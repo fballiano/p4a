@@ -1,3 +1,7 @@
+h2 {
+	text-align: center;
+}
+
 body {
 	text-align: left;
 }
@@ -36,6 +40,10 @@ body {
 
 fieldset {
 	border:1px solid black;
+}
+
+fieldset legend {
+	text-align: center;
 }
 
 input {
