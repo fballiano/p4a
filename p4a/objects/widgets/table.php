@@ -189,7 +189,8 @@
 		 * Returns the HTML rendered object.
 		 * @access public
 		 */
-		function getAsString()		{
+		function getAsString()
+		{
 			$this->clearDisplay();
 
 			if (!$this->isVisible()) {
