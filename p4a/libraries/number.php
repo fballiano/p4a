@@ -54,8 +54,12 @@
 		 * @param array			The format
 		 * @return string
 		 */
-		function format( $number = 0, $format )
+		function format( $number = null, $format )
 		{
+			if ($number === null) {
+				return null;
+			}
+
 			if( $format[0] == '*' )
 			{
 				$parts = explode('.', $number);

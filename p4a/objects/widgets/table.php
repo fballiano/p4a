@@ -260,7 +260,7 @@
 					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
 					$headers[$i]['order']		= NULL;
-					
+
 					if ($col->isOrderable()) {
 						$headers[$i]['action'] = $col->composeStringActions();
 					} else {
@@ -601,7 +601,7 @@
 		 * @access private
 		 */
 		var $format_name = NULL;
-		
+
 		/**
 		 * Tells if the table can order by this col
 		 * @var boolean
@@ -794,7 +794,7 @@
 			$this->format_name = NULL;
 			$this->unsetFormatted();
 		}
-		
+
 		/**
 		 * Sets the ability to order by this column
 		 * @access public
@@ -803,7 +803,7 @@
 		{
 			$this->orderable = $orderable;
 		}
-		
+
 		/**
 		 * Tell if the column is orderable or not
 		 * @access public
@@ -901,7 +901,7 @@
 			$limit = $parent->data->getPageLimit();
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
-			
+
 			$this->actionHandler('beforeDisplay', &$rows);
 
 			$i = 0;

@@ -1,4 +1,3 @@
-- P4A_Table_Col, if a NULL formatted integer, she shows 0
 - add and test rich_textarea spell check
 - check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
