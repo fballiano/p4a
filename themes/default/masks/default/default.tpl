@@ -69,7 +69,12 @@
     </style>
   </head>
   
-  <body onLoad="set_focus('[[$focus_id]]')">
+  [[if $focus_id]]
+  <body onLoad="setFocus('[[$focus_id]]')">
+  [[else]]
+  <body>
+  [[/if]]
+  
   	[[$mask_open]]
 
 	<!-- TOP -->
