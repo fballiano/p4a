@@ -953,13 +953,19 @@
 
 			$this->buttons->field_num_page->setLabel( $p4a->i18n->messages->get('go_to_page'));
 			$this->buttons->field_num_page->setNewValue($parent->data->getNumPage());
+			$num_pages = $parent->data->getNumPages();
+
+			if ($num_pages < 1) {
+				$num_pages = 1;
+			}
+
 			$current_page  = $p4a->i18n->messages->get('current_page');
 			$current_page .= '&nbsp;';
 			$current_page .= $parent->data->getNumPage();
 			$current_page .= '&nbsp;';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
 			$current_page .= '&nbsp;';
-			$current_page .= $parent->data->getNumPages();
+			$current_page .= $num_pages;
 			$current_page .= '&nbsp;';
 			$this->buttons->current_page->setValue($current_page);
 			return parent::getAsString();
