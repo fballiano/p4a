@@ -226,7 +226,7 @@
 				switch($data_field->getType()) {
 					case 'date':
 						$this->setType('date');
-						break;				
+						break;
 					case 'boolean':
 						$this->setType('checkbox');
 						break;
@@ -1064,7 +1064,7 @@
 				$checked = '' ;
 			}
 
-			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_box font_normal' value='1' $checked ";
+			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_none font_normal' value='1' $checked ";
 			$close_header 	= '>';
 
 			if( !$this->isEnabled() ) {

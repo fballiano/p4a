@@ -42,6 +42,10 @@ a.link_button:hover {
 	border: 1px solid;
 }
 
+.border_none {
+	border: none;
+}
+
 .border_box {
 	border: 1px solid #C6D3DE;
 }
@@ -159,7 +163,7 @@ a.link_button:hover {
 	overflow: visible;
 	display:block;
 	text-align: left;
-  	padding:1px;  
+  	padding:1px;
 	padding-left:6px;
 	background:#fcfcfc;
 	border:1px solid #fafafa;
@@ -411,11 +415,11 @@ dd.dd_block {
 	position:fixed;
 	top:70px;
 	bottom:10px;
- 	right:0px; 
- 	height:600px; 
+ 	right:0px;
+ 	height:600px;
 	padding:10px;
 	width:280px;
- 	z-index:2; 
+ 	z-index:2;
 }
 
 div.frame {
@@ -448,7 +452,7 @@ legend {
 }
 
 .message {
-	margin-right:auto;	
+	margin-right:auto;
 	margin-left:auto;
 }
 .message p{
@@ -473,11 +477,11 @@ legend {
 	margin:5px;
 }
 .table td{
-	padding:2px;	
+	padding:2px;
 	border:2px solid white;
 }
 .table_container {
- 	float:left; 
+ 	float:left;
 }
 .table_container .frame{
 	border-top:1px solid #C6D3DE;
