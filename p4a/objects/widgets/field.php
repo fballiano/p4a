@@ -975,7 +975,7 @@
 			}
 			$sReturn .= "</select>";
 
-			return $this->composeLabel() . $sReturn ;
+			return $this->composeLabel() . $sReturn;
 		}
 
 		function getAsMulticheckbox()
