@@ -100,7 +100,18 @@
 		function &build($class, $name)
 		{
 			$p4a =& P4A::singleton();
-			$this->$name = & new $class($name);
+			$args = func_get_args();
+			$str_args = '$this->$name =& new $class(';
+
+			for ($i=1; $i<sizeof($args); $i++) {
+				$str_args .= '$args[' . $i . '], ';
+			}
+
+			$str_args = substr($str_args, 0, -2);
+			$str_args .= ');';
+
+			eval($str_args);
+
 			$p4a->store($this->$name);
 			$this->_objects[] = $this->$name->getID();
 			$this->$name->setParentID($this->getID());

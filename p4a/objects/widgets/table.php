@@ -89,7 +89,7 @@
 		 * @var boolean
 		 * @access private
 		 */
-		var $show_header_row = TRUE;
+		var $_show_headers = TRUE;
 
 		/**
 		 * Stores the table's structure (table_cols).
@@ -219,7 +219,7 @@
 				}
 			}
 
-			if($this->show_header_row)
+			if($this->_show_headers)
 			{
 				$headers = array();
 				$i = 0;
@@ -228,29 +228,25 @@
 				$order_field	= NULL;
 				$order_mode		= NULL;
 
-				if( $this->data->getObjectType() == 'db_source' )
-				{
+				if ($this->data->getObjectType() == 'p4a_db_source') {
 					$is_orderable = true;
 
-					if( $this->data->hasOrder() )
-					{
+					if ($this->data->hasOrder()) {
     					$order			= $this->data->getOrder();
-    					$order_field	= $order[0]['field'];
-    					$order_mode		= $order[0]['mode'];
+    					$order_field	= $order[0][0];
+    					$order_mode		= $order[0][1];
 					}
 				}
 
 				while ($col =& $this->cols->nextItem()) {
-					if ($col->isVisible())
-					{
+					if ($col->isVisible()) {
 						$headers[$i]['properties']	= $col->composeStringProperties();
 						$headers[$i]['value']		= $col->getLabel();
 						$headers[$i]['action']		= $col->composeStringActions();
 						$headers[$i]['order']		= NULL;
 
-						if( $is_orderable and ( $order_field == $col->getName() ) )
-						{
-							 $headers[$i]['order'] = $order_mode ;
+						if ($is_orderable and ($order_field == $col->getName())) {
+							 $headers[$i]['order'] = $order_mode;
 						}
 
 						$i++;
@@ -368,19 +364,19 @@
 		 * Sets the title bar hidden
 		 * @access public
 		 */
-		function showHeaderRow()
+		function showHeaders()
 		{
-			$this->show_header_row = TRUE;
+			$this->_show_headers = TRUE;
 		}
 
 		/**
 		 * Sets the header row hidden
 		 * @access public
-		 * @see $show_header_row
+		 * @see $_show_headers
 		 */
-		function hideHeaderRow()
+		function hideHeaders()
 		{
-			$this->show_header_row = FALSE;
+			$this->_show_headers = FALSE;
 		}
 
 		/**
@@ -764,28 +760,28 @@
 
 		function onClick()
 		{
-			if( $this->parent->data->getObjectType() == 'db_source' )
-			{
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent =& $p4a->getObject($parent->getParentID());
+
+			if ($parent->data->getObjectType() == 'p4a_db_source') {
 				$new_order = 'ASC';
 
-				if( $this->parent->data->hasOrder() )
-				{
-					$order = $this->parent->data->dropMasterOrder();
+				if ($parent->data->hasOrder()) {
+					$order = $parent->data->getOrder();
+					$order = $order[0];
 
-					if( $order['field'] == $this->getName() )
-					{
-    					if( $order['mode'] == 'ASC' ) {
+					if ($order[0] == $this->getName()) {
+    					if ($order[1] == 'ASC') {
     						$new_order = 'DESC';
     					}
-					}
-					else
-					{
-						$new_order = $order['mode'];
+					} else {
+						$new_order = 'ASC';
 					}
 				}
 
-				$this->parent->data->addMasterOrder($this->getName(), $new_order);
-				$this->parent->data->load();
+				$parent->data->setOrder($this->getName(), $new_order);
+				$parent->data->row();
 			}
 		}
 	}
@@ -819,7 +815,7 @@
 		 */
 		function setMaxHeight( $height, $unit = 'px' )
 		{
-			$this->setStyleProperty( 'max-height', $height . $unit );
+			$this->setStyleProperty('max-height', $height . $unit);
 		}
 
 		/**
@@ -834,7 +830,7 @@
 			$aReturn = array();
 			$parent =& $p4a->getObject($this->getParentID());
 
-			$rows = $parent->data->page();
+			$rows = $parent->data->page(null, false);
 
 			$aCols = array();
 			while ($col =& $parent->cols->nextItem()) {
@@ -843,36 +839,33 @@
 				}
 			}
 
+			$limit = $parent->data->getPageLimit();
+			$num_page = $parent->data->getNumPage();
+			$offset = $parent->data->getOffset();
+
 			$i = 0;
 			foreach($rows as $row_number=>$row)
 			{
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
-				if ($row_number == $parent->data->getRowNumber()){
+				if ($row_number + $offset + 1 == $parent->data->getRowNumber()) {
 					$aReturn[$i]['row']['active'] = TRUE;
-				}else{
+				} else {
 					$aReturn[$i]['row']['active'] = FALSE;
 				}
-				foreach($aCols as $col_name)
-				{
+
+				foreach($aCols as $col_name) {
 					$aReturn[$i]['cells'][$j]['action'] = $action;
-					if ($parent->cols->$col_name->data)
-					{
+
+					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
-					}
-					elseif ($parent->cols->$col_name->isFormatted())
-					{
-						if( ( $parent->cols->$col_name->formatter_name === NULL ) and ( $parent->cols->$col_name->format_name === NULL ) )
-						{
+					} elseif ($parent->cols->$col_name->isFormatted()) {
+						if (($parent->cols->$col_name->formatter_name === NULL) and ($parent->cols->$col_name->format_name === NULL)) {
 							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->autoFormat($row[$col_name], $parent->data->fields->$col_name->getType());
+						} else {
+							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat($parent->cols->$col_name->format_name));
 						}
-						else
-						{
-							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat( $parent->cols->$col_name->format_name ) );
-						}
-					}
-					else
-					{
+					} else {
 						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					}
 
@@ -881,6 +874,7 @@
 				}
 				$i++;
 			}
+
 			return $aReturn;
 		}
 
@@ -897,7 +891,7 @@
 
 			if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
 
-			if ($parent->data->row($aParams[0]) == ABORT) return ABORT;
+			if ($parent->data->row($aParams[0] + $parent->data->getOffset() + 1) == ABORT) return ABORT;
 
 			if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
 		}
@@ -919,7 +913,6 @@
 		function &p4a_table_navigation_bar()
 		{
 			parent::p4a_toolbar("table_navigation_bar");
-			$this->setStyleProperty('display', 'block');
 
 			$this->addButton('button_first', 'little_first');
 			$this->buttons->button_first->addAction('onClick');
