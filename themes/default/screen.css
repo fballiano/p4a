@@ -225,6 +225,10 @@ label {
 	text-decoration: none;
 }
 
+.field_as_label {
+	margin-left: 120px;
+}
+
 /*   ---------   */
 /*   HTML TAGS   */
 /*   ---------   */

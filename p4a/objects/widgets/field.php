@@ -350,7 +350,10 @@
 
 			switch($type) {
 			case 'label':
-				$this->setStyleProperty( 'display', 'inline' ) ;
+				$label_width = $this->label->getWidth();
+				if (!empty($label_width)) {
+					$this->setStyleProperty('margin-left', $label_width+20 . "px") ;
+				}
 				break;
 
 			case 'rich_textarea':
@@ -772,25 +775,20 @@
 		 */
 		function getAsLabel()
 		{
-            $header         = '<DIV ';
+            $header         = '<DIV class="field_as_label" ';
             $close_header   = '>';
             $footer         = '</DIV>';
             $value			= '';
 
-            if( $this->data === NULL )
-			{
-				$value = $this->composeStringValue() ;
-            }
-            else
-            {
+            if ($this->data === NULL) {
+				$value = nl2br($this->composeStringValue());
+            } else {
 				$external_data		= $this->data->getAll() ;
 				$value_field		= $this->getSourceValueField() ;
 				$description_field	= $this->getSourceDescriptionField() ;
 
-    			foreach( $external_data as $key=>$current )
-    			{
-    				if ($current[ $value_field ] == $this->getNewValue())
-    				{
+    			foreach ($external_data as $key=>$current) {
+    				if ($current[ $value_field ] == $this->getNewValue()) {
     					$value = $current[ $description_field ] ;
     				}
     			}

@@ -1,4 +1,5 @@
 0.12
+- now P4A_Field::getAsLabel correctly handle multiline content
 - P4A_Widget now instance a "handheld" smarty variable, passed to the template
 - now P4A_Field::getAsDate correctly manage handheld devices
 - added some copyright notes to array_source.php, db_source.php, collection.php, data_source.php
