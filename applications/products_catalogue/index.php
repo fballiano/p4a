@@ -1,30 +1,20 @@
 <?php
 
-/*
- * This is the main application file.
- * Here you can define your custom costants overriding p4a defaults.
- * Than you must call p4a.
- * That's it!
- */
+define("P4A_LOCALE", 'en_US');
+define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
 
-// Including p4a
 require_once( dirname(__FILE__) . '/../../p4a.php' );
-
-// Optional - tells how to connect to the database
-// define("P4A_DSN", 'protocol://username:password@host/database');
-// define("P4A_DSN", 'mysql://root:@localhost/p4asample');
-
-// Optional - tells what locale we're going to use
-// define("P4A_LOCALE", 'en_US');
 
 // Check Installation and configuration.
 // This lines should be removed after the first run.
-if(! p4a_check_configuration($error)) {
-	die($error);
-}
+$p4a =& p4a::singleton("products_catalogue");
+$check = p4a_check_configuration();
 
 // Here we go
-$app =& p4a::singleton("products_catalogue");
-$app->main();
+if (is_string($check)) {
+	print $check;
+} else {
+	$p4a->main();
+}
 
 ?>

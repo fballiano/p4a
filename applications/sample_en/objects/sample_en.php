@@ -6,9 +6,9 @@ potremmo definirla il contenitore di tutte le maschere, la classe
 principale che gestire gli oggetti condivisi da tutta l'applicazione
 e che lancia la prima maschera che dovrà essere visualizzata.
 */
-class Sample_it extends P4A
+class Sample_En extends P4A
 {
-	function &Sample_It()
+	function &Sample_En()
 	{
 		//Prima di tutto richiamo il costruttore di p4a
 		parent::p4a();

@@ -1,0 +1,193 @@
+<?php
+
+class Products extends P4A_Mask
+{
+	function &Products()
+	{
+		$this->p4a_mask();
+		$p4a =& p4a::singleton();
+
+		// DB Source
+		$this->build("p4a_db_source", "source");
+		$this->source->setFields(array("products.*" => "*",
+									   "categories.description" => "category",
+									   "brands.description" => "brand"
+										));
+		$this->source->setTable("products");
+		$this->source->addJoin("categories",
+							   "products.category_id = categories.category_id");
+		$this->source->addJoin("brands", "product_instances.brand_id = brands.brand_id");
+		$this->source->setPk("product_id");
+		$this->source->addOrder("product_id");
+		$this->source->setPageLimit(10);
+		$this->source->load();
+		$this->setSource($this->source);
+		$this->source->firstRow();
+
+		$this->source->fields->purchasing_price->setType("decimal");
+		$this->source->fields->selling_price->setType("decimal");
+
+		// Customizing fields properties
+		$this->setFieldsProperties();
+		$fields =& $this->fields;
+
+		// Search Fieldset
+		$fs_search =& $this->build("p4a_fieldset","fs_search");
+		$fs_search->setTitle("Search");
+		$txt_search =& $this->build("p4a_field", "txt_search");
+		$txt_search->addAction("onReturnPress");
+		$this->intercept($txt_search, "onReturnPress","search");
+		$txt_search->setLabel("Cod. Prodotto");
+		$cmd_search =& $this->build("p4a_button","cmd_search");
+		$cmd_search->setValue("Cerca");
+		$this->intercept($cmd_search, "onClick","search");
+		$fs_search->anchor($txt_search);
+		$fs_search->anchorLeft($cmd_search);
+
+		// Toolbar
+		$this->build("p4a_standard_toolbar", "toolbar");
+		$this->toolbar->setMask($this);
+
+		// Table
+		$table =& $this->build("p4a_table", "table");
+ 		$table->setWidth(700);
+		$table->setSource($this->source);
+		$table->setVisibleCols(array("product_instance_id", "classe","marca",
+									 "model"));
+		$table->cols->product_instance_id->setLabel("Cod. Prodotto");
+		$table->cols->model->setLabel("Modello");
+		while ($col =& $table->cols->nextItem()) {
+			$col->setWidth(150);
+		}
+		$table->showNavigationBar();
+
+		// Message
+		$message =& $this->build("p4a_message", "message");
+		$message->setWidth("300");
+
+		// Frame Table
+		$frm_table =& $this->build("p4a_frame", "frm_table");
+ 		$frm_table->setWidth(700);
+		$frm_table->anchorCenter($message);
+		$frm_table->anchor($fs_search);
+		$frm_table->anchor($table);
+
+		//Fieldset con l'elenco dei campi
+		$fset=& $this->build("p4a_fieldset", "frame");
+		$fset->setTitle("Scheda prodotto");
+
+ 		$fset->anchor($this->fields->product_id);
+		$fset->anchor($this->fields->category_id);
+		$fset->anchorLeft($this->fields->brand_id);
+		$fset->anchor($this->fields->model);
+		$fset->anchor($this->fields->purchasing_price);
+ 		$fset->anchor($this->fields->selling_price);
+		$fset->anchorLeft($this->fields->discount);
+ 		$fset->anchor($this->fields->little_photo);
+ 		$fset->anchorLeft($this->fields->big_photo);
+		$fset->anchor($this->fields->is_new);
+		$fset->anchorLeft($this->fields->visible);
+		$fset->anchor($this->fields->description);
+
+		// Frame Fields
+		$frm_fields =& $this->build("p4a_frame", "frm_fields");
+		$frm_fields->setWidth(730);
+		$frm_fields->anchorCenter($message);
+		$frm_fields->anchorCenter($fset);
+
+		// Mandatory Fields
+	    $this->mf = array("product_id", "category_id", "brand_id", "model", "purchasing_price",
+ 					"selling_price", "description", "discount");
+		foreach($this->mf as $mf){
+			$fields->$mf->label->setFontWeight("bold");
+		}
+
+		// Display
+		$this->display("menu", $p4a->menu);
+		$this->display("top", $this->toolbar);
+	}
+
+	function main()
+	{
+		parent::main();
+
+		foreach($this->mf as $mf){
+			$this->fields->$mf->unsetStyleProperty("border");
+		}
+	}
+
+	function setFieldsProperties()
+	{
+		$p4a =& p4a::singleton();
+
+		$fields =& $this->fields;
+
+		$fields->product_id->setLabel("Product ID");
+		$fields->product_id->setWidth(200);
+		$fields->product_id->enable(false);
+
+		$fields->category_id->setLabel("Category");
+		$fields->category_id->setWidth(200);
+		$fields->category_id->setType("select");
+		$fields->category_id->setSourceDescriptionField("description");
+
+		$fields->brand_id->setLabel("Brand");
+		$fields->brand_id->setWidth(200);
+		$fields->brand_id->setType("select");
+		$fields->brand_id->setSource($p4a->brands);
+		$fields->brand_id->setSourceDescriptionField("description");
+
+		$fields->model->setWidth(200);
+
+		$fields->purchasing_price->setLabel("Purchasing price $");
+		$fields->purchasing_price->setWidth("40");
+
+		$fields->discount->setLabel("Discount %");
+		$fields->discount->setWidth("40");
+
+		$fields->selling_price->setLabel("Price $");
+		$fields->selling_price->setWidth("40");
+
+		$fields->little_photo->setType("image");
+		$fields->big_photo->setType("image");
+
+		$fields->description->label->setWidth(200);
+		$fields->description->setType("rich_textarea");
+		$fields->description->setHeight(400);
+	}
+
+	function saveRow()
+	{
+		$valid = true;
+
+		foreach($this->mf as $mf){
+			$value = $this->fields->$mf->getNewValue();
+			if(trim($value) === ""){
+				$this->fields->$mf->setStyleProperty("border", "1px solid red");
+				$valid = false;
+			}
+		}
+
+		if ($valid) {
+			parent::saveRow();
+		}else{
+			$this->message->setValue("Please fill all required fields");
+		}
+	}
+
+	function search()
+	{
+		$value = $this->txt_search->getNewValue();
+		$this->data->setWhere("model LIKE '%{$value}%'");
+		$this->data->firstRow();
+		$num_rows = $this->data->getNumRows();
+
+		if (!$num_rows) {
+			$this->message->setValue("No results were found");
+			$this->data->setWhere(null);
+			$this->data->firstRow();
+		}
+	}
+}
+
+?>

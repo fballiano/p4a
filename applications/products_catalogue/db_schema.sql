@@ -1,8 +1,6 @@
 CREATE TABLE categories (
   category_id INTEGER UNSIGNED NOT NULL,
-  parent_id INTEGER UNSIGNED NULL,
-  description_en TEXT NOT NULL,
-  description_it TEXT NOT NULL,
+  description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(category_id)
 )
@@ -10,8 +8,7 @@ TYPE=InnoDB;
 
 CREATE TABLE brands (
   brand_id INTEGER UNSIGNED NOT NULL,
-  description_en TEXT NOT NULL,
-  description_it TEXT NOT NULL,
+  description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(brand_id)
 )
@@ -25,14 +22,11 @@ CREATE TABLE products (
   purchasing_price DECIMAL(10,2) NOT NULL,
   selling_price DECIMAL(10,2) NOT NULL,
   discount INTEGER UNSIGNED NOT NULL,
-  delivery_cost_index INTEGER UNSIGNED NOT NULL,
   little_photo TEXT NULL,
   big_photo TEXT NULL,
   is_new BOOL NOT NULL,
-  in_home BOOL NOT NULL,
   visible BOOL NOT NULL,
-  description_en TEXT NOT NULL,
-  description_it TEXT NOT NULL,
+  description TEXT NOT NULL,
   PRIMARY KEY(product_id),
   INDEX products_FKIndex1(category_id),
   INDEX products_FKIndex2(brand_id),
@@ -46,5 +40,3 @@ CREATE TABLE products (
       ON UPDATE CASCADE
 )
 TYPE=InnoDB;
-
-

@@ -20,8 +20,8 @@ vedremo solo un piccolo esempio senza interrogazioni su
 basi di dati.
 */
 
-define("P4A_LOCALE", 'it_IT');
-//define("P4A_DSN", 'mysql://root:@localhost/sample_it');
+define("P4A_LOCALE", 'en_US');
+//define("P4A_DSN", 'mysql://root:@localhost/sample_en');
 
 // Includo p4a
 require_once( dirname(__FILE__) . '/../../p4a.php' );
@@ -40,7 +40,7 @@ devono essere preceduti dall'& quindi anche il costruttore della
 classe stessa (guarda la classe sample_it per capire meglio)
 */
 
-$sample_it =& p4a::singleton("Sample_It");
-$sample_it->main();
+$sample_en =& p4a::singleton("Sample_En");
+$sample_en->main();
 
 ?>

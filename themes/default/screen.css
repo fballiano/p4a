@@ -422,7 +422,6 @@ div.frame {
 	padding:0px;
 	margin-left:auto;
 	margin-right:auto;
-/* 	border:1px solid red; */
 }
 
 .row {
@@ -440,7 +439,6 @@ fieldset {
 	padding-left:15px;
 	padding-right:15px;
 	margin:0;
-/* 	float:left; */
 }
 
 legend {

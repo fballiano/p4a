@@ -7,7 +7,7 @@
 }
 
 input:active {
-	background-color:white !important; 
+	background-color:white !important;
 }
 
 select {
@@ -20,7 +20,7 @@ input {
 	border: none;
 	border-bottom: 1px solid black !important;
 	margin-right:10px;
-	font-size: 8px;	
+	font-size: 8px;
 	text-align:left !important;
 }
 
@@ -52,8 +52,6 @@ label {
 .label {
 	border:0px;
 }
-
-
 
 A {
 	text-decoration:none;
