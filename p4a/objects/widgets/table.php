@@ -150,12 +150,12 @@
 			unset($this->data);
 			$this->data =& $data_source;
 
-            $this->setDataStructure($this->data->getFields());
+			$this->setDataStructure($this->data->fields->getNames());
 
 			$this->build("p4a_table_rows", "table_rows");
-            if ($this->data->getNumPages() > 1){
-            	$this->addNavigationBar();
-            }
+			if ($this->data->getNumPages() > 1){
+				$this->addNavigationBar();
+			}
 		}
 
 		/**
@@ -165,22 +165,11 @@
 		 */
 		function setDataStructure($array_fields)
 		{
-			$this->cols = array();
-			foreach($array_fields as $field)
-			{
+			$this->build('p4a_collection', 'cols');
+
+			foreach($array_fields as $field) {
 				$this->addCol($field);
 			}
-		}
-
-		/**
-		 * Sets the data browser that will navigate the data source.
-		 * @param data_browser		The data browser.
-		 * @access public
-		 */
-		function setDataBrowser(&$data_browser)
-		{
-			unset($this->data_browser);
-			$this->data_browser =& $data_browser;
 		}
 
 		/**
@@ -251,8 +240,7 @@
 					}
 				}
 
-				foreach($this->cols as $col)
-				{
+				while ($col =& $this->cols->nextItem()) {
 					if ($col->isVisible())
 					{
 						$headers[$i]['properties']	= $col->composeStringProperties();
@@ -271,7 +259,7 @@
 				$this->display('headers', $headers);
 			}
 
-			if ($this->data->getNumRows()){
+			if ($this->data->getNumRows() > 0){
 				$this->display('table_rows_properties', $this->table_rows->composeStringProperties());
 				$this->display('table_rows', $this->table_rows->getRows());
 			}else{
@@ -280,6 +268,7 @@
 			}
 
 			$visible_cols = $this->getVisibleCols();
+
 			if( sizeof( $visible_cols ) > 0 ) {
 				$this->display('table_cols', 'TRUE');
 			} else {
@@ -455,7 +444,7 @@
 		 */
 		function getCols()
 		{
-			return array_keys($this->cols);
+			return $this->cols->getNames();
 		}
 
 		/**
@@ -467,10 +456,8 @@
 		{
 			$return = array();
 
-			foreach( array_keys( $this->cols ) as $col )
-			{
-				if( $this->cols[$col]->isVisible() )
-				{
+			while ($col =& $this->cols->nextItem()) {
+				if ($col->isVisible()) {
 					$return[] = $col;
 				}
 			}
@@ -487,10 +474,8 @@
 		{
 			$return = array();
 
-			foreach( array_keys( $this->cols ) as $col )
-			{
-				if( !$this->cols[$col]->isVisible() )
-				{
+			while ($col =& $this->cols->nextItem()) {
+				if (!$col->isVisible()) {
 					$return[] = $col;
 				}
 			}
@@ -506,14 +491,12 @@
 		 */
 		function setVisibleCols( $cols = array() )
 		{
-			if( sizeof( $cols ) == 0 )
-			{
+			if (sizeof($cols) == 0) {
 				$cols = $this->getCols();
 			}
 
-			foreach( $cols as $col )
-			{
-				$this->cols[$col]->setVisible();
+			foreach ($cols as $col) {
+				$this->cols->$col->setVisible();
 			}
 		}
 
@@ -532,7 +515,7 @@
 
 			foreach( $cols as $col )
 			{
-				$this->cols[$col]->setInvisible();
+				$this->cols->$col->setInvisible();
 			}
 		}
 	}
@@ -851,12 +834,12 @@
 			$aReturn = array();
 			$parent =& $p4a->getObject($this->getParentID());
 
-			$rows = $parent->getCurrentPage();
+			$rows = $parent->data->page();
+
 			$aCols = array();
-			foreach($this->parent->cols as $col_name=>$col)
-			{
-				if ($col->visible){
-					$aCols[] = $col_name;
+			while ($col =& $parent->cols->nextItem()) {
+				if ($col->isVisible()){
+					$aCols[] = $col->getName();
 				}
 			}
 
@@ -865,7 +848,7 @@
 			{
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
-				if ($row_number == $this->parent->data_browser->getRowNumber()){
+				if ($row_number == $parent->data->getRowNumber()){
 					$aReturn[$i]['row']['active'] = TRUE;
 				}else{
 					$aReturn[$i]['row']['active'] = FALSE;
@@ -873,19 +856,19 @@
 				foreach($aCols as $col_name)
 				{
 					$aReturn[$i]['cells'][$j]['action'] = $action;
-					if ($this->parent->cols[$col_name]->data)
+					if ($parent->cols->$col_name->data)
 					{
-						$aReturn[$i]['cells'][$j]['value'] = $this->parent->cols[$col_name]->getDescription($row[$col_name]);
+						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
 					}
-					elseif ($this->parent->cols[$col_name]->isFormatted())
+					elseif ($parent->cols->$col_name->isFormatted())
 					{
-						if( ( $this->parent->cols[$col_name]->formatter_name === NULL ) and ( $this->parent->cols[$col_name]->format_name === NULL ) )
+						if( ( $parent->cols->$col_name->formatter_name === NULL ) and ( $parent->cols->$col_name->format_name === NULL ) )
 						{
-							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->autoFormat($row[$col_name], $this->parent->data->structure[$col_name]['type']);
+							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->autoFormat($row[$col_name], $parent->data->fields->$col_name->getType());
 						}
 						else
 						{
-							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$this->parent->cols[$col_name]->formatter_name}->format( $row[$col_name], $p4a->i18n->{$this->parent->cols[$col_name]->formatter_name}->getFormat( $this->parent->cols[$col_name]->format_name ) );
+							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat( $parent->cols->$col_name->format_name ) );
 						}
 					}
 					else
@@ -909,11 +892,14 @@
 		 */
 		function onClick($aParams)
 		{
-			if( $this->actionHandler('beforeClick', $aParams) == ABORT ) return ABORT;
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
 
-			if( $this->parent->data_browser->moveRow($aParams[0]) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
 
-			if( $this->actionHandler('afterClick', $aParams) == ABORT ) return ABORT;
+			if ($parent->data->row($aParams[0]) == ABORT) return ABORT;
+
+			if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
 		}
 	}
 
@@ -953,37 +939,36 @@
 
 			$this->addSpacer(20);
 
-			/*
-			$this->addButton(new p4a_label('current_page'));
+			$this->buttons->build('p4a_label', 'current_page');
 
-			$this->addSpace(20);
+			$this->addSpacer(20);
 
-			$this->addButton(new p4a_field('field_num_page'));
-			$this->buttons['field_num_page']->setWidth(30);
-			$this->buttons['field_num_page']->addAction('onReturnPress');
-			$this->intercept($this->buttons['field_num_page'], 'onReturnPress', 'goOnClick');
+			$this->buttons->build('p4a_field', 'field_num_page');
+			$this->buttons->field_num_page->setWidth(30);
+			$this->buttons->field_num_page->addAction('onReturnPress');
+			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
 
-			$this->newButton('button_go', 'go');
-			$this->buttons['button_go']->addAction('onClick');
-			$this->intercept($this->buttons['button_go'], 'onClick', 'goOnClick');
-			*/
+			$this->addButton('button_go', 'go');
+			$this->buttons->button_go->addAction('onClick');
+			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
 		}
 
 		function getAsString()
 		{
 			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
 
-			$this->buttons['field_num_page']->setLabel( $p4a->i18n->messages->get( 'go_to_page' ) );
-			$this->buttons['field_num_page']->setNewValue($this->parent->data->getNumPage());
+			$this->buttons->field_num_page->setLabel( $p4a->i18n->messages->get('go_to_page'));
+			$this->buttons->field_num_page->setNewValue($parent->data->getNumPage());
 			$current_page  = $p4a->i18n->messages->get('current_page');
 			$current_page .= '&nbsp;';
-			$current_page .= $this->parent->data->getNumPage();
+			$current_page .= $parent->data->getNumPage();
 			$current_page .= '&nbsp;';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
 			$current_page .= '&nbsp;';
-			$current_page .= $this->parent->data->getNumPages();
+			$current_page .= $parent->data->getNumPages();
 			$current_page .= '&nbsp;';
-			$this->buttons['current_page']->setValue($current_page);
+			$this->buttons->current_page->setValue($current_page);
 			return parent::getAsString();
 		}
 
@@ -993,7 +978,9 @@
 		 */
 		function nextOnClick()
 		{
-			$this->parent->data_browser->moveNextPage();
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent->data->nextPage();
 		}
 
 		/**
@@ -1002,7 +989,9 @@
 		 */
 		function prevOnClick()
 		{
-			$this->parent->data_browser->movePrevPage();
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent->data->prevPage();
 		}
 
 		/**
@@ -1011,7 +1000,9 @@
 		 */
 		function firstOnClick()
 		{
-			$this->parent->data_browser->moveFirstPage();
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent->data->firstPage();
 		}
 
 		/**
@@ -1020,7 +1011,9 @@
 		 */
 		function lastOnClick()
 		{
-			$this->parent->data_browser->moveLastPage();
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent->data->lastPage();
 		}
 
 		/**
@@ -1029,7 +1022,9 @@
 		 */
 		function goOnClick()
 		{
-			$this->parent->data_browser->movePage($this->buttons['field_num_page']->getNewValue());
+			$p4a =& P4A::singleton();
+			$parent =& $p4a->getObject($this->getParentID());
+			$parent->data->page($this->buttons->field_num_page->getNewValue());
 		}
 
 	}

@@ -1,22 +1,21 @@
 <table cellpadding="2" cellspacing="0" [[$table_properties]]>
 	[[if $title_bar]]
 	<thead>
-	<tr> 
+	<tr>
 		<td class="border_box background_box font4 align_left">&nbsp;[[$title_bar]]</td>
 	</tr>
 	</thead>
 	[[/if]]
-	
+
 	[[if $expand]]
 
 		[[if $toolbar]]
-	<tr> 
+	<tr>
 		<td class="border_box align_left">[[$toolbar]]</td>
 	</tr>
-		[[/if]]		      
-
+		[[/if]]
 		[[if (( $table_rows or $row_headers ) and ( $table_cols ))]]
-	<tr> 
+	<tr>
 		<td class="border_box" align="center" [[$table_properties]]><table border="0" style="padding-bottom:10px; padding-right:15px;" width="100%">
 				[[if $headers]]
 				<thead>
@@ -42,15 +41,15 @@
 			        		[[if $cell.row_number is odd]]
 			        <td colspan="2" class="background1 clickable table_cell" [[$cell.action]]>[[$cell.value]]</td>
 				        	[[else]]
-					<td colspan="2" class="background2 clickable table_cell" [[$cell.action]]>[[$cell.value]]</td>				        	
+					<td colspan="2" class="background2 clickable table_cell" [[$cell.action]]>[[$cell.value]]</td>
 				        	[[/if]]
 				        [[/foreach]]
 				</tr>
 					[[/foreach]]
-				</tbody>	
+				</tbody>
 				[[/if]]
 			</table></td>
-	</tr>  
+	</tr>
 		[[/if]]
 		[[if $navigation_bar]]
     <tr>
