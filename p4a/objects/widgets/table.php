@@ -379,7 +379,7 @@
 		 */
 		function showTitleBar(){
 			if ($this->title_bar !== NULL){
-				$this->setTitle($this->name);
+				$this->setTitle($this->getName());
 			}
 			$this->title_bar->setVisible();
 		}

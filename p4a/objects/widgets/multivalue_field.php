@@ -100,7 +100,7 @@
 		{
 			parent::p4a_field($name);
 			$this->setType('multiselect');
-			$this->setProperty('name', $this->id .'[]');
+			$this->setProperty('name', $this->getID() .'[]');
 		}
 		
 		/**
@@ -191,7 +191,7 @@
 		 */
 		function getAsMultiselect()
 		{
-			$header 			= '<INPUT TYPE="hidden" NAME="' . $this->id . '" VALUE="false"><SELECT class="border_box font_normal" multiple="multiple" ';
+			$header 			= '<INPUT TYPE="hidden" NAME="' . $this->getID() . '" VALUE="false"><SELECT class="border_box font_normal" multiple="multiple" ';
 			$close_header 		= '>';
 			$footer				= '</SELECT>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;

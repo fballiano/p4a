@@ -103,7 +103,7 @@
 				$item->setLabel($label);
 			}
 			
-			$this->setItemPosition($item->name, $this->nextFreePosition());
+			$this->setItemPosition($item->getName(), $this->nextFreePosition());
  		}
 		
 		/**
@@ -209,7 +209,7 @@
 				{
 					$array_item = array();
 					$array_item['label'] = $item->label;
-					if (($item->items->getNumItems())){
+					if ((! $item->items->getNumItems())){
 						$array_item['actions'] = $item->composeStringActions();
 					}
 					$array_item['properties'] = $item->composeStringProperties();
@@ -254,7 +254,7 @@
 					$aItem = array();
 					$aItem['label'] = $item->label;
 					$aItem['actions'] =	$item->composeStringActions();
-					if ($item->name == $this->item_active){
+					if ($item->getName() == $this->item_active){
 						$aItem['active'] = TRUE;
 					}else{
 						$aItem['active'] = FALSE;
@@ -273,7 +273,7 @@
 						$this->items->{$this->item_active}->setItemActive( $item->getName() ) ;
 					}
 				
-					if ($item->name == $this->items->{$this->item_active}->item_active){
+					if ($item->getName() == $this->items->{$this->item_active}->item_active){
 						$aItem['active'] = TRUE;
 					}else{
 						$aItem['active'] = FALSE;
@@ -380,7 +380,7 @@
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 			
-			$this->setItemPosition($item->name, $this->nextFreePosition());
+			$this->setItemPosition($item->getName(), $this->nextFreePosition());
 			
 			if( $label !== NULL ) {
 				$item->setLabel($label);
@@ -395,7 +395,7 @@
 		function addSeparator($name)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
-			//todo
+			//todo		
 			$item->setParent($this->getId());
 			$item->dropAction('onClick');
 			$item->setLabel('');
@@ -405,7 +405,7 @@
 			$item->setStyleProperty('margin-left', '10px');
 			$item->setStyleProperty('margin-right', '10px');
 
-			$this->setItemPosition($item->name, $this->nextFreePosition());
+			$this->setItemPosition($item->getName(), $this->nextFreePosition());
 		}
 		
 		/**

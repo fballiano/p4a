@@ -316,7 +316,9 @@
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
 			$this->smarty->assign('css', $p4a->css);
-			$this->smarty->assign('focus_id', $this->focus_object->id);
+			if(isset($this->focus_object) and is_object($this->focus_object)){
+ 				$this->smarty->assign('focus_id', $this->focus_object->getID());
+			}
 			
 			$this->smarty->assign('application_title', $p4a->getTitle());
 // 			$this->smarty->assign('sheet', $this->sheet->getAsString());
@@ -357,7 +359,7 @@
         	}
 			
 			$this->fields->build("p4a_multivalue_field", $fieldname);
-        	$this->external_fields[] = $this->fields[$fieldname]->id ;
+        	$this->external_fields[] = $this->fields->$fieldname->getID() ;
         	
         	$pk_value = $this->fields->{$this->data->pk}->getNewValue();
 			$this->fields->$fieldname->setPkValue($pk_value);
@@ -714,6 +716,7 @@
             $this->sOpen .= "<INPUT TYPE='hidden' name='param2'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param3'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param4'>" . "\n";
+			
 			return $this->sOpen; 
 		}
 		

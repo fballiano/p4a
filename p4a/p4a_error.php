@@ -75,7 +75,7 @@
 			$this->message = $message;
 			
 			if( is_object( $object ) ) {
-				$this->object_id = $object->id;
+				$this->object_id = $object->getID();
 			}
 			
 			$this->external_object = $external_object;

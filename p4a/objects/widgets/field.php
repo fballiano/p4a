@@ -694,15 +694,15 @@
 		{
 			$p4a =& P4A::singleton();
 			
-			$this->setProperty('id', $this->id);
+			$this->setProperty('id', $this->getID());
 			$this->useTemplate('date_calendar');
-			$this->display('id', $this->id);
+			$this->display('id', $this->getID());
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
 			
-			$header 	   = "<INPUT type='text' id='{$this->id}' class='border_color1 font_normal field' ";			
+			$header 	   = "<INPUT type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";			
 			$close_header  = "/>";
-			$close_header .= "<INPUT type='button' value='...' id='{$this->id}button' class='border_box font4 no_print' ";
+			$close_header .= "<INPUT type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' ";
 			if( ! $this->isEnabled() ) {
 				$header .= " disabled='disabled' ";
 				$close_header .= " disabled='disabled' ";
@@ -745,8 +745,8 @@
 		 */
 		function getAsTextarea()
 		{
-			//$header 		= "<TEXTAREA class='border_color1 font_normal' id='{$this->id}' cols='82' rows='15' ";
-			$header 		= "<TEXTAREA class='border_color1 font_normal' id='{$this->id}' ";
+			//$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' cols='82' rows='15' ";
+			$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' ";
 			$close_header 	= '>';
 			$footer			= '</TEXTAREA>';
 			
@@ -771,7 +771,7 @@
 			
 			$this->useTemplate('rich_textarea');
 			$this->smarty->get_template_vars();
-			$this->display('id', $this->id);
+			$this->display('id', $this->getID());
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('spell_checker', $this->spell_checker);
 			$this->display('table_operations', $this->table_operations);
@@ -1020,7 +1020,7 @@
 				
 				unset( $sContent ) ;
 				$sContent  = $p4a->i18n->autoFormat( $current[ $description_field ], $this->data->structure[$description_field]['type']);
-				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->id . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'>";
+				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'>";
 				
 				$sheet->anchor( $sContent ) ;
 			}
@@ -1154,7 +1154,7 @@
 			$p4a =& P4A::singleton();
 			if( $this->getNewValue() === NULL )
 			{
-				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->id . "\", \"onChange\");' type='file' class='border_box font_normal clickable' ";
+				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 				
 				if( !$this->isEnabled() ) {

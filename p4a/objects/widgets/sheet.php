@@ -176,7 +176,7 @@
 				}
 				elseif( $this->grid[ $row ][ $col ]->isOccupied() )
 				{
-					ERROR( '"' . $this->name . '": Unable to anchor object "' . $widget->name . '" on row ' . $row . ' and col ' . $col . '.' ) ;
+					ERROR( '"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.' ) ;
 				}
 			}
 
@@ -200,7 +200,7 @@
 					}
 					else
 					{
-						ERROR( '"' . $this->name . '": Unable to anchor object "' . $widget->name . '" on row ' . $row . ' and col ' . $col . '.' ) ;
+						ERROR( '"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.' ) ;
 					}
 				}
 				

@@ -122,10 +122,10 @@
 		function addSheet( &$sheet, $name, $position = NULL )
 		{
 			$this->sheets->$name =& $sheet;
-			$this->setPosition( $sheet->name, $position );
+			$this->setPosition( $sheet->getName(), $position );
 			
 			$this->labels->build("P4A_Link", $name);
-			$this->labels->{$sheet->name}->setValue($sheet->getLabel());
+			$this->labels->{$sheet->getName()}->setValue($sheet->getLabel());
 			
 			$this->intercept($sheet, 'set_label', 'setSheetLabel');
 			$this->labels->{$sheet->getName()}->addAction('onClick');
@@ -133,7 +133,7 @@
 			
 			if( $this->active_sheet === NULL )
 			{
-				$this->setActive( $sheet->name );
+				$this->setActive( $sheet->getName() );
 			}
 		}
 		
@@ -248,9 +248,9 @@
 		 */
 		function movePrev()
 		{
-			if( $this->sheets_map[ $this->active_sheet->name ] > 1 )
+			if( $this->sheets_map[ $this->active_sheet->getName() ] > 1 )
 			{
-				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->name ] - 1 ) ) ;
+				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->getName() ] - 1 ) ) ;
 			}
 		}
 		
@@ -260,9 +260,9 @@
 		 */
 		function moveNext()
 		{
-			if( $this->sheets_map[ $this->active_sheet->name ] < sizeof( $this->sheets_map ) )
+			if( $this->sheets_map[ $this->active_sheet->getName() ] < sizeof( $this->sheets_map ) )
 			{
-				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->name ] + 1 ) ) ;
+				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->getName() ] + 1 ) ) ;
 			}
 		}
 		
@@ -298,7 +298,7 @@
 					}
 					
 					// Setting element activation state
-					if( $this->sheets[ $this->positions_map[ $i ] ]->name == $this->active_sheet->name )
+					if( $this->sheets[ $this->positions_map[ $i ] ]->getName() == $this->active_sheet->getName() )
 					{
 						if ($i>1)
 						{
@@ -340,7 +340,7 @@
 		function labelsOnClick()
 		{
 			$p4a =& P4A::singleton();
-			$this->setActive($p4a->active_object->name);
+			$this->setActive($p4a->active_object->getName());
 		}
 		
 		/**

@@ -239,7 +239,7 @@
 		 */
 		function setDefaultLabel()
 		{
-			$this->setLabel( ucwords(str_replace('_', ' ', $this->name)) );
+			$this->setLabel( ucwords(str_replace('_', ' ', $this->getName())) );
 		}
 		
 		/**
