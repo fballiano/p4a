@@ -750,9 +750,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (!$fk) {
 			$pk = $this->getPk();
 			if (!$pk) {
-				P4A_Error("Before call addMultivalueField set PK");
+				P4A_Error("Set PK before calling \"addMultivalueField\"");
 			} elseif (is_array($pk)) {
-				P4A_Error("Array for pk");
+				P4A_Error("Multivalue not usable with multiple pk");
 			} else {
 				$fk = $pk;
 			}
