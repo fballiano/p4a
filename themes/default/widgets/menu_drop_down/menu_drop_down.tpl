@@ -22,7 +22,7 @@
 		[[foreach item=item from=$items]] 
 			[[if not $item.actions]]
         	initializeMenu("[[$item.id]]Menu", "[[$item.id]]");
-        	[[/if]]
+			[[/if]]
         [[/foreach]]
     </script>
     

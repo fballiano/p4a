@@ -381,6 +381,7 @@
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 			
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
+			$item->setParent($this->getId());
 			
 			if( $label !== NULL ) {
 				$item->setLabel($label);
@@ -492,7 +493,7 @@ s		 * Removes an element from the element.
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->parent);
-			$parent->setItemActive($this->name);
+			$parent->setItemActive($this->getName());
 		}
 		
 		/**

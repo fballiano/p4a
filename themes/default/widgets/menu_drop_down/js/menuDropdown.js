@@ -5,14 +5,15 @@ if (!document.getElementById)
     document.getElementById = function() { return null; }
 
 function initializeMenu(menuId, actuatorId) {
-    var menu = document.getElementById(menuId);
+	
+	var menu = document.getElementById(menuId);
     var actuator = document.getElementById(actuatorId);
     if (menu == null || actuator == null) return;
 
     //if (window.opera) return; // I'm too tired
 
 	actuator.onmouseover = function() {
-        if (currentMenu) {
+		if (currentMenu) {
             currentMenu.style.visibility = "hidden";
             this.showMenu();
         }else{

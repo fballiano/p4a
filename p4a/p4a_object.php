@@ -273,8 +273,8 @@
 			{
 				$p4a->close();
 				$p4a->openMask('p4a_error');
-				$p4a->mask_active->listener->renderError($param);
-				$p4a->mask_active->raise();
+				$p4a->active_mask->listener->renderError($param);
+				$p4a->active_mask->raise();
 			}
 		}
 	}
