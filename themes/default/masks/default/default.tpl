@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=[[$charset]]">
     <title>[[$application_title]]</title>
+    <script src="[[$root_path]]/js/pngfix.js"></script>
     <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="screen">
     <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
     [[foreach from=$css key=uri item=media ]]

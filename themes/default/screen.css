@@ -16,11 +16,6 @@
 	border:none;
 }
 
-img_button:hover {
-	border: 1px solid #C6D3DE;
-	border:none;
-}
-
 .link_button {
 	border: 1px solid #FAFAFA;
 	display:block;
@@ -30,6 +25,7 @@ img_button:hover {
 
 a.link_button:hover {
 	border: 1px solid #C6D3DE;
+	background:white;
 }
 
 .radio {
@@ -434,6 +430,7 @@ div.frame {
 
 div.br{
 	clear:both;
+	background:red;
 }
 
 fieldset {

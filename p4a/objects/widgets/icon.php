@@ -39,7 +39,7 @@ class P4A_Icon extends P4A_Widget
 				$src .= "_disabled";		
 			}
 			$src .= '.' . P4A_ICONS_EXTENSION ;
-			return "<img $properties $actions src=\"$src\" />\n";
+			return "<span style='display:block'><img $properties $actions src=\"$src\" /></span>\n";
 		} else {
 			return "";
 		}

@@ -191,10 +191,10 @@
 			$properties = $this->composeStringProperties();
 			$string   = "<div class='toolbar' $properties >";
 			while($button =& $this->buttons->nextItem()) {
-				$string .= $button->getAsString();
+  				$string .= $button->getAsString();
 			}
-			$string .= "<div class='br'></div>";
-			$string .= "</div>";
+ 			$string .= "<div class='br'></div>\n";
+			$string .= "</div>\n\n";
 			return $string;
 		}
 

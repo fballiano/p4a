@@ -214,6 +214,7 @@
 				$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
 				$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
 				$this->displayText('theme_path', P4A_THEME_PATH);
+				$this->displayText('root_path', P4A_ROOT_PATH);
 				$this->displayText('mask_open', $this->maskOpen());
 				$this->displayText('mask_close', $this->maskClose());
 			}
