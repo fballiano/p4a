@@ -58,7 +58,8 @@ class P4A_XML_Mask extends P4A_Mask
 					$source->setTable($attr["TABLE"]);
 					$this->setAttr($source, $attr);
 					$source->load();
-					$source->firstRow();
+					$source->firstRow();				
+					$this->setPK($source, $attr);
 				} else {
 					$source =& $this->{$name};
 				}
@@ -196,6 +197,20 @@ class P4A_XML_Mask extends P4A_Mask
 	function setLevel(&$obj, $level)
 	{
 		$this->levels{$level} =& $obj;
+	}
+	
+	function setPK(&$source, $attr)
+	{
+		if (array_key_exists("pk", $attr)) {
+			$pk = $attr["pk"];
+			$pks = split(",",$pk);
+			$source->setPK($pks);
+			if (array_key_exists("autoincrement",$attr) and count($pks) == 1) {
+				$table = $source->getTable();
+				$pk_sequence = "{$table}_{$pk}";
+				$source->fields->$pk->setSequence($pk_sequence);
+			}
+		} 
 	}
 }
 ?>

@@ -41,6 +41,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 
         $pks = array();
 		$table_info = $db->tableInfo($name);
+	
 		$max_label_width = 0;
         foreach($table_info as $pos=>$field_info){
         	if (strpos($field_info['flags'], 'primary_key') !== FALSE){
@@ -52,10 +53,20 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 				$max_label_width = strlen($field_info['name']);
 			}
         }
+		
+		$pk = "";
 		$pk = join($pks, ",");
+		
+		$autoincrement = "0";
+		if (count($pks) == 1) {
+			if ($info[$pks[0]]["type"] == "int") {
+				$autoincrement = "1";
+			}
+		}
+
 
 		$xml  = "<mask>\n";
-		$xml .= "\t<source name='source' table='$name' pk='$pk' />\n";
+		$xml .= "\t<source name='source' table='$name' pk='$pk' autoincrement="$autoincrement" />\n";
 		$xml .= "\t<menu />\n";
 		$xml .= "\t<toolbar type='standard' />\n";
 

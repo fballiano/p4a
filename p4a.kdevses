@@ -1,12 +1,39 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="0" />
+ <DocsAndViews NumberOfDocuments="4" >
+  <Doc0 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/data_sources/db_source.php" >
+   <View0 line="398" Type="???" >
+    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widget.php" >
+   <View0 line="339" Type="???" >
+    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/applications/mysql_manager/objects/mysql_manager.php" >
+   <View0 line="8" Type="???" >
+    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/applications/mysql_manager/objects/masks/auto_mask.php" >
+   <View0 line="32" Type="???" >
+    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc3>
+ </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
    <bookmarks>
     <bookmark url="/home/andrea/dev/p4a/p4a/objects/widget.php" >
+     <mark line="550" />
      <mark line="228" />
+    </bookmark>
+    <bookmark url="/home/andrea/dev/p4a/p4a/objects/data_sources/db_source.php" >
+     <mark line="750" />
+     <mark line="155" />
+     <mark line="303" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
