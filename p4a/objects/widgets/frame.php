@@ -52,6 +52,7 @@ class P4A_Frame extends P4A_Widget
 		}
 
 		$p4a =& P4A::singleton();
+		$handheld = $p4a->isHandheld();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 
@@ -71,9 +72,13 @@ class P4A_Frame extends P4A_Widget
 						$margin = "margin";	
 					}
 					$margin_value = $obj["margin"];
-					$row .= "\n\t<div style='padding:2px 0px;float:$float;$margin:$margin_value'>";
-					$row .= "\n\t\t$as_string" ;
-					$row .= "\n\t</div>";
+					$as_string = "\n\t\t$as_string" ;
+					
+					if ($handheld) {
+						$row .= $as_string;
+					} else {
+						$row .= "\n\t<div style='padding:2px 0px;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
+					}
 				}
 			}
 

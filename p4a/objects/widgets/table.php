@@ -944,6 +944,8 @@
 		 */
 		function &P4A_Table_Navigation_Bar()
 		{
+			$p4a =& P4A::singleton();
+						
 			parent::P4A_Frame("table_navigation_bar");
 			$this->build("p4a_collection","buttons");
 
@@ -954,43 +956,57 @@
 			$field_num_page =& $this->buttons->build('p4a_field', 'field_num_page');
 			$field_num_page->label->setStyleProperty("text-align", "right");
 			$field_num_page->label->setWidth(80);
-// 			$field_num_page->label->setStyleProperty("border", "1px solid red");
 			$this->buttons->field_num_page->setWidth(30);
 			$this->buttons->field_num_page->addAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
 			$this->anchorRight($field_num_page);
 
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
-//  			$current_page->setStyleProperty("border","1px solid red");
 			$this->anchorLeft($current_page);
+			
+			if ($p4a->isHandheld()) {
+				$this->addButton('button_first');
+				$this->buttons->button_first->setLabel("<<");
+				$this->addButton('button_prev');
+				$this->buttons->button_prev->setLabel("<");
+				$this->addButton('button_next');
+				$this->buttons->button_next->setLabel(">");
+				$this->addButton('button_last');
+				$this->buttons->button_last->setLabel(">>");
+				
+				$this->buttons->button_go->setVisible(false);
+				$this->buttons->field_num_page->setVisible(false);
+			} else {
+				$this->addButton('button_last', 'last', 'right');
+				$this->addButton('button_next', 'next', 'right');
+				$this->addButton('button_prev', 'prev', 'right');
+				$this->addButton('button_first', 'first', 'right');
+			}
 
-			$this->addButton('button_last', 'last','right');
 			$this->buttons->button_last->addAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-
-			$this->addButton('button_next', 'next','right');
+			
 			$this->buttons->button_next->addAction('onClick');
 			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
-
-			$this->addButton('button_prev', 'prev', 'right');
+			
 			$this->buttons->button_prev->addAction('onClick');
 			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
 
-			$this->addButton('button_first', 'first', 'right');
 			$this->buttons->button_first->addAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
-
-//  			$this->setStyleProperty("border","1px solid red");
-
 		}
 
-		function addButton($button_name, $icon, $float = "left")
+		function addButton($button_name, $icon = null, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);
-			$button->setIcon($icon);
-			$button->setSize(16);
+			
+			if (strlen($icon)>0) {
+				$button->setIcon($icon);
+				$button->setSize(16);
+			}
+			
 			$anchor = "anchor" . $float;
-			$this->$anchor($button, "2");
+			$this->$anchor($button, "2px");
 			return $button;
 		}
 
