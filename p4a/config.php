@@ -127,7 +127,12 @@
 
 	//Applications Constants
 	if (!defined('P4A_APPLICATION_PATH')) {
-		define("P4A_APPLICATION_PATH", dirname($_SERVER["SCRIPT_NAME"]));
+		$dir = dirname($_SERVER["SCRIPT_NAME"]);
+		if ($dir == '/') {
+			$dir = '';
+		}
+
+		define("P4A_APPLICATION_PATH", $dir);
 	}
 
 	if (!defined('P4A_APPLICATION_DIR')) {

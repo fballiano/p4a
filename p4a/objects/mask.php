@@ -545,8 +545,7 @@
 		{
 			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-			if ($this->isActionTriggered('onMoveRow'))
-			{
+			if ($this->isActionTriggered('onMoveRow')) {
 				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
 			} else {
     			$this->data->firstRow();

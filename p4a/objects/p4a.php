@@ -283,17 +283,13 @@
 					move_uploaded_file( $value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name'] );
 					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'] ;
 
-					if( ( substr($key, 0, 3) == 'fld' ) and ( $value['error'] == 0 ) )
-					{
+					if( ( substr($key, 0, 3) == 'fld' ) and ( $value['error'] == 0 ) ) {
 						$new_value = $value['name'] . ',' . $value['tmp_name'] . ',' . $value['size'] . ',' . $value['type'] . ',' ;
 
-						if( substr( $value['type'], 0, 5 ) == 'image' )
-						{
-							$image_data = getimagesize( P4A_UPLOADS_TMP_DIR . '/' . $value['name'] );
+						if( substr( $value['type'], 0, 5 ) == 'image' ) {
+							$image_data = getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 							$new_value .= $image_data[0] . ',' . $image_data[1];
-						}
-						else
-						{
+						} else {
 							$new_value .= ',';
 						}
 

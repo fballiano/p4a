@@ -1177,15 +1177,12 @@
 				$height = $this->getNewValue(5);
 				$str_height = '';
 
-				if( $width > $height )
-				{
+				if( $width > $height ) {
 					if( $this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size ) {
 						$width = $this->max_thumbnail_size ;
 						$str_width = 'width="' . $width . '"' ;
 					}
-				}
-				else
-				{
+				} else {
 					if( $this->max_thumbnail_size !== NULL and $height > $this->max_thumbnail_size ) {
 						$height = $this->max_thumbnail_size ;
 						$str_height = 'height="' . $height . '"' ;

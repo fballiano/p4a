@@ -356,7 +356,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$query = $this->_composeSelectCountQuery();
 
 		if ($this->_num_rows === NULL) {
-			$this->_num_rows = $db->getOne($query);
+			$this->_num_rows = (int)$db->getOne($query);
 		}
 
 		return $this->_num_rows;
