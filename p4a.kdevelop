@@ -1,8 +1,8 @@
 <?xml version = '1.0'?>
 <kdevelop>
   <general>
-    <author>Fabrizio Balliano</author>
-    <email>fabrizio.balliano@crealabs.it</email>
+    <author>Andrea Giardina</author>
+    <email>andrea@andrea</email>
     <version>$VERSION$</version>
     <projectmanagement>KDevScriptProject</projectmanagement>
     <primarylanguage>PHP</primarylanguage>
@@ -65,7 +65,7 @@
       <toc>sdl</toc>
       <toc>stl</toc>
       <toc>sw</toc>
-      <toc>wxwidgets_bugs</toc>
+      <toc>wxwindows_bugs</toc>
     </ignoretocs>
     <ignoreqt_xml>
       <toc>Guide to the Qt Translation Tools</toc>

@@ -444,8 +444,8 @@
 						$target_dir = P4A_UPLOADS_DIR . '/' . $field->getUploadSubpath();
 
 						if (!is_dir($target_dir)) {
-							if (!System::mkDir("-p $target_dir")) {
-								$e = new P4A_ERROR("Cannot create directory \"$target_dir\"", $this, $rs);
+							if (!@System::mkDir("-p $target_dir")) {
+								$e = new P4A_ERROR("Cannot create directory \"$target_dir\"", $this);
     							if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
     								die();
     							}
@@ -461,7 +461,7 @@
                     			$new_path = $target_dir . '/' . $a_new_value[0];
 								$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 								if (!rename($old_path, $new_path)) {
-									$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this, $rs);
+									$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
 									}
@@ -478,7 +478,7 @@
 							} elseif ($new_value!=$old_value) {
 								$path = $target_dir . '/' . $a_old_value[1];
 								if (!unlink($path)) {
-									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this, $rs);
+									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
 									}
@@ -487,7 +487,7 @@
 								$new_path = $target_dir . '/' . $a_new_value[0];
 								$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 								if (!rename($old_path, $new_path)) {
-									$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this, $rs);
+									$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
 									}

@@ -75,10 +75,11 @@
 		 * @access private
 		 */
 		var $type = 'text';
-
-
+		
 		var $is_read_only = FALSE;
 		var $sequence = NULL;
+		var $table = NULL;
+		var $alias_of = NULL;
 
 		/**
 		 * Class constructor.
@@ -183,5 +184,21 @@
 				return $db->nextId($this->sequence);
 			}
 		}
+		
+		function setTable($table){
+			$this->table = $table;
+		}
+		
+		function getTable(){
+			return $this->table;
+		}
+		
+		function setAliasOf($alias_of){
+			$this->alias_of = $alias_of;
+		}
+		
+		function getAliasOf(){
+			return $this->alias_of;
+		}		
 	}
 ?>
