@@ -3,6 +3,7 @@
     class table_mask extends p4a_mask
     {
         var $table_name = "";
+		
 		function &table_mask($name)
         {
 			$this->p4a_mask();
@@ -53,7 +54,8 @@
             $table =& $this->build('p4a_table', 'table');
             $table->setSource($source);
 
-            $sheet =& $this->build("p4a_sheet", "sheet");
+            $sheet =& $this->build("p4a_frame", "sheet");
+			$sheet->setWidth(700);
             $sheet->anchor($table);
             $sheet->anchor($line);
 
@@ -154,11 +156,6 @@
 		function checkMandatory()
 		{
 			
-		}
-		
-		function getName()
-		{
-			return $this->table_name;
 		}
     }   
 ?>

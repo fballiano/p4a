@@ -574,6 +574,7 @@
 		 */
 		function maskOpen()
 		{
+			$mask_name = $this->getName();
 			$this->sOpen  = '';
 			$this->sOpen .= '<SCRIPT LANGUAGE="JavaScript1.2">'													. "\n";
 			$this->sOpen .= 'function executeEvent(object_name, action_name, param1, param2, param3, param4)'	. "\n";
@@ -583,16 +584,16 @@
             $this->sOpen .= '	if (!param3) param3 = "" ;'														. "\n";
             $this->sOpen .= '	if (!param4) param4 = "" ;'														. "\n";
 			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"]._object.value = object_name;'				. "\n";
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"]._action.value = action_name;'				. "\n";
-            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param1.value = param1;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param2.value = param2;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param3.value = param3;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param4.value = param4;'						. "\n";
-			$this->sOpen .= '	if (typeof document.forms["'. $this->getName() .'"].onsubmit == "function") {'		. "\n";
-			$this->sOpen .= '		document.forms["'. $this->getName() .'"].onsubmit();'							. "\n";
+			$this->sOpen .= '	document.forms["'. $mask_name .'"]._object.value = object_name;'				. "\n";
+			$this->sOpen .= '	document.forms["'. $mask_name .'"]._action.value = action_name;'				. "\n";
+            $this->sOpen .= '	document.forms["'. $mask_name .'"].param1.value = param1;'						. "\n";
+            $this->sOpen .= '	document.forms["'. $mask_name .'"].param2.value = param2;'						. "\n";
+            $this->sOpen .= '	document.forms["'. $mask_name .'"].param3.value = param3;'						. "\n";
+            $this->sOpen .= '	document.forms["'. $mask_name .'"].param4.value = param4;'						. "\n";
+			$this->sOpen .= '	if (typeof document.forms["'. $mask_name .'"].onsubmit == "function") {'		. "\n";
+			$this->sOpen .= '		document.forms["'. $mask_name .'"].onsubmit();'							. "\n";
 			$this->sOpen .= '	}'																				. "\n";
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"].submit();'									. "\n";
+			$this->sOpen .= '	document.forms["'. $mask_name .'"].submit();'									. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
 			$this->sOpen .= 'function isReturnPressed(e)'														. "\n";
@@ -614,13 +615,13 @@
 			$this->sOpen .= ''																					. "\n";
 			$this->sOpen .= 'function setFocus(id)'															. "\n";
 			$this->sOpen .= '{'																					. "\n";
-			$this->sOpen .= '	if( (id != null) && (document.forms["'. $this->getName() .'"].elements[id] != null) && (document.forms["'. $this->getName() .'"].elements[id].disabled == false) ) {' . "\n";
-			$this->sOpen .= '		document.forms["'. $this->getName() .'"].elements[id].focus();'					. "\n";
+			$this->sOpen .= '	if( (id != null) && (document.forms["'. $mask_name .'"].elements[id] != null) && (document.forms["'. $mask_name .'"].elements[id].disabled == false) ) {' . "\n";
+			$this->sOpen .= '		document.forms["'. $mask_name .'"].elements[id].focus();'					. "\n";
 			$this->sOpen .= '	}'																				. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
 			$this->sOpen .= '</SCRIPT>'																			. "\n";
-			$this->sOpen .= '<FORM method="post" enctype="multipart/form-data" name="' . $this->getName() . '" action="index.php">';
+			$this->sOpen .= '<FORM method="post" enctype="multipart/form-data" name="' . $mask_name . '" action="index.php">';
 			$this->sOpen .= "<INPUT TYPE='hidden' name='_object' value='" . $this->getId() . "'>" . "\n";
 			$this->sOpen .= "<INPUT TYPE='hidden' name='_action' value='none'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param1'>" . "\n";

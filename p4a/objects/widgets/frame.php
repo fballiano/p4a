@@ -52,22 +52,29 @@ class P4A_Frame extends P4A_Widget
 		$actions = $this->composeStringActions();
 
 		$string  = "<div class='frame' $properties $actions >";
-		foreach($this->_map as $i=>$row){
+		foreach($this->_map as $objs){
 
-			$string .= "\n<div class='row' style='border:1px solid white'>";
-
-			foreach ($row as $obj) {
+			$one_visible = FALSE;
+			$row = "\n<div class='row' style='border:1px solid white'>";
+			foreach ($objs as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
 				$float = $obj["float"];
 				$margin = "margin-" . $obj["float"];
 				$margin_value = $obj["margin"];
-				$string .= "\n\t<div style='padding:2px; float:$float;$margin:$margin_value'>";
-				$string .= "\n\t\t" . $object->getAsString() ;
-				$string .= "\n\t</div>";
+				$row .= "\n\t<div style='padding:2px;float:$float;$margin:$margin_value'>";
+				$row .= "\n\t\t" . $object->getAsString() ;
+				$row .= "\n\t</div>";
+				if ($object->isVisible()) {
+					$one_visible = TRUE;
+				}
 			}
 
-			$string .= "\n\n\t<div class='br'></div>\n";
-			$string .= "\n</div>\n";
+			$row .= "\n\n\t<div class='br'></div>\n";
+			$row .= "\n</div>\n";
+			
+			if ($one_visible) {
+				$string .= $row;		
+			}
 		}
 		$string .= "</div>\n\n";
 		return $string;

@@ -15,6 +15,8 @@
         
             $this->fields->user->setValue("root");
             $this->fields->server->setValue("localhost");
+			$this->fields->pass->setType("password");
+			$this->fields->pass->setEncryptionType("none");
         
             $button =& $this->build("p4a_button","button");
             $button->setLabel("Enter");
@@ -53,6 +55,7 @@
 			$edit =& $menu->addItem("edit", "Edit");
 			$p4a->intercept($edit, "onClick", "editMask");
             $menu->items->tables->items->$valid_table->onClick();
+// 			$p4a->openMask("p4a_auto_mask");
         }
     }
 ?>

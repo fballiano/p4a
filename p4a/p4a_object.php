@@ -298,5 +298,10 @@
 				return ABORT;
 			}
 		}
+		
+		function void($params = NULL)
+		{
+			return $this->actionHandler('void', $params);
+		}
 	}
 ?>

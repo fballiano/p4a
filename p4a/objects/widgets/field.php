@@ -734,7 +734,7 @@
 				$header        .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 			}
 
-			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
 

@@ -766,7 +766,11 @@
 		{
 			return $this->actionHandler('onChange', $params);
 		}
-
+		
+		function onMouseOver($params = NULL)
+		{
+			return $this->actionHandler('onMouseOver', $params);
+		}
 		/**
 		 * Wrapper used to add the handling of OnKeyPress action.
 		 * @see action_handler()
