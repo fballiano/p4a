@@ -187,16 +187,6 @@
 		}
 
 		/**
-		 * Shows the mask.
-		 * It means that the 'show' function of the current mask's listener is called.
-		 * @access private
-		 */
-		function show()
-		{
-			return $this->actionHandler('show');
-		}
-
-		/**
 		 * Shows the caller mask.
 		 * @access public
 		 */
@@ -268,7 +258,7 @@
 		 */
 		function display($variable, &$object)
 		{
-			unset($this->smarty_var[$variable]);
+// 			unset($this->smarty_var[$variable]);
 			$this->smarty_var[$variable] =& $object;
 		}
 
@@ -307,7 +297,7 @@
 		 * Prints out the mask.
 		 * @access public
 		 */
-		function raise()
+		function main()
 		{
 			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
@@ -328,10 +318,8 @@
 				if (is_object($value)){
 					$value = $value->getAsString();
 				}
-
 				$this->smarty->assign($key, $value);
 			}
-
 			$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
 			$this->smarty->display($path_template);
 		}
@@ -426,13 +414,8 @@
 		 * @access public
 		 * @throws onFileSystemError
 		 */
-		function updateRow()
+		function saveRow()
 		{
-			if ($this->actionHandler('beforeUpdateRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onUpdateRow')) {
-				if($this->actionHandler('onUpdateRow') == ABORT) return ABORT;
-			} else {
 				$p4a =& P4A::singleton();
 
 				// FILE UPLOADS
@@ -499,18 +482,7 @@
 					}
 	            }
 
-				// EXECUTE THE DATA BROWSER COMMIT
 				$this->data->saveRow();
-
-				// EXTERNAL FIELDS
-				/*
-				foreach($this->external_fields as $object_id) {
-					$p4a->objects->$object_id->update();
-				}
-				*/
-			}
-
-			$this->actionHandler('afterUpdateRow');
 		}
 
 		/**
@@ -521,23 +493,7 @@
 		 */
 		function newRow()
 		{
-			$p4a =& P4A::singleton();
-			if ($this->actionHandler('beforeNewRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onNewRow')) {
-				if( $this->actionHandler( 'onNewRow' ) == ABORT ) return ABORT;
-			} else {
-    			$this->data->newRow();
-				/*
-				foreach($this->external_fields as $object_id){
-					$pk_value = $this->fields[$this->data->pk]->getNewValue();
-					$p4a->objects[$object_id]->setPkValue($pk_value);
-					$p4a->objects[$object_id]->load();
-				}
-				*/
-			}
-
-			$this->actionHandler('afterNewRow');
+    		$this->data->newRow();
 		}
 
 		/**
@@ -546,23 +502,7 @@
 		 */
 		function deleteRow()
 		{
-			$p4a =& P4A::singleton();
-			if ($this->actionHandler('beforeDeleteRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onDeleteRow')) {
-				if ($this->actionHandler('onDeleteRow') == ABORT) return ABORT;
-			} else {
-				// EXTERNAL FIELDS
-				/*
-				foreach($this->external_fields as $object_id){
-					$p4a->objects[$object_id]->setNewValue();
-					$p4a->objects[$object_id]->update();
-				}*/
-
-    			$this->data->deleteRow();
-			}
-
-			$this->actionHandler('afterDeleteRow') ;
+    		$this->data->deleteRow();
 		}
 
 		/**
@@ -571,15 +511,7 @@
 		 */
 		function nextRow()
 		{
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-			} else {
-    			$this->data->nextRow();
-			}
-
-			$this->actionHandler('afterMoveRow');
+    		$this->data->nextRow();
 		}
 
 		/**

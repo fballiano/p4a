@@ -59,6 +59,8 @@
 		 * @access public
 		 */
 		var $buttons = NULL;
+		
+		var $_size = NULL;
 
 		/**
 		 * Class costructor.
@@ -72,9 +74,6 @@
 			$this->build("p4a_collection", "buttons");
 
 			$this->setOrientation('horizontal');
-			$this->setProperty('cellpadding', '0');
-			$this->setProperty('cellspacing', '0');
-			$this->setProperty('border', '0');
 		}
 
 		/**
@@ -84,10 +83,14 @@
 		 * @access public
 		 * @see BUTTON
 		 */
-		function addButton($button_name, $icon = NULL)
+		function &addButton($button_name, $icon = NULL, $position = "left")
 		{
 			$this->buttons->build("p4a_button", $button_name);
 			$this->buttons->$button_name->setIcon($icon);
+			$this->buttons->$button_name->setStyleProperty("float", $position);
+			if ($this->_size) {
+				$this->buttons->$button_name->setSize($this->_size);	
+			}
 			return $this->buttons->$button_name;
 		}
 
@@ -95,11 +98,12 @@
 		 * Adds a separator image.
 		 * @access public
 		 */
-		function addSeparator()
+		function addSeparator($position = "left")
 		{
 			$name = 's' . $this->separators_counter++;
-			$this->buttons->build("p4a_image", $name);
+			$this->buttons->build("p4a_icon", $name);
 			$this->buttons->$name->setIcon('separator');
+			$this->buttons->$name->setStyleProperty("float", $position);
 			return $this->buttons->$name;
 		}
 
@@ -152,6 +156,16 @@
 				}
 			}
 		}
+		
+		function setSize($size)
+		{
+			$this->_size = $size;
+		}
+		
+		function getSize()
+		{
+			return $this->_size;
+		}
 
 		/**
 		 * Sets the rendering orientation for the toolbar.
@@ -173,24 +187,16 @@
 			if (!$this->isVisible()) {
 				return '';
 			}
-
-			$header = '<table class="toolbar" ';
-			$close_header = ' >';
-			$contents = '';
-			$footer = '</table>';
-        	if ($this->orientation == 'vertical') {
-				while($button =& $this->buttons->nextItem()) {
-        			$contents .= '<tr><td>' . $button->getAsString() . '</td></tr>' . "\n";
-				}
-        	} else {
-        		$contents .= '<tr>';
-        		while($button =& $this->buttons->nextItem()) {
-        			$contents .= '<td>' . $button->getAsString() . '</td>' . "\n";
-        		}
-        		$contents .= '</tr>';
-        	}
-
-			return $header . $this->composeStringProperties() . $close_header . $contents . $footer ;
+			
+			$properties = $this->composeStringProperties();
+			$string   = "<div class='toolbar' $properties >";
+			while($button =& $this->buttons->nextItem()) {
+				$string .= $button->getAsString();
+			}
+			$string .= "<div class='br'></div>";
+			$string .= "</div>";
+			return $string;
 		}
+		
 	}
 ?>

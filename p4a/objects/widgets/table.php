@@ -70,19 +70,11 @@
 		var $toolbar = NULL;
 
 		/**
-		 * A little bar that displays a title for the table.
-		 * This also allows collapsing/expanding the table view.
-		 * @var link
-		 * @access private
-		 */
-		var $title_bar = NULL;
-
-		/**
 		 * All the table's rows.
-		 * @var table_rows
+		 * @var rows
 		 * @access private
 		 */
-		var $table_rows = NULL;
+		var $rows = NULL;
 
 		/**
 		 * Decides if the table will show the "field's header" row.
@@ -111,6 +103,8 @@
 		 * @access private
 		 */
 		var $expand = TRUE;
+		
+		var $_title = "";
 
 		/**
 		 * Class constructor.
@@ -132,12 +126,19 @@
 		 */
 		function setTitle($title)
 		{
-			if ($this->title_bar === NULL){
+			/*if ($this->title_bar === NULL){
 				$this->build("p4a_link",'title_bar');
 			}
 			$this->title_bar->setValue($title);
 			$this->title_bar->addAction('onClick');
 			$this->intercept($this->title_bar, 'onClick', 'rollup');
+			*/
+			$this->_title = $title;
+		}
+		
+		function getTitle()
+		{
+			return $this->_title;
 		}
 
 		/**
@@ -152,7 +153,7 @@
 
 			$this->setDataStructure($this->data->fields->getNames());
 
-			$this->build("p4a_table_rows", "table_rows");
+			$this->build("p4a_table_rows", "rows");
 			if ($this->data->getNumPages() > 1){
 				$this->addNavigationBar();
 			}
@@ -198,17 +199,16 @@
 			$this->display('table_properties', $this->composeStringProperties());
 
 			if ($this->toolbar !== NULL and
-				$this->toolbar->isVisible())
-			{
+				$this->toolbar->isVisible()) {
 				$this->display('toolbar', $this->toolbar->getAsString());
 			}
 
 			if ($this->navigation_bar !== NULL and
-				$this->navigation_bar->isVisible())
-			{
+				$this->navigation_bar->isVisible()) {
 				$this->display('navigation_bar', $this->navigation_bar);
 			}
-
+			$this->display("title", $this->getTitle());
+			/*
 			if ($this->title_bar !== NULL and
 				$this->title_bar->isVisible())
 			{
@@ -217,7 +217,7 @@
 				} else {
 					$this->display('title_bar', $this->title_bar->getValue());
 				}
-			}
+			}*/
 
 			if($this->_show_headers)
 			{
@@ -259,8 +259,8 @@
 			}
 
 			if ($this->data->getNumRows() > 0){
-				$this->display('table_rows_properties', $this->table_rows->composeStringProperties());
-				$this->display('table_rows', $this->table_rows->getRows());
+				$this->display('table_rows_properties', $this->rows->composeStringProperties());
+				$this->display('table_rows', $this->rows->getRows());
 			}else{
 				$this->display('table_rows_properties', NULL);
 				$this->display('table_rows', NULL);
@@ -507,13 +507,11 @@
 		 */
 		function setInvisibleCols( $cols = array() )
 		{
-			if( sizeof( $cols ) == 0 )
-			{
+			if (sizeof( $cols ) == 0) {
 				$cols = $this->getCols();
 			}
 
-			foreach( $cols as $col )
-			{
+			foreach ($cols as $col) {
 				$this->cols->$col->setInvisible();
 			}
 		}
@@ -814,7 +812,7 @@
 		 * @param string		Mnemonic identifier for the object
 		 * @access private
 		 */
-		function &p4a_table_rows($name = 'table_rows')
+		function &p4a_table_rows($name = 'rows')
 		{
 			parent::p4a_widget($name);
 			$this->addAction('onClick');
@@ -917,7 +915,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TABLE_NAVIGATION_BAR extends P4A_TOOLBAR
+	class P4A_TABLE_NAVIGATION_BAR extends P4A_FRAME
 	{
 		/**
 		 * Class constructor.
@@ -926,38 +924,52 @@
 		 */
 		function &p4a_table_navigation_bar()
 		{
-			parent::p4a_toolbar("table_navigation_bar");
+			parent::p4a_frame("table_navigation_bar");
+			$this->build("p4a_collection","buttons");
+			
+			$this->addButton('button_go', 'apply', 'right');
+			$this->buttons->button_go->addAction('onClick');
+			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
 
-			$this->addButton('button_first', 'little_first');
-			$this->buttons->button_first->addAction('onClick');
-			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
-
-			$this->addButton('button_prev', 'little_prev');
-			$this->buttons->button_prev->addAction('onClick');
-			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
-
-			$this->addButton('button_next', 'little_next');
-			$this->buttons->button_next->addAction('onClick');
-			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
-
-			$this->addButton('button_last', 'little_last');
-			$this->buttons->button_last->addAction('onClick');
-			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-
-			$this->addSpacer(20);
-
-			$this->buttons->build('p4a_label', 'current_page');
-
-			$this->addSpacer(20);
-
-			$this->buttons->build('p4a_field', 'field_num_page');
+			$field_num_page =& $this->buttons->build('p4a_field', 'field_num_page');
+			$field_num_page->label->setStyleProperty("text-align", "right");
+			$field_num_page->label->setWidth(80);
+// 			$field_num_page->label->setStyleProperty("border", "1px solid red");
 			$this->buttons->field_num_page->setWidth(30);
 			$this->buttons->field_num_page->addAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
+			$this->anchorRight($field_num_page);
+			
+			$current_page =& $this->buttons->build('p4a_label', 'current_page');
+// 			$current_page->setStyleProperty("border","1px solid red");
+			$this->anchorLeft($current_page);
+			
+			$this->addButton('button_last', 'last','right');
+			$this->buttons->button_last->addAction('onClick');
+			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
+			
+			$this->addButton('button_next', 'next','right');
+			$this->buttons->button_next->addAction('onClick');
+			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');			
+						
+			$this->addButton('button_prev', 'prev', 'right');
+			$this->buttons->button_prev->addAction('onClick');
+			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
+						
+			$this->addButton('button_first', 'first', 'right');
+			$this->buttons->button_first->addAction('onClick');
+			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
 
-			$this->addButton('button_go', 'go');
-			$this->buttons->button_go->addAction('onClick');
-			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
+		}
+		
+		function addButton($button_name, $icon, $float = "left")
+		{
+			$button =& $this->buttons->build("p4a_button", $button_name);
+			$button->setIcon($icon);
+			$button->setSize(16);
+			$anchor = "anchor" . $float;
+			$this->$anchor($button, "2");
+			return $button;
 		}
 
 		function getAsString()

@@ -95,12 +95,15 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/button.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/canvas.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/field.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/frame.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/href.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/image.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/icon.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/label.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/line.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/link.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/menu.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/message.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/multivalue_field.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/sheet.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/sheets_group.php');
@@ -110,6 +113,8 @@
 	//Toolbar Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
+	
+	require_once(dirname(__FILE__) . '/objects/widgets/frames/fieldset.php');
 
 	//We can have more applications on same site and same browser instance
 

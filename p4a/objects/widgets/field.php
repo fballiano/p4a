@@ -201,11 +201,12 @@
 
 			//Label
  			$this->build("P4A_Label", "label");
-			$this->label->setWidth(100);
+ 			$this->label->setWidth(100);
+			$this->label->setProperty("for",$this->getId());
+			$this->label->setStyleProperty("padding-right", "1em");
 			$this->setDefaultLabel();
 
 			//Properties
-			$this->setStyleProperty('float', 'left');
 			$this->label->setStyleProperty('float', 'left');
 		}
 
@@ -679,7 +680,11 @@
 			}
 
 			$new_method = 'getAs' . $type;
-			$this->as_string = $this->$new_method();
+			$string = $this->$new_method();
+			return $string . $suffix ;
+			return "<div style='width:400px;float:none;border:1px solid red'>{$this->as_string}{$suffix}
+			<div class='br'></div>
+			</div>";
 
 			return '<table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" nowrap="nowrap" style="float:'. $this->align .'">' . $this->as_string . '</td></tr></table>' . $suffix;
 		}
@@ -698,7 +703,7 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
 
@@ -766,7 +771,8 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-			$sReturn  = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
+// 			$sReturn  = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
+			$sReturn  = $this->composeLabel() . "<div class='br'></div>" . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;
 			return $sReturn;
@@ -894,8 +900,7 @@
     				$value = $this->null_message;
     			}
             }
-
-            return $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
+            return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
 		}
 
 		/**
@@ -951,6 +956,7 @@
 				$header .= $sContent;
 			}
 
+			return $this->composeLabel() . $header . $footer ;
 			return $this->composeLabel() . '</td><td>' .  $header . $footer ;
 		}
 
@@ -1058,7 +1064,7 @@
 				$checked = '' ;
 			}
 
-			$header 		= "<input type='hidden' " . $this->composeStringProperties() . " value='0'><input type='checkbox' class='border_box font_normal' value='1' $checked ";
+			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_box font_normal' value='1' $checked ";
 			$close_header 	= '>';
 
 			if( !$this->isEnabled() ) {
@@ -1066,6 +1072,7 @@
 			}
 
 			$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+			return $this->composeLabel() . $header ;
 			return $this->composeLabel() . '</td><td>' . $header ;
 		}
 
@@ -1116,6 +1123,7 @@
 				$sReturn .= '</table>';
 			}
 
+			return $this->composeLabel() . $sReturn;
 			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
 
@@ -1232,6 +1240,7 @@
 				$sReturn .= '</table>' ;
 			}
 
+			return $this->composeLabel() . $sReturn;
 			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
 

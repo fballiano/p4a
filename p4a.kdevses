@@ -1,16 +1,63 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="1" >
-  <Doc0 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/p4a/objects/widgets/field.php" >
-   <View0 line="1088" Type="???" >
-    <AdditionalSettings Top="2" Width="1023" Attach="1" Height="731" Left="2" MinMaxMode="0" />
+ <DocsAndViews NumberOfDocuments="9" >
+  <Doc0 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/button.php" >
+   <View0 line="19" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/screen.css" >
+   <View0 line="466" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/toolbars/standard_toolbar.php" >
+   <View0 line="37" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/toolbar.php" >
+   <View0 line="67" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/widgets/table/table.tpl" >
+   <View0 line="4" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/applications/joint/objects/product_instances.php" >
+   <View0 line="33" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/table.php" >
+   <View0 line="140" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc6>
+  <Doc7 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/changelog" >
+   <View0 line="1" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/field.php" >
+   <View0 line="389" Type="???" >
+    <AdditionalSettings Top="2" Width="756" Attach="1" Height="656" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc8>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
    <bookmarks/>
   </kdevbookmarks>
+  <kdevsubversion>
+   <subversion recurseresolve="1" recurserelocate="1" recursemerge="1" recursecommit="1" base="" recursepropget="1" recurseswitch="1" recurseupdate="1" recursepropset="1" recursediff="1" recurserevert="1" forcemove="1" recursecheckout="1" forceremove="1" recurseadd="1" recurseproplist="1" forcemerge="1" />
+  </kdevsubversion>
+  <kdevvalgrind>
+   <executable path="" params="" />
+   <valgrind path="" params="" />
+  </kdevvalgrind>
  </pluginList>
 </KDevPrjSession>

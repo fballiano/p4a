@@ -57,36 +57,39 @@
 		function &p4a_standard_toolbar($name)
 		{
 			parent::p4a_toolbar($name);
-
-			$this->addButton('confirm', 'big_confirm');
-			$this->addButton('cancel', 'big_cancel');
+			$save =& $this->addButton('save', 'save');
+			$save->setProperty("accesskey", "S");
+			$this->addButton('cancel', 'cancel');
 			$this->addSeparator();
 
-			$this->addButton('first', 'big_first');
-			$this->addButton('prev', 'big_prev');
-			$this->addButton('next', 'big_next');
-			$this->addButton('last', 'big_last');
+			$this->addButton('first', 'first');
+			$this->addButton('prev', 'prev');
+			$this->addButton('next', 'next');
+			$this->addButton('last', 'last');
 
 			$this->addSeparator();
 
-			$this->addButton('new', 'big_new');
+			$new =& $this->addButton('new', 'new');
+			$new->setProperty("accesskey", "N");
 
-			$this->addButton('delete', 'big_delete');
+			$this->addButton('delete', 'delete');
 			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');
 
 			$this->addSeparator();
 
-			$this->addButton('print', 'big_print');
+			$this->addButton('print', 'print');
 			$this->buttons->print->dropAction('onClick');
 			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
 
-			$this->addButton('exit', 'big_exit');
+			$this->addButton('exit', 'exit', 'right');
 
 		}
 
 		function setMask(&$mask)
 		{
-			$this->buttons->confirm->implementMethod('onClick', $mask, 'updateRow');
+			$this->_mask_name = $mask->getName();
+			
+			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
 			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
 			$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
 			$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
@@ -95,5 +98,28 @@
 			$this->buttons->new->implementMethod('onClick', $mask, 'newRow');
 			$this->buttons->delete->implementMethod('onClick', $mask, 'deleteRow');
 			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
+		}
+		
+		function getAsString()
+		{
+			$mask =& p4a_mask::singleton($this->_mask_name);
+			
+			if($mask->data->isNew()){
+				$this->buttons->first->enable(FALSE);
+				$this->buttons->prev->enable(FALSE);
+				$this->buttons->next->enable(FALSE);
+				$this->buttons->last->enable(FALSE);
+				$this->buttons->new->enable(FALSE);
+				$this->buttons->delete->enable(FALSE);
+			}else{
+				$this->buttons->first->enable(TRUE);
+				$this->buttons->prev->enable(TRUE);
+				$this->buttons->next->enable(TRUE);
+				$this->buttons->last->enable(TRUE);
+				$this->buttons->new->enable(TRUE);
+				$this->buttons->delete->enable(TRUE);
+			}
+			return parent::getAsString();
+			
 		}
 	}

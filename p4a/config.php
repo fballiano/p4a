@@ -278,7 +278,7 @@
 	}
 
 	if (!defined('P4A_ICONS_EXTENSION')){
-		define('P4A_ICONS_EXTENSION', 'gif');
+		define('P4A_ICONS_EXTENSION', 'png');
 	}
 
 	//Smarty Compile Dir

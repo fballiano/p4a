@@ -49,10 +49,11 @@
 	{
 		/**
 		* The icon used by button, if null standard html button is used.
-		* @access public
+		* @access private
 		* @var string
 		*/
-		var $icon = NULL;
+		var $_icon = NULL;
+		var $_size = 32;
 
 		/**
 		 * Class constructor.
@@ -111,7 +112,7 @@
 		 */
 		function setIcon($icon)
 		{
-			$this->icon = $icon;
+			$this->_icon = $icon;
 		}
 
 		/**
@@ -121,7 +122,17 @@
 		 */
 		function getIcon()
 		{
-			return $this->icon;
+			return $this->_icon;
+		}
+		
+		function setSize($size)
+		{
+			$this->_size = $size;
+		}
+		
+		function getSize()
+		{
+			return $this->_size;		
 		}
 
 		/**
@@ -142,25 +153,36 @@
 
 			$enabled = $this->isEnabled();
 
-			if ($this->icon != NULL)
+			if ($this->_icon != NULL)
 			{
 				if( $enabled ) {
 					$header .= '<a class="link_button" href="#" ' ;
+				}else{
+					$header .= '<span class="link_button" ' ;
 				}
-
 				$footer .= '>';
-				$footer .= '<img class="' ;
+				
+				$footer .= "<img class='img_button" ;
 
 				if( $enabled ) {
-					$footer .= 'clickable img_button ';
+					$footer .= ' clickable';
 				}
-
-				$footer .= '" src="' . P4A_ICONS_PATH . '/' . $p4a->i18n->getLanguage() . '/' . $p4a->i18n->getCountry() . '/' . $this->icon . '.' . P4A_ICONS_EXTENSION . '" alt="' . $p4a->i18n->messages->get($this->icon) . '" ';
-
+// 				P4A_ICONS_EXTENSION 
+				$img_src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon; 
+				if(!$enabled){
+					$img_src .= "_disabled";		
+				}
+				$img_src .= '.' . P4A_ICONS_EXTENSION ;
+				
+				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
+				
+				$footer .= "' src='$img_src' alt='$msg' title='$msg' " ;
 				$footer .= ' />';
 
 				if( $enabled ) {
 					$footer .= '</a>';
+				} else {
+					$footer .= '</span>';
 				}
 
 				$footer .= "\n";
@@ -176,7 +198,9 @@
 				$footer = ' />' . "\n";
 			}
 
-			$sReturn = $header . $this->composeStringProperties() ;
+			$sReturn = "";
+			
+			$sReturn .= $header . $this->composeStringProperties() ;
 			if( $enabled ) {
 				$sReturn .= $this->composeStringActions();
 			}

@@ -2,7 +2,8 @@
 
     class table_mask extends p4a_mask
     {
-        function table_mask($name)
+        var $table_name = "";
+		function &table_mask($name)
         {
 			$this->p4a_mask();
 			$this->table_name = $name;
@@ -14,6 +15,7 @@
             $this->setTitle($title);
             
 			$create_table_info = $db->getRow("show create table $name");
+
 			$create_table_info = $create_table_info["Create Table"];
 			$match = '/FOREIGN KEY \(`(\w*)`\) REFERENCES `(\w*)\` \(`(\w*)`\)/';
 			preg_match_all($match, $create_table_info, $results);
@@ -28,7 +30,7 @@
 			$max_label_width = 0;
             foreach($table_info as $pos=>$field_info){
                 if (strpos($field_info['flags'], 'primary_key') !== FALSE){
-                    $pks[] = $field_info['name'];
+					$pks[] = $field_info['name'];
 					$pos_pk = $pos;   
                 }
 				$info[$field_info['name']] = $field_info;
@@ -54,6 +56,7 @@
             $sheet =& $this->build("p4a_sheet", "sheet");
             $sheet->anchor($table);
             $sheet->anchor($line);
+
             while($field =& $this->fields->nextItem()){
 				$field_name = $field->getName();
                 if (in_array($field_name, $pks)){
@@ -89,7 +92,7 @@
 				$field->label->setWidth($max_label_width, "em");
                 $sheet->anchor($field);
             }
-            
+		
             $this->build("p4a_standard_toolbar", "toolbar");
             $this->toolbar->setMask($this);
 
@@ -151,6 +154,11 @@
 		function checkMandatory()
 		{
 			
+		}
+		
+		function getName()
+		{
+			return $this->table_name;
 		}
     }   
 ?>

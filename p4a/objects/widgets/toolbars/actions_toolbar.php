@@ -58,12 +58,12 @@
 		{
 			parent::p4a_toolbar($name);
 
-			$this->addButton('confirm', 'big_confirm');
-			$this->addButton('cancel', 'big_cancel');
+			$this->addButton('save', 'save');
+			$this->addButton('cancel', 'cancel');
 
 			$this->addSeparator();
 
-			$this->addButton('print', 'big_print');
+			$this->addButton('print', 'print');
 			$this->buttons->print->dropAction('onClick');
 			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
 
@@ -73,7 +73,7 @@
 
 		function setMask(&$mask)
 		{
-			$this->buttons->confirm->implementMethod('onClick', $mask, 'updateRow');
+			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
 			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
 			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 		}

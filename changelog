@@ -1,4 +1,5 @@
 0.1
+- Change: drop unroll table
 - Change: now MASK calls PEAR::System::mkDir to create directory (so we can create it recursively)
 - Add:    onFileSystemError is thrown when something goes wrong creating files/directory
 - Fix:    "not implemented" error is thrown when using a traslation data source with multiple pks

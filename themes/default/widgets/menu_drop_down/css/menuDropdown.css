@@ -10,6 +10,7 @@
   display:block;
   padding: 4px 6px;
   border-bottom: 1px solid #CCC;
+/*   font-weight:bold; */
 }
 
 .menuSeparator {
@@ -28,7 +29,8 @@
 
 a.actuator {
   background-color: transparent;
-  color: #4B718A;
+/*   color: #4B718A; */
+  color:black; 
   margin: 0px;
   padding: 4px 6px;
   text-decoration: none;
@@ -51,7 +53,8 @@ a.actuator:hover {
 .menu li a {
   background-color: transparent;
   display: block;
-  color: #4B718A;
+/*   color: #4B718A; */
+  color:black;
   font-size: 11px;
   line-height: 1.75em;
   margin: 0px 0px -1px 0px;

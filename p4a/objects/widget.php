@@ -134,6 +134,7 @@
 		{
 			parent::p4a_object($name, $prefix, $id);
 			$this->setProperty('name', $this->getId());
+			$this->setProperty('id', $this->getId());
 		}
 
 		/**

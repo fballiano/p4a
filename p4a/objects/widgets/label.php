@@ -119,9 +119,9 @@
 		{
 			if( $this->isVisible() )
 			{
-				$header	= '<DIV class="label" ';
+				$header	= '<label class="label" ';
 				$close_header = '>';
-				$footer	= '</DIV>'  .  "\n";
+				$footer	= '</label>'  .  "\n";
 				
 				$string =  $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $this->getValue() . $footer;
 				if ($this->getType() === 'temporary') {
