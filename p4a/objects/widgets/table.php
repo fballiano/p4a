@@ -849,7 +849,9 @@
 			$p4a =& P4A::singleton();
 
 			$aReturn = array();
-			$rows = $this->parent->getCurrentPage();
+			$parent =& $p4a->getObject($this->getParentID());
+
+			$rows = $parent->getCurrentPage();
 			$aCols = array();
 			foreach($this->parent->cols as $col_name=>$col)
 			{
@@ -930,27 +932,28 @@
 		 */
 		function &p4a_table_navigation_bar()
 		{
-			parent::p4a_toolbar();
+			parent::p4a_toolbar("table_navigation_bar");
 			$this->setStyleProperty('display', 'block');
 
-			$this->newButton('button_first', 'little_first');
-			$this->buttons['button_first']->addAction('onClick');
-			$this->intercept($this->buttons['button_first'], 'onClick', 'firstOnClick');
+			$this->addButton('button_first', 'little_first');
+			$this->buttons->button_first->addAction('onClick');
+			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
 
-			$this->newButton('button_prev', 'little_prev');
-			$this->buttons['button_prev']->addAction('onClick');
-			$this->intercept($this->buttons['button_prev'], 'onClick', 'prevOnClick');
+			$this->addButton('button_prev', 'little_prev');
+			$this->buttons->button_prev->addAction('onClick');
+			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
 
-			$this->newButton('button_next', 'little_next');
-			$this->buttons['button_next']->addAction('onClick');
-			$this->intercept($this->buttons['button_next'], 'onClick', 'nextOnClick');
+			$this->addButton('button_next', 'little_next');
+			$this->buttons->button_next->addAction('onClick');
+			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
 
-			$this->newButton('button_last', 'little_last');
-			$this->buttons['button_last']->addAction('onClick');
-			$this->intercept($this->buttons['button_last'], 'onClick', 'lastOnClick');
+			$this->addButton('button_last', 'little_last');
+			$this->buttons->button_last->addAction('onClick');
+			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
 
-			$this->addSpace(20);
+			$this->addSpacer(20);
 
+			/*
 			$this->addButton(new p4a_label('current_page'));
 
 			$this->addSpace(20);
@@ -963,6 +966,7 @@
 			$this->newButton('button_go', 'go');
 			$this->buttons['button_go']->addAction('onClick');
 			$this->intercept($this->buttons['button_go'], 'onClick', 'goOnClick');
+			*/
 		}
 
 		function getAsString()
@@ -970,14 +974,14 @@
 			$p4a =& P4A::singleton();
 
 			$this->buttons['field_num_page']->setLabel( $p4a->i18n->messages->get( 'go_to_page' ) );
-			$this->buttons['field_num_page']->setNewValue($this->parent->data_browser->getNumPage());
+			$this->buttons['field_num_page']->setNewValue($this->parent->data->getNumPage());
 			$current_page  = $p4a->i18n->messages->get('current_page');
 			$current_page .= '&nbsp;';
-			$current_page .= $this->parent->data_browser->getNumPage();
+			$current_page .= $this->parent->data->getNumPage();
 			$current_page .= '&nbsp;';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
 			$current_page .= '&nbsp;';
-			$current_page .= $this->parent->data_browser->getNumPages();
+			$current_page .= $this->parent->data->getNumPages();
 			$current_page .= '&nbsp;';
 			$this->buttons['current_page']->setValue($current_page);
 			return parent::getAsString();

@@ -185,12 +185,11 @@
 		 * Istances the widget, sets name and initializes its value.
 		 * @param string				Mnemonic identifier for the object.
 		 * @param string				If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
-		 * @param string				Static ID for the object (if null it's randomly generated
 		 * @access private
 		 */
-		function &p4a_field($name, $add_default_data_field = TRUE, $id = NULL)
+		function &p4a_field($name, $add_default_data_field = TRUE)
 		{
-			parent::p4a_widget($name, 'fld', $id);
+			parent::p4a_widget($name, 'fld');
 
 			$this->setType('text');
 
