@@ -208,31 +208,33 @@
 				// First level menu
 				while($item =& $this->items->nextItem())
 				{
-					$array_item = array();
-					$array_item['label'] = $item->label;
-					if ((! $item->items->getNumItems())) {
-						$array_item['actions'] = $item->composeStringActions();
-					}
-					$array_item['properties'] = $item->composeStringProperties();
-					$array_item['id'] = $item->getId();
-
-					// Second level menu
-					while($sub_item =& $item->items->nextItem())
-					{
-						if ($sub_item->isVisible()) {
-							$array_sub_item = array();
-							$array_sub_item['label'] = $sub_item->label;
-							$array_sub_item['actions'] = $sub_item->composeStringActions();
-							$array_sub_item['properties'] = $sub_item->composeStringProperties();
-							$array_sub_item['id'] = $sub_item->getId();
-
-							$array_item['sub_items'][] = $array_sub_item;
+					if ($item->isVisible()) {
+						$array_item = array();
+						$array_item['label'] = $item->label;
+						if ((! $item->items->getNumItems())) {
+							$array_item['actions'] = $item->composeStringActions();
 						}
-						unset($sub_item);
-					}
+						$array_item['properties'] = $item->composeStringProperties();
+						$array_item['id'] = $item->getId();
 
-					$array_items[] = $array_item;
-					unset($item);
+						// Second level menu
+						while($sub_item =& $item->items->nextItem())
+						{
+							if ($sub_item->isVisible()) {
+								$array_sub_item = array();
+								$array_sub_item['label'] = $sub_item->label;
+								$array_sub_item['actions'] = $sub_item->composeStringActions();
+								$array_sub_item['properties'] = $sub_item->composeStringProperties();
+								$array_sub_item['id'] = $sub_item->getId();
+
+								$array_item['sub_items'][] = $array_sub_item;
+							}
+							unset($sub_item);
+						}
+
+						$array_items[] = $array_item;
+						unset($item);
+					}
 				}
 
 				$this->display('properties', $this->composeStringProperties());
