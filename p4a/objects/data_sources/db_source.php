@@ -1532,7 +1532,7 @@
 				$field_pattern = $aMatches[0][$i];
 				$field_name = $aMatches[1][$i];
 				$replacement = is_null($new_row[$field_name]) ? "NULL" : "'" . addslashes($new_row[$field_name]) . "'";
-  	            $query = str_replace($field_pattern, $replacement, $query)
+  	            $query = str_replace($field_pattern, $replacement, $query);
 			}
 			
 			return $query;
