@@ -352,15 +352,15 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setWidth( $value = NULL, $unit = 'px' )
+		function setWidth($value = NULL, $unit = 'px')
 		{
 			if (is_numeric($value)) {
 				$value = $value . $unit;
 			}
-			if( $value === NULL ) {
-				$this->unsetStyleProperty( 'width' ) ;
+			if ($value === NULL) {
+				$this->unsetStyleProperty('width');
 			} else {
-				$this->setStyleProperty( 'width', $value ) ;
+				$this->setStyleProperty('width', $value);
 			}
 		}
 
@@ -373,7 +373,7 @@
 		 */
 		function getWidth()
 		{
-			return $this->getStyleProperty( 'width' ) ;
+			return $this->getStyleProperty('width');
 		}
 
 		/**
@@ -384,15 +384,15 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setHeight( $value = NULL, $unit = 'px' )
+		function setHeight($value = NULL, $unit = 'px')
 		{
 			if (is_numeric($value)) {
 				$value = $value . $unit;
-			}			
-			if( $value === NULL ) {
-				$this->unsetStyleProperty( 'height' ) ;
+			}
+			if ($value === NULL) {
+				$this->unsetStyleProperty('height');
 			} else {
-				$this->setStyleProperty( 'height', $value . $unit ) ;
+				$this->setStyleProperty('height', $value);
 			}
 		}
 
@@ -404,7 +404,7 @@
 		 */
 		function getHeight()
 		{
-			return $this->getStyleProperty( 'height' ) ;
+			return $this->getStyleProperty('height');
 		}
 
 		/**
@@ -771,7 +771,7 @@
 		{
 			return $this->actionHandler('onChange', $params);
 		}
-		
+
 		function onMouseOver($params = NULL)
 		{
 			return $this->actionHandler('onMouseOver', $params);
