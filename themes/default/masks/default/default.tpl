@@ -96,7 +96,7 @@
 		
 		<!-- SHEET -->
 		<div id="sheetContainer">
-		[[$sheet]]
+		[[$main]]
 		</div>
 
 	</div>
