@@ -74,7 +74,7 @@ function p4a_check_configuration($additionalDir = null)
     if ((is_readable(P4A_UPLOADS_DIR) and
 		is_dir(P4A_UPLOADS_DIR) and
 		is_writable(P4A_UPLOADS_DIR)) or
-		(System::mkDir("-p " . P4A_UPLOADS_DIR))) {
+		(@System::mkDir("-p " . P4A_UPLOADS_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
@@ -87,7 +87,7 @@ function p4a_check_configuration($additionalDir = null)
     if ((is_dir(P4A_UPLOADS_TMP_DIR) and
 		is_readable(P4A_UPLOADS_TMP_DIR) and
 		is_writable(P4A_UPLOADS_TMP_DIR)) or
-		(System::mkDir("-p " . P4A_UPLOADS_TMP_DIR))) {
+		(@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
@@ -103,8 +103,8 @@ function p4a_check_configuration($additionalDir = null)
 		is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and
 		is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and
 		is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) or
-		(System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR) and
-		System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR))) {
+		(@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR) and
+		@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable.";
@@ -115,7 +115,7 @@ function p4a_check_configuration($additionalDir = null)
     // ADDITIONAL DIRECTORY
 	if ($additionalDir) {
 		$error .= "<div class='box'>Checking ADDITIONAL DIRECTORY: ";
-		if ((is_dir($additionalDir) and is_readable($additionalDir) and is_writable($additionalDir)) or (System::mkDir("-p $additionalDir"))) {
+		if ((is_dir($additionalDir) and is_readable($additionalDir) and is_writable($additionalDir)) or (@System::mkDir("-p $additionalDir"))) {
 			$error .= "<span class='green'>OK</span>";
 		} else {
 			$error .= "<span class='red'>FAILED</span><br/>Create \"$additionalDir\" and set it writable.";
@@ -132,7 +132,7 @@ function p4a_check_configuration($additionalDir = null)
     		$error .= "<span class='red'>FAILED</span><br/>Check P4A_DSN definition.";
     		$correct = false ;
     	} else {
-    		$error .= "<span class=green'>OK</span>";
+    		$error .= "<span class='green'>OK</span>";
     	}
     } else {
     	$error .= "P4A_DSN is not defined, no database connection.";
