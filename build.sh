@@ -4,32 +4,17 @@ echo -n "Please, enter P4A version: "
 read VERSION
 
 SRCDIR=`pwd`
+TMPDIR='/tmp'
 
-# going to develop root
-cd ..
+
 
 # preparing creation
-rm -r p4aPackages
-mkdir p4aPackages
-cp -r p4a p4aPackages/
-cd p4aPackages
-
+cd $TMPDIR
+rm -r p4apackages
+mkdir p4apackages
+cp -r p4a p4apackages/
+cd p4apackages
 PKGDIR=`pwd`
-
-#########################
-# DOCBOOK DOCUMENTATION #
-#########################
-
-# generating sigle file for overview
-cd $PKGDIR
-mkdir overview-$VERSION
-cd overview-$VERSION
-mkdir html-singlefile
-cd html-singlefile
-xsltproc -o index.html /usr/share/xml/docbook/html/docbook.xsl ../../p4a/docs/overview/index.xml
-cp -r ../../p4a/docs/overview/images .
-cd ..
-cd ..
 
 ###########################
 # BUILDING CODE REFERENCE #
@@ -47,8 +32,11 @@ phpdoc -q -d 'core/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Co
 cd $PKGDIR
 rm p4a/.project
 rm -r `find -type d -name 'CVS'`
-rm -r p4a/applications/.cvsignore
-rm -r p4a/applications/testing
+rm `find -name '.cvsignore'`
+rm p4a/.project
+rm p4a/p4a.kdevelop
+rm p4a/p4a.kdevses
+rm p4a-$VERSION/build.sh
 
 ##############################################
 # COPYING DEFAULT DOCUMENTATION INTO PACKAGE #
@@ -57,7 +45,6 @@ rm -r p4a/applications/testing
 cd $PKGDIR
 rm -r p4a/docs
 mkdir p4a/docs
-cp -r overview-$VERSION/html-singlefile p4a/docs/overview
 cp -r codereference-$VERSION p4a/docs/code-reference
 
 ##############################
@@ -67,16 +54,8 @@ cp -r codereference-$VERSION p4a/docs/code-reference
 cd $PKGDIR
 cp -r p4a pra-$VERSION
 
-rm p4a-$VERSION/build.sh
-rm -r p4a-$VERSION/groovy-stuff
-
 tar cf p4a-$VERSION.tar p4a-$VERSION
 gzip p4a-$VERSION.tar
-
-tar cf p4a-$VERSION.tar p4a-$VERSION
-bzip2 p4a-$VERSION.tar
-
-zip -rq p4a-$VERSION.zip p4a-$VERSION
 
 rm -r p4a-$VERSION
 

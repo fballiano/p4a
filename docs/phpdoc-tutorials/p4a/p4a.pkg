@@ -33,8 +33,7 @@
 	</para>
 	
 	<para>
-		This 
-		P4A stands for Merlin web application Framework, it is a
+		P4A - PHP For Applications is a
 		framework for building web based applications turning
 		your internet browser in a smart application container.
 	</para>
@@ -43,13 +42,13 @@
 		the code so clean that you would never expect.
 	</para>
 	<para>
-		P4A concept is based upon the want to have a fremework for building of
-		<emphasis>STATEFUL</emphasis> applications without having to take care about
+		P4A concept is based upon the want to have a framework for building of
+		<em>STATEFUL</em> applications without having to take care about
 		state maintenance.
 	</para>
 	<para>
 		Next to this we want a simple but powerful programming interface so P4A
-		is totally <emphasis>EVENT</emphasis> driven. Every P4A object can trigger
+		is totally <em>EVENT</em> driven. Every P4A object can trigger
 		actions on specified event, so you can build a web application in the same way
 		you would have built it in traditional (client) way, and, above all, you will have
 		the same resulting effect.
