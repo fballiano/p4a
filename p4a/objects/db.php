@@ -13,18 +13,14 @@ class P4A_DB
 		static $db;
 		if(!isset($db) or $db == null) {
 			if(defined("P4A_DSN")) {
-				print "ciao0";
-				$db = DB::connect(P4A_DSN);
-				print "ciao1";
+				$db = DB::connect(P4A_DSN, array("debug"=>"5"));
     			if (DB::isError($db)) {
 					$e = new P4A_ERROR('Database connection failed.', $this, $db);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
-				print "ciao2";
     			$db->setFetchMode(DB_FETCHMODE_ASSOC);
-				print "ciao3";
 			} else {
 				$db = null;
 			}

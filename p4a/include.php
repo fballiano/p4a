@@ -48,7 +48,7 @@
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
 	unset($include_path[ $dot_key ]) ;
-	$new_include_path = '.' . _SSS_ . P4A_PROJECT_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/core/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
+	$new_include_path = '.' . _SSS_ . P4A_PROJECT_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
 	
 	//Core
