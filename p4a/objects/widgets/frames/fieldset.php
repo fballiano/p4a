@@ -21,6 +21,10 @@ class P4A_Fieldset extends P4A_Frame
 
 	function getAsString()
 	{
+		if (!$this->isVisible()) {
+			return "";
+		}
+
 		$p4a = P4A::singleton();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
