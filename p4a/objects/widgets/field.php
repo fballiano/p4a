@@ -1055,7 +1055,7 @@
 					$header .= 'disabled="disabled" ';
 				}
 
-				$header		= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+				$header		.= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 				$footer		= '';
 				$sReturn	= $header . $footer;
 			}
