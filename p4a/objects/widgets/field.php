@@ -1132,13 +1132,13 @@
 				$header 		= "<div style='float:left'><input type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
-				if( !$this->isEnabled() ) {
+				if (!$this->isEnabled()) {
 					$header .= 'disabled="disabled" ';
 				}
 
-				$header		   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-				$footer			= '';
-				$sReturn		= $header . $footer;
+				$header		= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+				$footer		= '';
+				$sReturn	= $header . $footer;
 			}
 			else
 			{
@@ -1158,9 +1158,9 @@
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 
 				$sReturn  = '<table class="border_box field">';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(2) . ' bytes</td></tr>';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(3) . '</td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>';
 			}
@@ -1175,7 +1175,7 @@
 		 */
 		function fileDeleteOnClick()
 		{
-			$this->setNewValue(NULL);
+			$this->setNewValue(null);
 		}
 
 		/**
@@ -1275,15 +1275,14 @@
 				$sReturn  = '<table class="border_box field">' ;
 				$sReturn .= '<tr><td colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" border="0" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . '></td></tr>';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(2) . ' bytes</td></tr>';
-				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(3) . '</td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
 
 			return $this->composeLabel() . $sReturn;
-			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
 
 		/**
