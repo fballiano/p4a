@@ -38,99 +38,101 @@
  * @package p4a
  */
 
-function p4a_check_configuration( &$error )
+function p4a_check_configuration(&$error)
 {
     $correct = true;
-    $error = "<center><h2>Application \"" . P4A_APPLICATION_NAME . "\" - Configuration Check</h2></center>\n" ;
+    $title = "Configuration checks for \"" . P4A_APPLICATION_NAME . "\"";
+    $error = "<center><h2>$title</h2></center>\n" ;
 
-    $error .= "<h3>Activities:</h3>\n";
+    $error .= "<h3>ACTIVITIES</h3>\n";
 
     // OPERATING SYSTEM
-    $error .= "Checking SERVER OPERATING SYSTEM: ";
+    $error .= "<div class='box'>Checking SERVER OPERATING SYSTEM:<br/>";
     if( _DS_ == '/' ) {
-    	$error .= "p4a is configured as running on <b>Linux</b>, if your server operatin system is different, than correct P4A_OS and _DS_ definition.";
+    	$error .= "P4A is configured as running on <b>Linux</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
     } else {
-    	$error .= "p4a is configured as running on <b>Windows</b>, if your server operatin system is different, than correct P4A_OS and _DS_ definition.";
+    	$error .= "P4A is configured as running on <b>Windows</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
     }
-    $error .= "<br>\n";
+    $error .= "</div>\n";
 
     // DOCUMENT ROOT
-    $error .= "Checking DOCUMENT_ROOT: ";
+    $error .= "<div class='box'>Checking DOCUMENT_ROOT: ";
     if( strlen( P4A_SERVER_DIR ) == 0 ) {
-    	$error .= "<font color='red'>FAILED</font> (define P4A_SERVER_DIR as your DOCUMENT_ROOT)";
-    	$correct = false ;
+    	$error .= "<span class='red'>FAILED</span><br/>Define P4A_SERVER_DIR as your DOCUMENT_ROOT.";
+    	$correct = false;
     } else {
-    	$error .= "<font color='green'>OK</font>";
+    	$error .= "<span class='green'>OK</span>";
     }
-    $error .= "<br>\n";
+    $error .= "</div>";
 
     // UPLOADS DIRECTORY
-    $error .= "Checking UPLOADS DIRECTORY: ";
+    $error .= "<div class='box'>Checking UPLOADS DIRECTORY: ";
     if( is_readable( P4A_UPLOADS_DIR ) and is_dir( P4A_UPLOADS_DIR ) and is_writable( P4A_UPLOADS_DIR ) ) {
-    	$error .= "<font color='green'>OK</font>";
+    	$error .= "<span class='green'>OK</span>";
     } else {
-    	$error .= "<font color='red'>FAILED</font> (create \"" . P4A_UPLOADS_DIR . "\" and set it writable)";
-    	$correct = false ;
+    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
+    	$correct = false;
     }
-    $error .= "<br>\n";
+    $error .= "</div>";
 
     // UPLOADS TEMPORARY DIRECTORY
-    $error .= "Checking UPLOADS TEMPORARY DIRECTORY: ";
+    $error .= "<div class='box'>Checking UPLOADS TEMPORARY DIRECTORY: ";
     if( is_readable( P4A_UPLOADS_TMP_DIR ) and is_dir( P4A_UPLOADS_TMP_DIR ) and is_writable( P4A_UPLOADS_TMP_DIR ) ) {
-    	$error .= "<font color='green'>OK</font>";
+    	$error .= "<span class='green'>OK</span>";
     } else {
-    	$error .= "<font color='red'>FAILED</font> (create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable)";
-    	$correct = false ;
+    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
+    	$correct = false;
     }
-    $error .= "<br>\n";
+    $error .= "</div>";
 
     // SMARTY COMPILE DIRECTORIES
-    $error .= "Checking SMARTY COMPILE DIRECTORIES: ";
+    $error .= "<div class='box'>Checking SMARTY COMPILE DIRECTORIES: ";
     if( is_dir( P4A_SMARTY_MASK_COMPILE_DIR ) and is_writable( P4A_SMARTY_MASK_COMPILE_DIR ) and is_dir( P4A_SMARTY_WIDGET_COMPILE_DIR ) and is_writable( P4A_SMARTY_WIDGET_COMPILE_DIR ) ) {
-    	$error .= "<font color='green'>OK</font>";
+    	$error .= "<span class='green'>OK</span>";
     } else {
-    	$error .= "<font color='red'>FAILED</font> (create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable)";
+    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable.";
     	$correct = false ;
     }
-    $error .= "<br>\n";
+    $error .= "</div>";
 
     // DATABASE CONNECTION
-    $error .= "Checking DATABASE CONNECTION: ";
-    if( defined( 'P4A_DSN' ) )
+    $error .= "<div class='box'>Checking DATABASE CONNECTION: ";
+    if (defined('P4A_DSN'))
     {
     	$db = DB::connect(P4A_DSN);
     	if (DB::isError($db)) {
-    		$error .= "<font color='red'>FAILED</font> (check P4A_DSN definition)";
+    		$error .= "<span class='red'>FAILED</span><br/>Check P4A_DSN definition.";
     		$correct = false ;
     	}
     	else
     	{
-    		$error .= "<font color='green'>OK</font>";
+    		$error .= "<span class=green'>OK</span>";
     	}
     }
     else
     {
-    	$error .= "P4A_DSN non defined, no database connection.";
+    	$error .= "P4A_DSN is not defined, no database connection.";
     }
-    $error .= "<br>\n";
+    $error .= "</div>";
 
     // REPORT
-    $error .= "<h3>Final report:</h3>\n";
+    $error .= "<h3>FINAL REPORT</h3>\n";
 
     if( $correct )
     {
-    	$error .= "<font size='+1'>Installation and configuration <font color='green' size='+1'>OK</font>.</font><br>\n";
-    	$error .= "<h3>To do:</h3>\n";
-    	$error .= "Now you can safely remove configuration_check() from your application.";
+    	$error .= "<div class='box'>Installation and configuration <span class='green'>OK</span>.</div>";
+    	$error .= "<h3>TO DO</h3>\n";
+    	$error .= "<div class='box'>Now you can safely remove p4a_configuration_check() from your application.</div>";
     }
     else
     {
-    	$error .= "<font size='+1'>Installation and configuration <font color='red'><b>FAILED</b></font>.</font><br>\n";
-    	$error .= "<h3>To do:</h3>\n";
-    	$error .= "Resolve all the problems to continue execution.<br>\n";
+    	$error .= "<div class='box'>Installation and configuration <span class='red'>FAILED</span>.</div>";
+    	$error .= "<h3>TO DO</h3>\n";
+    	$error .= "<div class='box'>Resolve all the problems to continue execution.</div>";
     }
-
-    $error = '<html><head><title>p4a Installation and configuration check</title></head><body>' . $error . '</body></html>';
+	
+	$style = "<style>body {font-family:sans-serif; font-size:90%; color:#111} h1,h2,h3,h4{text-align:center} .box{padding:10px; border:1px solid #111; background-color:#fafafa; margin-bottom:10px;} .red{color:red;font-weight:bold} .green{color:green;font-weight:bold}</style>";
+    $error = "<html><head><title>{$title}</title></head><body>{$style}{$error}</body></html>";
 
     return $correct;
 }
