@@ -55,6 +55,9 @@
 		 */
 		var $_id = NULL;
 		
+		//todo
+		var $_parent_id = NULL;
+		
 		/**
 		 * Object's name
 		 * @access public
@@ -99,9 +102,23 @@
 			$p4a =& P4A::singleton();
 			$this->$name = & new $class($name);
 			$p4a->store($this->$name);
-			$this->_objects[] = $this->$name->getId();
+			$this->_objects[] = $this->$name->getID();
+			$this->$name->setParentID($this->getID());
 			return $this->$name;
 		}
+		
+ 		//todo
+		function setParentID($object_id)
+		{
+			$this->_parent_id = $object_id;
+		}
+		
+		//todo
+		function getParentID()
+		{
+			return $this->_parent_id;
+		}
+		
 		
 		//todo
 		function getId()
@@ -112,23 +129,26 @@
 		/**
 		 * Destroys the object
 		 * Retrieves all children objects and destroy them.
-		 * It is able to check if children object are referenced elesewhere
-		 * in the application, if true the children will not be destroyed.
 		 * @access public
 		 */	
 		 //todo
 		function destroy()
 		{
 			$p4a =& P4A::singleton();
- 			$my_id = $this->_id;
+ 			$parent =& $p4a->getObject($this->getParentID());
 			
+			$this_id = $this->getID();
+			$this_name = $this->getName();
+
 			//todo			
 			foreach($this->_objects as $object_id){
 				$p4a->objects[$object_id]->destroy();
-				unset($p4a->objects[$object_id]);
+//  				unset($p4a->objects[$object_id]);
 			}
+			
 			$this = null;
-			unset($p4a->objects[$my_id]);
+			unset($parent->$this_name);
+			unset($p4a->objects[$this_id]);
 		}
 		
 		
