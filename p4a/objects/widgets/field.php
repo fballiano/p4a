@@ -153,27 +153,6 @@
 		var $upload_subpath = NULL;
 
 		/**
-		 * Tells if table operations are enabled on rich_textarea
-		 * @var boolean
-		 * @access private
-		 */
-		var $table_operations = false;
-
-		/**
-		 * Tells if spell checker is enabled on rich_textarea
-		 * @var boolean
-		 * @access private
-		 */
-		var $spell_checker = false;
-
-		/**
-		 * Tells if contextual menu is enabled on rich_textarea
-		 * @var boolean
-		 * @access private
-		 */
-		var $contextual_menu = false;
-
- 		/**
 		 * Type of encryption to use for password fields
 		 * @var		string
 		 * @access	private
@@ -769,64 +748,7 @@
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('width', $this->getWidth());
 			$this->display('height', $this->getHeight());
-			//$this->display('spell_checker', $this->spell_checker);
-			//$this->display('table_operations', $this->table_operations);
-			//$this->display('contextual_menu', $this->contextual_menu);
 			return $this->fetchTemplate();
-		}
-
-		/**
-		 * Enable table operations on rich_textarea
-		 * @access public
-		 */
-		function enableTableOperations()
-		{
-			$this->table_operations = true;
-		}
-
-		/**
-		 * Disable table operations on rich_textarea
-		 * @access public
-		 */
-		function disableTableOperations()
-		{
-			$this->table_operations = false;
-		}
-
-		/**
-		 * Disable table operations on rich_textarea
-		 * @access public
-		 */
-		function enableSpellChecker()
-		{
-			$this->spell_checker = true;
-		}
-
-		/**
-		 * Disable table operations on rich_textarea
-		 * @access public
-		 */
-		function disableSpellChecker()
-		{
-			$this->spell_checker = false;
-		}
-
-		/**
-		 * Disable contextual menu on rich_textarea
-		 * @access public
-		 */
-		function enableContextualMenu()
-		{
-			$this->contextual_menu = true;
-		}
-
-		/**
-		 * Disable contextual menu on rich_textarea
-		 * @access public
-		 */
-		function disableContextualMenu()
-		{
-			$this->contextual_menu = false;
 		}
 
 		/**
