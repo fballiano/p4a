@@ -1,6 +1,6 @@
----------------------------------------------------
--- MerlinWork, the new generation PHP framework. --
----------------------------------------------------
+---------------------------------
+-- P4A - PHP For Applications. --
+---------------------------------
 
 -----------
 -- Setup --
@@ -10,19 +10,19 @@ Just extract the archive under your web server
 DOCUMENT_ROOT (es:/home/httpd/htdocs).
 
 You should rename the directory
-"MerlinWork-version" to "MerlinWork".
+"p4a-version" to "p4a".
 
 If you want to see the sample project than you
 must install the database with this commands
 (as root/administrator):
 
-	cd /home/httpd/htdocs/MerlinWork
+	cd /home/httpd/htdocs/p4a
 	cd projects/sample
 	mysql < sample.sql
 	
 than open browser and go to:
 
-	http://localhost/MerlinWork/
+	http://localhost/p4a/
 	
 the sample project will start by default.
 
@@ -30,19 +30,19 @@ the sample project will start by default.
 -- Documentation --
 -------------------
 
-All Merlinwork documentation is in "/docs"
-directory under MerlinWork installation.
+All p4a documentation is in "/docs"
+directory under p4a installation.
 
--------------------------------------------
--- MerlinWork compatibility: Server Side --
--------------------------------------------
+------------------------------------
+-- P4A compatibility: Server Side --
+------------------------------------
 
 Linux/Windows
 Apache 1.3.x/2.0.x
 php/mod_php 4.3.x
 	
 ------------------------------------------------
--- MerlinWork compatibility: Workstation Side --
+-- P4A compatibility: Workstation Side --
 ------------------------------------------------
 
 Gecko browsers (Mozilla 1.x, Netscape 6.x, 7.x)
@@ -55,7 +55,7 @@ Any JavaScript 1.2 browser with css/css2 support
 Nescape 4.x is not supported
 
 -------------------------------------------
--- MerlinWork compatibility: Mobile Side --
+-- P4A compatibility: Mobile Side --
 -------------------------------------------
 
 coming soon.
@@ -64,13 +64,13 @@ coming soon.
 -- General Notes --
 -------------------
 
-MerlinWork automatically disable magic_quotes_runtime
+P4A automatically disable magic_quotes_runtime
 and magic_quotes_sybase, setting their value to the
 PHP default.
 magic_quotes_gpc must be Off (PHP default).
 
 You can't switch between two project with the same
-MERLIN_PROJECT_NAME under the same virtual host
+P4A_PROJECT_NAME under the same virtual host
 without closing the browser.
 
 -----------------------------------------------
@@ -99,17 +99,17 @@ at least perl 5.6.1.
 -- Notes on Opera --
 --------------------
 
-MerlinWork default theme does not seem to be
+P4A default theme does not seem to be
 compatible with Opera, because of the heavy
 CSS2 utilization.
 Maybe there will be a simpler theme for all
 browser that cannot support CSS2.
 
-MerlinWork fields use "div" tags for a nice
+P4A fields use "div" tags for a nice
 alignment, Opera does not seem to understand this
 structure and...
 
-MerlinWork default menu ("drop_down") 
+P4A default menu ("drop_down") 
 will not run on Opera 6.x, but only on Opera 7.x.
 If Opera 7.x cannot be installed than use differt menu
 style such as "tabbed" or "tabbed_rounded".
@@ -134,3 +134,4 @@ Joosep-Georg Järvemaa <georg@linux.ee>
 Christian G. Warden <cwarden@xerus.org>
 Juan Manuel Font Gutiérrez <juanmafont@telefonica.net>
 Julian Shen <julian_shen@users.sourceforge.net>
+Andriy Olischuk <biznw@km.ru>
