@@ -617,25 +617,27 @@
 		{
 			unset( $this->data ) ;
 			$this->data =& $data_source;
+			$pk = $this->data->getPk();
 
-			if( $this->data->getPk() !== NULL )
-			{
-				if( $this->getSourceValueField() === NULL )
-				{
-					$this->setSourceValueField( $this->data->pk ) ;
+			if ($pk !== NULL) {
+				if( $this->getSourceValueField() === NULL ) {
+					if (is_array($pk)) {
+						error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
+					} else {
+						$this->setSourceValueField($pk) ;
+					}
 				}
 
-				if( $this->getSourceDescriptionField() === NULL )
-				{
-					$aFields = $this->data->getFields() ;
+				if ($this->getSourceDescriptionField() === NULL) {
+					$source_value = $this->getSourceValueField();
+					$names = $this->data->fields->getNames();
 
-					$iDescriptionFieldIndex = 0 ;
-
-					if( ( sizeof( $aFields ) > 1 ) and ( $aFields[0] == $this->data->pk ) ) {
-						$iDescriptionFieldIndex = 1 ;
+					foreach ($names as $name) {
+						if ($name != $source_value) {
+							$this->setSourceDescriptionField($name) ;
+							break;
+						}
 					}
-
-					$this->setSourceDescriptionField( $aFields[ $iDescriptionFieldIndex ] ) ;
 				}
 			}
 		}
@@ -692,9 +694,9 @@
 		 */
 		function getDescription($value)
 		{
-			if (! $this->data){
+			if (!$this->data) {
 				return $value;
-			}else{
+			} else {
 				$row = $this->data->getPkRow($value);
 				if (is_array($row)){
 					return $row[$this->data_description_field];
