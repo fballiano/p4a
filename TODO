@@ -1,4 +1,6 @@
-- calendar CSS needs a fix for mozilla!!!
+- add and test rich_textarea spell check
+- add and test rich_textarea file upload
+- calendar CSS needs a small fix for mozilla
 - check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds
 - change P4A_Label HTML layout
