@@ -108,7 +108,6 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 				visibility:hidden;
 	      }
 	  }
-
     </style>
   </head>
 

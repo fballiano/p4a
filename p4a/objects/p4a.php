@@ -136,7 +136,22 @@
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
+
+			if ($this->isInternetExplorer()) {
+				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
+			}
+
 			$this->init();
+		}
+
+		function isInternetExplorer()
+		{
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') and
+				!strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
+				return true;
+			}
+
+			return false;
 		}
 
 		function &singleton($class_name = "p4a")
