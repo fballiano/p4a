@@ -1,27 +1,52 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="4" >
+ <DocsAndViews NumberOfDocuments="9" >
   <Doc0 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/data_sources/db_source.php" >
-   <View0 line="398" Type="???" >
-    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+   <View0 line="341" Type="???" >
+    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="654" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widget.php" >
-   <View0 line="339" Type="???" >
-    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+  <Doc1 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/masks/default/default.tpl" >
+   <View0 line="23" Type="???" >
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="641" Left="2" MinMaxMode="0" />
    </View0>
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/applications/mysql_manager/objects/mysql_manager.php" >
-   <View0 line="8" Type="???" >
-    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+  <Doc2 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/mask.php" >
+   <View0 line="200" Type="???" >
+    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="641" Left="2" MinMaxMode="0" />
    </View0>
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/applications/mysql_manager/objects/masks/auto_mask.php" >
-   <View0 line="32" Type="???" >
-    <AdditionalSettings Top="2" Width="662" Attach="1" Height="365" Left="2" MinMaxMode="0" />
+  <Doc3 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/config.php" >
+   <View0 line="107" Type="???" >
+    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="641" Left="2" MinMaxMode="0" />
    </View0>
   </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/screen.css" >
+   <View0 line="27" Type="???" >
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/js/pngfix.js" >
+   <View0 line="33" Type="???" >
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/toolbar.php" >
+   <View0 line="103" Type="???" >
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc6>
+  <Doc7 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/button.php" >
+   <View0 line="159" Type="???" >
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/icon.php" >
+   <View0 line="16" Type="???" >
+    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc8>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
