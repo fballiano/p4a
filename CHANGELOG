@@ -1,4 +1,5 @@
 0.15
+- now p4a_message can handle messages without icons
 - some language fixes in the "products_catalogue" application
 
 0.14

@@ -66,11 +66,16 @@
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
 				$value = $this->getValue();
+				$icon = $this->getIcon();
 				$size = $this->getSize();
 				$margin = $size + 5;
 
 				$string  = "<dl class='message' $properties $actions>\n";
-				$string .= "<dt><img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' style='width='$size' height='$size' /></dt>\n";
+				$string .= "<dt>";
+				if (!empty($icon)) {
+					$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' />";
+				}
+				$string .= "</dt>\n";
 				$string .= "<dd>$value</dd>\n";
 				$string .= "</dl>\n\n";
 			} else {
