@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Guess.php,v 1.3.6.8 2003/07/08 20:39:46 pajoye Exp $
+// $Id: Guess.php,v 1.3.6.10 2003/10/24 05:34:16 cellog Exp $
 
 // {{{ uname examples
 
@@ -167,7 +167,7 @@ class OS_Guess
         $cpp = popen("/usr/bin/cpp $tmpfile", "r");
         $major = $minor = 0;
         while ($line = fgets($cpp, 1024)) {
-            if ($line{0} == '#') {
+            if ($line{0} == '#' || trim($line) == '') {
                 continue;
             }
             if (list($major, $minor) = explode(' ', trim($line))) {
@@ -176,7 +176,7 @@ class OS_Guess
         }
         pclose($cpp);
         unlink($tmpfile);
-        if (!($major && $minor) && file_exists('/lib/libc.so.6')) {
+        if (!($major && $minor) && is_link('/lib/libc.so.6')) {
             // Let's try reading the libc.so.6 symlink
             if (ereg('^libc-([.*])\.so$', basename(readlink('/lib/libc.so.6')), $matches)) {
                 list($major, $minor) = explode('.', $matches);

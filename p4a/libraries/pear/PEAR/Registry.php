@@ -18,7 +18,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Registry.php,v 1.35.2.12 2003/08/06 01:58:30 cox Exp $
+// $Id: Registry.php,v 1.35.2.14 2003/10/20 15:51:44 cox Exp $
 
 /*
 TODO:
@@ -276,7 +276,7 @@ class PEAR_Registry extends PEAR
             }
             $open_mode = 'w';
             // XXX People reported problems with LOCK_SH and 'w'
-            if ($mode === LOCK_SH) {
+            if ($mode === LOCK_SH || $mode === LOCK_UN) {
                 if (@!is_file($this->lockfile)) {
                     touch($this->lockfile);
                 }

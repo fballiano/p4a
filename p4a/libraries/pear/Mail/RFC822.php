@@ -52,7 +52,7 @@
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.2 $
+* @version $Revision: 1.7 $
 * @license BSD
 * @package Mail
 */
@@ -186,8 +186,7 @@ class Mail_RFC822 {
         }
         
         if ($this->address === false || isset($this->error)) {
-            require_once 'PEAR.php';
-            return PEAR::raiseError($this->error);
+            return $this->raiseError($this->error);
         }
 
         // Loop through all the addresses
@@ -195,8 +194,7 @@ class Mail_RFC822 {
 
             if (($return = $this->_validateAddress($this->addresses[$i])) === false
                 || isset($this->error)) {
-                require_once 'PEAR.php';
-                return PEAR::raiseError($this->error);
+                return $this->raiseError($this->error);
             }
             
             if (!$this->nestGroups) {
@@ -597,7 +595,6 @@ class Mail_RFC822 {
         // A couple of defaults.
         $phrase  = '';
         $comment = '';
-        $comments = array();
 
         // Catch any RFC822 comments and store them separately
         $_mailbox = $mailbox;
@@ -618,10 +615,9 @@ class Mail_RFC822 {
             }
         }
 
-        foreach ($comments as $comment) {
-            $mailbox = str_replace("($comment)", '', $mailbox);
+        for($i=0; $i<count(@$comments); $i++){
+            $mailbox = str_replace('('.$comments[$i].')', '', $mailbox);
         }
-
         $mailbox = trim($mailbox);
 
         // Check for name + route-addr

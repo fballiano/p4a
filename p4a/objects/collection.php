@@ -1,9 +1,9 @@
 <?php
 //todo
-class P4A_Collection extends P4A_Object
+class P4A_COLLECTION extends P4A_Object
 {
 	var $_pointer = 0;
-	function &P4A_Collection($name = null)
+	function &p4a_collection($name = null)
 	{
 		parent::P4AObject($name);
 	}

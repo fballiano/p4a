@@ -111,17 +111,18 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
 	
 	//We can have more projects on same site and same browser instance
+	
 	session_name('sn_' . preg_replace('~\W~', '_', P4A_PROJECT_NAME) . '_includes');
 	
 	//Projects Objects Includes
 	session_start();
-	if (! array_key_exists('P4A_INCLUDES', $_SESSION))
-	{
+	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
 		$objects_dir = P4A_PROJECT_DIR . '/objects';
 		$_SESSION['P4A_INCLUDES'] = array();
 		include_p4a_objects($objects_dir);
 	}
-	foreach($_SESSION['P4A_INCLUDES'] as $include_file){
+	
+	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {
 		require_once($include_file);
 	}
 	session_write_close();

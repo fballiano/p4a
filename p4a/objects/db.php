@@ -11,18 +11,21 @@ class P4A_DB
 	function &singleton()
   	{
 		static $db;
-		if(!isset($db) or $db == null){
-			if(defined("P4A_DSN")){
+		if(!isset($db) or $db == null) {
+			if(defined("P4A_DSN")) {
+				print "ciao0";
 				$db = DB::connect(P4A_DSN);
-    			if (DB::isError($db)){
-					print_r($db);
+				print "ciao1";
+    			if (DB::isError($db)) {
 					$e = new P4A_ERROR('Database connection failed.', $this, $db);
-    				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED ){
+    				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
+				print "ciao2";
     			$db->setFetchMode(DB_FETCHMODE_ASSOC);
-			}else{
+				print "ciao3";
+			} else {
 				$db = null;
 			}
 		}
@@ -47,7 +50,7 @@ class P4A_DB
 	function close()
 	{
 		$db = P4A_DB::singleton();
-		if(is_object($db)){
+		if(is_object($db)) {
 			$db->disconnect();
 		}
 	}

@@ -1,7 +1,7 @@
 <?php
 // by Edd Dumbill (C) 1999-2001
 // <edd@usefulinc.com>
-// $Id: RPC.php,v 1.2 2003/10/23 09:28:42 balliano Exp $
+// $Id: RPC.php,v 1.11 2002/10/02 21:10:19 ssb Exp $
 
 // License is granted to use or modify this software ("XML-RPC for PHP")
 // for commercial or non-commercial use provided the copyright of the author

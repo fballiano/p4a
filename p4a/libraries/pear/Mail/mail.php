@@ -16,7 +16,7 @@
 // | Author: Chuck Hagenbuch <chuck@horde.org>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: mail.php,v 1.2 2003/10/23 09:28:42 balliano Exp $
+// $Id: mail.php,v 1.4 2003/06/20 05:08:03 jon Exp $
 
 require_once 'Mail.php';
 
@@ -24,7 +24,7 @@ require_once 'Mail.php';
  * internal PHP-mail() implementation of the PEAR Mail:: interface.
  * @access public
  * @package Mail
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.4 $
  */
  
 class Mail_mail extends Mail
@@ -63,7 +63,7 @@ class Mail_mail extends Mail
          * arguments, we can't guarantee the use of the standard "\r\n"
          * separator.  Instead, we use the system's native line separator.
          */
-        $this->sep = (strstr(PHP_OS, 'WIN')) ? "\r\n" : "\n";
+        $this->sep = OS_WINDOWS ? "\r\n" : "\n";
     }
 
 	/**

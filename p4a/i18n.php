@@ -138,7 +138,7 @@
 		 */
 		function &p4a_i18n($locale = P4A_LOCALE)
 		{
-			$this->setLocale( $locale ) ;
+			$this->setLocale($locale);
 		}
 		
 		/**

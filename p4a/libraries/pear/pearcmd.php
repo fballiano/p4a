@@ -18,14 +18,14 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: pearcmd.php,v 1.1.2.5 2003/08/06 01:58:30 cox Exp $
+// $Id: pearcmd.php,v 1.1.2.7 2003/10/20 15:51:46 cox Exp $
 
 ob_end_clean();
 /**
  * @nodep Gtk
  */
-if ('/usr/lib/php' != '@'.'include_path'.'@') {
-    ini_set('include_path', '/usr/lib/php');
+if ('/usr/share/php' != '@'.'include_path'.'@') {
+    ini_set('include_path', '/usr/share/php');
 }
 ini_set('allow_url_fopen', true);
 set_time_limit(0);
@@ -36,7 +36,7 @@ ini_set('magic_quotes_runtime', false);
 error_reporting(E_ALL & ~E_NOTICE);
 set_error_handler('error_handler');
 
-$pear_package_version = "1.2.1";
+$pear_package_version = "1.3b3";
 
 require_once 'PEAR.php';
 require_once 'PEAR/Config.php';

@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@fast.no>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: Parser.php,v 1.2 2003/10/23 09:28:42 balliano Exp $
+// $Id: Parser.php,v 1.5 2003/02/23 10:48:31 ssb Exp $
 
 require_once 'PEAR.php';
 

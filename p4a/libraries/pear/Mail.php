@@ -16,7 +16,7 @@
 // | Author: Chuck Hagenbuch <chuck@horde.org>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: Mail.php,v 1.2 2003/10/23 09:28:41 balliano Exp $
+// $Id: Mail.php,v 1.6 2003/06/26 07:05:36 jon Exp $
 
 require_once 'PEAR.php';
 
@@ -26,7 +26,7 @@ require_once 'PEAR.php';
  * useful in multiple mailer backends.
  *
  * @access public
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.6 $
  * @package Mail
  */
 class Mail

@@ -130,7 +130,7 @@
 		 * itself into p4a application.
 		 * @param string Object name (identifier).
 		 */
-		function &P4A_Mask($name = null)
+		function &p4a_mask($name = null)
 		{
 			//todo controllare
 			if ($name==null){
@@ -139,7 +139,7 @@
 			parent::p4aObject($name, 'ma');
 
 			//todo
-			$this->build("P4A_Collection", "fields");
+			$this->build("p4a_collection", "fields");
 
             $this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');
@@ -317,18 +317,19 @@
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
 			$this->smarty->assign('css', $p4a->css);
+			
 			if(isset($this->focus_object) and is_object($this->focus_object)){
  				$this->smarty->assign('focus_id', $this->focus_object->getID());
 			}
 
 			$this->smarty->assign('application_title', $p4a->getTitle());
-// 			$this->smarty->assign('sheet', $this->sheet->getAsString());
 
 			foreach($this->smarty_var as $key=>$value)
 			{
 				if (is_object($value)){
 					$value = $value->getAsString();
 				}
+				
 				$this->smarty->assign($key, $value);
 			}
 

@@ -60,28 +60,4 @@
 	//We're going to instance new application if it's not already instanced.
 	session_id(session_id() . 'p4a');
 	session_start();
-// 	if ( !array_key_exists( 'p4a', $_SESSION ) )
-// 	{
-// 		$p4a = new P4A();
-// 
-// 		$action_handler = new global_listener();
-// 		$action_handler->p4a =& $p4a ;
-// 		$p4a->listener =& $action_handler; 
-// 		$action_handler->intercept($p4a, 'init', 'init');
-// 		$action_handler->intercept($p4a, 'main', 'main');
-// 		$p4a->init();
-// 
-// 		$_SESSION['p4a'] = $p4a;
-// 	}
-// 	else
-// 	{
-// 		$p4a = $_SESSION['p4a'];
-// 		
-// 		// This is not so nice but it seems that 
-// 		// PHP session module desn't support referenced ojbect.
-// 		$p4a =& $p4a->listener->p4a;
-// 	}
-// 	
-// 	$p4a->main();
-		
 ?>

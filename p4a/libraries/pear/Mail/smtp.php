@@ -24,7 +24,7 @@ require_once 'Mail.php';
  * Net_SMTP:: class.
  * @access public
  * @package Mail
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.10 $
  */
 class Mail_smtp extends Mail {
 
@@ -66,14 +66,6 @@ class Mail_smtp extends Mail {
     var $password = '';
 
     /**
-     * Hostname or domain that will be sent to the remote SMTP server in the
-     * HELO / EHLO message.
-     *
-     * @var string
-     */
-    var $localhost = 'localhost';
-
-    /**
      * Constructor.
      *
      * Instantiates a new Mail_smtp:: object based on the parameters
@@ -83,7 +75,6 @@ class Mail_smtp extends Mail {
      *     auth        SMTP authentication.  Defaults to none.
      *     username    The username to use for SMTP auth. No default.
      *     password    The password to use for SMTP auth. No default.
-     *     localhost   The local hostname / domain. Defaults to localhost.
      *
      * If a parameter is present in the $params array, it replaces the
      * default.
@@ -99,7 +90,6 @@ class Mail_smtp extends Mail {
         if (isset($params['auth'])) $this->auth = $params['auth'];
         if (isset($params['username'])) $this->username = $params['username'];
         if (isset($params['password'])) $this->password = $params['password'];
-        if (isset($params['localhost'])) $this->localhost = $params['localhost'];
     }
 
     /**
@@ -130,14 +120,8 @@ class Mail_smtp extends Mail {
     {
         include_once 'Net/SMTP.php';
 
-        if (!($smtp = new Net_SMTP($this->host, $this->port, $this->localhost))) {
-            return new PEAR_Error('unable to instantiate Net_SMTP object');
-        }
-
-        if (PEAR::isError($smtp->connect())) {
-            return new PEAR_Error('unable to connect to smtp server ' .
-                                  $this->host . ':' . $this->port);
-        }
+        if (!($smtp = new Net_SMTP($this->host, $this->port))) { return new PEAR_Error('unable to instantiate Net_SMTP object'); }
+        if (PEAR::isError($smtp->connect())) { return new PEAR_Error('unable to connect to smtp server ' . $this->host . ':' . $this->port); }
 
         if ($this->auth) {
             $method = is_string($this->auth) ? $this->auth : '';
@@ -163,21 +147,14 @@ class Mail_smtp extends Mail {
             return new PEAR_Error('No from address given');
         }
 
-        if (PEAR::isError($smtp->mailFrom($from))) {
-            return new PEAR_Error('unable to set sender to [' . $from . ']');
-        }
+        if (PEAR::isError($smtp->mailFrom($from))) { return new PEAR_Error('unable to set sender to [' . $from . ']'); }
 
         $recipients = $this->parseRecipients($recipients);
         foreach($recipients as $recipient) {
-            if (PEAR::isError($res = $smtp->rcptTo($recipient))) {
-                return new PEAR_Error('unable to add recipient [' .
-                                      $recipient . ']: ' . $res->getMessage());
-            }
+            if (PEAR::isError($res = $smtp->rcptTo($recipient))) { return new PEAR_Error('unable to add recipient [' . $recipient . ']: ' . $res->getMessage()); }
         }
 
-        if (PEAR::isError($smtp->data($text_headers . "\r\n" . $body))) {
-            return new PEAR_Error('unable to send data');
-        }
+        if (PEAR::isError($smtp->data($text_headers . "\r\n" . $body))) { return new PEAR_Error('unable to send data'); }
 
         $smtp->disconnect();
         return true;

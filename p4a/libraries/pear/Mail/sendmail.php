@@ -22,7 +22,7 @@ require_once 'Mail.php';
  * Sendmail implementation of the PEAR Mail:: interface.
  * @access public
  * @package Mail
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 class Mail_sendmail extends Mail {
     
@@ -68,7 +68,7 @@ class Mail_sendmail extends Mail {
          * the commandline, we can't guarantee the use of the standard "\r\n"
          * separator.  Instead, we use the system's native line separator.
          */
-        $this->sep = (strstr(PHP_OS, 'WIN')) ? "\r\n" : "\n";
+        $this->sep = OS_WINDOWS ? "\r\n" : "\n";
     }
     
 	/**
