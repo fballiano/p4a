@@ -4,7 +4,6 @@
     <meta http-equiv="content-type" content="text/html; charset=[[$charset]]">
     <title>[[$application_title]]</title>
     <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="screen">
-	<link href="[[$theme_path]]/userChrome.css" rel="stylesheet" type="text/css" media="screen">
     <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
     [[foreach from=$css key=uri item=media ]]
     <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">
