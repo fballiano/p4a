@@ -1,3 +1,4 @@
+- Add: de_DE locale (Thanks to Robert Petersen)
 - Add: ro_RO locale (Thanks to Victor Vernescu)
 - Add: ru_RU locale (Thanks to Andriy Olischuk)
 - Change: P4A_PROJECT_PATH is now by default equal to SCRIPT_NAME, so it's possible to pass data to a p4a application in the script call
