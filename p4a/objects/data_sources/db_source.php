@@ -1531,7 +1531,8 @@
 			{
 				$field_pattern = $aMatches[0][$i];
 				$field_name = $aMatches[1][$i];
-				$query = str_replace($field_pattern, "'" . addslashes($new_row[$field_name]) . "'", $query) ;
+				$replacement = is_null($new_row[$field_name]) ? "NULL" : "'" . addslashes($new_row[$field_name]) . "'";
+  	            $query = str_replace($field_pattern, $replacement, $query)
 			}
 			
 			return $query;
