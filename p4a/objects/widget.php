@@ -546,8 +546,7 @@
 		function composeStringProperties()
 		{
 			$sReturn = "";
-			foreach($this->properties as $property_name=>$property_value)
-			{
+			foreach ($this->properties as $property_name=>$property_value) {
 				$sReturn .= $property_name . '="' . $property_value . '" ' ;
 			}
 

@@ -723,7 +723,7 @@
 		 */
 		function getAsPassword()
 		{
-			$header 		= '<INPUT TYPE="password" class="border_color1 font_normal" ';
+			$header 		= '<input type="password" class="border_color1 font_normal field" ';
 			$close_header 	= '/>';
 
 			if( !$this->isEnabled() ) {
@@ -940,7 +940,73 @@
 			}
 
 			return $this->composeLabel() . $header . $footer ;
-			return $this->composeLabel() . '</td><td>' .  $header . $footer ;
+		}
+		
+		function getAsMultiselect()
+		{
+			$p4a =& P4A::singleton();
+						
+			$properties =& $this->composeStringProperties();
+			$actions =& $this->composeStringActions();
+			
+			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
+			$sReturn .= "<select multiple='multiple' ";
+			foreach($this->properties as $property_name=>$property_value){
+				if ($property_name == "name") {
+					$property_value .= '[]';
+				}
+				$sReturn .= $property_name . '="' . $property_value . '" ' ;
+			}
+			$sReturn .= "$actions>";
+			
+			$external_data		= $this->data->getAll() ;
+			$value_field		= $this->getSourceValueField() ;
+			$description_field	= $this->getSourceDescriptionField() ;
+			$new_value			= $this->getNewValue() ;
+
+			foreach( $external_data as $key=>$current )
+			{
+				if (!$new_value) {
+					$new_value = array();
+				}
+				if (in_array($current[$value_field],$new_value)) {
+					$selected = "selected";
+				} else {
+					$selected = "";
+				}
+
+				$sReturn .= "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
+				$sReturn .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
+				$sReturn .= "</option>";
+
+			}
+			$sReturn .= "</select>";
+			
+			return $this->composeLabel() . $sReturn ;
+		}			
+		
+		function getAsMulticheckbox()
+		{
+			$p4a =& P4A::singleton();
+						
+			$properties =& $this->composeStringProperties();
+			$actions =& $this->composeStringActions();
+			
+			$sReturn .= "<input type='hidden' name='".$this->getID()."' value='' />";
+			$sReturn .= "<div>";
+			$sReturn .= "<select multiple='multiple' ";
+			foreach($this->properties as $property_name=>$property_value){
+				if ($property_name == "name") {
+					$property_value .= '[]';
+				}
+				$sReturn .= $property_name . '="' . $property_value . '" ' ;
+			}
+			$sReturn .= "$actions>";
+			
+			$external_data		= $this->data->getAll();
+			$value_field		= $this->getSourceValueField();
+			$description_field	= $this->getSourceDescriptionField();
+			$new_value			= $this->getNewValue();		
 		}
 
 		/**
@@ -1326,10 +1392,15 @@
 		 */
 		function composeStringValue()
 		{
+			$value = $this->getNewValue();
+			
+			if (is_array($value)) {
+				$value = join($value, ",");
+			}
 			if ($this->type == 'text' or $this->type == 'hidden' or $this->type == 'hidden' or $this->type == 'date') {
-				return 'value="' . htmlspecialchars($this->getNewValue()) . '" ';
+				return 'value="' . htmlspecialchars($value) . '" ';
 			} elseif($this->type == 'textarea' or $this->type == 'rich_textarea' or $this->type == 'label') {
-				return $this->getNewValue();
+				return $value;
 			}
 		}
 	}
