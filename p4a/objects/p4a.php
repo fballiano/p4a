@@ -120,14 +120,14 @@
 		 * @access private
 		 */
 		var $css = array();
-		
+
 		/**
 		 * Is the browser a handheld?
 		 * @var boolean
 		 * @access private
 		 */
 		var $handheld = false;
-		
+
 		/**
 		 * Is the browser Internet Explorer?
 		 * @var boolean
@@ -143,7 +143,7 @@
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
-			
+
 			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
 			$client =& new phpSniff();
 
@@ -151,12 +151,12 @@
 			$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
 			$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
 			$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
-			
+
 			if ($client->browser_is('ie')) {
 				$this->internet_explorer = true;
 				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
 			}
-			
+
 			if (!$client->has_feature('css2')) {
 				$this->handheld = true;
 				$this->css = array();
@@ -170,7 +170,7 @@
 		{
 			return $this->internet_explorer;
 		}
-		
+
 		function isHandheld()
 		{
 			return $this->handheld;
@@ -394,6 +394,19 @@
 	     	if (sizeof($this->masks_history) > 0){
 				$mask_name = array_pop($this->masks_history);
 				$this->setActiveMask($mask_name);
+	     	}
+	     }
+
+		 /**
+		 * Gets an instance of the previous mask
+		 * @access public
+		 */
+	     function &getPrevMask()
+	     {
+		 	$num_masks = sizeof($this->masks_history);
+	     	if ($num_masks > 0){
+				$mask_name = $this->masks_history[$num_masks-1];
+				return $this->masks->$mask_name;
 	     	}
 	     }
 

@@ -46,13 +46,6 @@
 	 */
 	class P4A_Mask extends P4A_Object
 	{
-		/**
-		 * The mask that called the current mask.
-		 * @var mask
-		 * @access public
-		 */
-       	var $prev_mask = NULL;
-
        	/**
 		 * The mask's data source.
 		 * @var mixed
@@ -195,6 +188,16 @@
 		{
 			$p4a =& P4A::singleton();
 			$p4a->showPrevMask();
+		}
+
+		/**
+		 * Get the caller mask.
+		 * @access public
+		 */
+		function &getPrevMask()
+		{
+			$p4a =& P4A::singleton();
+			return $p4a->getPrevMask();
 		}
 
 		/**
