@@ -31,7 +31,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
 			and is_dir($docs_dir . $filename))
 		{
 			
-			print "<li><a href='docs/$filename/' target='_blank'>{$filename}</a></li>\n";		
+			print "<li><a href='docs/$filename/'>{$filename}</a></li>\n";		
 		}
 
 	}
@@ -51,7 +51,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
 			and is_dir($projects_dir . $filename))
 		{
 			
-			print "<li><a href='applications/$filename/' target='_blank'>{$filename}</a></li>\n";		
+			print "<li><a href='applications/$filename/'>{$filename}</a></li>\n";
 		}
 
 	}
