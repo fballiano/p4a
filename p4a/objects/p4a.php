@@ -179,7 +179,7 @@
 		{
 			$this->timer = array();
 			$this->timer[0]['description'] = 'START';
-			$this->timer[0]['value'] = get_microtime();
+			$this->timer[0]['value'] = P4A_Get_Microtime();
 			$this->timer[0]['diff'] = 0;
 		}
 
@@ -192,8 +192,8 @@
 		{
 			$num_record = count($this->timer);
 			$this->timer[$num_record]['description'] = $description;
-			$this->timer[$num_record]['value'] = get_microtime();
-			$this->timer[$num_record]['diff'] = $this->timer[$num_record - 1]['diff'] + (get_microtime() - $this->timer[$num_record - 1]['value']);
+			$this->timer[$num_record]['value'] = P4A_Get_Microtime();
+			$this->timer[$num_record]['diff'] = $this->timer[$num_record - 1]['diff'] + (P4A_Get_Microtime() - $this->timer[$num_record - 1]['value']);
 		}
 
 		/**
@@ -273,7 +273,7 @@
 				foreach($_FILES as $key=>$value)
 				{
 					$value['name'] = str_replace( ',', ';', $value['name'] );
-					$value['name'] = get_unique_file_name( $value['name'], P4A_UPLOADS_TMP_DIR );
+					$value['name'] = P4A_Get_Unique_File_Name( $value['name'], P4A_UPLOADS_TMP_DIR );
 					move_uploaded_file( $value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name'] );
 					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'] ;
 

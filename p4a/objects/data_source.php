@@ -198,7 +198,7 @@ class P4A_Data_Source extends P4A_Object
 			}
 			return $return;
 		} else {
-			error("NO PK");
+			P4A_Error("NO PK");
 		}
 	}
 
@@ -206,40 +206,40 @@ class P4A_Data_Source extends P4A_Object
 	{
 		return;
 	}
-	
+
 	function getAsCSV($separator = ',')
 	{
 		$csv = "";
 		$rows = $this->getAll();
-		
+
 		foreach ($rows as $row) {
 			$strrow = "";
 			foreach ($row as $col) {
  				$col = str_replace("\n","",$col);
  				$col = str_replace("\r","",$col);
-				$strrow .= '"' . str_replace('"','""',$col) . "\"{$separator}";	
+				$strrow .= '"' . str_replace('"','""',$col) . "\"{$separator}";
 			}
 			$csv .= substr($strrow,0,-1) . "\n";
-		}		
+		}
 		return 	$csv;
 	}
-	
+
 	function exportToCSV($filename = "", $separator = ',')
 	{
 		$p4a =& P4A::singleton();
-		
+
 		if (!strlen($filename)) {
 			$filename = $this->getName() . ".csv";
 		}
-			
+
 		$output = $this->getAsCSV();
 
 		header("Cache-control: private");
 		header("Content-Type: text/comma-separated-values; charset=" . $p4a->i18n->getCharset());
- 
+
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Content-Length: " . strlen($output));
-		echo $output;	
+		echo $output;
 	}
 }
 ?>

@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -55,49 +55,49 @@
 		 * @access public
 		 */
 		var $sheets = array();
-		
+
 		/**
 		 * Here we store all labels (with the same name of the sheet).
 		 * @var array
 		 * @access public
 		 */
 		var $labels = array();
-		
+
 		/**
 		 * Maps sheet_name=>position
 		 * @var array
 		 * @access private
 		 */
 		var $sheets_map = array();
-		
+
 		/**
 		 * Maps position=>sheet_name
 		 * @var array
 		 * @access private
 		 */
 		var $positions_map = array();
-		
+
 		/**
 		 * Currently shown sheet.
 		 * @var array
 		 * @access private
 		 */
 		var $active_sheet = NULL;
-		
+
 		/**
 		 * Sheets navigation bar.
 		 * @var array
 		 * @access private
 		 */
 		var $navigation_bar = NULL;
-		
+
 		/**
 		 * Sheets type.
 		 * @var string
 		 * @access private
 		 */
 		var $type = 'normal';
-		
+
 		/**
 		 * Class constructor.
 		 * Sets default template and instances the sheet navigation bar.
@@ -110,7 +110,7 @@
 			$this->useTemplate( 'sheets_group_gray' );
 			$this->build("p4a_sheets_group_navigation_bar", "sheets_group_navigation_bar");
 		}
-		
+
 		/**
 		 * Adds a sheet to the group.
 		 * Creates a clickable label for sheet switching.<br>
@@ -123,20 +123,20 @@
 		{
 			$this->sheets->$name =& $sheet;
 			$this->setPosition( $sheet->getName(), $position );
-			
+
 			$this->labels->build("P4A_Link", $name);
 			$this->labels->{$sheet->getName()}->setValue($sheet->getLabel());
-			
+
 			$this->intercept($sheet, 'set_label', 'setSheetLabel');
 			$this->labels->{$sheet->getName()}->addAction('onClick');
  			$this->intercept($this->labels->{$sheet->getName()}, 'onClick', 'labelsOnClick');
-			
+
 			if( $this->active_sheet === NULL )
 			{
 				$this->setActive( $sheet->getName() );
 			}
 		}
-		
+
 		/**
 		 * Creates a new p4a_sheet and add it to the group.
 		 * @param string	Mnemonic identifier for the object.
@@ -147,7 +147,7 @@
 		{
 			$this->addSheet( new p4a_sheet($name), $position );
 		}
-		
+
 		/**
 		 * Sets the position for a sheet.
 		 * @param string	Mnemonic identifier for the object.
@@ -158,9 +158,9 @@
 		{
 			if( in_array( $position, array_values( $this->sheets_map ) ) )
 			{
-				error('existing position');
+				P4A_Error('existing position');
 			}
-			
+
 			if( $position === NULL )
 			{
 				$new_position = $this->getFreePosition() ;
@@ -173,7 +173,7 @@
 				$this->positions_map[ $position ] = $sheet_name ;
 			}
 		}
-		
+
 		/**
 		 * Returns the index of the next free position (at the end).
 		 * @access public
@@ -182,7 +182,7 @@
 		{
 			return ( sizeof( $this->positions_map ) + 1 ) ;
 		}
-		
+
 		/**
 		 * Sets a sheet as active (by name).
 		 * The currently active sheet is available in $sheet_group->active_sheet.
@@ -200,11 +200,11 @@
 					unset( $this->active_sheet ) ;
 				}
 			}
-			
+
 			$this->active_sheet =& $this->sheets[ $sheet_name ];
 			$this->labels[ $sheet_name ]->disable();
 		}
-		
+
 		/**
 		 * Sets a sheet as active (by position).
 		 * The currently active sheet is available in $sheet_group->active_sheet.
@@ -232,7 +232,7 @@
 				$this->setStyleProperty('border-style', 'solid');
 			}
 		}
-		
+
 		/**
 		 * Sets the first sheet as active.
 		 * @access public
@@ -241,7 +241,7 @@
 		{
 			$this->setActivePosition(1);
 		}
-		
+
 		/**
 		 * Sets the previous sheet as active.
 		 * @access public
@@ -253,7 +253,7 @@
 				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->getName() ] - 1 ) ) ;
 			}
 		}
-		
+
 		/**
 		 * Sets the next sheet as active.
 		 * @access public
@@ -265,7 +265,7 @@
 				$this->setActivePosition( ( $this->sheets_map[ $this->active_sheet->getName() ] + 1 ) ) ;
 			}
 		}
-		
+
 		/**
 		 * Sets the last sheet as active.
 		 * @access public
@@ -274,7 +274,7 @@
 		{
 			$this->setActivePosition( sizeof( $this->positions_map ) );
 		}
-		
+
 		/**
 		 * Prepares all the labels variables for the template engine.
 		 * @return array
@@ -284,7 +284,7 @@
 		{
 			$items = array() ;
 			$visible_counter = 0 ;
-			
+
 			for( $i = 1, $j = 1; $i <= sizeof( $this->positions_map ); $i++ )
 			{
 				if( $this->labels[ $this->positions_map[ $i ] ]->isVisible() )
@@ -292,31 +292,31 @@
 					$item = array();
 					$item['label'] = $this->labels[ $this->positions_map[ $i ] ]->getAsString();
 					$item['visible'] = $this->labels[ $this->positions_map[ $i ] ]->isVisible();
-					
+
 					if( $item['visible'] ) {
 						$visible_counter++;
 					}
-					
+
 					// Setting element activation state
 					if( $this->sheets[ $this->positions_map[ $i ] ]->getName() == $this->active_sheet->getName() )
 					{
 						if ($i>1)
 						{
-							$items[($j-1)]['next_active'] = true;		
+							$items[($j-1)]['next_active'] = true;
 						}
-						
+
 						$item['active'] = true;
 					}
 					else
 					{
 						$item['active'] = false;
 					}
-					
+
 					$items[$j] = $item;
 					$j++;
 				}
 			}
-			
+
 			return array($items, $visible_counter);
 		}
 
@@ -331,7 +331,7 @@
 		{
 			$this->labels->{$sheet->getName()}->setValue($label);
 		}
-		
+
 		/**
 		 * Action handler for the onClick action on labels.
 		 * Sets active the sheet associated with the label.
@@ -342,7 +342,7 @@
 			$p4a =& P4A::singleton();
 			$this->setActive($p4a->active_object->getName());
 		}
-		
+
 		/**
 		 * Returns HTML rendered sheet_group.
 		 * @return string
@@ -354,7 +354,7 @@
 			{
 				$this->setActivePosition(1);
 			}
-			
+
 			if( $this->navigation_bar->isVisible() )
 			{
 				foreach($this->navigation_bar->getDisplayVars() as $key=>$value){
@@ -362,7 +362,7 @@
 				}
 			}
 			$labels_data = $this->prepareLabels();
-			
+
 			$this->display('type', $this->type);
 			$this->display( 'properties', $this->composeStringProperties() );
 			$this->display( 'items', $labels_data[0] );
@@ -371,7 +371,7 @@
 			return $this->fetchTemplate();
 		}
 	}
-	
+
 	/**
 	 * Navigation bar for sheets_groups.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
@@ -386,28 +386,28 @@
 		 * @access public
 		 */
 		var $button_first = NULL ;
-		
+
 		/**
 		 * Button for 'previous' movement.
 		 * @var link
 		 * @access public
 		 */
 		var $button_prev = NULL ;
-		
+
 		/**
 		 * Button for 'next' movement.
 		 * @var link
 		 * @access public
 		 */
 		var $button_next = NULL ;
-		
+
 		/**
 		 * Button for 'last' movement.
 		 * @var link
 		 * @access public
 		 */
 		var $button_last = NULL ;
-		
+
 		/**
 		 * Class constructor.
 		 * Instances all the buttons.
@@ -418,30 +418,30 @@
 		function &p4a_sheets_group_navigation_bar( $name = 'navigation_bar' )
 		{
 			parent::p4a_widget($name);
-			
+
 			$this->buid("P4A_Button", "button_first", "little_first");
 			$this->button_first->setValue('<<');
 			$this->button_first->addAction('onClick');
 			$this->intercept($this->button_first, 'onClick', 'firstOnClick');
-			
+
 			$this->buid("P4A_Button", "button_prev", "little_prev");
 			$this->button_prev->setValue('<');
 			$this->button_prev->addAction('onClick');
 			$this->intercept($this->button_prev, 'onClick', 'prevOnClick');
-			
+
 			$this->buid("P4A_Button", "button_next", "little_next");
 			$this->button_next->setValue('>');
 			$this->button_next->addAction('onClick');
 			$this->intercept($this->button_next, 'onClick', 'nextOnClick');
-			
+
 			$this->buid("P4A_Button", "button_last", "little_last");
 			$this->button_last->setValue('>>');
 			$this->button_last->addAction('onClick');
 			$this->intercept($this->button_last, 'onClick', 'lastOnClick');
-			
+
 			$this->setInvisible();
 		}
-		
+
 		/**
 		 * Action handler for "first" button click.
 		 * @access public
@@ -450,7 +450,7 @@
 		{
 			$this->parent->moveFirst();
 		}
-		
+
 		/**
 		 * Action handler for "previous" button click.
 		 * @access public
@@ -459,7 +459,7 @@
 		{
 			$this->parent->movePrev();
 		}
-		
+
 		/**
 		 * Action handler for "next" button click.
 		 * @access public
@@ -477,7 +477,7 @@
 		{
 			$this->parent->moveLast();
 		}
-		
+
 		/**
 		 * Prepares variables for the template engine.
 		 * @return array

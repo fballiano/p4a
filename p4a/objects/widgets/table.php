@@ -309,7 +309,7 @@
 			if (is_object($this->toolbar)){
 				$this->toolbar->setVisible();
 			}else{
-				ERROR('NO TOOLBAR');
+				P4A_Error('NO TOOLBAR');
 			}
 		}
 
@@ -322,7 +322,7 @@
 			if (is_object($this->toolbar)){
 				$this->toolbar->setInvisible();
 			}else{
-				ERROR('NO TOOLBAR');
+				P4A_Error('NO TOOLBAR');
 			}
 		}
 
@@ -629,7 +629,7 @@
 			if ($pk !== NULL) {
 				if( $this->getSourceValueField() === NULL ) {
 					if (is_array($pk)) {
-						error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
+						P4A_Error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
 					} else {
 						$this->setSourceValueField($pk) ;
 					}

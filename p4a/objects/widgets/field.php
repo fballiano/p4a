@@ -305,7 +305,7 @@
 					case 'none':
 						break;
 					default:
-						trigger_error('unknown encryption type:' . $this->getEncryptionType());
+						P4A_Error('unknown encryption type:' . $this->getEncryptionType());
 				}
 			} elseif (($this->type == 'password')
 			and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
@@ -377,7 +377,7 @@
 					$this->encryption_type = $type;
 					break;
 				default:
-					trigger_error('unknown encryption type:' . $type);
+					P4A_Error('unknown encryption type:' . $type);
 			}
 		}
 
@@ -420,7 +420,7 @@
 					$this->setSourceDescriptionField($description_field);
 				}
 			} else {
-				error("ONLY ONE PK IN THIS CASE");
+				P4A_Error("ONLY ONE PK IN THIS CASE");
 			}
 
 			$this->setDefaultVisualizationProperties();

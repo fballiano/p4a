@@ -155,7 +155,7 @@
 	                    $output .= "\n";
 	                    break;
 	                case "O":
-	                	error("P4A_Date::format(): timezone operation are not implemented.");
+	                	p4a_error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $offms = $this->tz->getOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -164,7 +164,7 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "o":
-	                	error("P4A_Date::format(): timezone operation are not implemented.");
+	                	p4a_error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $offms = $this->tz->getRawOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -207,7 +207,7 @@
 	                    $output .= $aDate['year'];
 	                    break;
 	                case "Z":
-	                    error("P4A_Date::format(): timezone operation are not implemented.");
+	                    p4a_error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $output .= $this->tz->inDaylightTime($this) ? $this->tz->getDSTShortName() : $this->tz->getShortName();
 	                    break;
 	                case "%":
@@ -255,23 +255,23 @@
 	                $nextchar = substr($format,$strpos + 1,1);
 	                switch ($nextchar) {
 	                case "a":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::get_weekday_short_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
 	                    break;
 	                case "A":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::get_weekday_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
 	                    break;
 	                case "b":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::get_month_short_name($aDate['month'], $locale_vars);
 	                    break;
 	                case "B":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::get_month_name($aDate['month'], $locale_vars);
 	                    break;
 	                case "C":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d",intval($aDate['year']/100));
 	                    break;
 	                case "d":
@@ -279,7 +279,7 @@
 	                    $map['day'] = $nucleus_counter++;
 	                    break;
 	                case "D":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d/%02d/%02d",$aDate['month'],$aDate['day'],$aDate['year']);
 	                    break;
 	                case "e":
@@ -287,7 +287,7 @@
 	                    $map['day'] = $nucleus_counter++;
 	                    break;
 	                case "E":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "H":
@@ -295,12 +295,12 @@
 	                    $map['hour'] = $nucleus_counter++;
 	                    break;
 	                case "I":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $hour = ($aDate['hour'] + 1) > 12 ? $aDate['hour'] - 12 : $aDate['hour'];
 	                    $output .= sprintf("%02d", $hour==0 ? 12 : $hour);
 	                    break;
 	                case "j":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "m":
@@ -312,11 +312,11 @@
 	                    $map['minute'] = $nucleus_counter++;
 	                    break;
 	                case "n":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= "\n";
 	                    break;
 	                case "O":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $offms = $this->tz->getOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -325,7 +325,7 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "o":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $offms = $this->tz->getRawOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -334,20 +334,20 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "p":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $aDate['hour'] >= 12 ? "pm" : "am";
 	                    break;
 	                case "P":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $aDate['hour'] >= 12 ? "PM" : "AM";
 	                    break;
 	                case "r":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $hour = ($aDate['hour'] + 1) > 12 ? $aDate['hour'] - 12 : $aDate['hour'];
 	                    $output .= sprintf("%02d:%02d:%02d %s", $hour==0 ?  12 : $hour, $aDate['minute'], $aDate['second'], $aDate['hour'] >= 12 ? "PM" : "AM");
 	                    break;
 	                case "R":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d:%02d", $aDate['hour'], $aDate['minute']);
 	                    break;
 	                case "S":
@@ -355,19 +355,19 @@
 	                    $map['second'] = $nucleus_counter++;
 	                    break;
 	                case "t":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= "\t";
 	                    break;
 	                case "T":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d:%02d:%02d", $aDate['hour'], $aDate['minute'], $aDate['second']);
 	                    break;
 	                case "w":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::day_of_week($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "U":
-	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::week_of_year($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "y":
@@ -379,7 +379,7 @@
 	                    $map['year'] = $nucleus_counter++;
 	                    break;
 	                case "Z":
-	                    error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $this->tz->inDaylightTime($this) ? $this->tz->getDSTShortName() : $this->tz->getShortName();
 	                    break;
 	                case "%":

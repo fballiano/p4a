@@ -118,7 +118,7 @@
 				$this->items->$name->destroy();
 				unset($this->items->$name);
 			}else{
-				error("ITEM NOT FOUND");
+				P4A_Error("ITEM NOT FOUND");
 			}
 		}
 
@@ -147,7 +147,7 @@
 			if (isset($this->items->$item_name)){
 				$this->map_items[$position] = $item_name;
 			}else{
-				error("ITEM NOT FOUND: $item_name");
+				P4A_Error("ITEM NOT FOUND: $item_name");
 			}
 		}
 
@@ -176,7 +176,7 @@
 				$min_pos = min(array_keys($this->map_items));
 				return $this->map_items[$min_pos];
 			}else{
-				error("NOT SUB ITEM");
+				P4A_Error("NOT SUB ITEM");
 			}
 		}
 
@@ -423,7 +423,7 @@ s		 * Removes an element from the element.
 				$this->items->$name->destroy();
 				unset($this->items->$name);
 			}else{
-				error("ITEM NOT FOUND");
+				P4A_Error("ITEM NOT FOUND");
 			}
 		}
 
@@ -453,7 +453,7 @@ s		 * Removes an element from the element.
 				$this->map_items[$position] = $item_name;
 				$this->items->$item_name->setPosition($position);
 			}else{
-				error("ITEM NOT FOUND: $item_name");
+				P4A_Error("ITEM NOT FOUND: $item_name");
 			}
 		}
 
@@ -484,7 +484,7 @@ s		 * Removes an element from the element.
 				$min_pos = min(array_keys($this->map_items));
 				return $this->map_items[$min_pos];
 			}else{
-				error("NOT SUB ITEM");
+				P4A_Error("NOT SUB ITEM");
 			}
 		}
 

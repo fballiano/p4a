@@ -43,7 +43,7 @@
 	 * @param integer	The number of new lines to print.
 	 * @access public
 	 */
-	function p4a_new_line($number=1)
+	function P4A_New_Line($number=1)
 	{
 		for($i=0;$i<$number;$i++)
 		{
@@ -56,7 +56,7 @@
 	 * @param integer	The number of spaces to print.
 	 * @access public
 	 */
-	function p4a_space($number=1)
+	function P4A_Space($number=1)
 	{
 		for($i=0;$i<$number;$i++)
 		{
@@ -70,7 +70,7 @@
 	 * @param string	Error description or other message.
 	 * @access public
 	 */
-	function error($error, $message = '')
+	function P4A_Error($error, $message = '')
 	{
 		if (strlen($message)){
 			$error .= ': ' . $message;
@@ -83,9 +83,9 @@
 	 * @param object object		The object.
 	 * @access public
 	 */
-	function is_error($object)
+	function P4A_Is_Error($object)
 	{
-		return PEAR::isError( $object );
+		return PEAR::isError($object);
 	}
 
 	/**
@@ -94,7 +94,7 @@
 	 * @param string	The file.
 	 * @return array
 	 */
-	function file2array($file)
+	function P4A_File2array($file)
 	{
 		//name, path, size, type, width, height
 		//{image 96.gif,image 96.gif,7170,image/gif,96,70}
@@ -117,7 +117,7 @@
 	 * @param array		The file.
 	 * @return array
 	 */
-	function array2file($aFile)
+	function P4A_Array2file($aFile)
 	{
 		//name, path, size, type, width, height
 		//{image 96.gif,image 96.gif,7170,image/gif,96,70}
@@ -139,11 +139,11 @@
 	 * @param integer	Page limit.
 	 * @return integer
 	 */
-	function get_offset($page_number, $records_number, $page_limit)
+	function P4A_Get_Offset($page_number, $records_number, $page_limit)
 	{
 		$offset = $page_limit * ($page_number -1);
 		if ($offset > $records_number){
-			$offset = $page_limit * (get_num_pages($records_number, $page_limit) -1);
+			$offset = $page_limit * (P4A_Get_Num_Pages($records_number, $page_limit) -1);
 		}
 		return $offset;
 	}
@@ -154,7 +154,7 @@
 	 * @param integer	Records
 	 * @return integer
 	 */
-	function get_num_pages($records_number, $page_limit){
+	function P4A_Get_Num_Pages($records_number, $page_limit){
 		if ($records_number % $page_limit == 0){
 			return $records_number / $page_limit ;
 		}else{
@@ -170,7 +170,7 @@
 	 * @param string		The directory (absolute).
 	 * @return string
 	 */
-	function get_unique_file_name( $filename, $directory )
+	function P4A_Get_Unique_File_Name( $filename, $directory )
 	{
 		$aParts = explode( '.', $filename ) ;
 		$base = '' ;
@@ -201,7 +201,7 @@
 	 * @access public
 	 * @return integer
 	 */
-	function get_microtime()
+	function P4A_Get_Microtime()
 	{
 		list($usec, $sec) = explode(" ",microtime());
 		return ((float)$usec + (float)$sec);
@@ -211,7 +211,7 @@
 	 * Includes all p4a objects for the application.
 	 * @access private
 	 */
-	function p4a_include_objects($dir)
+	function P4A_Include_Objects($dir)
 	{
 		if (is_dir($dir))
 		{
@@ -237,7 +237,7 @@
 			}
 
 			foreach($dirs as $subdir){
-				p4a_include_objects($subdir);
+				P4A_Include_Objects($subdir);
 			}
 		}
 	}

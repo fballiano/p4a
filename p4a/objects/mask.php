@@ -422,7 +422,7 @@
 
 						if ($old_value === NULL) {
 							if ($new_value !== NULL) {
-								$a_new_value[0] = get_unique_file_name( $a_new_value[0], $target_dir );
+								$a_new_value[0] = P4A_Get_Unique_File_Name( $a_new_value[0], $target_dir );
                     			$new_path = $target_dir . '/' . $a_new_value[0];
 								$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 								if (!rename($old_path, $new_path)) {
@@ -454,7 +454,7 @@
 										die();
 									}
 								}
-								$a_new_value[0] = get_unique_file_name($a_new_value[0], $target_dir);
+								$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[0], $target_dir);
 								$new_path = $target_dir . '/' . $a_new_value[0];
 								$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 								if (!@rename($old_path, $new_path)) {

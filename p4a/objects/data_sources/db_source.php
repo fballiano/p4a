@@ -37,7 +37,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	function setFields($fields)
 	{
 		if ($this->getSelect()){
-			P4A_Utils::fatalError("Can't use setFields here");
+			p4a_error("Can't use setFields here");
 		}
 		$fields_keys = array_keys($fields);
 
@@ -56,7 +56,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	function setSelect($select)
 	{
 		if ($this->getFields()){
-			P4A_Utils::fatalError("Can't use setSelect here");
+			p4a_error("Can't use setSelect here");
 		}
 		$this->isReadOnly(TRUE);
 		$this->_select = $select;
@@ -156,7 +156,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 
 		if (!$this->getQuery() and !$this->getTable()){
-			P4A_Utils::fatalError("ERRORE");
+			p4a_error("ERRORE");
 		}
 
 		$db =& P4A_DB::singleton();
@@ -725,7 +725,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 			return substr($return, 0, -4);
 		} else {
-			error("NO PK");
+			p4a_error("NO PK");
 		}
 	}
 

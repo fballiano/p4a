@@ -702,7 +702,7 @@
 			if ($this->use_template){
 				$this->smarty->assign($var_name, $sDisplay);
 			}else{
-				error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
+				p4a_error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
 			}
 		}
 
@@ -729,7 +729,7 @@
 				$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
 				return $this->smarty->fetch($path_template);
 			}else{
-				error("ERROR: Unable to fetch template, first Call \"use_template\".");
+				p4a_error("ERROR: Unable to fetch template, first Call \"use_template\".");
 			}
 		}
 

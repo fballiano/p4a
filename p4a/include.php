@@ -124,7 +124,7 @@
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
 		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		$_SESSION['P4A_INCLUDES'] = array();
-		p4a_include_objects($objects_dir);
+		P4A_Include_Objects($objects_dir);
 	}
 
 	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {

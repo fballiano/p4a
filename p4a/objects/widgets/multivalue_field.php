@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,7 +37,7 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-	
+
 
 	/**
 	 * Multivalue fields are used to store multi selection data.
@@ -47,7 +47,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_MULTIVALUE_FIELD extends P4A_FIELD 
+	class P4A_MULTIVALUE_FIELD extends P4A_FIELD
 	{
 		/**
 		 * The value of the primary key (current record, current mask).
@@ -55,42 +55,42 @@
 		 * @var mixed
 		 */
 		var $pk_value = NULL;
-		
+
 		/**
 		 * The field name of the primary key on the TARGET TABLE.
 		 * @access private
 		 * @var string
 		 */
 		var $pk_field = NULL;
-		
+
 		/**
 		 * The field name of the value field on the TARGET TABLE.
 		 * @access private
 		 * @var string
 		 */
 		var $value_field = NULL;
-		
+
 		/**
 		 * The table where we'll store the data.
 		 * @access private
 		 * @var string
 		 */
 		var $target_table = NULL;
-		
+
 		/**
 		 * Here we store the values.
 		 * @access private
 		 * @var array
 		 */
 		var $value = array();
-		
+
 		/**
 		 * Here we store the values passed by web (between load and save).
 		 * @access private
 		 * @var array
 		 */
 		var $new_value = array();
-		
+
 		/**
 		 * Class constructor.
 		 * Sets the field as multiselect.
@@ -102,7 +102,7 @@
 			$this->setType('multiselect');
 			$this->setProperty('name', $this->getID() .'[]');
 		}
-		
+
 		/**
 		 * Sets the table where we'll store the data.
 		 * @param string		The table
@@ -117,11 +117,11 @@
 				$this->pk_field = $pk_field;
 				$this->value_field = $value_field;
 			}else{
-				ERROR('NO DATASOURCE SPECIFIED, USE SET_SOURCE BEFORE SET_TARGET_TABLE');
+				P4A_Error('NO DATASOURCE SPECIFIED, USE SET_SOURCE BEFORE SET_TARGET_TABLE');
 			}
 			$this->load();
 		}
-		
+
 		/**
 		 * Sets the primary key field name of the target table.
 		 * @param mixed			The primary key field name.
@@ -131,7 +131,7 @@
 		{
 			$this->pk_value = $value;
 		}
-		
+
 		/**
 		 * Loads the data.
 		 * @access public
@@ -152,11 +152,11 @@
 				}
 				else
 				{
-					ERROR('MULTI VALUE LOAD ERROR');
+					P4A_Error('MULTI VALUE LOAD ERROR');
 				}
 			}
 		}
-		
+
 		/**
 		 * Saves the data.
 		 * @access public
@@ -164,7 +164,7 @@
 		function update()
 		{
 			$db =& P4A_DB::singleton();
-			
+
 			$sQueryDelete  = " DELETE FROM " . $this->target_table;
 			$sQueryDelete .= " WHERE "  . $this->pk_field . "= ?";
 			$rQueryDelete = $db->prepare($sQueryDelete);
@@ -181,10 +181,10 @@
 			}
 			else
 			{
-				ERROR('DELETE QUERY FAILED');
+				P4A_Error('DELETE QUERY FAILED');
 			}
 		}
-		
+
 		/**
 		 * Gets the output
 		 * @access private
@@ -195,10 +195,10 @@
 			$close_header 		= '>';
 			$footer				= '</SELECT>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-			
+
 			$external_data		= $this->data->getAll() ;
 			$description_field	= $this->getSourceDescriptionField() ;
-			
+
 			foreach( $external_data as $key=>$current )
 			{
 				if (in_array($current[ $this->data->pk ], $this->getNewValue()))
@@ -209,17 +209,17 @@
 				{
 					$selected = "";
 				}
-				
-				$sContent  = "<option $selected value='" . htmlspecialchars($current[$this->data->pk]) ."'>"; 
+
+				$sContent  = "<option $selected value='" . htmlspecialchars($current[$this->data->pk]) ."'>";
 				$sContent .= htmlspecialchars($current[ $description_field ]);
 				$sContent .= "</option>";
 
 				$header .= $sContent;
 			}
-			 
-			return $this->composeLabel() . '</td><td>'.  $header . $footer; 
+
+			return $this->composeLabel() . '</td><td>'.  $header . $footer;
 		}
-		
+
 		/**
 		 * Gets the output
 		 * @access private
@@ -230,20 +230,20 @@
 			$close_header 		= '>';
 			$footer				= '</DIV>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-			
+
 			$external_data		= $this->data->getAll() ;
 			$description_field	= $this->getSourceDescriptionField() ;
-			
+
 			foreach( $external_data as $key=>$current )
 			{
 				if (in_array($current[ $this->data->pk ], $this->getNewValue())) {
 					$header .= htmlspecialchars($current[ $description_field ]) . '<br>';
 				}
 			}
-			 
+
 			return $this->composeLabel() . '</td><td>'.  $header . $footer;
 		}
-		
+
 		/**
 		 * Sets the number of displayed rows.
 		 * @param integer			The number of displayed rows.
@@ -253,7 +253,7 @@
 		{
 			$this->setProperty('size', $size);
 		}
-		
+
 		/**
 		 * Removes the size property.
 		 * @access public
@@ -263,27 +263,27 @@
 		{
 			$this->unsetProperty('size');
 		}
-		
+
 		function setValue($value = NULL)
 		{
 			$this->value = $value;
 			$this->setNewValue($value);
 		}
-		
+
 		function getValue()
 		{
 			return $this->value;
 		}
-		
+
 		function setNewValue($value = array())
 		{
 			if (!is_array($value)) {
 				$value = array();
 			}
-			
+
 			$this->new_value = $value;
 		}
-		
+
 		function getNewValue()
 		{
 			return $this->new_value;
