@@ -98,6 +98,12 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
+	function getOffset()
+	{
+		$limit = $this->getPageLimit();
+		return ($this->getNumPage() * $limit) - $limit;
+	}	
+
 	function setPageLimit($page_limit)
 	{
 		$this->_page_limit = $page_limit;
@@ -130,7 +136,6 @@ class P4A_Data_Source extends P4A_Object
 
 	function page($num_page = NULL, $move_pointer=TRUE)
 	{
-		$query = $this->_composeSelectQuery();
 		$limit = $this->getPageLimit();
 		$num_pages = $this->getNumPages();
 
