@@ -38,53 +38,28 @@
  * @package p4a
  */
 
-$messages = array
+$numbers_formats = array
 (
-	// Date
-    "days"				=> array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'),
-    "months"			=> array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'),
-    
-	// Standard Toolbar
-	"big_confirm"		=> "Änderungen übernehmen.",
-	"big_cancel"		=> "Operation abbrechen.",
-	"big_new"			=> "neuen Datensatz einfügen.",
-	"big_delete"		=> "Datensatz löschen.",
-	"big_first"			=> "zum Ersten.",
-	"big_prev"			=> "zum Vorhergehenden.",
-	"big_next"			=> "zum Nächsten.",
-	"big_last"			=> "zum Letzten.",
-	"big_print"			=> "drucken.",
-	"big_exit"			=> "beenden.",
-	"little_first"		=> "zum Ersten.",
-	"little_prev"		=> "zum Vorhergehenden.",
-	"little_next"		=> "zum Nächsten.",
-	"little_last"		=> "zum Letzten.",
-	"go"				=> "los",
+	"integer" => array('0', ',', '.'),
+	"decimal" => array('2', ',', '.'),
+	"float"   => array('*', ',', '.')
+);
+
+$datetime_formats = array
+(
+	"date_default"	=>	"%d.%m.%Y",
+	"date_medium"	=>	"%d. %b %Y",
+	"date_long"		=>	"%d. %B %Y",
+	"date_full"		=>	"%A %d. %B %Y",
 	
-	// Table
-	"current_page"		=> "Seite",
-	"of_pages"			=> "von",
-	"go_to_page"		=> "gehe zu Seite",
-	
-	// File uploads
-	"filename"			=> "Name",
-	"filesize"			=> "Größe",
-	"filetype"			=> "Typ",
-	"filepreview"		=> "Vorschau",
-	"filedelete"		=> "löschen",
-	
-	// Fields
-	"none_selected"		=> "nicht markiert",
-	
-	// Confirmations
-	"confirm_general"	=> "Sind Sie sich sicher?",
-	"confirm_confirm"	=> "Änderungen übernehmen?",
-	"confirm_cancel"	=> "Laufende Operation wirklich abbrechen?",
-	"confirm_delete"	=> "Diesen Datensatz wirklich löschen?",
-	
-	// Yes/No
-	"yes"				=> "Ja",
-	"no"				=> "Nein"
+	"time_default"	=>	"%H:%M",
+	"time_long"		=>	"%H:%M:%S"
+);
+
+$currency_formats = array
+(
+	"local"         => array('SFr. %', '2', '.', "'"),
+	"international" => array('% CHF', '2', '.', "'")
 );
 
 ?>
