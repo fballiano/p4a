@@ -111,6 +111,7 @@
 		[[$main]]
 		</div>
 
+		<!-- Please leave our links, can you think it's a small price for p4a? :-)) -->
 		<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a></div>
 	</div>
 

@@ -38,8 +38,8 @@ class P4A_Data_Source extends P4A_Object
 		while($field =& $this->fields->nextItem()) {
 			$field->setDefaultValue();
 		}
-	}	
-	
+	}
+
 	function isNew()
 	{
 		if ($this->_pointer === 0) {
@@ -66,7 +66,7 @@ class P4A_Data_Source extends P4A_Object
 	function firstRow()
 	{
 		$num_rows = $this->getNumRows();
-		
+
 		if ($num_rows > $this->_pointer-1) {
 			$this->_pointer = 1;
 			return $this->row();
@@ -119,7 +119,7 @@ class P4A_Data_Source extends P4A_Object
 	{
 		$limit = $this->getPageLimit();
 		return ($this->getNumPage() * $limit) - $limit;
-	}	
+	}
 
 	function setPageLimit($page_limit)
 	{
@@ -262,6 +262,21 @@ class P4A_Data_Source extends P4A_Object
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Content-Length: " . strlen($output));
 		echo $output;
+	}
+
+	function deleteRow()
+	{
+		$num_rows = $this->getNumRows();
+
+		if ($this->isNew() and $num_rows > 0) {
+			$this->lastRow();
+		} elseif ($this->isNew() and $num_rows == 0) {
+			$this->newRow();
+		} elseif ($this->_pointer > $this->getNumRows()) {
+			$this->lastRow();
+		} else {
+			$this->row();
+		}
 	}
 }
 ?>

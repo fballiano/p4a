@@ -1,3 +1,8 @@
+0.3
+- added deleteRow to DATA_SOURCE interface
+- added deleteRow to ARRAY_SOURCE
+- moved some code for deleteRow from DB_SOURCE to DATA_SOURCE, now used also FROM ARRAY_SOURCE
+
 0.2
 - Now db_source reload num_rows on setWhere, addFilter, dropFilter
 - Changed doctype for default template, now we're xhtml 1.1 (not validated, work in progress)

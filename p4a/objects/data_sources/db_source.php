@@ -548,17 +548,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$this->resetNumRows();
 		}
 
-		$num_rows = $this->getNumRows();
-
-		if ($this->isNew() and $num_rows > 0) {
-			$this->lastRow();
-		} elseif ($this->isNew() and $num_rows == 0) {
-			$this->newRow();
-		} elseif ($this->_pointer > $this->getNumRows()) {
-			$this->lastRow();
-		} else {
-			$this->row();
-		}
+		parent::deleteRow();
 	}
 
 	function getAll($from = 0, $count = 0)
