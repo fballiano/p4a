@@ -18,7 +18,7 @@
     </ignoreparts>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description></description>
+    <description/>
     <secondaryLanguages/>
   </general>
   <kdevscriptproject>
@@ -51,7 +51,7 @@
     <webInvocation>
       <weburl>http://localhost/</weburl>
       <webFileMode>2</webFileMode>
-      <defaultFile></defaultFile>
+      <defaultFile/>
     </webInvocation>
     <shell>
       <phpexe>/usr/local/bin/php</phpexe>

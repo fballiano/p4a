@@ -19,43 +19,19 @@ PRE,TT { font-family: arial, courier,sans-serif }
 <h1>P4A - PHP For Applications</h1>
 <h2>Documentation</h2>
 <ul>
-<?php
-	$docs_dir = dirname(__FILE__) . '/docs/';
-	$dhdocs = opendir($docs_dir);
-
-	while (false !== ($filename = readdir($dhdocs)))
-	{
-		if (	$filename != '.' 
-			and $filename != '..' 
-			and $filename != 'CVS' 
-			and is_dir($docs_dir . $filename))
-		{
-			
-			print "<li><a href='docs/$filename/'>{$filename}</a></li>\n";		
-		}
-
-	}
-?>
+<li><a href="docs">View documentation</a></li>
 </ul>
 <h2>Running Applications</h2>
 <ul>
 <?php
-	$projects_dir = dirname(__FILE__) . '/applications/';	
+	$projects_dir = dirname(__FILE__) . '/applications/';
 	$dhprojects = opendir($projects_dir);
 
-	while (false !== ($filename = readdir($dhprojects)))
-	{
-		if (	$filename != '.' 
-			and $filename != '..' 
-			and $filename != 'CVS' 
-			and is_dir($projects_dir . $filename))
-		{
-			
+	while (false !== ($filename = readdir($dhprojects))) {
+		if ( $filename != '.' and $filename != '..' and $filename != 'CVS' and is_dir($projects_dir . $filename)) {
 			print "<li><a href='applications/$filename/'>{$filename}</a></li>\n";
 		}
-
 	}
-
 ?>
 </ul>
 </body>

@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -43,7 +43,7 @@
 	 * @param integer	The number of new lines to print.
 	 * @access public
 	 */
-	function new_line($number=1)
+	function p4a_new_line($number=1)
 	{
 		for($i=0;$i<$number;$i++)
 		{
@@ -55,19 +55,19 @@
 	 * Prints out one or many HTML "spaces".
 	 * @param integer	The number of spaces to print.
 	 * @access public
-	 */	
-	function space($number=1)
+	 */
+	function p4a_space($number=1)
 	{
 		for($i=0;$i<$number;$i++)
 		{
 			print '&nbsp;' . "\n";
 		}
 	}
-	 
+
 	/**
 	 * Stops program execution with an error.
 	 * @param string	Error identifier.
-	 * @param string	Error description or other message. 
+	 * @param string	Error description or other message.
 	 * @access public
 	 */
 	function error($error, $message = '')
@@ -77,17 +77,17 @@
 		}
 		die($error);
 	}
-	
+
 	/**
 	 * Checks if an object is an error object.
-	 * @param object object		The object. 
+	 * @param object object		The object.
 	 * @access public
 	 */
 	function is_error($object)
 	{
 		return PEAR::isError( $object );
 	}
-	
+
 	/**
 	 * Converts a "file" value into an array.
 	 * @access public
@@ -108,9 +108,9 @@
 		$aFile['height'] = $aFileTmp[5];
 		//$aFile['url'] = rawurlencode($aFileTmp[1]);
 		$aFile['url'] = $aFileTmp[1];
-		return $aFile; 
+		return $aFile;
 	}
-	
+
 	/**
 	 * Converts an array into a "file" value.
 	 * @access public
@@ -128,9 +128,9 @@
 		$aFileNew[] = $aFile['width'];
 		$aFileNew[] = $aFile['height'];
 		$sFile = '{' . join(',' , $aFileNew ) . '}';
-		return $sFile; 
+		return $sFile;
 	}
-	
+
 	/**
 	 * Takes page number, records number, page limit and returns the necessary  offset for a query.
 	 * @access public
@@ -138,7 +138,7 @@
 	 * @param integer	Records limit.
 	 * @param integer	Page limit.
 	 * @return integer
-	 */	
+	 */
 	function get_offset($page_number, $records_number, $page_limit)
 	{
 		$offset = $page_limit * ($page_number -1);
@@ -152,7 +152,7 @@
 	 * @access public
 	 * @param integer	Page Number.
 	 * @param integer	Records
-	 * @return integer 
+	 * @return integer
 	 */
 	function get_num_pages($records_number, $page_limit){
 		if ($records_number % $page_limit == 0){
@@ -161,7 +161,7 @@
 			return intval(($records_number / $page_limit)) + 1;
 		}
 	}
-	
+
 	/**
 	 * Tests if a file with the same name exists and return the correct file name.
 	 * Appends _1 (_2, _3) at the end fo the file name.
@@ -175,7 +175,7 @@
 		$aParts = explode( '.', $filename ) ;
 		$base = '' ;
 		$ext = '' ;
-		
+
 		if( sizeof( $aParts ) > 1 )
 		{
 			$ext = '.' . array_pop( $aParts );
@@ -185,7 +185,7 @@
 		{
 			$base = $filename;
 		}
-		
+
 		$i = 1 ;
 		while( file_exists( $directory . '/' . $filename ) )
 		{
@@ -195,7 +195,7 @@
 
 		return $filename;
 	}
-	
+
 	/**
 	 * Returns the microtime.
 	 * @access public
@@ -203,41 +203,41 @@
 	 */
 	function get_microtime()
 	{
-		list($usec, $sec) = explode(" ",microtime()); 
-		return ((float)$usec + (float)$sec); 
+		list($usec, $sec) = explode(" ",microtime());
+		return ((float)$usec + (float)$sec);
 	}
-	
+
 	/**
 	 * Includes all p4a objects for the application.
 	 * @access private
 	 */
-	function include_p4a_objects($dir)
+	function p4a_include_objects($dir)
 	{
 		if (is_dir($dir))
 		{
 			$files = array();
 			$dirs  = array();
-			
+
 			$dh  = opendir($dir);
 			while (false !== ($filename = readdir($dh)))
 			{
-				if ($filename != '.' and $filename != '..' and $filename != 'CVS'){ 
+				if ($filename != '.' and $filename != '..' and $filename != 'CVS'){
 					$files[] = $filename;
 				}
 			}
 			closedir($dh);
-			
+
 			for($i=0;$i<count($files);$i++)
 			{
 				if(is_dir($dir .'/' . $files[$i])){
-					$dirs[]	= $dir .'/' . $files[$i];	
+					$dirs[]	= $dir .'/' . $files[$i];
 				}elseif (is_file($dir .'/' . $files[$i]) and (substr($files[$i], -4) == '.php')){
-					$_SESSION['P4A_INCLUDES'][] = $dir .'/' .$files[$i];						
+					$_SESSION['P4A_INCLUDES'][] = $dir .'/' .$files[$i];
 				}
 			}
-			
+
 			foreach($dirs as $subdir){
-				include_p4a_objects($subdir);
+				p4a_include_objects($subdir);
 			}
 		}
 	}

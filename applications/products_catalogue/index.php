@@ -7,6 +7,9 @@
  * That's it!
  */
 
+// Including p4a
+require_once( dirname(__FILE__) . '/../../p4a.php' );
+
 // Optional - tells how to connect to the database
 // define("P4A_DSN", 'protocol://username:password@host/database');
 // define("P4A_DSN", 'mysql://root:@localhost/p4asample');
@@ -16,15 +19,12 @@
 
 // Check Installation and configuration.
 // This lines should be removed after the first run.
-include( dirname(__FILE__) . '/../../core/libraries/check_configuration.php' );
-if( !check_configuration( $error ) ) {
-	die( $error );
+if(! p4a_check_configuration($error)) {
+	die($error);
 }
 
 // Here we go
-require_once( dirname(__FILE__) . '/../../p4a/p4a.php' );
-
-$sample =& p4a::singleton("sample"); 
-$sample->main();
+$app =& p4a::singleton("products_catalogue");
+$app->main();
 
 ?>

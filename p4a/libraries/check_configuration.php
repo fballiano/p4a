@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,16 +37,14 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
- 
-function check_configuration( &$error )
+
+function p4a_check_configuration( &$error )
 {
-    require_once( dirname(__FILE__) . '/../include.php' );
-    
     $correct = true;
     $error = "<center><h2>Application \"" . P4A_APPLICATION_NAME . "\" - Configuration Check</h2></center>\n" ;
-    
+
     $error .= "<h3>Activities:</h3>\n";
-    
+
     // OPERATING SYSTEM
     $error .= "Checking SERVER OPERATING SYSTEM: ";
     if( _DS_ == '/' ) {
@@ -55,7 +53,7 @@ function check_configuration( &$error )
     	$error .= "p4a is configured as running on <b>Windows</b>, if your server operatin system is different, than correct P4A_OS and _DS_ definition.";
     }
     $error .= "<br>\n";
-    
+
     // DOCUMENT ROOT
     $error .= "Checking DOCUMENT_ROOT: ";
     if( strlen( P4A_SERVER_DIR ) == 0 ) {
@@ -65,7 +63,7 @@ function check_configuration( &$error )
     	$error .= "<font color='green'>OK</font>";
     }
     $error .= "<br>\n";
-    
+
     // UPLOADS DIRECTORY
     $error .= "Checking UPLOADS DIRECTORY: ";
     if( is_readable( P4A_UPLOADS_DIR ) and is_dir( P4A_UPLOADS_DIR ) and is_writable( P4A_UPLOADS_DIR ) ) {
@@ -75,7 +73,7 @@ function check_configuration( &$error )
     	$correct = false ;
     }
     $error .= "<br>\n";
-    
+
     // UPLOADS TEMPORARY DIRECTORY
     $error .= "Checking UPLOADS TEMPORARY DIRECTORY: ";
     if( is_readable( P4A_UPLOADS_TMP_DIR ) and is_dir( P4A_UPLOADS_TMP_DIR ) and is_writable( P4A_UPLOADS_TMP_DIR ) ) {
@@ -85,7 +83,7 @@ function check_configuration( &$error )
     	$correct = false ;
     }
     $error .= "<br>\n";
-    
+
     // SMARTY COMPILE DIRECTORIES
     $error .= "Checking SMARTY COMPILE DIRECTORIES: ";
     if( is_dir( P4A_SMARTY_MASK_COMPILE_DIR ) and is_writable( P4A_SMARTY_MASK_COMPILE_DIR ) and is_dir( P4A_SMARTY_WIDGET_COMPILE_DIR ) and is_writable( P4A_SMARTY_WIDGET_COMPILE_DIR ) ) {
@@ -95,7 +93,7 @@ function check_configuration( &$error )
     	$correct = false ;
     }
     $error .= "<br>\n";
-    
+
     // DATABASE CONNECTION
     $error .= "Checking DATABASE CONNECTION: ";
     if( defined( 'P4A_DSN' ) )
@@ -115,10 +113,10 @@ function check_configuration( &$error )
     	$error .= "P4A_DSN non defined, no database connection.";
     }
     $error .= "<br>\n";
-    
+
     // REPORT
     $error .= "<h3>Final report:</h3>\n";
-    
+
     if( $correct )
     {
     	$error .= "<font size='+1'>Installation and configuration <font color='green' size='+1'>OK</font>.</font><br>\n";
@@ -131,9 +129,9 @@ function check_configuration( &$error )
     	$error .= "<h3>To do:</h3>\n";
     	$error .= "Resolve all the problems to continue execution.<br>\n";
     }
-    
+
     $error = '<html><head><title>p4a Installation and configuration check</title></head><body>' . $error . '</body></html>';
-    
+
     return $correct;
 }
 

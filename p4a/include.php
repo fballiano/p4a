@@ -56,6 +56,7 @@
 
 	//Libraries
 	require_once(dirname(__FILE__) . '/libraries/standard.php');
+	require_once(dirname(__FILE__) . '/libraries/check_configuration.php');
 	require_once(dirname(__FILE__) . '/libraries/smarty/libs/Smarty.class.php');
 	require_once(dirname(__FILE__) . '/libraries/pear/PEAR/Common.php');
 	require_once(dirname(__FILE__) . '/libraries/pear/DB.php');
@@ -109,12 +110,11 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/sheets_group.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/table.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/frames/fieldset.php');
 
 	//Toolbar Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
-	
-	require_once(dirname(__FILE__) . '/objects/widgets/frames/fieldset.php');
 
 	//We can have more applications on same site and same browser instance
 
@@ -125,7 +125,7 @@
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
 		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		$_SESSION['P4A_INCLUDES'] = array();
-		include_p4a_objects($objects_dir);
+		p4a_include_objects($objects_dir);
 	}
 
 	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {
