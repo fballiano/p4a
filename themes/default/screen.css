@@ -457,6 +457,10 @@ legend {
 	background:#fafafa;
 }
 
+.table_container .row{
+	background:#fafafa;
+}
+
 .accesskey {
 	text-decoration:underline;
 }

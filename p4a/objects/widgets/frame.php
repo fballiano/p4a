@@ -58,7 +58,7 @@ class P4A_Frame extends P4A_Widget
 		$string  = "<div class='frame' $properties $actions >";
 		foreach($this->_map as $objs){
 			$one_visible = false;
-			$row = "\n<div class='row' style='border:1px solid white'>";
+			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
 				$as_string = $object->getAsString();
