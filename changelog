@@ -1,4 +1,5 @@
 0.3
+- changed PEAR repository management, now with web interface we can easily install/upgrade/remove PEAR modules
 - added deleteRow to DATA_SOURCE interface
 - added deleteRow to ARRAY_SOURCE
 - moved some code for deleteRow from DB_SOURCE to DATA_SOURCE, now used also FROM ARRAY_SOURCE
