@@ -5,13 +5,13 @@ div.calendar { position: relative; }
   font-size: 11px;
   color: #4B718A;
   cursor: default;
-  background: #FFF;
   font-family: tahoma,verdana,sans-serif;
 }
 
 .calendar table {
  /* THIS FIX IS TEMPORARY, must go up */
  border: 1px solid #C6D3DE;	
+ background: #FFF;
 }
 
 /* Header part -- contains navigation buttons and day names. */
