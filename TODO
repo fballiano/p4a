@@ -1,7 +1,5 @@
 - P4A_Table_Col, if a NULL formatted integer, she shows 0
 - add and test rich_textarea spell check
-- add and test rich_textarea file upload
-- calendar CSS needs a small fix for mozilla (div goes to 100%) and konqueror (when on other fields is unusable)
 - check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds
 - change P4A_Label HTML layout

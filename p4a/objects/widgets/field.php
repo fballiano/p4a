@@ -160,6 +160,22 @@
 		var $encryption_type = 'md5';
 
 		/**
+		 * Is image upload enabled on rich text area?
+		 * This is disabled by default for security reasons, enable it only after a well done permission check.
+		 * @var		boolean
+		 * @access	private
+		 */
+		var $image_upload = false;
+		
+		/**
+		 * Is file upload enabled on rich text area?
+		 * This is disabled by default for security reasons, enable it only after a well done permission check.
+		 * @var		boolean
+		 * @access	private
+		 */
+		var $file_upload = false;
+
+		/**
 		 * Class constructor.
 		 * Istances the widget, sets name and initializes its value.
 		 * @param string				Mnemonic identifier for the object.
@@ -750,6 +766,9 @@
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('width', $this->getWidth());
 			$this->display('height', $this->getHeight());
+			$this->display('file_upload', $this->file_upload);
+			$this->display('image_upload', $this->image_upload);
+			$this->display('upload_path', P4A_UPLOADS_PATH);
 			return $this->fetchTemplate();
 		}
 
@@ -1313,6 +1332,16 @@
 			} elseif($this->type == 'textarea' or $this->type == 'rich_textarea' or $this->type == 'label') {
 				return $value;
 			}
+		}
+		
+		function enableImageUpload($enable = true)
+		{
+			$this->image_upload = $enable;
+		}
+		
+		function enableFileUpload($enable = true)
+		{
+			$this->file_upload = $enable;
 		}
 	}
 ?>

@@ -1,3 +1,7 @@
+0.14
+- P4A now can handle file/image uploads within rich_textarea fields (disabled by default)
+- added P4A_Field:enableFileUpload() and P4A_Field:enableImageUpload()
+
 0.13
 - various bugfix in P4A_Link
 - updated caledar widget to 1.0
