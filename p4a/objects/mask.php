@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -52,14 +52,14 @@
 		 * @access public
 		 */
        	var $prev_mask = NULL;
-       	      	      	
+
        	/**
 		 * The mask's data source.
 		 * @var mixed
 		 * @access public
 		 */
 		var $data = NULL;
-		
+
        	/**
 		 * The mask's data browser.
 		 * @var DATA_BROWSER
@@ -71,58 +71,58 @@
 		 * The fields collection
 		 * @var array
 		 * @access public
-		 */		
+		 */
 		var $fields = null;
-		
+
 		/**
 		 * Store the external fields' object_id
 		 * @var array
 		 * @access private
 		 */
 		var $external_fields = array();
-		
+
        	/**
 		 * Keeps the association between actions events and actions.
 		 * @var array
 		 * @access public
 		 */
 		var $map_actions = array();
-		
+
        	/**
 		 * Mask's title.
 		 * @var string
 		 * @access private
 		 */
 		var $title = NULL;
-		
+
        	/**
 		 * Template engine object.
 		 * @var object
 		 * @access private
 		 */
 		var $smarty = NULL;
-		
+
        	/**
 		 * Stores opening code for form.
 		 * @var string
 		 * @access private
 		 */
 		var $sOpen = NULL;
-		
+
 		/**
 		 * The object with active focus
 		 * @var object
 		 * @access private
 		 */
 		var $focus_object = NULL;
-		
+
 		/**
 		 * Currently used template name.
 		 * @var string
 		 * @access private
 		 */
 		var $template_name = NULL;
-				
+
 		/**
 		 * Mask constructor.
 		 * Generates unique ID for the object, istance a new
@@ -137,46 +137,46 @@
 				$name = get_class($this);
 			}
 			parent::p4aObject($name, 'ma');
-			
+
 			//todo
 			$this->build("P4A_Collection", "fields");
 
             $this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');
 		}
-		
+
 		//todo
 		function  &singleton($name)
 		{
 			$p4a =& P4A::singleton();
-			
-			
+
+
  			if (!isset($p4a->masks->$name)) {
 				$p4a->masks->build($name, $name);
 			}
 			return $p4a->masks->$name;
 		}
-		
+
 		/**
 		 * Sets the focus on object
 		 * @access public
 		 * @param object
-		 */		
+		 */
 		function setFocus(&$object)
 		{
 			$this->focus_object =& $object;
 		}
-		
+
 		/**
 		 * Removes focus property
 		 * @access public
-		 */		
+		 */
 		function unsetFocus()
 		{
 			unset( $this->focus_object );
 			$this->focus_object = NULL;
 		}
-		
+
 		/**
 		 * Inizializes the mask.
 		 * It means that the 'init' function of the current mask's listener is called.
@@ -186,7 +186,7 @@
 		{
 			$this->actionHandler('init');
 		}
-		
+
 		/**
 		 * Shows the mask.
 		 * It means that the 'show' function of the current mask's listener is called.
@@ -196,7 +196,7 @@
 		{
 			return $this->actionHandler('show');
 		}
-		
+
 		/**
 		 * Shows the caller mask.
 		 * @access public
@@ -206,7 +206,7 @@
 			$p4a =& P4A::singleton();
 			$p4a->showPrevMask();
 		}
-		
+
 		/**
 		 * Tells the mask that we're going to use a template.
 		 * @param string	"template name" stands for "template name.tpl" in the "CURRENT THEME\masks\" directory.
@@ -216,20 +216,20 @@
 		{
 			$this->use_template = TRUE;
 			$this->template_name = $template_name;
-			
+
 			// If smarty is not yes istanced, than we call it.
 			if (! is_object($this->smarty)){
 				$this->smarty = new SMARTY();
-							
+
 				$this->smarty->compile_dir = P4A_SMARTY_MASK_COMPILE_DIR;
 				$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
-				$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER; 			
+				$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
 				$this->displayText('theme_path', P4A_THEME_PATH);
 				$this->displayText('mask_open', $this->maskOpen());
 				$this->displayText('mask_close', $this->maskClose());
-			}									
-	
-			if (file_exists(P4A_SMARTY_MASK_TEMPLATES_DIR . '/' . $this->template_name)) {  
+			}
+
+			if (file_exists(P4A_SMARTY_MASK_TEMPLATES_DIR . '/' . $this->template_name)) {
 				$this->smarty->template_dir = P4A_SMARTY_MASK_TEMPLATES_DIR;
 				$this->displayText('tpl_path', P4A_SMARTY_MASK_TEMPLATES_PATH . '/' . $this->template_name);
 				$this->displayText('base_url', P4A_SERVER_URL . P4A_SMARTY_MASK_TEMPLATES_PATH . '/' . $this->template_name . '/');
@@ -237,9 +237,9 @@
 				$this->smarty->template_dir = P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR;
 				$this->displayText('tpl_path', P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH . '/' . $this->template_name);
 				$this->displayText('base_url', P4A_SERVER_URL . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH . '/' . $this->template_name . '/');
-			} 
+			}
 		}
-		
+
 		/**
 		 * Returns the currently used template name.
 		 * @access public
@@ -249,7 +249,7 @@
 		{
 			return $this->template_name;
 		}
-		
+
 		/**
 		 * Tells the object that we'll not use a template.
 		 * @access public
@@ -258,8 +258,8 @@
 		{
 			$this->use_template = FALSE;
 			$this->template_name = NULL;
-		}	
-			
+		}
+
 		/**
 		 * Tells the template engine to show an object as a variable.
 		 * $object will be shown in the $variable template zone.
@@ -272,7 +272,7 @@
 			unset($this->smarty_var[$variable]);
 			$this->smarty_var[$variable] =& $object;
 		}
-		
+
 		 /**
 		 * Tells the template engine to show a strng as a variable.
 		 * @param string	Variable name, stands for a template variable.
@@ -283,7 +283,7 @@
 		{
 			$this->smarty_var[$variable] = $text;
 		}
-		
+
 		/**
 		 * Sets the title for the mask.
 		 * @param string	Mask title.
@@ -293,7 +293,7 @@
 		{
 			$this->title = $title ;
 		}
-		
+
 		/**
 		 * Returns the title for the mask.
 		 * @return string
@@ -303,7 +303,7 @@
 		{
 			return $this->title ;
 		}
-		
+
 		/**
 		 * Prints out the mask.
 		 * @access public
@@ -313,17 +313,17 @@
 			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
-			
+
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
 			$this->smarty->assign('css', $p4a->css);
 			if(isset($this->focus_object) and is_object($this->focus_object)){
  				$this->smarty->assign('focus_id', $this->focus_object->getID());
 			}
-			
+
 			$this->smarty->assign('application_title', $p4a->getTitle());
 // 			$this->smarty->assign('sheet', $this->sheet->getAsString());
-			                        		
+
 			foreach($this->smarty_var as $key=>$value)
 			{
 				if (is_object($value)){
@@ -331,11 +331,11 @@
 				}
 				$this->smarty->assign($key, $value);
 			}
-			
+
 			$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
 			$this->smarty->display($path_template);
 		}
-		
+
 		/**
 		 * Removes every template variable assigned.
 		 * @access public
@@ -347,7 +347,7 @@
 			unset($this->smarty);
 			$this->useTemplate($this->template_name);
 		}
-        
+
         /**
 		 * Add a multivalue external field to mask
 		 * @access public
@@ -358,21 +358,21 @@
         	if (! $this->data ){
         		ERROR('NO DATASOURCE SPECIFIED, CALL SET_SOURCE BEFORE');
         	}
-			
+
 			$this->fields->build("p4a_multivalue_field", $fieldname);
         	$this->external_fields[] = $this->fields->$fieldname->getID() ;
-        	
+
         	$pk_value = $this->fields->{$this->data->pk}->getNewValue();
 			$this->fields->$fieldname->setPkValue($pk_value);
         }
-        
+
 		/**
 		 * Associates a data source with the mask.
 		 * Also set the data structure to allow correct widget rendering.
 		 * Also moves to the first row of the data source.
-		 * @param data_source		 
+		 * @param data_source
 		 * @access public
-		 */ 
+		 */
 		function setSource(&$data_source)
 		{
 			$this->data =& $data_source;
@@ -383,7 +383,7 @@
             }
 
 		}
-        		
+
 		/**
 		 * Loads the current record data.
 		 * @param integer		The wanted row number.
@@ -393,26 +393,26 @@
 		{
 			$p4a =& P4A::singleton();
 			if( $this->actionHandler( 'beforeLoadRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onLoadRow' ) )
 			{
 				if( $this->actionHandler( 'onLoadRow' ) == ABORT ) return ABORT;
 			}
 			else
-			{				
+			{
 				$this->data->loadRow($num_row);
-				
+
 				foreach($this->external_fields as $object_id){
 					$pk_value = $this->fields->{$this->data->pk}->getNewValue();
 					$p4a->objects[$object_id]->setPkValue($pk_value);
 					$p4a->objects[$object_id]->load();
 				}
-				
+
 			}
-            
+
             $this->actionHandler( 'afterLoadRow' ) ;
 		}
-		
+
 		/**
 		 * Reloads data for the current record.
 		 * @access public
@@ -421,11 +421,11 @@
 		{
 			$this->loadRow();
 		}
-		
+
 		/**
 		 * Overwrites internal data with the data arriving from the submitted mask.
 		 * @access public
-		 */ 
+		 */
 		function updateRow()
 		{
 			$p4a =& P4A::singleton();
@@ -450,10 +450,10 @@
 						if( !is_dir( $target_dir ) ) {
 							mkdir( $target_dir, P4A_UMASK );
 						}
-					
+
 						$a_new_value = explode( ',', substr( $new_value, 1, -1 ) );
 						$a_old_value = explode( ',', substr( $old_value, 1, -1 ) );
-					
+
 						if ($old_value === NULL)
 						{
 							if ($new_value !== NULL)
@@ -465,7 +465,7 @@
 								$this->fields[$fieldname]->setNewValue( '{' . join($a_new_value, ',') . '}' );
 							}
 							else
-							{							
+							{
 								$this->fields[$fieldname]->setNewValue( NULL );
 							}
 						}
@@ -488,7 +488,7 @@
 						}
 					}
 	            }
-				
+
 				// EXECUTE THE DATA BROWSER COMMIT
 				$this->data_browser->commitRow();
 
@@ -497,10 +497,10 @@
 					$p4a->objects[$object_id]->update();
 				}
 			}
-			
+
 			$this->actionHandler( 'afterUpdateRow' ) ;
 		}
-		
+
 		/**
 		 * Goes in "new row" modality.
 		 * This means that we prepare p4a for adding a new record
@@ -511,7 +511,7 @@
 		{
 			$p4a =& P4A::singleton();
 			if( $this->actionHandler( 'beforeNewRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onNewRow' ) )
 			{
 				if( $this->actionHandler( 'onNewRow' ) == ABORT ) return ABORT;
@@ -525,10 +525,10 @@
 					$p4a->objects[$object_id]->load();
 				}
 			}
-		
+
 			$this->actionHandler( 'afterNewRow' ) ;
 		}
-		
+
 		/**
 		 * Deletes the currently pointed record.
 		 * @access public
@@ -537,25 +537,25 @@
 		{
 			$p4a =& P4A::singleton();
 			if( $this->actionHandler( 'beforeDeleteRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onDeleteRow' ) )
 			{
 				if( $this->actionHandler( 'onDeleteRow' ) == ABORT ) return ABORT;
 			}
 			else
-			{    			
+			{
 				// EXTERNAL FIELDS
 				foreach($this->external_fields as $object_id){
 					$p4a->objects[$object_id]->setNewValue();
 					$p4a->objects[$object_id]->update();
 				}
-    			
+
     			$this->data_browser->deleteRow();
 			}
-			
+
 			$this->actionHandler( 'afterDeleteRow' ) ;
 		}
-		
+
 		/**
 		 * Moves to the next row.
 		 * @access public
@@ -563,7 +563,7 @@
 		function nextRow()
 		{
 			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onMoveRow' ) )
 			{
 				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
@@ -574,13 +574,13 @@
     			$this->data_browser->moveNext();
     			$this->loadRow();
     			*/
-    			
+
     			$this->data_browser->moveNext();
 			}
-			
-			$this->actionHandler( 'afterMoveRow' ) ; 
+
+			$this->actionHandler( 'afterMoveRow' ) ;
 		}
-		
+
 		/**
 		 * Moves to the previous row.
 		 * @access public
@@ -588,7 +588,7 @@
 		function prevRow()
 		{
 			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onMoveRow' ) )
 			{
 				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
@@ -599,13 +599,13 @@
     			$this->data_browser->movePrev();
     			$this->loadRow();
     			*/
-    			
+
     			$this->data_browser->movePrev();
 			}
-			
-			$this->actionHandler( 'afterMoveRow' ) ; 
+
+			$this->actionHandler( 'afterMoveRow' ) ;
 		}
-		
+
 		/**
 		 * Moves to the last row.
 		 * @access public
@@ -613,7 +613,7 @@
 		function lastRow()
 		{
 			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onMoveRow' ) )
 			{
 				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
@@ -624,10 +624,10 @@
     			$this->data_browser->moveLast();
     			$this->loadRow();
     			*/
-    			
+
     			$this->data_browser->moveLast();
 			}
-			
+
 			$this->actionHandler( 'afterMoveRow' ) ;
 		}
 
@@ -638,7 +638,7 @@
 		function firstRow()
 		{
 			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
-			
+
 			if( $this->isActionTriggered( 'onMoveRow' ) )
 			{
 				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
@@ -649,14 +649,14 @@
     			$this->data_browser->moveFirst();
     			$this->loadRow();
     			*/
-    			
+
     			$this->data_browser->moveFirst();
 			}
-			
+
 			$this->actionHandler( 'afterMoveRow' ) ;
 		}
 
-		
+
 		/**
 		 * Returns the opening code for the mask.
 		 * @return string
@@ -672,17 +672,17 @@
             $this->sOpen .= '	if (!param2) param2 = "" ;'														. "\n";
             $this->sOpen .= '	if (!param3) param3 = "" ;'														. "\n";
             $this->sOpen .= '	if (!param4) param4 = "" ;'														. "\n";
-			$this->sOpen .= ''																					. "\n";            
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"].object.value = object_name;'				. "\n";
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"].action.value = action_name;'				. "\n";
-            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param1.value = param1;'						. "\n";            
+			$this->sOpen .= ''																					. "\n";
+			$this->sOpen .= '	document.forms["'. $this->getName() .'"]._object.value = object_name;'				. "\n";
+			$this->sOpen .= '	document.forms["'. $this->getName() .'"]._action.value = action_name;'				. "\n";
+            $this->sOpen .= '	document.forms["'. $this->getName() .'"].param1.value = param1;'						. "\n";
             $this->sOpen .= '	document.forms["'. $this->getName() .'"].param2.value = param2;'						. "\n";
             $this->sOpen .= '	document.forms["'. $this->getName() .'"].param3.value = param3;'						. "\n";
             $this->sOpen .= '	document.forms["'. $this->getName() .'"].param4.value = param4;'						. "\n";
 			$this->sOpen .= '	if (typeof document.forms["'. $this->getName() .'"].onsubmit == "function") {'		. "\n";
 			$this->sOpen .= '		document.forms["'. $this->getName() .'"].onsubmit();'							. "\n";
 			$this->sOpen .= '	}'																				. "\n";
-			$this->sOpen .= '	document.forms["'. $this->getName() .'"].submit();'									. "\n";				
+			$this->sOpen .= '	document.forms["'. $this->getName() .'"].submit();'									. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
 			$this->sOpen .= 'function isReturnPressed(e)'														. "\n";
@@ -690,37 +690,37 @@
 			$this->sOpen .= '	var characterCode;'																. "\n";
             $this->sOpen .= ''																					. "\n";
             $this->sOpen .= '	if(e && e.which) {'																. "\n";
-			$this->sOpen .= '		e = e; characterCode = e.which;'											. "\n";            
+			$this->sOpen .= '		e = e; characterCode = e.which;'											. "\n";
 			$this->sOpen .= '	} else {'																		. "\n";
 			$this->sOpen .= '		e = event; characterCode = e.keyCode;'										. "\n";
-            $this->sOpen .= '	}'																				. "\n";            
+            $this->sOpen .= '	}'																				. "\n";
             $this->sOpen .= ''																					. "\n";
             $this->sOpen .= '	if(characterCode == 13) {'														. "\n";
             $this->sOpen .= '		return true;'																. "\n";
 			$this->sOpen .= '	} else {'																		. "\n";
 			$this->sOpen .= '		return false;'																. "\n";
-			$this->sOpen .= '	}'																				. "\n";				
+			$this->sOpen .= '	}'																				. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
 			$this->sOpen .= 'function setFocus(id)'															. "\n";
 			$this->sOpen .= '{'																					. "\n";
 			$this->sOpen .= '	if( (id != null) && (document.forms["'. $this->getName() .'"].elements[id] != null) && (document.forms["'. $this->getName() .'"].elements[id].disabled == false) ) {' . "\n";
 			$this->sOpen .= '		document.forms["'. $this->getName() .'"].elements[id].focus();'					. "\n";
-			$this->sOpen .= '	}'																				. "\n";				
+			$this->sOpen .= '	}'																				. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= '</SCRIPT>'																			. "\n";			
+			$this->sOpen .= '</SCRIPT>'																			. "\n";
 			$this->sOpen .= '<FORM method="post" enctype="multipart/form-data" name="' . $this->getName() . '" action="index.php">';
-			$this->sOpen .= "<INPUT TYPE='hidden' name='object' value='" . $this->getId() . "'>" . "\n";
-			$this->sOpen .= "<INPUT TYPE='hidden' name='action' value='none'>" . "\n";
+			$this->sOpen .= "<INPUT TYPE='hidden' name='_object' value='" . $this->getId() . "'>" . "\n";
+			$this->sOpen .= "<INPUT TYPE='hidden' name='_action' value='none'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param1'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param2'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param3'>" . "\n";
             $this->sOpen .= "<INPUT TYPE='hidden' name='param4'>" . "\n";
-			
-			return $this->sOpen; 
+
+			return $this->sOpen;
 		}
-		
+
 		/**
 		 * Returns the closing code for the mask.
 		 * @return string
@@ -731,7 +731,7 @@
 			$this->sClose = "</FORM>";
 			return $this->sClose;
 		}
-		
+
 		/**
 		 * Does nothing.
 		 * @access public

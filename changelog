@@ -1,3 +1,4 @@
+- Fix:    object and action hidden fields are now _object and _action (Thanks to Valery Sidorov)
 - Add:    support for currency type to I18N::auto_format() and I18N::auto_unformat() (Thanks to Valery Sidorov)
 - Fix:    I18N_DATETIME::format_time_default() and I18N_DATETIME::format_time_short() which prevented using default parameter (NULL) to format current time (Thanks to Valery Sidorov)
 - Add:    support for charset in i18n subsection (Thanks to Valery Sidorov)
