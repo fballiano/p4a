@@ -700,7 +700,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		$filters = $this->getFilters();
 		foreach ($filters as $filter) {
-			$query = "($filter) AND ";
+			$query .= "($filter) AND ";
 		}
 		if (strlen($query) > 0 ) {
 			$query = " WHERE " . substr($query,0,-4);

@@ -1,4 +1,6 @@
 0.5
+- fixed a file upload bug that prevented a correct behaviour when the web server is listening on a port differt from 80
+- fixed a bug in DATA_SOURCE filters engine
 - added a message to MySQL Manager to suggest using Firefox
 - fixed a bug in ARRAY_SOURCE getAll
 - fixed a bug in ARRAY_SOURCE load

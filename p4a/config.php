@@ -165,7 +165,7 @@
 	}
 
 	if (!defined('P4A_UPLOADS_URL')){
-		define('P4A_UPLOADS_URL', P4A_SERVER_URL . P4A_UPLOADS_PATH);
+		define('P4A_UPLOADS_URL', P4A_UPLOADS_PATH);
 	}
 
 	//Temporary Uploads Constants
