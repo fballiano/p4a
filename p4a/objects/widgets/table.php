@@ -944,7 +944,7 @@
 			$this->anchorRight($field_num_page);
 
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
-// 			$current_page->setStyleProperty("border","1px solid red");
+//  			$current_page->setStyleProperty("border","1px solid red");
 			$this->anchorLeft($current_page);
 
 			$this->addButton('button_last', 'last','right');
@@ -962,6 +962,8 @@
 			$this->addButton('button_first', 'first', 'right');
 			$this->buttons->button_first->addAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
+			
+//  			$this->setStyleProperty("border","1px solid red");
 
 		}
 

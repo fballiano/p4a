@@ -1144,7 +1144,7 @@
 			{
 				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
-					$button_file_delete->setValue( $p4a->i18n->messages->get('filedelete') );
+					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
 					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 				}
@@ -1242,6 +1242,7 @@
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete') );
 					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
+					$_SESSION["delete_id"] = $button_file_delete->getID();
 				}
 
 				if ($this->isEnabled()) {
@@ -1281,7 +1282,7 @@
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
-
+			
 			return $this->composeLabel() . $sReturn;
 		}
 

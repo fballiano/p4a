@@ -4,12 +4,12 @@
     <meta http-equiv="content-type" content="text/html; charset=[[$charset]]">
     <title>[[$application_title]]</title>
     <script src="[[$root_path]]/js/pngfix.js"></script>
-    <!--<link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">-->
-	<style type="text/css">
+    <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="all">
+    <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
+<!--	<style type="text/css">
 		@import url("[[$theme_path]]/screen.css") all;
 		@import url("[[$theme_path]]/print.css") print;
-	</style>
+	</style>-->
 	
     [[foreach from=$css key=uri item=media ]]
     <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">
