@@ -6,6 +6,8 @@
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #4B718A;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .img_button {
@@ -424,10 +426,8 @@ dd.dd_block {
  	z-index:2;
 }
 
-div.frame {
+fieldset.frame,div.frame {
 	padding:0px;
-	margin-left:auto;
-	margin-right:auto;
 }
 
 .row {
@@ -439,12 +439,9 @@ div.br{
 	background:red;
 }
 
-fieldset {
+fieldset.frame {
 	border:1px solid #C6D3DE;
-	padding-top:10px;
-	padding-left:15px;
-	padding-right:15px;
-	margin:0;
+	padding:10px 15px;
 }
 
 legend {

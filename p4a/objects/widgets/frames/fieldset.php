@@ -44,15 +44,19 @@ class P4A_Fieldset extends P4A_Frame
 				if (strlen($as_string)>0) {
 					$one_visible = true;
 					$float = $obj["float"];
-					$margin = "margin-" . $obj["float"];
+					if ($obj["float"] != "none") {
+						$margin = "margin-" . $obj["float"];
+					} else {					
+						$margin = "margin";	
+					}
 					$margin_value = $obj["margin"];
-					$row_html .= "\n\t<div style='padding:2px; float:$float;$margin:$margin_value'>";
+					$row_html .= "\n\t<div style='padding:2px 0px; float:$float;$margin:$margin_value'>";
 					$row_html .= "\n\t\t$as_string";
 					$row_html .= "\n\t</div>";
 				}
 			}
 
-			$row_html .= "\n\n\t<div class='br'></div>\n";
+// 			$row_html .= "\n\n\t<div class='br'></div>\n";
 			$row_html .= "\n</div>\n";
 
 			if ($one_visible) {

@@ -35,7 +35,7 @@ class P4A_Frame extends P4A_Widget
 		$this->_anchor($object, $margin, "left");
 	}
 
-	function anchorCenter(&$object, $margin = "10px")
+	function anchorCenter(&$object, $margin = "auto")
 	{
 		$this->_anchor($object, $margin, "none");
 	}
@@ -65,15 +65,19 @@ class P4A_Frame extends P4A_Widget
 				if (strlen($as_string)>0) {
 					$one_visible = true;
 					$float = $obj["float"];
-					$margin = "margin-" . $obj["float"];
+					if ($obj["float"] != "none") {
+						$margin = "margin-" . $obj["float"];
+					} else {
+						$margin = "margin";	
+					}
 					$margin_value = $obj["margin"];
-					$row .= "\n\t<div style='padding:2px;float:$float;$margin:$margin_value'>";
+					$row .= "\n\t<div style='padding:2px 0px;float:$float;$margin:$margin_value'>";
 					$row .= "\n\t\t$as_string" ;
 					$row .= "\n\t</div>";
 				}
 			}
 
-			$row .= "\n\n\t<div class='br'></div>\n";
+// 			$row .= "\n\n\t<div class='br'></div>\n";
 			$row .= "\n</div>\n";
 
 			if ($one_visible) {

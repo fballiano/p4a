@@ -296,7 +296,7 @@ class P4A_Data_Source extends P4A_Object
 
 		if ($this->isNew() and $num_rows > 0) {
 			$this->lastRow();
-		} elseif ($this->isNew() and $num_rows == 0) {
+		} elseif (!$this->isNew() and $num_rows == 0) {
 			$this->newRow();
 		} elseif ($this->_pointer > $this->getNumRows()) {
 			$this->lastRow();
