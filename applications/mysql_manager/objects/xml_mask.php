@@ -234,7 +234,7 @@ class P4A_XML_Mask extends P4A_Mask
 
 	function setPK(&$source, $attr)
 	{
-		if (array_key_exists("PK", $attr)) {
+		if (array_key_exists("PK", $attr) and $attr["PK"] != "") {
 			$pk = $attr["PK"];
 			$pks = split(",",$pk);
 
@@ -255,7 +255,6 @@ class P4A_XML_Mask extends P4A_Mask
 	
 	function saveRow()
 	{
-		
 		foreach ($this->_mandatory_fields as $fieldname) {
 			$value = trim($this->fields->$fieldname->getNewValue());
 			if (!strlen($value) and $this->fields->$fieldname->getType() != "checkbox") {
