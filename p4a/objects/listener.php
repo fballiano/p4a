@@ -62,18 +62,6 @@
 			parent::p4aObject(NULL, 'lst');
 			$this->active_object = NULL;
 		}
-
-		/**
-		 * Sets the passed object as active.
-		 * @param object object		The object that will be set as active.
-		 * @access private
-		 * @see $active_object
-		 */		
-		function setActiveObject(&$object)
-		{
-			unset($this->active_object);
-			$this->active_object = &$object;
-		}
 		
 		
 		/**
