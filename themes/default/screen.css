@@ -2,6 +2,39 @@
 /*   P4A CLASSES   */
 /*   -----------   */
 
+body {
+	height: 100%;
+	width:100%;
+	padding:0px;
+	margin:0px;
+	border:0px;
+}
+
+
+#sheetContainer>.sheet,#sheetContainer>fieldset{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#topContainer {
+	width:100%;
+	position:fixed;
+	top: 0px;
+	z-index:2;
+}
+
+#mainContainer {
+	width:100%;
+	position:absolute;
+	text-align:center;
+}
+
+#footerContainer {
+	clear: both;
+	text-align: center;
+	margin-top: 10px;
+}
+
 * {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;

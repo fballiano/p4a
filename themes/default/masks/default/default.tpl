@@ -9,7 +9,7 @@
 <link href="[[$v.0]]" rel="stylesheet" type="text/css" media="[[$v.1]]" />
 [[/foreach]]
 
-<style type="text/css">
+<style type="text/css" media="screen">
     [[assign var="toppx" value="0"]]
     [[if isset($menu)]]
 	     [[assign var="toppx" value="25"]]
@@ -21,54 +21,9 @@
 	     [[assign var="toppx" value="80"]]
     [[/if]]
 
-	body {
-		height: 100%;
-		width:100%;
-		padding:0px;
-		margin:0px;
-		border:0px;
-	}
-
-
-	#sheetContainer>.sheet,#sheetContainer>fieldset{
-		margin-left:auto;
-		margin-right:auto;
-	}
-
-	#topContainer {
-		width:100%;
-		position:fixed;
-		top: 0px;
-		z-index:2;
-	}
-
-	#mainContainer {
-		width:100%;
-		position:absolute;
-		text-align:center;
-	}
-
-	#footerContainer {
-		clear: both;
-		text-align: center;
-		margin-top: 10px;
-	}
-
-	@media screen {
-		#mainContainer {
-			top:[[$toppx]]px;
-		}
-	}
-
-	@media print {
-		#mainContainer {
-			top:0px;
-		}
-
-		#topContainer {
-			visibility:hidden;
-		}
-	}
+#mainContainer {
+	top:[[$toppx]]px;
+}
 </style>
 </head>
 
