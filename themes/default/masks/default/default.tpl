@@ -7,6 +7,10 @@
 <script type="text/javascript">
 function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or higher.
    {
+   var agt = navigator.userAgent.toLowerCase();
+   var is_ie = ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1));
+   if (!is_ie) return;
+
    for(var i=0; i<document.images.length; i++)
       {
           var img = document.images[i]
@@ -37,7 +41,6 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
              }
       }
    }
-window.attachEvent("onload", correctPNG);
 </script>
 
 
@@ -110,7 +113,7 @@ window.attachEvent("onload", correctPNG);
   </head>
 
   [[if $focus_id]]
-  <body onLoad="setFocus('[[$focus_id]]')">
+  <body onLoad="setFocus('[[$focus_id]]'); correctPNG();">
   [[else]]
   <body>
   [[/if]]
