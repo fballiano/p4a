@@ -1,12 +1,14 @@
 <?php
 
-require_once( dirname(__FILE__) . '/../../p4a.php' );
+require_once dirname(__FILE__) . '/../../p4a.php';
 
 $p4a =& p4a::singleton("mysql_manager");
-if (p4a_check_configuration($error)) {
-	$p4a->main();
+$check = p4a_check_configuration(dirname(__FILE__) . '/xml');
+
+if (is_string($check)) {
+	print $check;
 } else {
-	print $error;
+	$p4a->main();
 }
 
 ?>

@@ -38,17 +38,21 @@
  * @package p4a
  */
 
-function p4a_check_configuration(&$error)
+/*
+ * Checks and tries to repair system configuration.
+ * @access public
+ * @param string	If you want to check for another writable directory use this param
+ * @return boolean TRUE on success, an error string on failure
+ */
+function p4a_check_configuration($additionalDir = null)
 {
     $correct = true;
     $title = "Configuration checks for \"" . P4A_APPLICATION_NAME . "\"";
     $error = "<center><h2>$title</h2></center>\n" ;
 
-    $error .= "<h3>ACTIVITIES</h3>\n";
-
     // OPERATING SYSTEM
     $error .= "<div class='box'>Checking SERVER OPERATING SYSTEM:<br/>";
-    if( _DS_ == '/' ) {
+    if (_DS_ == '/') {
     	$error .= "P4A is configured as running on <b>Linux</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
     } else {
     	$error .= "P4A is configured as running on <b>Windows</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
@@ -57,7 +61,7 @@ function p4a_check_configuration(&$error)
 
     // DOCUMENT ROOT
     $error .= "<div class='box'>Checking DOCUMENT_ROOT: ";
-    if( strlen( P4A_SERVER_DIR ) == 0 ) {
+    if (strlen(P4A_SERVER_DIR) == 0) {
     	$error .= "<span class='red'>FAILED</span><br/>Define P4A_SERVER_DIR as your DOCUMENT_ROOT.";
     	$correct = false;
     } else {
@@ -67,7 +71,10 @@ function p4a_check_configuration(&$error)
 
     // UPLOADS DIRECTORY
     $error .= "<div class='box'>Checking UPLOADS DIRECTORY: ";
-    if( is_readable( P4A_UPLOADS_DIR ) and is_dir( P4A_UPLOADS_DIR ) and is_writable( P4A_UPLOADS_DIR ) ) {
+    if ((is_readable(P4A_UPLOADS_DIR) and
+		is_dir(P4A_UPLOADS_DIR) and
+		is_writable(P4A_UPLOADS_DIR)) or
+		(System::mkDir("-p " . P4A_UPLOADS_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
@@ -77,7 +84,10 @@ function p4a_check_configuration(&$error)
 
     // UPLOADS TEMPORARY DIRECTORY
     $error .= "<div class='box'>Checking UPLOADS TEMPORARY DIRECTORY: ";
-    if( is_readable( P4A_UPLOADS_TMP_DIR ) and is_dir( P4A_UPLOADS_TMP_DIR ) and is_writable( P4A_UPLOADS_TMP_DIR ) ) {
+    if ((is_dir(P4A_UPLOADS_TMP_DIR) and
+		is_readable(P4A_UPLOADS_TMP_DIR) and
+		is_writable(P4A_UPLOADS_TMP_DIR)) or
+		(System::mkDir("-p " . P4A_UPLOADS_TMP_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
@@ -87,7 +97,14 @@ function p4a_check_configuration(&$error)
 
     // SMARTY COMPILE DIRECTORIES
     $error .= "<div class='box'>Checking SMARTY COMPILE DIRECTORIES: ";
-    if( is_dir( P4A_SMARTY_MASK_COMPILE_DIR ) and is_writable( P4A_SMARTY_MASK_COMPILE_DIR ) and is_dir( P4A_SMARTY_WIDGET_COMPILE_DIR ) and is_writable( P4A_SMARTY_WIDGET_COMPILE_DIR ) ) {
+    if ((is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and
+		is_readable(P4A_SMARTY_MASK_COMPILE_DIR) and
+		is_writable(P4A_SMARTY_MASK_COMPILE_DIR) and
+		is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and
+		is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and
+		is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) or
+		(System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR) and
+		System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR))) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable.";
@@ -95,46 +112,42 @@ function p4a_check_configuration(&$error)
     }
     $error .= "</div>";
 
+    // ADDITIONAL DIRECTORY
+	if ($additionalDir) {
+		$error .= "<div class='box'>Checking ADDITIONAL DIRECTORY: ";
+		if ((is_dir($additionalDir) and is_readable($additionalDir) and is_writable($additionalDir)) or (System::mkDir("-p $additionalDir"))) {
+			$error .= "<span class='green'>OK</span>";
+		} else {
+			$error .= "<span class='red'>FAILED</span><br/>Create \"$additionalDir\" and set it writable.";
+			$correct = false ;
+		}
+		$error .= "</div>";
+	}
+
     // DATABASE CONNECTION
     $error .= "<div class='box'>Checking DATABASE CONNECTION: ";
-    if (defined('P4A_DSN'))
-    {
+    if (defined('P4A_DSN')) {
     	$db = DB::connect(P4A_DSN);
     	if (DB::isError($db)) {
     		$error .= "<span class='red'>FAILED</span><br/>Check P4A_DSN definition.";
     		$correct = false ;
-    	}
-    	else
-    	{
+    	} else {
     		$error .= "<span class=green'>OK</span>";
     	}
-    }
-    else
-    {
+    } else {
     	$error .= "P4A_DSN is not defined, no database connection.";
     }
     $error .= "</div>";
 
-    // REPORT
-    $error .= "<h3>FINAL REPORT</h3>\n";
-
-    if( $correct )
-    {
-    	$error .= "<div class='box'>Installation and configuration <span class='green'>OK</span>.</div>";
-    	$error .= "<h3>TO DO</h3>\n";
-    	$error .= "<div class='box'>Now you can safely remove p4a_configuration_check() from your application.</div>";
-    }
-    else
-    {
-    	$error .= "<div class='box'>Installation and configuration <span class='red'>FAILED</span>.</div>";
-    	$error .= "<h3>TO DO</h3>\n";
-    	$error .= "<div class='box'>Resolve all the problems to continue execution.</div>";
-    }
-	
+	// FINAL STRINGS
 	$style = "<style>body {font-family:sans-serif; font-size:90%; color:#111} h1,h2,h3,h4{text-align:center} .box{padding:10px; border:1px solid #111; background-color:#fafafa; margin-bottom:10px;} .red{color:red;font-weight:bold} .green{color:green;font-weight:bold}</style>";
-    $error = "<html><head><title>{$title}</title></head><body>{$style}{$error}</body></html>";
+	$error = "<html><head><title>{$title}</title></head><body>{$style}{$error}</body></html>";
 
-    return $correct;
+    if ($correct) {
+		return true;
+    } else {
+		return $error;
+	}
 }
 
 ?>
