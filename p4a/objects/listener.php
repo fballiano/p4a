@@ -45,13 +45,7 @@
 	 * @package p4a
 	 */
 	class P4A_LISTENER extends P4A_OBJECT
-	{
-		/**
-		 * The object that caused the event.
-		 * @var object object
-		 * @access private
-		 */
-		var $active_object = NULL;
+	{		
 		
 		/**
 		 * Class constructor.
@@ -60,7 +54,17 @@
 		function &p4a_listener()
 		{
 			parent::p4aObject(NULL, 'lst');
-			$this->active_object = NULL;
+		}
+		
+		//todo
+		function  &singleton($name)
+		{
+			$p4a =& P4A::singleton();
+			
+			if (! isset($p4a->listener->$name)){
+				$p4a->listener->build($name, $name);
+			}
+			return $p4a->listener->$name;
 		}
 		
 		
