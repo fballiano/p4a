@@ -1,3 +1,6 @@
+0.15
+- some language fixes in the "products_catalogue" application
+
 0.14
 - fixed a bug in P4A_Number::format, if null is passed, null is returned (not zero)
 - added P4A_Message::autoClear() to enable/disable auto clearing of messages

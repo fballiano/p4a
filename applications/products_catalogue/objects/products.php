@@ -41,7 +41,7 @@ class Products extends P4A_Mask
 		$this->intercept($txt_search, "onReturnPress","search");
 		$txt_search->setLabel("Cod. Product");
 		$cmd_search =& $this->build("p4a_button","cmd_search");
-		$cmd_search->setValue("Cerca");
+		$cmd_search->setValue("Go");
 		$this->intercept($cmd_search, "onClick","search");
 		$fs_search->anchor($txt_search);
 		$fs_search->anchorLeft($cmd_search);
@@ -70,7 +70,7 @@ class Products extends P4A_Mask
 
 		//Fieldset con l'elenco dei campi
 		$fset=& $this->build("p4a_fieldset", "frame");
-		$fset->setTitle("Scheda prodotto");
+		$fset->setTitle("Product details");
 
  		$fset->anchor($this->fields->product_id);
 		$fset->anchor($this->fields->category_id);
