@@ -40,7 +40,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
 <h2>Running Applications</h2>
 <ul>
 <?php
-	$projects_dir = dirname(__FILE__) . '/projects/';	
+	$projects_dir = dirname(__FILE__) . '/applications/';	
 	$dhprojects = opendir($projects_dir);
 
 	while (false !== ($filename = readdir($dhprojects)))
@@ -51,7 +51,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
 			and is_dir($projects_dir . $filename))
 		{
 			
-			print "<li><a href='projects/$filename/' target='_blank'>{$filename}</a></li>\n";		
+			print "<li><a href='applications/$filename/' target='_blank'>{$filename}</a></li>\n";		
 		}
 
 	}

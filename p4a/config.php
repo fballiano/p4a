@@ -93,11 +93,11 @@
 	}
 	
 	
-	// Automatic Project Name Detection
-	if (!defined('P4A_PROJECT_NAME'))
+	// Automatic Application Name Detection
+	if (!defined('P4A_APPLICATION_NAME'))
 	{
 		$aCwd = explode( _DS_, getcwd() ) ;
-		define('P4A_PROJECT_NAME', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
+		define('P4A_APPLICATION', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
 	}
 	
 	
@@ -140,35 +140,35 @@
 		define('P4A_LIBRARIES_URL', P4A_SERVER_URL . P4A_LIBRARIES_PATH);
 	}
 		
-	//Projects Constants
-	if (!defined('P4A_PROJECT_PATH')){
-		define("P4A_PROJECT_PATH", dirname($_SERVER["SCRIPT_NAME"]));
+	//Applications Constants
+	if (!defined('P4A_APPLICATION_PATH')){
+		define("P4A_APPLICATION_PATH", dirname($_SERVER["SCRIPT_NAME"]));
 	}
 	
-	if (!defined('P4A_PROJECT_DIR')){
-		define('P4A_PROJECT_DIR', P4A_SERVER_DIR . P4A_PROJECT_PATH);
+	if (!defined('P4A_APPLICATION_DIR')){
+		define('P4A_APPLICATION_DIR', P4A_SERVER_DIR . P4A_APPLICATION_PATH);
 	}
 
-	if (!defined('P4A_PROJECT_URL')){
-		define('P4A_PROJECT_URL', P4A_SERVER_URL . P4A_PROJECT_PATH);
+	if (!defined('P4A_APPLICATION_URL')){
+		define('P4A_APPLICATION_URL', P4A_SERVER_URL . P4A_APPLICATION_PATH);
 	}
 	
-	//Projects Libraries Constants
-	if (!defined('P4A_PROJECT_LIBRARIES_PATH')){
-		define('P4A_PROJECT_LIBRARIES_PATH', P4A_PROJECT_PATH . '/libraries/' );
+	//Applications Libraries Constants
+	if (!defined('P4A_APPLICATION_LIBRARIES_PATH')){
+		define('P4A_APPLICATION_LIBRARIES_PATH', P4A_APPLICATION_PATH . '/libraries/' );
 	}
 	
-	if (!defined('P4A_PROJECT_LIBRARIES_DIR')){
-		define('P4A_PROJECT_LIBRARIES_DIR', P4A_SERVER_DIR . P4A_PROJECT_LIBRARIES_PATH);
+	if (!defined('P4A_APPLICATION_LIBRARIES_DIR')){
+		define('P4A_APPLICATION_LIBRARIES_DIR', P4A_SERVER_DIR . P4A_APPLICATION_LIBRARIES_PATH);
 	}
 	
-	if (!defined('P4A_PROJECT_LIBRARIES_URL')){
-		define('P4A_PROJECT_LIBRARIES_URL', P4A_SERVER_DIR . P4A_PROJECT_LIBRARIES_PATH);
+	if (!defined('P4A_APPLICATION_LIBRARIES_URL')){
+		define('P4A_APPLICATION_LIBRARIES_URL', P4A_SERVER_DIR . P4A_APPLICATION_LIBRARIES_PATH);
 	}
 	
 	//Uploads Constants
 	if (!defined('P4A_UPLOADS_PATH')){
-		define('P4A_UPLOADS_PATH', P4A_PROJECT_PATH . '/uploads' );
+		define('P4A_UPLOADS_PATH', P4A_APPLICATION_PATH . '/uploads' );
 	}
 	
 	if (!defined('P4A_UPLOADS_DIR')){
@@ -295,16 +295,16 @@
 		define('P4A_LOCALE', 'en_US');
 	}
 		
-	if (!defined('P4A_PROJECT_LOCALES_PATH')){
-		define('P4A_PROJECT_LOCALES_PATH', P4A_PROJECT_PATH . '/i18n');
+	if (!defined('P4A_APPLICATION_LOCALES_PATH')){
+		define('P4A_APPLICATION_LOCALES_PATH', P4A_APPLICATION_PATH . '/i18n');
 	}
 			
-	if (!defined('P4A_PROJECT_LOCALES_DIR')){
-		define('P4A_PROJECT_LOCALES_DIR', P4A_PROJECT_DIR . '/i18n');
+	if (!defined('P4A_APPLICATION_LOCALES_DIR')){
+		define('P4A_APPLICATION_LOCALES_DIR', P4A_APPLICATION_DIR . '/i18n');
 	}
 	
-	if (!defined('P4A_PROJECT_LOCALES_URL')){
-		define('P4A_PROJECT_LOCALES_URL', P4A_PROJECT_URL . '/i18n');
+	if (!defined('P4A_APPLICATION_LOCALES_URL')){
+		define('P4A_APPLICATION_LOCALES_URL', P4A_APPLICATION_URL . '/i18n');
 	}
 	
 	//P4A SYSTEM CONSTANTS
