@@ -1,7 +1,8 @@
 0.11
-- navigation bar fix in P4A_Table
+- navigation bar bugfix in P4A_Table
 - print css bugfix
 - moved some inlie css to external files
+- output HTML optimizations
 
 0.10
 - moved some locale files, now ru_RU.CP121 and ru_RU.KOI8-R work again
