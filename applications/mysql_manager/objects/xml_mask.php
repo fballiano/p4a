@@ -3,6 +3,7 @@
 class P4A_XML_Mask extends P4A_Mask
 {
 	var $_xml = array();
+	var $_mandatory_fields = array();
 
 	function &P4A_XML_Mask($mask_name = NULL)
 	{
@@ -16,10 +17,7 @@ class P4A_XML_Mask extends P4A_Mask
 	{
 		$p4a =& p4a::singleton();
 
-		$host = $p4a->masks->db_configuration->fields->host->getNewValue();
-		$database = $p4a->masks->db_configuration->fields->database->getNewValue();
-
-		$file_name = P4A_APPLICATION_DIR . "/xml/$host/$database/$mask_name.xml";
+		$file_name = P4A_APPLICATION_DIR . "/xml/$mask_name.xml";
 
 		$xml = file_get_contents($file_name);
 
@@ -58,7 +56,7 @@ class P4A_XML_Mask extends P4A_Mask
 					$source->setTable($attr["TABLE"]);
 					$this->setAttr($source, $attr);
 					$source->load();
-					$source->firstRow();				
+					$source->firstRow();
 					$this->setPK($source, $attr);
 				} else {
 					$source =& $this->{$name};
@@ -77,7 +75,6 @@ class P4A_XML_Mask extends P4A_Mask
 
 			if ($tag["tag"] == "FIELD"  and $tag["type"] != "close") {
 				$field =& $this->fields->{$attr["NAME"]};
-				$field->setUploadSubpath("$host/$database");
 
 				$this->setAttr($field,$attr);
 				$this->setLevel($field, $level);
@@ -109,6 +106,28 @@ class P4A_XML_Mask extends P4A_Mask
 
 			if ($tag["tag"] == "MENU") {
 				$this->display("menu", $p4a->menu);
+			}
+
+			if ($tag["tag"] == "MESSAGE") {
+				$this->build("P4A_Message", "message");
+				if (!isset($attr["POSITION"])) {
+					$attr["POSITION"] = "left";
+				}
+
+				switch ($attr["POSITION"]) {
+					case "left":
+						$frame->anchor($this->message);
+						break;
+					case "center":
+						$frame->anchorCenter($this->message);
+						break;
+					case "right":
+						$frame->anchorRight($this->message);
+						break;
+				}
+
+				unset($attr["POSITION"]);
+				$this->setAttr($this->message, $attr);
 			}
 
 			if ($tag["tag"] == "TOOLBAR") {
@@ -170,6 +189,7 @@ class P4A_XML_Mask extends P4A_Mask
 			switch ($att) {
 				case "MANDATORY":
 					$obj->label->setFontWeight('bold');
+					$this->_mandatory_fields[] = $obj->getName();
 					break;
 				case "SOURCE_DESCRIPTION_FIELD":
 					$obj->setSourceDescriptionField($value);
@@ -181,6 +201,8 @@ class P4A_XML_Mask extends P4A_Mask
 					$obj->enable($value);
 					break;
 				case "PK":
+					$this->setPk($obj, $attr);
+					break;
 				case "AUTOINCREMENT":
 					break;
 				default:
@@ -201,7 +223,7 @@ class P4A_XML_Mask extends P4A_Mask
 	{
 		$this->levels{$level} =& $obj;
 	}
-	
+
 	function setPK(&$source, $attr)
 	{
 		if (array_key_exists("PK", $attr)) {
@@ -213,13 +235,14 @@ class P4A_XML_Mask extends P4A_Mask
 			}else{
 				$source->setPK($pks);
 			}
-			
+
 			if (array_key_exists("AUTOINCREMENT",$attr) and count($pks) == 1) {
 				$table = $source->getTable();
 				$pk_sequence = "{$table}_{$pk}";
+				$source->load();
 				$source->fields->$pk->setSequence($pk_sequence);
 			}
-		} 
+		}
 	}
 }
 ?>
