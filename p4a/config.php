@@ -57,52 +57,37 @@
 	// Server Operating System
 	if (!defined('P4A_OS'))
 	{
-		if( strtolower( substr( PHP_OS, 0, 3 ) ) == 'win'  )
-		{
-			define('P4A_OS', 'windows') ;
-		}
-		else
-		{
-			define('P4A_OS', 'linux') ;
+		if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
+			define('P4A_OS', 'windows');
+		} else {
+			define('P4A_OS', 'linux');
 		}
 	}
 
 	// Directory Separator
-	if (!defined('_DS_'))
-	{
-		if(  P4A_OS == 'windows' ) {
-			define('_DS_', '\\') ;
-		} else {
-			define('_DS_', '/') ;
-		}
+	if (!defined('_DS_')) {
+		define('_DS_', DIRECTORY_SEPARATOR);
 	}
 
 	// System String Separator
-	if (!defined('_SSS_'))
-	{
-		if(  P4A_OS == 'windows' ) {
-			define('_SSS_', ';') ;
-		} else {
-			define('_SSS_', ':') ;
-		}
+	if (!defined('_SSS_')) {
+		define('_SSS_', PATH_SEPARATOR) ;
 	}
 
-	if (!defined('P4A_PASSWORD_OBFUSCATOR'))
-	{
-		define( 'P4A_PASSWORD_OBFUSCATOR', '**********' );
+	if (!defined('P4A_PASSWORD_OBFUSCATOR')) {
+		define('P4A_PASSWORD_OBFUSCATOR', '**********');
 	}
 
 
 	// Automatic Application Name Detection
-	if (!defined('P4A_APPLICATION_NAME'))
-	{
+	if (!defined('P4A_APPLICATION_NAME')) {
 		$aCwd = explode( _DS_, getcwd() ) ;
 		define('P4A_APPLICATION_NAME', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
 	}
 
 
 	//Server Constants
-	if (!defined('P4A_SERVER_NAME')){
+	if (!defined('P4A_SERVER_NAME')) {
 		define('P4A_SERVER_NAME', $_SERVER['SERVER_NAME']) ;
 	}
 
