@@ -38,7 +38,7 @@ class P4A_Fieldset extends P4A_Frame
 			$string .= "\n<div class='row' style='border:1px solid white'>";
 
 			foreach ($row as $obj) {
-				$object = $p4a->getObject($obj["id"]);
+				$object =& $p4a->getObject($obj["id"]);
 				$float = $obj["float"];
 				$margin = "margin-" . $obj["float"];
 				$margin_value = $obj["margin"];
