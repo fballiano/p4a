@@ -437,7 +437,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					if (!$field->isReadOnly()) {
 						if (!array_key_exists($name,$this->_multivalue_fields)) {
 							$fields_values[$name] = $field->getNewValue();
-							if ($fields_values[$name] == "") {
+							if ($fields_values[$name] === "") {
 								$fields_values[$name] = NULL;	
 							}
 						}
