@@ -1,4 +1,5 @@
 0.10
+- moved some locale files, now ru_RU.CP121 and ru_RU.KOI8-R work again
 - bugfix in getAsFile method in P4A_FIELD
 - bugfix in saveRow method in P4A_DB_SOURCE
 - bugfix in getAsDate method in P4A_FIELD
