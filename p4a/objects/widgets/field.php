@@ -665,11 +665,6 @@
 			$new_method = 'getAs' . $type;
 			$string = $this->$new_method();
 			return $string . $suffix ;
-			return "<div style='width:400px;float:none;border:1px solid red'>{$this->as_string}{$suffix}
-			<div class='br'></div>
-			</div>";
-
-			return '<table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" nowrap="nowrap" style="float:'. $this->align .'">' . $this->as_string . '</td></tr></table>' . $suffix;
 		}
 
 		/**
@@ -745,8 +740,7 @@
 		 */
 		function getAsTextarea()
 		{
-			//$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' cols='82' rows='15' ";
-			$header 		= "<textarea class='border_color1 font_normal' id='" . $this->getID() . "' ";
+			$header 		= "<textarea class='border_color1 font_normal' ";
 			$close_header 	= '>';
 			$footer			= '</textarea>';
 
@@ -754,7 +748,6 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-// 			$sReturn  = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 			$sReturn  = $this->composeLabel() . "<div class='br'></div>" . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;

@@ -1,7 +1,7 @@
 // ** I18N
 
 // Calendar SV language (Swedish, svenska)
-// Author: Mihai Bazon, <mishoo@infoiasi.ro>
+// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
 // Translation team: <sv@li.org>
 // Translator: Leonard Norrgård <leonard.norrgard@refactor.fi>
 // Last translator: Leonard Norrgård <leonard.norrgard@refactor.fi>
