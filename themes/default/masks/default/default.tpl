@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=[[$charset]]" />
 <title>[[$application_title]]</title>
 
-<script type="text/javascript" src="[[$tpl_path]]/p4a.js"></script>
+<script type="text/javascript" src="[[$theme_path]]/p4a.js"></script>
 [[foreach from=$css key=k item=v ]]
 <link href="[[$v.0]]" rel="stylesheet" type="text/css" media="[[$v.1]]" />
 [[/foreach]]
