@@ -42,7 +42,7 @@
 	{
 
 		var $icon = 'warning';
-		var $size = 'big';
+		var $size = 48;
 
 
 		function &P4A_Message($name)
@@ -66,16 +66,13 @@
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
 				$value = $this->getValue();
-				$image = "<img src='" .P4A_ROOT_URL. "/images/" . $this->getIcon() . "_" .$this->getSize()  . ".png' style='float:left'>";
+				$size = $this->getSize();
+				$margin = $size + 5;
 
-
-				$string	 = "<div class='message' $properties $actions>\n";
-				$string	.= "$image\n";
-				$string	.= "<p>";
-				$string	.= "$value\n";
-				$string	.= "</p>";
- 				$string .= "<div class='br'></div>\n";
-				$string	.= "</div>\n\n";
+				$string  = "<div class='message' $properties $actions>\n";
+				$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' style='margin-right: 5px;' width='$size' height='$size' />\n";
+				$string .= "<div style='margin-left: {$margin}px; vertical-align:middle; height:{$size}px; display:table-cell'>$value</div>\n";
+				$string .= "</div>\n\n";
 			} else {
 				$string =  "";
 			}
@@ -85,7 +82,7 @@
 		}
 
 
-		function setIcon($type = 'important')
+		function setIcon($type = 'warning')
 		{
 			$this->icon = $type;
 		}
