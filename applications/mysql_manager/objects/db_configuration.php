@@ -48,7 +48,10 @@
                 	$menu->items->tables->addItem($table,$label);
                 	$p4a->intercept($menu->items->tables->items->$table, 'onClick', 'menuClick');
 				}
-            }           
+            }
+			
+			$edit =& $menu->addItem("edit", "Edit");
+			$p4a->intercept($edit, "onClick", "editMask");
             $menu->items->tables->items->$valid_table->onClick();
         }
     }

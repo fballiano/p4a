@@ -388,3 +388,18 @@ dd.dd_inline {
 dd.dd_block {
 	display:block;
 }
+
+
+
+
+#sidebar {
+	border:1px solid #CCC;
+	position:fixed;
+	top:70px;
+	bottom:10px;
+ 	right:0px; 
+ 	height:600px; 
+	padding:10px;
+	width:280px;
+ 	z-index:2; 
+}

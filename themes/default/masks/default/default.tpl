@@ -77,6 +77,12 @@
   [[/if]]
 
   	[[$mask_open]]
+	
+	[[if isset($sidebar)]]
+	<div id="sidebar" class="border_color4 background_box">
+		[[$sidebar]]
+	</div>
+	[[/if]]
 
 	<!-- TOP -->
 	<div id="topContainer">

@@ -95,7 +95,7 @@
 		 * @param string		Item's label.
 		 * @access public
 		 */
-		function addItem($name, $label = NULL)
+		function &addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 			$item->setParent($this->getId());
@@ -104,6 +104,7 @@
 			}
 
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
+			return $item;
  		}
 
 		/**

@@ -1266,7 +1266,7 @@
 		 */
 		function setLabel( $value )
 		{
-			$this->label->setValue( $value . ':&nbsp;&nbsp;' );
+			$this->label->setValue( $value );
 		}
 
 		/**
