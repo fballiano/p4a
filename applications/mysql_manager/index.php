@@ -1,6 +1,7 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../p4a.php';
+define("P4A_EXTENDED_ERRORS", FALSE);
+require_once( dirname(__FILE__) . '/../../p4a.php' );
 
 $p4a =& p4a::singleton("mysql_manager");
 $check = p4a_check_configuration(dirname(__FILE__) . '/xml');
