@@ -1,43 +1,40 @@
 <?php
 
 /*
-Questo file è utilizzato come file "di servizio", tutte le chiamate
-verranno eseguite ad esso, nascondendo tutti gli altri file che
-compongono l'applicazione. Qui definiamo le costanti atte a configurare
-la partenza dell'applicazione e andiamo ad includere la libreria di sistema.
-Al termine di queste poche operazioni non facciamo altro che istanziare e
-lanciare l'applicazione.
+This file is used as a "service file", all calls will come here,
+hiding all other files that are part of the application.
+Here we define all the constants that are involved in the application
+start. The next step is to include the system library.
+Now we can finally instance and launch the application.
 */
 
 /*
-Definisco la costante per il locale in italiano
-e per configurare la connessione al database.
-Per vedere quali altre costanti ci sono a disposizione
-puoi guardare il file p4a/config.php (queste 2 sono
-le più usate)
-In questo caso la connessione al database non è impostata,
-vedremo solo un piccolo esempio senza interrogazioni su
-basi di dati.
+We define the locale constant, this is for english/american
+users. We also define the database connection with the
+classis DSN.
+To view all the available constants take a look at
+p4a/config.php.
+In this sample we have no database connection so simply
+comment out the relative instruction.
 */
 
 define("P4A_LOCALE", 'en_US');
 //define("P4A_DSN", 'mysql://root:@localhost/sample_en');
 
-// Includo p4a
-require_once( dirname(__FILE__) . '/../../p4a.php' );
+// Including p4a
+require_once(dirname(__FILE__) . '/../../p4a.php');
 
 /*
-Istanzio l'applicazione con il metodo singleton
-e richiamo il metodo main dell'applicazione che viene
-eseguito ogni volta (click o reload).
-L'applicazione deve essere una classe presente dentro la
-dir objects dell'applicazione corrente e deve estendere p4a
-Attenzione agli oggetti: dentro p4a tutti gli oggetti devono
-essere assegnati usando "=&" e non "=" altrimenti vengono perse
-le rerefenze; per questo stesso motivo quando creo una classe
-tutti i metodi della classe che restituiscono un oggetto
-devono essere preceduti dall'& quindi anche il costruttore della
-classe stessa (guarda la classe sample_it per capire meglio)
+Now we instance the application with the singleton
+method, than we call the "main" method. main is executed
+every page call (click and reload included).
+The application must be a class under the "objects" directory
+and have to extend "p4a" class.
+Attention, in p4a all object have to be assigned using the "=&"
+operator or you will loose all references. You also have to
+use the "&" operator in the method definition, when the method
+returns objects (also for the class constructor).
+Take a look at "sample_en" class for a better understanding.
 */
 
 $sample_en =& p4a::singleton("Sample_En");

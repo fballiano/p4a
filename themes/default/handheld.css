@@ -50,3 +50,7 @@ input {
 label {
 	display: block;
 }
+
+.frame {
+	text-align: left;
+}

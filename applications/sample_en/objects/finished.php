@@ -1,22 +1,22 @@
 <?php
 
 /*
-Con questa maschera non facciamo altro che segnalare all'utente
-che il login è avvenuto con successo.
-D'altra parte questo è solo un esempio ;-)
+With this mask we only tell the user that the login
+has been successful.
+This is only an example ;-)
 */
 class Finished extends P4A_Mask
 {
-	function &Finito()
+	function &Finished()
 	{
 		parent::P4A_Mask();
 
-		$this->setTitle("Autenticazione riuscita");
+		$this->setTitle("Authentication successful");
 
 		$this->build("p4a_message", "message");
 
 		$this->build("p4a_button", "restart");
-		$this->restart->setLabel("Ricomincia");
+		$this->restart->setLabel("Restart");
 		$this->intercept($this->restart, "onClick", "restart");
 
 		$this->build("p4a_frame", "frame");
@@ -29,14 +29,15 @@ class Finished extends P4A_Mask
 	}
 
 	/*
-	Questo metodo viene richiamato ad ogni accesso alla maschera.
-	Qui andiamo a impostare il messaggio dell'oggetto "message" che,
-	come abbiamo visto in precedenza, viene cancellato subito dopo
-	il rendering. In questo caso sarebbe stato più corretto utilizzare
-	l'oggetto "label" che si occupa di stampare un messaggio (come il
-	message) ma non elimina il messaggio dopo il rendering. Siccome
-	però label non supporta l'icona abbiamo deciso di rendere più
-	carino il messaggio utilizzando appunto l'oggetto message.
+	This method is called on every access to the mask.
+	Here we set the test of the "message" object that,
+	as we see before, is deleted immediately after its
+	rendering. In this case would be better a "label"
+	object, that only prints the message (as the "message
+	does) but does not delete the value after the
+	rendering.
+	In this example we used the "message" because it supports
+	a nice icon while the "label" does not.
 	*/
 	function main()
 	{
@@ -44,8 +45,8 @@ class Finished extends P4A_Mask
 		$this->message->setIcon("info");
 
 		/*
-		Ricordiamoci di richiamare il main principale altrimenti non
-		vedremo nulla sullo schermo.
+		Remember to call the main method of the parent class or
+		we won't see nothing on the screen.
 		*/
 		parent::main();
 	}
@@ -55,8 +56,8 @@ class Finished extends P4A_Mask
 		$p4a =& p4a::singleton();
 
 		/*
-		Questo metodo distrugge le sessioni memorizzate sul server e permette
-		il "riavvio" dell'applicazione.
+		This method destroies the session and allows the restart of the
+		application.
 		*/
 		$p4a->restart();
 	}
