@@ -53,7 +53,7 @@
 		 */
 		function &p4a_listener()
 		{
-			parent::p4aObject(NULL, 'lst');
+			parent::p4a_object(NULL, 'lst');
 		}
 
 		//todo

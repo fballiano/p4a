@@ -84,7 +84,7 @@
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
 		 * @access private
 		 */
- 		function &p4aObject($name = NULL, $prefix = 'obj', $id = NULL)
+ 		function &p4a_object($name = NULL, $prefix = 'obj', $id = NULL)
 		{
 			$this->setName($name);
 

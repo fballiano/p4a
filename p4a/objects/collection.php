@@ -6,7 +6,7 @@ class P4A_COLLECTION extends P4A_Object
 
 	function &p4a_collection($name = null)
 	{
-		parent::P4AObject($name);
+		parent::p4a_object($name);
 	}
 
 	//todo da modificare, sbagliata in caso di destroy di un figlio

@@ -136,7 +136,7 @@
 			if ($name==null){
 				$name = get_class($this);
 			}
-			parent::p4aObject($name, 'ma');
+			parent::p4a_object($name, 'ma');
 
 			//todo
 			$this->build("p4a_collection", "fields");

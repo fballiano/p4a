@@ -140,7 +140,7 @@
 		 */
 		function &p4a_data_source($name, $array_data = NULL)
 		{
-			parent::p4aObject($name);
+			parent::p4a_object($name);
 			$this->addDataBrowser('default');
 			if ($array_data !== NULL){
 				$this->load($array_data);

@@ -132,7 +132,7 @@
 		 */
 		function &p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
 		{
-			parent::p4aObject($name, $prefix, $id);
+			parent::p4a_object($name, $prefix, $id);
 			$this->setProperty('name', $this->getId());
 		}
 

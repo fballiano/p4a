@@ -88,7 +88,7 @@
 		 */
 		function &p4a_data_field($name)
 		{
-			parent::p4aObject((string)$name);
+			parent::p4a_object((string)$name);
 		}
 
 		/**
