@@ -271,21 +271,14 @@
 					unset($_REQUEST[$key]);
 				}
 
-				foreach($_REQUEST as $key=>$value)
-				{
-					if (substr($key, 0, 3) == 'fld')
-					{
-						if( gettype( $value ) == 'string' )
-						{
+				foreach($_REQUEST as $key=>$value) {
+					if (substr($key, 0, 3) == 'fld') {
+						if( gettype( $value ) == 'string' ) {
 							$this->objects[$key]->setNewValue(stripslashes($value));
-						}
-						else
-						{
+						} else {
 							$this->objects[$key]->setNewValue($value);
 						}
-					}
-					elseif(substr($key, 0, 5) == 'param' and strlen($value) > 0)
-					{
+					} elseif(substr($key, 0, 5) == 'param' and strlen($value) > 0) {
 						$aParams[] = $value;
 					}
 				}

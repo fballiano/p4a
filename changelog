@@ -1,4 +1,6 @@
 0.6
+- added setlocale(LC_NUMERIC, "C") to avoid php 4.3.10 problems with numeric locales
+- added setlocale(LC_MONETARY, "C") to avoid php 4.3.10 problems with numeric locales
 - fixed P4A_TOOLBAR, now spacers work correctly
 - fixed P4A_IMAGE, now supports the new default icon path
 - added spacer.png image into icons

@@ -180,6 +180,8 @@
 		function setSystemLocale()
 		{
 			setlocale(LC_ALL, $this->locale);
+			setlocale(LC_NUMERIC, "C");
+			setlocale(LC_MONETARY, "C");
 		}
 
 		/**
