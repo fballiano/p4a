@@ -216,10 +216,10 @@
 				} else {
 					if ( $this->navigation_bar->isVisible()) {
 						$this->display('navigation_bar', $this->navigation_bar);
-					} 
+					}
 				}
 			}
-			
+
 			$this->display("title", $this->getTitle());
 			/*
 			if ($this->title_bar !== NULL and
@@ -945,7 +945,7 @@
 		function &P4A_Table_Navigation_Bar()
 		{
 			$p4a =& P4A::singleton();
-						
+
 			parent::P4A_Frame("table_navigation_bar");
 			$this->build("p4a_collection","buttons");
 
@@ -963,7 +963,7 @@
 
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
 			$this->anchorLeft($current_page);
-			
+
 			if ($p4a->isHandheld()) {
 				$this->addButton('button_first');
 				$this->buttons->button_first->setLabel("<<");
@@ -973,7 +973,7 @@
 				$this->buttons->button_next->setLabel(">");
 				$this->addButton('button_last');
 				$this->buttons->button_last->setLabel(">>");
-				
+
 				$this->buttons->button_go->setVisible(false);
 				$this->buttons->field_num_page->setVisible(false);
 			} else {
@@ -985,10 +985,10 @@
 
 			$this->buttons->button_last->addAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-			
+
 			$this->buttons->button_next->addAction('onClick');
 			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
-			
+
 			$this->buttons->button_prev->addAction('onClick');
 			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
 
@@ -999,12 +999,12 @@
 		function addButton($button_name, $icon = null, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);
-			
+
 			if (strlen($icon)>0) {
 				$button->setIcon($icon);
 				$button->setSize(16);
 			}
-			
+
 			$anchor = "anchor" . $float;
 			$this->$anchor($button, "2px");
 			return $button;

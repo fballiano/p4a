@@ -1,5 +1,6 @@
 0.12
 - updated TODO
+- bugfix in P4A_Table, now ordering works well with aliased fields
 - changes in P4A_Frame, when viewed by an handheld no divs are generated and all elements float left (Pocket IE seems to not support floats)
 - optimized P4A_Table_Navigation_Bar output for handhelds
 - bugfix in P4A_Table_Navigation_Bar::addButton(), now margins are correct
