@@ -142,7 +142,8 @@
 		
 	//Projects Constants
 	if (!defined('P4A_PROJECT_PATH')){
-		define("P4A_PROJECT_PATH", dirname($_SERVER["PHP_SELF"]));
+		//define("P4A_PROJECT_PATH", dirname($_SERVER["PHP_SELF"]));
+		define("P4A_PROJECT_PATH", dirname($_SERVER["SCRIPT_NAME"]));
 	}
 	
 	if (!defined('P4A_PROJECT_DIR')){
