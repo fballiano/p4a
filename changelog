@@ -1,4 +1,7 @@
 0.6
+- fixed P4A_TOOLBAR, now spacers work correctly
+- fixed P4A_IMAGE, now supports the new default icon path
+- added spacer.png image into icons
 - DATA_SOURCE::getAsCSV() now suports fields names
 - renamed DATA_SOURCE::exportToCSV() to DATA_SOURCE::exportAsCSV()
 - added DATA_SOURCE::exportToCSV() as an alias of DATA_SOURCE::exportAsCSV()

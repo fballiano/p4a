@@ -112,10 +112,11 @@
 		 * @param integer		Width in pixel from the spacer.
 		 * @access public
 		 */
-		function addSpacer($width = 10)
+		function addSpacer($width = 10, $position = "left")
 		{
 			$name = 's' . $this->separators_counter++;
 			$this->buttons->build("p4a_image", $name);
+			$this->buttons->$name->setStyleProperty("float", $position);
 			$this->buttons->$name->setIcon('spacer');
 			$this->buttons->$name->setWidth($width);
 			return $this->buttons->$name;

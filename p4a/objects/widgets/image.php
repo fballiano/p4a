@@ -94,7 +94,7 @@
 		function setIcon($icon)
 		{
 			$p4a =& P4A::singleton();
-			$value = P4A_ICONS_PATH . '/' . $p4a->i18n->getLanguage() . '/' . $p4a->i18n->getCountry() . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
+			$value = P4A_ICONS_PATH . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
 			$this->setValue($value);
 		}
 
