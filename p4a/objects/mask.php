@@ -148,12 +148,13 @@
 		//todo
 		function &singleton($name)
 		{
+			$name = strtolower($name);
 			$p4a =& P4A::singleton();
 
  			if (!isset($p4a->masks->$name)) {
 				$p4a->masks->build($name, $name);
 			}
-			return $p4a->masks->$name;
+ 			return $p4a->masks->$name;
 		}
 
 		/**

@@ -71,7 +71,7 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
       }
 
 
-      #sheetContainer>.sheet{
+      #sheetContainer>.sheet,#sheetContainer>fieldset{
       	margin-left:auto;
       	margin-right:auto;
       }

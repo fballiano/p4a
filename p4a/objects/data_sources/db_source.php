@@ -16,6 +16,8 @@ class P4A_DB_Source extends P4A_Data_Source
 	var $_use_fields_aliases = FALSE;
 
 	var $_multivalue_fields = array();
+	
+	var $_filters = array();
 
 
 	function &P4A_DB_Source($name)
@@ -151,6 +153,34 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_query;
 	}
+	
+	function addFilter($filter, &$obj)
+	{
+		$this->_filters[$filter] =& $obj; 
+	}
+	
+	function dropFilter($filter)
+	{
+		if (array_key_exists($filter,$this->_filter)) {
+			unset($this->_filters[$filter]);
+		} 
+	}
+	
+	function getFilters()
+	{
+		$filters = array();
+		foreach ($this->_filters as $string=>$obj) {
+			if (is_object($obj)) {
+				$value = $obj->getNewValue();
+				if (strlen($value)) {
+					$filters[] = str_replace('?',$value,$string);
+				}
+			} else {
+				unset($this->_filters[$key]);
+			}
+		}
+		return $filters;
+	}
 
 	function load()
 	{
@@ -263,7 +293,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	function getPkRow($pk)
-	{
+ 	{
 		$db =& P4A_DB::singleton();
 		$query = $this->_composeSelectPkQuery($pk);
 		return $db->getRow($query);
@@ -274,6 +304,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$db =& P4A_DB::singleton();
 
 		$query = $this->_composeSelectQuery();
+		
 
 		if ($num_row === NULL) {
 			$num_row = $this->_pointer;
@@ -377,7 +408,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 			$query .= $this->_composeGroupPart();
 			$query .= $this->_composeOrderPart($new_order_array);
-
+			
 			$db =& p4a_db::singleton();
 			return $db->getOne($query);
 		}
@@ -461,7 +492,6 @@ class P4A_DB_Source extends P4A_Data_Source
 					$res =& $db->executeMultiple($sth, $fk_values);
 
 					if (DB::isError($res)) {
-						print_r($res);
 						P4A_Error($res->getMessage());
 					}
 				}
@@ -470,13 +500,14 @@ class P4A_DB_Source extends P4A_Data_Source
 			if(is_string($pks)){
 				$row = $this->getPkRow($this->fields->$pks->getNewValue());
 			}else{
+				
 				$pk_values = array();
 				foreach($pks as $pk){
 					$pk_values[] = $this->fields->$pk->getNewValue();
 				}
 				$row = $this->getPkRow($pk_values);
 			}
-
+			
 			$this->resetNumRows();
 
 			if ($row) {
@@ -681,11 +712,18 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		$query = "";
 		if ($where = $this->getWhere()){
-			$query .= "WHERE ($where) ";
+			$query .= "($where) AND ";
+		}
+		$filters = $this->getFilters();
+		foreach ($filters as $filter) {
+			$query = "($filter) AND ";
+		}
+		if (strlen($query) > 0 ) {
+			$query = " WHERE " . substr($query,0,-4);
 		}
 		return $query;
 	}
-
+	
 	function _composeGroupPart()
 	{
 		$query = "";
