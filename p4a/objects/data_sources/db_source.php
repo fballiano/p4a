@@ -37,7 +37,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	function setFields($fields)
 	{
 		if ($this->getSelect()){
-			P4A_Utils::fatalError("ERRORE");
+			P4A_Utils::fatalError("Can't use setFields here");
 		}
 		$fields_keys = array_keys($fields);
 
@@ -56,7 +56,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	function setSelect($select)
 	{
 		if ($this->getFields()){
-			P4A_Utils::fatalError("ERRORE");
+			P4A_Utils::fatalError("Can't use setSelect here");
 		}
 		$this->isReadOnly(TRUE);
 		$this->_select = $select;
@@ -69,7 +69,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	function addJoin($table, $clausole, $type="INNER")
 	{
-//  		$this->isReadOnly(TRUE);
 		$this->_join[] = array($type, $table, $clausole);
 	}
 
