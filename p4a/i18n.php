@@ -52,35 +52,42 @@
 		 * @var string
 		 * @access private
 		 */
-		var $locale = NULL ;
+		var $locale = NULL;
 		
 		/**
 		 * Here we store the current language.
 		 * @var string
 		 * @access private
 		 */
-		var $language = NULL ;
+		var $language = NULL;
 		
 		/**
 		 * Here we store the current country.
 		 * @var string
 		 * @access private
 		 */
-		var $country = NULL ;
+		var $country = NULL;
 		
 		/**
-		 * Here we store the current charset.
+		 * Here we store the current codepage.
 		 * @var string
 		 * @access private
 		 */
-		var $charset = 'UTF-8' ;
+		var $codepage = NULL;
+
+		/**
+		 * Here we store the current charset. Default is UTF-8.
+		 * @var string
+		 * @access private
+		 */
+		var $charset = 'UTF-8';
 		
 		/**
 		 * Currency management object.
 		 * @var I18N_CURRENCY
 		 * @access public
 		 */
-		var $currency = NULL ;
+		var $currency = NULL;
 		
 		/**
 		 * Here we store all formats for currency data.
@@ -94,7 +101,7 @@
 		 * @var I18N_DATETIME
 		 * @access public
 		 */
-		var $datetime = NULL ;
+		var $datetime = NULL;
 		
 		/**
 		 * Here we store all formats for date/time data.
@@ -108,14 +115,14 @@
 		 * @var I18N_MESSAGES
 		 * @access public
 		 */
-		var $messages = NULL ;
+		var $messages = NULL;
 		
 		/**
 		 * Numbers management object.
 		 * @var I18N_NUMBERS
 		 * @access public
 		 */
-		var $numbers = NULL ;
+		var $numbers = NULL;
 
 		/**
 		 * Here we store all formats for numeric data.
@@ -129,28 +136,32 @@
 		 * @param string				The desidered locale.
 		 * @access private
 		 */
-		function &p4a_i18n( $locale = P4A_LOCALE )
+		function &p4a_i18n($locale = P4A_LOCALE)
 		{
 			$this->setLocale( $locale ) ;
 		}
 		
 		/**
-		 * Sets the desidered locale (it_IT|en_UK|en_US).
-		 * @param string				The desidered locale.
+		 * Sets the desidered locale (it_IT|en_UK|en_US). Locale name can contain codepage (ru_RU.KOI-8|ru_RU.CP1251).
+		 * @param string				The desired locale.
 		 * @access public
 		 */
-		function setLocale( $locale = P4A_LOCALE )
+		function setLocale($locale = P4A_LOCALE)
 		{
 			$this->language = strtolower(substr($locale, 0, 2));
-			$this->country = strtoupper(substr($locale, -2));
-			$this->locale = $this->language . '_' . $this->country;
+			$this->country = strtoupper(substr($locale, 3, 2));
+			$this->codepage = strtoupper(substr($locale, 6));
+			$this->locale = "{$this->language}_{$this->country}";
+
+			if ($this->codepage) {
+				$this->locale .= ".{$this->codepage}";
+			}
 			
 			$this->setSystemLocale();
-			
 			$this->loadFormats();
 			
 			unset( $this->messages ) ;
-			$this->messages =& new p4a_i18n_messages( $this->language, $this->country );
+			$this->messages =& new p4a_i18n_messages( $this->language, $this->country, $this->codepage );
 			
 			unset( $this->numbers ) ;
 			$this->numbers =& new p4a_i18n_numbers( $this->numbers_formats );
@@ -227,11 +238,20 @@
 		 */
 		function loadFormats()
 		{
-			include( dirname(__FILE__) . '/i18n/formats/' . $this->language . '/' . $this->country . '.php' );
+			$cp = ($this->codepage ? ".$this->codepage" : "");
+			include(dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$cp}.php");
+			
+			if (isset($text_formats['charset'])) {
+				$this->charset = $text_formats['charset'];
+			}
+			unset($text_formats);
 			
 			$this->numbers_formats = $numbers_formats;
+			unset($numbers_formats);
 			$this->datetime_formats = $datetime_formats;
+			unset($datetime_formats);
 			$this->currency_formats = $currency_formats;
+			unset($currency_formats);
 		}
 		
 		/**
@@ -239,10 +259,10 @@
 		 * If the type in not recognized, $value is returned as is.
 		 * @access public
 		 * @param mixed		The value to be formatter
-		 * @param string	The type (date|time|integer|float|decimal)
+		 * @param string	The type (date|time|integer|float|decimal|currency)
 		 * @return mixed
 		 */
-		function autoFormat( $value, $type )
+		function autoFormat($value, $type)
 		{
 			switch( $type )
 			{
@@ -261,6 +281,9 @@
 				case 'decimal':
 					$value = $this->numbers->formatDecimal($value);
 					break;
+				case 'currency':
+					$value = $this->currency->formatLocal($value);
+					break;
 			}
 			
 			return $value;
@@ -271,10 +294,10 @@
 		 * If the type in not recognized, $value is returned as is.
 		 * @access public
 		 * @param mixed		The value to be unformatter
-		 * @param string	The type (date|time|integer|float|decimal)
+		 * @param string	The type (date|time|integer|float|decimal|currency)
 		 * @return mixed
 		 */
-		function autoUnformat( $value, $type )
+		function autoUnformat($value, $type)
 		{
 			switch( $type )
 			{
@@ -292,6 +315,9 @@
 					break;
 				case 'decimal':
 					$value = $this->numbers->unformatDecimal($value);
+					break;
+				case 'currency':
+					$value = $this->currency->unformatLocal($value);
 					break;
 			}
 			

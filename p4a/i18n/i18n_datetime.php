@@ -217,7 +217,11 @@
 		 */
 		function formatTimeDefault($time = NULL)
 		{
-			return DATE::format('0000-01-01 ' . $time, $this->getFormat('time_default'));
+			if ($time !== NULL) {
+				$time = "0000-01-01 $time";
+			}
+			
+			return DATE::format($time, $this->getFormat('time_default'));
 		}
 		
 		/**
@@ -228,6 +232,10 @@
 		 */
 		function formatTimeShort($time = NULL)
 		{
+			if ($time !== NULL) {
+				$time = "0000-01-01 $time";
+			}
+
 			return DATE::format('0000-01-01 ' . $time, $this->getFormat('time_short'));
 		}
 		

@@ -56,21 +56,24 @@
 		
 		/**
 		 * Class constructor.
-		 * @param string				The desidered language.
-		 * @param string				The desidered country.
+		 * @param string				The desired language.
+		 * @param string				The desired country.
+		 * @param string				Optional the desired codepage.
 		 * @access private
 		 */
-		function &p4a_i18n_messages( $language, $country )
+		function &i18n_messages($language, $country, $codepage = NULL)
 		{
-			include(dirname(__FILE__) . '/messages/' . $language . '/' . $country . '.php');
+			$codepage = ($codepage ? ".$codepage" : "");
+			$msg_file = "{$language}/{$country}{$codepage}.php";
+			include(dirname(__FILE__) . "/messages/{$msg_file}");
 			
-			$project_localization = P4A_PROJECT_LOCALES_DIR . '/' . $language . '/' . $country . '.php' ;
-			if( file_exists( $project_localization ) )
-			{
+			$project_localization = P4A_PROJECT_LOCALES_DIR . "/{$msg_file}";
+			if (file_exists($project_localization)) {
 				include($project_localization );
 			}
 			
 			$this->messages = $messages;
+			unset($messages);
 		}
 		
 		/**
@@ -80,7 +83,7 @@
 		 * @param string		The second level message id (used only when the first level value is an array. Eg: days names).
 		 * @return string
 		 */
-		function get( $first_level_id, $second_level_id = NULL )
+		function get($first_level_id, $second_level_id = NULL)
 		{
 			if( $second_level_id === NULL )
 			{
