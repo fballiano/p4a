@@ -105,7 +105,13 @@
 	}
 
 	if (!defined('P4A_ROOT_PATH')){
-		define('P4A_ROOT_PATH', str_replace( '\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR))) ;
+		if (strpos(P4A_ROOT_DIR, P4A_SERVER_DIR) === false) {
+			define('P4A_IN_DOCUMENT_ROOT', false) ;
+			define('P4A_ROOT_PATH', "/p4a") ;
+		} else {
+			define('P4A_IN_DOCUMENT_ROOT', true) ;
+			define('P4A_ROOT_PATH', str_replace( '\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR))) ;
+		}
 	}
 
 	if (!defined('P4A_ROOT_URL')){
@@ -118,7 +124,7 @@
 	}
 
 	if (!defined('P4A_LIBRARIES_DIR')){
-	 	 define('P4A_LIBRARIES_DIR', P4A_SERVER_DIR . P4A_LIBRARIES_PATH) ;
+	 	 define('P4A_LIBRARIES_DIR', P4A_ROOT_DIR . P4A_LIBRARIES_PATH) ;
 	}
 
 	if (!defined('P4A_LIBRARIES_URL')){
@@ -157,7 +163,7 @@
 	}
 
 	if (!defined('P4A_APPLICATION_LIBRARIES_URL')){
-		define('P4A_APPLICATION_LIBRARIES_URL', P4A_SERVER_DIR . P4A_APPLICATION_LIBRARIES_PATH);
+		define('P4A_APPLICATION_LIBRARIES_URL', P4A_SERVER_URL . P4A_APPLICATION_LIBRARIES_PATH);
 	}
 
 	//Uploads Constants
@@ -199,29 +205,38 @@
 
 	//Themes Dir
 	if (!defined('P4A_THEMES_DIR')){
-		define('P4A_THEMES_DIR', P4A_SERVER_DIR . P4A_THEMES_PATH);
+		define('P4A_THEMES_DIR', P4A_ROOT_DIR . P4A_THEMES_PATH);
 	}
 
 	//Default Theme Configuration
 	if (!defined('P4A_DEFAULT_THEME_NAME')){
 		define('P4A_DEFAULT_THEME_NAME', 'default');
 	}
+	
 		//mask
 	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH'	)){
 		define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/masks');
 	}
 
 	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR')){
-		define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
+		} else {
+			define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', dirname(P4A_ROOT_DIR) . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
+		}
 	}
 
-	//widgets
+		//widgets
 	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH')){
 		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/widgets');
 	}
 
 	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR')){
-		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', P4A_SERVER_DIR  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', P4A_SERVER_DIR  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
+		} else {
+			define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', dirname(P4A_ROOT_DIR)  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
+		}
 	}
 
 	//Current Theme Configuration
@@ -234,7 +249,11 @@
 	}
 
 	if (!defined('P4A_THEME_DIR')){
-		define('P4A_THEME_DIR', P4A_SERVER_DIR . P4A_THEME_PATH);
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_THEME_DIR', P4A_ROOT_DIR . P4A_THEME_PATH);
+		} else {
+			define('P4A_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_THEME_PATH);
+		}
 	}
 		//mask
 	if (!defined('P4A_SMARTY_MASK_TEMPLATES_PATH')){
@@ -242,8 +261,11 @@
 	}
 
 	if (!defined('P4A_SMARTY_MASK_TEMPLATES_DIR')){
-		//define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_THEME_DIR . '/masks');
-		define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_MASK_TEMPLATES_PATH);
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_THEME_DIR . '/masks');
+		} else {
+			define('P4A_SMARTY_MASK_TEMPLATES_DIR', dirname(P4A_THEME_DIR) . '/masks');
+		}
 	}
 		//widgets
 	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_PATH')){
@@ -251,7 +273,11 @@
 	}
 
 	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_DIR')){
-		define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', P4A_THEME_DIR . '/widgets');
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', P4A_THEME_DIR . '/widgets');
+		} else {
+			define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', dirname(P4A_THEME_DIR) . '/widgets');
+		}
 	}
 
 	//Icons configuration
@@ -264,11 +290,15 @@
 	}
 
 	if (!defined('P4A_ICONS_DIR')){
-		define('P4A_ICONS_DIR', P4A_SERVER_DIR . P4A_ICONS_PATH);
+		if (P4A_IN_DOCUMENT_ROOT) {
+			define('P4A_ICONS_DIR', P4A_ROOT_DIR . P4A_ICONS_PATH);
+		} else {
+			define('P4A_ICONS_DIR', dirname(P4A_ROOT_DIR) . P4A_ICONS_PATH);
+		}
 	}
 
 	if (!defined('P4A_ICONS_URL')){
-		define('P4A_ICONS_URL', P4A_SERVER_URL . P4A_ICONS_PATH);
+		define('P4A_ICONS_URL', P4A_ROOT_URL . P4A_ICONS_PATH);
 	}
 
 	if (!defined('P4A_ICONS_EXTENSION')){

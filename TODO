@@ -5,8 +5,6 @@
 - make SHEETS_GROUP and tabbed MENU work
 - change template engine to flexy
 - if a password is not inserted, reloading the mask we would not like to see the obfuscator
-- make a better support for using p4a out of the document root (maybe a bit of documentation is enaught)
-- debianize p4a
 
 ------------------------------------------------------------------------
 If you want to help subscribe our mailing lists at and propose yourself!

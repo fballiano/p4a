@@ -1,6 +1,8 @@
 0.12
+- done some work on config.php to allow p4a to stay out of the document root (must have an alias set to /p4a), take a look at docs/httpd.conf
 - added P4A_Mask::getPrevMask() and P4A::getPrevMask() to get an instance of the previous opened mask
 - updated TODO
+- updated READMEs
 - bugfix in P4A_Table, now ordering works well with aliased fields
 - changes in P4A_Frame, when viewed by an handheld no divs are generated and all elements float left (Pocket IE seems to not support floats)
 - optimized P4A_Table_Navigation_Bar output for handhelds
