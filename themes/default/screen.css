@@ -186,6 +186,10 @@ label {
 	padding-bottom: 5px;
 }
 
+.table_container a {
+	text-decoration: none;
+}
+
 /*   ---------   */
 /*   HTML TAGS   */
 /*   ---------   */
@@ -454,16 +458,13 @@ legend {
 	font-weight: bold;
 	text-align: left;
 	color: black;
+	border: 1px solid #C6D3DE;
+	padding: 5px;
 }
 
 .message img {
 	float: left;
-}
-
-.message div {
-	vertical-align: middle;
-	display: table-cell;
-	color: black;
+	padding-right: 5px;
 }
 
 .table {

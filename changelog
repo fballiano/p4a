@@ -1,5 +1,9 @@
 0.2
-- P4A_Array_Source: Fixed getALL
-- P4A_DB_Source: Fixed page
+- Fixed getAll in P4A_Array_Source
+- Fixed page in P4A_DB_Source
+- Fixed a problem with table and handheld Pocket Internet Explorer 2003
+- Added index.php file into applications directory, just for a redirect
+- beautified handheld css
+
 0.1
 Initial release

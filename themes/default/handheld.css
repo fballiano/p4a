@@ -54,3 +54,23 @@ label {
 .frame {
 	text-align: left;
 }
+
+.table_container table {
+	border-collapse: collapse;
+}
+
+.table_container td {
+
+	border-top:1px solid black;
+}
+
+.message {
+	border: 2px solid red;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+}
+
+.message img {
+	display: none;
+}

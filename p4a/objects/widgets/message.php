@@ -71,7 +71,8 @@
 
 				$string  = "<div class='message' $properties $actions>\n";
 				$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' style='margin-right: 5px;' width='$size' height='$size' />\n";
-				$string .= "<div style='margin-left: {$margin}px; vertical-align:middle; height:{$size}px; display:table-cell'>$value</div>\n";
+				$string .= "$value\n";
+				$string .= "<div class='br'></div>\n";
 				$string .= "</div>\n\n";
 			} else {
 				$string =  "";
