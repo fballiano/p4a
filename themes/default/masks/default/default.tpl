@@ -80,40 +80,41 @@
 
 [[$mask_open]]
 
-	[[if isset($sidebar)]]
-	<div id="sidebar" class="border_color4 background_box">
-		[[$sidebar]]
-	</div>
-	[[/if]]
+[[if isset($sidebar)]]
+<div id="sidebar" class="border_color4 background_box">
+[[$sidebar]]
+</div>
+[[/if]]
 
-	<!-- TOP -->
-	<div id="topContainer">
-		[[if isset($menu)]]
-			[[$menu]]
-		[[/if]]
-		[[if $top]]
-		<div style="background-color:#FAFAFA; border-bottom: 1px solid #CCC;padding:2px">
-		[[$top]]
-		</div>
-		[[/if]]
-	</div>
+<!-- TOP -->
+<div id="topContainer">
+[[if isset($menu)]]
+[[$menu]]
+[[/if]]
 
-	<!-- MAIN  -->
-	<div id="mainContainer">
+[[if $top]]
+<div style="background-color:#FAFAFA; border-bottom: 1px solid #CCC;padding:2px">
+[[$top]]
+</div>
+[[/if]]
+</div>
 
-		<!-- TITLE -->
-		[[if $title]]
-		<div><h2>[[$title]]</h2></div>
-		[[/if]]
+<!-- MAIN  -->
+<div id="mainContainer">
 
-		<!-- SHEET -->
-		<div id="sheetContainer">
-		[[$main]]
-		</div>
+<!-- TITLE -->
+[[if $title]]
+<div><h2>[[$title]]</h2></div>
+[[/if]]
 
-		<!-- Please leave our links, can you think it's a small price for p4a? :-)) -->
-		<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a></div>
-	</div>
+<!-- SHEET -->
+<div id="sheetContainer">
+[[$main]]
+</div>
+
+<!-- Please leave our links, can you think it's a small price for p4a? :-)) -->
+<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a></div>
+</div>
 
 [[$mask_close]]
 </body>

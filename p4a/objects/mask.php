@@ -562,60 +562,14 @@
 		 */
 		function maskOpen()
 		{
-			$mask_name = $this->getName();
-			$this->sOpen  = '';
-			$this->sOpen .= '<script type="text/javascript"><!--'													. "\n";
-			$this->sOpen .= 'function executeEvent(object_name, action_name, param1, param2, param3, param4)'	. "\n";
-			$this->sOpen .= '{'																					. "\n";
-            $this->sOpen .= '	if (!param1) param1 = "" ;'														. "\n";
-            $this->sOpen .= '	if (!param2) param2 = "" ;'														. "\n";
-            $this->sOpen .= '	if (!param3) param3 = "" ;'														. "\n";
-            $this->sOpen .= '	if (!param4) param4 = "" ;'														. "\n";
-			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= '	document.forms["'. $mask_name .'"]._object.value = object_name;'				. "\n";
-			$this->sOpen .= '	document.forms["'. $mask_name .'"]._action.value = action_name;'				. "\n";
-            $this->sOpen .= '	document.forms["'. $mask_name .'"].param1.value = param1;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $mask_name .'"].param2.value = param2;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $mask_name .'"].param3.value = param3;'						. "\n";
-            $this->sOpen .= '	document.forms["'. $mask_name .'"].param4.value = param4;'						. "\n";
-			$this->sOpen .= '	if (typeof document.forms["'. $mask_name .'"].onsubmit == "function") {'		. "\n";
-			$this->sOpen .= '		document.forms["'. $mask_name .'"].onsubmit();'							. "\n";
-			$this->sOpen .= '	}'																				. "\n";
-			$this->sOpen .= '	document.forms["'. $mask_name .'"].submit();'									. "\n";
-			$this->sOpen .= '}'																					. "\n";
-			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= 'function isReturnPressed(e)'														. "\n";
-			$this->sOpen .= '{'																					. "\n";
-			$this->sOpen .= '	var characterCode;'																. "\n";
-            $this->sOpen .= ''																					. "\n";
-            $this->sOpen .= '	if(e && e.which) {'																. "\n";
-			$this->sOpen .= '		e = e; characterCode = e.which;'											. "\n";
-			$this->sOpen .= '	} else {'																		. "\n";
-			$this->sOpen .= '		e = event; characterCode = e.keyCode;'										. "\n";
-            $this->sOpen .= '	}'																				. "\n";
-            $this->sOpen .= ''																					. "\n";
-            $this->sOpen .= '	if(characterCode == 13) {'														. "\n";
-            $this->sOpen .= '		return true;'																. "\n";
-			$this->sOpen .= '	} else {'																		. "\n";
-			$this->sOpen .= '		return false;'																. "\n";
-			$this->sOpen .= '	}'																				. "\n";
-			$this->sOpen .= '}'																					. "\n";
-			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= 'function setFocus(id)'															. "\n";
-			$this->sOpen .= '{'																					. "\n";
-			$this->sOpen .= '	if( (id != null) && (document.forms["'. $mask_name .'"].elements[id] != null) && (document.forms["'. $mask_name .'"].elements[id].disabled == false) ) {' . "\n";
-			$this->sOpen .= '		document.forms["'. $mask_name .'"].elements[id].focus();'					. "\n";
-			$this->sOpen .= '	}'																				. "\n";
-			$this->sOpen .= '}'																					. "\n";
-			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= '--></script>'																			. "\n";
-			$this->sOpen .= '<form method="post" enctype="multipart/form-data" name="' . $mask_name . '" action="index.php">';
-			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "'>" . "\n";
-			$this->sOpen .= "<input type='hidden' name='_action' value='none'>" . "\n";
-            $this->sOpen .= "<input type='hidden' name='param1'>" . "\n";
-            $this->sOpen .= "<input type='hidden' name='param2'>" . "\n";
-            $this->sOpen .= "<input type='hidden' name='param3'>" . "\n";
-            $this->sOpen .= "<input type='hidden' name='param4'>" . "\n";
+			$this->sOpen  = "";
+			$this->sOpen .= "<form method='post' enctype='multipart/form-data' name='p4a' action='index.php'>\n";
+			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "'>\n";
+			$this->sOpen .= "<input type='hidden' name='_action' value='none'>\n";
+			$this->sOpen .= "<input type='hidden' name='param1'>\n";
+			$this->sOpen .= "<input type='hidden' name='param2'>\n";
+			$this->sOpen .= "<input type='hidden' name='param3'>\n";
+			$this->sOpen .= "<input type='hidden' name='param4'>\n";
 
 			return $this->sOpen;
 		}
