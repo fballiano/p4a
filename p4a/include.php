@@ -62,7 +62,6 @@
 	require_once(dirname(__FILE__) . '/libraries/pear/DB.php');
 	require_once(dirname(__FILE__) . '/libraries/date.php');
 	require_once(dirname(__FILE__) . '/libraries/number.php');
-	require_once(dirname(__FILE__) . '/libraries/pdf/class.ezpdf.php');
 	require_once(dirname(__FILE__) . '/libraries/smarty/libs/plugins/function.assign.php');
 
 	//Core
@@ -80,7 +79,6 @@
 	require_once(dirname(__FILE__) . '/objects/db.php');
 	require_once(dirname(__FILE__) . '/objects/mask.php');
 	require_once(dirname(__FILE__) . '/objects/listener.php');
-	require_once(dirname(__FILE__) . '/objects/report.php');
 	require_once(dirname(__FILE__) . '/objects/collection.php');
 	require_once(dirname(__FILE__) . '/objects/data_field.php');
 	require_once(dirname(__FILE__) . '/objects/data_source.php');

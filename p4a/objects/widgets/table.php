@@ -962,7 +962,7 @@
 			$this->addButton('button_first', 'first', 'right');
 			$this->buttons->button_first->addAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
-			
+
 //  			$this->setStyleProperty("border","1px solid red");
 
 		}

@@ -85,32 +85,11 @@
 		var $masks_history = array();
 
 		/**
-		 * Pointer to the currently active report.
-		 * @var object object
-		 * @access public
-		 */
-		var $active_report = NULL;
-
-		/**
 		 * Opened masks are stored here.
 		 * @var object object
 		 * @access public
 		 */
 		var $masks = null;
-
-		/**
-		 * Opened reports are stored here.
-		 * @var object object
-		 * @access public
-		 */
-		var $reports = null;
-
-		/**
-		 * Opened listeners are stored here.
-		 * @var object
-		 * @access public
-		 */
-		var $reports = null;
 
 		/**
 		 * I18n objects and methods.
@@ -320,17 +299,8 @@
 				$action_return = $this->objects[$object]->$action($aParams);
 			}
 
-			if( is_object( $this->active_report ) )
-			{
-				$this->active_report->raise();
-				unset( $this->active_report );
-			}
-			else
-			{
-				if ( is_object( $this->active_mask ) )
-				{
-					$this->active_mask->main();
-				}
+			if (is_object($this->active_mask)) {
+				$this->active_mask->main();
 			}
 
 			P4A_DB::close();
@@ -347,24 +317,8 @@
 		 */
 		function setActiveMask($mask_name)
 		{
-// 			unset($this->active_mask);
 			$mask =& P4A_Mask::singleton($mask_name);
 			$this->active_mask =& $mask;
-		}
-
-		/**
-		 * Sets the desidered report as active.
-		 * @param string		The name of the report.
-		 * @access private
-		 */
-		function setActiveReport($report_name)
-		{
-			//if( ( is_object($this->active_mask) ) and ( $this->report[$report_name]->prev_mask === NULL ) ){
-			if( is_object($this->active_mask) ){
-				$this->report[$report_name]->prev_mask = $this->active_mask->getName();
-			}
-			unset($this->active_report);
-			$this->active_report =& $this->reports[$report_name];
 		}
 
 		/**
@@ -385,18 +339,11 @@
 		 */
 		function &openMask($mask_name)
 		{
-			unset($this->active_report);
-			$this->active_report = NULL;
-
 			if ($this->actionHandler('beforeOpenMask') == ABORT) return ABORT;
 
 			if ($this->isActionTriggered('onOpenMask')) {
 				if ($this->actionHandler('onOpenMask') == ABORT) return ABORT;
 			} else {
-// 				//Mask initialization
-// 				if (! $this->maskExists($mask_name)){
-// 					$this->initMask($mask_name);
-// 				}
 				P4A_Mask::singleton($mask_name);
 
 				//Update masks history
@@ -425,44 +372,6 @@
 	     }
 
 		/**
-		 * Istances a report.
-		 * @param string		The report name.
-		 * @access private
-		 */
-		 //todo
-		function initReport($report_name)
-		{
-			if( array_key_exists( $report_name, $this->reports ) )
-			{
-				unset( $this->reports[ $report_name ] );
-			}
-
-			$this->reports->build("p4a_report", $report_name);
-		}
-
-		/**
-		 * Opens a report.
-		 * @access public
-		 */
-		function openReport($report_name)
-		{
-			if( $this->actionHandler( 'beforeOpenReport' ) == ABORT ) return ABORT;
-
-			if( $this->isActionTriggered( 'onOpenReport' ) )
-			{
-				if( $this->actionHandler( 'onOpenReport' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				$this->initReport($report_name);
-				$this->setActiveReport($report_name);
-				$this->reports[$report_name]->listener->main();
-			}
-
-			$this->actionHandler( 'afterOpenReport' );
-		}
-
-		/**
 		 * Checks if the desidered mask is in the masks collection.
 		 * @param string		The mask's name.
 		 * @access private
@@ -471,20 +380,6 @@
 		function maskExists($mask_name)
 		{
 			if (array_key_exists($mask_name, $this->masks)){
-				return TRUE;
-			}else{
-				return FALSE;
-			}
-		}
-
-		/**
-		 * Checks if the desidered report is in the reports collection.
-		 * @param string		The mask's name.
-		 * @access private
-		 */
-		function reportExists($report_name)
-		{
-			if (array_key_exists($report_name, $this->reports)){
 				return TRUE;
 			}else{
 				return FALSE;
