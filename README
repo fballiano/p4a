@@ -12,19 +12,19 @@ DOCUMENT_ROOT (es:/home/httpd/htdocs).
 You should rename the directory
 "p4a-version" to "p4a".
 
-If you want to see the sample project than you
+If you want to see the sample application than you
 must install the database with this commands
 (as root/administrator):
 
 	cd /home/httpd/htdocs/p4a
-	cd projects/sample
+	cd applications/sample
 	mysql < sample.sql
 
 than open browser and go to:
 
 	http://localhost/p4a/
 
-the sample project will start by default.
+the sample application will start by default.
 
 -------------------
 -- Documentation --
@@ -69,8 +69,8 @@ and magic_quotes_sybase, setting their value to the
 PHP default.
 magic_quotes_gpc must be Off (PHP default).
 
-You can't switch between two project with the same
-P4A_PROJECT_NAME under the same virtual host
+You can't switch between two application with the same
+P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
 
 -----------------------------------------------

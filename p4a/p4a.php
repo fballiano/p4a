@@ -52,8 +52,8 @@
 	//Main inclusion file
 	require_once(dirname(__FILE__) . '/include.php');
 	
-	//We can have more projects on same site and same browser instance
-	session_name('sn_' . preg_replace('~\W~', '_', P4A_PROJECT_NAME) . '_p4a');
+	//We can have more applications on same site and same browser instance
+	session_name('sn_' . preg_replace('~\W~', '_', P4A_APPLICATION_NAME) . '_p4a');
 	
 	$action_return = NULL;
 	

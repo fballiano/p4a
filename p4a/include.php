@@ -48,7 +48,7 @@
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
 	unset($include_path[ $dot_key ]) ;
-	$new_include_path = '.' . _SSS_ . P4A_PROJECT_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
+	$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
 
 	//Core
@@ -110,14 +110,14 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
 
-	//We can have more projects on same site and same browser instance
+	//We can have more applications on same site and same browser instance
 
-	session_name('sn_' . preg_replace('~\W~', '_', P4A_PROJECT_NAME) . '_includes');
+	session_name('sn_' . preg_replace('~\W~', '_', P4A_APPLICATION_NAME) . '_includes');
 
-	//Projects Objects Includes
+	//Applications Objects Includes
 	session_start();
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
-		$objects_dir = P4A_PROJECT_DIR . '/objects';
+		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		$_SESSION['P4A_INCLUDES'] = array();
 		include_p4a_objects($objects_dir);
 	}

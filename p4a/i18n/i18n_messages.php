@@ -67,10 +67,10 @@
 			$msg_file = "{$language}/{$country}{$codepage}.php";
 			include(dirname(__FILE__) . "/messages/{$msg_file}");
 
-			$project_localization = P4A_PROJECT_LOCALES_DIR . "/{$msg_file}";
+			$application_localization = P4A_APPLICATION_LOCALES_DIR . "/{$msg_file}";
 
-			if (file_exists($project_localization)) {
-				include($project_localization );
+			if (file_exists($application_localization)) {
+				include($application_localization );
 			}
 
 			$this->messages = $messages;

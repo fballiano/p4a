@@ -208,7 +208,7 @@
 	}
 	
 	/**
-	 * Includes all p4a objects for the project.
+	 * Includes all p4a objects for the application.
 	 * @access private
 	 */
 	function include_p4a_objects($dir)

@@ -97,7 +97,7 @@
 	if (!defined('P4A_APPLICATION_NAME'))
 	{
 		$aCwd = explode( _DS_, getcwd() ) ;
-		define('P4A_APPLICATION', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
+		define('P4A_APPLICATION_NAME', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
 	}
 	
 	

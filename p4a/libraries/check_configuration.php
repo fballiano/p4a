@@ -43,7 +43,7 @@ function check_configuration( &$error )
     require_once( dirname(__FILE__) . '/../include.php' );
     
     $correct = true;
-    $error = "<center><h2>Project \"" . P4A_PROJECT_NAME . "\" - Configuration Check</h2></center>\n" ;
+    $error = "<center><h2>Application \"" . P4A_APPLICATION_NAME . "\" - Configuration Check</h2></center>\n" ;
     
     $error .= "<h3>Activities:</h3>\n";
     

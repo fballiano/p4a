@@ -1,4 +1,5 @@
 0.1
+- Change: all _PROJECT_ constants are now _APPLICATION_
 - Fix:    rendering bug for disabled select fields
 - Add:    visible/enabled param in setVisible() and enable() methods into WIDGET class
 - Change: P4A_TOOLBAR, P4A_STANDARD_TOOLBAR and P4A_ACTIONS_TOOLBAR completely rewritten

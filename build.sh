@@ -47,8 +47,8 @@ phpdoc -q -d 'core/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Co
 cd $PKGDIR
 rm p4a/.project
 rm -r `find -type d -name 'CVS'`
-rm -r p4a/projects/.cvsignore
-rm -r p4a/projects/testing
+rm -r p4a/applications/.cvsignore
+rm -r p4a/applications/testing
 
 ##############################################
 # COPYING DEFAULT DOCUMENTATION INTO PACKAGE #
