@@ -71,10 +71,16 @@ function p4a_check_configuration($additionalDir = null)
 
     // UPLOADS DIRECTORY
     $error .= "<div class='box'>Checking UPLOADS DIRECTORY: ";
-    if ((is_readable(P4A_UPLOADS_DIR) and
-		is_dir(P4A_UPLOADS_DIR) and
-		is_writable(P4A_UPLOADS_DIR)) or
-		(@System::mkDir("-p " . P4A_UPLOADS_DIR))) {
+
+	if (is_dir(P4A_UPLOADS_DIR) and is_writable(P4A_UPLOADS_DIR)) {
+		$ok = true;
+	} elseif (!is_dir(P4A_UPLOADS_DIR)) {
+		@System::mkDir("-p " . P4A_UPLOADS_DIR);
+	} else {
+		$ok = false;
+	}
+
+    if ($ok) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
@@ -84,10 +90,16 @@ function p4a_check_configuration($additionalDir = null)
 
     // UPLOADS TEMPORARY DIRECTORY
     $error .= "<div class='box'>Checking UPLOADS TEMPORARY DIRECTORY: ";
-    if ((is_dir(P4A_UPLOADS_TMP_DIR) and
-		is_readable(P4A_UPLOADS_TMP_DIR) and
-		is_writable(P4A_UPLOADS_TMP_DIR)) or
-		(@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR))) {
+
+	if (is_dir(P4A_UPLOADS_TMP_DIR) and is_writable(P4A_UPLOADS_TMP_DIR)) {
+		$ok = true;
+	} elseif (!is_dir(P4A_UPLOADS_TMP_DIR)) {
+		@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR);
+	} else {
+		$ok = false;
+	}
+
+    if ($ok) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
@@ -97,14 +109,24 @@ function p4a_check_configuration($additionalDir = null)
 
     // SMARTY COMPILE DIRECTORIES
     $error .= "<div class='box'>Checking SMARTY COMPILE DIRECTORIES: ";
-    if ((is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and
-		is_readable(P4A_SMARTY_MASK_COMPILE_DIR) and
-		is_writable(P4A_SMARTY_MASK_COMPILE_DIR) and
-		is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and
-		is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and
-		is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) or
-		(@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR) and
-		@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR))) {
+
+	if (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_writable(P4A_SMARTY_MASK_COMPILE_DIR)) {
+		$ok1 = true;
+	} elseif (!is_dir(P4A_SMARTY_MASK_COMPILE_DIR)) {
+		@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR);
+	} else {
+		$ok1 = false;
+	}
+
+	if (is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
+		$ok2 = true;
+	} elseif (!is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
+		@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR);
+	} else {
+		$ok2 = false;
+	}
+
+    if ($ok1 and $ok2) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable.";
@@ -115,7 +137,16 @@ function p4a_check_configuration($additionalDir = null)
     // ADDITIONAL DIRECTORY
 	if ($additionalDir) {
 		$error .= "<div class='box'>Checking ADDITIONAL DIRECTORY: ";
-		if ((is_dir($additionalDir) and is_readable($additionalDir) and is_writable($additionalDir)) or (@System::mkDir("-p $additionalDir"))) {
+
+		if (is_dir($additionalDir) and is_writable($additionalDir)) {
+			$ok = true;
+		} elseif (!is_dir($additionalDir)) {
+			@System::mkDir("-p " . $additionalDir);
+		} else {
+			$ok = false;
+		}
+
+		if ($ok) {
 			$error .= "<span class='green'>OK</span>";
 		} else {
 			$error .= "<span class='red'>FAILED</span><br/>Create \"$additionalDir\" and set it writable.";
