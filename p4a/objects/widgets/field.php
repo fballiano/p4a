@@ -943,7 +943,7 @@
 			$actions =& $this->composeStringActions();
 
 			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
-			$sReturn .= "<select multiple='multiple' ";
+			$sReturn .= "<select multiple='multiple' " . $this->composeStringStyle() . " ";
 			foreach($this->properties as $property_name=>$property_value){
 				if ($property_name == "name") {
 					$property_value .= '[]';
