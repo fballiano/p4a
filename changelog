@@ -1,3 +1,8 @@
+0.6
+- DATA_SOURCE::getAsCSV() now suports fields names
+- renamed DATA_SOURCE::exportToCSV() to DATA_SOURCE::exportAsCSV()
+- added DATA_SOURCE::exportToCSV() as an alias of DATA_SOURCE::exportAsCSV()
+
 0.5
 - fixed a file upload bug that prevented a correct behaviour when the web server is listening on a port differt from 80
 - fixed a bug in DATA_SOURCE filters engine

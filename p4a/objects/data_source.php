@@ -228,24 +228,49 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
-	function getAsCSV($separator = ',')
+	function getAsCSV($separator = ',', $fields_names = null)
 	{
+		if ($fields_names === true or is_array($fields_names)) {
+			$insert_header = true;
+		} else {
+			$insert_header = false;
+		}
+
+		if ($fields_names === null or $fields_names === false or $fields_names === true) {
+			$fields_names = array();
+			while ($field =& $this->fields->nextItem()) {
+				$name = $field->getName();
+				$fields_names[$name] = $name;
+			}
+		}
+
 		$csv = "";
 		$rows = $this->getAll();
 
+		if ($insert_header) {
+			array_unshift($rows, $fields_names);
+		}
+
 		foreach ($rows as $row) {
 			$strrow = "";
-			foreach ($row as $col) {
- 				$col = str_replace("\n","",$col);
- 				$col = str_replace("\r","",$col);
-				$strrow .= '"' . str_replace('"','""',$col) . "\"{$separator}";
+			foreach ($row as $key=>$col) {
+				if (in_array($key, array_keys($fields_names))) {
+					$col = str_replace("\n","",$col);
+					$col = str_replace("\r","",$col);
+					$strrow .= '"' . str_replace('"','""',$col) . "\"{$separator}";
+				}
 			}
 			$csv .= substr($strrow,0,-1) . "\n";
 		}
 		return 	$csv;
 	}
 
-	function exportToCSV($filename = "", $separator = ',')
+	function exportToCSV($filename = "", $separator = ',', $fields_names = null)
+	{
+		$this->exportAsCSV($filename, $separator, $fields_names);
+	}
+
+	function exportAsCSV($filename = "", $separator = ',', $fields_names = null)
 	{
 		$p4a =& P4A::singleton();
 
@@ -253,7 +278,7 @@ class P4A_Data_Source extends P4A_Object
 			$filename = $this->getName() . ".csv";
 		}
 
-		$output = $this->getAsCSV();
+		$output = $this->getAsCSV($separator, $fields_names);
 
 		header("Cache-control: private");
 		header("Content-Type: text/comma-separated-values; charset=" . $p4a->i18n->getCharset());
