@@ -3,7 +3,7 @@ class P4A_Array_Source extends P4A_Data_Source
 {
 	var $_array = array();
 	
-	function P4A_Array_Source($name){
+	function &P4A_Array_Source($name){
 		P4A_Data_Source::P4A_Data_Source($name);
 	}
 	
@@ -19,7 +19,11 @@ class P4A_Array_Source extends P4A_Data_Source
 		
 	function row($num_row = NULL, $move_pointer = TRUE)
 	{
-		$row = $this->_array[$num_row-1];
+		if ($num_row !== NULL) {
+			$row = $this->_array[$num_row-1];
+		} else {
+			$row = $this->_array[$this->_pointer - 1];
+		}
 		
 		if ($move_pointer) {
 			if (!empty($row)) {

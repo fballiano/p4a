@@ -32,6 +32,23 @@ class P4A_Data_Source extends P4A_Object
 		return ;
 	}
 
+	function newRow()
+	{
+		$this->_pointer = 0;
+		while($field =& $this->fields->nextItem()) {
+			$field->setDefaultValue();
+		}
+	}	
+	
+	function isNew()
+	{
+		if ($this->_pointer === 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function getAll($from = 0, $count = 0) {
 		return;
 	}
@@ -49,7 +66,7 @@ class P4A_Data_Source extends P4A_Object
 	function firstRow()
 	{
 		$num_rows = $this->getNumRows();
-
+		
 		if ($num_rows > $this->_pointer-1) {
 			$this->_pointer = 1;
 			return $this->row();

@@ -16,7 +16,7 @@ class mysql_manager extends p4a
         parent::main();
     }
 
-    function menuClick(&$object)
+    function maskOpenClick(&$object)
     {
         $name = $object->getName();
         if (!isset($this->masks->$name)) {
@@ -24,10 +24,18 @@ class mysql_manager extends p4a
         }
         $this->openMask($name);
     }
+	
+	function tableOpenClick(&$object)
+    {
+        $name = $object->getName();
+        if (!isset($this->masks->$name)) {
+			$this->masks->build('P4A_Table_Mask', $name);
+        }
+        $this->openMask($name);
+    }
 
 	function editMask()
 	{
-
 		$mask =& $this->active_mask;
 		$table =& $mask->table;
 		$table->setStyleProperty("border", "1px dashed red");
@@ -54,9 +62,9 @@ class mysql_manager extends p4a
 		$mask->info->setValue("Click on the red areas to edit widgets");
 	}
 	
-	function saveRow()
+	function createTable()
 	{
-	
+		$this->openMask("My_Create_Table");
 	}
 }
 ?>

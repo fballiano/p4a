@@ -1048,7 +1048,7 @@
 
 			if( $this->getNewValue() === NULL )
 			{
-				$header 		= "<div style='float:left'><input type='file' class='border_box font_normal clickable' ";
+				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
 				if (!$this->isEnabled()) {

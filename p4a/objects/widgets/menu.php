@@ -379,7 +379,7 @@
 		 * @access public
 		 */
 		 //todo
-		function addItem($name, $label = NULL)
+		function &addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 
@@ -389,6 +389,8 @@
 			if( $label !== NULL ) {
 				$item->setLabel($label);
 			}
+			
+			return $item;
 		}
 
 		/**

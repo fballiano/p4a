@@ -59,20 +59,25 @@ class db_configuration extends p4a_mask
 
 		$tables =& $db->getCol("show tables");
 		$menu =& $p4a->build("p4a_menu", "menu");
-		$menu->addItem("tables", "Tables");
+		$menu->addItem("masks", "&Masks");
+		$menu->addItem("tables", "&Tables");
 
 		foreach($tables as $table){
 			if (! preg_match("/_seq$/", $table)){
 				$valid_table = $table;
 				$label =  ucwords(str_replace('_', ' ', $table));
+				$menu->items->masks->addItem($table,$label);
 				$menu->items->tables->addItem($table,$label);
-				$p4a->intercept($menu->items->tables->items->$table, 'onClick', 'menuClick');
+				$p4a->intercept($menu->items->masks->items->$table, 'onClick', 'maskOpenClick');
+				$p4a->intercept($menu->items->tables->items->$table, 'onClick', 'tableOpenClick');
 			}
 		}
+		$create_table =& $menu->addItem("create_table", "New Table");
 
 		$edit =& $menu->addItem("edit", "Edit");
 		$p4a->intercept($edit, "onClick", "editMask");
-		$menu->items->tables->items->$valid_table->onClick();
+		$p4a->intercept($create_table, "onClick", "createTable");
+		$menu->items->masks->items->$valid_table->onClick();
 	}
 }
 

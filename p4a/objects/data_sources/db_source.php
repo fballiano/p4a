@@ -292,15 +292,6 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_is_sortable;
 	}
 
-	function isNew()
-	{
-		if ($this->_pointer === 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function getPkRow($pk)
  	{
 		$db =& P4A_DB::singleton();
@@ -426,14 +417,6 @@ class P4A_DB_Source extends P4A_Data_Source
 	function updateRowPosition()
 	{
 		$this->_pointer = $this->getRowPosition();
-	}
-
-	function newRow()
-	{
-		$this->_pointer = 0;
-		while($field =& $this->fields->nextItem()) {
-			$field->setDefaultValue();
-		}
 	}
 
 	function saveRow($fields_values = array(), $pk_values = array())
@@ -779,12 +762,6 @@ class P4A_DB_Source extends P4A_Data_Source
 	function resetNumRows()
 	{
 		$this->_num_rows = NULL;
-	}
-
-	function getOffset()
-	{
-		$limit = $this->getPageLimit();
-		return ($this->getNumPage() * $limit) - $limit;
 	}
 
 	function addMultivalueField($fieldname, $table, $fk = NULL, $fk_field = NULL)
