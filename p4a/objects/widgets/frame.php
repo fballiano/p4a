@@ -47,6 +47,10 @@ class P4A_Frame extends P4A_Widget
 
 	function getAsString()
 	{
+		if (!$this->isVisible()) {
+			return "";
+		}
+
 		$p4a =& P4A::singleton();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();

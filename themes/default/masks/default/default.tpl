@@ -89,8 +89,9 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 	      	text-align:center;
       }
 
-      #titleContaineer {
-      		text-align:left;
+      #footerContainer {
+            text-align: center;
+			margin-top: 10px;
       }
 
       @media screen {
@@ -142,9 +143,7 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 
 		<!-- TITLE -->
 		[[if $title]]
-		<div id="titleContainer">
-			<h2>[[$title]]</h2>
-		</div>
+		<div><h2>[[$title]]</h2></div>
 		[[/if]]
 
 		<!-- SHEET -->
@@ -152,8 +151,9 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 		[[$main]]
 		</div>
 
+		<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a></div>
 	</div>
 
-  	[[$mask_close]]
+	[[$mask_close]]
   </body>
 </html>
