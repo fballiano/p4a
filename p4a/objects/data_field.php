@@ -75,6 +75,9 @@
 		 * @access private
 		 */
 		var $type = 'text';
+		
+		
+		var $is_updatable = TRUE;
 						
 		/**
 		 * Class constructor.
@@ -144,6 +147,24 @@
 		function getType()
 		{
 			return $this->type;
+		}
+		
+		//todo
+		function setUpdatable($value = TRUE)
+		{
+			$this->is_updatable = $value;
+		}
+		
+		//todo
+		function isUpdatable()
+		{
+			return $this->is_updatable;
+		}
+		
+		//todo
+		function setDefaultValue()
+		{
+			$this->setValue($this->default_value);
 		}
 	}
 ?>

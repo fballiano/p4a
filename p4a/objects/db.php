@@ -1,6 +1,6 @@
 <?php
 
-class P4A_DB  
+class P4A_DB
 {
 	/**
 	* Connects to the configured database.
@@ -15,6 +15,7 @@ class P4A_DB
 			if(defined("P4A_DSN")){
 				$db = DB::connect(P4A_DSN);
     			if (DB::isError($db)){
+					print_r($db);
 					$e = new P4A_ERROR('Database connection failed.', $this, $db);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED ){
     					die();
@@ -27,22 +28,22 @@ class P4A_DB
 		}
 		return $db;
 	}
-	
+
 	/**
 	* Connects to the configured database.
 	* Database is configured by setting P4A_DSN constant.
 	* @access private
 	* @throws onDBConnectionError
-	*/	
+	*/
 	function &connect()
 	{
 		return P4A_DB::singleton();
 	}
-	
+
 	/**
 	* Close the connection to the database.
 	* @access private
-	*/	
+	*/
 	function close()
 	{
 		$db = P4A_DB::singleton();
