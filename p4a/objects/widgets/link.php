@@ -59,13 +59,20 @@
 		 */
 		function &P4A_Link ($name, $id = NULL)
 		{
-			$prefix = 'lnk' ;
+			$prefix = 'lnk';
 
-			if( $id === NULL ) {
+			if ($id === NULL) {
 				parent::P4A_Widget($name, $prefix);
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);
 			}
+
+			$this->addAction("onClick");
+		}
+
+		function setLabel($label)
+		{
+			$this->setValue($label);
 		}
 
 		/**
@@ -75,17 +82,18 @@
 		 */
 		function getAsString()
 		{
-			if( $this->isEnabled() )
-			{
+			if (!$this->isVisible()) {
+				return '';
+			}
+
+			if ($this->isEnabled()) {
 				$header 		= '<A href="#" class="link" ';
 				$close_header 	= '>';
 				$footer			= '</A>';
 				$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 				$sReturn .= $this->getValue();
 				$sReturn .= $footer;
-			}
-			else
-			{
+			} else {
 				$sReturn = $this->getValue();
 			}
 

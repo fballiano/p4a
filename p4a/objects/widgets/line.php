@@ -57,9 +57,9 @@
 		 */
 		function &P4A_Line ($name, $id = NULL)
 		{
-			$prefix = 'line' ;
+			$prefix = 'line';
 
-			if( $id === NULL ) {
+			if ($id === NULL) {
 				parent::P4A_Widget($name, $prefix);
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);
@@ -73,7 +73,7 @@
 		 */
 		function getAsString()
 		{
-			if( !$this->isVisible() ) {
+			if (!$this->isVisible()) {
 				return NULL;
 			}
 

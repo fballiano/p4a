@@ -1,4 +1,5 @@
 0.13
+- various bugfix in P4A_Link
 - updated caledar widget to 1.0
 - added P4A_Table_Col::setOrderable() and P4A_Table_Col::isOrderable() to set and check the possibility to enable the "order by" on a column
 - added the possibility to intercept the "beforeDisplay" event on P4A_Table
