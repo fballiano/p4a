@@ -526,7 +526,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TABLE_COL extends P4A_WIDGET
+	class P4A_Table_Col extends P4A_Widget
 	{
 		/**
 		 * Keeps the header string.
@@ -635,7 +635,6 @@
 				if ($this->getSourceDescriptionField() === NULL) {
 					$source_value = $this->getSourceValueField();
 					$names = $this->data->fields->getNames();
-
 					foreach ($names as $name) {
 						if ($name != $source_value) {
 							$this->setSourceDescriptionField($name) ;

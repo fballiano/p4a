@@ -5,19 +5,11 @@ if (!document.getElementById)
     document.getElementById = function() { return null; }
 
 function initializeMenu(menuId, actuatorId) {
-	
-	var menu = document.getElementById(menuId);
+    
+    var menu = document.getElementById(menuId);
     var actuator = document.getElementById(actuatorId);
     if (menu == null || actuator == null) return;
-
-    //if (window.opera) return; // I'm too tired
-	
-// 	document.onclick = function() {
-// 		if (currentMenu) {
-//             currentMenu.style.visibility = "hidden";
-//         }
-// 	}
-	     
+   
     actuator.onclick = function() {
         if (currentMenu == null) {
             this.showMenu();

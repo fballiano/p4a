@@ -46,7 +46,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_OBJECT
+	class P4A_Object
 	{
 		/**
 		 * Object's ID

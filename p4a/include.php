@@ -83,8 +83,9 @@
 	require_once(dirname(__FILE__) . '/objects/report.php');
 	require_once(dirname(__FILE__) . '/objects/collection.php');
 	require_once(dirname(__FILE__) . '/objects/data_field.php');
-	//require_once(dirname(__FILE__) . '/objects/data_source.php');
-	require_once(dirname(__FILE__) . '/objects/db_source.php');
+	require_once(dirname(__FILE__) . '/objects/data_source.php');
+	require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
+	require_once(dirname(__FILE__) . '/objects/data_sources/array_source.php');
 	//require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
 	//require_once(dirname(__FILE__) . '/objects/data_sources/txt_source.php');
 	require_once(dirname(__FILE__) . '/objects/widget.php');

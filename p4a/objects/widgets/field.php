@@ -313,32 +313,27 @@
 		function setNewValue($new_value)
 		{
 			$set = true ;
-
-			if( $new_value == NULL )
-			{
+			
+			if( $new_value == NULL ) {
 				$new_value = NULL;
-			}
-			elseif( $this->isFormattable() and $this->isFormatted() )
-			{
+			} elseif ( $this->isFormattable() and $this->isFormatted() ) {
 				$new_value = $this->unformat($new_value);
-			}
-			elseif( ( $this->type == 'password' ) and ( $new_value != P4A_PASSWORD_OBFUSCATOR ) )
-			{
+			} elseif (($this->type == 'password' ) 
+			and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
-				$new_value = md5( $new_value );
+						$new_value = md5( $new_value );
 					case 'none':
 						break;
 					default:
 						trigger_error('unknown encryption type:' . $this->getEncryptionType());
 				}
-			}
-			elseif( ( $this->type == 'password' ) and ( $new_value == P4A_PASSWORD_OBFUSCATOR ) )
-			{
+			} elseif (($this->type == 'password') 
+			and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
 				$set = false;
 			}
 
-			if( $set ) {
+			if ($set) {
 				$this->data_field->setNewValue($new_value);
 			}
 		}
@@ -352,24 +347,17 @@
 		function getNewValue($index = NULL)
 		{
 			$new_value = $this->data_field->getNewValue();
-
-			if( $new_value == NULL )
-			{
+			
+			if ($new_value == NULL) {
 				$new_value = NULL;
-			}
-			elseif ($index === NULL)
-			{
-				if ($this->isFormattable() and $this->isFormatted())
-				{
+			} elseif ($index === NULL) {
+				if ($this->isFormattable() and $this->isFormatted()) {
 					$new_value = $this->format($new_value);
 				}
-            }
-            elseif(is_array($new_value))
-            {
+            } elseif(is_array($new_value)) {
                 $new_value = $new_value[$index];
-            }
-            elseif( substr($new_value, 0, 1) == '{' && substr($new_value, -1) == '}' )
-			{
+            } elseif( substr($new_value, 0, 1) == '{' 
+			&& substr($new_value, -1) == '}') {
                 $tmp_value = substr($new_value, 1, -1);
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];
