@@ -1,6 +1,6 @@
 0.9
 - all javascript moved in p4a.js, the default form is now named "p4a"
-- fixed a bug in mask default template, no javascript wan included
+- fixed a bug in mask default template, no javascript was included
 - added the ability to detect handheld devices (a browser that does not support css2 is considered handheld)
 - new library (phpSniff) to detect Internet Explorer
 - optimized output HTML, cleaner and lighter

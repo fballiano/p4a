@@ -1,5 +1,4 @@
 - migrate to I18Nv2
-- integrate NET_USERAGENT to automatically detect ie and handheld
 - if handheld render toolbar as buttons hiding unuseful buttons?
 - make SHEETS_GROUP and tabbed MENU work
 - change template engine to flexy
