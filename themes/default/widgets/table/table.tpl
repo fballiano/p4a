@@ -43,5 +43,4 @@
 		[[if $navigation_bar]]
 			[[$navigation_bar]]
 		[[/if]]
-	</table>
 </div>	

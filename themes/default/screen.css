@@ -439,6 +439,7 @@ fieldset {
 	padding-left:15px;
 	padding-right:15px;
 	margin:0;
+	float:left;
 }
 
 legend {
@@ -476,7 +477,7 @@ legend {
 	border:2px solid white;
 }
 .table_container {
-	float:left;
+ 	float:left; 
 }
 .table_container .frame{
 	border-top:1px solid #C6D3DE;

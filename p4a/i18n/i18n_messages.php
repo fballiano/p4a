@@ -87,7 +87,12 @@
 		function get($first_level_id, $second_level_id = NULL)
 		{
 			if ($second_level_id === NULL) {
-				return $this->messages[$first_level_id];
+				if (array_key_exists($first_level_id, $this->messages)){
+					return $this->messages[$first_level_id];
+				} else {
+					return "";
+				}
+				
 			} else {
 				return $this->messages[$first_level_id][$second_level_id];
 			}
