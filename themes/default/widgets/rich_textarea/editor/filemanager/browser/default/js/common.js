@@ -12,7 +12,7 @@
  * 	Common objects and functions shared by all pages that compose the
  * 	File Browser dialog window.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-27 00:03:05
  * 
  * File Authors:

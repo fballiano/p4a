@@ -11,8 +11,8 @@
  * File Name: it.js
  * 	Italian language file.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-24 23:39:21
+ * Version:  2.0 RC2
+ * Modified: 2004-12-05 22:24:11
  * 
  * File Authors:
  * 		Simone Chiaretta (simone@piyosailing.com)
@@ -96,7 +96,7 @@ CellProperties		: "Proprietà cella",
 TableProperties		: "Proprietà tabella",
 ImageProperties		: "Proprietà immagine",
 
-FontFormats		: "Normale;Formattato;Indirizzo;Titolo 1;Titolo 2;Titolo 3;Titolo 4;Titolo 5;Titolo 6",
+FontFormats		: "Normale;Formattato;Indirizzo;Titolo 1;Titolo 2;Titolo 3;Titolo 4;Titolo 5;Titolo 6;Paragrafo (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Elaborazione XHTML in corso. Attendere prego...",

@@ -11,8 +11,8 @@
  * File Name: fck_image.js
  * 	Scripts related to the Link dialog window (see fck_link.html).
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-30 10:56:21
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 14:11:04
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -86,9 +86,10 @@ function LoadSelection()
 	if ( ! oImage ) return ;
 
 	var sUrl = GetAttribute( oImage, 'src', '' ) ;
-	
-	if ( sUrl.startsWith( FCK.BaseUrl ) )
-		sUrl = sUrl.remove( 0, FCK.BaseUrl.length ) ;
+
+	// TODO: Wait stable version and remove the following commented lines.
+//	if ( sUrl.startsWith( FCK.BaseUrl ) )
+//		sUrl = sUrl.remove( 0, FCK.BaseUrl.length ) ;
 	
 	GetE('txtUrl').value    = sUrl ;
 	GetE('txtAlt').value    = GetAttribute( oImage, 'alt', '' ) ;
@@ -136,12 +137,10 @@ function Ok()
 		return false ;
 	}
 
-	var e = ( oImage || FCK.EditorDocument.createElement( 'IMG' ) ) ;
-	
-	UpdateImage( e ) ;
+	if ( !oImage )
+		oImage = FCK.CreateElement( 'IMG' ) ;
 
-	if ( ! oImage )
-		FCK.InsertElement( e ) ;
+	UpdateImage( oImage ) ;
 
 	return true ;
 }

@@ -11,8 +11,8 @@
  * File Name: pl.js
  * 	Polish language file.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-24 23:42:36
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 01:16:06
  * 
  * File Authors:
  * 		Jakub Boesche (jboesche@gazeta.pl)
@@ -74,7 +74,7 @@ ShowTableBorders	: "Pokazuj ramkę tabeli",
 ShowDetails			: "Pokaż szczegóły",
 Style				: "Styl",
 FontFormat			: "Format",
-Font				: "Czcnioka",
+Font				: "Czcionka",
 FontSize			: "Rozmiar",
 TextColor			: "Kolor tekstu",
 BGColor				: "Kolor tła",

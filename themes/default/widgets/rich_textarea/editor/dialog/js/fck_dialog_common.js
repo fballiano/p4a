@@ -11,8 +11,8 @@
  * File Name: fck_dialog_common.js
  * 	Useful functions used by almost all dialog window pages.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-23 17:21:15
+ * Version:  2.0 RC2
+ * Modified: 2004-12-19 23:37:29
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -45,11 +45,28 @@ function GetAttribute( element, attName, valueIfNull )
 	var oAtt = element.attributes[attName] ;
 	
 	if ( oAtt == null || !oAtt.specified )
-		return valueIfNull ;
+		return valueIfNull ? valueIfNull : '' ;
 		
 	var oValue = element.getAttribute( attName, 2 ) ;
 	
 	return ( oValue == null ? valueIfNull : oValue ) ;
+}
+
+// Functions used by text fiels to accept numbers only.
+function IsDigit( e )
+{
+	e = e || event ;
+	var iCode = ( e.keyCode || e.charCode ) ;
+	
+	event.returnValue = 
+		(
+			( iCode >= 48 && iCode <= 57 )		// Numbers
+			|| (iCode >= 37 && iCode <= 40)		// Arrows
+			|| iCode == 8						// Backspace
+			|| iCode == 46						// Delete
+		) ;
+		
+	return event.returnValue ;
 }
 
 String.prototype.startsWith = function( value )

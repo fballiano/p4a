@@ -11,8 +11,8 @@
  * File Name: fckdialog.html
  * 	This page is used by all dialog box as the container.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-30 10:26:36
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 00:48:49
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -24,6 +24,11 @@
 		<meta name="robots" content="noindex, nofollow" />
 		<script type="text/javascript">
 <!--
+
+// On some Gecko browsers (probably over slow connections) the 
+// "dialogArguments" are not set so we must get it from the opener window.
+if ( !dialogArguments )
+	dialogArguments = window.opener.FCKLastDialogInfo ;
 
 // Sets the Skin CSS
 document.write( '<link href="' + dialogArguments.Editor.FCKConfig.SkinPath + 'fck_dialog.css" type="text/css" rel="stylesheet">' ) ;

@@ -11,7 +11,7 @@
  * File Name: bs.js
  * 	Bosnian language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-27 15:13:10
  * 
  * File Authors:

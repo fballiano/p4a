@@ -1,19 +1,19 @@
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2004 Frederico Caldeira Knabben
- *
+ * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
- *
+ * 
  * For further information visit:
  * 		http://www.fckeditor.net/
- *
+ * 
  * File Name: fckconfig.js
  * 	Editor configuration settings.
- *
- * Version:  2.0 RC1
- * Modified: 2004-11-29 18:38:00
- *
+ * 
+ * Version:  2.0 RC2
+ * Modified: 2004-12-17 08:14:33
+ * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
  */
@@ -49,7 +49,12 @@ FCKConfig.StartupFocus = true ;
 // Cut and Paste options
 FCKConfig.ForcePasteAsPlainText	= false ;
 
-FCKConfig.ForceSimpleAmpersand = true ;
+FCKConfig.ForceSimpleAmpersand = false ;
+
+FCKConfig.TabSpaces = 0 ;
+
+// When the user presses <ENTER> inserts a <BR> tag instead of a <P> (on IE).
+FCKConfig.UseBROnCarriageReturn	= false ;
 
 // Link: Target Windows
 FCKConfig.LinkShowTargets = true ;
@@ -85,7 +90,7 @@ FCKConfig.FontColors = '000000,993300,333300,003300,003366,000080,333399,333333,
 // Font Combos
 FCKConfig.FontNames		= 'Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 FCKConfig.FontSizes		= '1/xx-small;2/x-small;3/small;4/medium;5/large;6/x-large;7/xx-large' ;
-FCKConfig.FontFormats	= 'p;pre;address;h1;h2;h3;h4;h5;h6' ;
+FCKConfig.FontFormats	= 'p;div;pre;address;h1;h2;h3;h4;h5;h6' ;
 
 FCKConfig.StylesXmlPath	= '../fckstyles.xml' ;
 

@@ -11,7 +11,7 @@
  * File Name: he.js
  * 	Hebrew language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-26 13:01:45
  * 
  * File Authors:

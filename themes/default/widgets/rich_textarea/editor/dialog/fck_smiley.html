@@ -11,8 +11,8 @@
  * File Name: fck_smiley.html
  * 	Smileys (emoticons) dialog window.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-16 01:23:06
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 14:09:08
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -36,9 +36,11 @@ function setDefaults()
 	oEditor.FCKLanguageManager.TranslatePage(document) ;
 }
 
-function insertChar(td)
+function InsertSmiley( url )
 {
-	oEditor.FCK.InsertHtml( td.innerHTML || "" ) ;
+	var oImg = oEditor.FCK.CreateElement( 'IMG' ) ;
+	oImg.src = url ;
+
 	window.parent.Cancel() ;
 }
 
@@ -71,8 +73,9 @@ while (i < aImages.length)
 	{
 		if (aImages[i])
 		{
-			document.write("<TD width='1%' align='center' class='DarkBackground HandIE HandMozilla' onclick='insertChar(this)' onmouseover='over(this)' onmouseout='out(this)'>") ;
-			document.write("<img src='" + sBasePath + aImages[i] + "' border='0'>") ;
+			var sUrl = sBasePath + aImages[i] ;
+			document.write("<TD width='1%' align='center' class='DarkBackground HandIE HandMozilla' onclick='InsertSmiley(\"" + sUrl.replace(/"/g, '\\"' ) + "\")' onmouseover='over(this)' onmouseout='out(this)'>") ;
+			document.write("<img src='" + sUrl + "' border='0'>") ;
 		}
 		else
 			document.write("<TD width='1%' class='DarkBackground'>&nbsp;") ;

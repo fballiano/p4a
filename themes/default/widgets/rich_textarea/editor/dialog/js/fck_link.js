@@ -11,8 +11,8 @@
  * File Name: fck_link.js
  * 	Scripts related to the Link dialog window (see fck_link.html).
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-30 10:35:09
+ * Version:  2.0 RC2
+ * Modified: 2004-12-21 01:56:13
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -150,7 +150,7 @@ function LoadAnchorNamesAndIds()
 	var aAnchors	= oEditor.FCK.EditorDocument.anchors ;
 	var aIds		= oEditor.FCKTools.GetAllChildrenIds( oEditor.FCK.EditorDocument.body ) ;
 
-	bHasAnchors = ( aAnchors.lenght > 0 || aIds.length > 0 ) ;
+	bHasAnchors = ( aAnchors.length > 0 || aIds.length > 0 ) ;
 	
 	for ( var i = 0 ; i < aAnchors.length ; i++ )
 	{
@@ -177,8 +177,9 @@ function LoadSelection()
 	// Get the actual Link href.
 	var sHRef = oLink.getAttribute('href',2) + '' ;
 	
-	if ( sHRef.startsWith( FCK.BaseUrl ) )
-		sHRef = sHRef.remove( 0, FCK.BaseUrl.length ) ;
+	// TODO: Wait stable version and remove the following commented lines.
+//	if ( sHRef.startsWith( FCK.BaseUrl ) )
+//		sHRef = sHRef.remove( 0, FCK.BaseUrl.length ) ;
 
 	// Look for a popup javascript link.
 	var oPopupMatch = oRegex.PopupUri.exec( sHRef ) ;
@@ -467,7 +468,7 @@ function Ok()
 
 	// Advances Attributes
 	SetAttribute( oLink, 'id'		, GetE('txtAttId').value ) ;
-	SetAttribute( oLink, 'name'		, GetE('txtAttName').value ) ;		// No IE. Set but doensn't update the outerHTML.
+	SetAttribute( oLink, 'name'		, GetE('txtAttName').value ) ;		// No IE. Set but doesnt't update the outerHTML.
 	SetAttribute( oLink, 'dir'		, GetE('cmbAttLangDir').value ) ;
 	SetAttribute( oLink, 'lang'		, GetE('txtAttLangCode').value ) ;
 	SetAttribute( oLink, 'accesskey', GetE('txtAttAccessKey').value ) ;

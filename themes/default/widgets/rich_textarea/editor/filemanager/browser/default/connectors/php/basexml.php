@@ -11,8 +11,8 @@
  * File Name: basexml.php
  * 	This is the File Manager Connector for ASP.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-29 17:56:52
+ * Version:  2.0 RC2
+ * Modified: 2004-12-10 17:49:19
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -27,7 +27,7 @@ function CreateXmlHeader( $command, $resourceType, $currentFolder )
 	echo '<Connector command="' . $command . '" resourceType="' . $resourceType . '">' ;
 	
 	// Add the current folder node.
-	echo '<CurrentFolder path="' . $currentFolder . '" url="' . GetUrlFromPath( $resourceType, $currentFolder ) . '" />' ;
+	echo '<CurrentFolder path="' . ConvertToXmlAttribute( $currentFolder ) . '" url="' . ConvertToXmlAttribute( GetUrlFromPath( $resourceType, $currentFolder ) ) . '" />' ;
 }
 
 function CreateXmlFooter()

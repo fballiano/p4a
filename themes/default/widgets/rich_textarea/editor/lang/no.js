@@ -11,7 +11,7 @@
  * File Name: no.js
  * 	Norwegian language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-30 12:31:05
  * 
  * File Authors:

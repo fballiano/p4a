@@ -15,7 +15,7 @@
  * 	instances in a HTML page in the client side. For server side
  * 	operations, use the specific integration system.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-23 20:35:14
  * 
  * File Authors:

@@ -11,7 +11,7 @@
  * File Name: es.js
  * 	Spanish language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-26 01:58:26
  * 
  * File Authors:

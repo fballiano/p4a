@@ -11,7 +11,7 @@
  * File Name: sr.js
  * 	Serbian (Cyrillic) language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-26 02:03:06
  * 
  * File Authors:
