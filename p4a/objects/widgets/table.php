@@ -259,8 +259,13 @@
 					$col =& $this->cols->$col_name;
 					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
-					$headers[$i]['action']		= $col->composeStringActions();
 					$headers[$i]['order']		= NULL;
+					
+					if ($col->isOrderable()) {
+						$headers[$i]['action'] = $col->composeStringActions();
+					} else {
+						$headers[$i]['action'] = "";
+					}
 
 					$data_field =& $this->data->fields->{$col->getName()};
 					$field_name = $data_field->getName();
@@ -578,7 +583,7 @@
 
 		/**
 		 * Tells if the fields content is formatted or not.
-		 * @var string
+		 * @var boolean
 		 * @access private
 		 */
 		var $formatted = true;
@@ -596,6 +601,13 @@
 		 * @access private
 		 */
 		var $format_name = NULL;
+		
+		/**
+		 * Tells if the table can order by this col
+		 * @var boolean
+		 * @access private
+		 */
+		var $orderable = true;
 
 		/**
 		 * Class constructor.
@@ -782,6 +794,24 @@
 			$this->format_name = NULL;
 			$this->unsetFormatted();
 		}
+		
+		/**
+		 * Sets the ability to order by this column
+		 * @access public
+		 */
+		function setOrderable($orderable = true)
+		{
+			$this->orderable = $orderable;
+		}
+		
+		/**
+		 * Tell if the column is orderable or not
+		 * @access public
+		 */
+		function isOrderable()
+		{
+			return $this->orderable;
+		}
 
 		function onClick()
 		{
@@ -871,6 +901,8 @@
 			$limit = $parent->data->getPageLimit();
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
+			
+			$this->actionHandler('beforeDisplay', &$rows);
 
 			$i = 0;
 			foreach($rows as $row_number=>$row)

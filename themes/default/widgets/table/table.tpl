@@ -11,9 +11,14 @@
 		<thead>
 			<tr>
 				<th>&nbsp;</th>
-				[[foreach from=$headers item=header]]
+				[[foreach from=$headers item=header]]				
+				[[if $header.action]]
 				<th class="font3 align_center clickable" [[$header.properties]] [[$header.action]]><img style="float:right;padding:2px;" src="[[$tpl_path]]/images/[[if $header.order]][[$header.order|lower]][[else]]spacer[[/if]].gif" border="0" />
 				<a href="#" [[$header.action]]>[[$header.value]]</a>
+				[[else]]
+				<th class="font3 align_center" [[$header.properties]]><img style="float:right;padding:2px;" src="[[$tpl_path]]/images/[[if $header.order]][[$header.order|lower]][[else]]spacer[[/if]].gif" border="0" />
+				[[$header.value]]
+				[[/if]]
 				</th>
 				[[/foreach]]
 			</tr>

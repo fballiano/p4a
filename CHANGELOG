@@ -1,9 +1,13 @@
+0.13
+- added P4A_Table_Col::setOrderable() and P4A_Table_Col::isOrderable() to set and check the possibility to enable the "order by" on a column
+- added the possibility to intercept the "beforeDisplay" event on P4A_Table
+
 0.12
 - added folder.png and folder_open.png images in 16x16 pixels icons
 - updated rich text editor (FCKeditor 2.0 RC3)
-- now P4A_Field::getAsLabel correctly handle multiline content
+- now P4A_Field::getAsLabel() correctly handle multiline content
 - P4A_Widget now instance a "handheld" smarty variable, passed to the template
-- now P4A_Field::getAsDate correctly manage handheld devices
+- now P4A_Field::getAsDate() correctly manage handheld devices
 - added some copyright notes to array_source.php, db_source.php, collection.php, data_source.php
 - removed multivalue_field.php because it was obsolete
 - removed P4A_Mask::addMultivalueField() because it was obsolete
