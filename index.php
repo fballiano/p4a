@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <html>
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
-<title>P4A Web Application Framework</title>
+<title>P4A - PHP For Applications</title>
 <head>
   <STYLE>
 BODY { background-color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size:13px}
@@ -16,7 +16,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
   </STYLE>
 </head>
 <body>
-<h1>P4A Web Application Framework</h1>
+<h1>P4A - PHP For Applications</h1>
 <h2>Documentation</h2>
 <ul>
 <?php
