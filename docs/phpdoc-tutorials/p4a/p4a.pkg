@@ -1,0 +1,111 @@
+<refentry id="{@id}">
+
+ <refnamediv>
+  <refname>Welcome to P4A - PHP For Applications!</refname>
+  <refpurpose>The new generation of PHP frameworks.</refpurpose>
+ </refnamediv>
+ <refsynopsisdiv>
+  <author>
+   CreaLabs
+   <authorblurb>
+    {@link http://www.crealabs.it}
+   </authorblurb>
+  </author>
+  <author>
+   Fabrizio Balliano
+   <authorblurb>
+    {@link mailto:fabrizio.balliano@crealabs.it fabrizio.balliano@crealabs.it}
+   </authorblurb>
+  </author>
+  <author>
+   Andrea Giardina
+   <authorblurb>
+    {@link mailto:andrea.giardina@crealabs.it andrea.giardina@crealabs.it}
+   </authorblurb>
+  </author>
+ </refsynopsisdiv>
+ 
+ <refsect1 id="{@id whatis}">
+	<title>What is P4A?</title>
+	
+	<para>
+		P4A is a fully OO PHP framework for easy building of stateful web applications.
+	</para>
+	
+	<para>
+		This 
+		P4A stands for Merlin web application Framework, it is a
+		framework for building web based applications turning
+		your internet browser in a smart application container.
+	</para>
+	<para>
+		P4A's architecture lets you build simple ad extremely complex applications keeping
+		the code so clean that you would never expect.
+	</para>
+	<para>
+		P4A concept is based upon the want to have a fremework for building of
+		<emphasis>STATEFUL</emphasis> applications without having to take care about
+		state maintenance.
+	</para>
+	<para>
+		Next to this we want a simple but powerful programming interface so P4A
+		is totally <emphasis>EVENT</emphasis> driven. Every P4A object can trigger
+		actions on specified event, so you can build a web application in the same way
+		you would have built it in traditional (client) way, and, above all, you will have
+		the same resulting effect.
+	</para>
+	<para>
+		P4A has a powerful, modular and totally expandible set of widget for
+		content management applications building. Examples are input fields, simple
+		text boxes, text areas with rich editing features, combo box, table widgets
+		and so on.
+	</para>
+ </refsect1>
+ 
+ <refsect1 id="{@id where}">
+	<title>Where to find P4A</title>
+	
+	<para>
+		P4A project official site is 
+		{@link http://p4a.sourceforge.net}.
+	</para>
+	<para>
+		CREALABS, the creators of P4A, are available at the web site
+		{@link http://www.crealabs.it}
+		or by e-mail at: {@link mailto:info@crealabs.it info@crealabs.it}
+	</para>
+ </refsect1>
+
+
+ <refsect1 id="{@id license}">
+  <title>P4A License</title>
+  <para>
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the 
+   {@link http://www.gnu.org/licenses/gpl.html GNU General Public License version 2}
+   as published by the Free Software Foundation.
+  </para>
+  <para>
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+  </para>
+  <para>
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  </para>
+  <para>
+   To contact the authors write to:
+   CreaLabs -															
+   Viale dei Mughetti 13/A,											
+   10151, Torino (Italy).												
+   Tel.:   (+39) 011 735645											
+   Fax:    (+39) 011 735645											
+   Web:    {@link http://www.crealabs.it}							
+   E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
+   .
+  </para>
+ </refsect1>
+</refentry>
