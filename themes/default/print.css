@@ -1,6 +1,59 @@
 /*   ---------------------------------------------------------------------------------   */
 /*   HTML TAGS   																		 */
 /*   ---------------------------------------------------------------------------------   */
+* {
+	color:black !important;
+	border-color:black;
+}
+
+input:active {
+	background-color:white !important; 
+}
+
+select {
+	border-color:1px solid white !important;
+	padding:2px;
+}
+
+input {
+	background-color:white;
+	border: none;
+	border-bottom: 1px solid black !important;
+	margin-right:10px;
+	font-size: 8px;	
+	text-align:left !important;
+}
+
+iframe {
+	border:none !important;
+}
+
+input[type="file"] {
+	display:none;
+}
+
+fieldset {
+	border:1px solid black;
+}
+
+.row {
+	border:1px solid black;
+}
+
+.statusBar  {
+	display:none;
+}
+
+label {
+	background:#ddd;
+	font-weight:normal !important;
+}
+
+.label {
+	border:0px;
+}
+
+
 
 A {
 	text-decoration:none;
@@ -24,13 +77,6 @@ HR {
 
 IMG {
 	display:none;
-}
-
-INPUT {
-	border: none;
-	border-bottom: 1px solid #000000;
-	margin-right:10px;
-	font-size: 8px;
 }
 
 TEXTAREA {
@@ -75,19 +121,19 @@ TEXTAREA {
 }
 
 .border_box {
-	border: 1px solid #CCCCCC;
+	border: 1px solid black;
 }
 
 .border_color1 {
-	border-color: #CCCCCC;
+	border-color: black;
 }
 
 .border_color2 {
-	border-color: #CCCCCC;
+	border-color: black;
 }
 
 .border_color3 {
-	border-color: #CCCCCC;
+	border-color: black;
 }
 
 .header {
