@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,7 +37,7 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-	
+
 	/**
 	 * HTML "button".
 	 * It's useful to trigger actions in easy way (with/without graphics).
@@ -69,7 +69,7 @@
 				$this->setIcon($icon);
 			}
 		}
-		
+
 		/**
 		 * Sets the label for the button.
 		 * It'a a wrapper for set_value().
@@ -80,7 +80,7 @@
 		{
 			$this->setValue( $value );
 		}
-		
+
 		/**
 		 * Returns the label for the button.
 		 * It'a a wrapper for get_value().
@@ -91,7 +91,7 @@
 		{
 			return $this->getValue();
 		}
-		
+
 		/**
 		 * Sets the value for the button.
 		 * Also sets the right HTML property for correct display.
@@ -103,7 +103,7 @@
 			parent::setValue($value);
 			$this->setProperty( 'value', $value );
 		}
-		
+
 		/**
 		 * Sets the icon for the button.
 		 * @param string		The icon taken from icon set (file name without extension).
@@ -113,7 +113,7 @@
 		{
 			$this->icon = $icon;
 		}
-		
+
 		/**
 		 * Returns the icon for the button.
 		 * @access public
@@ -128,43 +128,46 @@
 		 * Retuns the HTML rendered button.
 		 * @access public
 		 * @return string
-		 */		
+		 */
 		function getAsString()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			if (! $this->isVisible()) {
 				return NULL;
 			}
+
 			$header = '' ;
-			
+			$footer = '' ;
+
 			$enabled = $this->isEnabled();
-			
+
 			if ($this->icon != NULL)
 			{
 				if( $enabled ) {
-					$header .= '<a class="link_button" href="#">';
+					$header .= '<a class="link_button" href="#" ' ;
 				}
-				
-				$header .= '<img class="' ;
-				
+
+				$footer .= '>';
+				$footer .= '<img class="' ;
+
 				if( $enabled ) {
-					$header .= 'clickable img_button ';
+					$footer .= 'clickable img_button ';
 				}
-				
-				$header .= '" src="' . P4A_ICONS_PATH . '/' . $p4a->i18n->getLanguage() . '/' . $p4a->i18n->getCountry() . '/' . $this->icon . '.' . P4A_ICONS_EXTENSION . '" alt="' . $p4a->i18n->messages->get($this->icon) . '" ';
-				  
-				$footer = ' />';
-				
+
+				$footer .= '" src="' . P4A_ICONS_PATH . '/' . $p4a->i18n->getLanguage() . '/' . $p4a->i18n->getCountry() . '/' . $this->icon . '.' . P4A_ICONS_EXTENSION . '" alt="' . $p4a->i18n->messages->get($this->icon) . '" ';
+
+				$footer .= ' />';
+
 				if( $enabled ) {
 					$footer .= '</a>';
 				}
-				
+
 				$footer .= "\n";
 			}else{
 				$header .= '<INPUT type="button" class="' ;
 				if( $enabled ) {
-					$header .= 'clickable ';  
+					$header .= 'clickable ';
 				}
 				$header .= 'border_box font4 no_print" ';
 				if( !$enabled ) {
@@ -172,14 +175,14 @@
 				}
 				$footer = ' />' . "\n";
 			}
-			
+
 			$sReturn = $header . $this->composeStringProperties() ;
 			if( $enabled ) {
 				$sReturn .= $this->composeStringActions();
 			}
 			$sReturn .= $footer;
-			
+
 			return $sReturn;
 		}
-	}		
+	}
 ?>

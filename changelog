@@ -1,3 +1,5 @@
+- Fix:    every events for image buttons are now in the <a> tag instead <img>, better compatibility with old browsers (Thanks to Valery Sidorov)
+- Add:    DB_SOURCE now can order also when you define custom queries (Thanks to Valery Sidorov)
 - Fix:    object and action hidden fields are now _object and _action (Thanks to Valery Sidorov)
 - Add:    support for currency type to I18N::auto_format() and I18N::auto_unformat() (Thanks to Valery Sidorov)
 - Fix:    I18N_DATETIME::format_time_default() and I18N_DATETIME::format_time_short() which prevented using default parameter (NULL) to format current time (Thanks to Valery Sidorov)

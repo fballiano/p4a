@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -61,21 +61,21 @@
 		 * @access private
 		 */
 		var $defined_queries = array();
-		
+
 		/**
 		 * Here we store every single part of the built queries.
 		 * @var array
 		 * @access private
 		 */
 		var $query_parts = array();
-		
+
 		/**
 		 * The name of the sequence that determines the primary key.
 		 * @var string
 		 * @access private
 		 */
 		var $pk_sequence = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param string				Mnemonic identifier for the object.
@@ -84,12 +84,12 @@
 		function &p4a_db_source($name)
 		{
 			parent::p4a_data_source($name);
-			
+
 			$this->defined_queries['select']	= NULL;
 			$this->defined_queries['insert']	= array();
 			$this->defined_queries['update']	= array();
 			$this->defined_queries['delete']	= array();
-			
+
 			$this->query_parts['select']		= NULL;
 			$this->query_parts['from']			= NULL;
 			$this->query_parts['table']			= NULL;
@@ -102,9 +102,9 @@
 			$this->query_parts['order']			= array();
 			$this->query_parts['limit']			= NULL;
 			$this->query_parts['offset']		= NULL;
-			
+
 		}
-		
+
 		/**
 		 * Tells if insert operations can be done on this db_source.
 		 * @access public
@@ -131,10 +131,10 @@
 					return false;
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		/**
 		 * Tells if update operations can be done on this db_source.
 		 * @access public
@@ -161,10 +161,10 @@
 					return false;
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		/**
 		 * Tells if delete operations can be done on this db_source.
 		 * @access public
@@ -191,10 +191,10 @@
 					return false;
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		/**
 		 * Tells if the db_source has a limit or an offset in his generation query.
 		 * @access public
@@ -202,7 +202,7 @@
 		 */
 		function isLimited()
 		{
-			if( ( $this->query_parts['limit'] !== NULL ) or 
+			if( ( $this->query_parts['limit'] !== NULL ) or
 			    ( $this->query_parts['offset'] !== NULL )
 			  )
 			{
@@ -213,7 +213,7 @@
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Tells if the db_source allows filtering operations.
 		 * @access public
@@ -230,7 +230,7 @@
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Tells if the db_source allows sorting operations.
 		 * @access public
@@ -247,7 +247,7 @@
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Adds a query that will be executed on db_source load.
 		 * The query is a normal SQL query but you MUST use
@@ -281,7 +281,7 @@
 			}
 			return $this->query_parts['table_alias'] . '.';
 		}
-		
+
 		/**
 		 * Removes a query that will be executed on db_source load.
 		 * @access public
@@ -290,7 +290,7 @@
 		{
 			$this->defined_queries['select'] = NULL;
 		}
-		
+
 		/**
 		 * Adds a query that will be executed on insert.
 		 * The query is a normal SQL query but you can use
@@ -303,7 +303,7 @@
 		{
 			$this->defined_queries['insert'][] = $query;
 		}
-		
+
 		/**
 		 * Removes a query that will be executed on insert.
 		 * @access public
@@ -313,7 +313,7 @@
 		{
 			$old = $this->defined_queries['insert'];
 			$new = array();
-			
+
 			foreach( $old as $key=>$value )
 			{
 				if( $query != $value )
@@ -321,10 +321,10 @@
 					$new[] = $value;
 				}
 			}
-			
+
 			$this->defined_queries['insert'] = $new;
 		}
-		
+
 		/**
 		 * Adds a query that will be executed on update.
 		 * The query is a normal SQL query but you can use
@@ -337,7 +337,7 @@
 		{
 			$this->defined_queries['update'][] = $query;
 		}
-		
+
 		/**
 		 * Removes a query that will be executed on update.
 		 * @access public
@@ -347,7 +347,7 @@
 		{
 			$old = $this->defined_queries['update'];
 			$new = array();
-			
+
 			foreach( $old as $key=>$value )
 			{
 				if( $query != $value )
@@ -355,10 +355,10 @@
 					$new[] = $value;
 				}
 			}
-			
+
 			$this->defined_queries['update'] = $new;
 		}
-		
+
 		/**
 		 * Adds a query that will be executed on delete.
 		 * The query is a normal SQL query but you can use
@@ -371,7 +371,7 @@
 		{
 			$this->defined_queries['delete'][] = $query;
 		}
-		
+
 		/**
 		 * Removes a query that will be executed on delete.
 		 * @access public
@@ -381,7 +381,7 @@
 		{
 			$old = $this->defined_queries['delete'];
 			$new = array();
-			
+
 			foreach( $old as $key=>$value )
 			{
 				if( $query != $value )
@@ -389,10 +389,10 @@
 					$new[] = $value;
 				}
 			}
-			
+
 			$this->defined_queries['delete'] = $new;
 		}
-		
+
 		/**
 		 * Sets the select clause for the db_source load query.
 		 * @access public
@@ -403,7 +403,7 @@
 			//$this->unsetFields();
 			$this->query_parts['select'] = $select;
 		}
-		
+
 		/**
 		 * Removes the select clause for the db_source load query.
 		 * @access public
@@ -412,7 +412,7 @@
 		{
 			$this->query_parts['select'] = NULL;
 		}
-		
+
 		/**
 		 * Sets the structure of the db source.
 		 * This mean that you set all the fields that data source will manage.
@@ -425,7 +425,7 @@
 			//$this->unsetSelect();
 			parent::setFields($fields);
 		}
-		
+
 		/**
 		 * Returns an array with all the fields types.
 		 * @access public
@@ -435,19 +435,19 @@
 		function getFieldsTypes( $fields = NULL )
 		{
 			$return = array();
-			
+
 			if( !is_array( $fields ) )
 			{
 				$fields = $this->getFields();
 			}
-			
+
 			foreach($fields as $field) {
 				$return[] = 'text';
 			}
-			
+
 			return $return;
 		}
- 		
+
 		/**
 		 * Sets a "raw" from clause for the db_source load query.
 		 * @access public
@@ -468,7 +468,7 @@
 		{
 			$this->query_parts['table'] = $table;
 		}
-		
+
 		/**
 		 * Removes the from clause for the db_source load query.
 		 * @access public
@@ -487,7 +487,7 @@
 		{
 			$this->unsetFrom();
 		}
-		
+
 		/**
 		 * Adds a join clause to the db_source load query.
 		 * @access public
@@ -503,7 +503,7 @@
 			$tmp['type'] = strtoupper( $type );
 			$this->query_parts['joins'][] = $tmp;
 		}
-		
+
 		/**
 		 * Wrapper for add_join('INNER', $table, $clause).
 		 * @access public
@@ -514,7 +514,7 @@
 		{
 			$this->addJoin('INNER', $table, $clause);
 		}
-		
+
 		/**
 		 * Wrapper for add_join('LEFT', $table, $clause).
 		 * @access public
@@ -525,7 +525,7 @@
 		{
 			$this->addJoin('LEFT', $table, $clause);
 		}
-		
+
 		/**
 		 * Wrapper for add_join('RIGHT', $table, $clause).
 		 * @access public
@@ -536,7 +536,7 @@
 		{
 			$this->addJoin('RIGHT', $table, $clause);
 		}
-		
+
 		/**
 		 * Drops joins from the db_source load query.
 		 * If nothing is passed, drops every join.
@@ -553,7 +553,7 @@
 			$type = strtoupper( $type );
 			$old = $this->query_parts['joins'];
 			$new = array();
-			
+
 			if( ( $type !== NULL ) and ( $table !== NULL ) and ( $clause !== NULL ) )
 			{
 				for( $i=0; $i<sizeof($old); $i++ )
@@ -584,7 +584,7 @@
 					}
 				}
 			}
-			
+
 			$this->query_parts['joins'] = $new;
 		}
 
@@ -606,7 +606,7 @@
 		{
 			return $this->query_parts['where'];
 		}
-				
+
 		/**
 		 * Removes the "static" where clause for the db_source.
 		 * @access public
@@ -628,7 +628,7 @@
 			$tmp = array('field'=>$field, 'operator'=>$operator, 'value'=>$value);
 			$this->query_parts['filters'][] = $tmp;
 		}
-		
+
 		/**
 		 * Drops a filter for the db_source.
 		 * For the implementation method see drop_joins()
@@ -641,7 +641,7 @@
 		{
 			$old = $this->query_parts['filters'];
 			$new = array();
-			
+
 			if( ( $field !== NULL ) and ( $operator !== NULL ) and ( $value !== NULL ) )
 			{
 				for( $i=0; $i<sizeof($old); $i++ )
@@ -672,10 +672,10 @@
 					}
 				}
 			}
-			
+
 			$this->query_parts['filters'] = $new;
 		}
-		
+
 		/**
 		 * Sets the "GROUP BY" clause.
 		 * @access public
@@ -685,7 +685,7 @@
 		{
 			$this->query_parts['group'] = $group;
 		}
-		
+
 		/**
 		 * Removes the "GROUP BY" clause.
 		 * @access public
@@ -694,7 +694,7 @@
 		{
 			$this->query_parts['group'] = NULL;
 		}
-		
+
 		/**
 		 * Sets the "HAVING" clause.
 		 * @access public
@@ -704,7 +704,7 @@
 		{
 			$this->query_parts['having'] = $having;
 		}
-		
+
 		/**
 		 * Removes the "HAVING" clause.
 		 * @access public
@@ -716,7 +716,7 @@
 
 		/**
 		 * Adds on "ORDER BY" clause.
-		 * Order clauses are multiple, this function push at the end. 
+		 * Order clauses are multiple, this function push at the end.
 		 * @access public
 		 * @param string		The field on wich the db_source we'll order.
 		 * @param string		The ordering mode (P4A_ORDER_ASCENDING|P4A_ORDER_DESCENDING)
@@ -726,13 +726,13 @@
 			$tmp = array();
 			$tmp['field'] = $field;
 			$tmp['mode'] = $mode;
-			
+
 			array_push( $this->query_parts['order'], $tmp );
 		}
-		
+
 		/**
 		 * Adds on "ORDER BY" clause.
-		 * Order clauses are multiple, this function push on the top. 
+		 * Order clauses are multiple, this function push on the top.
 		 * @access public
 		 * @param string		The field on wich the db_source we'll order.
 		 * @param string		The ordering mode (P4A_ORDER_ASCENDING|P4A_ORDER_DESCENDING)
@@ -742,12 +742,12 @@
 			$tmp = array();
 			$tmp['field'] = $field;
 			$tmp['mode'] = $mode;
-			
+
 			array_unshift( $this->query_parts['order'], $tmp );
 		}
-		
+
 		/**
-		 * Removes the first ordering clause. 
+		 * Removes the first ordering clause.
 		 * @access public
 		 * @return array		The dropped order data.
 		 */
@@ -755,9 +755,9 @@
 		{
 			return array_shift( $this->query_parts['order'] );
 		}
-		
+
 		/**
-		 * Removes all the ordering clauses on $field. 
+		 * Removes all the ordering clauses on $field.
 		 * @access public
 		 * @param string		The field.
 		 * @return array		The dropped order data.
@@ -767,7 +767,7 @@
 			$old    = $this->query_parts['order'];
 			$new    = array();
 			$return = NULL;
-			
+
 			if( $field !== NULL )
 			{
 				for( $i=0; $i<sizeof($old); $i++ )
@@ -782,13 +782,13 @@
 					}
 				}
 			}
-			
+
 			$this->query_parts['order'] = $new;
 			return $return;
 		}
-		
+
 		/**
-		 * Reverses all the ordering clauses on $field. 
+		 * Reverses all the ordering clauses on $field.
 		 * @access public
 		 * @param string		The field.
 		 */
@@ -809,9 +809,9 @@
 				}
 			}
 		}
-		
+
 		/**
-		 * Reverses the first ordering clauses. 
+		 * Reverses the first ordering clauses.
 		 * @access public
 		 */
 		function reverseMasterOrder()
@@ -821,7 +821,7 @@
 				$master_order = array_shift( $this->query_parts['order'] );
 				$field = $master_order['field'];
 				$mode = $master_order['mode'];
-				
+
 				if( $mode == P4A_ORDER_ASCENDING )
 				{
 					$mode = P4A_ORDER_DESCENDING;
@@ -830,11 +830,11 @@
 				{
 					$mode = P4A_ORDER_ASCENDING;
 				}
-				
+
 				$this->addMasterOrder( $field, $mode );
 			}
 		}
-		
+
 		/**
 		 * Returns true if the db_source has at least one ordering clause.
 		 * @access public
@@ -851,7 +851,7 @@
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Returns the order structure.
 		 * @access public
@@ -861,7 +861,7 @@
 		{
 			return $this->query_parts['order'];
 		}
-		
+
 		/**
 		 * Sets the limit clause.
 		 * @access public
@@ -871,7 +871,7 @@
 		{
 			$this->query_parts['limit'] = $limit;
 		}
-		
+
 		/**
 		 * Removes the limit clause.
 		 * @access public
@@ -880,7 +880,7 @@
 		{
 			$this->query_parts['limit'] = NULL;
 		}
-		
+
 		/**
 		 * Sets the offset clause.
 		 * @access public
@@ -890,7 +890,7 @@
 		{
 			$this->query_parts['offset'] = $offset;
 		}
-		
+
 		/**
 		 * Removes the offset clause.
 		 * @access public
@@ -899,7 +899,7 @@
 		{
 			$this->query_parts['offset'] = NULL;
 		}
-		
+
 		/**
 		 * Builds the select part of the db_source queries.
 		 * @access private
@@ -908,7 +908,7 @@
 		{
 			$query = 'SELECT ';
 			$fields = $this->getFields();
-			
+
 			if( sizeof( $fields ) > 0 and ($this->query_parts['select'] === NULL) )
 			{
 				$query .= join( ',', $fields );
@@ -919,10 +919,10 @@
 			}else{
 				$query .= ' * ';
 			}
-			
-			return $query; 
+
+			return $query;
 		}
-		
+
 		/**
 		 * Builds the from part of the db_source queries.
 		 * @access private
@@ -930,7 +930,7 @@
 		function composeFromPart()
 		{
 			$query = ' FROM ' ;
-			
+
 			if( $this->query_parts['table'] === NULL )
 			{
 				$query .= $this->query_parts['from'];
@@ -939,15 +939,15 @@
 			{
 				$query .= $this->query_parts['table'];
 			}
-			
+
 			foreach( $this->query_parts['joins'] as $join )
 			{
 				$query .= ' ' . strtoupper( $join['type'] ) . ' JOIN ' . $join['table'] . ' ON ' . $join['clause'] ;
 			}
 
-			return $query; 
+			return $query;
 		}
-		
+
 		/**
 		 * Builds the where part of the db_source queries.
 		 * @access private
@@ -956,21 +956,21 @@
 		function composeWherePart($pk = NULL)
 		{
 			$query = '';
-			
+
 			if ($this->query_parts['having']) {
 				return;
 			}
-			
+
 			if( ( $this->query_parts['where'] !== NULL ) or ( sizeof( $this->query_parts['filters'] ) > 0 ) or $pk)
 			{
 				$query .= ' WHERE ';
 				$tmp = array();
-				
+
 				if( $this->query_parts['where'] !== NULL )
 				{
 					$tmp[] = '(' . $this->query_parts['where'] . ')' ;
 				}
-				
+
 				foreach( $this->query_parts['filters'] as $filter )
 				{
 					if( $filter['value'] == P4A_NULL )
@@ -989,26 +989,26 @@
 					}
 				}
 				}
-				
+
 				if ($pk){
 					if (is_array($pk))
 					{
 						$sPk = '';
 						foreach($pk as $pk_value){
-							$sPk .= "'" . addslashes($pk_value) . "',";	
-						}		
-						$sPk = $this->getTableAlias() . $this->pk . " in (" . substr($sPk, 0, -1) . ")"; 		 			
+							$sPk .= "'" . addslashes($pk_value) . "',";
+						}
+						$sPk = $this->getTableAlias() . $this->pk . " in (" . substr($sPk, 0, -1) . ")";
 					}else{
 						$sPk = $this->getTableAlias() . $this->pk . "='" . addslashes($pk) . "'";
 					}
-					$tmp[] = $sPk; 
+					$tmp[] = $sPk;
 				}
-				
+
 				$query .= '(' . join( ' AND ', $tmp ) . ')';
 			}
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the "group by" part of the db_source queries.
 		 * @access private
@@ -1022,7 +1022,7 @@
 			}
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the having part of the db_source queries.
 		 * @access private
@@ -1036,7 +1036,7 @@
 			}
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the "order by" part of the db_source queries.
 		 * @access private
@@ -1048,12 +1048,12 @@
 			{
 				$query .= ' ORDER BY ';
 				$tmp = array();
-				
+
 				foreach( $this->query_parts['order'] as $order )
 				{
 					$tmp[] = $order['field'] . ' ' . $order['mode'];
 				}
-				
+
 				$query .= join( ',', $tmp );
 			}
 			return $query;
@@ -1076,7 +1076,7 @@
 			$query .= $this->composeOrderPart();
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the query used for inserting a record .
 		 * @access private
@@ -1090,7 +1090,7 @@
 			foreach( $row as $key=>$value )
 			{
 				$fields .= $key . ", ";
-				
+
 				if( strlen( $value ) > 0 ) {
 					$values .= "'" . addslashes( $value ) . "', ";
 				} else {
@@ -1099,15 +1099,15 @@
 			}
 			$fields = substr($fields, 0, -2);
 			$values = substr($values, 0, -2);
-			
+
 			$query   = 'INSERT INTO ';
-			
+
 			if( $this->query_parts['from'] === NULL ) {
 				$query 	.= $this->query_parts['table'];
 			} else {
 				$query 	.= $this->query_parts['from'];
 			}
-			
+
 			$query	.= ' (';
 			$query	.= $fields;
 			$query	.= ') VALUES (';
@@ -1115,7 +1115,7 @@
 			$query	.= ')';
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the query used for updating a record.
 		 * @access private
@@ -1125,31 +1125,31 @@
 		function composeUpdateQuery($row)
 		{
 			$query   = 'UPDATE ';
-			
+
 			if( $this->query_parts['from'] === NULL ) {
 				$query 	.= $this->query_parts['table'];
 			} else {
 				$query 	.= $this->query_parts['from'];
 			}
-			
+
 			$query	.= ' SET ';
-			
+
 			foreach( $row as $key=>$value )
 			{
 				$query .= $key . "=" ;
-				
+
 				if( strlen( $value ) > 0 ) {
 					$query .= "'" . addslashes( $value ) . "', ";
 				} else {
 					$query .= "NULL, ";
 				}
 			}
-			
+
 			$query  = substr($query, 0, -2);
 			$query .= $this->composeWherePart( $row[ $this->pk ] );
 			return $query;
 		}
-		
+
 		/**
 		 * Builds the query used for deleting a record.
 		 * @access private
@@ -1158,13 +1158,13 @@
 		 */
 		function composeDeleteQuery($pk)
 		{
-			
+
 			$query   = 'DELETE ';
 			$query 	.= $this->composeFromPart();
 			$query	.= $this->composeWherePart($pk);
 			return $query;
 		}
-		
+
 		/**
 		 * Goes in "new row" mode.
 		 * This mean that we'll act on a temporary row that can be saved.
@@ -1181,9 +1181,9 @@
 				}else{
 					$this->_data[-1][$field] = $this->getFieldDefaultValue($field);
 				}
-			}		
+			}
 		}*/
-		
+
 		/**
 		 * Inserts a row into the data source.
 		 * If there's an insert query it will prevale.
@@ -1193,29 +1193,29 @@
 		function insertRow($row)
 		{
 			$db =& P4A_DB::singleton();
-			
+
 			if( !$this->isInsertPossible() )
 			{
 				ERROR('CANNOT INSERT: DEFINE INSERT QUERY');
 			}
-			
+
 			//Default insert new row
 			if ($row === NULL){
 				$row = $this->new_row;
 			}
-			
+
 			//Primary key
 			if (!array_key_exists($this->pk, $row) or
 				strlen(trim($row[$this->pk])) == 0)
 			{
 				$row[$this->pk] = $this->nextPk();
 			}
-	
+
 			$pk = $row[$this->pk];
-			
+
 			//If PK already exist error
 			if(array_key_exists($pk, $this->_map_pk)){
-				ERROR('DUPLICATE PK');				
+				ERROR('DUPLICATE PK');
 			}
 			else
 			{
@@ -1223,7 +1223,7 @@
 				{
 					$query = $this->composeInsertQuery($row);
 					$result = $db->query($query);
-					if (DB::isError($result)) 
+					if (DB::isError($result))
 					{
 						ERROR('INSERT FAILED', $result->getMessage() . '->' . $query);
 					}
@@ -1234,7 +1234,7 @@
 					{
 						$query = $this->_getParsedQuery($defined_query, $row);
 						$result = $db->query($query);
-						if (DB::isError($result)) 
+						if (DB::isError($result))
 						{
 							ERROR('INSERT FAILED', $result->getMessage() . '->' . $query);
 						}
@@ -1247,13 +1247,13 @@
 				} else {
 					$num_row = 0;
 				}
-				
+
 				$this->_map_pk[$pk] = $num_row;
 				$this->_data[$num_row] = $row[$this->pk];
 				return $num_row + 1;
 			}
 		}
-		
+
 		/**
 		 * Updates a row's data.
 		 * If there's an update query it will prevale.
@@ -1268,7 +1268,7 @@
 			{
 				ERROR('CANNOT UPDATE: DEFINE UPDATE QUERY');
 			}
-			
+
 			$pk = $this->_data[$row_number -1];
 			$new_pk = $row[$this->pk];
 			if (! array_key_exists($pk, $this->_map_pk)){
@@ -1276,12 +1276,12 @@
 			}elseif(($new_pk != $pk) AND array_key_exists($new_pk, $this->_map_pk)){
 				ERROR('DUPLICATE PK');
 			}
-			
+
 			if( sizeof( $this->defined_queries['update'] ) == 0 )
 			{
 				$query = $this->composeUpdateQuery($row);
 				$result = $db->query($query);
-				if (DB::isError($result)) 
+				if (DB::isError($result))
 				{
 					ERROR('UPDATE FAILED', $result->getMessage() . '->' . $query);
 				}
@@ -1293,21 +1293,21 @@
 					$query = str_replace('[P4A_PK]', $this->getTableAlias() . $this->pk . "='" . addslashes( $row[ $this->pk ] ) . "'", $query);
 					$query = $this->_getParsedQuery($query, $row);
 					$result = $db->query($query);
-					if (DB::isError($result)) 
+					if (DB::isError($result))
 					{
 						ERROR('UPDATE FAILED', $result->getMessage() . '->' . $query);
 					}
 				}
 			}
-			
+
 			if($new_pk != $pk)
 			{
 				$this->_map_pk[$new_pk] = $this->_map_pk[$pk];
-				$this->_data[$row_number - 1] = $new_pk;  
+				$this->_data[$row_number - 1] = $new_pk;
 				unset($this->_map_pk[$pk]);
 			}
 		}
-		
+
 		/**
 		 * Deletes a row.
 		 * If there's a delete query it will prevale.
@@ -1322,13 +1322,13 @@
 			{
 				ERROR('CANNOT DELETE: DEFINE DELETE QUERY');
 			}
-			
+
 			if ($row_number != -1)
 			{
 	    		//Row is used by user defined delete query
 	    		$pk_key = $this->pk;
 	    		$pk = $this->_data[$row_number -1];
-	    		
+
 	    		if (sizeof( $this->defined_queries['delete'] ) == 0)
 	    		{
 	    			$query = $this->composeDeleteQuery($pk);
@@ -1345,20 +1345,20 @@
 						$query = str_replace('[P4A_PK]', $this->getTableAlias() . $this->pk . "='" . addslashes( $row[ $this->pk ] ) . "'", $query);
 						$query = $this->_getParsedQuery($query, $row);
 						$result = $db->query($query);
-						if (DB::isError($result)) 
+						if (DB::isError($result))
 						{
 							ERROR('DELETE FAILED', $result->getMessage() . '->' . $query);
 						}
 					}
 	    		}
-	    		
+
     			unset($this->_map_pk[$pk]);
     			unset($this->_data[$row_number -1]);
-    			
+
     			if (count($this->_data))
     			{
     				$max_pk = max(array_keys($this->_data));
-    
+
 	    			for($i = $row_number; $i<=$max_pk; $i++)
 	    			{
 	    				//data compatting
@@ -1366,7 +1366,7 @@
 	    				$old_row_number = $i;
 	    				$new_row_number = $i-1;
 	    				$pk_value = $this->_data[$old_row_number];
-	    				
+
 	    				//I copy old row in new row
 	    				$this->_data[$new_row_number] = $this->_data[$old_row_number];
 	    				//I destroy old row
@@ -1378,10 +1378,10 @@
 			}
 			else //new row
 			{
-				unset($this->_data[$row_number]);				
+				unset($this->_data[$row_number]);
 			}
 		}
-		
+
 		/**
 		 * In a master-detail environment sets the master row of the master data source.
 		 * @param array		The row.
@@ -1392,28 +1392,28 @@
 			$aParts = explode('=', $this->master_relation);
 			$master_field = $aParts[0];
 			$child_field = $aParts[1];
-			
+
 			//It deletes old master row filter
 			if ($this->_master_row) {
 				$old_filter_value = $this->getFieldDefaultValue($child_field);
-				$this->dropFilter($child_field, '=', $old_filter_value);  
+				$this->dropFilter($child_field, '=', $old_filter_value);
 			}else{
-				$this->dropFilter($child_field, 'is', P4A_NULL);  
+				$this->dropFilter($child_field, 'is', P4A_NULL);
 			}
-			
+
 			$this->_master_row = $row;
-			if ($this->_master_row) 
+			if ($this->_master_row)
 			{
 				$filter_value = $this->_master_row[$master_field];
 				$this->addFilter($child_field, '=', $filter_value);
 			}else{
 				$filter_value = P4A_NULL;
-				$this->addFilter($child_field, 'is', $filter_value);		
+				$this->addFilter($child_field, 'is', $filter_value);
 			}
 			$this->load();
 			$this->setFieldDefaultValue($child_field, $filter_value);
 		}
-		
+
 		/**
 		 * Returns all tables and all fields in the result set.
 		 * @param result_set		The result set.
@@ -1431,7 +1431,7 @@
 				$array_return['fields'] = array();
 				$array_return['tables'] = array();
 				$array_return['structure'] = array();
-				
+
 				foreach($table_info as $key=>$aValue)
 				{
 					if ($key == 0){
@@ -1479,7 +1479,7 @@
 							$aValue['type'] = 'text';
 							break;
 					}
-					
+
 					$array_return['structure'][$aValue['name']]['type'] = $aValue['type'];
 					$array_return['structure'][$aValue['name']]['len'] = $aValue['len'];
 					$array_return['structure'][$aValue['name']]['table'] = $aValue['table'];
@@ -1512,7 +1512,7 @@
 			}
 			return $query;
 		}
-			
+
 		/**
 		 * Parses the query and substitute all [field] occurence with the correspondent value in row.
 		 * This also quote your value so you must not quote in your query.
@@ -1534,10 +1534,10 @@
 				$replacement = is_null($new_row[$field_name]) ? "NULL" : "'" . addslashes($new_row[$field_name]) . "'";
   	            $query = str_replace($field_pattern, $replacement, $query);
 			}
-			
+
 			return $query;
 		}
-		
+
 		/**
 		 * Return the desidered row.
 		 * @param integer				Row number.
@@ -1553,7 +1553,7 @@
 				return NULL;
 			}else{
 				$pk = $this->_data[$num_row - 1];
-				
+
 				if( $this->defined_queries['select'] === NULL )
 				{
 					$query = $this->composeSelectQuery($pk);
@@ -1563,17 +1563,17 @@
 					$query = str_replace( '[P4A_PK]', $this->getTableAlias() . $this->pk . "='" . addslashes($pk) . "'" , $this->defined_queries['select'] );
 				}
 				$query = $this->_getEvalParsedQuery($query);
-				
+
 				$result = $db->query($query);
-				
+
 				if (DB::isError($result)){
-					ERROR('GET ROW FAILED', $result->getMessage() . '->' . $query);	
+					ERROR('GET ROW FAILED', $result->getMessage() . '->' . $query);
 				} else {
 					return $result->fetchRow();
 				}
 			}
 		}
-		
+
 		/**
 		 * Returns all the rows between $from and $to.
 		 * It should be implemented with only 1 query...
@@ -1587,7 +1587,7 @@
 		function getRowsFromTo( $from, $to )
 		{
 			$db =& P4A_DB::singleton();
-			
+
 			$array_pk = array();
 			$array_return = array();
 			$i = $from;
@@ -1597,14 +1597,14 @@
 				$array_pk[] = $this->_data[$i-1];
 				$i++;
 			}
-			
+
 			if( $this->defined_queries['select'] === NULL )
 			{
 				$query = $this->composeSelectQuery($array_pk);
 			}
 			else
 			{
-				if (sizeof($array_pk) > 0) 
+				if (sizeof($array_pk) > 0)
 				{
     				$in = $this->getTableAlias() . $this->pk . " IN(";
     				foreach( $array_pk as $pk )
@@ -1612,21 +1612,21 @@
     					$in .= "'" . addslashes($pk) . "',";
     				}
     				$in = substr( $in, 0, -1 ) . ")" ;
-				} 
-				else 
+				}
+				else
 				{
 					$in = "1=0";
 				}
-				
+
 				$query = str_replace( '[P4A_PK]', $in , $this->defined_queries['select'] );
 			}
 			$query = $this->_getEvalParsedQuery($query);
-			
+
 			$rs = $db->query($query);
 			if (DB::isError($rs)){
 				error('GET ROWS FROM TO FAILED');
 			}
-			
+
 			while ($row = $rs->fetchRow())
 			{
 				$array_return[$this->_map_pk[$row[$this->pk]]+1] = $row;
@@ -1635,7 +1635,7 @@
 
 			return $array_return ;
 		}
-		
+
 		/**
 		 * Loads data into the db_source.
 		 * This method effectively retrieve only the primary key's value
@@ -1645,39 +1645,39 @@
 		function load()
 		{
 			$db =& P4A_DB::singleton();
-			
+
 			$this->_map_pk = array();
 			$this->_data = array();
-			
+
 			if( $this->defined_queries['select'] === NULL )
 			{
 				//Information about table
 				$query = $this->composeSelectQuery();
 				$query = $this->_getEvalParsedQuery($query);
 				$result_info = $db->limitQuery($query, 0, 1);
-				
+
 				if (DB::isError($result_info)) {
 					ERROR('QUERY ERROR');
 				}
 				$table_info = $this->_getResultInfo($result_info);
-				
+
 				if (count($this->getFields()) == 0)
 				{
 					$this->setFields($table_info['fields']);
-					
+
 					foreach( $table_info['structure'] as $field=>$aField )
 					{
 						$this->setFieldType($field, $aField['type']);
 					}
 				}
-		
+
 				//If pk is not defined I use first field
 				if ($this->pk === NULL) {
-					$this->setPk($table_info['first_field']); 										
+					$this->setPk($table_info['first_field']);
 				}
-				
+
 				$pk = $this->pk;
-				
+
 				if( $this->query_parts['select'] === NULL )
 				{
 					$query = "SELECT $pk";
@@ -1688,21 +1688,21 @@
 					$query = "SELECT " . $this->query_parts['select'];
 					$types = $this->getFieldsTypes();
 				}
-				
+
 				$query .= $this->composeFromPart();
 				$query .= $this->composeWherePart();
 				$query .= $this->composeGroupPart();
 				$query .= $this->composeHavingPart();
 				$query .= $this->composeOrderPart();
 				$query = $this->_getEvalParsedQuery($query);
-				
+
 				$limit = $this->query_parts['limit'];
 				$offset = $this->query_parts['offset'];
-				
+
 				if (($limit !== NULL) and ($offset === NULL)){
 					$offset = 0;
 				}
-	
+
 				if ($limit === NULL and $offset === NULL){
 					$result = $db->query($query);
 				}else{
@@ -1713,28 +1713,33 @@
 			{
 				$query = str_replace( '[P4A_PK]', '1=1', $this->defined_queries['select'] );
 				$query = $this->_getEvalParsedQuery($query);
+
+				if (!preg_match('/\sORDER BY\s/i', $query)) {
+					$query .= $this->composeOrderPart();
+				}
+
 				$result = $db->query($query);
 				if (DB::isError($result)) {
 					ERROR('NOT VALID TABLE');
 				}
 				$table_info = $this->_getResultInfo($result);
-				
+
 				if ((count($this->getFields()) == 0) and ($this->query_parts['select'] === NULL)){
 					$this->setFields($table_info['fields']);
 				}
-		
+
 				//If pk is not defined I use first field
 				//if ($pk !== NULL) {
 				//	$this->setPk($pk);
 				//}
 				//else
 				if ($this->pk === NULL){
-					$this->setPk($table_info['first_field']); 										
+					$this->setPk($table_info['first_field']);
 				}
-				
+
 				$pk = $this->pk;
 			}
-			
+
 			if (DB::isError($result))
 			{
 				ERROR('LOAD TABLE FAILED', $result->getMessage());
@@ -1746,20 +1751,20 @@
 					$row = $result->fetchRow();
 					$pk_value = $row[$pk];
 					$this->_map_pk[$pk_value] = $i;
-					$this->_data[$i] = $pk_value; 															
+					$this->_data[$i] = $pk_value;
 				}
 			}
-			
+
 			foreach(array_keys($this->data_browsers) as $browser_name)
 			{
     			if (! $this->data_browsers[$browser_name]->getFields()){
-    				$this->data_browsers[$browser_name]->setFields($this->getFields());		
+    				$this->data_browsers[$browser_name]->setFields($this->getFields());
     			}
-    			
+
     			$this->data_browsers[$browser_name]->moveFirst();
 			}
 		}
-		
+
 		/**
 		 * Wrapper for set_pk(), set_table(), load().
 		 * @access public
@@ -1775,5 +1780,5 @@
 			$this->load();
 		}
 	}
-	
+
 ?>
