@@ -1,4 +1,7 @@
 0.2
+- Now db_source reload num_rows on setWhere, addFilter, dropFilter
+- Changed doctype for default template, now we're xhtml 1.1 (not validated, work in progress)
+- Changes in default template to start the xhtml validation
 - Fixed getAll in P4A_Array_Source
 - Fixed page in P4A_DB_Source
 - Fixed a problem with table and handheld Pocket Internet Explorer 2003

@@ -16,7 +16,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	var $_use_fields_aliases = FALSE;
 
 	var $_multivalue_fields = array();
-	
+
 	var $_filters = array();
 
 
@@ -153,19 +153,21 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_query;
 	}
-	
+
 	function addFilter($filter, &$obj)
 	{
-		$this->_filters[$filter] =& $obj; 
+		$this->_filters[$filter] =& $obj;
+		$this->resetNumRows();
 	}
-	
+
 	function dropFilter($filter)
 	{
 		if (array_key_exists($filter,$this->_filter)) {
+			$this->resetNumRows();
 			unset($this->_filters[$filter]);
-		} 
+		}
 	}
-	
+
 	function getFilters()
 	{
 		$filters = array();
@@ -193,16 +195,16 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$query = $this->_composeSelectStructureQuery();
 		$rs = $db->limitQuery($query,0,1);
-		
+
 		if (DB::isError($rs)) {
 			$e = new P4A_ERROR('A query has returned an error', $this, $rs);
     		if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
     			die();
     		}
 		} else {
-		
+
 			$info = $db->tableInfo($rs);
-	
+
 			$main_table = $this->getTable();
 			$array_fields = $this->getFields();
 			foreach($info as $col){
@@ -211,11 +213,11 @@ class P4A_DB_Source extends P4A_Data_Source
 					continue;
 				}
 				$this->fields->build("p4a_data_field",$field_name);
-	
+
 				if ($col['type'] == "int" and $col['len'] == 1) {
 					$col['type'] = "tinyint";
 				}
-	
+
 				switch($col['type']) {
 					case 'bit':
 					case 'bool':
@@ -256,19 +258,19 @@ class P4A_DB_Source extends P4A_Data_Source
 						$this->fields->$field_name->setType('text');
 						break;
 				}
-	
+
 	// 			If field is not on main table is not updatable
 				if ($col['table'] != $main_table){
 					$this->fields->$field_name->setReadOnly();
 				}
-	
+
 				if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
 					$this->fields->$field_name->setAliasOf($alias_of);
 				}
-	
+
 				$this->fields->$field_name->setTable($col['table']);
 			}
-		}	
+		}
 	}
 
 
@@ -304,7 +306,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$db =& P4A_DB::singleton();
 
 		$query = $this->_composeSelectQuery();
-		
+
 
 		if ($num_row === NULL) {
 			$num_row = $this->_pointer;
@@ -408,7 +410,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 			$query .= $this->_composeGroupPart();
 			$query .= $this->_composeOrderPart($new_order_array);
-			
+
 			$db =& p4a_db::singleton();
 			return $db->getOne($query);
 		}
@@ -492,14 +494,14 @@ class P4A_DB_Source extends P4A_Data_Source
 			if(is_string($pks)){
 				$row = $this->getPkRow($this->fields->$pks->getNewValue());
 			}else{
-				
+
 				$pk_values = array();
 				foreach($pks as $pk){
 					$pk_values[] = $this->fields->$pk->getNewValue();
 				}
 				$row = $this->getPkRow($pk_values);
 			}
-			
+
 			$this->resetNumRows();
 
 			if ($row) {
@@ -715,7 +717,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		return $query;
 	}
-	
+
 	function _composeGroupPart()
 	{
 		$query = "";

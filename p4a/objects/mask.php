@@ -209,7 +209,7 @@
 
 			// If smarty is not yes istanced, than we call it.
 			if (! is_object($this->smarty)){
-				$this->smarty = new SMARTY();
+				$this->smarty = new Smarty();
 
 				$this->smarty->compile_dir = P4A_SMARTY_MASK_COMPILE_DIR;
 				$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
@@ -565,7 +565,7 @@
 		{
 			$mask_name = $this->getName();
 			$this->sOpen  = '';
-			$this->sOpen .= '<SCRIPT LANGUAGE="JavaScript1.2">'													. "\n";
+			$this->sOpen .= '<script type="text/javascript"><!--'													. "\n";
 			$this->sOpen .= 'function executeEvent(object_name, action_name, param1, param2, param3, param4)'	. "\n";
 			$this->sOpen .= '{'																					. "\n";
             $this->sOpen .= '	if (!param1) param1 = "" ;'														. "\n";
@@ -609,14 +609,14 @@
 			$this->sOpen .= '	}'																				. "\n";
 			$this->sOpen .= '}'																					. "\n";
 			$this->sOpen .= ''																					. "\n";
-			$this->sOpen .= '</SCRIPT>'																			. "\n";
-			$this->sOpen .= '<FORM method="post" enctype="multipart/form-data" name="' . $mask_name . '" action="index.php">';
-			$this->sOpen .= "<INPUT TYPE='hidden' name='_object' value='" . $this->getId() . "'>" . "\n";
-			$this->sOpen .= "<INPUT TYPE='hidden' name='_action' value='none'>" . "\n";
-            $this->sOpen .= "<INPUT TYPE='hidden' name='param1'>" . "\n";
-            $this->sOpen .= "<INPUT TYPE='hidden' name='param2'>" . "\n";
-            $this->sOpen .= "<INPUT TYPE='hidden' name='param3'>" . "\n";
-            $this->sOpen .= "<INPUT TYPE='hidden' name='param4'>" . "\n";
+			$this->sOpen .= '--></script>'																			. "\n";
+			$this->sOpen .= '<form method="post" enctype="multipart/form-data" name="' . $mask_name . '" action="index.php">';
+			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "'>" . "\n";
+			$this->sOpen .= "<input type='hidden' name='_action' value='none'>" . "\n";
+            $this->sOpen .= "<input type='hidden' name='param1'>" . "\n";
+            $this->sOpen .= "<input type='hidden' name='param2'>" . "\n";
+            $this->sOpen .= "<input type='hidden' name='param3'>" . "\n";
+            $this->sOpen .= "<input type='hidden' name='param4'>" . "\n";
 
 			return $this->sOpen;
 		}
@@ -628,7 +628,7 @@
 		 */
 		function maskClose()
 		{
-			$this->sClose = "</FORM>";
+			$this->sClose = "</form>";
 			return $this->sClose;
 		}
 
