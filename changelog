@@ -1,4 +1,9 @@
 0.1
+- Change: now MASK calls PEAR::System::mkDir to create directory (so we can create it recursively)
+- Add:    onFileSystemError is thrown when something goes wrong creating files/directory
+- Fix:    "not implemented" error is thrown when using a traslation data source with multiple pks
+- Fix:    TABLE now correctly handle translations
+- Fix:    DB_SOURCE and TABLE now use P4A_ORDER_ASCENDING AND P4A_ORDER_DESCENDING
 - Change: all _PROJECT_ constants are now _APPLICATION_
 - Fix:    rendering bug for disabled select fields
 - Add:    visible/enabled param in setVisible() and enable() methods into WIDGET class

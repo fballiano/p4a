@@ -5,20 +5,20 @@
  *
  * p4a configuration keeper.
  * It's possible to override any p4a constant.
- * Any P4A constant start with "P4A_" token 
+ * Any P4A constant start with "P4A_" token
  * URI Naming:
- * 
+ *
  * P4A_*_DIR  = naming for directories URI. E.g.: /home/http/p4a						<br>
  * P4A_*_FILE = naming for files URI. E.g.: /home/http/p4a/index.php					<br>
  * P4A_*_PATH = naming for server document root relatives URI. E.g.: /p4a/index.php	<br>
- * P4A_*_URL  = naming for http URI. E.g.: http://localhost/index.php						
+ * P4A_*_URL  = naming for http URI. E.g.: http://localhost/index.php
  *
  * Note:
  * URL  + PATH = URL	<br>
  * DIR  + PATH = DIR
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -66,7 +66,7 @@
 			define('P4A_OS', 'linux') ;
 		}
 	}
-	
+
 	// Directory Separator
 	if (!defined('_DS_'))
 	{
@@ -76,7 +76,7 @@
 			define('_DS_', '/') ;
 		}
 	}
-	
+
 	// System String Separator
 	if (!defined('_SSS_'))
 	{
@@ -86,39 +86,39 @@
 			define('_SSS_', ':') ;
 		}
 	}
-	
+
 	if (!defined('P4A_PASSWORD_OBFUSCATOR'))
 	{
 		define( 'P4A_PASSWORD_OBFUSCATOR', '**********' );
 	}
-	
-	
+
+
 	// Automatic Application Name Detection
 	if (!defined('P4A_APPLICATION_NAME'))
 	{
 		$aCwd = explode( _DS_, getcwd() ) ;
 		define('P4A_APPLICATION_NAME', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
 	}
-	
-	
+
+
 	//Server Constants
-	if (!defined('P4A_SERVER_NAME')){ 
+	if (!defined('P4A_SERVER_NAME')){
 		define('P4A_SERVER_NAME', $_SERVER['SERVER_NAME']) ;
 	}
-		
+
 	if (!defined('P4A_SERVER_URL')) {
 		define('P4A_SERVER_URL', 'http://' . $_SERVER['SERVER_NAME']) ;
 	}
-		
+
 	if (!defined('P4A_SERVER_DIR')){
 		define('P4A_SERVER_DIR', realpath($_SERVER['DOCUMENT_ROOT'])) ;
 	}
-	
+
 	//P4A Root Constants
 	if (!defined('P4A_ROOT_DIR')){
 	 	 define('P4A_ROOT_DIR', dirname(dirname(realpath(__FILE__)))) ;
 	}
-	
+
 	if (!defined('P4A_ROOT_PATH')){
 		define('P4A_ROOT_PATH', str_replace( '\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR))) ;
 	}
@@ -126,25 +126,25 @@
 	if (!defined('P4A_ROOT_URL')){
 		define('P4A_ROOT_URL', P4A_SERVER_URL . P4A_ROOT_PATH);
 	}
-	
+
 	//P4A Plugins Constants
 	if (!defined('P4A_LIBRARIES_PATH')){
 		define('P4A_LIBRARIES_PATH', P4A_ROOT_PATH . '/libraries') ;
 	}
-	
+
 	if (!defined('P4A_LIBRARIES_DIR')){
 	 	 define('P4A_LIBRARIES_DIR', P4A_SERVER_DIR . P4A_LIBRARIES_PATH) ;
 	}
-	 	 
+
 	if (!defined('P4A_LIBRARIES_URL')){
 		define('P4A_LIBRARIES_URL', P4A_SERVER_URL . P4A_LIBRARIES_PATH);
 	}
-		
+
 	//Applications Constants
 	if (!defined('P4A_APPLICATION_PATH')){
 		define("P4A_APPLICATION_PATH", dirname($_SERVER["SCRIPT_NAME"]));
 	}
-	
+
 	if (!defined('P4A_APPLICATION_DIR')){
 		define('P4A_APPLICATION_DIR', P4A_SERVER_DIR . P4A_APPLICATION_PATH);
 	}
@@ -152,71 +152,71 @@
 	if (!defined('P4A_APPLICATION_URL')){
 		define('P4A_APPLICATION_URL', P4A_SERVER_URL . P4A_APPLICATION_PATH);
 	}
-	
+
 	//Applications Libraries Constants
 	if (!defined('P4A_APPLICATION_LIBRARIES_PATH')){
 		define('P4A_APPLICATION_LIBRARIES_PATH', P4A_APPLICATION_PATH . '/libraries/' );
 	}
-	
+
 	if (!defined('P4A_APPLICATION_LIBRARIES_DIR')){
 		define('P4A_APPLICATION_LIBRARIES_DIR', P4A_SERVER_DIR . P4A_APPLICATION_LIBRARIES_PATH);
 	}
-	
+
 	if (!defined('P4A_APPLICATION_LIBRARIES_URL')){
 		define('P4A_APPLICATION_LIBRARIES_URL', P4A_SERVER_DIR . P4A_APPLICATION_LIBRARIES_PATH);
 	}
-	
+
 	//Uploads Constants
 	if (!defined('P4A_UPLOADS_PATH')){
 		define('P4A_UPLOADS_PATH', P4A_APPLICATION_PATH . '/uploads' );
 	}
-	
+
 	if (!defined('P4A_UPLOADS_DIR')){
 		define('P4A_UPLOADS_DIR', P4A_SERVER_DIR . P4A_UPLOADS_PATH);
-	}	
-	
+	}
+
 	if (!defined('P4A_UPLOADS_URL')){
 		define('P4A_UPLOADS_URL', P4A_SERVER_URL . P4A_UPLOADS_PATH);
 	}
-			
+
 	//Temporary Uploads Constants
 	define('P4A_UPLOADS_TMP_NAME', 'tmp' );
 	define('P4A_UPLOADS_TMP_PATH', P4A_UPLOADS_PATH . '/' . P4A_UPLOADS_TMP_NAME );
 	define('P4A_UPLOADS_TMP_DIR', P4A_SERVER_DIR . P4A_UPLOADS_TMP_PATH);
 	define('P4A_UPLOADS_TMP_URL', P4A_SERVER_URL . P4A_UPLOADS_TMP_PATH);
-	
+
 	//Smarty Options Constants
 	if (!defined('P4A_SMARTY_TEMPLATE_EXSTENSION')){
 		define('P4A_SMARTY_TEMPLATE_EXSTENSION', 'tpl');
 	}
-		
+
 	if (!defined('P4A_SMARTY_LEFT_DELIMITER')){
 		define('P4A_SMARTY_LEFT_DELIMITER', '[[');
 	}
-			
+
 	if (!defined('P4A_SMARTY_RIGHT_DELIMITER')){
 		define('P4A_SMARTY_RIGHT_DELIMITER', ']]');
-	}		
-	
+	}
+
 	//Themes Path
 	if (!defined('P4A_THEMES_PATH')){
 		define('P4A_THEMES_PATH', P4A_ROOT_PATH . '/themes');
 	}
-	
+
 	//Themes Dir
 	if (!defined('P4A_THEMES_DIR')){
 		define('P4A_THEMES_DIR', P4A_SERVER_DIR . P4A_THEMES_PATH);
 	}
-	
-	//Default Theme Configuration 
+
+	//Default Theme Configuration
 	if (!defined('P4A_DEFAULT_THEME_NAME')){
 		define('P4A_DEFAULT_THEME_NAME', 'default');
-	}		
+	}
 		//mask
 	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH'	)){
 		define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/masks');
 	}
-		
+
 	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR')){
 		define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
 	}
@@ -225,20 +225,20 @@
 	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH')){
 		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/widgets');
 	}
-			
+
 	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR')){
-		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', P4A_SERVER_DIR  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );	
+		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', P4A_SERVER_DIR  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
 	}
-	
+
 	//Current Theme Configuration
 	if (!defined('P4A_THEME_NAME')){
 		define('P4A_THEME_NAME', 'default');
 	}
-			
+
 	if (!defined('P4A_THEME_PATH')){
 		define('P4A_THEME_PATH', P4A_THEMES_PATH . '/' . P4A_THEME_NAME);
 	}
-			
+
 	if (!defined('P4A_THEME_DIR')){
 		define('P4A_THEME_DIR', P4A_SERVER_DIR . P4A_THEME_PATH);
 	}
@@ -246,7 +246,7 @@
 	if (!defined('P4A_SMARTY_MASK_TEMPLATES_PATH')){
 		define('P4A_SMARTY_MASK_TEMPLATES_PATH', P4A_THEME_PATH . '/masks');
 	}
-	
+
 	if (!defined('P4A_SMARTY_MASK_TEMPLATES_DIR')){
 		//define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_THEME_DIR . '/masks');
 		define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_MASK_TEMPLATES_PATH);
@@ -255,58 +255,58 @@
 	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_PATH')){
 		define('P4A_SMARTY_WIDGET_TEMPLATES_PATH', P4A_THEME_PATH . '/widgets');
 	}
-			
+
 	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_DIR')){
 		define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', P4A_THEME_DIR . '/widgets');
-	}		
-		
+	}
+
 	//Icons configuration
 	if (!defined('P4A_ICONS_NAME')){
 		define('P4A_ICONS_NAME', 'default' );
 	}
-					
+
 	if (!defined('P4A_ICONS_PATH')){
 		define('P4A_ICONS_PATH', P4A_ROOT_PATH . '/icons/' . P4A_ICONS_NAME );
 	}
-	
+
 	if (!defined('P4A_ICONS_DIR')){
 		define('P4A_ICONS_DIR', P4A_SERVER_DIR . P4A_ICONS_PATH);
 	}
-	
+
 	if (!defined('P4A_ICONS_URL')){
 		define('P4A_ICONS_URL', P4A_SERVER_URL . P4A_ICONS_PATH);
 	}
-	
+
 	if (!defined('P4A_ICONS_EXTENSION')){
 		define('P4A_ICONS_EXTENSION', 'gif');
 	}
-	
+
 	//Smarty Compile Dir
 	if (!defined('P4A_SMARTY_MASK_COMPILE_DIR')){
 		define("P4A_SMARTY_MASK_COMPILE_DIR", ini_get('session.save_path'));
 	}
-	
+
 	if (!defined('P4A_SMARTY_WIDGET_COMPILE_DIR')){
 		define('P4A_SMARTY_WIDGET_COMPILE_DIR', ini_get('session.save_path'));
 	}
-		
+
 	//I18N
 	if (!defined('P4A_LOCALE')){
 		define('P4A_LOCALE', 'en_US');
 	}
-		
+
 	if (!defined('P4A_APPLICATION_LOCALES_PATH')){
 		define('P4A_APPLICATION_LOCALES_PATH', P4A_APPLICATION_PATH . '/i18n');
 	}
-			
+
 	if (!defined('P4A_APPLICATION_LOCALES_DIR')){
 		define('P4A_APPLICATION_LOCALES_DIR', P4A_APPLICATION_DIR . '/i18n');
 	}
-	
+
 	if (!defined('P4A_APPLICATION_LOCALES_URL')){
 		define('P4A_APPLICATION_LOCALES_URL', P4A_APPLICATION_URL . '/i18n');
 	}
-	
+
 	//P4A SYSTEM CONSTANTS
 	if (!defined('P4A_EXTENDED_ERRORS')){
 		define('P4A_EXTENDED_ERRORS', false);
@@ -320,9 +320,4 @@
 	define('P4A_DATE', '%Y-%m-%d');
 	define('P4A_TIME', '%H:%M:%S');
 	define('P4A_DATETIME', '%Y-%m-%d %H:%M:%S');
-	
-	if (!defined('P4A_UMASK')){
-		define('P4A_UMASK', '0777');
-	}
-
 ?>

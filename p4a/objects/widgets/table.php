@@ -767,18 +767,18 @@
 			$parent =& $p4a->getObject($parent->getParentID());
 
 			if ($parent->data->getObjectType() == 'p4a_db_source') {
-				$new_order = 'ASC';
+				$new_order = P4A_ORDER_ASCENDING;
 
 				if ($parent->data->hasOrder()) {
 					$order = $parent->data->getOrder();
 					$order = $order[0];
 
 					if ($order[0] == $this->getName()) {
-    					if ($order[1] == 'ASC') {
-    						$new_order = 'DESC';
+    					if ($order[1] == P4A_ORDER_ASCENDING) {
+    						$new_order = P4A_ORDER_DESCENDING;
     					}
 					} else {
-						$new_order = 'ASC';
+						$new_order = P4A_ORDER_ASCENDING;
 					}
 				}
 
