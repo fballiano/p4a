@@ -1086,7 +1086,7 @@
 			}
 			else
 			{
-				if (!is_object($this->buttons->button_file_delete)) {
+				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 					$button_file_delete->setValue( $p4a->i18n->messages->get('filedelete') );
 					$button_file_delete->addAction('onClick');
@@ -1179,7 +1179,7 @@
 					return $this->getAsFile();
 				}
 
-				if (! is_object($this->buttons->button_file_delete)) {
+				if (! isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete') );
