@@ -1,3 +1,7 @@
+0.4
+- removed pear/pear.php that caused errors on windows installation
+- fixed various errors in array_source
+
 0.3
 - changed PEAR repository management, now with web interface we can easily install/upgrade/remove PEAR modules
 - added deleteRow to DATA_SOURCE interface

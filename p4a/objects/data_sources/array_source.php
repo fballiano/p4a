@@ -23,7 +23,8 @@ class P4A_Array_Source extends P4A_Data_Source
 		if ($num_row !== NULL) {
 			$row = $this->_array[$num_row-1];
 		} else {
-			$row = $this->_array[$this->_pointer - 1];
+			$num_row = $this->_pointer;
+			$row = $this->_array[$num_row-1];
 		}
 
 		if ($move_pointer) {
@@ -43,8 +44,6 @@ class P4A_Array_Source extends P4A_Data_Source
 
 	function getAll($from = 0, $count = 0)
 	{
-	print_r($this->_array);
-	die();
 		if ($from == 0 and $count == 0) {
 			return $this->_array;
 		} else {
@@ -54,7 +53,7 @@ class P4A_Array_Source extends P4A_Data_Source
 
 	function getNumRows()
 	{
-		return count($this->_array);
+		return count($this->_array) - 1;
 	}
 
 	function getPkRow($pk)
@@ -70,9 +69,7 @@ class P4A_Array_Source extends P4A_Data_Source
 	function deleteRow()
 	{
 		$pointer = $this->getRowNumber();
-		print $pointer;
-		die();
-		unset($this->_array[$pointer]);
+		unset($this->_array[$pointer-1]);
 		parent::deleteRow();
 	}
 }

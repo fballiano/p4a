@@ -66,8 +66,7 @@ class P4A_Data_Source extends P4A_Object
 	function firstRow()
 	{
 		$num_rows = $this->getNumRows();
-
-		if ($num_rows > $this->_pointer-1) {
+		if ($num_rows > ($this->_pointer-1)) {
 			$this->_pointer = 1;
 			return $this->row();
 		} elseif($this->_pointer !== $num_rows) {
