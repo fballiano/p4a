@@ -1,5 +1,7 @@
 0.12
-- beautified handheld css
+- handheld css change: now mask's title is centered
+- handheld css change: now fieldset' title is centered
+- handheld css change: now table's width is forced to 100% to avoid Pocket IE problem
 
 0.11
 - bugfix in MySQL Manager

@@ -65,10 +65,10 @@ label {
 
 .table_container table {
 	border-collapse: collapse;
+	width: 100%
 }
 
 .table_container td {
-
 	border-top:1px solid black;
 }
 
