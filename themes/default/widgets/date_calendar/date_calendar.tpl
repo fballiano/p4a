@@ -1,8 +1,8 @@
 [[if !$handheld]]
 <link href="[[$tpl_path]]/calendar.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="[[$tpl_path]]/calendar.js"></script>
+<script type="text/javascript" src="[[$tpl_path]]/calendar_stripped.js"></script>
 <script type="text/javascript" src="[[$tpl_path]]/lang/calendar-en.js"></script>
-<script type="text/javascript" src="[[$tpl_path]]/calendar-setup.js"></script>
+<script type="text/javascript" src="[[$tpl_path]]/calendar-setup_stripped.js"></script>
 <script type="text/javascript">
   Calendar.setup(
     {

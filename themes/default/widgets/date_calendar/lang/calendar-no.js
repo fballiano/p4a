@@ -79,8 +79,8 @@ Calendar._TT["INFO"] = "Om kalenderen";
 
 Calendar._TT["ABOUT"] =
 "DHTML Dato-/Tidsvelger\n" +
-"(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
-"For nyeste versjon, gå til: http://dynarch.com/mishoo/calendar.epl\n" +
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
+"For nyeste versjon, gå til: http://www.dynarch.com/projects/calendar/\n" +
 "Distribuert under GNU LGPL.  Se http://gnu.org/licenses/lgpl.html for detaljer." +
 "\n\n" +
 "Datovalg:\n" +

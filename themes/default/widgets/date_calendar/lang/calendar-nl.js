@@ -31,8 +31,8 @@ Calendar._TT["INFO"] = "Info";
 
 Calendar._TT["ABOUT"] =
 "DHTML Datum/Tijd Selector\n" +
-"(c) dynarch.com 2002-2003\n" +
-"Ga voor de meest recente versie naar: http://dynarch.com/mishoo/calendar.epl\n" +
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" +
+"Ga voor de meest recente versie naar: http://www.dynarch.com/projects/calendar/\n" +
 "Verspreid onder de GNU LGPL. Zie http://gnu.org/licenses/lgpl.html voor details." +
 "\n\n" +
 "Datum selectie:\n" +

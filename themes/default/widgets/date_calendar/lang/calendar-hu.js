@@ -80,8 +80,8 @@ Calendar._TT["INFO"] = "A kalendáriumról";
 
 Calendar._TT["ABOUT"] =
 "DHTML dátum/idõ kiválasztó\n" +
-"(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
-"a legfrissebb verzió megtalálható: http://dynarch.com/mishoo/calendar.epl\n" +
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
+"a legfrissebb verzió megtalálható: http://www.dynarch.com/projects/calendar/\n" +
 "GNU LGPL alatt terjesztve.  Lásd a http://gnu.org/licenses/lgpl.html oldalt a részletekhez." +
 "\n\n" +
 "Dátum választás:\n" +
