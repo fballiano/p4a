@@ -41,7 +41,7 @@ class P4A_Array_Source extends P4A_Data_Source
 		if ($from == 0 and $count == 0) {
 			return $this->_array;	
 		} else {
-			return array_slice($this->_array,$from-1,$count);
+			return array_slice($this->_array,$from,$count);
 		}
 	}
 	
