@@ -75,8 +75,11 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_UPLOADS_DIR) and is_writable(P4A_UPLOADS_DIR)) {
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_DIR)) {
-		@System::mkDir("-p " . P4A_UPLOADS_DIR);
-		$ok = true;
+		if (@System::mkDir("-p " . P4A_UPLOADS_DIR)) {
+			$ok = true;
+		} else {
+			$ok = false;
+		}
 	} else {
 		$ok = false;
 	}
@@ -95,8 +98,11 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_UPLOADS_TMP_DIR) and is_writable(P4A_UPLOADS_TMP_DIR)) {
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_TMP_DIR)) {
-		@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR);
-		$ok = true;
+		if (@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR)) {
+			$ok = true;
+		} else {
+			$ok = false;
+		}
 	} else {
 		$ok = false;
 	}
@@ -115,8 +121,11 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_writable(P4A_SMARTY_MASK_COMPILE_DIR)) {
 		$ok1 = true;
 	} elseif (!is_dir(P4A_SMARTY_MASK_COMPILE_DIR)) {
-		@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR);
-		$ok1 = true;
+		if (@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR)) {
+			$ok1 = true;
+		} else {
+			$ok1 = false;
+		}
 	} else {
 		$ok1 = false;
 	}
@@ -124,8 +133,11 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
 		$ok2 = true;
 	} elseif (!is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
-		@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR);
-		$ok2 = true;
+		if (@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR)) {
+			$ok2 = true;
+		} else {
+			$ok2 = false;
+		}
 	} else {
 		$ok2 = false;
 	}
@@ -145,7 +157,11 @@ function p4a_check_configuration($additionalDir = null)
 		if (is_dir($additionalDir) and is_writable($additionalDir)) {
 			$ok = true;
 		} elseif (!is_dir($additionalDir)) {
-			@System::mkDir("-p " . $additionalDir);
+			if (@System::mkDir("-p " . $additionalDir)) {
+				$ok = true;
+			} else {
+				$ok = false;
+			}
 		} else {
 			$ok = false;
 		}

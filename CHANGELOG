@@ -1,3 +1,6 @@
+0.10
+- improved check_configuration library
+
 0.9
 - all javascript moved in p4a.js, the default form is now named "p4a"
 - fixed a bug in mask default template, no javascript was included
