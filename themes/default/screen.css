@@ -382,36 +382,22 @@ select:focus{
 	font-weight:bold;
 }
 
-dl {
-	float:left;
-	text-align:center;
-}
-
-dl *{
-	display:inline;
-}
-
-dl, dl *{
-	padding:0px;
-	margin:0px;
-	font-size:10px;
-}
-
-dl img {
-	vertical-align:middle;
-	border:none;
-}
-
-dd {
-}
-
-dd.dd_inline {
-	display:inline;
-	margin-left:5px;
-}
-
-dd.dd_block {
+.message {
+	width:300px;
+	font-weight: bold;
+	color: black;
 	display:block;
+}
+
+.message dt {
+	display:table-cell;
+	vertical-align:middle;
+}
+
+.message dd {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:left;
 }
 
 #sidebar {
@@ -447,21 +433,6 @@ fieldset.frame {
 legend {
 	font-weight:bold;
 	font-size:12px;
-}
-
-.message {
-	margin-right: auto;
-	margin-left: auto;
-	font-weight: bold;
-	text-align: left;
-	color: black;
-	border: 1px solid #C6D3DE;
-	padding: 5px;
-}
-
-.message img {
-	float: left;
-	padding-right: 5px;
 }
 
 .table {

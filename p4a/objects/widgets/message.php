@@ -69,11 +69,10 @@
 				$size = $this->getSize();
 				$margin = $size + 5;
 
-				$string  = "<div class='message' $properties $actions>\n";
-				$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' style='margin-right: 5px;' width='$size' height='$size' />\n";
-				$string .= "$value\n";
-				$string .= "<div class='br'></div>\n";
-				$string .= "</div>\n\n";
+				$string  = "<dl class='message' $properties $actions>\n";
+				$string .= "<dt><img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' style='width='$size' height='$size' /></dt>\n";
+				$string .= "<dd>$value</dd>\n";
+				$string .= "</dl>\n\n";
 			} else {
 				$string =  "";
 			}

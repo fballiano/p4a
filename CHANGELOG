@@ -1,5 +1,7 @@
 0.8
-- fixed deleteRow method on P4A_Data_Source
+- change P4A_MESSAGE layout
+- fixed fieldset ie bug
+- fixed deleteRow method on P4A_DATA_SOURCE
 - fixed screen.css in default theme
 - fixed anchorCenter bug in P4A_FRAME
 - fixed anchorCenter bug in P4A_FIELDSET
