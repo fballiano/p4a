@@ -34,7 +34,6 @@ rm p4a/p4a.kdevses
 rm p4a/build.sh
 rm -r `find -type d -name 'CVS'`
 rm `find -name '.cvsignore'`
-rm -r applications/mysql_manager/xml
 
 ##############################################
 # COPYING DEFAULT DOCUMENTATION INTO PACKAGE #
