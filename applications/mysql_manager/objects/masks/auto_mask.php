@@ -280,5 +280,16 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		fwrite($handle,$xml);
 		fclose($handle);
 	}
+
+	function showPrevMask()
+	{
+		$p4a =& p4a::singleton();
+
+		if (sizeof($p4a->masks_history) == 1) {
+			$p4a->restart();
+		} else {
+			parent::showPrevMask();
+		}
+	}
 }
 ?>

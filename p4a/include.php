@@ -76,7 +76,7 @@
 	require_once(dirname(__FILE__) . '/i18n/i18n_numbers.php');
 
 	//Objects
-	require_once(dirname(__FILE__) . '/objects/application.php');
+	require_once(dirname(__FILE__) . '/objects/p4a.php');
 	require_once(dirname(__FILE__) . '/objects/db.php');
 	require_once(dirname(__FILE__) . '/objects/mask.php');
 	require_once(dirname(__FILE__) . '/objects/listener.php');

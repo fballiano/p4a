@@ -7,8 +7,6 @@ class db_configuration extends p4a_mask
 		$this->p4a_mask();
 		$this->setTitle("DB Connection");
 
-
-
 		$fields = array("user","pass","port","server","database");
 		$frame =& $this->build("p4a_frame","frame");
 		$frame->setWidth(300);
@@ -35,6 +33,8 @@ class db_configuration extends p4a_mask
 		$button->setLabel("Enter");
 		$this->intercept($button,'onClick', 'enter');
 		$frame->anchorCenter($button);
+
+		$this->setFocus($this->fields->user);
 
 		$this->display("main", $frame);
 	}
