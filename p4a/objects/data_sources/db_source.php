@@ -14,7 +14,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	var $_query = "";
 
 	var $_use_fields_aliases = FALSE;
-	
+
 	var $_multivalue_fields = array();
 
 
@@ -300,18 +300,18 @@ class P4A_DB_Source extends P4A_Data_Source
 					$this->newRow();
 				}
 			}
-			
+
 			foreach($this->_multivalue_fields as $fieldname=>$mv){
 				$fk = $mv["fk"];
 				$fk_field = $mv["fk_field"];
 				$table = $mv["table"];
-				
+
 				$pk = $this->getPk();
 				$pk_value = $this->fields->$pk->getNewValue();
-				$fk_values = $db->getCol("SELECT $fk_field 
+				$fk_values = $db->getCol("SELECT $fk_field
 										  FROM $table
 										  WHERE $fk='$pk_value'");
-				$this->fields->$fieldname->setValue($fk_values);					  
+				$this->fields->$fieldname->setValue($fk_values);
 				$row[$fieldname] = $fk_values;
 			}
 			return $row;
@@ -358,7 +358,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 
 					if ( $direction == P4A_ORDER_ASCENDING){
-						$where_order .= " $long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' AND";
+						$where_order .= " ($long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' or $long_fld IS NULL) AND";
 					}else{
 						$where_order .= " $long_fld >= '" . addslashes($this->fields->$short_fld->getValue()) . "' AND";
 					}
@@ -412,7 +412,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 					if (!$field->isReadOnly()) {
 						if (!array_key_exists($name,$this->_multivalue_fields)) {
-							$fields_values[$name] = $field->getNewValue();						
+							$fields_values[$name] = $field->getNewValue();
 						}
 					}
 				}
@@ -430,12 +430,12 @@ class P4A_DB_Source extends P4A_Data_Source
     				die();
     			}
 			}
-			
+
 			$pks = $this->getPk();
-			
+
 			foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 				$pk_value = $this->fields->$pks->getNewValue();
-				
+
 				$fk_values = $this->fields->$fieldname->getNewValue();
 				if (is_string($fk_values)) {
 					$fk_values = split(",",$fk_values);
@@ -443,31 +443,31 @@ class P4A_DB_Source extends P4A_Data_Source
 				$fk_table = $aField["table"];
 				$fk_field = $aField["fk_field"];
 				$fk = $aField["fk"];
-							
+
 				$sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
 				if (DB::isError($sth)) {
     				P4A_Error($sth->getMessage());
 				}
 				$res =& $db->execute($sth, $pk_value);
-				
+
 				if (DB::isError($res)) {
     				P4A_Error($res->getMessage());
 				}
-				
+
 				if ($fk_values) {
 					$sth = $db->prepare("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)");
 					if (DB::isError($sth)) {
 						P4A_Error($sth->getMessage());
 					}
 					$res =& $db->executeMultiple($sth, $fk_values);
-					
+
 					if (DB::isError($res)) {
 						print_r($res);
 						P4A_Error($res->getMessage());
-					}				
+					}
 				}
 			}
-			
+
 			if(is_string($pks)){
 				$row = $this->getPkRow($this->fields->$pks->getNewValue());
 			}else{
@@ -479,7 +479,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 
 			$this->resetNumRows();
-			
+
 			if ($row) {
 				foreach($row as $field=>$value){
 					$this->fields->$field->setValue($value);
@@ -487,7 +487,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->updateRowPosition();
 			} else {
 				$this->row();
-			}	
+			}
 
 		}
 	}
@@ -497,19 +497,19 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (!$this->isReadOnly()) {
 			$db =& P4A_DB::singleton();
 			$table = $this->getTable();
-			
+
 			$pks = $this->getPK();
-			foreach ($this->_multivalue_fields as $fieldname=>$aField) {			
+			foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 				$pk_value = $this->fields->$pks->getNewValue();
-				
+
 				$fk_table = $aField["table"];
 				$fk = $aField["fk"];
-				
+
 				$sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
 				if (DB::isError($sth)) {
     				P4A_Error($sth->getMessage());
 				}
-				$res =& $db->execute($sth, $pk_value);			
+				$res =& $db->execute($sth, $pk_value);
 			}
 
 			$rs = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
@@ -521,7 +521,7 @@ class P4A_DB_Source extends P4A_Data_Source
     			}
 			}
 
-			$this->resetNumRows();		
+			$this->resetNumRows();
 		}
 
 		$num_rows = $this->getNumRows();
@@ -740,13 +740,13 @@ class P4A_DB_Source extends P4A_Data_Source
 		$limit = $this->getPageLimit();
 		return ($this->getNumPage() * $limit) - $limit;
 	}
-	
+
 	function addMultivalueField($fieldname, $table, $fk = NULL, $fk_field = NULL)
 	{
 		$db =& P4A_DB::singleton();
-		
+
 		$this->_multivalue_fields[$fieldname]['table'] = $table;
-		
+
 		if (!$fk) {
 			$pk = $this->getPk();
 			if (!$pk) {
@@ -758,7 +758,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 		}
 		$this->_multivalue_fields[$fieldname]['fk'] = $fk;
-		
+
 		if (!$fk_field) {
 			$info = $db->tableInfo($table);
 			foreach($info as $field) {
@@ -767,9 +767,9 @@ class P4A_DB_Source extends P4A_Data_Source
 					break;
 				}
 			}
-		}	
-		$this->_multivalue_fields[$fieldname]['fk_field'] = $fk_field;	
-	
+		}
+		$this->_multivalue_fields[$fieldname]['fk_field'] = $fk_field;
+
 		$this->fields->build("P4A_Data_Field",$fieldname);
 	}
 

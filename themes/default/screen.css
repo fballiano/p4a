@@ -356,14 +356,12 @@ SELECT:focus{
 
 .navigator {
 	margin-left: 0px;
-	list-style-image: url("/MerlinWork/themes/default/widgets/menu_drop_down/images/dir.png");
 }
 
 .navigator ul {
 	margin-left:0px;
 	padding-left:15px;
 	list-style-position:inside;
-	list-style-image: url("/MerlinWork/themes/default/widgets/menu_drop_down/images/dir.png");
 }
 
 

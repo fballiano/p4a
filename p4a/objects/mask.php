@@ -374,26 +374,7 @@
 		 */
 		function loadRow($num_row = NULL)
 		{
-			$p4a =& P4A::singleton();
-			if( $this->actionHandler( 'beforeLoadRow' ) == ABORT ) return ABORT;
-
-			if( $this->isActionTriggered( 'onLoadRow' ) )
-			{
-				if( $this->actionHandler( 'onLoadRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				$this->data->loadRow($num_row);
-
-				foreach($this->external_fields as $object_id){
-					$pk_value = $this->fields->{$this->data->pk}->getNewValue();
-					$p4a->objects[$object_id]->setPkValue($pk_value);
-					$p4a->objects[$object_id]->load();
-				}
-
-			}
-
-            $this->actionHandler( 'afterLoadRow' ) ;
+			$this->data->row($num_row);
 		}
 
 		/**
