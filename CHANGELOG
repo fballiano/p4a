@@ -1,4 +1,6 @@
 0.14
+- added P4A_Message::autoClear() to enable/disable auto clearing of messages
+- removed P4A_Label::setType() because it were formally uncorrect
 - P4A now can handle file/image uploads within rich_textarea fields (disabled by default)
 - added P4A_Field:enableFileUpload() and P4A_Field:enableImageUpload()
 

@@ -2,7 +2,7 @@ FCKConfig.AutoDetectLanguage = false;
 FCKConfig.StartupFocus = false;
 
 FCKConfig.ToolbarSets["p4a"] = [
-	['Cut','Copy','Paste','PasteText','PasteWord','-','Print','SpellCheck'],
+	['Cut','Copy','Paste','PasteText','PasteWord','-','Print'],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	['SpecialChar','Source'],
 	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript','-',

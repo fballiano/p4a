@@ -68,13 +68,6 @@
 		var $format_name = NULL;
 
 		/**
-		 * The label type, temporary or normal.
-		 * @var string
-		 * @access private
-		 */
-		var $type = 'normal';
-
-		/**
 		 * The class constructor
 		 * @param string	Object identifier.
 		 * @param string	The Value of the label.
@@ -117,24 +110,17 @@
 		 */
 		function getAsString()
 		{
-			if( $this->isVisible() )
-			{
-				$header	= '<label class="label" ';
-				$close_header = '>';
-				$footer	= '</label>'  .  "\n";
+			if (!$this->isVisible()) {
+				return '';
+			}
 
-				$string =  $header . $this->composeStringProperties()
-								   . $this->composeStringActions()
-								   . $close_header . $this->getLabel()
-								    .$footer;
-				if ($this->getType() === 'temporary') {
-					$this->setLabel("");
-				}
-			}
-			else
-			{
-				$string =  '';
-			}
+			$header	= '<label class="label" ';
+			$close_header = '>';
+			$footer	= '</label>'  .  "\n";
+
+			$string = $header . $this->composeStringProperties() .
+						$this->composeStringActions() .
+						$close_header . $this->getLabel() . $footer;
 
 			return $string;
 		}

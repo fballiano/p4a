@@ -1,10 +1,8 @@
 - P4A_Table_Col, if a NULL formatted integer, she shows 0
 - add and test rich_textarea spell check
 - check P4A_Field::getAsMultiCheckbox()
-- make toolbars work well with handhelds
-- change P4A_Label HTML layout
+- make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
 - migrate to I18Nv2
-- if handheld render toolbar as buttons hiding unuseful buttons?
 - make SHEETS_GROUP and tabbed MENU work
 - change template engine to flexy
 - if a password is not inserted, reloading the mask we would not like to see the obfuscator

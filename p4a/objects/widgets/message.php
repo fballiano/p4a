@@ -43,7 +43,7 @@
 
 		var $icon = 'warning';
 		var $size = 48;
-
+		var $auto_clear = true;
 
 		function &P4A_Message($name)
 		{
@@ -77,7 +77,10 @@
 				$string =  "";
 			}
 
-			$this->setValue("");
+			if ($this->auto_clear) {
+				$this->setValue("");
+			}
+
 			return $string;
 		}
 
@@ -100,6 +103,11 @@
 		function getSize()
 		{
 			return $this->size;
+		}
+
+		function autoClear($enable = true)
+		{
+			$this->auto_clear = $enable;
 		}
 	}
 ?>
