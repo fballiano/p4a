@@ -356,8 +356,7 @@
 				}
             } elseif(is_array($new_value)) {
                 $new_value = $new_value[$index];
-            } elseif( substr($new_value, 0, 1) == '{'
-			&& substr($new_value, -1) == '}') {
+            } elseif( substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
                 $tmp_value = substr($new_value, 1, -1);
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];
@@ -597,15 +596,11 @@
 		function format( $value )
 		{
 			$p4a =& P4A::singleton();
-			if( strlen( $value ) > 0 )
-			{
-				if( ( $this->formatter_name !== NULL ) and ( $this->format_name !== NULL ) )
-				{
-					$value = $p4a->i18n->{$this->formatter_name}->format( $value, $p4a->i18n->{$this->formatter_name}->getFormat( $this->format_name ) );
-				}
-				else
-				{
-					$value = $p4a->i18n->autoFormat( $value, $this->data_field->getType() );
+			if (strlen($value) > 0) {
+				if (($this->formatter_name !== NULL) and ($this->format_name !== NULL)) {
+					$value = $p4a->i18n->{$this->formatter_name}->format($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
+				} else {
+					$value = $p4a->i18n->autoFormat($value, $this->data_field->getType());
 				}
 			}
 
@@ -684,7 +679,7 @@
 		 */
 		function getAsText()
 		{
-			$header 		= '<INPUT TYPE="text" class="border_color1 font_normal field" ';
+			$header 		= '<input type="text" class="border_color1 font_normal field" ';
 			$close_header 	= '/>';
 
 			if( !$this->isEnabled() ) {
@@ -1331,17 +1326,9 @@
 		 */
 		function composeStringValue()
 		{
-			if (   $this->type == 'text'
-			    or $this->type == 'hidden'
-			    or $this->type == 'hidden'
-			    or $this->type == 'date')
-			{
-				return 'VALUE="' . htmlspecialchars($this->getNewValue()) . '" ';
-			}
-			elseif($this->type == 'textarea'
-				or $this->type == 'rich_textarea'
-				or $this->type == 'label')
-			{
+			if ($this->type == 'text' or $this->type == 'hidden' or $this->type == 'hidden' or $this->type == 'date') {
+				return 'value="' . htmlspecialchars($this->getNewValue()) . '" ';
+			} elseif($this->type == 'textarea' or $this->type == 'rich_textarea' or $this->type == 'label') {
 				return $this->getNewValue();
 			}
 		}

@@ -169,7 +169,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		foreach($info as $col){
 			$field_name = $col["name"];
 			if(isset($this->fields->$field_name)){
-				continue;				
+				continue;
 			}
 			$this->fields->build("p4a_data_field",$field_name);
 
@@ -217,16 +217,16 @@ class P4A_DB_Source extends P4A_Data_Source
                     $this->fields->$field_name->setType('text');
                     break;
             }
-			
+
 // 			If field is not on main table is not updatable
 			if ($col['table'] != $main_table){
-				$this->fields->$field_name->setReadOnly();	
+				$this->fields->$field_name->setReadOnly();
 			}
-			
+
 			if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
 				$this->fields->$field_name->setAliasOf($alias_of);
 			}
-			
+
 			$this->fields->$field_name->setTable($col['table']);
 		}
 	}
@@ -277,7 +277,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($num_row === NULL) {
 			$num_row = $this->_pointer;
 		}
-		
+
 		$rs = $db->limitQuery($query, $num_row - 1, 1);
 		if (DB::isError($rs)) {
 			$e = new P4A_ERROR('A query has returned an error', $this, $rs);
@@ -286,11 +286,11 @@ class P4A_DB_Source extends P4A_Data_Source
     		}
 		}else{
 			$row = $rs->fetchRow();
-	
+
 			if ($move_pointer) {
 				if (!empty($row)) {
 					$this->_pointer = $num_row;
-	
+
 					foreach($row as $field=>$value){
 						$this->fields->$field->setValue($value);
 					}
@@ -298,7 +298,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					$this->newRow();
 				}
 			}
-	
+
 			return $row;
 		}
 	}
@@ -327,21 +327,21 @@ class P4A_DB_Source extends P4A_Data_Source
 				foreach($order as $o){
 					$field = $o[0];
 					$direction = strtoupper($o[1]);
-					
+
 					$dot_pos = strpos($field, '.');
-					
+
 					if($dot_pos){
 						$short_fld = substr($field, $dot_pos + 1);
 					}else{
 						$short_fld = $field;
 					}
-					
+
 					if ($this->fields->$short_fld->getAliasOf()){
 						$long_fld = $this->fields->$short_fld->getAliasOf();
 					}else{
 						$long_fld = $this->fields->$short_fld->getTable() . "." . $this->fields->$short_fld->getName();
 					}
-					
+
 					if ( $direction == P4A_ORDER_ASCENDING){
 						$where_order .= " $long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' AND";
 					}else{
@@ -349,7 +349,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 					$new_order_array[] = array($long_fld, $direction);
 				}
-				
+
 				$where_order = substr($where_order, 0, -4);
 				$where = $this->_composeWherePart();
 				if ($where != ''){
@@ -360,7 +360,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			}else{
 				$query .= $this->_composeWherePart();
 			}
-			
+
 			$query .= $this->_composeGroupPart();
 			$query .= $this->_composeOrderPart($new_order_array);
 
@@ -368,7 +368,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			return $db->getOne($query);
 		}
 	}
-	
+
 	function updateRowPosition()
 	{
 		$this->_pointer = $this->getRowPosition();
@@ -388,19 +388,19 @@ class P4A_DB_Source extends P4A_Data_Source
 			$db =& P4A_DB::singleton();
 			if (empty($fields_values)) {
 				while($field =& $this->fields->nextItem()) {
-					
+
 					if ($field->getAliasOf()) {
 						$name = $field->getAliasOf();
 					}else{
 						$name = $field->getName();
 					}
-					
-					if (!$field->isReadOnly()) {	
+
+					if (!$field->isReadOnly()) {
 						$fields_values[$name] = $field->getNewValue();
 					}
 				}
-			}		
-		
+			}
+
 			if ($this->isNew()) {
 				$rs = $db->autoExecute($this->_table, $fields_values, DB_AUTOQUERY_INSERT);
 			} else {
@@ -422,15 +422,15 @@ class P4A_DB_Source extends P4A_Data_Source
 				foreach($pks as $pk){
 					$pk_values[] = $this->fields->$pk->getNewValue();
 				}
-				$row = $this->getPkRow($pk_values);	
+				$row = $this->getPkRow($pk_values);
 			}
-			
+
 			foreach($row as $field=>$value){
 				$this->fields->$field->setValue($value);
 			}
-			
+
 			$this->updateRowPosition();
-			
+
 			if ($this->isNew()) {
 				$this->resetNumRows();
 			}
@@ -671,11 +671,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		$limit = $this->getPageLimit();
 		return ($this->getNumPage() * $limit) - $limit;
 	}
-	
+
 	function __sleep()
 	{
 		$this->resetNumRows();
 		return array_keys(get_object_vars($this));
-	}	
+	}
 }
 ?>

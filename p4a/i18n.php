@@ -264,7 +264,7 @@
 		 */
 		function autoFormat($value, $type)
 		{
-			switch( $type )
+			switch($type)
 			{
 				case 'date':
 					$value = $this->datetime->formatDateDefault($value);
@@ -299,7 +299,7 @@
 		 */
 		function autoUnformat($value, $type)
 		{
-			switch( $type )
+			switch($type)
 			{
 				case 'date':
 					$value = $this->datetime->unformatDateDefault($value);
