@@ -288,7 +288,7 @@
 		{
 			$set = true ;
 
-			if( $new_value == NULL ) {
+			if( $new_value === NULL ) {
 				$new_value = NULL;
 			} elseif ( $this->isFormattable() and $this->isFormatted() ) {
 				$new_value = $this->unformat($new_value);

@@ -1,3 +1,6 @@
+0.8
+- fixed an error P4A_FIELD::setNewValue that prevented the system from handling 0 as numeric value
+
 0.7
 - code cleanup
 - added P4A_Navigation_Toolbar, a new default toolbar with "first", "prev", "next", "last", "exit" buttons
