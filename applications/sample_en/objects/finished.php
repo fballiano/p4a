@@ -41,7 +41,7 @@ class Finished extends P4A_Mask
 	*/
 	function main()
 	{
-		$this->message->setValue("Complimenti, ti sei appena autenticato!");
+		$this->message->setValue("You've been authenticated!");
 		$this->message->setIcon("info");
 
 		/*
