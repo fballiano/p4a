@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -44,7 +44,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_IMAGE extends P4A_WIDGET
+	class P4A_Image extends P4A_Widget
 	{
 		/**
 		* The label position
@@ -52,21 +52,21 @@
 		* @var string
 		*/
 		var $label_position = 'bottom';
-		
+
 		/**
 		 * The class constructor.
 		 * @param string	Object identifier.
 		 * @param string	The absolute source path of the image.
 		 * @access private
 		 */
-		function &p4a_image($name, $value = NULL )
+		function &P4A_Image($name, $value = NULL )
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			if ($value !== NULL){
 				$this->setValue($value);
 			}
 		}
-		
+
 		/**
 		 * Sets label position.
 		 * @param strig		bottom or right
@@ -76,16 +76,16 @@
 		{
 			$this->label_position = $position;
 		}
-		
+
 		/**
 		 * Returns label position.
 		 * @access public
-		 */		
+		 */
 		function getLabelPosition()
 		{
 			return $this->label_position;
 		}
-		
+
 		/**
 		 * Sets image's source from icon set repository.
 		 * @param strig		The image filename without extension (e.g.: "new").
@@ -97,7 +97,7 @@
 			$value = P4A_ICONS_PATH . '/' . $p4a->i18n->getLanguage() . '/' . $p4a->i18n->getCountry() . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
 			$this->setValue($value);
 		}
-		
+
 		/**
 		 * Sets image's source from absolute url.
 		 * @param strig		The image source url.
@@ -108,7 +108,7 @@
 			parent::setValue($value);
 			$this->setProperty('src', $value);
 		}
-		
+
 
 		/**
 		 * Returns the HTML rendered label.
@@ -119,7 +119,7 @@
 			if (! $this->isVisible()) {
 				return NULL;
 			}
-			
+
 			$label = $this->getLabel();
 			$actions = $this->composeStringActions();
 			$properties = $this->composeStringProperties();
@@ -128,7 +128,7 @@
 					$class = "dd_block";
 				}else{
 					$class = "dd_inline";
-				}				
+				}
 				$sReturn  = "<dl>";
 				$sReturn .= "<dt><img $properties $actions /></dt>";
 				$sReturn .= "<dd class=\"$class\">$label</dd>";
@@ -136,8 +136,8 @@
 			}else{
 				$sReturn  = "<img $properties $actions />\n";
 			}
-			
-			return $sReturn; 
+
+			return $sReturn;
 		}
 	}
 ?>

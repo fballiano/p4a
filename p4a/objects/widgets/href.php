@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -46,7 +46,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_HREF extends P4A_WIDGET
+	class P4A_Href extends P4A_Widget
 	{
 		/**
 		 * Class constructor.
@@ -57,37 +57,37 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &href ($name, $id = NULL)
+		function &P4A_Href ($name, $id = NULL)
 		{
 			$prefix = 'href' ;
-			
+
 			if( $id === NULL ) {
-				parent::p4a_widget($name, $prefix);
+				parent::P4A_Widget($name, $prefix);
 			} else {
-				parent::p4a_widget($name, $prefix, $id);
+				parent::P4A_Widget($name, $prefix, $id);
 			}
 		}
-		
+
 		/**
 		 * Composes a string containing all the actions implemented by the widget.
-		 * In the case of "HREF" we have only the link target. 
+		 * In the case of "HREF" we have only the link target.
 		 * @return string
 		 * @access public
 		 */
 		function composeStringActions()
 		{
 			$sActions = P4A_APPLICATION_URL . '/index.php?action=onClick&object=' . $this->getID();
-			return $sActions;   
+			return $sActions;
 		}
 
 		/**
 		 * HTML rendered "HREF".
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getAsString()
 		{
-			return 'href="' . $this->composeStringActions() .'"';  
+			return 'href="' . $this->composeStringActions() .'"';
 		}
 	}
 ?>

@@ -44,7 +44,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_FIELD extends P4A_WIDGET
+	class P4A_Field extends P4A_Widget
 	{
 		/**
 		 * Buttons collection.
@@ -187,9 +187,9 @@
 		 * @param string				If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 		 * @access private
 		 */
-		function &p4a_field($name, $add_default_data_field = TRUE)
+		function &P4A_Field($name, $add_default_data_field = TRUE)
 		{
-			parent::p4a_widget($name, 'fld');
+			parent::P4A_Widget($name, 'fld');
 
 			$this->build("p4a_collection", "buttons");
 			$this->setType('text');

@@ -46,7 +46,7 @@
 	 * @package p4a
 	 * @see TOOLBAR
 	 */
-	class P4A_STANDARD_TOOLBAR extends P4A_TOOLBAR
+	class P4A_Standard_Toolbar extends P4A_Toolbar
 	{
 		/**
 		 * Class costructor.
@@ -54,26 +54,26 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &p4a_standard_toolbar($name)
+		function &P4A_Standard_Toolbar($name)
 		{
-			parent::p4a_toolbar($name);
+			parent::P4A_Toolbar($name);
 			$save =& $this->addButton('save', 'save');
 			$save->setAccessKey("S");
-			
+
 			$cancel =& $this->addButton('cancel', 'cancel');
 			$cancel->setAccessKey("Z");
-			
+
 			$this->addSeparator();
 
 			$first =& $this->addButton('first', 'first');
 			$first->setAccessKey(8);
-			
+
 			$prev =& $this->addButton('prev', 'prev');
 			$prev->setAccessKey(4);
-			
+
 			$next =& $this->addButton('next', 'next');
 			$next->setAccessKey(6);
-			
+
 			$last =& $this->addButton('last', 'last');
 			$last->setAccessKey(2);
 
@@ -83,7 +83,7 @@
 			$new->setProperty("accesskey", "N");
 
 			$this->addButton('delete', 'delete');
-			
+
 			$this->buttons->delete->requireConfirmation('onClick', NULL,
 'confirm_delete');
 
@@ -96,13 +96,13 @@
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
 			$exit->setAccessKey("X");
-			
+
 		}
 
 		function setMask(&$mask)
 		{
 			$this->_mask_name = $mask->getName();
-			
+
 			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
 			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
 			$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
@@ -113,11 +113,11 @@
 			$this->buttons->delete->implementMethod('onClick', $mask, 'deleteRow');
 			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 		}
-		
+
 		function getAsString()
 		{
 			$mask =& p4a_mask::singleton($this->_mask_name);
-			
+
 			if($mask->data->isNew()){
 				$this->buttons->first->enable(FALSE);
 				$this->buttons->prev->enable(FALSE);
@@ -134,6 +134,6 @@
 				$this->buttons->delete->enable(TRUE);
 			}
 			return parent::getAsString();
-			
+
 		}
 	}

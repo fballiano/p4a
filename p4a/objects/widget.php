@@ -47,7 +47,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_WIDGET extends P4A_OBJECT
+	class P4A_Widget extends P4A_Object
 	{
 		/**
 		 * Object's value. Used for widget with data binding.
@@ -236,9 +236,9 @@
 				$key = $a[2];
 				$label = str_replace($amp_key,"<span class=\"accesskey\">$key</span>",
 						 $label);
-				$this->setProperty("accesskey",$key);				 
+				$this->setProperty("accesskey",$key);
 			}
-			
+
 			$this->label = $label;
 		}
 
@@ -320,11 +320,11 @@
 		{
 			unset( $this->style[$property] );
 		}
-		
+
 		function setAccessKey($key) {
 			$this->setProperty("accesskey",$key);
 		}
-		
+
 		function getAccessKey() {
 			return $this->getProperty("accesskey");
 		}

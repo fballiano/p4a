@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -47,7 +47,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class DATE
+	class P4A_Date
 	{
 	    /**
 	     *  Date pretty printing, similar to strftime()
@@ -99,10 +99,10 @@
 	    	if( $date === NULL ) {
 	    		$date = DATE::now('%Y-%m-%d %H:%M:%S');
 	    	}
-	    	
+
 	    	$aDate = DATE::parse($date);
 	        $output = "";
-	
+
 	        for($strpos = 0; $strpos < strlen($format); $strpos++) {
 	            $char = substr($format,$strpos,1);
 	            if ($char == "%") {
@@ -223,7 +223,7 @@
 	        }
 	        return $output;
 	    }
-	    
+
 	    /**
 	     * Reverse date analysis on a formatted date.
 	     * This function takes the formatted date and the original format
@@ -240,7 +240,7 @@
 	        $regexp = "";
 	        $map = array();
 	        $nucleus_counter = 1;
-	        
+
 	    	$iso			= array();
 	    	$iso['year']	= '0';
 	    	$iso['month']	= '01';
@@ -248,7 +248,7 @@
 	    	$iso['hour']	= '00';
 	    	$iso['minute']	= '00';
 	    	$iso['second']	= '00';
-	
+
 	        for($strpos = 0; $strpos < strlen($format); $strpos++) {
 	            $char = substr($format,$strpos,1);
 	            if ($char == "%") {
@@ -397,7 +397,7 @@
 	                $regexp .= $char;
 	            }
 	        }
-	        
+
 	        if( ereg($regexp, $date, $res) )
 	        {
 	        	foreach( $map as $key=>$nucleus )
@@ -405,7 +405,7 @@
 	        		$iso[$key] = $res[$nucleus];
 	        	}
 	        }
-	        
+
 	        if( defined( 'P4A_DATETIME' ) and ( $output_format == P4A_DATETIME ) ) {
 	        	return $iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'];
 	        } elseif( defined( 'P4A_DATE' ) and ( $output_format == P4A_DATE ) ) {
@@ -414,7 +414,7 @@
 	        	return DATE::format($iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'], $output_format, $locale_vars );
 	        }
 	    }
-	    
+
 	    /**
 	     * Parses a date in the standard datetime format and returns
 	     * an associative array with every single date part.
@@ -431,46 +431,46 @@
 	    	$return['hour']		= '00';
 	    	$return['minute']	= '00';
 	    	$return['second']	= '00';
-	    	
+
             if( ereg("([0-9]{1,4})",$date,$regs) ) {
             	$return['year'] = $regs[1];
             } else {
             	return $return;
 	    	}
-            
+
             if( ereg("[0-9]{1,4}-([0-9]{1,2})",$date,$regs) ) {
             	$return['month'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
-	    	
+
             if( ereg("[0-9]{1,4}-[0-9]{1,2}-([0-9]{1,2})",$date,$regs) ) {
             	$return['day'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
-	    	
+
             if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ]([0-9]{1,2})",$date,$regs) ) {
             	$return['hour'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
-	    	
+
             if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:([0-9]{1,2})",$date,$regs) ) {
             	$return['minute'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
-	    	
+
             if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:[0-9]{1,2}:([0-9]{1,2})",$date,$regs) ) {
             	$return['second'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
-            
+
             return $return;
 	    }
-	    
+
 	    /**
 	     * Returns true for valid date, false for invalid date.
 		 * @access public
@@ -484,14 +484,14 @@
 	        if ($year < 0 or $year > 9999) {
 	            return false;
 	        }
-	        
+
 	        if (!checkdate($month,$day,$year)) {
 	            return false;
 	        }
-	
+
 	        return true;
 	    }
-	    
+
 	    /**
 	     * Returns the abbreviated weekday name for the given date
 	     * @access public
@@ -506,7 +506,7 @@
 	    {
 	    	return substr(DATE::get_weekday_name($year, $month, $day, $locale_vars), 0, 3);
 	    }
-	    
+
 	    /**
 	     * Returns the full weekday name for the given date
 	     * @access public
@@ -520,14 +520,14 @@
 	    function get_weekday_name($year = NULL, $month = NULL, $day = NULL, $locale_vars = NULL)
 	    {
 	        $weekday = DATE::day_of_week($year, $month, $day);
-			
+
 			if( $locale_vars === NULL ) {
 				$locale_vars = DATE::get_weekdays_names();
 			}
-			
+
 	        return $locale_vars[$weekday];
 	    }
-	    
+
 	    /**
 	     * Returns day of week for given date, 0=Sunday
 	     * @access public
@@ -547,25 +547,25 @@
 	        if (empty($day)) {
 	            $day = DATE::now('%d');
 	        }
-	
+
 	        if ($month > 2) {
 	            $month -= 2;
 	        } else {
 	            $month += 10;
 	            $year--;
 	        }
-	
+
 	        $day = ( floor((13 * $month - 1) / 5) +
 	            $day + ($year % 100) +
 	            floor(($year % 100) / 4) +
 	            floor(($year / 100) / 4) - 2 *
 	            floor($year / 100) + 77);
-	
+
 	        $weekday_number = (($day - 7 * floor($day / 7)));
-	
+
 	        return $weekday_number;
 	    }
-	    
+
 	    /**
 	     * Returns the current local date. NOTE: This function
 	     * retrieves the local date using strftime(), which may
@@ -578,7 +578,7 @@
 	    {
 	        return(strftime($format,time()));
 	    }
-	    
+
 	    /**
 	    * Returns an array of week days
 	    * Used to take advantage of the setlocale function to
@@ -593,7 +593,7 @@
 	        }
 	        return($weekdays);
 	    }
-	    
+
 	    /**
 	     * Returns the full month name for the given month
 	     * @access public
@@ -606,16 +606,16 @@
 	        if (empty($month)) {
 	            $month = DATE::now('%m');
 	        }
-	        
+
 	        $month = (int)$month;
-			
+
 			if( $locale_vars === NULL ) {
 	        	$locale_vars = DATE::get_months_names();
 			}
-			
+
 	        return $locale_vars[$month];
 	    }
-	
+
 	    /**
 	     * Returns the abbreviated month name for the given month
 	     * @access public
@@ -628,7 +628,7 @@
 	    {
 	        return substr(DATE::get_month_name($month, $locale_vars), 0, 3);
 	    }
-	    
+
 	    /**
 	     * Returns an array of month names
 	     * Used to take advantage of the setlocale function to return
@@ -643,7 +643,7 @@
 	        }
 	        return($months);
 	    }
-	    
+
 	    /**
 	     * Converts a date to number of days since a
 	     * distant unspecified epoch.
@@ -664,10 +664,10 @@
 	        if (empty($day)) {
 	            $day = DATE::now('%d');
 	        }
-	        
+
 	        $century = (int) substr($year,0,2);
 	        $year = (int) substr($year,2,2);
-	
+
 	        if ($month > 2) {
 	            $month -= 3;
 	        } else {
@@ -679,13 +679,13 @@
 	                $century --;
 	            }
 	        }
-	
+
 	        return (floor(( 146097 * $century) / 4 ) +
 	            floor(( 1461 * $year) / 4 ) +
 	            floor(( 153 * $month + 2) / 5 ) +
 	            $day + 1721119);
 	    }
-	    
+
 	    /**
 	     * Converts number of days to a distant unspecified epoch.
 	     * @access public
@@ -696,20 +696,20 @@
 	     */
 	    function days_to_date($days, $format='%Y%m%d', $locale_vars = NULL)
 	    {
-	
+
 	        $days       -=  1721119;
 	        $century    =   floor(( 4 * $days - 1) / 146097);
 	        $days       =   floor(4 * $days - 1 - 146097 * $century);
 	        $day        =   floor($days / 4);
-	
+
 	        $year       =   floor(( 4 * $day +  3) / 1461);
 	        $day        =   floor(4 * $day +  3 - 1461 * $year);
 	        $day        =   floor(($day +  4) / 4);
-	
+
 	        $month      =   floor(( 5 * $day - 3) / 153);
 	        $day        =   floor(5 * $day - 3 - 153 * $month);
 	        $day        =   floor(($day +  5) /  5);
-	
+
 	        if ($month < 10) {
 	            $month +=3;
 	        } else {
@@ -719,12 +719,12 @@
 	                $century++;
 	            }
 	        }
-	
+
 	        $century = sprintf('%02d',$century);
 	        $year = sprintf('%02d',$year);
 	        return(DATE::format($century.$year.'-'.$month.'-'.$day, $format, $locale_vars));
 	    }
-	    
+
 	    /**
 	     * Returns number of days since 31 December of year before given date.
 	     * @access public
@@ -744,46 +744,46 @@
 	        if (empty($day)) {
 	            $day = DATE::now('%d');
 	        }
-	        
+
 	        $year = (int) $year;
 	        $month = (int) $month;
 	        $day = (int) $day;
-	
+
 	        $days = array(0,31,59,90,120,151,181,212,243,273,304,334);
-	
+
 	        $julian = ($days[$month - 1] + $day);
-	
+
 	        if ($month > 2 && DATE::is_leap_year($year)) {
 	            $julian++;
 	        }
-	
+
 	        return($julian);
 	    }
-	    
+
 	     /**
 	     * Returns true for a leap year, else false
 	     * @access public
 	     * @param string year in format YYYY
 	     * @return boolean
 	     */
-	
+
 	    function is_leap_year($year = NULL)
 	    {
 	        if (empty($year)) {
 	            $year = DATE::now('%Y');
 	        }
-	
+
 	        if (strlen($year) != 4) {
 	            return false;
 	        }
-	
+
 	        if (preg_match('/\D/',$year)) {
 	            return false;
 	        }
-	
+
 	        return (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0);
 	    }
-	    
+
 	    /**
 	     * Returns week of the year, first Sunday is first day of first week
 	     * @access public
@@ -799,7 +799,7 @@
 	        $week_number = intval($parts[1]);
 	        return $week_number;
 	    }
-	    
+
 	    /**
 	     * Converts from Gregorian Year-Month-Day to
 	     * ISO YearNumber-WeekNumber-WeekDay
@@ -813,7 +813,7 @@
 	     * @param string year in format CCYY
 	     * @return string
 	     */
-	    function gregorian_to_iso($year, $month, $day) 
+	    function gregorian_to_iso($year, $month, $day)
 	    {
 	        if (empty($year)) {
 	            $year = DATE::now('%Y');
@@ -824,11 +824,11 @@
 	        if (empty($day)) {
 	            $day = DATE::now('%d');
 	        }
-	        
+
 	        $year = (int) $year;
 	        $month = (int) $month;
 	        $day = (int) $day;
-	        
+
 	        $mnth = array (0,31,59,90,120,151,181,212,243,273,304,334);
 	        $y_isleap = DATE::is_leap_year($year);
 	        $y_1_isleap = DATE::is_leap_year($year - 1);
@@ -881,7 +881,7 @@
 	            $weeknumber = '0'.$weeknumber;
 	        return "{$yearnumber}-{$weeknumber}-{$weekday}";
 	    }
-	    
+
 	    /**
 	     * Determines if given date is a future date from now.
 	     * @access public
@@ -895,7 +895,7 @@
 	        $this_year = DATE::now('%Y');
 	        $this_month = DATE::now('%m');
 	        $this_day = DATE::now('%d');
-	
+
 	        if ($year > $this_year) {
 	            return true;
 	        } elseif ($year == $this_year) {
@@ -907,10 +907,10 @@
 	                }
 	            }
 	        }
-	
+
 	        return false;
 	    }
-	
+
 	    /**
 	     * Determines if given date is a past date from now.
 	     * @access public
@@ -924,7 +924,7 @@
 	        $this_year = DATE::now('%Y');
 	        $this_month = DATE::now('%m');
 	        $this_day = DATE::now('%d');
-	
+
 	        if ($year < $this_year) {
 	            return true;
 	        } elseif ($year == $this_year) {
@@ -936,7 +936,7 @@
 	                }
 	            }
 	        }
-	
+
 	        return false;
 	    }
 	}

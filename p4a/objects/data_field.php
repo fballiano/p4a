@@ -46,7 +46,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_DATA_FIELD extends P4A_OBJECT
+	class P4A_Data_Field extends P4A_Object
 	{
 		/**
 		 * The value of field.
@@ -75,7 +75,7 @@
 		 * @access private
 		 */
 		var $type = 'text';
-		
+
 		var $is_read_only = FALSE;
 		var $sequence = NULL;
 		var $table = NULL;
@@ -184,21 +184,21 @@
 				return $db->nextId($this->sequence);
 			}
 		}
-		
+
 		function setTable($table){
 			$this->table = $table;
 		}
-		
+
 		function getTable(){
 			return $this->table;
 		}
-		
+
 		function setAliasOf($alias_of){
 			$this->alias_of = $alias_of;
 		}
-		
+
 		function getAliasOf(){
 			return $this->alias_of;
-		}		
+		}
 	}
 ?>

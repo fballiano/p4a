@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -46,7 +46,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_LINK extends P4A_WIDGET
+	class P4A_Link extends P4A_Widget
 	{
 		/**
 		 * Class constructor.
@@ -57,17 +57,17 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &link ($name, $id = NULL)
+		function &P4A_Link ($name, $id = NULL)
 		{
 			$prefix = 'lnk' ;
-			
+
 			if( $id === NULL ) {
-				parent::p4a_widget($name, $prefix);
+				parent::P4A_Widget($name, $prefix);
 			} else {
-				parent::p4a_widget($name, $prefix, $id);
+				parent::P4A_Widget($name, $prefix, $id);
 			}
 		}
-		
+
 		/**
 		 * HTML rendered link.
 		 * @return string
@@ -88,8 +88,8 @@
 			{
 				$sReturn = $this->getValue();
 			}
-			
-			return $sReturn;  
+
+			return $sReturn;
 		}
 	}
 ?>

@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -40,12 +40,12 @@
 
 	/**
 	 * p4a internationalization class for numbers.
-	 * 
+	 *
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_I18N_NUMBERS
+	class P4A_I18N_Numbers
 	{
 		/**
 		 * Here we store all formats.
@@ -53,35 +53,35 @@
 		 * @var array
 		 */
 		var $formats = NULL;
-		
+
 		/**
 		 * The decimal separator.
 		 * @access private
 		 * @var string
 		 */
 		var $decimal_separator = NULL;
-		
+
 		/**
 		 * The thousand separator.
 		 * @access private
 		 * @var string
 		 */
 		var $thousand_separator = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &p4a_i18n_numbers( &$formats )
+		function &P4A_I18N_Numbers( &$formats )
 		{
 			$this->formats =& $formats;
-			
+
 			$float_format = $this->getFormat('float');
 			$this->decimal_separator = $float_format[1];
 			$this->thousand_separator = $float_format[2];
 		}
-		
+
 		/**
 		 * Format a number.
 		 * Default format is float.
@@ -96,10 +96,10 @@
 			if( $format === NULL ) {
 				$format = $this->getFormat('float');
 			}
-			
+
 			return NUMBER::format($number, $format);
 		}
-		
+
 		/**
 		 * Format a number as an integer.
 		 * @access public
@@ -111,7 +111,7 @@
 		{
 			return $this->format($number, $this->getFormat('integer'));
 		}
-		
+
 		/**
 		 * Format a number as a float.
 		 * @access public
@@ -123,7 +123,7 @@
 		{
 			return $this->format($number, $this->getFormat('float'));
 		}
-		
+
 		/**
 		 * Format a number as a decimal.
 		 * @access public
@@ -135,7 +135,7 @@
 		{
 			return $this->format($number, $this->getFormat('decimal'));
 		}
-		
+
 		/**
 		 * Unformat a number.
 		 * Default format is float.
@@ -150,10 +150,10 @@
 			if( $format === NULL ) {
 				$format = $this->getFormat('float');
 			}
-			
+
 			return NUMBER::unformat($number, $format);
 		}
-		
+
 		/**
 		 * Unformat a number as an integer.
 		 * @access public
@@ -165,7 +165,7 @@
 		{
 			return $this->unformat($number, $this->getFormat('integer'));
 		}
-		
+
 		/**
 		 * Unformat a number as a float.
 		 * @access public
@@ -177,7 +177,7 @@
 		{
 			return $this->unformat($number, $this->getFormat('float'));
 		}
-		
+
 		/**
 		 * Unformat a number as a decimal.
 		 * @access public
@@ -189,7 +189,7 @@
 		{
 			return $this->unformat($number, $this->getFormat('decimal'));
 		}
-		
+
 		/**
 		 * Returns the format array for a given format name.
 		 * @access public
@@ -200,7 +200,7 @@
 		{
 			return $this->formats[ $format ];
 		}
-		
+
 		/**
 		 * Sets the format array for a given format name.
 		 * @access public
@@ -212,7 +212,7 @@
 		{
 			$this->formats[ $format ] = $value;
 		}
-		
+
 		/**
 		 * Sets the format (only decimals number) for a given format name, according to the current locale.
 		 * @access public

@@ -45,7 +45,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_BUTTON extends P4A_WIDGET
+	class P4A_Button extends P4A_Widget
 	{
 		/**
 		* The icon used by button, if null standard html button is used.
@@ -61,9 +61,9 @@
 		 * @param string			The icon taken from icon set (file name without extension).
 		 * @access private
 		 */
-		function &p4a_button($name, $icon = NULL)
+		function &P4A_Button($name, $icon = NULL)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->addAction('onClick');
 			$this->setDefaultLabel();
 			if ($icon !== NULL){
@@ -124,15 +124,15 @@
 		{
 			return $this->_icon;
 		}
-		
+
 		function setSize($size)
 		{
 			$this->_size = $size;
 		}
-		
+
 		function getSize()
 		{
-			return $this->_size;		
+			return $this->_size;
 		}
 
 		/**
@@ -161,21 +161,21 @@
 					$header .= '<span class="link_button" ' ;
 				}
 				$footer .= '>';
-				
+
 				$footer .= "<img class='img_button" ;
 
 				if( $enabled ) {
 					$footer .= ' clickable';
 				}
-// 				P4A_ICONS_EXTENSION 
-				$img_src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon; 
+// 				P4A_ICONS_EXTENSION
+				$img_src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
 				if(!$enabled){
-					$img_src .= "_disabled";		
+					$img_src .= "_disabled";
 				}
 				$img_src .= '.' . P4A_ICONS_EXTENSION ;
-				
+
 				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
-				
+
 				$footer .= "' src='$img_src' alt='$msg' title='$msg' " ;
 				$footer .= ' />';
 
@@ -199,7 +199,7 @@
 			}
 
 			$sReturn = "";
-			
+
 			$sReturn .= $header . $this->composeStringProperties() ;
 			if( $enabled ) {
 				$sReturn .= $this->composeStringActions();

@@ -46,7 +46,7 @@
 	 * @package p4a
 	 * @see TOOLBAR
 	 */
-	class P4A_ACTIONS_TOOLBAR extends P4A_TOOLBAR
+	class P4A_Actions_Toolbar extends P4A_Toolbar
 	{
 		/**
 		 * Class costructor.
@@ -54,9 +54,9 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &p4a_actions_toolbar($name)
+		function &P4A_Actions_Toolbar($name)
 		{
-			parent::p4a_toolbar($name);
+			parent::P4A_Toolbar($name);
 
 			$this->addButton('save', 'save');
 			$this->addButton('cancel', 'cancel');

@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -38,26 +38,26 @@
  * @package p4a
  */
 
- 	class P4A_MESSAGE extends P4A_WIDGET
+ 	class P4A_Message extends P4A_Widget
 	{
-		
+
 		var $icon = 'warning';
 		var $size = 'big';
-		
-		
-		function &p4a_message($name)
+
+
+		function &P4A_Message($name)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 		}
-		
+
 		function getValue()
 		{
-			return $this->value; 
+			return $this->value;
 		}
 
 		function setValue($value=NULL)
 		{
-			$this->value = $value; 
+			$this->value = $value;
 		}
 
 		function getAsString()
@@ -66,15 +66,15 @@
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
 				$value = $this->getValue();
-				$image = "<img src='" .P4A_ROOT_URL. "/images/" . $this->getIcon() . "_" .$this->getSize()  . ".png' style='float:left'>";				
-				
-				
+				$image = "<img src='" .P4A_ROOT_URL. "/images/" . $this->getIcon() . "_" .$this->getSize()  . ".png' style='float:left'>";
+
+
 				$string	 = "<div class='message' $properties $actions>\n";
-				$string	.= "$image\n";			
+				$string	.= "$image\n";
 				$string	.= "<p>";
 				$string	.= "$value\n";
 				$string	.= "</p>";
- 				$string .= "<div class='br'></div>\n";				
+ 				$string .= "<div class='br'></div>\n";
 				$string	.= "</div>\n\n";
 			} else {
 				$string =  "";
@@ -84,22 +84,22 @@
 			return $string;
 		}
 
-	
+
 		function setIcon($type = 'important')
 		{
-			$this->icon = $type; 
+			$this->icon = $type;
 		}
-		
+
 		function getIcon()
 		{
-			return $this->icon; 
-		}		
-		
+			return $this->icon;
+		}
+
 		function setSize($size)
 		{
 			$this->size = $size;
 		}
-		
+
 		function getSize()
 		{
 			return $this->size;

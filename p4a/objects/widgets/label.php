@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -44,49 +44,49 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_LABEL extends P4A_WIDGET
+	class P4A_Label extends P4A_Widget
 	{
 		/**
 		 * Tells if the fields content is formatted or not.
 		 * @var string
 		 * @access private
-		 */		
+		 */
 		var $formatted = true;
-		
+
 		/**
 		 * The formatter class name for the data field.
 		 * @var string
 		 * @access private
 		 */
 		var $formatter_name = NULL;
-		
+
 		/**
 		 * The format name for the data field.
 		 * @var string
 		 * @access private
 		 */
 		var $format_name = NULL;
-		
+
 		/**
 		 * The label type, temporary or normal.
 		 * @var string
 		 * @access private
 		 */
 		var $type = 'normal';
-		
+
 		/**
 		 * The class constructor
 		 * @param string	Object identifier.
 		 * @param string	The Value of the label.
 		 * @access private
 		 */
-		
-		function &p4a_label($name, $value=NULL)
+
+		function &P4A_Label($name, $value=NULL)
 		{
-			parent::p4a_widget($name);
-			$this->setLabel($value);  
+			parent::P4A_Widget($name);
+			$this->setLabel($value);
 		}
-		
+
 		/**
 		 * Only returns the value of the label.
 		 * @return string
@@ -122,23 +122,23 @@
 				$header	= '<label class="label" ';
 				$close_header = '>';
 				$footer	= '</label>'  .  "\n";
-				
-				$string =  $header . $this->composeStringProperties() 
-								   . $this->composeStringActions() 
-								   . $close_header . $this->getLabel() 
+
+				$string =  $header . $this->composeStringProperties()
+								   . $this->composeStringActions()
+								   . $close_header . $this->getLabel()
 								    .$footer;
 				if ($this->getType() === 'temporary') {
 					$this->setLabel("");
 				}
-			} 
+			}
 			else
 			{
 				$string =  '';
 			}
-			
+
 			return $string;
 		}
-		
+
 		/**
 		 * Set the label type, normal or temporary
 		 * @param string label type.
@@ -146,16 +146,16 @@
 		 */
 		function setType($type = 'normal')
 		{
-			$this->type = $type; 
+			$this->type = $type;
 		}
-		
+
 		/**
 		 * Returns the label type
 		 * @access public
 		 */
 		function getType()
 		{
-			return $this->type; 
-		}		
+			return $this->type;
+		}
 	}
 ?>

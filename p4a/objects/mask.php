@@ -44,7 +44,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_MASK extends P4A_OBJECT
+	class P4A_Mask extends P4A_Object
 	{
 		/**
 		 * The mask that called the current mask.

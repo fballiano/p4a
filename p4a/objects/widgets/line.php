@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -39,12 +39,12 @@
  */
 
 	/**
-	 * Line 
+	 * Line
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_LINE extends P4A_WIDGET
+	class P4A_Line extends P4A_Widget
 	{
 		/**
 		 * Class constructor.
@@ -55,17 +55,17 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &line ($name, $id = NULL)
+		function &P4A_Line ($name, $id = NULL)
 		{
 			$prefix = 'line' ;
-			
+
 			if( $id === NULL ) {
-				parent::p4a_widget($name, $prefix);
+				parent::P4A_Widget($name, $prefix);
 			} else {
-				parent::p4a_widget($name, $prefix, $id);
+				parent::P4A_Widget($name, $prefix, $id);
 			}
 		}
-		
+
 		/**
 		 * HTML rendered link.
 		 * @return string
@@ -76,12 +76,12 @@
 			if( !$this->isVisible() ) {
 				return NULL;
 			}
-			
+
 			$header 		= '<HR noshade class="color2" ';
 			$close_header 	= '/>';
 			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
-			
-			return $sReturn;  
+
+			return $sReturn;
 		}
 	}
 ?>

@@ -47,7 +47,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_MENU extends P4A_WIDGET
+	class P4A_Menu extends P4A_Widget
 	{
 		/**
 		 * Menu rendering interface type (drop_down|tabbed)
@@ -83,9 +83,9 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_menu($name = '')
+		function &P4A_Menu($name = '')
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->build("P4A_Collection", "items");
 		}
 
@@ -311,7 +311,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_MENU_ITEM extends P4A_WIDGET
+	class P4A_Menu_Item extends P4A_Widget
 	{
 		/**
 		 * Tells if the element is currenty active.
@@ -361,9 +361,9 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_menu_item($name)
+		function &P4A_Menu_Item($name)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 
 			$this->setDefaultLabel();
 			$this->addAction('onClick');

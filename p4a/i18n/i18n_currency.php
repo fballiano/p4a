@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -40,12 +40,12 @@
 
 	/**
 	 * p4a internationalization class for currency.
-	 * 
+	 *
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_I18N_CURRENCY
+	class P4A_I18N_Currency
 	{
 		/**
 		 * Here we store all formats.
@@ -53,35 +53,35 @@
 		 * @var array
 		 */
 		var $formats = NULL;
-		
+
 		/**
 		 * The decimal separator.
 		 * @access private
 		 * @var string
 		 */
 		var $decimal_separator = NULL;
-		
+
 		/**
 		 * The thousand separator.
 		 * @access private
 		 * @var string
 		 */
 		var $thousand_separator = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &p4a_i18n_currency( &$formats )
+		function &P4A_I18N_Currency( &$formats )
 		{
 			$this->formats =& $formats;
-			
+
 			$local_format = $this->getFormat('local');
 			$this->decimal_separator = $local_format[2];
 			$this->thousand_separator = $local_format[3];
 		}
-		
+
 		/**
 		 * Returns the format array for a given format name.
 		 * @access public
@@ -92,7 +92,7 @@
 		{
 			return $this->formats[ $format ];
 		}
-		
+
 		/**
 		 * Sets the format array for a given format name.
 		 * @access public
@@ -104,7 +104,7 @@
 		{
 			$this->formats[ $format ] = $value;
 		}
-		
+
 		/**
 		 * Sets the format (only decimals number) for a given format name, according to the current locale.
 		 * @access public
@@ -117,7 +117,7 @@
 		{
 			$this->formats[ $format ] = array( $format_string, $decimals, $this->decimal_separator, $this->thousand_separator );
 		}
-		
+
 		/**
 		 * Format a currency.
 		 * Default format is local.
@@ -132,11 +132,11 @@
 			if( $format === NULL ) {
 				$format = $this->getFormat('local');
 			}
-			
+
 			$value = NUMBER::format($value, array_slice($format, 1));
 			return str_replace('%', $value, $format[0]);
 		}
-		
+
 		/**
 		 * Format a value in local format.
 		 * @access public
@@ -148,7 +148,7 @@
 		{
 			return $this->format($value, $this->getFormat('local'));
 		}
-		
+
 		/**
 		 * Format a value in international format.
 		 * @access public
@@ -160,7 +160,7 @@
 		{
 			return $this->format($value, $this->getFormat('international'));
 		}
-		
+
 		/**
 		 * Unformat a currency.
 		 * Default format is local.
@@ -175,10 +175,10 @@
 			if( $format === NULL ) {
 				$format = $this->getFormat('local');
 			}
-			
+
 			return NUMBER::unformat($value, array_slice($format, 1));
 		}
-		
+
 		/**
 		 * Unformat a value in local format.
 		 * @access public
@@ -190,7 +190,7 @@
 		{
 			return $this->unformat($value, $this->getFormat('local'));
 		}
-		
+
 		/**
 		 * Unformat a value in international format.
 		 * @access public

@@ -45,7 +45,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_I18N_MESSAGES
+	class P4A_I18N_Messages
 	{
 		/**
 		 * All messages are stored here.
@@ -61,7 +61,7 @@
 		 * @param string				Optional the desired codepage.
 		 * @access private
 		 */
-		function &p4a_i18n_messages($language, $country, $codepage = NULL)
+		function &P4A_I18N_Messages($language, $country, $codepage = NULL)
 		{
 			$codepage = ($codepage ? ".$codepage" : "");
 			$msg_file = "{$language}/{$country}{$codepage}.php";
@@ -92,7 +92,7 @@
 				} else {
 					return "";
 				}
-				
+
 			} else {
 				return $this->messages[$first_level_id][$second_level_id];
 			}

@@ -45,7 +45,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_I18N_DATETIME
+	class P4A_I18N_Datetime
 	{
 		/**
 		 * Here we store all formats.
@@ -66,7 +66,7 @@
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &p4a_i18n_datetime(&$formats, &$locale_vars)
+		function &P4A_I18N_Datetime(&$formats, &$locale_vars)
 		{
 			$this->formats =& $formats;
 			$this->locale_vars =& $locale_vars;

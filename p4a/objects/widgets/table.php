@@ -103,9 +103,9 @@
 		 * @access private
 		 */
 		var $expand = TRUE;
-		
+
 		var $_title = "";
-		
+
 		var $_visible_cols = array();
 
 		/**
@@ -113,9 +113,9 @@
 		 * @param string				Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_table($name)
+		function &P4A_Table($name)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->useTemplate('table');
 			$this->setStyleProperty('border-collapse', 'collapse');
 		}
@@ -137,7 +137,7 @@
 			*/
 			$this->_title = $title;
 		}
-		
+
 		function getTitle()
 		{
 			return $this->_title;
@@ -241,7 +241,7 @@
 				}
 
 				$visible_cols = $this->getVisibleCols();
-				foreach($visible_cols as $col_name) {				
+				foreach($visible_cols as $col_name) {
 					$col =& $this->cols->$col_name;
 					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
@@ -458,7 +458,7 @@
 			if ($this->_visible_cols) {
 				return $this->_visible_cols;
 			} else {
-				return $this->getCols();			
+				return $this->getCols();
 			}
 		}
 
@@ -493,7 +493,7 @@
 				$cols = $this->getCols();
 			}
 			$this->_visible_cols = $cols;
-			
+
 			foreach ($cols as $col) {
 				$this->cols->$col->setVisible();
 			}
@@ -514,7 +514,7 @@
 			foreach ($cols as $col) {
 				$this->cols->$col->setInvisible();
 				if ($pos = array_search($col, $this->_visible_cols)) {
-					unset($this->_visible_cols[$pos]);	
+					unset($this->_visible_cols[$pos]);
 				}
 			}
 		}
@@ -582,9 +582,9 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_table_col($name)
+		function &P4A_Table_Col($name)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
 			$this->addAction('onClick');
 		}
@@ -770,11 +770,11 @@
 			$parent =& $p4a->getObject($parent->getParentID());
 
 			if ($parent->data->getObjectType() == 'p4a_db_source') {
-				
+
 				$data_field =& $parent->data->fields->{$this->getName()};
 				$field_name = $data_field->getName();
 				$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
-				
+
 				$new_order = P4A_ORDER_ASCENDING;
 
 				if ($parent->data->hasOrder()) {
@@ -806,7 +806,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TABLE_ROWS extends P4A_WIDGET
+	class P4A_Table_Rows extends P4A_Widget
 	{
 		/**
 		 * Class constructor.
@@ -814,9 +814,9 @@
 		 * @param string		Mnemonic identifier for the object
 		 * @access private
 		 */
-		function &p4a_table_rows($name = 'rows')
+		function &P4A_Table_Rows($name = 'rows')
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->addAction('onClick');
 		}
 
@@ -847,7 +847,7 @@
 			$rows = $parent->data->page(null, false);
 
 			$aCols = $parent->getVisibleCols();
-			
+
 			$limit = $parent->data->getPageLimit();
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
@@ -912,18 +912,18 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TABLE_NAVIGATION_BAR extends P4A_FRAME
+	class P4A_Table_Navigation_Bar extends P4A_Frame
 	{
 		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_table_navigation_bar()
+		function &P4A_Table_Navigation_Bar()
 		{
-			parent::p4a_frame("table_navigation_bar");
+			parent::P4A_Frame("table_navigation_bar");
 			$this->build("p4a_collection","buttons");
-			
+
 			$this->addButton('button_go', 'apply', 'right');
 			$this->buttons->button_go->addAction('onClick');
 			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
@@ -936,29 +936,29 @@
 			$this->buttons->field_num_page->addAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
 			$this->anchorRight($field_num_page);
-			
+
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
 // 			$current_page->setStyleProperty("border","1px solid red");
 			$this->anchorLeft($current_page);
-			
+
 			$this->addButton('button_last', 'last','right');
 			$this->buttons->button_last->addAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-			
+
 			$this->addButton('button_next', 'next','right');
 			$this->buttons->button_next->addAction('onClick');
-			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');			
-						
+			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
+
 			$this->addButton('button_prev', 'prev', 'right');
 			$this->buttons->button_prev->addAction('onClick');
 			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
-						
+
 			$this->addButton('button_first', 'first', 'right');
 			$this->buttons->button_first->addAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
 
 		}
-		
+
 		function addButton($button_name, $icon, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);

@@ -44,7 +44,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_ERROR
+	class P4A_Error
 	{
 		var $message = NULL;
 		var $data = array();

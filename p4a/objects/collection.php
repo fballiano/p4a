@@ -1,6 +1,6 @@
 <?php
 //todo
-class P4A_COLLECTION extends P4A_Object
+class P4A_Collection extends P4A_Object
 {
 	var $_pointer = 0;
 
@@ -21,20 +21,6 @@ class P4A_COLLECTION extends P4A_Object
 			$this->_pointer = 0;
 		}
 	}
-
-	/*
-	function &item()
-	{
-		$p4a =& P4A::singleton();
-
-		if ($this->getNumItems() > 0)
-			$id = $this->_objects[$this->_pointer];
-			return $p4a->objects[$id];
-		} else {
-			return null;
-		}
-	}
-	*/
 
 	//todo
 	function getNumItems()

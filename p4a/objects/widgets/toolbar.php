@@ -44,7 +44,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TOOLBAR extends P4A_WIDGET
+	class P4A_Toolbar extends P4A_Widget
 	{
 		/**
 		 * Counts the number of separators/spacers in the toolbar.
@@ -59,7 +59,7 @@
 		 * @access public
 		 */
 		var $buttons = NULL;
-		
+
 		var $_size = NULL;
 
 		/**
@@ -68,9 +68,9 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &p4a_toolbar($name)
+		function &P4A_Toolbar($name)
 		{
-			parent::p4a_widget($name);
+			parent::P4A_Widget($name);
 			$this->build("p4a_collection", "buttons");
 
 			$this->setOrientation('horizontal');
@@ -89,7 +89,7 @@
 			$this->buttons->$button_name->setIcon($icon);
 			$this->buttons->$button_name->setStyleProperty("float", $position);
 			if ($this->_size) {
-				$this->buttons->$button_name->setSize($this->_size);	
+				$this->buttons->$button_name->setSize($this->_size);
 			}
 			return $this->buttons->$button_name;
 		}
@@ -156,12 +156,12 @@
 				}
 			}
 		}
-		
+
 		function setSize($size)
 		{
 			$this->_size = $size;
 		}
-		
+
 		function getSize()
 		{
 			return $this->_size;
@@ -187,7 +187,7 @@
 			if (!$this->isVisible()) {
 				return '';
 			}
-			
+
 			$properties = $this->composeStringProperties();
 			$string   = "<div class='toolbar' $properties >";
 			while($button =& $this->buttons->nextItem()) {
@@ -197,6 +197,6 @@
 			$string .= "</div>";
 			return $string;
 		}
-		
+
 	}
 ?>
