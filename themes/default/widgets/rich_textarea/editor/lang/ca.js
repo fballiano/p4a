@@ -11,7 +11,7 @@
  * File Name: ca.js
  * 	Catalan language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-28 19:53:54
  * 
  * File Authors:

@@ -11,8 +11,8 @@
  * File Name: en.js
  * 	English language file.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-26 01:58:51
+ * Version:  2.0 RC2
+ * Modified: 2004-12-19 23:51:20
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -96,7 +96,7 @@ CellProperties		: "Cell Properties",
 TableProperties		: "Table Properties",
 ImageProperties		: "Image Properties",
 
-FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6",
+FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Paragraph (DIV)",	// 2.0: The last entry has been added.
 
 // Alerts and Messages
 ProcessingXHTML		: "Processing XHTML. Please wait...",
@@ -251,16 +251,16 @@ DlgCellWidthPx		: "pixels",
 DlgCellWidthPc		: "percent",
 DlgCellHeight		: "Height",
 DlgCellWordWrap		: "Word Wrap",
-DlgCellWordWrapNotSet	: "<Not set>",
+DlgCellWordWrapNotSet	: "&lt;Not set&gt;",
 DlgCellWordWrapYes	: "Yes",
 DlgCellWordWrapNo	: "No",
 DlgCellHorAlign		: "Horizontal Alignment",
-DlgCellHorAlignNotSet	: "<Not set>",
+DlgCellHorAlignNotSet	: "&lt;Not set&gt;",
 DlgCellHorAlignLeft	: "Left",
 DlgCellHorAlignCenter	: "Center",
 DlgCellHorAlignRight: "Right",
 DlgCellVerAlign		: "Vertical Alignment",
-DlgCellVerAlignNotSet	: "<Not set>",
+DlgCellVerAlignNotSet	: "&lt;Not set&gt;",
 DlgCellVerAlignTop	: "Top",
 DlgCellVerAlignMiddle	: "Middle",
 DlgCellVerAlignBottom	: "Bottom",

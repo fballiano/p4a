@@ -11,8 +11,8 @@
  * File Name: fcklanguagemanager.js
  * 	This file list all avialable languages in the editor.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-30 09:19:01
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 23:44:51
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -25,6 +25,9 @@ FCKLanguageManager.AvailableLanguages =
 	'ar'		: 'Arabic',
 	'bs'		: 'Bosnian',
 	'ca'		: 'Catalan',
+	'cs'		: 'Czech',
+	'da'		: 'Danish',
+	'de'		: 'German',
 	'en'		: 'English',
 	'es'		: 'Spanish',
 	'et'		: 'Estonian',
@@ -36,9 +39,16 @@ FCKLanguageManager.AvailableLanguages =
 	'it'		: 'Italian',
 	'ko'		: 'Korean',
 	'lt'		: 'Lithuanian',
+	'nl'		: 'Dutch',
 	'no'		: 'Norwegian',
 	'pl'		: 'Polish',
+	'pt'		: 'Portuguese (Portugal)',
+	'ru'		: 'Russian',
+	'sl'		: 'Slovenian',
 	'sr'		: 'Serbian (Cyrillic)',
 	'sr-latn'	: 'Serbian (Latin)',
-	'sv'		: 'Swedish'
+	'sv'		: 'Swedish',
+	'zh-cn'		: 'Chinese Simplified',
+	'zh-hk'		: 'Chinese Traditional (Hong Kong)',
+	'zh-tw'		: 'Chinese Traditional (Taiwan)'	
 }

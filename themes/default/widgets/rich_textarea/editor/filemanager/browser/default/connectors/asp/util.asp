@@ -11,8 +11,8 @@
  * File Name: util.asp
  * 	This file include generic functions used by the ASP Connector.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-29 02:19:46
+ * Version:  2.0 RC2
+ * Modified: 2004-12-10 17:02:49
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -32,5 +32,9 @@ Function RemoveFromEnd( sourceString, charToRemove )
 	oRegex.Pattern = charToRemove & "+$"
 
 	RemoveFromEnd = oRegex.Replace( sourceString, "" )
+End Function
+
+Function ConvertToXmlAttribute( value )
+	ConvertToXmlAttribute = Replace( value, "&", "&amp;" )
 End Function
 %>

@@ -15,7 +15,7 @@
  * 	The code of this page if included in the FredCK.FCKeditorV2.dll file. So to
  * 	use it you must include the DLL in your "bin" directory.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-26 23:16:40
  * 
  * File Authors:

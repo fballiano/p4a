@@ -1,4 +1,5 @@
-﻿<%
+﻿<%@ CodePage=65001 Language="VBScript"%>
+<%
 Option Explicit
 %>
 <!--
@@ -14,8 +15,8 @@ Option Explicit
  * File Name: connector.asp
  * 	This is the File Manager Connector for ASP.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-29 10:25:58
+ * Version:  2.0 RC2
+ * Modified: 2004-12-10 16:43:33
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)

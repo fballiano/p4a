@@ -11,8 +11,8 @@
  * File Name: fr.js
  * 	French language file.
  * 
- * Version:  2.0 RC1
- * Modified: 2004-11-30 09:20:40
+ * Version:  2.0 RC2
+ * Modified: 2004-12-20 01:57:31
  * 
  * File Authors:
  * 		Hubert Garrido (webmaster@liane.net)
@@ -201,7 +201,7 @@ DlgLnkPopScroll		: "Barres de Défilement",
 DlgLnkPopStatus		: "Barre d'Etat",
 DlgLnkPopToolbar	: "Barre d'Outils",
 DlgLnkPopFullScrn	: "Plein Ecran (IE)",
-DlgLnkPopDependent	: "Dependent (Netscape)",
+DlgLnkPopDependent	: "Dépendante (Netscape)",
 DlgLnkPopWidth		: "Largeur",
 DlgLnkPopHeight		: "Hauteur",
 DlgLnkPopLeft		: "Position Gauche",
@@ -279,16 +279,16 @@ DlgFindNotFoundMsg	: "Le texte indiqué est introuvable.",
 // Replace Dialog
 DlgReplaceTitle			: "Remplacer",
 DlgReplaceFindLbl		: "Rechercher:",
-DlgReplaceReplaceLbl	: "Replacer par:",
+DlgReplaceReplaceLbl	: "Remplacer par:",
 DlgReplaceCaseChk		: "Respecter la casse",
 DlgReplaceReplaceBtn	: "Remplacer",
 DlgReplaceReplAllBtn	: "Tout remplacer",
 DlgReplaceWordChk		: "Mot entier",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Les paramètres de sécurité de votre navigateur interdisent à l'éditeur de coller automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+V).",
-PasteErrorCut	: "Les paramètres de sécurité de votre navigateur interdisent à l'éditeur de couper automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+X).",
-PasteErrorCopy	: "Les paramètres de sécurité de votre navigateur interdisent à l'éditeur de copier automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+C).",
+PasteErrorPaste	: "Les paramètres de sécurité de votre navigateur empêchent l'éditeur de coller automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+V).",
+PasteErrorCut	: "Les paramètres de sécurité de votre navigateur empêchent l'éditeur de couper automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+X).",
+PasteErrorCopy	: "Les paramètres de sécurité de votre navigateur empêchent l'éditeur de copier automatiquement vos données. Veuillez utiliser les équivalents claviers (Ctrl+C).",
 
 PasteAsText		: "Coller comme texte",
 PasteFromWord	: "Coller à partir de Word",

@@ -11,7 +11,7 @@
  * File Name: hr.js
  * 	Croatian language file.
  * 
- * Version:  2.0 RC1
+ * Version:  2.0 RC2
  * Modified: 2004-11-24 23:38:22
  * 
  * File Authors:
