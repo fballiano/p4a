@@ -379,25 +379,25 @@ select:focus{
 }
 
 .navigator .active_node {
-	font-weight:bold;
+	font-weight: bold;
 }
 
 .message {
-	width:300px;
+	width: 300px;
 	font-weight: bold;
-	color: black;
-	display:block;
+	display: block;
 }
 
 .message dt {
-	display:table-cell;
-	vertical-align:middle;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .message dd {
-	display:table-cell;
-	vertical-align:middle;
-	text-align:left;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	color: black;
 }
 
 #sidebar {

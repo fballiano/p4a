@@ -1,4 +1,5 @@
 0.10
+- P4A_DB_SOURCE::saveRow() now replaces empty strings with NULL
 - improved check_configuration library
 
 0.9
