@@ -42,7 +42,6 @@
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
-
 class P4A_DB
 {
 	/**

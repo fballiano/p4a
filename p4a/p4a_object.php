@@ -294,12 +294,11 @@
 			} else {
 				$p4a->close();
 				$p4a->openMask('p4a_mask_error');
-				$p4a->active_mask->renderError($param);
-				$p4a->active_mask->raise();
+				$p4a->active_mask->main($param);
 				return ABORT;
 			}
 		}
-		
+
 		function void($params = NULL)
 		{
 			return $this->actionHandler('void', $params);

@@ -90,8 +90,8 @@
 	//require_once(dirname(__FILE__) . '/objects/data_sources/txt_source.php');
 	require_once(dirname(__FILE__) . '/objects/widget.php');
 
-	//Listeners
-	require_once(dirname(__FILE__) . '/objects/listeners/p4a_error.php');
+	//Masks
+	require_once(dirname(__FILE__) . '/objects/masks/p4a_error.php');
 
 	//Widget Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/button.php');
