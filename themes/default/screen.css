@@ -156,7 +156,7 @@ a.link_button:hover {
 /* 	overflow: auto; */
 }
 
-.label {
+label {
 	overflow: visible;
 	display:block;
 	text-align: left;
@@ -165,7 +165,9 @@ a.link_button:hover {
 	background:#fcfcfc;
 	border:1px solid #fafafa;
 	cursor:pointer;
-/* 	margin-bottom:800px; */
+	float: left;
+	padding-right: 1em;
+	width: 100px;
 }
 
 .table_cell {

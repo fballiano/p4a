@@ -43,12 +43,8 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
    }
 </script>
 
-
-    <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="all">
-    <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
-
-    [[foreach from=$css key=uri item=media ]]
-    <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">
+    [[foreach from=$css key=k item=v ]]
+    <link href="[[$v.0]]" rel="stylesheet" type="text/css" media="[[$v.1]]">
     [[/foreach]]
     <style type="text/css">
     [[assign var="toppx" value="0"]]
@@ -90,6 +86,7 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
       }
 
       #footerContainer {
+	  		clear: both;
             text-align: center;
 			margin-top: 10px;
       }

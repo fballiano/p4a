@@ -180,13 +180,8 @@
 
 			//Label
  			$this->build("P4A_Label", "label");
- 			$this->label->setWidth(100);
 			$this->label->setProperty("for",$this->getId());
-			$this->label->setStyleProperty("padding-right", "1em");
 			$this->setDefaultLabel();
-
-			//Properties
-			$this->label->setStyleProperty('float', 'left');
 		}
 
 		/**

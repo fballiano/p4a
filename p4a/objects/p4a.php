@@ -137,6 +137,11 @@
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
 
+			$this->addCSS(P4A_THEME_PATH . "/screen.css", "all");
+			$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
+			$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
+			$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
+
 			if ($this->isInternetExplorer()) {
 				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
 			}
@@ -454,7 +459,7 @@
 		 */
 		function addCss($uri, $media = "screen")
 		{
-			$this->css[$uri] = $media;
+			$this->css[] = array($uri, $media);
 		}
 
 		/**
