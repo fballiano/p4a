@@ -903,12 +903,13 @@
 			$header 			= '<SELECT class="border_box font_normal field" ';
 			$close_header 		= '>';
 			$footer				= '</SELECT>';
-			$header			   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+			$header			   .= $this->composeStringActions() . $this->composeStringProperties();
 
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
 
+			$header			   .= $close_header;
 			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
