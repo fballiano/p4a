@@ -809,11 +809,11 @@
 						$new_order = P4A_ORDER_ASCENDING;
 					}
 				}
-// 				if ($data_field->getAliasOf()){
-// 					$order = $data_field->getName();
-// 				}else{
+				if ($data_field->getAliasOf()){
+					$order = $data_field->getName();
+				}else{
 					$order = $data_field->getTable() . "." . $data_field->getName();
-// 				}
+				}
 				$parent->data->setOrder($order, $new_order);
 				$parent->data->updateRowPosition();
 			}
