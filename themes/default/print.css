@@ -1,0 +1,153 @@
+/*   ---------------------------------------------------------------------------------   */
+/*   HTML TAGS   																		 */
+/*   ---------------------------------------------------------------------------------   */
+
+A {
+	text-decoration:none;
+	color: #000000;
+}
+
+BODY {
+	page: landescape;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#000000;
+}
+
+HR {
+ 	margin-top:10px; 
+	margin-bottom:10px; 
+	border-style:solid;
+	width:1px;
+	height:1px;
+}
+
+IMG {
+	display:none;
+}
+
+INPUT {
+	border: none;
+	border-bottom: 1px solid #000000;
+	margin-right:10px; 
+	font-size: 8px;
+}
+
+TEXTAREA {
+	border: 1px solid #cccccc;
+}
+
+
+/*   ---------------------------------------------------------------------------------   */
+/*   MERLIN GENERIC CLASSES 															 */
+/*   ---------------------------------------------------------------------------------   */
+
+.font3 {
+	font-size: 11px; 
+	font-family: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	font-weight:bolder;
+	color:#000000; 
+}
+
+.font4 {
+	font-size: 11px; 
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;	
+	font-weight:bolder;
+	color: #000000;
+}
+
+.font_normal {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#000000;
+}
+
+.background1 {
+	background-color: #FCFCFC;
+}
+
+.background2 {
+	background-color: #EEEEEE;
+}
+
+.border {
+	border: 1px solid;
+}
+
+.border_box {
+	border: 1px solid #CCCCCC;
+}
+
+.border_color1 {
+	border-color: #CCCCCC;
+}
+
+.border_color2 {
+	border-color: #CCCCCC;
+}
+
+.border_color3 {
+	border-color: #CCCCCC;
+}
+
+.header {
+	display:none;
+}
+
+.overflow {
+	overflow: visible;
+}
+
+.image {
+	display:block;
+}
+
+.no_print {
+	display:none;
+}
+
+.table_cell {
+	white-space: normal;
+	text-align: left;
+}
+
+.toolbar {
+	display:none;
+}
+
+.label {
+	display:visible;
+}
+
+.table_cell {
+	padding-top: 7px;
+	padding-bottom:7px;
+	padding-left: 5px;
+}
+
+.textarea {
+	border: 1px solid #cccccc;
+}
+
+.sheet {
+}
+
+.sheet_cell {
+	padding-left: 0px;
+	padding-right: 5px;
+	padding-top: 0px;
+	padding-bottom: 5px;
+}
+
+
+/*   ----   */
+/*   MENU   */
+/*   ----   */
+
+#mainMenu {
+	display:none;
+}
+/*
+@page rotated {size: landscape}
+TABLE {page: rotated; page-break-before: right}
+*/

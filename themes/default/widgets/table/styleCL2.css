@@ -1,0 +1,84 @@
+.textTitolo { 
+	FONT-SIZE: 12px; 
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	FONT-WEIGHT:BOLDER;
+    /*COLOR:#78B0EA;
+*/
+    color: #4B718A;
+    BORDER: 1px solid #CCCCCC;
+    BACKGROUND-COLOR: #fafafa;
+    TEXT-ALIGN:left;
+}
+
+.table {
+/*	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid  #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+*/
+}
+.border {
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	BACKGROUND-COLOR:#FFFFFF;
+    COLOR:#4B718A;
+	TEXT-ALIGN:left;
+    border: 1px solid #cccccc;
+}
+
+.textCampo {
+	FONT-SIZE: 12px; 
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	FONT-WEIGHT:BOLDER;
+	COLOR:#588FA3;
+	TEXT-ALIGN:center;
+}
+
+.text {
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	COLOR:#4B718A;
+	TEXT-ALIGN:left;
+}
+
+.ImputPage {
+	FONT-SIZE: 11px;
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica,sans-serif;
+	COLOR:#4B718A;
+	TEXT-ALIGN:left;
+	border: 1px solid #C6D3DE;
+	border-top-color: #8FA2B6;
+	border-right-color: #8FA2B6;
+	border-bottom-color: #8FA2B6;
+	border-left-color: #8FA2B6;
+}
+
+
+body {
+	scrollbar-face-color: #F3F2F3;
+	scrollbar-highlight-color: #7899C5;
+	scrollbar-3dlight-color: #F3F2F3;
+	scrollbar-darkshadow-color: #F3F2F3;
+	scrollbar-shadow-color: #7899C5;
+	scrollbar-arrow-color: #7899C5;
+	scrollbar-track-color: #F3F2F3;
+	margin-left:0px;
+	margin-top:0px;
+	margin-right:0px;
+	margin-bottom:0px;
+}
+
+A.linkCampo:hover {
+	color: #C6D1D5; 
+    TEXT-DECORATION: underline;
+}
+A.linkCampo:active {
+	COLOR: #588FA3; TEXT-DECORATION: none
+}
+A.linkCampo:visited{
+	COLOR: #588FA3; TEXT-DECORATION: none
+}
+A.linkCampo:link{
+	COLOR: #588FA3; TEXT-DECORATION: none
+}
+
