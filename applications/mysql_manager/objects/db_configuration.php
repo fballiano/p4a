@@ -34,6 +34,7 @@ class db_configuration extends p4a_mask
 		$button =& $this->build("p4a_button","button");
 		$button->setLabel("Enter");
 		$this->intercept($button,'onClick', 'enter');
+		$frame->newRow();
 		$frame->anchorCenter($button);
 
 		$this->setFocus($this->fields->host);
