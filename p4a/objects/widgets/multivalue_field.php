@@ -47,7 +47,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_MULTIVALUE_FIELD extends P4A_FIELD
+	class P4A_Multivalue_Field extends P4A_Field
 	{
 		/**
 		 * The value of the primary key (current record, current mask).

@@ -14,11 +14,11 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 
 		$this->table_name = $name;
 		$this->file_name = $filename;
-
+		
 		if (!file_exists($filename)) {
 			$this->createXML();
 		}
-
+		
 		P4A_XML_Mask::P4A_XML_Mask($name);
 	}
 
@@ -79,6 +79,8 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		}
         $source->firstRow();
         $this->setSource($source);*/
+		$xml .= "\t\t<message name='error' />\n";
+		$xml .= "\t\t<message name='info' icon='info' />\n\n";
         $xml .= "\t\t<table name='table'>\n";
 		$xml .= "\t\t\t<source name='source' />\n";
 		foreach ($info as $col_name=>$array) {
@@ -314,6 +316,15 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 			$p4a->restart();
 		} else {
 			parent::showPrevMask();
+		}
+	}
+	
+	function saveRow()
+	{
+		$result = parent::saveRow();
+		print $result;
+		if (!$result) {
+			$this->error->setValue("Please fill all required fields");
 		}
 	}
 }

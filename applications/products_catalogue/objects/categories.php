@@ -10,7 +10,7 @@ class Categories extends P4A_Mask
 		$this->build("p4a_message", "message");
 		$this->message->setWidth("300");
 
-		$p4a->brands->firstRow();
+		$p4a->categories->firstRow();
 		$this->setSource($p4a->categories);
 
 		$this->fields->category_id->disable();

@@ -8,10 +8,10 @@ class Products_Catalogue extends P4A
 
 		// Menu
 		$this->build("p4a_menu", "menu");
-		$this->menu->addItem("products");
+		$this->menu->addItem("products", "P&roducts");
 		$this->intercept($this->menu->items->products, "onClick", "menuClick");
 
-		$this->menu->addItem("support_tables");
+		$this->menu->addItem("support_tables", "S&upport Tables");
 
 		$this->menu->items->support_tables->addItem("categories");
 		$this->intercept($this->menu->items->support_tables->items->categories,
@@ -45,5 +45,4 @@ class Products_Catalogue extends P4A
 		$this->openMask($this->active_object->getName());
 	}
 }
-
 ?>

@@ -193,73 +193,82 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$query = $this->_composeSelectStructureQuery();
 		$rs = $db->limitQuery($query,0,1);
-		$info = $db->tableInfo($rs);
-
- 		$main_table = $this->getTable();
-		$array_fields = $this->getFields();
-		foreach($info as $col){
-			$field_name = $col["name"];
-			if(isset($this->fields->$field_name)){
-				continue;
+		
+		if (DB::isError($rs)) {
+			$e = new P4A_ERROR('A query has returned an error', $this, $rs);
+    		if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
+    			die();
+    		}
+		} else {
+		
+			$info = $db->tableInfo($rs);
+	
+			$main_table = $this->getTable();
+			$array_fields = $this->getFields();
+			foreach($info as $col){
+				$field_name = $col["name"];
+				if(isset($this->fields->$field_name)){
+					continue;
+				}
+				$this->fields->build("p4a_data_field",$field_name);
+	
+				if ($col['type'] == "int" and $col['len'] == 1) {
+					$col['type'] = "tinyint";
+				}
+	
+				switch($col['type']) {
+					case 'bit':
+					case 'bool':
+					case 'boolean':
+					case 'tinyint':
+						$this->fields->$field_name->setType('boolean');
+						break;
+					case 'numeric':
+					case 'real':
+					case 'float':
+						$this->fields->$field_name->setType('float');
+						break;
+					case 'decimal':
+						$this->fields->$field_name->setType('decimal');
+						break;
+					case 'int':
+					case 'int2':
+					case 'int4':
+					case 'int8':
+					case 'long':
+					case 'integer':
+						$this->fields->$field_name->setType('integer');
+						break;
+					case 'char':
+					case 'string':
+					case 'varchar':
+					case 'varchar2':
+					case 'text':
+						$this->fields->$field_name->setType('text');
+						break;
+					case 'date':
+						$this->fields->$field_name->setType('date');
+						break;
+					case 'time':
+						$this->fields->$field_name->setType('time');
+						break;
+					default:
+						$this->fields->$field_name->setType('text');
+						break;
+				}
+	
+	// 			If field is not on main table is not updatable
+				if ($col['table'] != $main_table){
+					$this->fields->$field_name->setReadOnly();
+				}
+	
+				if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
+					$this->fields->$field_name->setAliasOf($alias_of);
+				}
+	
+				$this->fields->$field_name->setTable($col['table']);
 			}
-			$this->fields->build("p4a_data_field",$field_name);
-
-			if ($col['type'] == "int" and $col['len'] == 1) {
-				$col['type'] = "tinyint";
-			}
-
-			switch($col['type']) {
-				case 'bit':
-				case 'bool':
-				case 'boolean':
-				case 'tinyint':
-					$this->fields->$field_name->setType('boolean');
-					break;
-                case 'numeric':
-                case 'real':
-                case 'float':
-                	$this->fields->$field_name->setType('float');
-                	break;
-                case 'decimal':
-					$this->fields->$field_name->setType('decimal');
-                    break;
-                case 'int':
-                case 'int2':
-                case 'int4':
-                case 'int8':
-                case 'long':
-                case 'integer':
-                	$this->fields->$field_name->setType('integer');
-                	break;
-                case 'char':
-                case 'string':
-                case 'varchar':
-                case 'varchar2':
-                case 'text':
-					$this->fields->$field_name->setType('text');
-                    break;
-                case 'date':
-                    $this->fields->$field_name->setType('date');
-                    break;
-                case 'time':
-                    $this->fields->$field_name->setType('time');
-                    break;
-                default:
-                    $this->fields->$field_name->setType('text');
-                    break;
-            }
-
-// 			If field is not on main table is not updatable
-			if ($col['table'] != $main_table){
-				$this->fields->$field_name->setReadOnly();
-			}
-
-			if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
-				$this->fields->$field_name->setAliasOf($alias_of);
-			}
-
-			$this->fields->$field_name->setTable($col['table']);
-		}
+		}	
 	}
 
 

@@ -498,7 +498,11 @@
 			$this->_visible_cols = $cols;
 
 			foreach ($cols as $col) {
-				$this->cols->$col->setVisible();
+				if (isset($this->cols->$col)) {
+					$this->cols->$col->setVisible();
+				} else {
+					P4A_Error("Unknow column $col");
+				}
 			}
 		}
 

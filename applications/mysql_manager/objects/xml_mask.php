@@ -17,7 +17,10 @@ class P4A_XML_Mask extends P4A_Mask
 	{
 		$p4a =& p4a::singleton();
 
-		$file_name = P4A_APPLICATION_DIR . "/xml/$mask_name.xml";
+		$host = $p4a->masks->db_configuration->fields->host->getNewValue();
+		$database = $p4a->masks->db_configuration->fields->database->getNewValue();
+
+		$file_name = P4A_APPLICATION_DIR . "/xml/$host/$database/$mask_name.xml";
 
 		$xml = file_get_contents($file_name);
 
@@ -75,6 +78,7 @@ class P4A_XML_Mask extends P4A_Mask
 
 			if ($tag["tag"] == "FIELD"  and $tag["type"] != "close") {
 				$field =& $this->fields->{$attr["NAME"]};
+				$field->setUploadSubpath("$host/$database");
 
 				$this->setAttr($field,$attr);
 				$this->setLevel($field, $level);
@@ -109,25 +113,27 @@ class P4A_XML_Mask extends P4A_Mask
 			}
 
 			if ($tag["tag"] == "MESSAGE") {
-				$this->build("P4A_Message", "message");
+				$message =& $this->build("P4A_Message", $attr["NAME"]);
 				if (!isset($attr["POSITION"])) {
 					$attr["POSITION"] = "left";
 				}
 
 				switch ($attr["POSITION"]) {
 					case "left":
-						$frame->anchor($this->message);
+						$frame->anchor($message);
 						break;
 					case "center":
-						$frame->anchorCenter($this->message);
+						$frame->anchorCenter($message);
 						break;
 					case "right":
-						$frame->anchorRight($this->message);
+						$frame->anchorRight($message);
 						break;
+					default:	
+						$frame->anchor($message);
 				}
 
 				unset($attr["POSITION"]);
-				$this->setAttr($this->message, $attr);
+				$this->setAttr($message, $attr);
 			}
 
 			if ($tag["tag"] == "TOOLBAR") {
@@ -187,6 +193,8 @@ class P4A_XML_Mask extends P4A_Mask
 			}
 
 			switch ($att) {
+				case "NAME":
+					break;
 				case "MANDATORY":
 					$obj->label->setFontWeight('bold');
 					$this->_mandatory_fields[] = $obj->getName();
@@ -243,6 +251,19 @@ class P4A_XML_Mask extends P4A_Mask
 				$source->fields->$pk->setSequence($pk_sequence);
 			}
 		}
+	}
+	
+	function saveRow()
+	{
+		
+		foreach ($this->_mandatory_fields as $fieldname) {
+			$value = trim($this->fields->$fieldname->getNewValue());
+			if (!strlen($value) and $this->fields->$fieldname->getType() != "checkbox") {
+				return FALSE;			
+			}
+		}
+		parent::saveRow();
+		return TRUE;
 	}
 }
 ?>

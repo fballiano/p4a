@@ -16,11 +16,13 @@ class Products extends P4A_Mask
 		$this->source->setTable("products");
 		$this->source->addJoin("categories",
 							   "products.category_id = categories.category_id");
-		$this->source->addJoin("brands", "product_instances.brand_id = brands.brand_id");
+		$this->source->addJoin("brands", "products.brand_id = brands.brand_id");
 		$this->source->setPk("product_id");
 		$this->source->addOrder("product_id");
 		$this->source->setPageLimit(10);
 		$this->source->load();
+		$this->source->fields->product_id->setSequence("product_id");
+		
 		$this->setSource($this->source);
 		$this->source->firstRow();
 
@@ -37,7 +39,7 @@ class Products extends P4A_Mask
 		$txt_search =& $this->build("p4a_field", "txt_search");
 		$txt_search->addAction("onReturnPress");
 		$this->intercept($txt_search, "onReturnPress","search");
-		$txt_search->setLabel("Cod. Prodotto");
+		$txt_search->setLabel("Cod. Product");
 		$cmd_search =& $this->build("p4a_button","cmd_search");
 		$cmd_search->setValue("Cerca");
 		$this->intercept($cmd_search, "onClick","search");
@@ -52,10 +54,10 @@ class Products extends P4A_Mask
 		$table =& $this->build("p4a_table", "table");
  		$table->setWidth(700);
 		$table->setSource($this->source);
-		$table->setVisibleCols(array("product_instance_id", "classe","marca",
-									 "model"));
-		$table->cols->product_instance_id->setLabel("Cod. Prodotto");
-		$table->cols->model->setLabel("Modello");
+		$table->setVisibleCols(array("product_id","model","category",
+									 "brand"));
+		$table->cols->product_id->setLabel("Cod. Product");
+
 		while ($col =& $table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
@@ -65,12 +67,6 @@ class Products extends P4A_Mask
 		$message =& $this->build("p4a_message", "message");
 		$message->setWidth("300");
 
-		// Frame Table
-		$frm_table =& $this->build("p4a_frame", "frm_table");
- 		$frm_table->setWidth(700);
-		$frm_table->anchorCenter($message);
-		$frm_table->anchor($fs_search);
-		$frm_table->anchor($table);
 
 		//Fieldset con l'elenco dei campi
 		$fset=& $this->build("p4a_fieldset", "frame");
@@ -89,11 +85,13 @@ class Products extends P4A_Mask
 		$fset->anchorLeft($this->fields->visible);
 		$fset->anchor($this->fields->description);
 
-		// Frame Fields
-		$frm_fields =& $this->build("p4a_frame", "frm_fields");
-		$frm_fields->setWidth(730);
-		$frm_fields->anchorCenter($message);
-		$frm_fields->anchorCenter($fset);
+		// Frame
+		$frm=& $this->build("p4a_frame", "frm");
+		$frm->setWidth(730);
+		$frm->anchor($fs_search);
+		$frm->anchor($message);
+		$frm->anchor($table);
+  		$frm->anchor($fset);
 
 		// Mandatory Fields
 	    $this->mf = array("product_id", "category_id", "brand_id", "model", "purchasing_price",
@@ -103,6 +101,7 @@ class Products extends P4A_Mask
 		}
 
 		// Display
+		$this->display("main", $frm);
 		$this->display("menu", $p4a->menu);
 		$this->display("top", $this->toolbar);
 	}
@@ -126,9 +125,14 @@ class Products extends P4A_Mask
 		$fields->product_id->setWidth(200);
 		$fields->product_id->enable(false);
 
+		$categories =& $this->build("P4A_DB_Source","categories");
+		$categories->setTable("categories");
+		$categories->setPK("category_id");
+		$categories->load();
 		$fields->category_id->setLabel("Category");
 		$fields->category_id->setWidth(200);
 		$fields->category_id->setType("select");
+		$fields->category_id->setSource($categories);
 		$fields->category_id->setSourceDescriptionField("description");
 
 		$fields->brand_id->setLabel("Brand");

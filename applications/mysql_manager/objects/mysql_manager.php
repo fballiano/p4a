@@ -51,6 +51,12 @@ class mysql_manager extends p4a
 			$mask->intercept($field, "onClick", "editWidget");
 			$field->enable();
 		}
+		$mask->info->setValue("Click on the red areas to edit widgets");
+	}
+	
+	function saveRow()
+	{
+	
 	}
 }
 ?>

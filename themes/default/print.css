@@ -7,7 +7,7 @@
 }
 
 input:active {
-	background-color:white !important;
+	background-color:white !important; 
 }
 
 select {
@@ -20,7 +20,7 @@ input {
 	border: none;
 	border-bottom: 1px solid black !important;
 	margin-right:10px;
-	font-size: 8px;
+	font-size: 8px;	
 	text-align:left !important;
 }
 
@@ -34,6 +34,10 @@ input[type="file"] {
 
 fieldset {
 	border:1px solid black;
+}
+
+th {
+	text-align:left !important;
 }
 
 .row {
@@ -52,6 +56,7 @@ label {
 .label {
 	border:0px;
 }
+
 
 A {
 	text-decoration:none;
