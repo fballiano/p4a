@@ -1,4 +1,5 @@
 0.11
+- bugfix in MySQL Manager
 - navigation bar bugfix in P4A_Table
 - print css bugfix
 - moved some inlie css to external files
