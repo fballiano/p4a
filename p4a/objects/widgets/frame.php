@@ -77,13 +77,13 @@ class P4A_Frame extends P4A_Widget
 				}
 			}
 
-// 			$row .= "\n\n\t<div class='br'></div>\n";
 			$row .= "\n</div>\n";
 
 			if ($one_visible) {
 				$string .= $row;
 			}
 		}
+		$string .= "<div class='br'></div>";
 		$string .= "</div>\n\n";
 		return $string;
 	}

@@ -56,13 +56,13 @@ class P4A_Fieldset extends P4A_Frame
 				}
 			}
 
-// 			$row_html .= "\n\n\t<div class='br'></div>\n";
 			$row_html .= "\n</div>\n";
 
 			if ($one_visible) {
 				$string .= $row_html;
 			}
 		}
+		$string .= "<div class='br'></div>";
 		$string .= "</fieldset>\n\n";
 		return $string;
 	}

@@ -513,7 +513,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 				$this->updateRowPosition();
 			} else {
-				$this->row();
+				$this->firstRow();
 			}
 
 		}

@@ -669,9 +669,9 @@
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
 
-			$header 	   = "<INPUT type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";
+			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";
 			$close_header  = "/>";
-			$close_header .= "<INPUT type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' ";
+			$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' ";
 			if( ! $this->isEnabled() ) {
 				$header .= " disabled='disabled' ";
 				$close_header .= " disabled='disabled' ";
@@ -679,7 +679,7 @@
 			$close_header .= "/>";
 			$close_header .= $this->fetchTemplate();
 
-			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 
 			return $sReturn;
 		}
@@ -1048,7 +1048,7 @@
 
 			if( $this->getNewValue() === NULL )
 			{
-				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' class='border_box font_normal clickable' ";
+				$header 		= "<div style='float:left'><input type='file' onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
 				if (!$this->isEnabled()) {
