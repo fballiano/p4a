@@ -162,7 +162,7 @@
 				}
 				$footer .= '>';
 
-				$footer .= "<img class='img_button" ;
+				$footer .= "<img class=\"img_button" ;
 
 				if( $enabled ) {
 					$footer .= ' clickable';
@@ -174,9 +174,14 @@
 				}
 				$img_src .= '.' . P4A_ICONS_EXTENSION ;
 
+				$alt = ucfirst($this->_icon);
 				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
+				$accesskey = $this->getProperty("accesskey");
+				if (strlen($accesskey) > 0) {
+					$msg .= htmlentities(" (ALT+$accesskey)");
+				}
 
-				$footer .= "' src='$img_src' alt='$msg' title='$msg' " ;
+				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" " ;
 				$footer .= ' />';
 
 				if( $enabled ) {

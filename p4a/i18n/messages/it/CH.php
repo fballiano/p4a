@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -43,45 +43,45 @@ $messages = array
 	// Date
     "days"				=> array('Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'),
     "months"			=> array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'),
-    
+
 	// Standard Toolbar
-	"save"		=> "Conferma e memorizza.",
-	"cancel"		=> "Annulla l'operazione.",
-	"new"			=> "Inserisci un nuovo elemento.",
-	"delete"		=> "Elimina l'elemento corrente.",
-	"first"			=> "Vai al primo elemento.",
-	"prev"			=> "Vai all'elemento precedente.",
-	"next"			=> "Vai al prossimo elemento.",
-	"last"			=> "Vai all'ultimo elemento.",
-	"print"			=> "Stampa.",
-	"exit"			=> "Esci.",
-	"first"		=> "Vai al primo elemento.",
-	"prev"		=> "Vai all'elemento precedente.",
-	"next"		=> "Vai al prossimo elemento.",
-	"last"		=> "Vai all'ultimo elemento.",
-	"go"				=> "Vai",
-	
+	"save"		=> "Conferma e memorizza",
+	"cancel"	=> "Annulla l'operazione",
+	"new"		=> "Inserisci un nuovo elemento",
+	"delete"	=> "Elimina l'elemento corrente",
+	"first"		=> "Vai al primo elemento",
+	"prev"		=> "Vai all'elemento precedente",
+	"next"		=> "Vai al prossimo elemento",
+	"last"		=> "Vai all'ultimo elemento",
+	"print"		=> "Stampa",
+	"exit"		=> "Esci",
+	"first"		=> "Vai al primo elemento",
+	"prev"		=> "Vai all'elemento precedente",
+	"next"		=> "Vai al prossimo elemento",
+	"last"		=> "Vai all'ultimo elemento",
+	"go"		=> "Vai",
+
 	// Table
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "di",
 	"go_to_page"		=> "Vai a pagina",
-	
+
 	// File uploads
 	"filename"			=> "Nome",
 	"filesize"			=> "Dimensione",
 	"filetype"			=> "Tipo",
 	"filepreview"		=> "Anteprima",
 	"filedelete"		=> "Elimina",
-	
+
 	// Fields
 	"none_selected"		=> "Nessun Valore Selezionato",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Sei sicuro?",
 	"confirm_confirm"	=> "Confermare e memorizzare?",
 	"confirm_cancel"	=> "Annullare l'operazione?",
 	"confirm_delete"	=> "Eliminare l'elemento?",
-	
+
 	// Yes/No
 	"yes"				=> "Sì",
 	"no"				=> "No"

@@ -1,7 +1,9 @@
 <?php
-class P4A_Data_Source extends P4A_Object 
+class P4A_Data_Source extends P4A_Object
 {
 	var $_pointer = NULL;
+
+	var $_pk = NULL;
 
 	var $_limit = NULL;
 	var $_offset = NULL;
@@ -9,31 +11,31 @@ class P4A_Data_Source extends P4A_Object
 	var $_num_rows = NULL;
 	var $_num_pages = NULL;
 	var $_page_limit = 10;
-	
-	var $_fields = array();
-	
+
+	var $_fields = NULL;
+
 	var $_is_read_only = FALSE;
 	var $_is_sortable = TRUE;
 
 	var $fields = NULL; //P4A_Collection
-	
+
 	function &P4A_Array_Source($name) {
 		parent::P4A_Object($name);
 		$this->build("P4A_Collection", "fields");
 	}
-	
+
 	function load() {
 		return;
 	}
-	
+
 	function row($num_row = NULL, $move_pointer = TRUE) {
 		return ;
 	}
-	
+
 	function getAll($from = 0, $count = 0) {
 		return;
-	}			
-	
+	}
+
 	function getNumRows()
 	{
 		return;
@@ -42,8 +44,8 @@ class P4A_Data_Source extends P4A_Object
 	function getRowNumber()
 	{
 		return $this->_pointer;
-	}	
-				
+	}
+
 	function firstRow()
 	{
 		$num_rows = $this->getNumRows();
@@ -69,7 +71,7 @@ class P4A_Data_Source extends P4A_Object
 		}
 		return;
 	}
-	
+
 	function nextRow()
 	{
 		$num_rows = $this->getNumRows();
@@ -82,7 +84,7 @@ class P4A_Data_Source extends P4A_Object
 		}
 		return;
 	}
-	
+
 	function lastRow()
 	{
 		$num_rows = $this->getNumRows();
@@ -104,8 +106,8 @@ class P4A_Data_Source extends P4A_Object
 	function getPageLimit()
 	{
 		return $this->_page_limit;
-	}	
-	
+	}
+
 	function getNumPages()
 	{
 		$num_rows = $this->getNumRows();
@@ -117,7 +119,7 @@ class P4A_Data_Source extends P4A_Object
  			return intval( ($num_rows - 1) / $page_limit ) + 1;
 		}
 	}
-	
+
 	function getNumPage()
 	{
 		$row_number = $this->_pointer;
@@ -155,34 +157,35 @@ class P4A_Data_Source extends P4A_Object
 	{
 		return $this->page(1);
 	}
-	
+
 	function prevPage()
 	{
 		$current_page = $this->getNumPage();
 		return $this->page($current_page - 1);
 	}
-	
+
 	function nextPage()
 	{
 		$current_page = $this->getNumPage();
 		return $this->page($current_page + 1);
 	}
-	
+
 	function lastPage()
 	{
 		$num_pages = $this->getNumPages();
 		return $this->page($num_pages);
 	}
-		
+
 	function setPk($pk)
 	{
 		$this->_pk = $pk;
 	}
 
-	function getPk(){
+	function getPk()
+	{
 		return $this->_pk;
 	}
-	
+
 	function getPkValues(){
 		$pks = $this->getPk();
 
@@ -198,10 +201,10 @@ class P4A_Data_Source extends P4A_Object
 			error("NO PK");
 		}
 	}
-	
+
 	function getPkRow($pk)
 	{
 		return;
-	}	
+	}
 }
 ?>
