@@ -19,11 +19,11 @@ must install the database with this commands
 	cd /home/httpd/htdocs/p4a
 	cd projects/sample
 	mysql < sample.sql
-	
+
 than open browser and go to:
 
 	http://localhost/p4a/
-	
+
 the sample project will start by default.
 
 -------------------
@@ -40,7 +40,7 @@ directory under p4a installation.
 Linux/Windows
 Apache 1.3.x/2.0.x
 php/mod_php 4.3.x
-	
+
 ------------------------------------------------
 -- P4A compatibility: Workstation Side --
 ------------------------------------------------
@@ -84,9 +84,9 @@ these modules:
 	Text::Aspell
 	XML::DOM
 	CGI
-	
-Of these, only Text::Aspell might need to be 
-installed manually. The others are likely to 
+
+Of these, only Text::Aspell might need to be
+installed manually. The others are likely to
 be available by default in most Perl distributions.
 
 You must also set executable this file:
@@ -109,7 +109,7 @@ P4A fields use "div" tags for a nice
 alignment, Opera does not seem to understand this
 structure and...
 
-P4A default menu ("drop_down") 
+P4A default menu ("drop_down")
 will not run on Opera 6.x, but only on Opera 7.x.
 If Opera 7.x cannot be installed than use differt menu
 style such as "tabbed" or "tabbed_rounded".
@@ -141,3 +141,4 @@ Dominic Lüchinger <d.luechinger@bluewin.ch>
 Alen Toric <a.toric@quicknet.nl>
 Thiago Trindade <thiagownt@hotmail.com>
 Valery Sidorov <valery@blagovest.com>
+Tomas Kuba

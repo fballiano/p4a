@@ -1,4 +1,4 @@
-- Add:    cs_CZ locale
+- Add:    cs_CZ locale (Thank to Tomas Kuba)
 - Fix:    every events for image buttons are now in the <a> tag instead <img>, better compatibility with old browsers (Thanks to Valery Sidorov)
 - Add:    DB_SOURCE now can order also when you define custom queries (Thanks to Valery Sidorov)
 - Fix:    object and action hidden fields are now _object and _action (Thanks to Valery Sidorov)
