@@ -283,11 +283,20 @@
 
 	//Smarty Compile Dir
 	if (!defined('P4A_SMARTY_MASK_COMPILE_DIR')){
-		define("P4A_SMARTY_MASK_COMPILE_DIR", ini_get('session.save_path'));
+		define("P4A_SMARTY_MASK_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a' . str_replace(_DS_, "_", P4A_APPLICATION_DIR) . "_masks");
+	}
+	
+	if (! (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_readable(P4A_SMARTY_MASK_COMPILE_DIR) and is_writable(P4A_SMARTY_MASK_COMPILE_DIR))) {
+		mkdir(P4A_SMARTY_MASK_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_SMARTY_MASK_COMPILE_DIR . " or directory is not readable/writable.");
 	}
 
+
 	if (!defined('P4A_SMARTY_WIDGET_COMPILE_DIR')){
-		define('P4A_SMARTY_WIDGET_COMPILE_DIR', ini_get('session.save_path'));
+		define('P4A_SMARTY_WIDGET_COMPILE_DIR', ini_get('session.save_path') . _DS_ . 'p4a' . str_replace(_DS_, "_", P4A_APPLICATION_DIR) . "_widgets");
+	}
+	
+	if (! (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR))) {
+		mkdir(P4A_SMARTY_WIDGET_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_SMARTY_WIDGET_COMPILE_DIR . " or directory is not readable/writable.");
 	}
 
 	//I18N
