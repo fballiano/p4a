@@ -12,6 +12,8 @@ class db_configuration extends p4a_mask
 		$frame->setWidth(300);
 
 		$message =& $this->build("p4a_message", "message");
+		$message->setValue("MySQL Manager edit mode is available only for Mozilla browsers.");
+		$message->setIcon("info");
 		$frame->anchorCenter($message);
 
 		foreach($fields as $field_name){
@@ -37,6 +39,12 @@ class db_configuration extends p4a_mask
 		$this->setFocus($this->fields->host);
 
 		$this->display("main", $frame);
+	}
+
+	function main()
+	{
+		parent::main();
+		$this->message->setIcon("warning");
 	}
 
 	function enter()

@@ -1,22 +1,29 @@
+0.5
+- added a message to MySQL Manager to suggest using Firefox
+- fixed a bug in ARRAY_SOURCE getAll
+- fixed a bug in ARRAY_SOURCE load
+
 0.4
 - removed pear/pear.php that caused errors on windows installation
 - fixed various errors in array_source
+- fixed a reference in frame
+- various bugfixes
 
 0.3
 - changed PEAR repository management, now with web interface we can easily install/upgrade/remove PEAR modules
 - added deleteRow to DATA_SOURCE interface
 - added deleteRow to ARRAY_SOURCE
-- moved some code for deleteRow from DB_SOURCE to DATA_SOURCE, now used also FROM ARRAY_SOURCE
+- moved some code for deleteRow from DB_SOURCE to DATA_SOURCE, now used also from ARRAY_SOURCE
 
 0.2
-- Now db_source reload num_rows on setWhere, addFilter, dropFilter
-- Changed doctype for default template, now we're xhtml 1.1 (not validated, work in progress)
-- Changes in default template to start the xhtml validation
-- Fixed getAll in P4A_Array_Source
-- Fixed page in P4A_DB_Source
-- Fixed a problem with table and handheld Pocket Internet Explorer 2003
-- Added index.php file into applications directory, just for a redirect
+- now db_source reload num_rows on setWhere, addFilter, dropFilter
+- changed doctype for default template, now we're xhtml 1.1 (not validated, work in progress)
+- changes in default template to start the xhtml validation
+- fixed getAll in P4A_Array_Source
+- fixed page in P4A_DB_Source
+- fixed a problem with table and handheld Pocket Internet Explorer 2003
+- added index.php file into applications directory, just for a redirect
 - beautified handheld css
 
 0.1
-Initial release
+- initial release

@@ -76,6 +76,7 @@ function p4a_check_configuration($additionalDir = null)
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_DIR)) {
 		@System::mkDir("-p " . P4A_UPLOADS_DIR);
+		$ok = true;
 	} else {
 		$ok = false;
 	}
@@ -95,6 +96,7 @@ function p4a_check_configuration($additionalDir = null)
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_TMP_DIR)) {
 		@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR);
+		$ok = true;
 	} else {
 		$ok = false;
 	}
@@ -114,6 +116,7 @@ function p4a_check_configuration($additionalDir = null)
 		$ok1 = true;
 	} elseif (!is_dir(P4A_SMARTY_MASK_COMPILE_DIR)) {
 		@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR);
+		$ok1 = true;
 	} else {
 		$ok1 = false;
 	}
@@ -122,6 +125,7 @@ function p4a_check_configuration($additionalDir = null)
 		$ok2 = true;
 	} elseif (!is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
 		@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR);
+		$ok2 = true;
 	} else {
 		$ok2 = false;
 	}
