@@ -1,4 +1,6 @@
 0.11
+- navigation bar fix in P4A_Table
+- print css bugfix
 - moved some inlie css to external files
 
 0.10

@@ -95,7 +95,7 @@
 		 * @var boolean
 		 * @access private
 		 */
-		var $rollable = true;
+		var $rollable = TRUE;
 
 		/**
 		 * Decides if the table is collapsed or expanded.
@@ -107,6 +107,8 @@
 		var $_title = "";
 
 		var $_visible_cols = array();
+
+		var $_auto_navigation_bar = TRUE;
 
 		/**
 		 * Class constructor.
@@ -156,9 +158,10 @@
 			$this->setDataStructure($this->data->fields->getNames());
 
 			$this->build("p4a_table_rows", "rows");
-			if ($this->data->getNumPages() > 1){
-				$this->addNavigationBar();
-			}
+			$this->addNavigationBar();
+// 			if ($this->data->getNumPages() > 1){
+// 				$this->addNavigationBar();
+// 			}
 		}
 
 		/**
@@ -205,10 +208,18 @@
 				$this->display('toolbar', $this->toolbar->getAsString());
 			}
 
-			if ($this->navigation_bar !== NULL and
-				$this->navigation_bar->isVisible()) {
-				$this->display('navigation_bar', $this->navigation_bar);
+			if ($this->navigation_bar !== NULL) {
+				if ($this->_auto_navigation_bar) {
+					if ($this->data->getNumPages() > 1) {
+						$this->display('navigation_bar', $this->navigation_bar);
+					}
+				} else {
+					if ( $this->navigation_bar->isVisible()) {
+						$this->display('navigation_bar', $this->navigation_bar);
+					} 
+				}
 			}
+			
 			$this->display("title", $this->getTitle());
 			/*
 			if ($this->title_bar !== NULL and
@@ -344,6 +355,7 @@
 				$this->addNavigationBar();
 			}
 			$this->navigation_bar->setVisible();
+			$this->_auto_navigation_bar = FALSE;
 		}
 
 		/**
@@ -355,6 +367,7 @@
 			if ($this->navigation_bar !== NULL ){
 				$this->navigation_bar->setInvisible();
 			}
+			$this->_auto_navigation_bar = FALSE;
 		}
 
 		/**

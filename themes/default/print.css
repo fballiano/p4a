@@ -4,11 +4,12 @@
 
 * {
 	color:black !important;
-	border-color:black;
 }
 
-input:active {
-	background-color:white !important; 
+input:focus {
+	background-color:white !important;
+	border:none;
+	border-bottom:1px solid black;
 }
 
 select {
@@ -33,16 +34,12 @@ input[type="file"] {
 	display:none;
 }
 
-fieldset {
+fieldset.frame {
 	border:1px solid black;
 }
 
 th {
 	text-align:left !important;
-}
-
-.row {
-	border:1px solid black;
 }
 
 .statusBar  {
