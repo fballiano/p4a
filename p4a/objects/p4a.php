@@ -120,6 +120,20 @@
 		 * @access private
 		 */
 		var $css = array();
+		
+		/**
+		 * Is the browser a handheld?
+		 * @var boolean
+		 * @access private
+		 */
+		var $handheld = false;
+		
+		/**
+		 * Is the browser Internet Explorer?
+		 * @var boolean
+		 * @access private
+		 */
+		var $internet_explorer = false;
 
 		/**
 		 * Class constructor.
@@ -129,14 +143,24 @@
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
+			
+			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
+			$client =& new phpSniff();
 
 			$this->addCSS(P4A_THEME_PATH . "/screen.css", "all");
 			$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
 			$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
 			$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
-
-			if ($this->isInternetExplorer()) {
+			
+			if ($client->browser_is('ie')) {
+				$this->internet_explorer = true;
 				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
+			}
+			
+			if (!$client->has_feature('css2')) {
+				$this->handheld = true;
+				$this->css = array();
+				$this->addCSS(P4A_THEME_PATH . "/handheld.css");
 			}
 
 			$this->init();
@@ -144,12 +168,12 @@
 
 		function isInternetExplorer()
 		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') and
-				!strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
-				return true;
-			}
-
-			return false;
+			return $this->internet_explorer;
+		}
+		
+		function isHandheld()
+		{
+			return $this->handheld;
 		}
 
 		function &singleton($class_name = "p4a")

@@ -1,5 +1,10 @@
+0.9
+- added the ability to detect handheld devices (a browser that does not support css2 is considered handheld)
+- new library (phpSniff) to detect Internet Explorer
+- optimized output HTML, ~20% lighter
+
 0.8
-- change P4A_MESSAGE layout
+- changed P4A_MESSAGE layout
 - fixed fieldset ie bug
 - fixed deleteRow method on P4A_DATA_SOURCE
 - fixed screen.css in default theme
