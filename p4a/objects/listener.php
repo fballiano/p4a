@@ -61,10 +61,10 @@
 		{
 			$p4a =& P4A::singleton();
 			
-			if (! isset($p4a->listener->$name)){
-				$p4a->listener->build($name, $name);
+			if (! isset($p4a->listeners->$name)){
+				$p4a->listeners->build($name, $name);
 			}
-			return $p4a->listener->$name;
+			return $p4a->listeners->$name;
 		}
 		
 		

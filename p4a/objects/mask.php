@@ -150,7 +150,8 @@
 		{
 			$p4a =& P4A::singleton();
 			
-			if (! isset($p4a->masks->$name)){
+			
+ 			if (!isset($p4a->masks->$name)) {
 				$p4a->masks->build($name, $name);
 			}
 			return $p4a->masks->$name;
