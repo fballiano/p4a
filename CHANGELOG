@@ -1,5 +1,8 @@
 0.10
-- P4A_DB_SOURCE::saveRow() now replaces empty strings with NULL
+- bugfix in getAsFile method in P4A_FIELD
+- bugfix in saveRow method in P4A_DB_SOURCE
+- bugfix in getAsDate method in P4A_FIELD
+- null value bugfix in saveRow method on P4A_DB_SOURCE
 - improved check_configuration library
 
 0.9
