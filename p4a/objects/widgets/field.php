@@ -313,12 +313,12 @@
 		function setNewValue($new_value)
 		{
 			$set = true ;
-			
+
 			if( $new_value == NULL ) {
 				$new_value = NULL;
 			} elseif ( $this->isFormattable() and $this->isFormatted() ) {
 				$new_value = $this->unformat($new_value);
-			} elseif (($this->type == 'password' ) 
+			} elseif (($this->type == 'password' )
 			and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
@@ -328,7 +328,7 @@
 					default:
 						trigger_error('unknown encryption type:' . $this->getEncryptionType());
 				}
-			} elseif (($this->type == 'password') 
+			} elseif (($this->type == 'password')
 			and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
 				$set = false;
 			}
@@ -347,7 +347,7 @@
 		function getNewValue($index = NULL)
 		{
 			$new_value = $this->data_field->getNewValue();
-			
+
 			if ($new_value == NULL) {
 				$new_value = NULL;
 			} elseif ($index === NULL) {
@@ -356,7 +356,7 @@
 				}
             } elseif(is_array($new_value)) {
                 $new_value = $new_value[$index];
-            } elseif( substr($new_value, 0, 1) == '{' 
+            } elseif( substr($new_value, 0, 1) == '{'
 			&& substr($new_value, -1) == '}') {
                 $tmp_value = substr($new_value, 1, -1);
                 $tmp_value = explode("," , $tmp_value);
@@ -617,8 +617,8 @@
 		 * @access private
 		 * @param string	The formatted value.
 		 * @return string
-		 * @see NUMBER::unformat()
-		 * @see DATE::unformat()
+		 * @see P4A_Number::unformat()
+		 * @see P4A_Date::unformat()
 		 */
 		function unformat( $value )
 		{

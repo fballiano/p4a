@@ -97,10 +97,10 @@
 	    function format($date = NULL, $format, $locale_vars = NULL)
 	    {
 	    	if( $date === NULL ) {
-	    		$date = DATE::now('%Y-%m-%d %H:%M:%S');
+	    		$date = P4A_Date::now('%Y-%m-%d %H:%M:%S');
 	    	}
 
-	    	$aDate = DATE::parse($date);
+	    	$aDate = P4A_Date::parse($date);
 	        $output = "";
 
 	        for($strpos = 0; $strpos < strlen($format); $strpos++) {
@@ -109,16 +109,16 @@
 	                $nextchar = substr($format,$strpos + 1,1);
 	                switch ($nextchar) {
 	                case "a":
-	                    $output .= DATE::get_weekday_short_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars['days']);
+	                    $output .= P4A_Date::get_weekday_short_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars['days']);
 	                    break;
 	                case "A":
-	                    $output .= DATE::get_weekday_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars['days']);
+	                    $output .= P4A_Date::get_weekday_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars['days']);
 	                    break;
 	                case "b":
-	                    $output .= DATE::get_month_short_name($aDate['month'], $locale_vars['months']);
+	                    $output .= P4A_Date::get_month_short_name($aDate['month'], $locale_vars['months']);
 	                    break;
 	                case "B":
-	                    $output .= DATE::get_month_name($aDate['month'], $locale_vars['months']);
+	                    $output .= P4A_Date::get_month_name($aDate['month'], $locale_vars['months']);
 	                    break;
 	                case "C":
 	                    $output .= sprintf("%02d",intval($aDate['year']/100));
@@ -133,7 +133,7 @@
 	                    $output .= $aDate['day'];
 	                    break;
 	                case "E":
-	                    $output .= DATE::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
+	                    $output .= P4A_Date::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "H":
 	                    $output .= sprintf("%02d", $aDate['hour']);
@@ -143,7 +143,7 @@
 	                    $output .= sprintf("%02d", $hour==0 ? 12 : $hour);
 	                    break;
 	                case "j":
-	                    $output .= DATE::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
+	                    $output .= P4A_Date::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "m":
 	                    $output .= sprintf("%02d",$aDate['month']);
@@ -155,7 +155,7 @@
 	                    $output .= "\n";
 	                    break;
 	                case "O":
-	                	error("DATE::format(): timezone operation are not implemented.");
+	                	error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $offms = $this->tz->getOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -164,7 +164,7 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "o":
-	                	error("DATE::format(): timezone operation are not implemented.");
+	                	error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $offms = $this->tz->getRawOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -195,10 +195,10 @@
 	                    $output .= sprintf("%02d:%02d:%02d", $aDate['hour'], $aDate['minute'], $aDate['second']);
 	                    break;
 	                case "w":
-	                    $output .= DATE::day_of_week($aDate['year'],$aDate['month'],$aDate['day']);
+	                    $output .= P4A_Date::day_of_week($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "U":
-	                    $output .= DATE::week_of_year($aDate['year'],$aDate['month'],$aDate['day']);
+	                    $output .= P4A_Date::week_of_year($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "y":
 	                    $output .= substr($aDate['year'],2,2);
@@ -207,7 +207,7 @@
 	                    $output .= $aDate['year'];
 	                    break;
 	                case "Z":
-	                    error("DATE::format(): timezone operation are not implemented.");
+	                    error("P4A_Date::format(): timezone operation are not implemented.");
 	                    $output .= $this->tz->inDaylightTime($this) ? $this->tz->getDSTShortName() : $this->tz->getShortName();
 	                    break;
 	                case "%":
@@ -255,23 +255,23 @@
 	                $nextchar = substr($format,$strpos + 1,1);
 	                switch ($nextchar) {
 	                case "a":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::get_weekday_short_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::get_weekday_short_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
 	                    break;
 	                case "A":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::get_weekday_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::get_weekday_name($aDate['year'], $aDate['month'], $aDate['day'], $locale_vars);
 	                    break;
 	                case "b":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::get_month_short_name($aDate['month'], $locale_vars);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::get_month_short_name($aDate['month'], $locale_vars);
 	                    break;
 	                case "B":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::get_month_name($aDate['month'], $locale_vars);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::get_month_name($aDate['month'], $locale_vars);
 	                    break;
 	                case "C":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d",intval($aDate['year']/100));
 	                    break;
 	                case "d":
@@ -279,7 +279,7 @@
 	                    $map['day'] = $nucleus_counter++;
 	                    break;
 	                case "D":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d/%02d/%02d",$aDate['month'],$aDate['day'],$aDate['year']);
 	                    break;
 	                case "e":
@@ -287,21 +287,21 @@
 	                    $map['day'] = $nucleus_counter++;
 	                    break;
 	                case "E":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "H":
 	                    $regexp .= '([0-9]{1,2})';
 	                    $map['hour'] = $nucleus_counter++;
 	                    break;
 	                case "I":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $hour = ($aDate['hour'] + 1) > 12 ? $aDate['hour'] - 12 : $aDate['hour'];
 	                    $output .= sprintf("%02d", $hour==0 ? 12 : $hour);
 	                    break;
 	                case "j":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "m":
 	                    $regexp .= '([0-9]{1,2})';
@@ -312,11 +312,11 @@
 	                    $map['minute'] = $nucleus_counter++;
 	                    break;
 	                case "n":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= "\n";
 	                    break;
 	                case "O":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $offms = $this->tz->getOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -325,7 +325,7 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "o":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $offms = $this->tz->getRawOffset($this);
 	                    $direction = $offms >= 0 ? "+" : "-";
 	                    $offmins = abs($offms) / 1000 / 60;
@@ -334,20 +334,20 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "p":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $aDate['hour'] >= 12 ? "pm" : "am";
 	                    break;
 	                case "P":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $aDate['hour'] >= 12 ? "PM" : "AM";
 	                    break;
 	                case "r":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $hour = ($aDate['hour'] + 1) > 12 ? $aDate['hour'] - 12 : $aDate['hour'];
 	                    $output .= sprintf("%02d:%02d:%02d %s", $hour==0 ?  12 : $hour, $aDate['minute'], $aDate['second'], $aDate['hour'] >= 12 ? "PM" : "AM");
 	                    break;
 	                case "R":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d:%02d", $aDate['hour'], $aDate['minute']);
 	                    break;
 	                case "S":
@@ -355,20 +355,20 @@
 	                    $map['second'] = $nucleus_counter++;
 	                    break;
 	                case "t":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= "\t";
 	                    break;
 	                case "T":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= sprintf("%02d:%02d:%02d", $aDate['hour'], $aDate['minute'], $aDate['second']);
 	                    break;
 	                case "w":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::day_of_week($aDate['year'],$aDate['month'],$aDate['day']);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::day_of_week($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "U":
-	                	error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= DATE::week_of_year($aDate['year'],$aDate['month'],$aDate['day']);
+	                	error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    $output .= P4A_Date::week_of_year($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
 	                case "y":
 	                    $regexp .= '([0-9]{1,4})';
@@ -379,7 +379,7 @@
 	                    $map['year'] = $nucleus_counter++;
 	                    break;
 	                case "Z":
-	                    error("DATE::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
+	                    error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= $this->tz->inDaylightTime($this) ? $this->tz->getDSTShortName() : $this->tz->getShortName();
 	                    break;
 	                case "%":
@@ -411,7 +411,7 @@
 	        } elseif( defined( 'P4A_DATE' ) and ( $output_format == P4A_DATE ) ) {
 	        	return $iso['year'] . '-' . $iso['month'] . '-' . $iso['day'];
 	        } else {
-	        	return DATE::format($iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'], $output_format, $locale_vars );
+	        	return P4A_Date::format($iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'], $output_format, $locale_vars );
 	        }
 	    }
 
@@ -500,11 +500,11 @@
 	     * @param string day in format DD, default is current local day
 	     * @param array localization strings for days names
 	     * @return string full month name
-	     * @see DATE::get_weekday_name
+	     * @see P4A_Date::get_weekday_name
 	     */
 	    function get_weekday_short_name($year = NULL, $month = NULL, $day = NULL, $locale_vars = NULL)
 	    {
-	    	return substr(DATE::get_weekday_name($year, $month, $day, $locale_vars), 0, 3);
+	    	return substr(P4A_Date::get_weekday_name($year, $month, $day, $locale_vars), 0, 3);
 	    }
 
 	    /**
@@ -515,14 +515,14 @@
 	     * @param string day in format DD, default is current local day
 	     * @param array localization strings for days names
 	     * @return string full month name
-	     * @see DATE::get_weekday_name
+	     * @see P4A_Date::get_weekday_name
 	     */
 	    function get_weekday_name($year = NULL, $month = NULL, $day = NULL, $locale_vars = NULL)
 	    {
-	        $weekday = DATE::day_of_week($year, $month, $day);
+	        $weekday = P4A_Date::day_of_week($year, $month, $day);
 
 			if( $locale_vars === NULL ) {
-				$locale_vars = DATE::get_weekdays_names();
+				$locale_vars = P4A_Date::get_weekdays_names();
 			}
 
 	        return $locale_vars[$weekday];
@@ -539,13 +539,13 @@
 	    function day_of_week($year = NULL, $month = NULL, $day = NULL)
 	    {
 	        if (empty($year)) {
-	            $year = DATE::now('%Y');
+	            $year = P4A_Date::now('%Y');
 	        }
 	        if (empty($month)) {
-	            $month = DATE::now('%m');
+	            $month = P4A_Date::now('%m');
 	        }
 	        if (empty($day)) {
-	            $day = DATE::now('%d');
+	            $day = P4A_Date::now('%d');
 	        }
 
 	        if ($month > 2) {
@@ -604,13 +604,13 @@
 	    function get_month_name($month = NULL, $locale_vars = NULL)
 	    {
 	        if (empty($month)) {
-	            $month = DATE::now('%m');
+	            $month = P4A_Date::now('%m');
 	        }
 
 	        $month = (int)$month;
 
 			if( $locale_vars === NULL ) {
-	        	$locale_vars = DATE::get_months_names();
+	        	$locale_vars = P4A_Date::get_months_names();
 			}
 
 	        return $locale_vars[$month];
@@ -622,11 +622,11 @@
 	     * @param string month in format MM
 	     * @param array localization strings for months names
 	     * @return string abbreviated month name
-	     * @see DATE::get_month_name
+	     * @see P4A_Date::get_month_name
 	     */
 	    function get_month_short_name($month = NULL, $locale_vars = NULL)
 	    {
-	        return substr(DATE::get_month_name($month, $locale_vars), 0, 3);
+	        return substr(P4A_Date::get_month_name($month, $locale_vars), 0, 3);
 	    }
 
 	    /**
@@ -656,13 +656,13 @@
 	    function date_to_days($year = NULL, $month = NULL, $day = NULL)
 	    {
 	        if (empty($year)) {
-	            $year = DATE::now('%Y');
+	            $year = P4A_Date::now('%Y');
 	        }
 	        if (empty($month)) {
-	            $month = DATE::now('%m');
+	            $month = P4A_Date::now('%m');
 	        }
 	        if (empty($day)) {
-	            $day = DATE::now('%d');
+	            $day = P4A_Date::now('%d');
 	        }
 
 	        $century = (int) substr($year,0,2);
@@ -722,7 +722,7 @@
 
 	        $century = sprintf('%02d',$century);
 	        $year = sprintf('%02d',$year);
-	        return(DATE::format($century.$year.'-'.$month.'-'.$day, $format, $locale_vars));
+	        return(P4A_Date::format($century.$year.'-'.$month.'-'.$day, $format, $locale_vars));
 	    }
 
 	    /**
@@ -736,13 +736,13 @@
 	    function julian_date($year = NULL, $month = NULL, $day = NULL)
 	    {
 	        if (empty($year)) {
-	            $year = DATE::now('%Y');
+	            $year = P4A_Date::now('%Y');
 	        }
 	        if (empty($month)) {
-	            $month = DATE::now('%m');
+	            $month = P4A_Date::now('%m');
 	        }
 	        if (empty($day)) {
-	            $day = DATE::now('%d');
+	            $day = P4A_Date::now('%d');
 	        }
 
 	        $year = (int) $year;
@@ -753,7 +753,7 @@
 
 	        $julian = ($days[$month - 1] + $day);
 
-	        if ($month > 2 && DATE::is_leap_year($year)) {
+	        if ($month > 2 && P4A_Date::is_leap_year($year)) {
 	            $julian++;
 	        }
 
@@ -770,7 +770,7 @@
 	    function is_leap_year($year = NULL)
 	    {
 	        if (empty($year)) {
-	            $year = DATE::now('%Y');
+	            $year = P4A_Date::now('%Y');
 	        }
 
 	        if (strlen($year) != 4) {
@@ -794,7 +794,7 @@
 	     */
 	    function week_of_year($year = NULL, $month = NULL, $day = NULL)
 	    {
-	        $iso    = DATE::gregorian_to_iso($year, $month, $day );
+	        $iso    = P4A_Date::gregorian_to_iso($year, $month, $day );
 	        $parts  = explode('-',$iso);
 	        $week_number = intval($parts[1]);
 	        return $week_number;
@@ -816,13 +816,13 @@
 	    function gregorian_to_iso($year, $month, $day)
 	    {
 	        if (empty($year)) {
-	            $year = DATE::now('%Y');
+	            $year = P4A_Date::now('%Y');
 	        }
 	        if (empty($month)) {
-	            $month = DATE::now('%m');
+	            $month = P4A_Date::now('%m');
 	        }
 	        if (empty($day)) {
-	            $day = DATE::now('%d');
+	            $day = P4A_Date::now('%d');
 	        }
 
 	        $year = (int) $year;
@@ -830,8 +830,8 @@
 	        $day = (int) $day;
 
 	        $mnth = array (0,31,59,90,120,151,181,212,243,273,304,334);
-	        $y_isleap = DATE::is_leap_year($year);
-	        $y_1_isleap = DATE::is_leap_year($year - 1);
+	        $y_isleap = P4A_Date::is_leap_year($year);
+	        $y_1_isleap = P4A_Date::is_leap_year($year - 1);
 	        $day_of_year_number = $day + $mnth[$month - 1];
 	        if ($y_isleap && $month > 2) {
 	            $day_of_year_number++;
@@ -892,9 +892,9 @@
 	     */
 	    function is_future_date($year, $month, $day)
 	    {
-	        $this_year = DATE::now('%Y');
-	        $this_month = DATE::now('%m');
-	        $this_day = DATE::now('%d');
+	        $this_year = P4A_Date::now('%Y');
+	        $this_month = P4A_Date::now('%m');
+	        $this_day = P4A_Date::now('%d');
 
 	        if ($year > $this_year) {
 	            return true;
@@ -921,9 +921,9 @@
 	     */
 	    function is_past_date($year, $month, $day)
 	    {
-	        $this_year = DATE::now('%Y');
-	        $this_month = DATE::now('%m');
-	        $this_day = DATE::now('%d');
+	        $this_year = P4A_Date::now('%Y');
+	        $this_month = P4A_Date::now('%m');
+	        $this_day = P4A_Date::now('%d');
 
 	        if ($year < $this_year) {
 	            return true;

@@ -81,7 +81,7 @@
 		 */
 		function format($date = NULL, $format = P4A_DATETIME)
 		{
-			return DATE::format($date, $format, $this->locale_vars);
+			return P4A_Date::format($date, $format, $this->locale_vars);
 		}
 
 		/**
@@ -92,7 +92,7 @@
 		 */
 		function formatDateDefault($date = NULL)
 		{
-			return DATE::format($date, $this->getFormat('date_default'), $this->locale_vars);
+			return P4A_Date::format($date, $this->getFormat('date_default'), $this->locale_vars);
 		}
 
 		/**
@@ -103,7 +103,7 @@
 		 */
 		function formatDateMedium($date = NULL)
 		{
-			return DATE::format($date, $this->getFormat('date_medium'), $this->locale_vars);
+			return P4A_Date::format($date, $this->getFormat('date_medium'), $this->locale_vars);
 		}
 
 		/**
@@ -114,7 +114,7 @@
 		 */
 		function formatDateLong($date = NULL)
 		{
-			return DATE::format($date, $this->getFormat('date_long'), $this->locale_vars);
+			return P4A_Date::format($date, $this->getFormat('date_long'), $this->locale_vars);
 		}
 
 		/**
@@ -125,7 +125,7 @@
 		 */
 		function formatDateFull($date = NULL)
 		{
-			return DATE::format($date, $this->getFormat('date_full'), $this->locale_vars);
+			return P4A_Date::format($date, $this->getFormat('date_full'), $this->locale_vars);
 		}
 
 		/**
@@ -140,7 +140,7 @@
 		 */
 		function unformat($date, $format, $output_format = P4A_DATETIME)
 		{
-			return DATE::unformat($date, $format, $output_format);
+			return P4A_Date::unformat($date, $format, $output_format);
 		}
 
 		/**
@@ -154,7 +154,7 @@
 		 */
 		function unformatDate($date, $format)
 		{
-			return DATE::unformat($date, $format, P4A_DATE);
+			return P4A_Date::unformat($date, $format, P4A_DATE);
 		}
 
 		/**
@@ -167,7 +167,7 @@
 		 */
 		function unformatDateDefault($date)
 		{
-			return DATE::unformat($date, $this->getFormat('date_default'), P4A_DATE);
+			return P4A_Date::unformat($date, $this->getFormat('date_default'), P4A_DATE);
 		}
 
 		/**
@@ -180,7 +180,7 @@
 		 */
 		function unformatDateMedium($date)
 		{
-			return DATE::unformat($date, $this->getFormat('date_medium'), P4A_DATE);
+			return P4A_Date::unformat($date, $this->getFormat('date_medium'), P4A_DATE);
 		}
 
 		/**
@@ -193,7 +193,7 @@
 		 */
 		function unformatDateLong($date)
 		{
-			return DATE::unformat($date, $this->getFormat('date_long'), P4A_DATE);
+			return P4A_Date::unformat($date, $this->getFormat('date_long'), P4A_DATE);
 		}
 
 		/**
@@ -206,7 +206,7 @@
 		 */
 		function unformatDateFull($date)
 		{
-			return DATE::unformat($date, $this->getFormat('date_full'), P4A_DATE);
+			return P4A_Date::unformat($date, $this->getFormat('date_full'), P4A_DATE);
 		}
 
 		/**
@@ -221,7 +221,7 @@
 				$time = "0000-01-01 $time";
 			}
 
-			return DATE::format($time, $this->getFormat('time_default'));
+			return P4A_Date::format($time, $this->getFormat('time_default'));
 		}
 
 		/**
@@ -236,7 +236,7 @@
 				$time = "0000-01-01 $time";
 			}
 
-			return DATE::format('0000-01-01 ' . $time, $this->getFormat('time_short'));
+			return P4A_Date::format('0000-01-01 ' . $time, $this->getFormat('time_short'));
 		}
 
 		/**
@@ -247,7 +247,7 @@
 		 */
 		function unformatTimeDefault($time = NULL)
 		{
-			return DATE::unformat($time, $this->getFormat('time_default'), P4A_TIME);
+			return P4A_Date::unformat($time, $this->getFormat('time_default'), P4A_TIME);
 		}
 
 		/**
@@ -258,7 +258,7 @@
 		 */
 		function unformatTimeShort($time = NULL)
 		{
-			return DATE::unformat($time, $this->getFormat('time_short'), P4A_TIME);
+			return P4A_Date::unformat($time, $this->getFormat('time_short'), P4A_TIME);
 		}
 
 		/**

@@ -89,7 +89,7 @@
 		 * @param mixed		the number
 		 * @param array		the format
 		 * @return mixed
-		 * @see NUMBER::format()
+		 * @see P4A_Number::format()
 		 */
 		function format( $number = 0, $format = NULL )
 		{
@@ -97,7 +97,7 @@
 				$format = $this->getFormat('float');
 			}
 
-			return NUMBER::format($number, $format);
+			return P4A_Number::format($number, $format);
 		}
 
 		/**
@@ -143,7 +143,7 @@
 		 * @param mixed		the number
 		 * @param string	the format
 		 * @return mixed
-		 * @see NUMBER::unformat()
+		 * @see P4A_Number::unformat()
 		 */
 		function unformat( $number = 0, $format = NULL )
 		{
@@ -151,7 +151,7 @@
 				$format = $this->getFormat('float');
 			}
 
-			return NUMBER::unformat($number, $format);
+			return P4A_Number::unformat($number, $format);
 		}
 
 		/**

@@ -125,7 +125,7 @@
 		 * @param mixed		the value
 		 * @param array		the format
 		 * @return mixed
-		 * @see NUMBER::format()
+		 * @see P4A_Number::format()
 		 */
 		function format( $value = 0, $format = NULL )
 		{
@@ -133,7 +133,7 @@
 				$format = $this->getFormat('local');
 			}
 
-			$value = NUMBER::format($value, array_slice($format, 1));
+			$value = P4A_Number::format($value, array_slice($format, 1));
 			return str_replace('%', $value, $format[0]);
 		}
 
@@ -168,7 +168,7 @@
 		 * @param mixed		the value
 		 * @param array		the format
 		 * @return mixed
-		 * @see NUMBER::format()
+		 * @see P4A_Number::format()
 		 */
 		function unformat( $value = 0, $format = NULL )
 		{
@@ -176,7 +176,7 @@
 				$format = $this->getFormat('local');
 			}
 
-			return NUMBER::unformat($value, array_slice($format, 1));
+			return P4A_Number::unformat($value, array_slice($format, 1));
 		}
 
 		/**

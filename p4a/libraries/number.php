@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -44,7 +44,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class NUMBER
+	class P4A_Number
 	{
 		/**
 		 * Format a number using a format.
@@ -52,14 +52,14 @@
 		 * @access public
 		 * @param string		The number
 		 * @param array			The format
-		 * @return string 
+		 * @return string
 		 */
 		function format( $number = 0, $format )
 		{
 			if( $format[0] == '*' )
 			{
 				$parts = explode('.', $number);
-				
+
 				if( array_key_exists( 1, $parts ) )
 				{
 					$format[0] = strlen( $parts[1] );
@@ -69,10 +69,10 @@
 					$format[0] = 0;
 				}
 			}
-			
+
 			return call_user_func_array( 'number_format' , array_merge( array($number), $format ) );
 		}
-		
+
 		/**
 		 * UnFormat a number formatted using "format".
 		 * This function takes a formatted number back to its international notation.
@@ -80,16 +80,16 @@
 		 * @param string		The number
 		 * @param array			The format used in formatting phase
 		 * @return string
-		 * @see format() 
+		 * @see format()
 		 */
 		function unformat( $number = 0, $format )
 		{
 			$decimal_separator = $format[1];
-			
+
 			$number = preg_replace("/[^0-9\\" . $decimal_separator . "]/", '', $number);
 			$number = str_replace($decimal_separator, '.', $number);
-			
-			$number = NUMBER::format($number, array( $format[0], '.', ''));
+
+			$number = P4A_Number::format($number, array( $format[0], '.', ''));
 			return $number;
 		}
 	}
