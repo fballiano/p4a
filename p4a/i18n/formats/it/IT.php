@@ -59,7 +59,7 @@ $datetime_formats = array
 $currency_formats = array
 (
 	"local"         => array('% &euro;', '2', ',', '.'),
-	"international" => array('% Eur'   , '2', ',', '.')
+	"international" => array('% EUR'   , '2', ',', '.')
 );
 
 ?>

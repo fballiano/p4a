@@ -47,10 +47,10 @@ $numbers_formats = array
 
 $datetime_formats = array
 (
-	"date_default"	=>	"%d.%m.%Y",
-	"date_medium"	=>	"%d. %b %Y",
-	"date_long"		=>	"%d. %B %Y",
-	"date_full"		=>	"%A %d. %B %Y",
+	"date_default"	=>	"%d-%m-%Y",
+	"date_medium"	=>	"%d %b %Y",
+	"date_long"		=>	"%d %B %Y",
+	"date_full"		=>	"%A, %d %B %Y",
 	
 	"time_default"	=>	"%H:%M",
 	"time_long"		=>	"%H:%M:%S"
@@ -58,7 +58,7 @@ $datetime_formats = array
 
 $currency_formats = array
 (
-	"local"         => array('% &euro;', '2', ',', '.'),
+	"local"         => array('&euro; %', '2', ',', '.'),
 	"international" => array('% EUR'   , '2', ',', '.')
 );
 

@@ -38,28 +38,53 @@
  * @package p4a
  */
 
-$numbers_formats = array
+$messages = array
 (
-	"integer" => array('0', ',', '.'),
-	"decimal" => array('2', ',', '.'),
-	"float"   => array('*', ',', '.')
-);
-
-$datetime_formats = array
-(
-	"date_default"	=>	"%d.%m.%Y",
-	"date_medium"	=>	"%d. %b %Y",
-	"date_long"		=>	"%d. %B %Y",
-	"date_full"		=>	"%A %d. %B %Y",
+	// Date
+    "days"				=> array('Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'),
+    "months"			=> array('Januari', 'Debruari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'),
+    
+	// Standard Toolbar
+	"big_confirm"		=> "Bevestigen en opslaan.",
+	"big_cancel"		=> "Annuleer huidige handeling.",
+	"big_new"			=> "Voeg een nieuw record in.",
+	"big_delete"		=> "Verwijder huidig record.",
+	"big_first"			=> "Ga naar eerste.",
+	"big_prev"			=> "Ga naar vorige.",
+	"big_next"			=> "Ga naar volgende.",
+	"big_last"			=> "Ga naar laatste.",
+	"big_print"			=> "Printen.",
+	"big_exit"			=> "Sluiten.",
+	"little_first"		=> "Ga naar eerste.",
+	"little_prev"		=> "Ga naar vorige.",
+	"little_next"		=> "Ga naar volgende.",
+	"little_last"		=> "Ga naar laatste.",
+	"go"				=> "Ga",
 	
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
-);
-
-$currency_formats = array
-(
-	"local"         => array('% &euro;', '2', ',', '.'),
-	"international" => array('% EUR'   , '2', ',', '.')
+	// Table
+	"current_page"		=> "Pagina",
+	"of_pages"			=> "van",
+	"go_to_page"		=> "Ga naar pagina",
+	
+	// File uploads
+	"filename"			=> "Naam",
+	"filesize"			=> "Grootte",
+	"filetype"			=> "Type",
+	"filepreview"		=> "Voorbeeld",
+	"filedelete"		=> "Verwijderen",
+	
+	// Fields
+	"none_selected"		=> "Niets geselecteerd",
+	
+	// Confirmations
+	"confirm_general"	=> "Weet u het zeker?",
+	"confirm_confirm"	=> "Bevestigen en opslaan?",
+	"confirm_cancel"	=> "Annuleer huidige handeling?",
+	"confirm_delete"	=> "Verwijder huidig record?",
+	
+	// Yes/No
+	"yes"				=> "Ja",
+	"no"				=> "Nee"
 );
 
 ?>
