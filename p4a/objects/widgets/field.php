@@ -767,9 +767,11 @@
 			$this->smarty->get_template_vars();
 			$this->display('id', $this->getID());
 			$this->display('language', $p4a->i18n->getLanguage());
-			$this->display('spell_checker', $this->spell_checker);
-			$this->display('table_operations', $this->table_operations);
-			$this->display('contextual_menu', $this->contextual_menu);
+			$this->display('width', $this->getWidth());
+			$this->display('height', $this->getHeight());
+			//$this->display('spell_checker', $this->spell_checker);
+			//$this->display('table_operations', $this->table_operations);
+			//$this->display('contextual_menu', $this->contextual_menu);
 			return $this->fetchTemplate();
 		}
 
@@ -1282,7 +1284,7 @@
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
-			
+
 			return $this->composeLabel() . $sReturn;
 		}
 

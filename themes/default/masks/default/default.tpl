@@ -3,14 +3,47 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=[[$charset]]">
     <title>[[$application_title]]</title>
-    <script src="[[$root_path]]/js/pngfix.js"></script>
+
+<script type="text/javascript">
+function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or higher.
+   {
+   for(var i=0; i<document.images.length; i++)
+      {
+          var img = document.images[i]
+          var imgName = img.src.toUpperCase()
+          if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
+             {
+                 var imgID = (img.id) ? "id='" + img.id + "' " : ""
+                 var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+                 var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+                 var imgStyle = "display:inline-block;" + img.style.cssText
+                 var imgAttribs = img.attributes;
+                 for (var j=0; j<imgAttribs.length; j++)
+                        {
+                        var imgAttrib = imgAttribs[j];
+                        if (imgAttrib.nodeName == "align")
+                           {
+                           if (imgAttrib.nodeValue == "left") imgStyle = "float:left;" + imgStyle
+                           if (imgAttrib.nodeValue == "right") imgStyle = "float:right;" + imgStyle
+                           break
+                           }
+            }
+                 var strNewHTML = "<span " + imgID + imgClass + imgTitle
+                 strNewHTML += " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+             strNewHTML += "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+                 strNewHTML += "(src=\'" + img.src + "\', sizingMethod='image');\" ></span>"
+                 img.outerHTML = strNewHTML
+                 i = i-1
+             }
+      }
+   }
+window.attachEvent("onload", correctPNG);
+</script>
+
+
     <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="all">
     <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
-<!--	<style type="text/css">
-		@import url("[[$theme_path]]/screen.css") all;
-		@import url("[[$theme_path]]/print.css") print;
-	</style>-->
-	
+
     [[foreach from=$css key=uri item=media ]]
     <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">
     [[/foreach]]
@@ -83,7 +116,7 @@
   [[/if]]
 
   	[[$mask_open]]
-	
+
 	[[if isset($sidebar)]]
 	<div id="sidebar" class="border_color4 background_box">
 		[[$sidebar]]

@@ -438,11 +438,17 @@
 							}
 						} else {
 							if ($new_value === NULL) {
-								unlink($target_dir . '/' . $a_old_value[1]);
+								$path = $target_dir . '/' . $a_old_value[0];
+								if (!@unlink($path)) {
+									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
+									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
+										die();
+									}
+								}
 								$field->setNewValue(NULL);
 							} elseif ($new_value!=$old_value) {
-								$path = $target_dir . '/' . $a_old_value[1];
-								if (!unlink($path)) {
+								$path = $target_dir . '/' . $a_old_value[0];
+								if (!@unlink($path)) {
 									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
@@ -451,7 +457,7 @@
 								$a_new_value[0] = get_unique_file_name($a_new_value[0], $target_dir);
 								$new_path = $target_dir . '/' . $a_new_value[0];
 								$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
-								if (!rename($old_path, $new_path)) {
+								if (!@rename($old_path, $new_path)) {
 									$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
