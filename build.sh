@@ -6,15 +6,13 @@ read VERSION
 SRCDIR=`pwd`
 TMPDIR='/tmp'
 
-
-
 # preparing creation
 cd $TMPDIR
 rm -r p4apackages
 mkdir p4apackages
-cp -r p4a p4apackages/
 cd p4apackages
 PKGDIR=`pwd`
+cp -r $SRCDIR .
 
 ###########################
 # BUILDING CODE REFERENCE #
@@ -23,7 +21,7 @@ PKGDIR=`pwd`
 cd $PKGDIR
 mkdir codereference-$VERSION
 cd $SRCDIR
-phpdoc -q -d 'core/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'P4A' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/codereference-$VERSION -i 'pdf/,pear/,smarty/,formats/,messages/' -o 'HTML:frames:earthli'
+phpdoc -q -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/codereference-$VERSION -i 'pdf/,pear/,smarty/,formats/,messages/' -o 'HTML:frames:earthli'
 
 ##########################
 # cleaning master source #
@@ -31,12 +29,11 @@ phpdoc -q -d 'core/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Co
 
 cd $PKGDIR
 rm p4a/.project
-rm -r `find -type d -name 'CVS'`
-rm `find -name '.cvsignore'`
-rm p4a/.project
 rm p4a/p4a.kdevelop
 rm p4a/p4a.kdevses
-rm p4a-$VERSION/build.sh
+rm p4a/build.sh
+rm -r `find -type d -name 'CVS'`
+rm `find -name '.cvsignore'`
 
 ##############################################
 # COPYING DEFAULT DOCUMENTATION INTO PACKAGE #
@@ -44,25 +41,16 @@ rm p4a-$VERSION/build.sh
 
 cd $PKGDIR
 rm -r p4a/docs
-mkdir p4a/docs
-cp -r codereference-$VERSION p4a/docs/code-reference
+cp -r codereference-$VERSION p4a/docs
 
 ##############################
 # creating framework package #
 ##############################
 
 cd $PKGDIR
-cp -r p4a pra-$VERSION
+mv p4a p4a-$VERSION
 
 tar cf p4a-$VERSION.tar p4a-$VERSION
 gzip p4a-$VERSION.tar
 
 rm -r p4a-$VERSION
-
-################################
-# cleaning up and turning back #
-################################
-
-cd $PKGDIR
-rm -r p4a
-cd ..
