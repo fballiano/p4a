@@ -7,7 +7,7 @@ class db_configuration extends p4a_mask
 		$this->p4a_mask();
 		$this->setTitle("DB Connection");
 
-		$fields = array("user","pass","port","server","database");
+		$fields = array("host","port","user","password","database");
 		$frame =& $this->build("p4a_frame","frame");
 		$frame->setWidth(300);
 
@@ -20,9 +20,9 @@ class db_configuration extends p4a_mask
 		}
 
 		$this->fields->user->setValue("root");
-		$this->fields->server->setValue("localhost");
-		$this->fields->pass->setType("password");
-		$this->fields->pass->setEncryptionType("none");
+		$this->fields->host->setValue("localhost");
+		$this->fields->password->setType("password");
+		$this->fields->password->setEncryptionType("none");
 
 		while ($field =& $this->fields->nextItem()) {
 			$field->addAction("onReturnPress");
@@ -34,7 +34,7 @@ class db_configuration extends p4a_mask
 		$this->intercept($button,'onClick', 'enter');
 		$frame->anchorCenter($button);
 
-		$this->setFocus($this->fields->user);
+		$this->setFocus($this->fields->host);
 
 		$this->display("main", $frame);
 	}
@@ -42,10 +42,10 @@ class db_configuration extends p4a_mask
 	function enter()
 	{
 		$p4a =& p4a::singleton();
-		$user = $this->fields->user->getNewValue();
-		$pass = $this->fields->pass->getNewValue();
+		$host = $this->fields->host->getNewValue();
 		$port = $this->fields->port->getNewValue();
-		$server = $this->fields->server->getNewValue();
+		$user = $this->fields->user->getNewValue();
+		$password = $this->fields->password->getNewValue();
 		$database = $this->fields->database->getNewValue();
 
 		if (empty($database)) {
@@ -53,7 +53,7 @@ class db_configuration extends p4a_mask
 			return ABORT;
 		}
 
-		$p4a->dsn = "mysql://$user:$pass@$server/$database";
+		$p4a->dsn = "mysql://$user:$password@$host/$database";
 		define("P4A_DSN", $p4a->dsn);
 		$db =& p4a_db::singleton();
 
