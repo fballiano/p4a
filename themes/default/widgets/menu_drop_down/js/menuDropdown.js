@@ -11,30 +11,13 @@ function initializeMenu(menuId, actuatorId) {
     if (menu == null || actuator == null) return;
 
     //if (window.opera) return; // I'm too tired
-
-	actuator.onmouseover = function() {
-		if (currentMenu) {
-            currentMenu.style.visibility = "hidden";
-            this.showMenu();
-        }else{
-	        this.showMenu();
-        }
-    }
-    
-    document.onclick = function() {
-        if (currentMenu) {
-            currentMenu.style.visibility = "hidden";
-            //this.showMenu();
-        }    	
-    }
-
-    /*actuator.onmouseover = function() {
-        if (currentMenu) {
-            currentMenu.style.visibility = "hidden";
-            this.showMenu();
-        }
-    }*/
-       
+	
+// 	document.onclick = function() {
+// 		if (currentMenu) {
+//             currentMenu.style.visibility = "hidden";
+//         }
+// 	}
+	     
     actuator.onclick = function() {
         if (currentMenu == null) {
             this.showMenu();

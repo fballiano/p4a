@@ -84,7 +84,7 @@
 		function &p4a_label($name, $value=NULL)
 		{
 			parent::p4a_widget($name);
-			$this->setValue($value);  
+			$this->setLabel($value);  
 		}
 		
 		/**
@@ -94,7 +94,7 @@
 		 */
 		function getValue()
 		{
-			return $this->value; 
+			return $this->getLabel();
 		}
 
 		/**
@@ -104,7 +104,7 @@
 		 */
 		function setValue($value=NULL)
 		{
-			$this->value = $value; 
+			$this->setLabel($value);
 		}
 
 		/**
@@ -123,9 +123,12 @@
 				$close_header = '>';
 				$footer	= '</label>'  .  "\n";
 				
-				$string =  $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $this->getValue() . $footer;
+				$string =  $header . $this->composeStringProperties() 
+								   . $this->composeStringActions() 
+								   . $close_header . $this->getLabel() 
+								    .$footer;
 				if ($this->getType() === 'temporary') {
-					$this->setValue();
+					$this->setLabel("");
 				}
 			} 
 			else

@@ -58,14 +58,24 @@
 		{
 			parent::p4a_toolbar($name);
 			$save =& $this->addButton('save', 'save');
-			$save->setProperty("accesskey", "S");
-			$this->addButton('cancel', 'cancel');
+			$save->setAccessKey("S");
+			
+			$cancel =& $this->addButton('cancel', 'cancel');
+			$cancel->setAccessKey("Z");
+			
 			$this->addSeparator();
 
-			$this->addButton('first', 'first');
-			$this->addButton('prev', 'prev');
-			$this->addButton('next', 'next');
-			$this->addButton('last', 'last');
+			$first =& $this->addButton('first', 'first');
+			$first->setAccessKey(8);
+			
+			$prev =& $this->addButton('prev', 'prev');
+			$prev->setAccessKey(4);
+			
+			$next =& $this->addButton('next', 'next');
+			$next->setAccessKey(6);
+			
+			$last =& $this->addButton('last', 'last');
+			$last->setAccessKey(2);
 
 			$this->addSeparator();
 
@@ -73,16 +83,20 @@
 			$new->setProperty("accesskey", "N");
 
 			$this->addButton('delete', 'delete');
-			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');
+			
+			$this->buttons->delete->requireConfirmation('onClick', NULL,
+'confirm_delete');
 
 			$this->addSeparator();
 
-			$this->addButton('print', 'print');
-			$this->buttons->print->dropAction('onClick');
-			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
+			$print =& $this->addButton('print', 'print');
+			$print->dropAction('onClick');
+			$print->setProperty('onClick', 'window.print(); return false;');
+			$print->setAccessKey("P");
 
-			$this->addButton('exit', 'exit', 'right');
-
+			$exit =& $this->addButton('exit', 'exit', 'right');
+			$exit->setAccessKey("X");
+			
 		}
 
 		function setMask(&$mask)

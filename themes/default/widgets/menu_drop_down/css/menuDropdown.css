@@ -62,6 +62,10 @@ a.actuator:hover {
   text-decoration: none;
 }
 
+a span{
+	color:black;
+} 
+
 .menu li a:hover {
   background-color: #E2E7ED;
 }

@@ -488,3 +488,7 @@ legend {
 	border-top:1px solid #C6D3DE;
 	background:#fafafa;
 }
+
+.accesskey {
+	text-decoration:underline;
+}

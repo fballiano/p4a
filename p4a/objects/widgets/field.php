@@ -1282,7 +1282,7 @@
 		 */
 		function setLabel( $value )
 		{
-			$this->label->setValue( $value );
+			$this->label->setLabel( $value );
 		}
 
 		/**
@@ -1292,7 +1292,7 @@
 		 */
 		function getLabel()
 		{
-			return $this->label->getValue();
+			return $this->label->getLabel();
 		}
 
 		/**

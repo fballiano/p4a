@@ -8,7 +8,8 @@
           [[if $item.actions]]
 		  <a href="#" id="[[$item.id]]" class="actuator" [[$item.actions]] [[$item.properties]]>[[$item.label]]</a>
           [[else]]
-          <a href="#" id="[[$item.id]]" class="actuator" [[$item.properties]]>[[$item.label]]</a>
+          <a href="#" id="[[$item.id]]"
+class="actuator" [[$item.properties]]>[[$item.label]]</a>
           [[/if]]
           <ul id="[[$item.id]]Menu" class="menu">
           [[foreach item=sub_item from=$item.sub_items]]

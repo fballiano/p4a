@@ -1,12 +1,12 @@
 <?php
-class p4a_icon extends p4a_widget
+class P4A_Icon extends P4A_Widget
 {
 	var $_icon = NULL;
 	var $_size = 32;
 	
-	function &p4a_icon($name)
+	function &P4A_Icon($name)
 	{
-		parent::p4a_widget($name);
+		parent::P4A_Widget($name);
 	}
 	
 	function setSize($size)

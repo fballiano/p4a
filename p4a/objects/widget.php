@@ -230,6 +230,15 @@
 		{
 			// Used for sheets group->sheets labels
 			$this->actionHandler('set_label', $label);
+			$result = preg_match("/(&(\w))/", $label, $a);
+			if ($result) {
+				$amp_key = $a[0];
+				$key = $a[2];
+				$label = str_replace($amp_key,"<span class=\"accesskey\">$key</span>",
+						 $label);
+				$this->setProperty("accesskey",$key);				 
+			}
+			
 			$this->label = $label;
 		}
 
@@ -310,6 +319,14 @@
 		function unsetStyleProperty($property)
 		{
 			unset( $this->style[$property] );
+		}
+		
+		function setAccessKey($key) {
+			$this->setProperty("accesskey",$key);
+		}
+		
+		function getAccessKey() {
+			return $this->getProperty("accesskey");
 		}
 
 		/**
@@ -525,7 +542,7 @@
 			$sReturn = "";
 			foreach($this->properties as $property_name=>$property_value)
 			{
-				$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;
+				$sReturn .= $property_name . '="' . $property_value . '" ' ;
 			}
 
 			$sReturn .= $this->composeStringStyle();

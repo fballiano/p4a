@@ -7,12 +7,25 @@
     <projectmanagement>KDevScriptProject</projectmanagement>
     <primarylanguage>PHP</primarylanguage>
     <ignoreparts>
+      <part>KDevQuickOpen</part>
+      <part>KDevFileGroups</part>
+      <part>KDevClearCase</part>
+      <part>KDevPerforce</part>
+      <part>KDevCTags</part>
+      <part>KDevDebugger</part>
       <part>KDevDoxygen</part>
       <part>KDevdistpart</part>
     </ignoreparts>
+    <projectdirectory>.</projectdirectory>
+    <absoluteprojectpath>false</absoluteprojectpath>
+    <description></description>
+    <secondaryLanguages/>
   </general>
   <kdevscriptproject>
-    <general/>
+    <general>
+      <includepatterns>*.php,*.PHP,*.php3,*.PHP3,*.php4,*.PHP4,*.txt</includepatterns>
+      <excludepatterns>*~</excludepatterns>
+    </general>
     <run>
       <directoryradio>executable</directoryradio>
     </run>
@@ -32,6 +45,17 @@
       <codeHinting>true</codeHinting>
       <realtimeParsing>false</realtimeParsing>
     </codeHelp>
+    <general>
+      <invocationMode>0</invocationMode>
+    </general>
+    <webInvocation>
+      <weburl>http://localhost/</weburl>
+      <webFileMode>2</webFileMode>
+      <defaultFile></defaultFile>
+    </webInvocation>
+    <shell>
+      <phpexe>/usr/local/bin/php</phpexe>
+    </shell>
   </kdevphpsupport>
   <kdevdoctreeview>
     <ignoretocs>
@@ -79,9 +103,8 @@
     </ignoredoxygen>
   </kdevdoctreeview>
   <kdevfilecreate>
-    <useglobaltypes>
-      <type ext="php" />
-    </useglobaltypes>
+    <filetypes/>
+    <useglobaltypes/>
   </kdevfilecreate>
   <kdevcvsservice>
     <recursivewhenupdate>true</recursivewhenupdate>

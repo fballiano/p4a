@@ -984,13 +984,13 @@
 			}
 
 			$current_page  = $p4a->i18n->messages->get('current_page');
-			$current_page .= '&nbsp;';
+			$current_page .= ' ';
 			$current_page .= $parent->data->getNumPage();
-			$current_page .= '&nbsp;';
+			$current_page .= ' ';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
-			$current_page .= '&nbsp;';
+			$current_page .= ' ';
 			$current_page .= $num_pages;
-			$current_page .= '&nbsp;';
+			$current_page .= ' ';
 			$this->buttons->current_page->setValue($current_page);
 			return parent::getAsString();
 		}
