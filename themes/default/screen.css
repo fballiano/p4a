@@ -475,7 +475,9 @@ legend {
 	padding:2px;	
 	border:2px solid white;
 }
-
+.table_container {
+	float:left;
+}
 .table_container .frame{
 	border-top:1px solid #C6D3DE;
 	background:#fafafa;
