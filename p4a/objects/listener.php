@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -45,8 +45,8 @@
 	 * @package p4a
 	 */
 	class P4A_LISTENER extends P4A_OBJECT
-	{		
-		
+	{
+
 		/**
 		 * Class constructor.
 		 * @access private
@@ -55,19 +55,19 @@
 		{
 			parent::p4aObject(NULL, 'lst');
 		}
-		
+
 		//todo
 		function  &singleton($name)
 		{
 			$p4a =& P4A::singleton();
-			
+
 			if (! isset($p4a->listeners->$name)){
 				$p4a->listeners->build($name, $name);
 			}
 			return $p4a->listeners->$name;
 		}
-		
-		
+
+
 		/**
 		* Mask's initialization method.
 		* This is called on the initialization of the class
@@ -77,15 +77,15 @@
 		*/
 		function init()
 		{
-											
+
 		}
-		
+
 		/**
 		* Mask's main method.
 		* This is called every time the mask is raised.
 		* This must be overridden.
 		* @access private
-		*/		
+		*/
 		function main()
 		{
 		}

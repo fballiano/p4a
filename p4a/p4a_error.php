@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -51,11 +51,11 @@
 		var $object_id = NULL;
 		var $external_object = NULL;
 		var $backtrace = array();
-		
+
 		/**
 		 * Class constructor.
 		 */
-		function &p4aError($message=NULL, $object=NULL, $external_object=NULL)
+		function &p4a_error($message=NULL, $object=NULL, $external_object=NULL)
 		{
 			$this->data['class']	= NULL;
 			$this->data['function'] = NULL;
@@ -63,44 +63,43 @@
 			$this->data['line']		= NULL;
 			$this->data['type']		= NULL;
 			$this->data['args']		= array();
-			
-			if( function_exists('debug_backtrace') )
-			{
+
+			if(function_exists('debug_backtrace')) {
 				$this->backtrace = debug_backtrace();
 				array_shift($this->backtrace);
-				
+
 				$this->data = $this->backtrace[0];
 			}
-			
+
 			$this->message = $message;
-			
-			if( is_object( $object ) ) {
+
+			if (is_object($object)) {
 				$this->object_id = $object->getID();
 			}
-			
+
 			$this->external_object = $external_object;
 		}
-		
+
 		function getMessage()
 		{
 			return $this->message;
 		}
-		
+
 		function getBacktrace()
 		{
 			return $this->backtrace;
 		}
-		
+
 		function getData()
 		{
 			return $this->data;
 		}
-		
+
 		function getObjectId()
 		{
 			return $this->object_id;
 		}
-		
+
 		function getExternalObject()
 		{
 			return $this->external_object;

@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -55,7 +55,7 @@
 		 * @access private
 		 */
 		var $type = 'drop_down';
-		
+
 		/**
 		 * Menu elements
 		 * @var array
@@ -63,21 +63,21 @@
 		 */
 		//todo
 		var $items = NULL;
-		
+
 		/**
 		 * Subelements positions map.
 		 * @var array
 		 * @access private
 		 */
 		var $map_items = array();
-		
+
 		/**
 		 * The element/subelement currently active.
 		 * @var menu_item
 		 * @access public
 		 */
 		var $item_active = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
@@ -85,10 +85,10 @@
 		 */
 		function &p4a_menu($name = '')
 		{
-			parent::p4a_widget($name); 
+			parent::p4a_widget($name);
 			$this->build("P4A_Collection", "items");
 		}
-		
+
 		/**
 		 * Adds an element to the menu.
 		 * @param string		Mnemonic identifier for the element.
@@ -102,10 +102,10 @@
 			if( $label !== NULL ) {
 				$item->setLabel($label);
 			}
-			
+
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
  		}
-		
+
 		/**
 		 * Removes an element from the menu.
 		 * @param string		Mnemonic identifier for the element.
@@ -120,7 +120,7 @@
 				error("ITEM NOT FOUND");
 			}
 		}
-		
+
 		/**
 		 * Returns true if the menu has items.
 		 * @return boolean
@@ -132,9 +132,9 @@
 				return TRUE;
 			}else{
 				return FALSE;
-			}	
+			}
 		}
-		
+
 		/**
 		 * Sets the position for a menu element.
 		 * @param string		Mnemonic identifier for the element.
@@ -144,27 +144,27 @@
 		function setItemPosition($item_name, $position)
 		{
 			if (isset($this->items->$item_name)){
-				$this->map_items[$position] = $item_name;	
+				$this->map_items[$position] = $item_name;
 			}else{
 				error("ITEM NOT FOUND: $item_name");
 			}
 		}
-		
+
 		/**
 		 * Returns the first free position index.
 		 * @return integer
 		 * @access public
-		 */ 
+		 */
 		function nextFreePosition()
 		{
 			if (count($this->map_items))
 			{
-				return max(array_keys($this->map_items)) + 1;					
+				return max(array_keys($this->map_items)) + 1;
 			}else{
 				return 1;
 			}
 		}
-		
+
 		/**
 		 * Returns the first element name.
 		 * @access private
@@ -176,9 +176,9 @@
 				return $this->map_items[$min_pos];
 			}else{
 				error("NOT SUB ITEM");
-			}		
+			}
 		}
-		 	
+
 		/**
 		 * Sets the desidered element as active.
 		 * @access private
@@ -186,7 +186,7 @@
 		function setItemActive($name)
 		{
 			$this->item_active = $name;
-		}		
+		}
 
 		/**
 		 * Returns the HTML rendered widget.
@@ -198,18 +198,18 @@
 			if (!$this->isVisible()) {
 				return;
 			}
-			
+
 			if ($this->type === 'drop_down')
 			{
 				$this->useTemplate('menu_drop_down');
 				$array_items = array();
-			
+
 				// First level menu
 				while($item =& $this->items->nextItem())
 				{
 					$array_item = array();
 					$array_item['label'] = $item->label;
-					if ((! $item->items->getNumItems())){
+					if ((! $item->items->getNumItems())) {
 						$array_item['actions'] = $item->composeStringActions();
 					}
 					$array_item['properties'] = $item->composeStringProperties();
@@ -224,16 +224,16 @@
 							$array_sub_item['actions'] = $sub_item->composeStringActions();
 							$array_sub_item['properties'] = $sub_item->composeStringProperties();
 							$array_sub_item['id'] = $sub_item->getId();
-					
+
 							$array_item['sub_items'][] = $array_sub_item;
 						}
-						unset($sub_item);   
-					}	
-				
+						unset($sub_item);
+					}
+
 					$array_items[] = $array_item;
 					unset($item);
-				}						
-			
+				}
+
 				$this->display('properties', $this->composeStringProperties());
 				$this->display('items', $array_items);
 			}
@@ -242,15 +242,15 @@
 				$this->useTemplate('menu_' . $this->type);
 				$aItems1 = array();
 				$aItems2 = array();
-			
+
 				// First level menu
 				foreach($this->items as $key=>$item)
 				{
-				
+
 					if( $this->item_active === NULL ) {
-						$this->setItemActive( $key ) ; 
+						$this->setItemActive( $key ) ;
 					}
-				
+
 					$aItem = array();
 					$aItem['label'] = $item->label;
 					$aItem['actions'] =	$item->composeStringActions();
@@ -261,36 +261,36 @@
 					}
 					$aItems1[] = $aItem;
 				}
-		
-				// Second level menu			
+
+				// Second level menu
 				while($item =& $this->items->{$this->item_active}->items->nextItem())
 				{
 					$aItem = array();
 					$aItem['label'] = $item->label;
 					$aItem['actions'] =	$item->composeStringActions();
-				
+
 					if( $this->items->{$this->item_active}->item_active === NULL ) {
 						$this->items->{$this->item_active}->setItemActive( $item->getName() ) ;
 					}
-				
+
 					if ($item->getName() == $this->items->{$this->item_active}->item_active){
 						$aItem['active'] = TRUE;
 					}else{
 						$aItem['active'] = FALSE;
 					}
-					$aItems2[] = $aItem; 	
+					$aItems2[] = $aItem;
 					unset($item);
 				}
-						
+
 				$this->display('items1', $aItems1);
 				$this->display('items2', $aItems2);
-				
+
 			}
-						
+
 			return $this->fetchTemplate();
 
 		}
-		
+
 		/**
 		 * Changes the menu type.
 		 * @param string		The type identifier
@@ -301,9 +301,9 @@
 		{
 			$this->type = $type;
 		}
-	
+
 	}
-	
+
 	/**
 	 * Rapresents every menu item.
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
@@ -318,7 +318,7 @@
 		 * @access private
 		 */
 		var $active = FALSE;
-		
+
 		/**
 		 * Subelements array.
 		 * @var array
@@ -326,35 +326,35 @@
 		 */
 		 //todo
 		var $items = NULL;
-		
+
 		/**
 		 * Name of the currently active subelement.
 		 * @var array
 		 * @access public
 		 */
 		var $item_active = NULL;
-		
+
 		/**
 		 * Stores the shortkey associated with the element.
 		 * @var string
 		 * @access private
 		 */
 		var $key = NULL;
-		
+
 		/**
 		 * Subelements positions map.
 		 * @var array
 		 * @access private
 		 */
 		var $map_items = array();
-		
+
 		/**
 		 * Parent element of the item.
 		 * @var object
 		 * @access private
 		 */
 		var $parent = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
@@ -363,12 +363,12 @@
 		function &p4a_menu_item($name)
 		{
 			parent::p4a_widget($name);
-			
-			$this->setDefaultLabel();	
+
+			$this->setDefaultLabel();
 			$this->addAction('onClick');
 			$this->build("P4A_Collection", "items");
 		}
-		
+
 		/**
 		 * Adds an element to the element.
 		 * @param string		Mnemonic identifier for the element.
@@ -379,36 +379,36 @@
 		function addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
-			
+
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
 			$item->setParent($this->getId());
-			
+
 			if( $label !== NULL ) {
 				$item->setLabel($label);
 			}
 		}
-		
+
 		/**
 		 * Adds a separator to the element.
 		 * @param string		Mnemonic identifier for the separator.
 		 * @access public
-		 */		
+		 */
 		function addSeparator($name)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
-			//todo		
+			//todo
 			$item->setParent($this->getId());
 			$item->dropAction('onClick');
 			$item->setLabel('');
-				
-		
+
+
 			$item->setProperty('class', 'menuSeparator');
 			$item->setStyleProperty('margin-left', '10px');
 			$item->setStyleProperty('margin-right', '10px');
 
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
 		}
-		
+
 		/**
 s		 * Removes an element from the element.
 		 * @param string		Mnemonic identifier for the element.
@@ -423,7 +423,7 @@ s		 * Removes an element from the element.
 				error("ITEM NOT FOUND");
 			}
 		}
-		
+
 		/**
 		 * Returns true if the element has subelements.
 		 * @return boolean
@@ -435,9 +435,9 @@ s		 * Removes an element from the element.
 				return TRUE;
 			}else{
 				return FALSE;
-			}	
+			}
 		}
-		
+
 		/**
 		 * Sets the position of a subelement.
 		 * @param string		Mnemonic identifier for the element.
@@ -448,12 +448,12 @@ s		 * Removes an element from the element.
 		{
 			if (($this->items->$item_name)){
 				$this->map_items[$position] = $item_name;
-				$this->items->$item_name->setPosition($position);	
+				$this->items->$item_name->setPosition($position);
 			}else{
 				error("ITEM NOT FOUND: $item_name");
 			}
 		}
-		
+
 		/**
 		 * Returns the first free position index.
 		 * @return integer
@@ -462,13 +462,13 @@ s		 * Removes an element from the element.
 		function nextFreePosition()
 		{
 			if (count($this->map_items))
-			{				
-				return max(array_keys($this->map_items)) + 1;					
+			{
+				return max(array_keys($this->map_items)) + 1;
 			}else{
 				return 1;
 			}
 		}
-		
+
 		/**
 		 * Returns the first subelement name.
 		 * @return string
@@ -482,9 +482,9 @@ s		 * Removes an element from the element.
 				return $this->map_items[$min_pos];
 			}else{
 				error("NOT SUB ITEM");
-			}		
+			}
 		}
-		
+
 		/**
 		 * Sets as active the current element.
 		 * @access private
@@ -495,16 +495,16 @@ s		 * Removes an element from the element.
 			$parent =& $p4a->getObject($this->parent);
 			$parent->setItemActive($this->getName());
 		}
-		
+
 		/**
 		 * Sets as NON active the current element.
 		 * @access private
-		 */	
+		 */
 		function setNoActive()
 		{
 			$this->active = FALSE;
 		}
-		
+
 		/**
 		 * Sets an object as parent.
 		 * @access private
@@ -513,18 +513,18 @@ s		 * Removes an element from the element.
 		{
 			$this->parent = $object_id;
 		}
-		
+
 		/**
 		 * Sets the desidered subelement as active.
 		 * @param string		Mnemonic identifier for the element.
 		 * @access private
-		 */	
+		 */
 		function setItemActive($name)
 		{
 			$this->item_active = $name;
 			$this->setActive();
 		}
-		
+
 		/**
 		 * Sets the position of the current element.
 		 * @param integer		The position.
@@ -532,9 +532,9 @@ s		 * Removes an element from the element.
 		 */
 		function setPosition($position)
 		{
-			$this->position = $position;	
+			$this->position = $position;
 		}
-		
+
 		/**
 		 * Sets the access key for the element.
 		 * @param string		The access key.
@@ -543,9 +543,9 @@ s		 * Removes an element from the element.
 		 */
 		function setAccessKey($key)
 		{
-			$this->setProperty('accesskey', $key);			
+			$this->setProperty('accesskey', $key);
 		}
-		
+
 		/**
 		 * Removes the access key for the element.
 		 * @access public
@@ -555,7 +555,7 @@ s		 * Removes an element from the element.
 		{
 			$this->unsetProperty('accesskey');
 		}
-		
+
 		/**
 		 * What is executed on a click on the element.
 		 * If the current element has subitems,
@@ -563,7 +563,7 @@ s		 * Removes an element from the element.
 		 * @access private
 		 */
 		function onClick()
-		{		
+		{
 			// If the current element has subitems, than we pass the action to the subitem
 			if ($this->hasItems()){
 				return $this->items->{$this->getFirstItem()}->onClick();
@@ -572,6 +572,6 @@ s		 * Removes an element from the element.
 				return $this->actionHandler('onClick');
 			}
 		}
-		
+
 	}
 ?>

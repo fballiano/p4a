@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -39,7 +39,7 @@
  */
 
 	/**
-	 * Base class for objects that permit user interation with the application. 
+	 * Base class for objects that permit user interation with the application.
 	 * Every P4A objects thats can be rendered should use WIDGET as base class.
 	 * This class have all the basic methods to build complex widgets that must
 	 * be P4A compatible.
@@ -55,7 +55,7 @@
 		 * @var string
 		 */
 		var $value = NULL;
-		
+
 		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
@@ -69,73 +69,73 @@
 		 * @var boolean
 		 */
 		var $visible = TRUE;
-		
+
 		/**
 		 * Keeps the association between an action and its listener.
 		 * @access private
 		 * @var array
 		 */
 		var $map_actions = array();
-		
+
 		/**
-		 * Keeps all the actions implemented by the widget. 
+		 * Keeps all the actions implemented by the widget.
 		 * @access private
 		 * @var array
 		 */
 		var $actions = array();
-		
+
 		/**
 		 * Keeps the label associated with the widget.
-		 * The label will be displayed on the left of the widget. 
+		 * The label will be displayed on the left of the widget.
 		 * @access public
 		 * @var mixed
 		 */
 		var $label = NULL;
-		
+
 		/**
-		 * Keeps all the HTML properties for the widget. 
+		 * Keeps all the HTML properties for the widget.
 		 * @access private
 		 * @var array
 		 */
 		var $properties = array();
-		
+
 		/**
 		 * Keeps all the CSS properties for the widget.
 		 * @access private
 		 * @var array
 		 */
 		var $style = array();
-		
+
 		/**
 		 * Defines if we are going to use a template for the widget.
 		 * @access public
 		 * @var boolean
 		 */
 		var $use_template = false;
-		
+
 		/**
 		 * Defines the name of the widget.
-		 * if you set it to 'menu' P4A will search for "menu/menu.tpl" 
+		 * if you set it to 'menu' P4A will search for "menu/menu.tpl"
 		 * in the "themes/CURRENT_THEME/widgets/" directory.
 		 * @access public
 		 * @var string
 		 */
 		var $template_name = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * Sets default properties and store the object in the application object stack.
 		 * @param string	Widget identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name.
 		 * @param string	Prefix string for ID generation.
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
-		 * @access private 
+		 * @access private
 		 */
 		function &p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
 		{
 			parent::p4aObject($name, $prefix, $id);
 			$this->setProperty('name', $this->getId());
 		}
-		
+
 		/**
 		 * Sets the value of the widget.
 		 * @param string	The value to be setted.
@@ -146,7 +146,7 @@
 		{
 			$this->value = $value;
 		}
-		
+
 		/**
 		 * Retuns the value of the widget.
 		 * @return string
@@ -157,15 +157,16 @@
 		{
 			return $this->value;
 		}
-		
+
 		/**
 		 * Sets the widget enabled.
+		 * @param boolean		Visibility flag
 		 * @access public
 		 * @see $enable
 		 */
-		function enable()
+		function enable($enabled=TRUE)
 		{
-			$this->enabled = TRUE;
+			$this->enabled = $enabled;
 		}
 
 		/**
@@ -177,7 +178,7 @@
 		{
 			$this->enabled = FALSE;
 		}
-		
+
 		/**
 		 * Returns true if the widget is enabled.
 		 * @access public
@@ -190,13 +191,14 @@
 
 		/**
 		 * Sets the widget visible.
+		 * @param boolean		Visibility flag
 		 * @access public
 		 */
-		function setVisible()
+		function setVisible($visible=TRUE)
 		{
-			$this->visible = TRUE;
+			$this->visible = $visible;
 		}
-		
+
 		/**
 		 * Sets the widget invisible.
 		 * @access public
@@ -210,12 +212,12 @@
 		 * Returns true if the widget is visible.
 		 * @return boolean
 		 * @access public
-		 */		
+		 */
 		function isVisible()
 		{
 			return $this->visible;
 		}
-		
+
 		/**
 		 * Sets the label for the widget.
 		 * In rendering phase it will be added with ':  '.
@@ -229,9 +231,9 @@
 			$this->actionHandler('set_label', $label);
 			$this->label = $label;
 		}
-		
+
 		/**
-		 * Create from name a default label for the widget 
+		 * Create from name a default label for the widget
 		 * In rendering phase it will be added with ':  '.
 		 * @param string	The string to set as label.
 		 * @access public
@@ -241,7 +243,7 @@
 		{
 			$this->setLabel( ucwords(str_replace('_', ' ', $this->getName())) );
 		}
-		
+
 		/**
 		 * Returns the label for the widget.
 		 * @return string
@@ -249,9 +251,9 @@
 		 */
 		function getLabel()
 		{
-			return $this->label;			
+			return $this->label;
 		}
-		
+
 		/**
 		 * Sets an HTML property for the widget.
 		 * @param string	The property's name.
@@ -260,14 +262,14 @@
 		 */
 		function setProperty($property, $value)
 		{
-			$this->properties[$property] = $value;						
+			$this->properties[$property] = $value;
 		}
 
 		/**
 		 * Unsets an HTML property for the widget.
 		 * @param string	The property's name.
 		 * @access public
-		 */		
+		 */
 		function unsetProperty($property)
 		{
 			unset($this->properties[$property]);
@@ -278,16 +280,16 @@
 		 * @param string	The property's name.
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getProperty($property)
 		{
 			if ( array_key_exists( $property, $this->properties ) ) {
 				return $this->properties[$property];
 			} else {
 				return null;
-			}						
+			}
 		}
-		
+
 		/**
 		 * Sets a CSS property for the widget.
 		 * @param string	The property's name.
@@ -298,7 +300,7 @@
 		{
 			$this->style[$property] = $value;
 		}
-		
+
 		/**
 		 * Unset a CSS property for the widget.
 		 * @param string	The property's name.
@@ -314,7 +316,7 @@
 		 * @param string	The property's name.
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getStyleProperty($property)
 		{
 			if( array_key_exists( $property, $this->style ) ) {
@@ -323,7 +325,7 @@
 				return NULL;
 			}
 		}
-		
+
 		/**
 		 * Sets the width for the widget.
 		 * It's a wrapper for set_style_property().
@@ -340,7 +342,7 @@
 				$this->setStyleProperty( 'width', $value . $unit ) ;
 			}
 		}
-		
+
 		/**
 		 * Returns the width for the widget.
 		 * It's a wrapper for get_style_property().
@@ -360,7 +362,7 @@
 		 * @param string	The measure unit (px|pt|%) etc...
 		 * @access public
 		 * @see set_style_property()
-		 */		
+		 */
 		function setHeight( $value = NULL, $unit = 'px' )
 		{
 			if( $value === NULL ) {
@@ -369,69 +371,69 @@
 				$this->setStyleProperty( 'height', $value . $unit ) ;
 			}
 		}
-		
+
 		/**
 		 * Returns the height for the widget.
 		 * It's a wrapper for get_style_property().
 		 * @access public
 		 * @see get_style_property()
-		 */		
+		 */
 		function getHeight()
 		{
 			return $this->getStyleProperty( 'height' ) ;
 		}
-		
+
 		/**
 		 * Sets the background color for the widget.
 		 * It's a wrapper for set_style_property().
 		 * @param string	The value to be used as color.
 		 * @access public
 		 * @see set_style_property()
-		 */		
+		 */
 		function setBgcolor( $value )
 		{
 			$this->setStyleProperty( 'background-color', $value ) ;
 		}
-		
+
 		/**
 		 * Sets the background image for the widget.
 		 * It's a wrapper for set_style_property().
 		 * @param string	The url of the image.
 		 * @access public
 		 * @see set_style_property()
-		 */	
+		 */
 		function setBgimage( $value )
 		{
 			$this->setStyleProperty('background-image', "url('" . $value . "')");
 		}
-		
+
 		/**
 		 * Sets the font weight for the widget
 		 * It's a wrapper for set_style_property().
 		 * @param string	The url of the image.
 		 * @access public
 		 * @see set_style_property()
-		 */	
+		 */
 		function setFontWeight( $value )
 		{
 			$this->setStyleProperty('font-weight', $value);
 		}
-		
+
 		/**
 		 * Sets the font color for the widget
 		 * It's a wrapper for set_style_property().
 		 * @param string	The url of the image.
 		 * @access public
 		 * @see set_style_property()
-		 */	
+		 */
 		function setFontColor( $value )
 		{
 			$this->setStyleProperty('color', $value);
-		}		
-		
+		}
+
 		/**
 		 * Adds an action to the implemented actions stack for the widget.
-		 * @access public 
+		 * @access public
 		 * @param string	The action's name.
 		 * @param string	The JavaScript event that triggers.
 		 * @param boolean	Action Requires confirmation?.
@@ -440,12 +442,12 @@
 		 */
 		function addAction($action, $event = NULL, $require_confirmation = false, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general')
 		{
-			// If not specified, the event has the same name of the action 
+			// If not specified, the event has the same name of the action
 			if (! $event)
 			{
 				$event = $action;
 			}
-			
+
 			$tmp_action = array();
 			$tmp_action['event'] = $event;
 			$this->actions[$action] = $tmp_action;
@@ -453,7 +455,7 @@
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
 		}
-		
+
 		/**
 		 * Requires confirmation for an action.
 		 * @access public
@@ -467,7 +469,7 @@
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
 		}
-		
+
 		/**
 		 * Removes confirmation for an action.
 		 * @access public
@@ -477,32 +479,32 @@
 		{
 			$this->actions[$action]['require_confirmation'] = false;
 		}
-		
+
 		/**
 		 * Changes the event associated to an action.
 		 * If no event is given, here we set event=action.
-		 * 
+		 *
 		 * @param string	The action's name.
 		 * @param string	The JavaScript event that triggers.
 		 * @access public
 		 */
 		function changeEvent($action, $event = NULL)
 		{
-			// If not specified, the event has the same name of the action 
+			// If not specified, the event has the same name of the action
 			if ($event === NULL)
 			{
 				$event = $action;
 			}
-			
+
 			if (array_key_exists($action, $this->actions))
 			{
 				$this->actions[$action]['event'] = $event;
 			}
 		}
-		
+
 		/**
 		 * Removes an action from the implemented actions stack for the widget.
-		 * 
+		 *
 		 * @param string	The action's name.
 		 * @access public
 		 */
@@ -510,7 +512,7 @@
 		{
 			unset($this->actions[$action]);
 		}
-				
+
 		/**
 		 * Composes a string containing all the HTML properties of the widget.
 		 * Note: it will also contain the name and the value.
@@ -522,9 +524,9 @@
 			$sReturn = "";
 			foreach($this->properties as $property_name=>$property_value)
 			{
-				$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;	
+				$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;
 			}
-			
+
 			$sReturn .= $this->composeStringStyle();
 			return $sReturn;
 		}
@@ -539,31 +541,31 @@
 		function composeStringActions($params = NULL)
 		{
   			$p4a =& P4A::singleton();
-			
+
 			$sParams = '';
   			$sActions = '';
-  			
+
   			if (is_string($params) or is_numeric($params)){
-  				$sParams =  ", '" . $params . "'"; 			
+  				$sParams =  ", '" . $params . "'";
   			}elseif(is_array($params) and count($params)){
   				$sParams = ", ";
   				foreach($params as $param){
-  					$sParams .= "'" . $param . "', "; 
+  					$sParams .= "'" . $param . "', ";
   				}
   				$sParams = substr($sParams, 0, -2);
   			}
-  			
+
   			foreach ($this->actions as $action=>$action_data)
 			{
 				if( !$this->isEnabled() ) {
 					return NULL;
 				}
-				
+
 				$browser_action = $action;
 				$return = 'false';
 				$prefix = '';
 				$suffix = '';
-				
+
 				if ($action == 'onReturnPress')
 				{
 					$browser_action = 'onKeyPress';
@@ -571,11 +573,11 @@
 					$prefix .= 'if(isReturnPressed(event)){';
 					$suffix .= '}';
 				}
-				
+
 				if ($action_data['require_confirmation'])
 				{
 					$suffix .= '}';
-					
+
 					if ($action_data['confirmation_text'] === NULL)
 					{
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $p4a->i18n->messages->get($action_data['confirmation_text_handler'])) .'\')){';
@@ -585,10 +587,10 @@
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $action_data['confirmation_text'] ) .'\')){';
 					}
 				}
-				
-				$sActions .= $browser_action . '="' . $prefix . 'executeEvent(\'' . $this->getId() . '\', \'' . $action_data['event'] . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" '; 
-			}		
-			return $sActions; 															
+
+				$sActions .= $browser_action . '="' . $prefix . 'executeEvent(\'' . $this->getId() . '\', \'' . $action_data['event'] . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" ';
+			}
+			return $sActions;
 		}
 
 		/**
@@ -603,14 +605,14 @@
 			{
 				$sStyle .= "$property:$property_value;";
 			}
-			
+
 			if ($sStyle)
 			{
-				$sStyle = 'style="' . substr($sStyle, 0, -1) . '" '; 
+				$sStyle = 'style="' . substr($sStyle, 0, -1) . '" ';
 			}
-			return $sStyle; 
+			return $sStyle;
 		}
-		
+
 		/**
 		 * Composes a string contaning the CSS class property for the widget.
 		 * @return string
@@ -620,11 +622,11 @@
 		{
 			if ($this->class_style)
 			{
-				$sClassStyle = 'class="' . $this->class_style . '" '; 
+				$sClassStyle = 'class="' . $this->class_style . '" ';
 			}
-			return $sClassStyle; 
+			return $sClassStyle;
 		}
-		
+
 		/**
 		 * Defines the template used by the widget.
 		 * @param string	Template name
@@ -649,7 +651,7 @@
 			$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
 			$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
 		}
-		
+
 		/**
 		 * Unsets template informations for the widget.
 		 * @access public
@@ -659,9 +661,9 @@
 			$this->use_template = FALSE;
 			$this->template_name = NULL;
 		}
-		
+
 		/**
-		 * Adds this variable (name and value) to the template engine variables' stack. 
+		 * Adds this variable (name and value) to the template engine variables' stack.
 		 * @param string	The variable name.
 		 * @param string	The variable value.
 		 */
@@ -673,14 +675,14 @@
 			}else{
 				$sDisplay = $var_value;
 			}
-			
+
 			if ($this->use_template){
 				$this->smarty->assign($var_name, $sDisplay);
 			}else{
-				error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");				
+				error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
 			}
 		}
-		
+
 		/**
 		 * Empties the template engine variables' stack.
 		 * @access public
@@ -692,7 +694,7 @@
 			unset($this->smarty);
 			$this->useTemplate($this->template_name);
 		}
-        
+
 		/**
 		 * Returns the HTML rendered template.
 		 * @return string
@@ -707,7 +709,7 @@
 				error("FETCH TEMPLATE IMPOSSIBLE. First Call use_template.");
 			}
 		}
-		
+
 		/**
 		 * Returns the HTML rendered widget.
 		 * This method MUST be overridden by every
@@ -717,7 +719,7 @@
 		function getAsString()
 		{
 		}
-		
+
 		/**
 		 * Prints the value returned by get_as_string().
 		 * It Should never be used by "normal" p4a users.
@@ -728,7 +730,7 @@
 		{
 			print $this->getAsString();
 		}
-		
+
 		/**
 		 * Wrapper used to add the handling of OnClick action.
 		 * @see action_handler()
@@ -744,18 +746,18 @@
 		 */
 		function onChange($params = NULL)
 		{
-			return $this->actionHandler('onChange', $params);	
+			return $this->actionHandler('onChange', $params);
 		}
-		
+
 		/**
 		 * Wrapper used to add the handling of OnKeyPress action.
 		 * @see action_handler()
 		 */
 		function onKeyPress($params = NULL)
 		{
-			return $this->actionHandler('onKeyPress', $params);	
+			return $this->actionHandler('onKeyPress', $params);
 		}
-		
+
 		/**
 		 * Wrapper used to add the handling of onReturnPress action.
 		 * The onReturnPress action is an onKeyPress with checking if
@@ -764,7 +766,7 @@
 		 */
 		function onReturnPress($params = NULL)
 		{
-			return $this->actionHandler('onReturnPress', $params);	
+			return $this->actionHandler('onReturnPress', $params);
 		}
 	}
 ?>

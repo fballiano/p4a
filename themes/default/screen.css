@@ -251,9 +251,6 @@ SELECT:focus{
 /*   ----   */
 /*   MENU   */
 /*   ----   */
-.LinkMainMenu border {
-	1px solid red;
-}
 
 .LinkMainMenu:link
 {

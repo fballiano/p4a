@@ -1,3 +1,8 @@
+0.1
+- Add:    visible/enabled param in setVisible() and enable() methods into WIDGET class
+- Change: P4A_TOOLBAR, P4A_STANDARD_TOOLBAR and P4A_ACTIONS_TOOLBAR completely rewritten
+- Update: PEAR were upgraded to latest versions (2004-09-22)
+- Fix:    KHTML problem for drop down menu
 - Add:    cs_CZ locale (Thank to Tomas Kuba)
 - Fix:    every events for image buttons are now in the <a> tag instead <img>, better compatibility with old browsers (Thanks to Valery Sidorov)
 - Add:    DB_SOURCE now can order also when you define custom queries (Thanks to Valery Sidorov)

@@ -53,7 +53,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_DB_SOURCE extends P4A_DATA_SOURCE
+	class P4A_DB_SOURCE_OLD extends P4A_DATA_SOURCE
 	{
 		/**
 		 * Here we store the custom defined queries.

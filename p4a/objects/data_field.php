@@ -3,7 +3,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -35,8 +35,8 @@
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
- */	
-	
+ */
+
 	/**
 	 * Every DATA_SOURCE field is a DATA_FIELD.
 	 * It's used to emulate some database behaviours
@@ -54,7 +54,7 @@
 		 * @access private
 		 */
 		var $value = NULL;
-				
+
 		/**
 		 * The new value of field
 		 * @var string
@@ -75,10 +75,11 @@
 		 * @access private
 		 */
 		var $type = 'text';
-		
-		
-		var $is_updatable = TRUE;
-						
+
+
+		var $is_read_only = FALSE;
+		var $sequence = NULL;
+
 		/**
 		 * Class constructor.
 		 * Sets ID and name for the object.
@@ -89,7 +90,7 @@
 		{
 			parent::p4aObject((string)$name);
 		}
-		
+
 		/**
 		 * Sets the value of the data field.
 		 * @access public
@@ -99,7 +100,7 @@
 			$this->value = $value;
 			$this->setNewValue($value);
 		}
-		
+
 		/**
 		 * Returns the value of the data field.
 		 * @access public
@@ -109,7 +110,7 @@
 		{
 			return $this->value;
 		}
-		
+
 		/**
 		 * Sets the new value of the data field.
 		 * @access public
@@ -118,7 +119,7 @@
 		{
 			$this->new_value = $value;
 		}
-			
+
 		/**
 		 * Returns the new value of the data field.
 		 * @access public
@@ -128,7 +129,7 @@
 		{
 			return $this->new_value;
 		}
-		
+
 		/**
 		 * Sets the type of the data_field.
 		 * @access public
@@ -138,7 +139,7 @@
 		{
 			$this->type = $type;
 		}
-		
+
 		/**
 		 * Returns the type of the data_field.
 		 * @access public
@@ -148,23 +149,39 @@
 		{
 			return $this->type;
 		}
-		
-		//todo
-		function setUpdatable($value = TRUE)
+
+		function setReadOnly($value = TRUE)
 		{
-			$this->is_updatable = $value;
+			$this->is_read_only = $value;
 		}
-		
-		//todo
-		function isUpdatable()
+
+		function isReadOnly()
 		{
-			return $this->is_updatable;
+			return $this->is_read_only;
 		}
-		
-		//todo
-		function setDefaultValue()
+
+		function setDefaultValue($value = NULL)
 		{
-			$this->setValue($this->default_value);
+			if ($value === NULL) {
+				$this->setValue($this->getDefaultValue());
+			} else {
+				$this->default_value = $value;
+			}
+		}
+
+		function setSequence($name = NULL)
+		{
+			$this->sequence = $name;
+		}
+
+		function getDefaultValue()
+		{
+			if ($this->sequence === NULL) {
+				return $this->default_value;
+			} else {
+				$db =& p4a_db::singleton();
+				return $db->nextId($this->sequence);
+			}
 		}
 	}
 ?>

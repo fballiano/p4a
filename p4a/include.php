@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -39,34 +39,34 @@
  */
 
 	/**
-	 * 
-	 */	
+	 *
+	 */
 	//Configuration container
 	require_once(dirname(__FILE__) . '/config.php');
-	
+
 	// Changing inclusion path
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
 	unset($include_path[ $dot_key ]) ;
 	$new_include_path = '.' . _SSS_ . P4A_PROJECT_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
-	
+
 	//Core
 	require_once(dirname(__FILE__) . '/p4a_object.php');
-	
+
 	//Libraries
-	require_once(dirname(__FILE__) . '/libraries/standard.php'); 
+	require_once(dirname(__FILE__) . '/libraries/standard.php');
 	require_once(dirname(__FILE__) . '/libraries/smarty/libs/Smarty.class.php');
 	require_once(dirname(__FILE__) . '/libraries/pear/DB.php');
 	require_once(dirname(__FILE__) . '/libraries/date.php');
 	require_once(dirname(__FILE__) . '/libraries/number.php');
 	require_once(dirname(__FILE__) . '/libraries/pdf/class.ezpdf.php');
 	require_once(dirname(__FILE__) . '/libraries/smarty/libs/plugins/function.assign.php');
-	
+
 	//Core
 	require_once(dirname(__FILE__) . '/p4a_error.php');
 	require_once(dirname(__FILE__) . '/i18n.php');
-	
+
 	//I18N
 	require_once(dirname(__FILE__) . '/i18n/i18n_currency.php');
 	require_once(dirname(__FILE__) . '/i18n/i18n_datetime.php');
@@ -79,17 +79,17 @@
 	require_once(dirname(__FILE__) . '/objects/mask.php');
 	require_once(dirname(__FILE__) . '/objects/listener.php');
 	require_once(dirname(__FILE__) . '/objects/report.php');
-	require_once(dirname(__FILE__) . '/objects/collection.php');	
-	require_once(dirname(__FILE__) . '/objects/data_field.php');	
-	require_once(dirname(__FILE__) . '/objects/data_source.php');
+	require_once(dirname(__FILE__) . '/objects/collection.php');
+	require_once(dirname(__FILE__) . '/objects/data_field.php');
+	//require_once(dirname(__FILE__) . '/objects/data_source.php');
 	require_once(dirname(__FILE__) . '/objects/db_source.php');
-	require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
-	require_once(dirname(__FILE__) . '/objects/data_sources/txt_source.php');
+	//require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
+	//require_once(dirname(__FILE__) . '/objects/data_sources/txt_source.php');
 	require_once(dirname(__FILE__) . '/objects/widget.php');
-	
+
 	//Listeners
 	require_once(dirname(__FILE__) . '/objects/listeners/p4a_error.php');
-		
+
 	//Widget Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/button.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/canvas.php');
@@ -109,11 +109,11 @@
 	//Toolbar Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
-	
+
 	//We can have more projects on same site and same browser instance
-	
+
 	session_name('sn_' . preg_replace('~\W~', '_', P4A_PROJECT_NAME) . '_includes');
-	
+
 	//Projects Objects Includes
 	session_start();
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
@@ -121,7 +121,7 @@
 		$_SESSION['P4A_INCLUDES'] = array();
 		include_p4a_objects($objects_dir);
 	}
-	
+
 	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {
 		require_once($include_file);
 	}

@@ -13,9 +13,9 @@ class P4A_DB
 		static $db;
 		if(!isset($db) or $db == null) {
 			if(defined("P4A_DSN")) {
-				$db = DB::connect(P4A_DSN, array("debug"=>"5"));
+				$db = DB::connect(P4A_DSN);
     			if (DB::isError($db)) {
-					$e = new P4A_ERROR('Database connection failed.', $this, $db);
+					$e = new P4A_ERROR('Database connection failed', $this, $db);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
@@ -32,7 +32,6 @@ class P4A_DB
 	* Connects to the configured database.
 	* Database is configured by setting P4A_DSN constant.
 	* @access private
-	* @throws onDBConnectionError
 	*/
 	function &connect()
 	{

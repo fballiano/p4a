@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -40,7 +40,7 @@
 
 	/**
 	 * p4a internationalization class for date/time.
-	 * 
+	 *
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
@@ -53,25 +53,25 @@
 		 * @var array
 		 */
 		var $formats = NULL;
-		
+
 		/**
 		 * Here we store all formats.
 		 * @access private
 		 * @var array
 		 */
 		var $locale_vars = NULL;
-		
+
 		/**
 		 * Class constructor.
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &p4a_i18n_datetime( &$formats, &$locale_vars )
+		function &p4a_i18n_datetime(&$formats, &$locale_vars)
 		{
 			$this->formats =& $formats;
 			$this->locale_vars =& $locale_vars;
 		}
-		
+
 		/**
 		 * Format a date using a format.
 		 * @access public
@@ -83,7 +83,7 @@
 		{
 			return DATE::format($date, $format, $this->locale_vars);
 		}
-		
+
 		/**
 		 * Format a date using the default format.
 		 * @access public
@@ -94,7 +94,7 @@
 		{
 			return DATE::format($date, $this->getFormat('date_default'), $this->locale_vars);
 		}
-		
+
 		/**
 		 * Format a date using the "medium" format.
 		 * @access public
@@ -105,7 +105,7 @@
 		{
 			return DATE::format($date, $this->getFormat('date_medium'), $this->locale_vars);
 		}
-		
+
 		/**
 		 * Format a date using the "long" format.
 		 * @access public
@@ -116,7 +116,7 @@
 		{
 			return DATE::format($date, $this->getFormat('date_long'), $this->locale_vars);
 		}
-		
+
 		/**
 		 * Format a date using the "full" format.
 		 * @access public
@@ -127,7 +127,7 @@
 		{
 			return DATE::format($date, $this->getFormat('date_full'), $this->locale_vars);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * After unformatting, returns the date formatting it with $output_format.
@@ -140,9 +140,9 @@
 		 */
 		function unformat($date, $format, $output_format = P4A_DATETIME)
 		{
-			return DATE::unformat( $date, $format, $output_format);
+			return DATE::unformat($date, $format, $output_format);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * Returns a date formatted with the P4A_DATE date format.
@@ -154,9 +154,9 @@
 		 */
 		function unformatDate($date, $format)
 		{
-			return DATE::unformat( $date, $format, P4A_DATE);
+			return DATE::unformat($date, $format, P4A_DATE);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * Assumes that data is formatted with the default date format.
@@ -167,9 +167,9 @@
 		 */
 		function unformatDateDefault($date)
 		{
-			return DATE::unformat( $date, $this->getFormat('date_default'), P4A_DATE);
+			return DATE::unformat($date, $this->getFormat('date_default'), P4A_DATE);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * Assumes that data is formatted with the "medium" date format.
@@ -180,9 +180,9 @@
 		 */
 		function unformatDateMedium($date)
 		{
-			return DATE::unformat( $date, $this->getFormat('date_medium'), P4A_DATE);
+			return DATE::unformat($date, $this->getFormat('date_medium'), P4A_DATE);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * Assumes that data is formatted with the "long" date format.
@@ -193,9 +193,9 @@
 		 */
 		function unformatDateLong($date)
 		{
-			return DATE::unformat( $date, $this->getFormat('date_long'), P4A_DATE);
+			return DATE::unformat($date, $this->getFormat('date_long'), P4A_DATE);
 		}
-		
+
 		/**
 		 * Unformat a date formatted with a format.
 		 * Assumes that data is formatted with the "full" date format.
@@ -206,9 +206,9 @@
 		 */
 		function unformatDateFull($date)
 		{
-			return DATE::unformat( $date, $this->getFormat('date_full'), P4A_DATE);
+			return DATE::unformat($date, $this->getFormat('date_full'), P4A_DATE);
 		}
-		
+
 		/**
 		 * Format a time with in the default time format.
 		 * @access public
@@ -220,10 +220,10 @@
 			if ($time !== NULL) {
 				$time = "0000-01-01 $time";
 			}
-			
+
 			return DATE::format($time, $this->getFormat('time_default'));
 		}
-		
+
 		/**
 		 * Format a time in the "short" time format.
 		 * @access public
@@ -238,7 +238,7 @@
 
 			return DATE::format('0000-01-01 ' . $time, $this->getFormat('time_short'));
 		}
-		
+
 		/**
 		 * Unformat a formatted time (in default format) and returns it formatted in P4A_TIME format.
 		 * @access public
@@ -249,7 +249,7 @@
 		{
 			return DATE::unformat($time, $this->getFormat('time_default'), P4A_TIME);
 		}
-		
+
 		/**
 		 * Unformat a formatted time (in "short" format) and returns it formatted in P4A_TIME format.
 		 * @access public
@@ -260,18 +260,18 @@
 		{
 			return DATE::unformat($time, $this->getFormat('time_short'), P4A_TIME);
 		}
-		
+
 		/**
 		 * Returns a format identified by a name.
 		 * @access public
 		 * @param string		The format name.
 		 * @return array
 		 */
-		function getFormat( $format )
+		function getFormat($format)
 		{
-			return $this->formats[ $format ];
+			return $this->formats[$format];
 		}
-		
+
 		/**
 		 * Sets a format.
 		 * Format is like this: array('% Eur', '2', ',', '.').
@@ -279,9 +279,9 @@
 		 * @param string		The format name
 		 * @param array			The format
 		 */
-		function setFormat( $format, $value = P4A_DATETIME )
+		function setFormat($format, $value = P4A_DATETIME)
 		{
-			$this->formats[ $format ] = $value;
+			$this->formats[$format] = $value;
 		}
 	}
 

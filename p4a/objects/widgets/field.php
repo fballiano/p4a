@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -52,42 +52,42 @@
 		 * @access private
 		 */
 		var $buttons = array();
-		
+
 		/**
 		 * Data source for the field.
 		 * @var data_source
 		 * @access private
 		 */
 		var $data = NULL;
-		
+
 		/**
 		 * Data source for the field.
 		 * @var data_field
 		 * @access private
 		 */
-		var $data_field = NULL;		
-		
+		var $data_field = NULL;
+
 		/**
 		 * Will be used for future implementations.
 		 * @var data_field
 		 * @access private
-		 */ 
+		 */
 		var $data_member = NULL;
-		
+
 		/**
 		 * The data source member that contains the values for this field.
 		 * @var string
 		 * @access private
 		 */
 		var $data_value_field = NULL ;
-		
+
 		/**
 		 * The data source member that contains the descriptions for this field.
 		 * @var string
 		 * @access private
 		 */
 		var $data_description_field	= NULL ;
-			
+
 		/**
 		 * Field type.
 		 * @var string
@@ -95,91 +95,91 @@
 		 * @see set_type()
 		 */
 		var $type = 'text' ;
-		
+
 		/**
 		 * Max size in pixels for image thumbnail.
 		 * @var integer
 		 * @access private
 		 */
 		var $max_thumbnail_size = 100 ;
-		
+
 		/**
 		 * Defines if a SELECT has "none selected" record.
 		 * @var integer
 		 * @access private
 		 */
 		var $allow_null = false ;
-		
+
 		/**
 		 * Defines the message for "none selected" record for select.
 		 * @var integer
 		 * @access private
 		 */
 		var $null_message = NULL ;
-		
+
 		/**
 		 * Field align.
 		 * @var string
 		 * @access private
 		 */
 		var $align = 'left';
-		
+
 		/**
 		 * Tells if the fields content is formatted or not.
 		 * @var string
 		 * @access private
-		 */		
+		 */
 		var $formatted = true;
-		
+
 		/**
 		 * The formatter class name for the data field.
 		 * @var string
 		 * @access private
 		 */
 		var $formatter_name = NULL;
-		
+
 		/**
 		 * The format name for the data field.
 		 * @var string
 		 * @access private
 		 */
 		var $format_name = NULL;
-		
+
 		/**
 		 * Path under P4A_UPLOADS_PATH where uploads happens.
 		 * @var string
 		 * @access private
 		 */
 		var $upload_subpath = NULL;
-		
+
 		/**
 		 * Tells if table operations are enabled on rich_textarea
 		 * @var boolean
 		 * @access private
 		 */
 		var $table_operations = false;
-		
+
 		/**
 		 * Tells if spell checker is enabled on rich_textarea
 		 * @var boolean
 		 * @access private
 		 */
 		var $spell_checker = false;
-		
+
 		/**
 		 * Tells if contextual menu is enabled on rich_textarea
 		 * @var boolean
 		 * @access private
 		 */
 		var $contextual_menu = false;
-		
+
  		/**
 		 * Type of encryption to use for password fields
 		 * @var		string
 		 * @access	private
 		 */
 		var $encryption_type = 'md5';
-		
+
 		/**
 		 * Class constructor.
 		 * Istances the widget, sets name and initializes its value.
@@ -188,28 +188,27 @@
 		 * @param string				Static ID for the object (if null it's randomly generated
 		 * @access private
 		 */
-		function &p4a_field($name, $add_default_data_field = TRUE, $id = null)
+		function &p4a_field($name, $add_default_data_field = TRUE, $id = NULL)
 		{
 			parent::p4a_widget($name, 'fld', $id);
-            
-			//Type
+
 			$this->setType('text');
 
 			//Data field
 			if ($add_default_data_field){
 				$this->build("P4A_Data_Field", "data_field");
 			}
-			
+
 			//Label
  			$this->build("P4A_Label", "label");
 			$this->label->setWidth(100);
 			$this->setDefaultLabel();
-			
+
 			//Properties
 			$this->setStyleProperty('float', 'left');
 			$this->label->setStyleProperty('float', 'left');
 		}
-		
+
 		/**
 		 * Sets a data field as current data_field.
 		 * This changes default text alignment for
@@ -221,17 +220,16 @@
 		{
 			unset($this->data_field);
 
-			switch( $data_field->getType() )
-			{
+			switch($data_field->getType()) {
 				case 'boolean':
 					$this->setType('checkbox');
 					break;
 			}
-			
+
 			$this->data_field =& $data_field;
 			$this->setDefaultVisualizationProperties();
 		}
-		
+
 		/**
 		 * Sets the default visualization property for the field.
 		 * @access private
@@ -240,7 +238,7 @@
 		{
 			$visualization_data_type = NULL;
 			$source_description_field = $this->getSourceDescriptionField();
-			
+
 			if( !is_null( $source_description_field ) and is_object($this->data))
 			{
 				$visualization_data_type = $this->data->data_browsers['default']->fields[$source_description_field]->getType();
@@ -249,7 +247,7 @@
 			{
 				$visualization_data_type = $this->data_field->getType();
 			}
-			
+
 			switch( $visualization_data_type )
 			{
 				case 'integer':
@@ -264,7 +262,7 @@
 					break;
 			}
 		}
-		
+
 		/**
 		 * Sets the value for the field.
 		 * @param mixed				Value.
@@ -275,7 +273,7 @@
 			$this->data_field->setValue($value);
 		}
 
-		/**		
+		/**
 		 * Returns the value for the field.
 		 * @return mixed
 		 * @access public
@@ -284,8 +282,8 @@
 		{
 			return $this->data_field->getValue();
 		}
-        
-		/**		
+
+		/**
 		 * Return the field's value always as string.
 		 * If the value is an array, it will be encoded in {value1, value2}
 		 * @return string
@@ -296,14 +294,14 @@
             $value = $this->data_field->getValue();
             if (is_array($value)){
                 $sReturn = implode(', ', $value);
-                $sReturn = '{' . $sReturn . '}'; 
+                $sReturn = '{' . $sReturn . '}';
                 return $sReturn;
             }else {
-                return $value;                    
+                return $value;
             }
         }
 
-		/**		
+		/**
 		 * Examines the value passed by the web form and set the new value.
 		 * @param mixed		The new value for the field.
 		 * @access public
@@ -311,7 +309,7 @@
 		function setNewValue($new_value)
 		{
 			$set = true ;
-			
+
 			if( $new_value == NULL )
 			{
 				$new_value = NULL;
@@ -335,7 +333,7 @@
 			{
 				$set = false;
 			}
-			
+
 			if( $set ) {
 				$this->data_field->setNewValue($new_value);
 			}
@@ -350,7 +348,7 @@
 		function getNewValue($index = NULL)
 		{
 			$new_value = $this->data_field->getNewValue();
-			
+
 			if( $new_value == NULL )
 			{
 				$new_value = NULL;
@@ -372,31 +370,31 @@
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];
             }
-            
+
             return $new_value;
 		}
 
-		/**		
-		 * Sets the field's type.						
+		/**
+		 * Sets the field's type.
 		 * @param strings		The type (text|password|textarea|rich_textarea|hidden|label|select|radio|checkbox).
 		 * @access public
 		 */
 		function setType($type)
 		{
 			$this->type = $type;
-			
+
 			switch($type) {
 			case 'label':
 				$this->setStyleProperty( 'display', 'inline' ) ;
 				break;
-				
+
 			case 'rich_textarea':
 				$this->setWidth(586);
 				break;
 			}
 		}
-		 
-		/**		
+
+		/**
 		 * Set type of encryption to use for password fields
 		 * (md5|none)
 		 *
@@ -412,8 +410,8 @@
 					trigger_error('unknown encryption type:' . $type);
 			}
 		}
-		 
-		/**		
+
+		/**
 		 * If we use fields like combo box we have to set a data source.
 		 * By default we'll take the data source primary key as value field
 		 * and the first fiels (not pk) as description.
@@ -424,31 +422,31 @@
 		{
 			unset( $this->data ) ;
 			$this->data =& $data_source;
-			
+
 			if( $this->data->pk !== NULL )
 			{
 				if( $this->getSourceValueField() === NULL )
 				{
 					$this->setSourceValueField( $this->data->pk ) ;
 				}
-				
+
 				if( $this->getSourceDescriptionField() === NULL )
 				{
 					$aFields = $this->data->getFields() ;
-					
+
 					$iDescriptionFieldIndex = 0 ;
-					
+
 					if( ( sizeof( $aFields ) > 1 ) and ( $aFields[0] == $this->data->pk ) ) {
 						$iDescriptionFieldIndex = 1 ;
 					}
-					
+
 					$this->setSourceDescriptionField( $aFields[ $iDescriptionFieldIndex ] ) ;
-				}				
+				}
 			}
 			$this->setDefaultVisualizationProperties();
 		}
-		
-		/**		
+
+		/**
 		 * Sets what data source member is the keeper of the field's value.
 		 * @param string		The name of the data source member.
 		 * @access public
@@ -460,11 +458,11 @@
 			$this->data_value_field = $name ;
 		}
 
-		/**		
+		/**
 		 * Sets what data source member is the keeper of the field's description.
 		 * @param string		The name of the data source member.
 		 * @access public
-		 */		
+		 */
 		function setSourceDescriptionField( $name )
 		{
 			// No controls if $name exists...
@@ -472,8 +470,8 @@
 			$this->data_description_field = $name ;
 			$this->setDefaultVisualizationProperties();
 		}
-		
-		/**		
+
+		/**
 		 * Returns the name of the data source member that keeps the field's value.
 		 * @return string
 		 * @access public
@@ -482,8 +480,8 @@
 		{
 			return $this->data_value_field ;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the name of the data source member that keeps the field's description.
 		 * @return string
 		 * @access public
@@ -493,16 +491,16 @@
 			return $this->data_description_field ;
 		}
 
-		/**		
+		/**
 		 * Returns the field's type.
 		 * @return string
 		 * @access public
 		 */
 		function getType()
 		{
-			return $this->type; 
+			return $this->type;
 		}
-		
+
 		/**
 		 * Returns the encryption type (for password fields)
 		 *
@@ -512,7 +510,7 @@
 		function getEncryptionType() {
 			return $this->encryption_type;
 		}
-		
+
 		/**
 		 * Returns true if the field is text or textarea.
 		 * @access public
@@ -528,10 +526,10 @@
 				case 'date':
 					return true;
 			}
-			
+
 			return false;
 		}
-		
+
 		/**
 		 * Returns true if a formatting format for the field has been set.
 		 * @access public
@@ -541,7 +539,7 @@
 		{
 			return $this->formatted;
 		}
-		
+
 		/**
 		 * Sets the field as formatted.
 		 * @access public
@@ -550,7 +548,7 @@
 		{
 			$this->formatted = $value;
 		}
-		
+
 		/**
 		 * Sets the field as not formatted.
 		 * @access public
@@ -559,7 +557,7 @@
 		{
 			$this->formatted = false;
 		}
-		
+
 		/**
 		 * Sets the field formatter and format.
 		 * This also turns formatting on.<br>
@@ -574,7 +572,7 @@
 			$this->format_name = $format_name;
 			$this->setFormatted();
 		}
-		
+
 		/**
 		 * Removes formatting options and turns formatting off.
 		 * @access public
@@ -585,7 +583,7 @@
 			$this->format_name = NULL;
 			$this->unsetFormatted();
 		}
-		
+
 		/**
 		 * Format the given value using the current formatting options.
 		 * Empty values are not formatted.<br>
@@ -608,10 +606,10 @@
 					$value = $p4a->i18n->autoFormat( $value, $this->data_field->getType() );
 				}
 			}
-			
+
 			return $value;
 		}
-		
+
 		/**
 		 * Takes the formatted passed value and takes it back to its unformatted form.
 		 * @access private
@@ -634,20 +632,20 @@
 					$value = $p4a->i18n->autoUnformat( $value, $this->data_field->getType() );
 				}
 			}
-			
+
 			return $value;
 		}
 
-		/**		
+		/**
 		 * Resets the "new_value".
 		 * @access public
 		 */
         function cleanNewValue()
         {
-			$this->setNewValue(NULL);		        	
-        }   
-		
-		/**		
+			$this->setNewValue(NULL);
+        }
+
+		/**
 		 * Returns the HTML rendered field.
 		 * @return string
 		 * @access public
@@ -657,23 +655,23 @@
 			if (! $this->isVisible()) {
 				return NULL;
 			}
-			
+
 			$type   = $this->type;
 			$suffix = '';
-			
+
 			if ($type == 'rich_textarea')
 			{
 				$type = 'textarea';
 				$suffix = $this->getAsRichTextarea();
 			}
-			
+
 			$new_method = 'getAs' . $type;
-			$this->as_string = $this->$new_method(); 
-			
+			$this->as_string = $this->$new_method();
+
 			return '<table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" nowrap="nowrap" style="float:'. $this->align .'">' . $this->as_string . '</td></tr></table>' . $suffix;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as '<input type="text"'.
 		 * @return string
 		 * @access public
@@ -682,7 +680,7 @@
 		{
 			$header 		= '<INPUT TYPE="text" class="border_color1 font_normal field" ';
 			$close_header 	= '/>';
-			
+
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
@@ -690,18 +688,18 @@
 			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
-	
+
 		function getAsDate()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			$this->setProperty('id', $this->getID());
 			$this->useTemplate('date_calendar');
 			$this->display('id', $this->getID());
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
-			
-			$header 	   = "<INPUT type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";			
+
+			$header 	   = "<INPUT type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";
 			$close_header  = "/>";
 			$close_header .= "<INPUT type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' ";
 			if( ! $this->isEnabled() ) {
@@ -710,13 +708,13 @@
 			}
 			$close_header .= "/>";
 			$close_header .= $this->fetchTemplate();
-			
+
 			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 
-			return $sReturn;			
+			return $sReturn;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as '<input type="password"'.
 		 * We use P4A_PASSWORD_OBFUSCATOR for password value so the old password isn't sent over the net.
 		 * @return string
@@ -726,20 +724,20 @@
 		{
 			$header 		= '<INPUT TYPE="password" class="border_color1 font_normal" ';
 			$close_header 	= '/>';
-			
+
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
-			
+
 			if( $this->getNewValue() !== NULL ) {
 				$header        .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 			}
-			
+
 			$sReturn = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
 
-		/**		
+		/**
 		 * Returns the HTML rendered field as '<input type="textarea"'.
 		 * @return string
 		 * @access public
@@ -750,18 +748,18 @@
 			$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' ";
 			$close_header 	= '>';
 			$footer			= '</TEXTAREA>';
-			
+
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
-			
+
 			$sReturn  = $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;
 			return $sReturn;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as '<input type="textarea"' with rich text editing features.
 		 * @return string
 		 * @access public
@@ -769,7 +767,7 @@
 		function getAsRichTextarea()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			$this->useTemplate('rich_textarea');
 			$this->smarty->get_template_vars();
 			$this->display('id', $this->getID());
@@ -788,7 +786,7 @@
 		{
 			$this->table_operations = true;
 		}
-		
+
 		/**
 		 * Disable table operations on rich_textarea
 		 * @access public
@@ -797,7 +795,7 @@
 		{
 			$this->table_operations = false;
 		}
-		
+
 		/**
 		 * Disable table operations on rich_textarea
 		 * @access public
@@ -806,7 +804,7 @@
 		{
 			$this->spell_checker = true;
 		}
-		
+
 		/**
 		 * Disable table operations on rich_textarea
 		 * @access public
@@ -815,7 +813,7 @@
 		{
 			$this->spell_checker = false;
 		}
-		
+
 		/**
 		 * Disable contextual menu on rich_textarea
 		 * @access public
@@ -824,7 +822,7 @@
 		{
 			$this->contextual_menu = true;
 		}
-		
+
 		/**
 		 * Disable contextual menu on rich_textarea
 		 * @access public
@@ -834,7 +832,7 @@
 			$this->contextual_menu = false;
 		}
 
-		/**		
+		/**
 		 * Returns the HTML rendered field as '<input type="hidden"'.
 		 * @return string
 		 * @access public
@@ -844,12 +842,12 @@
 			$header 		= '<INPUT TYPE="hidden" ';
 			$close_header 	= '>';
 			$footer			= '</INPUT>';
-			
+
 			$sReturn = $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() .  $close_header;
 			return $sReturn;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as '<div>$value</div>'.
 		 * @return string
 		 * @access public
@@ -860,7 +858,7 @@
             $close_header   = '>';
             $footer         = '</DIV>';
             $value			= '';
-            
+
             if( $this->data === NULL )
 			{
 				$value = $this->composeStringValue() ;
@@ -870,7 +868,7 @@
 				$external_data		= $this->data->getAll() ;
 				$value_field		= $this->getSourceValueField() ;
 				$description_field	= $this->getSourceDescriptionField() ;
-				
+
     			foreach( $external_data as $key=>$current )
     			{
     				if ($current[ $value_field ] == $this->getNewValue())
@@ -878,16 +876,16 @@
     					$value = $current[ $description_field ] ;
     				}
     			}
-    			
+
     			if (empty($value)) {
     				$value = $this->null_message;
     			}
             }
-            
+
             return $this->composeLabel() . '</td><td>' . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as combo box.
 		 * @return string
 		 * @access public
@@ -895,21 +893,21 @@
 		function getAsSelect()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			$header 			= '<SELECT class="border_box font_normal field" ';
 			$close_header 		= '>';
 			$footer				= '</SELECT>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-			
+
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
-			
+
 			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
 			$new_value			= $this->getNewValue() ;
-			
+
 			if( $this->isNullAllowed() )
 			{
 				if( $this->null_message === NULL ) {
@@ -917,10 +915,10 @@
 				} else {
 					$message = $this->null_message;
 				}
-				
+
 				$header .= "<option value=''>" . $message . "</option>";
 			}
-			
+
 			foreach( $external_data as $key=>$current )
 			{
 				if ($current[ $value_field ] == $new_value)
@@ -931,18 +929,18 @@
 				{
 					$selected = "";
 				}
-				
-				$sContent  = "<option $selected value='" . htmlspecialchars($current[ $value_field ]) ."'>"; 
+
+				$sContent  = "<option $selected value='" . htmlspecialchars($current[ $value_field ]) ."'>";
 				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->structure[$description_field]['type']));
 				$sContent .= "</option>";
 
 				$header .= $sContent;
 			}
-			 
-			return $this->composeLabel() . '</td><td>' .  $header . $footer ; 
+
+			return $this->composeLabel() . '</td><td>' .  $header . $footer ;
 		}
-		
-		/**		
+
+		/**
 		 * Used ony for select, sets the select to allow a "none selected" record.
 		 * @param string		The message for "none selected"
 		 * @access public
@@ -952,8 +950,8 @@
 			$this->allow_null = true ;
 			$this->null_message = $message ;
 		}
-		
-		/**		
+
+		/**
 		 * Used ony for select, sets the select to do not allow a "none selected" record.
 		 * @access public
 		 */
@@ -961,8 +959,8 @@
 		{
 			$this->allow_null = false ;
 		}
-		
-		/**		
+
+		/**
 		 * Used ony for select, returns if the select allows a "none selected" record.
 		 * @return boolean
 		 * @access public
@@ -971,8 +969,8 @@
 		{
 			return $this->allow_null ;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as radio buttons group.
 		 * @return string
 		 * @access public
@@ -980,23 +978,23 @@
 		function getAsRadio()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
 			$new_value			= $this->getNewValue();
-			
+
 			$enabled = '';
 			if( !$this->isEnabled() ) {
 				$enabled = 'disabled="disabled" ';
 			}
-			
+
 			$sheet =& new p4a_sheet('radio_sheet');
 			$sheet->setProperty('class', 'border_box');
-			
+
 			$sheet->properties = array_merge($sheet->properties, $this->properties);
 			$sheet->style = array_merge($sheet->style, $this->style);
-			
+
 			if( $this->isNullAllowed() )
 			{
 				if( $this->null_message === NULL ) {
@@ -1004,10 +1002,10 @@
 				} else {
 					$message = $this->null_message;
 				}
-				
+
 				array_unshift($external_data, array($value_field=>'', $description_field=>$message));
 			}
-			
+
 			foreach( $external_data as $key=>$current )
 			{
 				if ($current[ $value_field ] == $new_value)
@@ -1018,20 +1016,20 @@
 				{
 					$checked = "";
 				}
-				
+
 				unset( $sContent ) ;
 				$sContent  = $p4a->i18n->autoFormat( $current[ $description_field ], $this->data->structure[$description_field]['type']);
 				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'>";
-				
+
 				$sheet->anchor( $sContent ) ;
 			}
-			 
+
 			$return = $this->composeLabel() . '</td><td>' . $sheet->getAsString();
 			$sheet->destroy();
 			return $return;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as checkbox.
 		 * @return string
 		 * @access public
@@ -1045,19 +1043,19 @@
 			} else {
 				$checked = '' ;
 			}
-			
+
 			$header 		= "<input type='hidden' " . $this->composeStringProperties() . " value='0'><input type='checkbox' class='border_box font_normal' value='1' $checked ";
 			$close_header 	= '>';
-			
+
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
 			}
-			
+
 			$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 			return $this->composeLabel() . '</td><td>' . $header ;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the HTML rendered field as file upload.
 		 * @return string
 		 * @access public
@@ -1065,16 +1063,16 @@
 		function getAsFile()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			if( $this->getNewValue() === NULL )
 			{
 				$header 		= "<div style='float:left'><input type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
-				
+
 				if( !$this->isEnabled() ) {
 					$header .= 'disabled="disabled" ';
 				}
-				
+
 				$header		   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 				$footer			= '';
 				$sReturn		= $header . $footer;
@@ -1088,7 +1086,7 @@
 					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 				}
-				
+
 				if( $this->isEnabled() ) {
 					$button_file_delete->enable();
 				} else {
@@ -1096,7 +1094,7 @@
 				}
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
-				
+
 				$sReturn  = '<table class="border_box field">';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(2) . ' bytes</td></tr>';
@@ -1107,8 +1105,8 @@
 
 			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
-		
-		/**		
+
+		/**
 		 * Action handler for file deletetion.
 		 * @access public
 		 */
@@ -1116,7 +1114,7 @@
 		{
 			$this->setNewValue(NULL);
 		}
-		
+
 		/**
 		 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen.
 		 * @access public
@@ -1126,7 +1124,7 @@
 		{
 			$this->upload_subpath = $subpath;
 		}
-		
+
 		/**
 		 * Removes the subpath for upload.
 		 * @access public
@@ -1135,7 +1133,7 @@
 		{
 			$this->upload_subpath = NULL;
 		}
-		
+
 		/**
 		 * Return the subpath for upload..
 		 * @access public
@@ -1149,7 +1147,7 @@
 		 * Returns the HTML rendered field as image upload.
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getAsImage()
 		{
 			$p4a =& P4A::singleton();
@@ -1157,11 +1155,11 @@
 			{
 				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
-				
+
 				if( !$this->isEnabled() ) {
 					$header .= 'disabled="disabled" ';
 				}
-				
+
 				$header		   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 				$footer			= '';
 				$sReturn		= $header . $footer;
@@ -1170,34 +1168,34 @@
 			{
 				$mime_type = explode( '/', $this->getNewValue(3) );
 				$mime_type = $mime_type[0];
-				
+
 				if( $mime_type != 'image' )
 				{
 					return $this->getAsFile();
 				}
-				
+
 				if (! array_key_exists('button_file_delete', $this->buttons))
 				{
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
-					
+
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete') );
 					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 				}
-				
+
 				if( $this->isEnabled() ) {
 					$button_file_delete->enable();
 				} else {
 					$button_file_delete->disable();
 				}
-				
+
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
-				
+
 				$width = $this->getNewValue(4);
 				$str_width = '';
 				$height = $this->getNewValue(5);
 				$str_height = '';
-				
+
 				if( $width > $height )
 				{
 					if( $this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size ) {
@@ -1212,7 +1210,7 @@
 						$str_height = 'height="' . $height . '"' ;
 					}
 				}
-				
+
 				$sReturn  = '<table class="border_box field">' ;
 				$sReturn .= '<tr><td colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" border="0" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . '></td></tr>';
@@ -1225,7 +1223,7 @@
 
 			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
-		
+
 		/**
 		 * Sets the maximum size for image thumbnails.
 		 * @param integer		Max size (width and height)
@@ -1235,7 +1233,7 @@
 		{
 			$this->max_thumbnail_size = $size ;
 		}
-		
+
 		/**
 		 * Removes the maximum size for image thumbnails.
 		 * @access public
@@ -1244,7 +1242,7 @@
 		{
 			$this->max_thumbnail_size = NULL ;
 		}
-		
+
 		/**
 		 * Returns the maximum size for image thumbnails.
 		 * @return integer
@@ -1254,7 +1252,7 @@
 		{
 			return $this->max_thumbnail_size ;
 		}
-		
+
 		/**
 		 * Sets the label for the field.
 		 * In rendering phase it will be added with ':  '.
@@ -1266,7 +1264,7 @@
 		{
 			$this->label->setValue( $value . ':&nbsp;&nbsp;' );
 		}
-		
+
 		/**
 		 * Returns the label for the field.
 		 * @return string
@@ -1274,10 +1272,10 @@
 		 */
 		function getLabel()
 		{
-			return $this->label->getValue();			
+			return $this->label->getValue();
 		}
-        
-		/**		
+
+		/**
 		 * Gets the HTML rendered field's label.
 		 * @return string
 		 * @access public
@@ -1286,7 +1284,7 @@
 		{
 			return $this->label->getAsString();
 		}
-		
+
 		/**
 		 * Sets the alignment property for the field.
 		 * @access public
@@ -1296,7 +1294,7 @@
 		{
 			$this->align = $align;
 		}
-		
+
 		/**
 		 * Composes a string containing all the HTML properties of the widget.
 		 * Note: it will also contain the name and the value.
@@ -1313,27 +1311,27 @@
 					$sReturn .= $property_name . "='" . htmlspecialchars($property_value) . "' " ;
 				}
 			}
-			
+
 			$sReturn .= $this->composeStringStyle();
 			return $sReturn;
 		}
-		
-		/**		
+
+		/**
 		 * Returns the field's value differently if we are in an '<input value="' environment on in a '<tag>value</tag>' environment.
 		 * @return string
 		 * @access public
 		 */
 		function composeStringValue()
 		{
-			if (   $this->type == 'text' 
+			if (   $this->type == 'text'
 			    or $this->type == 'hidden'
 			    or $this->type == 'hidden'
 			    or $this->type == 'date')
 			{
 				return 'VALUE="' . htmlspecialchars($this->getNewValue()) . '" ';
 			}
-			elseif($this->type == 'textarea' 
-				or $this->type == 'rich_textarea' 
+			elseif($this->type == 'textarea'
+				or $this->type == 'rich_textarea'
 				or $this->type == 'label')
 			{
 				return $this->getNewValue();

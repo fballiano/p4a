@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -47,26 +47,19 @@
 	class P4A_TOOLBAR extends P4A_WIDGET
 	{
 		/**
+		 * Counts the number of separators/spacers in the toolbar.
+		 * @var integer
+		 * @access private
+		 */
+		var $separators_counter = 0;
+
+		/**
 		 * Buttons collection.
 		 * @var array
 		 * @access public
 		 */
-		var $buttons = array();
-		
-		/**
-		 * Buttons counter.
-		 * @var integer
-		 * @access private
-		 */
-		var $index = 0;
-		
-		/**
-		 * Separators counter.
-		 * @var integer
-		 * @access private
-		 */
-		var $index_separator = 0;
-		
+		var $buttons = NULL;
+
 		/**
 		 * Class costructor.
 		 * @param string				Mnemonic identifier for the object.
@@ -76,23 +69,14 @@
 		function &p4a_toolbar($name)
 		{
 			parent::p4a_widget($name);
+			$this->build("p4a_collection", "buttons");
+
 			$this->setOrientation('horizontal');
 			$this->setProperty('cellpadding', '0');
 			$this->setProperty('cellspacing', '0');
-			$this->setProperty('border', '0'); 
+			$this->setProperty('border', '0');
 		}
-		
-		/**
-		 * Adds a button/image object to the toolbar.
-		 * @param object object			The button/image object.
-		 * @access public
-		 */
-		function addButton(&$button, $name)
-		{
-			$this->index++;
-			$this->buttons->$name =& $button;
-		}
-		
+
 		/**
 		 * Istances a new p4a_button object and than adds it to the toolbar.
 		 * @param string			Mnemonic identifier for the object.
@@ -100,38 +84,39 @@
 		 * @access public
 		 * @see BUTTON
 		 */
-		function newButton($button_name, $icon = NULL)
+		function addButton($button_name, $icon = NULL)
 		{
-			return $this->buttons->build("p4a_button", $button_name, $icon);
+			$this->buttons->build("p4a_button", $button_name);
+			$this->buttons->$button_name->setIcon($icon);
+			return $this->buttons->$button_name;
 		}
-		
+
 		/**
 		 * Adds a separator image.
 		 * @access public
 		 */
 		function addSeparator()
 		{
-			$this->index++;
-			$this->index_separator++;
-			
-			$image =& $this->buttons->build("P4A_Image", 's' . $this->index_separator++);
-			$image->setIcon('separator');
+			$name = 's' . $this->separators_counter++;
+			$this->buttons->build("p4a_image", $name);
+			$this->buttons->$name->setIcon('separator');
+			return $this->buttons->$name;
 		}
-		
+
 		/**
 		 * Adds a spacer image of the desidered width.
 		 * @param integer		Width in pixel from the spacer.
 		 * @access public
 		 */
-		function addSpace( $width = 10 )
+		function addSpacer($width = 10)
 		{
-			$this->index++;
-			$this->index_separator++;
-			$image =& $this->buttons->build("P4A_Image", 's' . $this->index_separator++);
-			$image->setIcon('spacer');
-			$image->setWidth($width);
+			$name = 's' . $this->separators_counter++;
+			$this->buttons->build("p4a_image", $name);
+			$this->buttons->$name->setIcon('spacer');
+			$this->buttons->$name->setWidth($width);
+			return $this->buttons->$name;
 		}
-		
+
 		/**
 		 * Turns off the action handler for the desidered button.
 		 * @param string		Button identifier.
@@ -139,23 +124,17 @@
 		 */
 		function disable($button_name = NULL)
 		{
-			if ($button_name === NULL)
-			{
-				foreach(array_keys($this->buttons) as $button_name)
-				{
-					$this->buttons[$button_name]->disable();
+			if ($button_name === NULL) {
+				while ($button =& $this->buttons->nextItem()) {
+					$button->disable();
+				}
+			} else {
+				if (is_object($this->buttons->$button_name)) {
+					$this->buttons->$button_name->disable();
 				}
 			}
-			else
-			{
-				if (array_key_exists($button_name, $this->buttons))
-				{
-					$this->buttons[$button_name]->disable();
-					//ERROR
-				}
-			}			
 		}
-		
+
 		/**
 		 * Turns on the action handler for the desidered button.
 		 * @param string		Button identifier.
@@ -163,23 +142,17 @@
 		 */
 		function enable($button_name = NULL)
 		{
-			if ($button_name === NULL)
-			{
-				foreach(array_keys($this->buttons) as $button_name)
-				{
-					$this->buttons[$button_name]->enable();
+			if ($button_name === NULL) {
+				while ($button =& $this->buttons->nextItem()) {
+					$button->enable();
+				}
+			} else {
+				if (is_object($this->buttons->$button_name)) {
+					$this->buttons->$button_name->enable();
 				}
 			}
-			else
-			{
-				if (array_key_exists($button_name, $this->buttons))
-				{
-					$this->buttons[$button_name]->enable();
-					//ERROR
-				}
-			}			
-		}		
-		
+		}
+
 		/**
 		 * Sets the rendering orientation for the toolbar.
 		 * @param string		Orientation (horizontal|vertical).
@@ -188,9 +161,8 @@
 		function setOrientation($orientation)
 		{
 			$this->orientation = $orientation;
-			$this->sheet = NULL;
 		}
-		
+
 		/**
 		 * Returns the HTML rendered widget.
 		 * @return string
@@ -201,35 +173,24 @@
 			if (!$this->isVisible()) {
 				return '';
 			}
-			
+
 			$header = '<table class="toolbar" ';
 			$close_header = ' >';
 			$contents = '';
 			$footer = '</table>';
-        	if ($this->orientation == 'vertical')
-        	{
-        		foreach(array_keys($this->buttons) as $button_name)
-        		{
-        			if (is_object($this->buttons[$button_name]))
-        			{
-        				$contents .= '<tr><td>' . $this->buttons[$button_name]->getAsString() . '</td></tr>' . "\n";
-        			}
-        		}
-        	}
-        	else
-        	{
+        	if ($this->orientation == 'vertical') {
+				while($button =& $this->buttons->nextItem()) {
+        			$contents .= '<tr><td>' . $button->getAsString() . '</td></tr>' . "\n";
+				}
+        	} else {
         		$contents .= '<tr>';
-        		foreach(array_keys($this->buttons) as $button_name)
-        		{
-        			if (is_object($this->buttons[$button_name]))
-        			{
-        				$contents .= '<td>' . $this->buttons[$button_name]->getAsString() . '</td>' . "\n";
-        			}
+        		while($button =& $this->buttons->nextItem()) {
+        			$contents .= '<td>' . $button->getAsString() . '</td>' . "\n";
         		}
         		$contents .= '</tr>';
         	}
-			
-			return $header . $this->composeStringProperties() . $close_header . $contents . $footer ; 
+
+			return $header . $this->composeStringProperties() . $close_header . $contents . $footer ;
 		}
-	}		
+	}
 ?>

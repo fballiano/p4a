@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -40,7 +40,7 @@
 
 	/**
 	 * p4a internationalization class for string messages.
-	 * 
+	 *
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
@@ -53,7 +53,7 @@
 		 * @var array
 		 */
 		var $messages = array();
-		
+
 		/**
 		 * Class constructor.
 		 * @param string				The desired language.
@@ -61,21 +61,22 @@
 		 * @param string				Optional the desired codepage.
 		 * @access private
 		 */
-		function &i18n_messages($language, $country, $codepage = NULL)
+		function &p4a_i18n_messages($language, $country, $codepage = NULL)
 		{
 			$codepage = ($codepage ? ".$codepage" : "");
 			$msg_file = "{$language}/{$country}{$codepage}.php";
 			include(dirname(__FILE__) . "/messages/{$msg_file}");
-			
+
 			$project_localization = P4A_PROJECT_LOCALES_DIR . "/{$msg_file}";
+
 			if (file_exists($project_localization)) {
 				include($project_localization );
 			}
-			
+
 			$this->messages = $messages;
 			unset($messages);
 		}
-		
+
 		/**
 		 * Retrieves a message.
 		 * @access public
@@ -85,12 +86,9 @@
 		 */
 		function get($first_level_id, $second_level_id = NULL)
 		{
-			if( $second_level_id === NULL )
-			{
+			if ($second_level_id === NULL) {
 				return $this->messages[$first_level_id];
-			}
-			else
-			{
+			} else {
 				return $this->messages[$first_level_id][$second_level_id];
 			}
 		}

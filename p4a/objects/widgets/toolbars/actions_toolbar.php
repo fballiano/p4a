@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,10 +37,10 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-	
+
 	/**
 	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "exit" buttons. 
+	 * This toolbar has "confirm", "cancel", "exit" buttons.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
@@ -54,25 +54,27 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &p4a_actions_toolbar($name, &$mask)
+		function &p4a_actions_toolbar($name)
 		{
 			parent::p4a_toolbar($name);
-			$this->mask = &$mask;
-			
-			$this->addButton(new p4a_button('confirm', 'big_confirm'));
-			$this->buttons['confirm']->implementMethod('onClick', $this->mask, 'updateRow');
 
-			$this->addButton(new p4a_button('cancel', 'big_cancel'));
-			$this->buttons['cancel']->implementMethod('onClick', $this->mask, 'reloadRow');
-			
+			$this->addButton('confirm', 'big_confirm');
+			$this->addButton('cancel', 'big_cancel');
+
 			$this->addSeparator();
-			
-			$this->addButton(new p4a_button('print', 'big_print'));
-			$this->buttons['print']->dropAction('onClick');
-			$this->buttons['print']->setProperty('onClick', 'window.print(); return false;');
 
-			$this->addButton(new p4a_button('exit', 'big_exit'));
-			$this->buttons['exit']->implementMethod('onClick', $this->mask, 'showPrevMask');			
+			$this->addButton('print', 'big_print');
+			$this->buttons->print->dropAction('onClick');
+			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
 
+			$this->addButton('exit', 'big_exit');
+
+		}
+
+		function setMask(&$mask)
+		{
+			$this->buttons->confirm->implementMethod('onClick', $mask, 'updateRow');
+			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
+			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 		}
 	}

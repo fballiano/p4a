@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -54,48 +54,48 @@
 		 * @var string
 		 */
 		var $_id = NULL;
-		
+
 		//todo
 		var $_parent_id = NULL;
-		
+
 		/**
 		 * Object's name
 		 * @access public
 		 * @var string
 		 */
 		var $_name = NULL;
-		
+
 		/**
 		 * Keeps the association between an action and its listener.
 		 * @var array
 		 * @access private
 		 */
 		var $_map_actions = array();
-		
+
 		//todo
 		var $_objects = array();
-		
-				
+
+
 		/**
 		 * Class constructor.
 		 * Sets default properties and store the object in the application object stack.
 		 * @param string	Object identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name.
 		 * @param string	Prefix string for ID generation.
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
-		 * @access private 
+		 * @access private
 		 */
  		function &p4aObject($name = NULL, $prefix = 'obj', $id = NULL)
 		{
 			$this->setName($name);
-		
+
 			// Setting unique identifier ID
 			if( $id === NULL )  {
 				$this->_id = uniqid($prefix);
 			}else{
-				$this->_id = $prefix . $id ;	
+				$this->_id = $prefix . $id ;
 			}
 		}
-		
+
 		//todo
 		function &build($class, $name)
 		{
@@ -106,52 +106,49 @@
 			$this->$name->setParentID($this->getID());
 			return $this->$name;
 		}
-		
+
  		//todo
 		function setParentID($object_id)
 		{
 			$this->_parent_id = $object_id;
 		}
-		
+
 		//todo
 		function getParentID()
 		{
 			return $this->_parent_id;
 		}
-		
-		
+
 		//todo
 		function getId()
 		{
 			return $this->_id;
 		}
-		
+
 		/**
 		 * Destroys the object
 		 * Retrieves all children objects and destroy them.
 		 * @access public
-		 */	
+		 */
 		 //todo
 		function destroy()
 		{
 			$p4a =& P4A::singleton();
  			$parent =& $p4a->getObject($this->getParentID());
-			
+
 			$this_id = $this->getID();
 			$this_name = $this->getName();
 
-			//todo			
+			//todo
 			foreach($this->_objects as $object_id){
 				$p4a->objects[$object_id]->destroy();
 //  				unset($p4a->objects[$object_id]);
 			}
-			
+
 			$this = null;
 			unset($parent->$this_name);
 			unset($p4a->objects[$this_id]);
 		}
-		
-		
 
 		/**
 		 * Sets the object's name.
@@ -161,7 +158,7 @@
 		{
 			$this->_name=$name;
 		}
-		
+
 		/**
 		 * Returns the object name.
 		 * @access public
@@ -172,7 +169,7 @@
 		{
 			return $this->_name;
 		}
-		
+
 		/**
 		 * Handle an action implemented by the object.
 		 * @param string	The action to be handled.
@@ -193,7 +190,7 @@
 				return $return;
 			}
 		}
-			
+
 		/**
 		 * Tells an object to execute a method when an action is called.
 		 * @param object object		The object that has the method.
@@ -205,12 +202,12 @@
 		{
 			$object->_map_actions[$action] = array();
 			$object->_map_actions[$action]['object'] =& $this;
-			$object->_map_actions[$action]['method'] = $method;	
+			$object->_map_actions[$action]['method'] = $method;
 		}
-		
+
 		/**
 		 * Wrapper for setting an intercepted event on an object.
-		 * 
+		 *
 		 * @param string			The action's name.
 		 * @param object object		The object that will intercept the action.
 		 * @param string			The method that will be called.
@@ -220,7 +217,7 @@
 		{
 			$object->intercept( $this, $action, $method );
 		}
-		
+
 		/**
 		 * Tells if an action is triggered.
 		 * @param string	The action.
@@ -238,7 +235,7 @@
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Returns the "CLASS" type of the object.
 		 * @return string
@@ -248,7 +245,7 @@
 		{
 			return get_class($this);
 		}
-		
+
 		/**
 		 * Handle an error action implemented by the object.
 		 * Checks if the the specified action is triggered and calls it,
@@ -263,38 +260,31 @@
 			$p4a =& P4A::singleton();
 			$interceptor = NULL;
 			$method = NULL;
-			
-			if (array_key_exists( $action, $this->_map_actions ))
-			{
+
+			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
 				$method = $this->_map_actions[$action]['method'];
-			}
-			elseif(array_key_exists( 'onError', $this->_map_actions ))
-			{
+			} elseif(array_key_exists('onError', $this->_map_actions)) {
 				$interceptor =& $this->_map_actions['onError']['object'];
 				$method = $this->_map_actions['onError']['method'];
-			}
-			elseif(isset($p4a) and array_key_exists( 'onError', $p4a->_map_actions ))
-			{
+			} elseif(isset($p4a) and array_key_exists('onError', $p4a->_map_actions)) {
 				$interceptor =& $p4a->_map_actions['onError']['object'];
 				$method = $p4a->_map_actions['onError']['method'];
 			}
-			
-			if ($interceptor !== NULL)
-			{
-    			if ($param !== NULL){
+
+			if ($interceptor !== NULL) {
+    			if ($param !== NULL) {
     				eval('$return = $interceptor->' . $method . '($param);');
-    			}else{
+    			} else {
     				eval('$return = $interceptor->' . $method . '();');
-    			}		
+    			}
     			return $return;
-			}
-			else
-			{
+			} else {
 				$p4a->close();
-				$p4a->openMask('p4a_error');
-				$p4a->active_mask->listener->renderError($param);
+				$p4a->openMask('p4a_mask_error');
+				$p4a->active_mask->renderError($param);
 				$p4a->active_mask->raise();
+				return ABORT;
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
+// | Copyright (c) 1997-2004 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -14,25 +14,31 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 // | Author: Stig Bakken <ssb@php.net>                                    |
+// | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: odbc.php,v 1.8 2003/06/22 10:18:16 cox Exp $
-//
-// Database independent query interface definition for PHP's ODBC
-// extension.
-//
+// $Id: odbc.php,v 1.46 2004/03/11 04:20:11 danielc Exp $
 
-//
+
 // XXX legend:
 //  More info on ODBC errors could be found here:
 //  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/trblsql/tr_err_odbc_5stz.asp
 //
 // XXX ERRORMSG: The error message from the odbc function should
 //                 be registered here.
-//
+
 
 require_once 'DB/common.php';
 
+/**
+ * Database independent query interface definition for PHP's ODBC
+ * extension.
+ *
+ * @package  DB
+ * @version  $Id: odbc.php,v 1.46 2004/03/11 04:20:11 danielc Exp $
+ * @category Database
+ * @author   Stig Bakken <ssb@php.net>
+ */
 class DB_odbc extends DB_common
 {
     // {{{ properties
@@ -65,7 +71,9 @@ class DB_odbc extends DB_common
             '22008' => DB_ERROR_INVALID_DATE,
             '22012' => DB_ERROR_DIVZERO,
             '23000' => DB_ERROR_CONSTRAINT,
+            '23502' => DB_ERROR_CONSTRAINT_NOT_NULL,
             '23503' => DB_ERROR_CONSTRAINT,
+            '23505' => DB_ERROR_CONSTRAINT,
             '24000' => DB_ERROR_INVALID,
             '34000' => DB_ERROR_INVALID,
             '37000' => DB_ERROR_SYNTAX,
@@ -79,6 +87,7 @@ class DB_odbc extends DB_common
             'S0012' => DB_ERROR_NOT_FOUND,
             'S0021' => DB_ERROR_ALREADY_EXISTS,
             'S0022' => DB_ERROR_NOSUCHFIELD,
+            'S1000' => DB_ERROR_CONSTRAINT_NOT_NULL,
             'S1009' => DB_ERROR_INVALID,
             'S1090' => DB_ERROR_INVALID,
             'S1C00' => DB_ERROR_NOT_CAPABLE
@@ -99,11 +108,12 @@ class DB_odbc extends DB_common
      */
     function connect($dsninfo, $persistent = false)
     {
-        if (!DB::assertExtension('odbc'))
+        if (!DB::assertExtension('odbc')) {
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
+        }
 
         $this->dsn = $dsninfo;
-        if (!empty($dsninfo['dbsyntax'])) {
+        if ($dsninfo['dbsyntax']) {
             $this->dbsyntax = $dsninfo['dbsyntax'];
         }
         switch ($this->dbsyntax) {
@@ -113,24 +123,31 @@ class DB_odbc extends DB_common
                     'pconnect' => true,
                     'transactions' => true
                 );
-                $default_dsn = 'localhost';
                 break;
             case 'navision':
                 // the Navision driver doesn't support fetch row by number
                 $this->features['limit'] = false;
-                break;
-            default:
-                break;
         }
-        $dbhost = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
-        $user = $dsninfo['username'];
-        $pw = $dsninfo['password'];
+
+        /*
+         * This is hear for backwards compatibility.
+         * Should have been using 'database' all along, but used hostspec.
+         */
+        if ($dsninfo['database']) {
+            $odbcdsn = $dsninfo['database'];
+        } elseif ($dsninfo['hostspec']) {
+            $odbcdsn = $dsninfo['hostspec'];
+        } else {
+            $odbcdsn = 'localhost';
+        }
+
         if ($this->provides('pconnect')) {
             $connect_function = $persistent ? 'odbc_pconnect' : 'odbc_connect';
         } else {
             $connect_function = 'odbc_connect';
         }
-        $conn = @$connect_function($dbhost, $user, $pw);
+        $conn = @$connect_function($odbcdsn, $dsninfo['username'],
+                                   $dsninfo['password']);
         if (!is_resource($conn)) {
             return $this->raiseError(DB_ERROR_CONNECT_FAILED, null, null,
                                          null, $this->errorNative());
@@ -176,7 +193,7 @@ class DB_odbc extends DB_common
             $this->manip_result = $result; // For affectedRows()
             return DB_OK;
         }
-        $this->row[$result] = 0;
+        $this->row[(int)$result] = 0;
         $this->manip_result = 0;
         return $result;
     }
@@ -195,43 +212,67 @@ class DB_odbc extends DB_common
      */
     function nextResult($result)
     {
-        return odbc_next_result($result);
+        return @odbc_next_result($result);
     }
 
     // }}}
     // {{{ fetchInto()
 
-    function fetchInto($result, &$row, $fetchmode, $rownum=null)
+    /**
+     * Fetch a row and insert the data into an existing array.
+     *
+     * Formating of the array and the data therein are configurable.
+     * See DB_result::fetchInto() for more information.
+     *
+     * @param resource $result    query result identifier
+     * @param array    $arr       (reference) array where data from the row
+     *                            should be placed
+     * @param int      $fetchmode how the resulting array should be indexed
+     * @param int      $rownum    the row number to fetch
+     *
+     * @return mixed DB_OK on success, null when end of result set is
+     *               reached or on failure
+     *
+     * @see DB_result::fetchInto()
+     * @access private
+     */
+    function fetchInto($result, &$arr, $fetchmode, $rownum=null)
     {
-        $row = array();
+        $arr = array();
         if ($rownum !== null) {
             $rownum++; // ODBC first row is 1
             if (version_compare(phpversion(), '4.2.0', 'ge')) {
-                $cols = odbc_fetch_into($result, $row, $rownum);
+                $cols = @odbc_fetch_into($result, $arr, $rownum);
             } else {
-                $cols = odbc_fetch_into($result, $rownum, $row);
+                $cols = @odbc_fetch_into($result, $rownum, $arr);
             }
         } else {
-            $cols = odbc_fetch_into($result, $row);
+            $cols = @odbc_fetch_into($result, $arr);
         }
 
         if (!$cols) {
             /* XXX FIXME: doesn't work with unixODBC and easysoft
                           (get corrupted $errno values)
-            if ($errno = odbc_error($this->connection)) {
+            if ($errno = @odbc_error($this->connection)) {
                 return $this->RaiseError($errno);
             }*/
             return null;
         }
         if ($fetchmode !== DB_FETCHMODE_ORDERED) {
-            for ($i = 0; $i < count($row); $i++) {
-                $colName = odbc_field_name($result, $i+1);
-                $a[$colName] = $row[$i];
+            for ($i = 0; $i < count($arr); $i++) {
+                $colName = @odbc_field_name($result, $i+1);
+                $a[$colName] = $arr[$i];
             }
-            if ($this->options['optimize'] == 'portability') {
+            if ($this->options['portability'] & DB_PORTABILITY_LOWERCASE) {
                 $a = array_change_key_case($a, CASE_LOWER);
             }
-            $row = $a;
+            $arr = $a;
+        }
+        if ($this->options['portability'] & DB_PORTABILITY_RTRIM) {
+            $this->_rtrimArrayValues($arr);
+        }
+        if ($this->options['portability'] & DB_PORTABILITY_NULL_TO_EMPTY) {
+            $this->_convertNullArrayValuesToEmpty($arr);
         }
         return DB_OK;
     }
@@ -241,16 +282,8 @@ class DB_odbc extends DB_common
 
     function freeResult($result)
     {
-        if (is_resource($result)) {
-            // Always return true
-            return odbc_free_result($result);
-        }
-        if (!isset($this->prepare_tokens[(int)$result])) {
-            return false;
-        }
-        unset($this->prepare_tokens[(int)$result]);
-        unset($this->prepare_types[(int)$result]);
-        return true;
+        unset($this->row[(int)$result]);
+        return @odbc_free_result($result);
     }
 
     // }}}
@@ -269,17 +302,17 @@ class DB_odbc extends DB_common
     // {{{ affectedRows()
 
     /**
-    * Returns the number of rows affected by a manipulative query
-    * (INSERT, DELETE, UPDATE)
-    * @return mixed int affected rows, 0 when non manip queries or
-    *               DB error on error
-    */
+     * Returns the number of rows affected by a manipulative query
+     * (INSERT, DELETE, UPDATE)
+     * @return mixed int affected rows, 0 when non manip queries or
+     *               DB error on error
+     */
     function affectedRows()
     {
         if (empty($this->manip_result)) {  // In case of SELECT stms
             return 0;
         }
-        $nrows = odbc_num_rows($this->manip_result);
+        $nrows = @odbc_num_rows($this->manip_result);
         if ($nrows == -1) {
             return $this->odbcRaiseError();
         }
@@ -298,35 +331,56 @@ class DB_odbc extends DB_common
      */
     function numRows($result)
     {
-        $nrows = odbc_num_rows($result);
+        $nrows = @odbc_num_rows($result);
         if ($nrows == -1) {
             return $this->odbcRaiseError(DB_ERROR_UNSUPPORTED);
         }
         return $nrows;
     }
 
-    // {{{ quote()
+    // }}}
+    // {{{ quoteIdentifier()
+
     /**
-    * Quote the given string so it can be safely used within string delimiters
-    * in a query.
-    * @param $string mixed Data to be quoted
-    * @return mixed "NULL" string, quoted string or original data
-    */
-    function quote($str = null)
+     * Quote a string so it can be safely used as a table / column name
+     *
+     * Quoting style depends on which dbsyntax was passed in the DSN.
+     *
+     * Use 'mssql' as the dbsyntax in the DB DSN only if you've unchecked
+     * "Use ANSI quoted identifiers" when setting up the ODBC data source.
+     *
+     * @param string $str  identifier name to be quoted
+     *
+     * @return string  quoted identifier string
+     *
+     * @since 1.6.0
+     * @access public
+     */
+    function quoteIdentifier($str)
     {
-        if (is_numeric($str)) {
-            return $str;
-        }
-        switch (strtolower(gettype($str))) {
-            case 'null':
-                return 'NULL';
-            case 'boolean':
-                return $str ? 'TRUE' : 'FALSE';
-            case 'string':
+        switch ($this->dsn['dbsyntax']) {
+            case 'access':
+                return '[' . $str . ']';
+            case 'mssql':
+            case 'sybase':
+                return '[' . str_replace(']', ']]', $str) . ']';
+            case 'mysql':
+            case 'mysqli':
+                return '`' . $str . '`';
             default:
-                $str = str_replace("'", "''", $str);
-                return "'$str'";
+                return '"' . str_replace('"', '""', $str) . '"';
         }
+    }
+
+    // }}}
+    // {{{ quote()
+
+    /**
+     * @deprecated  Deprecated in release 1.6.0
+     * @internal
+     */
+    function quote($str) {
+        return $this->quoteSmart($str);
     }
 
     // }}}
@@ -340,30 +394,29 @@ class DB_odbc extends DB_common
      *
      * @return int ODBC error code
      */
-
     function errorNative()
     {
         if (!isset($this->connection) || !is_resource($this->connection)) {
-            return odbc_error() . ' ' . odbc_errormsg();
+            return @odbc_error() . ' ' . @odbc_errormsg();
         }
-        return odbc_error($this->connection) . ' ' . odbc_errormsg($this->connection);
+        return @odbc_error($this->connection) . ' ' . @odbc_errormsg($this->connection);
     }
 
     // }}}
     // {{{ nextId()
 
     /**
-     * Get the next value in a sequence.  We emulate sequences
-     * for odbc. Will create the sequence if it does not exist.
+     * Returns the next free id in a sequence
      *
+     * @param string  $seq_name  name of the sequence
+     * @param boolean $ondemand  when true, the seqence is automatically
+     *                           created if it does not exist
+     *
+     * @return int  the next id number in the sequence.  DB_Error if problem.
+     *
+     * @internal
+     * @see DB_common::nextID()
      * @access public
-     *
-     * @param $seq_name the name of the sequence
-     *
-     * @param $ondemand whether to create the sequence table on demand
-     * (default is true)
-     *
-     * @return a sequence integer, or a DB error
      */
     function nextId($seq_name, $ondemand = true)
     {
@@ -405,20 +458,40 @@ class DB_odbc extends DB_common
         return $row[0];
     }
 
-    // }}}
-    // {{{ createSequence()
-
+    /**
+     * Creates a new sequence
+     *
+     * @param string $seq_name  name of the new sequence
+     *
+     * @return int  DB_OK on success.  A DB_Error object is returned if
+     *              problems arise.
+     *
+     * @internal
+     * @see DB_common::createSequence()
+     * @access public
+     */
     function createSequence($seq_name)
     {
         $seqname = $this->getSequenceName($seq_name);
         return $this->query("CREATE TABLE ${seqname} ".
-                            '(id bigint NOT NULL,'.
+                            '(id integer NOT NULL,'.
                             ' PRIMARY KEY(id))');
     }
 
     // }}}
     // {{{ dropSequence()
 
+    /**
+     * Deletes a sequence
+     *
+     * @param string $seq_name  name of the sequence to be deleted
+     *
+     * @return int  DB_OK on success.  DB_Error if problems.
+     *
+     * @internal
+     * @see DB_common::dropSequence()
+     * @access public
+     */
     function dropSequence($seq_name)
     {
         $seqname = $this->getSequenceName($seq_name);
@@ -461,9 +534,29 @@ class DB_odbc extends DB_common
     // }}}
     // {{{ odbcRaiseError()
 
+    /**
+     * Gather information about an error, then use that info to create a
+     * DB error object and finally return that object.
+     *
+     * @param  integer  $errno  PEAR error number (usually a DB constant) if
+     *                          manually raising an error
+     * @return object  DB error object
+     * @see errorNative()
+     * @see DB_common::errorCode()
+     * @see DB_common::raiseError()
+     */
     function odbcRaiseError($errno = null)
     {
         if ($errno === null) {
+            switch ($this->dbsyntax) {
+                case 'access':
+                    if ($this->options['portability'] & DB_PORTABILITY_ERRORS) {
+                        $this->errorcode_map['07001'] = DB_ERROR_NOSUCHFIELD;
+                    } else {
+                        // Doing this in case mode changes during runtime.
+                        $this->errorcode_map['07001'] = DB_ERROR_MISMATCH;
+                    }
+            }
             $errno = $this->errorCode(odbc_error($this->connection));
         }
         return $this->raiseError($errno, null, null, null,
@@ -471,29 +564,14 @@ class DB_odbc extends DB_common
     }
 
     // }}}
-    // {{{ getSpecialQuery()
-
-    /**
-    * Returns the query needed to get some backend info
-    * @param string $type What kind of info you want to retrieve
-    * @return string The SQL query string
-    */
-    function getSpecialQuery($type)
-    {
-        switch ($type) {
-            case 'tables':
-            default:
-                return null;
-        }
-        return $sql;
-    }
-
-    // }}}
 
 }
 
-// Local variables:
-// tab-width: 4
-// c-basic-offset: 4
-// End:
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */
+
 ?>

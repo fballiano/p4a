@@ -3,7 +3,7 @@
     </style>
     <script type="text/javascript" src="[[$tpl_path]]/js/menuDropdown.js"></script>
       <ul name="menu_top" class="menuList" [[$properties]]>
-         [[foreach item=item from=$items]] 
+         [[foreach item=item from=$items]]
         <li class="menubar">
           [[if $item.actions]]
 		  <a href="#" id="[[$item.id]]" class="actuator" [[$item.actions]] [[$item.properties]]>[[$item.label]]</a>
@@ -19,10 +19,9 @@
         [[/foreach]]
       </ul>
     <script type="text/javascript">
-		[[foreach item=item from=$items]] 
+		[[foreach item=item from=$items]]
 			[[if not $item.actions]]
         	initializeMenu("[[$item.id]]Menu", "[[$item.id]]");
 			[[/if]]
         [[/foreach]]
     </script>
-    

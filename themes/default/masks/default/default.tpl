@@ -6,7 +6,7 @@
     <link href="[[$theme_path]]/screen.css" rel="stylesheet" type="text/css" media="screen">
     <link href="[[$theme_path]]/print.css" rel="stylesheet" type="text/css" media="print">
     [[foreach from=$css key=uri item=media ]]
-    <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">    
+    <link href="[[$uri]]" rel="stylesheet" type="text/css" media="[[$media]]">
     [[/foreach]]
     <style type="text/css">
     [[assign var="toppx" value="0"]]
@@ -19,62 +19,63 @@
     [[if isset($menu) and isset($top)]]
 	     [[assign var="toppx" value="80"]]
     [[/if]]
-    
-      body { 
-			height: 100%; 
-	      	width:100%; 
-    	  	padding:0px; 
-      		margin:0px; 
-	      	border:0px; 
+
+      body {
+			height: 100%;
+	      	width:100%;
+    	  	padding:0px;
+      		margin:0px;
+	      	border:0px;
       }
-      
-    
+
+
       #sheetContainer>.sheet{
       	margin-left:auto;
       	margin-right:auto;
       }
-      
+
       #topContainer {
 			width:100%;
 			position:fixed;
+			top: 0px;
 			z-index:2;
       }
-      
+
       #mainContainer {
 		   	width:100%;
-	      	position:absolute; 
+	      	position:absolute;
 	      	text-align:center;
       }
-      
+
       #titleContaineer {
       		text-align:left;
       }
-      
+
       @media screen {
-	      #mainContainer { 
+	      #mainContainer {
 				 top:[[$toppx]]px;
-	      } 
+	      }
 	  }
-	  
+
       @media print {
-	      #mainContainer { 
+	      #mainContainer {
 				top:0px;
 	      }
-	      
+
 	      #topContainer {
 				visibility:hidden;
 	      }
 	  }
-	  
+
     </style>
   </head>
-  
+
   [[if $focus_id]]
   <body onLoad="setFocus('[[$focus_id]]')">
   [[else]]
   <body>
   [[/if]]
-  
+
   	[[$mask_open]]
 
 	<!-- TOP -->
@@ -88,24 +89,24 @@
 		</div>
 		[[/if]]
 	</div>
-	
+
 	<!-- MAIN  -->
 	<div id="mainContainer">
-		
+
 		<!-- TITLE -->
 		[[if $title]]
 		<div id="titleContainer">
 			<h2>[[$title]]</h2>
 		</div>
 		[[/if]]
-		
+
 		<!-- SHEET -->
 		<div id="sheetContainer">
 		[[$main]]
 		</div>
 
 	</div>
-	
+
   	[[$mask_close]]
   </body>
 </html>

@@ -146,10 +146,9 @@
 		}
 
 		//todo
-		function  &singleton($name)
+		function &singleton($name)
 		{
 			$p4a =& P4A::singleton();
-
 
  			if (!isset($p4a->masks->$name)) {
 				$p4a->masks->build($name, $name);
@@ -317,7 +316,7 @@
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
 			$this->smarty->assign('css', $p4a->css);
-			
+
 			if(isset($this->focus_object) and is_object($this->focus_object)){
  				$this->smarty->assign('focus_id', $this->focus_object->getID());
 			}
@@ -329,7 +328,7 @@
 				if (is_object($value)){
 					$value = $value->getAsString();
 				}
-				
+
 				$this->smarty->assign($key, $value);
 			}
 
@@ -353,15 +352,10 @@
 		 * Add a multivalue external field to mask
 		 * @access public
 		 */
-		 //todo
         function addMultivalueField($fieldname)
         {
-        	if (! $this->data ){
-        		ERROR('NO DATASOURCE SPECIFIED, CALL SET_SOURCE BEFORE');
-        	}
-
 			$this->fields->build("p4a_multivalue_field", $fieldname);
-        	$this->external_fields[] = $this->fields->$fieldname->getID() ;
+        	$this->external_fields[] = $this->fields->$fieldname->getID();
 
         	$pk_value = $this->fields->{$this->data->pk}->getNewValue();
 			$this->fields->$fieldname->setPkValue($pk_value);
@@ -378,11 +372,11 @@
 		{
 			$this->data =& $data_source;
 
-            foreach($this->data->getFields() as $field){
-            	$this->fields->build("P4A_Field",$field, false);
-            	$this->fields->$field->setDataField($this->data->fields->$field);
-            }
-
+			while($field =& $this->data->fields->nextItem()) {
+				$field_name = $field->getName();
+				$this->fields->build("P4A_Field",$field_name, false);
+				$this->fields->$field_name->setDataField($field);
+			}
 		}
 
 		/**
@@ -429,77 +423,66 @@
 		 */
 		function updateRow()
 		{
-			$p4a =& P4A::singleton();
-			if( $this->actionHandler( 'beforeUpdateRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeUpdateRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onUpdateRow' ) )
-			{
-				if( $this->actionHandler( 'onUpdateRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
+			if ($this->isActionTriggered('onUpdateRow')) {
+				if($this->actionHandler('onUpdateRow') == ABORT) return ABORT;
+			} else {
+				$p4a =& P4A::singleton();
+
 				// FILE UPLOADS
-	            foreach(array_keys($this->fields) as $fieldname)
-         		{
-					$field_type = $this->fields[$fieldname]->getType();
-					if ($field_type=='file' or $field_type=='image')
-					{
-						$new_value  = $this->fields[$fieldname]->getNewValue();
-						$old_value  = $this->fields[$fieldname]->getValue();
-						$target_dir = P4A_UPLOADS_DIR . '/' . $this->fields[$fieldname]->getUploadSubpath();
+				while ($field =& $this->fields->nextItem()) {
+					$field_type = $field->getType();
+					if ($field_type=='file' or $field_type=='image') {
+						$new_value  = $field->getNewValue();
+						$old_value  = $field->getValue();
+						$target_dir = P4A_UPLOADS_DIR . '/' . $field->getUploadSubpath();
 
-						if( !is_dir( $target_dir ) ) {
-							mkdir( $target_dir, P4A_UMASK );
+						if (!is_dir($target_dir)) {
+							mkdir($target_dir, P4A_UMASK);
 						}
 
-						$a_new_value = explode( ',', substr( $new_value, 1, -1 ) );
-						$a_old_value = explode( ',', substr( $old_value, 1, -1 ) );
+						$a_new_value = explode(',', substr($new_value, 1, -1 ));
+						$a_old_value = explode(',', substr($old_value, 1, -1 ));
 
-						if ($old_value === NULL)
-						{
-							if ($new_value !== NULL)
-							{
+						if ($old_value === NULL) {
+							if ($new_value !== NULL) {
 								$a_new_value[0] = get_unique_file_name( $a_new_value[0], $target_dir );
                     			$new_path = $target_dir . '/' . $a_new_value[0];
-								rename(P4A_UPLOADS_DIR . '/' . $a_new_value[1], $new_path );
-								$a_new_value[1] = str_replace( P4A_UPLOADS_DIR , '', $new_path );
-								$this->fields[$fieldname]->setNewValue( '{' . join($a_new_value, ',') . '}' );
+								rename(P4A_UPLOADS_DIR . '/' . $a_new_value[1], $new_path);
+								$a_new_value[1] = str_replace(P4A_UPLOADS_DIR , '', $new_path);
+								$field->setNewValue('{' . join($a_new_value, ',') . '}');
+							} else {
+								$field->setNewValue(NULL);
 							}
-							else
-							{
-								$this->fields[$fieldname]->setNewValue( NULL );
-							}
-						}
-						else
-						{
-							if ($new_value === NULL)
-							{
-								unlink($target_dir . '/' . $a_old_value[1] );
-								$this->fields[$fieldname]->setNewValue( NULL );
-							}
-							elseif ($new_value!=$old_value)
-							{
-								unlink($target_dir . '/' . $a_old_value[1] );
-								$a_new_value[0] = get_unique_file_name( $a_new_value[0], $target_dir );
+						} else {
+							if ($new_value === NULL) {
+								unlink($target_dir . '/' . $a_old_value[1]);
+								$field->setNewValue(NULL);
+							} elseif ($new_value!=$old_value) {
+								unlink($target_dir . '/' . $a_old_value[1]);
+								$a_new_value[0] = get_unique_file_name($a_new_value[0], $target_dir);
 								$new_path = $target_dir . '/' . $a_new_value[0];
-								rename(P4A_UPLOADS_DIR . '/' . $a_new_value[1], $new_path );
-								$a_new_value[1] = str_replace( P4A_UPLOADS_DIR , '', $new_path );
-								$this->fields[$fieldname]->setNewValue( '{' . join($a_new_value, ',') . '}' );
+								rename(P4A_UPLOADS_DIR . '/' . $a_new_value[1], $new_path);
+								$a_new_value[1] = str_replace(P4A_UPLOADS_DIR , '', $new_path);
+								$field->setNewValue('{' . join($a_new_value, ',') . '}');
 							}
 						}
 					}
 	            }
 
 				// EXECUTE THE DATA BROWSER COMMIT
-				$this->data_browser->commitRow();
+				$this->data->saveRow();
 
 				// EXTERNAL FIELDS
-				foreach($this->external_fields as $object_id){
-					$p4a->objects[$object_id]->update();
+				/*
+				foreach($this->external_fields as $object_id) {
+					$p4a->objects->$object_id->update();
 				}
+				*/
 			}
 
-			$this->actionHandler( 'afterUpdateRow' ) ;
+			$this->actionHandler('afterUpdateRow');
 		}
 
 		/**
@@ -511,23 +494,22 @@
 		function newRow()
 		{
 			$p4a =& P4A::singleton();
-			if( $this->actionHandler( 'beforeNewRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeNewRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onNewRow' ) )
-			{
+			if ($this->isActionTriggered('onNewRow')) {
 				if( $this->actionHandler( 'onNewRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-    			$this->data_browser->moveNew();
+			} else {
+    			$this->data->newRow();
+				/*
 				foreach($this->external_fields as $object_id){
 					$pk_value = $this->fields[$this->data->pk]->getNewValue();
 					$p4a->objects[$object_id]->setPkValue($pk_value);
 					$p4a->objects[$object_id]->load();
 				}
+				*/
 			}
 
-			$this->actionHandler( 'afterNewRow' ) ;
+			$this->actionHandler('afterNewRow');
 		}
 
 		/**
@@ -537,24 +519,22 @@
 		function deleteRow()
 		{
 			$p4a =& P4A::singleton();
-			if( $this->actionHandler( 'beforeDeleteRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeDeleteRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onDeleteRow' ) )
-			{
-				if( $this->actionHandler( 'onDeleteRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
+			if ($this->isActionTriggered('onDeleteRow')) {
+				if ($this->actionHandler('onDeleteRow') == ABORT) return ABORT;
+			} else {
 				// EXTERNAL FIELDS
+				/*
 				foreach($this->external_fields as $object_id){
 					$p4a->objects[$object_id]->setNewValue();
 					$p4a->objects[$object_id]->update();
-				}
+				}*/
 
-    			$this->data_browser->deleteRow();
+    			$this->data->deleteRow();
 			}
 
-			$this->actionHandler( 'afterDeleteRow' ) ;
+			$this->actionHandler('afterDeleteRow') ;
 		}
 
 		/**
@@ -563,23 +543,15 @@
 		 */
 		function nextRow()
 		{
-			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onMoveRow' ) )
-			{
-				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				/*
-    			$this->data_browser->moveNext();
-    			$this->loadRow();
-    			*/
-
-    			$this->data_browser->moveNext();
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+    			$this->data->nextRow();
 			}
 
-			$this->actionHandler( 'afterMoveRow' ) ;
+			$this->actionHandler('afterMoveRow');
 		}
 
 		/**
@@ -588,23 +560,15 @@
 		 */
 		function prevRow()
 		{
-			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onMoveRow' ) )
-			{
-				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				/*
-    			$this->data_browser->movePrev();
-    			$this->loadRow();
-    			*/
-
-    			$this->data_browser->movePrev();
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+    			$this->data->prevRow();
 			}
 
-			$this->actionHandler( 'afterMoveRow' ) ;
+			$this->actionHandler('afterMoveRow');
 		}
 
 		/**
@@ -613,23 +577,15 @@
 		 */
 		function lastRow()
 		{
-			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onMoveRow' ) )
-			{
-				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				/*
-    			$this->data_browser->moveLast();
-    			$this->loadRow();
-    			*/
-
-    			$this->data_browser->moveLast();
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+    			$this->data->lastRow();
 			}
 
-			$this->actionHandler( 'afterMoveRow' ) ;
+			$this->actionHandler('afterMoveRow');
 		}
 
 		/**
@@ -638,23 +594,16 @@
 		 */
 		function firstRow()
 		{
-			if( $this->actionHandler( 'beforeMoveRow' ) == ABORT ) return ABORT;
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-			if( $this->isActionTriggered( 'onMoveRow' ) )
+			if ($this->isActionTriggered('onMoveRow'))
 			{
-				if( $this->actionHandler( 'onMoveRow' ) == ABORT ) return ABORT;
-			}
-			else
-			{
-				/*
-    			$this->data_browser->moveFirst();
-    			$this->loadRow();
-    			*/
-
-    			$this->data_browser->moveFirst();
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+    			$this->data->firstRow();
 			}
 
-			$this->actionHandler( 'afterMoveRow' ) ;
+			$this->actionHandler('afterMoveRow');
 		}
 
 

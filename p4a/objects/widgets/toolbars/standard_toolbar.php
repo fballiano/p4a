@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,10 +37,10 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-	
+
 	/**
 	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "first", "prev", "next", "last", "new", "delete", "exit" buttons. 
+	 * This toolbar has "confirm", "cancel", "first", "prev", "next", "last", "new", "delete", "exit" buttons.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
@@ -54,47 +54,46 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &p4a_standard_toolbar($name, &$mask)
+		function &p4a_standard_toolbar($name)
 		{
 			parent::p4a_toolbar($name);
-			$this->mask = &$mask;
-			
-			$this->addButton(new p4a_button('confirm', 'big_confirm'));
-			$this->buttons['confirm']->implementMethod('onClick', $this->mask, 'updateRow');
 
-			$this->addButton(new p4a_button('cancel', 'big_cancel'));
-			$this->buttons['cancel']->implementMethod('onClick', $this->mask, 'reloadRow');
-			
+			$this->addButton('confirm', 'big_confirm');
+			$this->addButton('cancel', 'big_cancel');
 			$this->addSeparator();
 
-			$this->addButton(new p4a_button('first', 'big_first'));
-			$this->buttons['first']->implementMethod('onClick', $this->mask, 'firstRow');
+			$this->addButton('first', 'big_first');
+			$this->addButton('prev', 'big_prev');
+			$this->addButton('next', 'big_next');
+			$this->addButton('last', 'big_last');
 
-			$this->addButton(new p4a_button('prev', 'big_prev'));
-			$this->buttons['prev']->implementMethod('onClick', $this->mask, 'prevRow');
-
-			$this->addButton(new p4a_button('next', 'big_next'));
-			$this->buttons['next']->implementMethod('onClick', $this->mask, 'nextRow');
-			
-			$this->addButton(new p4a_button('last', 'big_last'));
-			$this->buttons['last']->implementMethod('onClick', $this->mask, 'lastRow');
-			
 			$this->addSeparator();
-			
-			$this->addButton(new p4a_button('new', 'big_new'));
-			$this->buttons['new']->implementMethod('onClick', $this->mask, 'newRow');
-			
-			$this->addButton(new p4a_button('delete', 'big_delete'));
-			$this->buttons['delete']->requireConfirmation('onClick', NULL, 'confirm_delete');
-			$this->buttons['delete']->implementMethod('onClick', $this->mask, 'deleteRow');
-			
-			$this->addSeparator();
-			
-			$this->addButton(new p4a_button('print', 'big_print'));
-			$this->buttons['print']->dropAction('onClick');
-			$this->buttons['print']->setProperty('onClick', 'window.print(); return false;');
 
-			$this->addButton(new p4a_button('exit', 'big_exit'));
-			$this->buttons['exit']->implementMethod('onClick', $this->mask, 'showPrevMask');
+			$this->addButton('new', 'big_new');
+
+			$this->addButton('delete', 'big_delete');
+			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');
+
+			$this->addSeparator();
+
+			$this->addButton('print', 'big_print');
+			$this->buttons->print->dropAction('onClick');
+			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
+
+			$this->addButton('exit', 'big_exit');
+
+		}
+
+		function setMask(&$mask)
+		{
+			$this->buttons->confirm->implementMethod('onClick', $mask, 'updateRow');
+			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
+			$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
+			$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
+			$this->buttons->next->implementMethod('onClick', $mask, 'nextRow');
+			$this->buttons->last->implementMethod('onClick', $mask, 'lastRow');
+			$this->buttons->new->implementMethod('onClick', $mask, 'newRow');
+			$this->buttons->delete->implementMethod('onClick', $mask, 'deleteRow');
+			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 		}
 	}

@@ -1,14 +1,14 @@
-.menuList, .menuList *{ 
+.menuList, .menuList *{
 	z-index:2;
 }
 
 .menuList {
-  font-family: Vesrdana, Arial, Helvetica, sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: #4B718A;
-  background-color: #FAFAFA; 
+  background-color: #FAFAFA;
   margin: 0px;
   display:block;
-  padding: 4px 6px; 
+  padding: 4px 6px;
   border-bottom: 1px solid #CCC;
 }
 
@@ -36,7 +36,7 @@ a.actuator {
   position:relative;
 }
 
-a.actuator:hover {	
+a.actuator:hover {
   background-color: #E2E7ED;
 }
 
@@ -44,7 +44,7 @@ a.actuator:hover {
   color: #000;
   background-color: #FAFAFA;;
   border: 1px solid #CCC;
-  position: absolute;   
+  position: absolute;
   visibility: hidden;
 }
 
@@ -53,7 +53,7 @@ a.actuator:hover {
   display: block;
   color: #4B718A;
   font-size: 11px;
-  line-height: 1.75em; 
+  line-height: 1.75em;
   margin: 0px 0px -1px 0px;
   padding: 1px 15px 2px 15px;
   text-decoration: none;
