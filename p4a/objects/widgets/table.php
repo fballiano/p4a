@@ -46,7 +46,7 @@
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_TABLE extends P4A_WIDGET
+	class P4A_Table extends P4A_Widget
 	{
 		/**
 		 * Data source associated with the table.
@@ -105,6 +105,8 @@
 		var $expand = TRUE;
 		
 		var $_title = "";
+		
+		var $_visible_cols = array();
 
 		/**
 		 * Class constructor.
@@ -238,22 +240,22 @@
 					}
 				}
 
-				while ($col =& $this->cols->nextItem()) {				
-					if ($col->isVisible()) {
-						$headers[$i]['properties']	= $col->composeStringProperties();
-						$headers[$i]['value']		= $col->getLabel();
-						$headers[$i]['action']		= $col->composeStringActions();
-						$headers[$i]['order']		= NULL;
+				$visible_cols = $this->getVisibleCols();
+				foreach($visible_cols as $col_name) {				
+					$col =& $this->cols->$col_name;
+					$headers[$i]['properties']	= $col->composeStringProperties();
+					$headers[$i]['value']		= $col->getLabel();
+					$headers[$i]['action']		= $col->composeStringActions();
+					$headers[$i]['order']		= NULL;
 
-						$data_field =& $this->data->fields->{$col->getName()};
-						$field_name = $data_field->getName();
-						$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
-						if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
-							 $headers[$i]['order'] = $order_mode;
-						}
-
-						$i++;
+					$data_field =& $this->data->fields->{$col->getName()};
+					$field_name = $data_field->getName();
+					$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
+					if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
+						 $headers[$i]['order'] = $order_mode;
 					}
+
+					$i++;
 				}
 				$this->display('headers', $headers);
 			}
@@ -453,15 +455,11 @@
 		 */
 		function getVisibleCols()
 		{
-			$return = array();
-
-			while ($col =& $this->cols->nextItem()) {
-				if ($col->isVisible()) {
-					$return[] = $col;
-				}
+			if ($this->_visible_cols) {
+				return $this->_visible_cols;
+			} else {
+				return $this->getCols();			
 			}
-
-			return $return;
 		}
 
 		/**
@@ -490,10 +488,12 @@
 		 */
 		function setVisibleCols( $cols = array() )
 		{
+			$this->setInvisibleCols();
 			if (sizeof($cols) == 0) {
 				$cols = $this->getCols();
 			}
-
+			$this->_visible_cols = $cols;
+			
 			foreach ($cols as $col) {
 				$this->cols->$col->setVisible();
 			}
@@ -513,6 +513,9 @@
 
 			foreach ($cols as $col) {
 				$this->cols->$col->setInvisible();
+				if ($pos = array_search($col, $this->_visible_cols)) {
+					unset($this->_visible_cols[$pos]);	
+				}
 			}
 		}
 	}
@@ -844,13 +847,8 @@
 
 			$rows = $parent->data->page(null, false);
 
-			$aCols = array();
-			while ($col =& $parent->cols->nextItem()) {
-				if ($col->isVisible()){
-					$aCols[] = $col->getName();
-				}
-			}
-
+			$aCols = $parent->getVisibleCols();
+			
 			$limit = $parent->data->getPageLimit();
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
