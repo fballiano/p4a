@@ -67,6 +67,7 @@
 			if(function_exists('debug_backtrace')) {
 				$this->backtrace = debug_backtrace();
 				array_shift($this->backtrace);
+				$this->backtrace = array_slice($this->backtrace, 0, 2);
 
 				$this->data = $this->backtrace[0];
 			}
@@ -78,6 +79,9 @@
 			}
 
 			$this->external_object = $external_object;
+			if (isset($this->external_object->backtrace)) {
+				unset($this->external_object->backtrace);
+			}
 		}
 
 		function getMessage()

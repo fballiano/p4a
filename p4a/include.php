@@ -89,7 +89,7 @@
 	require_once(dirname(__FILE__) . '/objects/widget.php');
 
 	//Masks
-	require_once(dirname(__FILE__) . '/objects/masks/p4a_error.php');
+	require_once(dirname(__FILE__) . '/objects/masks/error.php');
 
 	//Widget Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/button.php');
