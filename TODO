@@ -1,3 +1,5 @@
+- calendar CSS needs a fix for mozilla!!!
+- check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds
 - change P4A_Label HTML layout
 - migrate to I18Nv2

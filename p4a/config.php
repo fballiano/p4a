@@ -291,6 +291,7 @@
 
 	if (!defined('P4A_ICONS_DIR')){
 		if (P4A_IN_DOCUMENT_ROOT) {
+			//define('P4A_ICONS_DIR', P4A_SERVER_DIR . P4A_ICONS_PATH);
 			define('P4A_ICONS_DIR', P4A_ROOT_DIR . P4A_ICONS_PATH);
 		} else {
 			define('P4A_ICONS_DIR', dirname(P4A_ROOT_DIR) . P4A_ICONS_PATH);
@@ -298,6 +299,7 @@
 	}
 
 	if (!defined('P4A_ICONS_URL')){
+		//define('P4A_ICONS_URL', P4A_SERVER_URL . P4A_ICONS_PATH);
 		define('P4A_ICONS_URL', P4A_ROOT_URL . P4A_ICONS_PATH);
 	}
 

@@ -1,3 +1,4 @@
+[[if !$handheld]]
 <link href="[[$tpl_path]]/calendar.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="[[$tpl_path]]/calendar.js"></script>
 <script type="text/javascript" src="[[$tpl_path]]/lang/calendar-en.js"></script>
@@ -11,3 +12,4 @@
     }
   );
 </script>
+[[/if]]

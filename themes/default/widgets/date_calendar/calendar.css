@@ -2,16 +2,16 @@
 
 div.calendar { position: relative; }
 .calendar {
-  border: 1px solid #C6D3DE;
   font-size: 11px;
   color: #4B718A;
   cursor: default;
   background: #FFF;
   font-family: tahoma,verdana,sans-serif;
+  border: 1px solid #C6D3DE;
 }
 
 .calendar table {
-
+	
 }
 
 /* Header part -- contains navigation buttons and day names. */

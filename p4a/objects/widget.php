@@ -658,7 +658,8 @@
 		 */
 		function useTemplate($template_name)
 		{
-			$this->use_template = TRUE;
+			$p4a =& p4a::singleton();
+			$this->use_template = true;
 			$this->template_name = $template_name;
 
 			$this->smarty = new Smarty();
@@ -673,6 +674,7 @@
 			$this->smarty->compile_dir = P4A_SMARTY_WIDGET_COMPILE_DIR;
 			$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
 			$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
+			$this->display('handheld', $p4a->isHandheld());
 		}
 
 		/**

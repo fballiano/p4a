@@ -341,19 +341,6 @@
 			$this->useTemplate($this->template_name);
 		}
 
-        /**
-		 * Add a multivalue external field to mask
-		 * @access public
-		 */
-        function addMultivalueField($fieldname)
-        {
-			$this->fields->build("p4a_multivalue_field", $fieldname);
-        	$this->external_fields[] = $this->fields->$fieldname->getID();
-
-        	$pk_value = $this->fields->{$this->data->pk}->getNewValue();
-			$this->fields->$fieldname->setPkValue($pk_value);
-        }
-
 		/**
 		 * Associates a data source with the mask.
 		 * Also set the data structure to allow correct widget rendering.

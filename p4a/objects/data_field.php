@@ -1,4 +1,5 @@
 <?php
+
 /**
  * P4A - PHP For Applications.
  *

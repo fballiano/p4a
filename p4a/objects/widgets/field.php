@@ -662,6 +662,12 @@
 		function getAsDate()
 		{
 			$p4a =& P4A::singleton();
+			
+			if ($this->isEnabled()) {
+				$enabled = "";
+			} else {
+				$enabled = " disabled='disabled' ";
+			}
 
 			$this->setProperty('id', $this->getID());
 			$this->useTemplate('date_calendar');
@@ -669,16 +675,14 @@
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
 
-			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' ";
+			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' $enabled";
 			$close_header  = "/>";
-			$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' ";
-			if( ! $this->isEnabled() ) {
-				$header .= " disabled='disabled' ";
-				$close_header .= " disabled='disabled' ";
+			
+			if (!$p4a->isHandheld()) {
+				$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' $enabled />";
 			}
-			$close_header .= "/>";
-			$close_header .= $this->fetchTemplate();
 
+			$close_header .= $this->fetchTemplate();
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 
 			return $sReturn;
@@ -871,12 +875,12 @@
 			}
 			$sReturn .= "$actions>";
 
-			$external_data		= $this->data->getAll() ;
-			$value_field		= $this->getSourceValueField() ;
-			$description_field	= $this->getSourceDescriptionField() ;
-			$new_value			= $this->getNewValue() ;
+			$external_data		= $this->data->getAll();
+			$value_field		= $this->getSourceValueField();
+			$description_field	= $this->getSourceDescriptionField();
+			$new_value			= $this->getNewValue();
 
-			foreach( $external_data as $key=>$current )
+			foreach ($external_data as $key=>$current)
 			{
 				if (!$new_value) {
 					$new_value = array();

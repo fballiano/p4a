@@ -104,7 +104,6 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/link.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/menu.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/message.php');
-	require_once(dirname(__FILE__) . '/objects/widgets/multivalue_field.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/sheet.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/sheets_group.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbar.php');

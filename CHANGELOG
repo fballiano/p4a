@@ -1,4 +1,9 @@
 0.12
+- P4A_Widget now instance a "handheld" smarty variable, passed to the template
+- now P4A_Field::getAsDate correctly manage handheld devices
+- added some copyright notes to array_source.php, db_source.php, collection.php, data_source.php
+- removed multivalue_field.php because it was obsolete
+- removed P4A_Mask::addMultivalueField() because it was obsolete
 - done some work on config.php to allow p4a to stay out of the document root (must have an alias set to /p4a), take a look at docs/httpd.conf
 - added P4A_Mask::getPrevMask() and P4A::getPrevMask() to get an instance of the previous opened mask
 - updated TODO
