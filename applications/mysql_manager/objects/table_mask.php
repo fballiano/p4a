@@ -13,14 +13,30 @@
             $title = ucwords(str_replace('_', ' ', $name));
             $this->setTitle($title);
             
-            $table_info = $db->tableInfo($name);
+			$create_table_info = $db->getRow("show create table $name");
+			$create_table_info = $create_table_info["Create Table"];
+			$match = '/FOREIGN KEY \(`(\w*)`\) REFERENCES `(\w*)\` \(`(\w*)`\)/';
+			preg_match_all($match, $create_table_info, $results);
+			$fks = array();
+			for($i=0;$i<count($results[1]);$i++){
+				$fks[$results[1][$i]]['table'] = $results[2][$i];
+				$fks[$results[1][$i]]['column'] = $results[3][$i];
+			}
+			
             $pks = array();
+			$table_info = $db->tableInfo($name);
+			$max_label_width = 0;
             foreach($table_info as $pos=>$field_info){
                 if (strpos($field_info['flags'], 'primary_key') !== FALSE){
                     $pks[] = $field_info['name'];
 					$pos_pk = $pos;   
                 }
+				$info[$field_info['name']] = $field_info;
+				if (strlen($field_info['name'])>$max_label_width){
+					$max_label_width = strlen($field_info['name']);
+				}
             }
+			$indexs = $db->getAll("show index from");
             $source =& $this->build("p4a_db_source", "source");
             $source->setTable($name);
             $source->setPk($pks);
@@ -39,9 +55,38 @@
             $sheet->anchor($table);
             $sheet->anchor($line);
             while($field =& $this->fields->nextItem()){
-                if (in_array($field->getName(), $pks)){
+				$field_name = $field->getName();
+                if (in_array($field_name, $pks)){
                     $field->disable();
                 }
+				
+				if(array_key_exists($field_name, $fks)){
+					$fk_table = $fks[$field_name]['table'];
+					$fk_column = $fks[$field_name]['column'];
+ 					$fk_source =& $this->build("p4a_db_source", $fk_table);
+					$fk_source->setTable($fk_table);
+ 					$fk_source->setPk($fk_column);
+ 					$fk_source->load();
+ 					$field->setType("select");
+ 					$field->setSource($fk_source);
+					$fk_table_info = $db->tableInfo($fk_table);
+					foreach($fk_table_info as $fk_field_info){
+						if($fk_field_info['type'] == "string" or $fk_field_info['type'] == "blob" ){
+							$field->setSourceDescriptionField($fk_field_info["name"]);
+							break;								
+						}
+					}
+					
+					if (! preg_match('/not_null/',$info[$field_name]['flags'])){
+						$field->allowNull("");
+					}
+				}
+				
+				if (preg_match('/not_null/', $info[$field_name]['flags']) and $field->getType() != "checkbox"){
+					$field->label->setFontWeight("bold");
+				}
+				
+				$field->label->setWidth($max_label_width, "em");
                 $sheet->anchor($field);
             }
             
@@ -101,6 +146,11 @@
 			$p4a->masks->build('table_mask', $table_name);
 	        $mask =& $p4a->openMask($table_name);
 			$mask->fields->$field_name->setLabel($label);
+		}
+		
+		function checkMandatory()
+		{
+			
 		}
     }   
 ?>

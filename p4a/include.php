@@ -57,6 +57,7 @@
 	//Libraries
 	require_once(dirname(__FILE__) . '/libraries/standard.php');
 	require_once(dirname(__FILE__) . '/libraries/smarty/libs/Smarty.class.php');
+	require_once(dirname(__FILE__) . '/libraries/pear/PEAR/Common.php');
 	require_once(dirname(__FILE__) . '/libraries/pear/DB.php');
 	require_once(dirname(__FILE__) . '/libraries/date.php');
 	require_once(dirname(__FILE__) . '/libraries/number.php');

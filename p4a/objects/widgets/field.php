@@ -220,12 +220,19 @@
 		{
 			unset($this->data_field);
 
-			switch($data_field->getType()) {
-				case 'boolean':
-					$this->setType('checkbox');
-					break;
+			if (! $data_field->isReadOnly())
+			{
+				switch($data_field->getType()) {
+					case 'date':
+						$this->setType('date');
+						break;				
+					case 'boolean':
+						$this->setType('checkbox');
+						break;
+				}
+			}else{
+				$this->setType('label');
 			}
-
 			$this->data_field =& $data_field;
 			$this->setDefaultVisualizationProperties();
 		}

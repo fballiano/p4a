@@ -238,14 +238,17 @@
 					}
 				}
 
-				while ($col =& $this->cols->nextItem()) {
+				while ($col =& $this->cols->nextItem()) {				
 					if ($col->isVisible()) {
 						$headers[$i]['properties']	= $col->composeStringProperties();
 						$headers[$i]['value']		= $col->getLabel();
 						$headers[$i]['action']		= $col->composeStringActions();
 						$headers[$i]['order']		= NULL;
 
-						if ($is_orderable and ($order_field == $col->getName())) {
+						$data_field =& $this->data->fields->{$col->getName()};
+						$field_name = $data_field->getName();
+						$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
+						if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
 							 $headers[$i]['order'] = $order_mode;
 						}
 
@@ -767,13 +770,18 @@
 			$parent =& $p4a->getObject($parent->getParentID());
 
 			if ($parent->data->getObjectType() == 'p4a_db_source') {
+				
+				$data_field =& $parent->data->fields->{$this->getName()};
+				$field_name = $data_field->getName();
+				$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
+				
 				$new_order = P4A_ORDER_ASCENDING;
 
 				if ($parent->data->hasOrder()) {
 					$order = $parent->data->getOrder();
 					$order = $order[0];
 
-					if ($order[0] == $this->getName()) {
+					if ($order[0] == $complete_field_name or $order[0] == $field_name) {
     					if ($order[1] == P4A_ORDER_ASCENDING) {
     						$new_order = P4A_ORDER_DESCENDING;
     					}
@@ -781,9 +789,13 @@
 						$new_order = P4A_ORDER_ASCENDING;
 					}
 				}
-
-				$parent->data->setOrder($this->getName(), $new_order);
-				$parent->data->row();
+// 				if ($data_field->getAliasOf()){
+// 					$order = $data_field->getName();
+// 				}else{
+					$order = $data_field->getTable() . "." . $data_field->getName();
+// 				}
+				$parent->data->setOrder($order, $new_order);
+				$parent->data->updateRowPosition();
 			}
 		}
 	}
