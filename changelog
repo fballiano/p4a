@@ -1,3 +1,4 @@
+- Fix:    1=1 bug for Microsoft SQL Server (Thanks to Valery Sidorov)
 - Fix:    FIELD now supports static ID (Thanks to Christian G. Warden)
 - Add:    pt_BR locale (Thanks to Thiago Trindade)
 - Add:    de_CH locale (Thanks to Dominic Lüchinger)

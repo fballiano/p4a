@@ -1711,7 +1711,7 @@
 			}
 			else
 			{
-				$query = str_replace( '[P4A_PK]', '1', $this->defined_queries['select'] );
+				$query = str_replace( '[P4A_PK]', '1=1', $this->defined_queries['select'] );
 				$query = $this->_getEvalParsedQuery($query);
 				$result = $db->query($query);
 				if (DB::isError($result)) {
