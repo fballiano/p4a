@@ -66,7 +66,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 
 
 		$xml  = "<mask>\n";
-		$xml .= "\t<source name='source' table='$name' pk='$pk' autoincrement="$autoincrement" />\n";
+		$xml .= "\t<source name='source' table='$name' pk='$pk' autoincrement='$autoincrement' />\n";
 		$xml .= "\t<menu />\n";
 		$xml .= "\t<toolbar type='standard' />\n";
 
@@ -94,7 +94,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 				$xml .= "mandatory='true' ";
 			}
 
-			if (in_array($field_name, $pks)){
+			if (in_array($field_name, $pks) and count($pks) == 1 and $array["type"] == "int" ){
             	$xml .= "enable='false' ";
             }
 

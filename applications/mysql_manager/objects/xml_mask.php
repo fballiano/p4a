@@ -180,6 +180,9 @@ class P4A_XML_Mask extends P4A_Mask
 				case "ENABLE":
 					$obj->enable($value);
 					break;
+				case "PK":
+				case "AUTOINCREMENT":
+					break;
 				default:
 					eval('$obj->set' . $att . "('$value');");
 
@@ -201,11 +204,17 @@ class P4A_XML_Mask extends P4A_Mask
 	
 	function setPK(&$source, $attr)
 	{
-		if (array_key_exists("pk", $attr)) {
-			$pk = $attr["pk"];
+		if (array_key_exists("PK", $attr)) {
+			$pk = $attr["PK"];
 			$pks = split(",",$pk);
-			$source->setPK($pks);
-			if (array_key_exists("autoincrement",$attr) and count($pks) == 1) {
+
+			if (count($pks)==1) {
+				$source->setPK($pk);
+			}else{
+				$source->setPK($pks);
+			}
+			
+			if (array_key_exists("AUTOINCREMENT",$attr) and count($pks) == 1) {
 				$table = $source->getTable();
 				$pk_sequence = "{$table}_{$pk}";
 				$source->fields->$pk->setSequence($pk_sequence);
