@@ -746,9 +746,9 @@
 		function getAsTextarea()
 		{
 			//$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' cols='82' rows='15' ";
-			$header 		= "<TEXTAREA class='border_color1 font_normal' id='" . $this->getID() . "' ";
+			$header 		= "<textarea class='border_color1 font_normal' id='" . $this->getID() . "' ";
 			$close_header 	= '>';
-			$footer			= '</TEXTAREA>';
+			$footer			= '</textarea>';
 
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
@@ -941,14 +941,14 @@
 
 			return $this->composeLabel() . $header . $footer ;
 		}
-		
+
 		function getAsMultiselect()
 		{
 			$p4a =& P4A::singleton();
-						
+
 			$properties =& $this->composeStringProperties();
 			$actions =& $this->composeStringActions();
-			
+
 			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
 			$sReturn .= "<select multiple='multiple' ";
 			foreach($this->properties as $property_name=>$property_value){
@@ -958,7 +958,7 @@
 				$sReturn .= $property_name . '="' . $property_value . '" ' ;
 			}
 			$sReturn .= "$actions>";
-			
+
 			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
@@ -981,17 +981,17 @@
 
 			}
 			$sReturn .= "</select>";
-			
+
 			return $this->composeLabel() . $sReturn ;
-		}			
-		
+		}
+
 		function getAsMulticheckbox()
 		{
 			$p4a =& P4A::singleton();
-						
+
 			$properties =& $this->composeStringProperties();
 			$actions =& $this->composeStringActions();
-			
+
 			$sReturn .= "<input type='hidden' name='".$this->getID()."' value='' />";
 			$sReturn .= "<div>";
 			$sReturn .= "<select multiple='multiple' ";
@@ -1002,11 +1002,11 @@
 				$sReturn .= $property_name . '="' . $property_value . '" ' ;
 			}
 			$sReturn .= "$actions>";
-			
+
 			$external_data		= $this->data->getAll();
 			$value_field		= $this->getSourceValueField();
 			$description_field	= $this->getSourceDescriptionField();
-			$new_value			= $this->getNewValue();		
+			$new_value			= $this->getNewValue();
 		}
 
 		/**
@@ -1393,7 +1393,7 @@
 		function composeStringValue()
 		{
 			$value = $this->getNewValue();
-			
+
 			if (is_array($value)) {
 				$value = join($value, ",");
 			}

@@ -1,6 +1,6 @@
-/*   --------------   */
-/*   MERLIN CLASSES   */
-/*   --------------   */
+/*   -----------   */
+/*   P4A CLASSES   */
+/*   -----------   */
 
 * {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -20,11 +20,12 @@ img_button:hover {
 	border: 1px solid #C6D3DE;
 	border:none;
 }
+
 .link_button {
 	border: 1px solid #FAFAFA;
 	display:block;
 	text-decoration:none;
-	text-align:center
+	text-align:center;
 }
 
 a.link_button:hover {

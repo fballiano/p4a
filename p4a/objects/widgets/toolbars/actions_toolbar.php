@@ -58,16 +58,21 @@
 		{
 			parent::P4A_Toolbar($name);
 
-			$this->addButton('save', 'save');
-			$this->addButton('cancel', 'cancel');
+			$save =& $this->addButton('save', 'save');
+			$save->setAccessKey("S");
+
+			$cancel =& $this->addButton('cancel', 'cancel');
+			$cancel->setAccessKey("Z");
 
 			$this->addSeparator();
 
-			$this->addButton('print', 'print');
-			$this->buttons->print->dropAction('onClick');
-			$this->buttons->print->setProperty('onClick', 'window.print(); return false;');
+			$print =& $this->addButton('print', 'print');
+			$print->dropAction('onClick');
+			$print->setProperty('onClick', 'window.print(); return false;');
+			$print->setAccessKey("P");
 
-			$this->addButton('exit', 'big_exit');
+			$exit =& $this->addButton('exit', 'exit', 'right');
+			$exit->setAccessKey("X");
 
 		}
 

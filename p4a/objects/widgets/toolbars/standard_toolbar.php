@@ -83,9 +83,7 @@
 			$new->setProperty("accesskey", "N");
 
 			$this->addButton('delete', 'delete');
-
-			$this->buttons->delete->requireConfirmation('onClick', NULL,
-'confirm_delete');
+			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');
 
 			$this->addSeparator();
 
@@ -118,14 +116,14 @@
 		{
 			$mask =& p4a_mask::singleton($this->_mask_name);
 
-			if($mask->data->isNew()){
+			if ($mask->data->isNew()) {
 				$this->buttons->first->enable(FALSE);
 				$this->buttons->prev->enable(FALSE);
 				$this->buttons->next->enable(FALSE);
 				$this->buttons->last->enable(FALSE);
 				$this->buttons->new->enable(FALSE);
 				$this->buttons->delete->enable(FALSE);
-			}else{
+			} else {
 				$this->buttons->first->enable(TRUE);
 				$this->buttons->prev->enable(TRUE);
 				$this->buttons->next->enable(TRUE);

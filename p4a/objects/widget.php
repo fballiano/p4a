@@ -729,7 +729,7 @@
 				$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
 				return $this->smarty->fetch($path_template);
 			}else{
-				error("FETCH TEMPLATE IMPOSSIBLE. First Call use_template.");
+				error("ERROR: Unable to fetch template, first Call \"use_template\".");
 			}
 		}
 
