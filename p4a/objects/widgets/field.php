@@ -51,7 +51,7 @@
 		 * @var array
 		 * @access private
 		 */
-		var $buttons = array();
+		var $buttons = NULL;
 
 		/**
 		 * Data source for the field.
@@ -191,6 +191,7 @@
 		{
 			parent::p4a_widget($name, 'fld');
 
+			$this->build("p4a_collection", "buttons");
 			$this->setType('text');
 
 			//Data field
@@ -1085,18 +1086,17 @@
 			}
 			else
 			{
-				if (! array_key_exists('button_file_delete', $this->buttons))
-				{
+				if (!is_object($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 					$button_file_delete->setValue( $p4a->i18n->messages->get('filedelete') );
 					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 				}
 
-				if( $this->isEnabled() ) {
-					$button_file_delete->enable();
+				if ($this->isEnabled()) {
+					$this->buttons->button_file_delete->enable();
 				} else {
-					$button_file_delete->disable();
+					$this->buttons->button_file_delete->disable();
 				}
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
@@ -1105,7 +1105,7 @@
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(2) . ' bytes</td></tr>';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(3) . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons['button_file_delete']->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>';
 			}
 
@@ -1175,13 +1175,11 @@
 				$mime_type = explode( '/', $this->getNewValue(3) );
 				$mime_type = $mime_type[0];
 
-				if( $mime_type != 'image' )
-				{
+				if ($mime_type != 'image') {
 					return $this->getAsFile();
 				}
 
-				if (! array_key_exists('button_file_delete', $this->buttons))
-				{
+				if (! is_object($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete') );
@@ -1189,10 +1187,10 @@
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 				}
 
-				if( $this->isEnabled() ) {
-					$button_file_delete->enable();
+				if ($this->isEnabled()) {
+					$this->buttons->button_file_delete->enable();
 				} else {
-					$button_file_delete->disable();
+					$this->buttons->button_file_delete->disable();
 				}
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
@@ -1223,7 +1221,7 @@
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(2) . ' bytes</td></tr>';
 				$sReturn .= '<tr><td>' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td>' . $this->getNewValue(3) . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center">' . $button_file_delete->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
 

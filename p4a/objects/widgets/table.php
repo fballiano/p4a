@@ -618,7 +618,7 @@
 			unset( $this->data ) ;
 			$this->data =& $data_source;
 
-			if( $this->data->pk !== NULL )
+			if( $this->data->getPk() !== NULL )
 			{
 				if( $this->getSourceValueField() === NULL )
 				{
