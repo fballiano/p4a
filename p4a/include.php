@@ -113,6 +113,7 @@
 
 	//Toolbar Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/navigation_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
 
 	//We can have more applications on same site and same browser instance

@@ -48,13 +48,6 @@
 	class P4A extends P4A_Object
 	{
 		/**
-		 * Database object.
-		 * @var object object
-		 * @access public
-		 */
-		//var $db = NULL;
-
-		/**
 		 * All P4A objects are stored here.
 		 * @var array
 		 * @access public

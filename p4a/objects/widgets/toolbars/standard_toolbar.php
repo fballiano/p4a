@@ -94,7 +94,6 @@
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
 			$exit->setAccessKey("X");
-
 		}
 
 		function setMask(&$mask)
@@ -131,7 +130,7 @@
 				$this->buttons->new->enable(TRUE);
 				$this->buttons->delete->enable(TRUE);
 			}
-			return parent::getAsString();
 
+			return parent::getAsString();
 		}
 	}

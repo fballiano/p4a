@@ -39,14 +39,14 @@
  */
 
 	/**
-	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "exit" buttons.
+	 * Navigation toolbar for data source operations.
+	 * This toolbar has "first", "prev", "next", "last", "exit" buttons.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 * @see TOOLBAR
 	 */
-	class P4A_Actions_Toolbar extends P4A_Toolbar
+	class P4A_Navigation_Toolbar extends P4A_Toolbar
 	{
 		/**
 		 * Class costructor.
@@ -54,15 +54,20 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &P4A_Actions_Toolbar($name)
+		function &P4A_Navigation_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
+			$first =& $this->addButton('first', 'first');
+			$first->setAccessKey(8);
 
-			$save =& $this->addButton('save', 'save');
-			$save->setAccessKey("S");
+			$prev =& $this->addButton('prev', 'prev');
+			$prev->setAccessKey(4);
 
-			$cancel =& $this->addButton('cancel', 'cancel');
-			$cancel->setAccessKey("Z");
+			$next =& $this->addButton('next', 'next');
+			$next->setAccessKey(6);
+
+			$last =& $this->addButton('last', 'last');
+			$last->setAccessKey(2);
 
 			$this->addSeparator();
 
@@ -77,8 +82,12 @@
 
 		function setMask(&$mask)
 		{
-			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
-			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
+			$this->_mask_name = $mask->getName();
+
+			$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
+			$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
+			$this->buttons->next->implementMethod('onClick', $mask, 'nextRow');
+			$this->buttons->last->implementMethod('onClick', $mask, 'lastRow');
 			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 		}
 	}

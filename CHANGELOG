@@ -1,3 +1,8 @@
+0.7
+- code cleanup
+- added P4A_Navigation_Toolbar, a new default toolbar with "first", "prev", "next", "last", "exit" buttons
+- updated TODO
+
 0.6
 - renamed changelog to CHANGELOG
 - added TODO file
