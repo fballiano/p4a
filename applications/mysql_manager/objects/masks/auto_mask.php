@@ -1,22 +1,33 @@
 <?php
 class P4A_Auto_Mask extends P4A_XML_Mask
 {
+	var $table_name = null;
+	var $file_name = null;
+
 	function &P4A_Auto_Mask($name)
 	{
-		$filename = P4A_APPLICATION_DIR . "/xml/{$name}.xml";
+		$p4a =& p4a::singleton();
+		$host = $p4a->masks->db_configuration->fields->host->getNewValue();
+		$database = $p4a->masks->db_configuration->fields->database->getNewValue();
+
+		$filename = P4A_APPLICATION_DIR . "/xml/$host/$database/{$name}.xml";
+
 		$this->table_name = $name;
+		$this->file_name = $filename;
+
 		if (!file_exists($filename)) {
-			$this->createXML($name);
+			$this->createXML();
 		}
 
 		P4A_XML_Mask::P4A_XML_Mask($name);
 	}
 
-	function createXML($name)
+	function createXML()
 	{
         $p4a =& p4a::singleton();
         $db =& p4a_db::singleton();
 
+		$name = $this->table_name;
 		$create_table_info = $db->getRow("show create table $name");
 
 		$create_table_info = $create_table_info["Create Table"];
@@ -106,7 +117,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		$xml .= "\t</frame>\n";
 		$xml .= "</mask>\n";
 
-		$this->writeXML($name,$xml);
+		$this->writeXML($xml);
 
 	}
 
@@ -262,7 +273,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		$table_name = $this->table_name;
 
 		$xml =  $this->getXML();
-		$this->writeXML($table_name,$xml);
+		$this->writeXML($xml);
 
 		$this->destroy();
 		$p4a->masks->build('p4a_auto_mask', $table_name);
@@ -274,9 +285,11 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		return $this->table_name;
 	}
 
-	function writeXML($name, $xml)
+	function writeXML($xml)
 	{
-		$filename = P4A_APPLICATION_DIR . "/xml/{$name}.xml";
+		$filename = $this->file_name;
+		$directory = dirname($filename);
+		System::mkDir("-p $directory");
 		$handle = fopen($filename, "w");
 		fwrite($handle,$xml);
 		fclose($handle);
