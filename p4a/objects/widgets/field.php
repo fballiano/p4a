@@ -239,17 +239,13 @@
 			$visualization_data_type = NULL;
 			$source_description_field = $this->getSourceDescriptionField();
 
-			if( !is_null( $source_description_field ) and is_object($this->data))
-			{
-				$visualization_data_type = $this->data->data_browsers['default']->fields[$source_description_field]->getType();
-			}
-			elseif( !is_null( $this->data_field ) )
-			{
+			if (!is_null( $source_description_field ) and is_object($this->data)) {
+				$visualization_data_type = $this->data->fields->$source_description_field->getType();
+			} elseif (!is_null($this->data_field)) {
 				$visualization_data_type = $this->data_field->getType();
 			}
 
-			switch( $visualization_data_type )
-			{
+			switch( $visualization_data_type ) {
 				case 'integer':
 				case 'decimal':
 				case 'float':
@@ -423,26 +419,36 @@
 			unset( $this->data ) ;
 			$this->data =& $data_source;
 
-			if( $this->data->pk !== NULL )
-			{
-				if( $this->getSourceValueField() === NULL )
-				{
-					$this->setSourceValueField( $this->data->pk ) ;
+			$pk = $this->data->getPk();
+
+			if (is_string($pk)) {
+				if ($this->getSourceValueField() === NULL) {
+					$this->setSourceValueField($pk);
 				}
 
-				if( $this->getSourceDescriptionField() === NULL )
+				if ($this->getSourceDescriptionField() === NULL)
 				{
-					$aFields = $this->data->getFields() ;
+					$num_fields = $this->data->fields->getNumItems();
+					$fields = $this->data->fields->getNames();
+					$pk = $this->getSourceValueField();
 
-					$iDescriptionFieldIndex = 0 ;
-
-					if( ( sizeof( $aFields ) > 1 ) and ( $aFields[0] == $this->data->pk ) ) {
-						$iDescriptionFieldIndex = 1 ;
+					if ($num_fields == 1) {
+						$description_field = $pk;
+					} else {
+						foreach ($fields as $field) {
+							if ($field != $pk) {
+								$description_field = $field;
+								break;
+							}
+						}
 					}
 
-					$this->setSourceDescriptionField( $aFields[ $iDescriptionFieldIndex ] ) ;
+					$this->setSourceDescriptionField($description_field);
 				}
+			} else {
+				error("ONLY ONE PK IN THIS CASE");
 			}
+
 			$this->setDefaultVisualizationProperties();
 		}
 
@@ -931,7 +937,7 @@
 				}
 
 				$sContent  = "<option $selected value='" . htmlspecialchars($current[ $value_field ]) ."'>";
-				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->structure[$description_field]['type']));
+				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
 				$sContent .= "</option>";
 
 				$header .= $sContent;

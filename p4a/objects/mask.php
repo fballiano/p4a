@@ -414,7 +414,11 @@
 		 */
 		function reloadRow()
 		{
-			$this->loadRow();
+			if ($this->data->isNew()) {
+				$this->lastRow();
+			} else {
+				$this->data->row();
+			}
 		}
 
 		/**

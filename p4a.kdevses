@@ -1,32 +1,17 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/p4a/objects/application.php" >
-   <View0 line="84" Type="???" >
-    <AdditionalSettings Top="2" Width="847" Attach="1" Height="741" Left="2" MinMaxMode="0" />
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/p4a/objects/db_source.php" >
+   <View0 line="526" Type="???" >
+    <AdditionalSettings Top="2" Width="1036" Attach="1" Height="731" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/projects/joint/index.php" >
-   <View0 line="3" Type="???" >
-    <AdditionalSettings Top="2" Width="847" Attach="1" Height="741" Left="2" MinMaxMode="0" />
+  <Doc1 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/projects/joint/objects/product_classes.php" >
+   <View0 line="26" Type="???" >
+    <AdditionalSettings Top="2" Width="1036" Attach="1" Height="731" Left="2" MinMaxMode="0" />
    </View0>
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/p4a/objects/db_source.php" >
-   <View0 line="692" Type="???" >
-    <AdditionalSettings Top="2" Width="847" Attach="1" Height="741" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/p4a/objects/mask.php" >
-   <View0 line="550" Type="???" >
-    <AdditionalSettings Top="2" Width="847" Attach="1" Height="741" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/fabrizio/workspace/p4a/projects/joint/objects/product_classes.php" >
-   <View0 line="13" Type="???" >
-    <AdditionalSettings Top="2" Width="847" Attach="1" Height="741" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
