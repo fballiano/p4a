@@ -12,19 +12,62 @@ DOCUMENT_ROOT (es:/home/httpd/htdocs).
 You should rename the directory
 "p4a-version" to "p4a".
 
-If you want to see the sample application than you
-must install the database with this commands
-(as root/administrator):
-
-	cd /home/httpd/htdocs/p4a
-	cd applications/sample
-	mysql < sample.sql
-
-than open browser and go to:
+Open your web browser and go to:
 
 	http://localhost/p4a/
 
-the sample application will start by default.
+you will now see the list of sample applications
+distribuited with p4a.
+
+There are three samples included:
+	- sample_en
+	- sample_it
+	- products_catalogue
+
+sample_en and sample_it are the same application in english
+and italian, these applications are very simple and do not
+make use of databases.
+
+products_catalogue is a very simple example of virtual catalogue
+for shops. To have this application runnning you've to create a
+MySQL database using these instructions:
+
+	# cd applications
+	# cd products_catalogue
+	# mysqladmin create p4a_products_catalogue
+	# mysql p4a_products_catalogue < db_schema.sql
+
+We've also included a schema model image (db_schema.png) and the
+DBDesigner source for that (db_schema.xml), so you can better
+understand what that db does.
+
+In the application directory you should have seen another project:
+
+	mysql_manager
+
+mysql_manager is a big project for creating an automatic application wizard.
+Simply connect mysql_manager to your existing database and you will have
+a perfectly running web application to manage it.
+mysql_manager is very different from phpMyAdmin, because phpMyAdmin has been
+created primarily to view and modify the database structure, mysql_manager
+instead is done to allow developers have an application to use to insert
+data into the database without having to write a line of code!
+In a far (we hope not so much :)) future we hope that mysql_manager could
+become an alternative to Microsoft Access, for the ease of use and the power
+of developing we applications without programming knowledge.
+
+mysql_manager understand relations between tables, so you will automagically
+see combo box where a field is relationated to another and so on.
+
+mysql_manager will let you modify your web application with a simple
+POINT AND CLICK grafic interface. Click on "EDIT" menu item and start
+playing around. All modifies are saved to XML files.
+
+mysql_manager EDIT system works only on Mozilla browsers.
+
+mysql_manager, as p4a, has a big PEAR integration, so primary keys are managed
+trought sequences. You sould have no AUTOINCREMENT primary keys in your table
+structure, simple INTEGER fields will correctly work.
 
 -------------------
 -- Documentation --
@@ -32,6 +75,11 @@ the sample application will start by default.
 
 All p4a documentation is in "/docs"
 directory under p4a installation.
+
+P4A has very few documentation, actually we need p4a running with many
+features so we've to develop, develop and develop.
+
+It would be great if you would help in decumenting p4a!!
 
 ------------------------------------
 -- P4A compatibility: Server Side --
@@ -41,24 +89,25 @@ Linux/Windows
 Apache 1.3.x/2.0.x
 php/mod_php 4.3.x
 
-------------------------------------------------
+-----------------------------------------
 -- P4A compatibility: Workstation Side --
-------------------------------------------------
+-----------------------------------------
 
-Gecko browsers (Mozilla 1.x, Netscape 6.x, 7.x)
-Internet Explorer 5.x, 6.x
-Safari 1.x
-Opera 6.x, 7.x
+Gecko browsers (Mozilla 1.x, Netscape 6.x/7.x)
+Internet Explorer 5.x/6.x
+Safari 1.x (testers needed!!)
+Opera 6.x, 7.x (testers needed!!)
 Konqueror 3.x
 Any JavaScript 1.2 browser with css/css2 support
 
 Nescape 4.x is not supported
 
--------------------------------------------
+------------------------------------
 -- P4A compatibility: Mobile Side --
--------------------------------------------
+------------------------------------
 
-coming soon.
+Pocket Internet Explorer for Microsoft Windows Mobile 2003
+Opera 6.x/7.x
 
 -------------------
 -- General Notes --
@@ -73,41 +122,13 @@ You can't switch between two application with the same
 P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
 
------------------------------------------------
--- Rich text editing and spell checker notes --
------------------------------------------------
-
-To enable spell checking feature on rich editors,
-remember that you must have perl executable with
-these modules:
-
-	Text::Aspell
-	XML::DOM
-	CGI
-
-Of these, only Text::Aspell might need to be
-installed manually. The others are likely to
-be available by default in most Perl distributions.
-
-You must also set executable this file:
-themes/default/widgets/rich_textarea/plugins/SpellChecker/spell-check-logic.cgi
-
-Because of UFT-8, you should have perl 5.8 installed or,
-at least perl 5.6.1.
-
 --------------------
 -- Notes on Opera --
 --------------------
 
-P4A default theme does not seem to be
-compatible with Opera, because of the heavy
+P4A default theme does not seem to be fully
+compatible with Opera 6.x, because of the heavy
 CSS2 utilization.
-Maybe there will be a simpler theme for all
-browser that cannot support CSS2.
-
-P4A fields use "div" tags for a nice
-alignment, Opera does not seem to understand this
-structure and...
 
 P4A default menu ("drop_down")
 will not run on Opera 6.x, but only on Opera 7.x.
