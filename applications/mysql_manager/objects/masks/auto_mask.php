@@ -59,6 +59,9 @@ class P4A_Auto_Mask extends P4A_XML_Mask
         $this->setSource($source);*/
         $xml .= "\t\t<table name='table'>\n";
 		$xml .= "\t\t\t<source name='source' />\n";
+		foreach ($info as $col_name=>$array) {
+			$xml .= "\t\t\t<col name='$col_name' />\n";    	
+		}
 		$xml .= "\t\t</table>\n\n";    
 
 		foreach ($info as $field_name=>$array) {
@@ -106,15 +109,16 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 
 	}
 	
-	function editField(&$field)
+	function editWidget(&$wdg)
 	{
-		if (isset($this->field_name)){
-			$this->fields->{$this->field_name}->setStyleProperty("background", "white");
-			$this->fields->{$this->field_name}->setStyleProperty("border", "1px dashed red");
+		$p4a =& p4a::singleton();
+		if (isset($this->wdg_id)) {
+			$last_wdg =& $p4a->getObject($this->wdg_id);
+			$last_wdg->setStyleProperty("border", "1px dashed red");
 		}
-		$this->field_name = $field->getName();
-		$this->fields->{$this->field_name}->setStyleProperty("background", "#F0F0F0");
-		$this->fields->{$this->field_name}->setStyleProperty("border", "1px solid red");
+		$this->wdg_id = $wdg->getId();
+ 		
+		$wdg->setStyleProperty("border", "1px solid black");
 		
 		if(isset($this->_sidebar)){
 			$this->_sidebar->destroy();
@@ -124,12 +128,34 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		$s->build("P4A_Collection", "fields");
 		
 		$label =& $s->fields->build("p4a_field", "label");
-		$label->setValue($field->getLabel());
+		$label->setValue($wdg->getLabel());
 		
 		$width =& $s->fields->build("p4a_field", "width");
-		$width->setValue($field->getWidth());
+		$width->setValue($wdg->getWidth());
 		
 		$height =& $s->fields->build("p4a_field", "height");
+		$height->setValue($wdg->getHeight());
+		
+		$aTypes = array();
+		$aTypes[] = array("pk"=>"text","label"=>"Text");
+		$aTypes[] = array("pk"=>"checkbox","label"=>"Checkbox");
+		$aTypes[] = array("pk"=>"data","label"=>"Data");
+		$aTypes[] = array("pk"=>"file","label"=>"File");		
+		$aTypes[] = array("pk"=>"rich_textarea","label"=>"HTML Editor");		
+		$aTypes[] = array("pk"=>"image","label"=>"Image");
+		$aTypes[] = array("pk"=>"textarea","label"=>"Textarea");
+		$data_type = $s->build("p4a_array_source","data_type");
+		$data_type->setPk("pk");
+		$data_type->load($aTypes);
+		$type =& $s->fields->build("p4a_field", "type");
+		$type->setType("select");
+		$type->setSource($data_type);
+		$type->allowNull("");
+		if (get_class($wdg) == "p4a_field") {
+			$type->setValue($wdg->getType());
+		}
+		$type->addAction("onChange");
+		$this->intercept($type, "onChange", "customizeSidebar");
 		
 		$visible =& $s->fields->build("p4a_field", "visible");
 		$visible->setType("checkbox");
@@ -138,27 +164,70 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		$enable =& $s->fields->build("p4a_field", "enable");
 		$enable->setType("checkbox");
 		$enable->setValue(1);
-		
+				
+		$ok =& $s->build("p4a_button", "ok");
+		$ok->setLabel("OK");
+		$ok->setWidth(100);
+		$cancel =& $s->build("p4a_button", "cancel");
+		$cancel->setWidth(100);
 		$save =& $s->build("p4a_button", "save");
-		$this->intercept($save,'onClick', "save");
+		$save->setLabel("Save &amp; Close");
+		$save->setWidth(215);
+		
+		$this->intercept($save,'onClick', "save_edit");
+		$this->intercept($cancel,'onClick', "cancel_edit");
+		$this->intercept($ok,'onClick', "ok_edit");
 		
 		while ($fld =& $s->fields->nextItem()) {
 			$s->anchor($fld);
 		}
+		$s->anchor($ok);
+		$s->anchorLeft($cancel);
 		$s->anchor($save);
+		
+		$this->customizeSidebar($wdg);
+		
 		$this->display("sidebar", $s);
 	}
 	
-	function editCol()
+	function customizeSidebar(&$obj)
 	{
+		$s =& $this->_sidebar;
+		
+		$a["p4a_table_col"] = array("label","width","visible","enable");
+		$class = get_class($obj);
+		
+		if ($class == "p4a_field") {
+			$type = $s->fields->type->getNewValue();
+			if ($type == 'textarea' or $type == 'rich_textarea') {
+				$a["p4a_field"] = array("label","width","height","type","visible","enable");				
+			} else {
+				$a["p4a_field"] = array("label","width","type","visible","enable");				
+			}
+		}
+		
+
+		while ($fld =& $s->fields->nextItem()) {
+			$fld->setVisible(FALSE);
+		}
+		
+		foreach ($a[$class] as $fieldname) {
+			$s->fields->$fieldname->setVisible();
+		}
+		
 	}
 	
-	function save()
+	function ok_edit()
 	{
-		$p4a =& p4a::singleton();		
+		$id = $this->wdg_id;
+		
+		$p4a =& p4a::singleton();
+		
+		$wdg =& $p4a->getObject($id);
+		$wdg->setStyleProperty("background", "#F0F0F0");
+
 		$table_name= $this->table_name;
-		$field_name = $this->field_name;
-		$id = $this->fields->$field_name->getId();
+		
 		
 		$key = 0;
 		for ($i=0;$i<count($this->_xml);$i++) {
@@ -176,13 +245,26 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 				$this->_xml[$key]["attributes"][$property] = $value;
 			}	
 		}
+	}
+	
+	function cancel_edit() 
+	{
+		$this->_sidebar->destroy();
+	}
+	
+	function save_edit()
+	{
+		$p4a =& p4a::singleton();
+		
+		$this->ok_edit();
+		$table_name = $this->table_name;
 		
 		$xml =  $this->getXML();
 		$this->writeXML($table_name,$xml);
 		
 		$this->destroy();
 		$p4a->masks->build('p4a_auto_mask', $table_name);
-	    $mask =& $p4a->openMask($table_name);
+	    $mask =& $p4a->openMask($table_name);		
 	}	
 
 	function getName()

@@ -242,6 +242,9 @@
 
 				$visible_cols = $this->getVisibleCols();
 				foreach($visible_cols as $col_name) {
+// 					if (! $this->cols->$col_name->isVisible()) {
+// 						continue;
+// 					}
 					$col =& $this->cols->$col_name;
 					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
@@ -864,6 +867,9 @@
 				}
 
 				foreach($aCols as $col_name) {
+// 					if (! $parent->cols->$col_name->isVisible()) {
+// 						continue;
+// 					}
 					$aReturn[$i]['cells'][$j]['action'] = $action;
 
 					if ($parent->cols->$col_name->data) {

@@ -1,6 +1,6 @@
 <?php
 
-class P4A_XML_Mask extends P4A_Mask 
+class P4A_XML_Mask extends P4A_Mask
 {
 	var $_xml = array();
 	
@@ -88,15 +88,17 @@ class P4A_XML_Mask extends P4A_Mask
 			}
 			
 			if ($tag["tag"] == "TABLE" and $tag["type"] == "close") {
-				$this->levels{$level}->setVisibleCols($cols);
+ 				$this->levels{$level}->setVisibleCols($cols);
 			}
 			
 			if ($tag["tag"] == "COL") {
-				$cols[] = $name;		
 				$new_level = $level-1;
 				$this->setLevel($this->levels{$new_level}->cols->$name, $level);
  				$this->setAttr($this->levels{$new_level}->cols->$name, $attr);
 				$this->setId($this->levels{$new_level}->cols->$name, $tag, $key);
+				if ($this->levels{$new_level}->cols->$name->isVisible()){
+					$cols[] = $name;		
+				}
 			}
 			
 			if ($tag["tag"] == "MENU") {

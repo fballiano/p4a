@@ -354,10 +354,13 @@
 		 */
 		function setWidth( $value = NULL, $unit = 'px' )
 		{
+			if (is_numeric($value)) {
+				$value = $value . $unit;
+			}
 			if( $value === NULL ) {
 				$this->unsetStyleProperty( 'width' ) ;
 			} else {
-				$this->setStyleProperty( 'width', $value . $unit ) ;
+				$this->setStyleProperty( 'width', $value ) ;
 			}
 		}
 
@@ -383,6 +386,9 @@
 		 */
 		function setHeight( $value = NULL, $unit = 'px' )
 		{
+			if (is_numeric($value)) {
+				$value = $value . $unit;
+			}			
 			if( $value === NULL ) {
 				$this->unsetStyleProperty( 'height' ) ;
 			} else {

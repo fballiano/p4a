@@ -151,9 +151,10 @@
 			$this_name = $this->getName();
 
 			//todo
-			foreach($this->_objects as $object_id){
-				$p4a->objects[$object_id]->destroy();
-//  				unset($p4a->objects[$object_id]);
+			foreach($this->_objects as $key=>$object_id){
+				if (array_key_exists($object_id, $p4a->objects)) {
+					$p4a->objects[$object_id]->destroy();
+				}
 			}
 
 			$this = null;

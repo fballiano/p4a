@@ -38,7 +38,7 @@ class mysql_manager extends p4a
 			$col->setStyleProperty("vertical-align", "bottom");
 			$col->setVisible();
 			$col->addAction("onClick", "void");
-			$mask->intercept($col, "void", "editCol");
+ 			$mask->intercept($col, "void", "editWidget");
 		}
 		
 		
@@ -49,7 +49,7 @@ class mysql_manager extends p4a
 			$field->setVisible();
 			$field->setNewValue("");
 			$field->addAction("onClick");
-			$mask->intercept($field, "onClick", "editField");
+			$mask->intercept($field, "onClick", "editWidget");
 			$field->enable();
 		}
 	}
