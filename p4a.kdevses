@@ -1,10 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="9" >
+ <DocsAndViews NumberOfDocuments="10" >
   <Doc0 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/data_sources/db_source.php" >
    <View0 line="341" Type="???" >
-    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="654" Left="2" MinMaxMode="0" />
+    <AdditionalSettings Top="2" Width="742" Attach="1" Height="654" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/masks/default/default.tpl" >
@@ -43,10 +43,15 @@
    </View0>
   </Doc7>
   <Doc8 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/p4a/objects/widgets/icon.php" >
-   <View0 line="16" Type="???" >
+   <View0 line="9" Type="???" >
     <AdditionalSettings Top="2" Width="1022" Attach="1" Height="641" Left="2" MinMaxMode="0" />
    </View0>
   </Doc8>
+  <Doc9 NumberOfViews="1" URL="file:/home/andrea/dev/p4a/themes/default/widgets/rich_textarea/htmlarea.css" >
+   <View0 line="83" Type="???" >
+    <AdditionalSettings Top="2" Width="1022" Attach="1" Height="641" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc9>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
