@@ -73,6 +73,11 @@ class P4A_XML_Mask extends P4A_Mask
 
 			if ($tag["tag"] == "FIELD"  and $tag["type"] != "close") {
 				$field =& $this->fields->{$attr["NAME"]};
+
+				$host = $p4a->masks->db_configuration->fields->host->getNewValue();
+				$database = $p4a->masks->db_configuration->fields->database->getNewValue();
+				$field->setUploadSubpath("$host/$database");
+
 				$this->setAttr($field,$attr);
 				$this->setLevel($field, $level);
 				$frame->anchor($field);

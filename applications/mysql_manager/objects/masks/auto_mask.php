@@ -68,10 +68,6 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 
 			$xml .= "\t\t<field name='$field_name' ";
 
-			$host = $p4a->masks->db_configuration->fields->host->getNewValue();
-			$database = $p4a->masks->db_configuration->fields->database->getNewValue();
-			$xml .= "upload_subpath='$host/$database' ";
-
 			if (preg_match('/not_null/',$info[$field_name]['flags'])){
 				$xml .= "mandatory='true' ";
 			}
