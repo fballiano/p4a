@@ -188,8 +188,7 @@ a.link_button:hover {
 /*   HTML TAGS   */
 /*   ---------   */
 
-BODY
-{
+body {
 	SCROLLBAR-FACE-COLOR: #C6D3DE;
 	SCROLLBAR-HIGHLIGHT-COLOR: #C9CFD6;
 	SCROLLBAR-SHADOW-COLOR: #F7F7FF;
@@ -202,16 +201,16 @@ BODY
 	color: #4B718A;
 }
 
-FORM {
+form {
 	display: inline;
 }
 
-H2 {
+h2 {
 	text-align:center;
 	font-size: 16px;
 }
 
-HR {
+hr {
  	margin-top:10px;
 	margin-bottom:10px;
 	border-style:solid;
@@ -219,16 +218,17 @@ HR {
 	height:1px;
 }
 
-IMG {
+img {
 	display: block;
+	behavior: url("pngbehavior.htc");
 }
 
-INPUT{
+input {
 	border: none;
 	border: 1px solid;
 }
 
-INPUT:focus{
+input:focus{
  	border: 1px solid #000000;
 	color: #000000;
 	background-color: #F0F0F0;
@@ -241,31 +241,33 @@ INPUT:focus{
 	color: #255587;
 }
 
-TEXTAREA{
+textarea {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color:#4B718A;
 }
 
-TEXTAREA:focus{
+textarea:focus {
  	border: 1px solid #000000;
 	color: #000000;
 	background-color: #F0F0F0;
 }
 
-SELECT{
+select {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color:#4B718A;
 }
+
 /*
-SELECT:focus{
+select:focus{
 	border: 1px solid;
 	background-color: #F0F0F0;
 }
 */
+
 /*   ----   */
 /*   MENU   */
 /*   ----   */
@@ -426,7 +428,6 @@ div.frame {
 
 .row {
 	clear:both;
-/* 	background:red; */
 }
 
 div.br{
@@ -440,6 +441,7 @@ fieldset {
 	padding-left:15px;
 	padding-right:15px;
 	margin:0;
+/* 	float:left; */
 }
 
 legend {
