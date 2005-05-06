@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -166,7 +164,7 @@
 		 * @access	private
 		 */
 		var $image_upload = false;
-		
+
 		/**
 		 * Is file upload enabled on rich text area?
 		 * This is disabled by default for security reasons, enable it only after a well done permission check.
@@ -681,7 +679,7 @@
 		function getAsDate()
 		{
 			$p4a =& P4A::singleton();
-			
+
 			if ($this->isEnabled()) {
 				$enabled = "";
 			} else {
@@ -696,7 +694,7 @@
 
 			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' $enabled";
 			$close_header  = "/>";
-			
+
 			if (!$p4a->isHandheld()) {
 				$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' $enabled />";
 			}
@@ -1257,7 +1255,7 @@
 		 * In rendering phase it will be added with ':  '.
 		 * @param string	The string to set as label.
 		 * @access public
-		 * @see WIDGET::$label
+		 * @see P4A_Widget::$label
 		 */
 		function setLabel( $value )
 		{
@@ -1333,12 +1331,12 @@
 				return $value;
 			}
 		}
-		
+
 		function enableImageUpload($enable = true)
 		{
 			$this->image_upload = $enable;
 		}
-		
+
 		function enableFileUpload($enable = true)
 		{
 			$this->file_upload = $enable;

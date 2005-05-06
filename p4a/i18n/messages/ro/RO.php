@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -42,7 +40,7 @@ $messages = array
 (
     "days"				=> array('Duminica' , 'Luni' , 'Marti' , 'Miercuri' , 'Joi' , 'Vineri' , 'Sambata'),
 	"months"			=> array('Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'),
-    
+
 	// Standard Toolbar
 	"save"		=> "Confirmă şi salvează.",
 	"cancel"		=> "Anulează operaţia curentă.",
@@ -59,28 +57,28 @@ $messages = array
 	"next"		=> "Continuă la următorul..",
 	"last"		=> "Continuă la ultimul.",
 	"go"				=> "Continuă",
-	
+
 	// Table
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "din",
 	"go_to_page"		=> "Continuă la pagina",
-	
+
 	// File uploads
 	"filename"			=> "Nume",
 	"filesize"			=> "Mărime",
 	"filetype"			=> "Tip",
 	"filepreview"		=> "Vizualizare",
 	"filedelete"		=> "Şterge",
-	
+
 	// Fields
 	"none_selected"		=> "Nimic Selectat",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Eşti sigur?",
 	"confirm_confirm"	=> "Confirmă şi salvează?",
 	"confirm_cancel"	=> "Anulează operaţia curentă?",
 	"confirm_delete"	=> "Şterge înregistrarea curentă?",
-	
+
 	// Yes/No
 	"yes"				=> "Da",
 	"no"				=> "Nu"

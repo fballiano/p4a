@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -43,7 +41,7 @@ $messages = array
 	// Date
     "days"				=> array('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'),
     "months"			=> array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'),
-    
+
 	// Standard Toolbar
 	"save"		=> "Confirmar e salvar.",
 	"cancel"		=> "Cancelar operação atual.",
@@ -60,28 +58,28 @@ $messages = array
 	"next"		=> "Ir para o próximo.",
 	"last"		=> "Ir para o último.",
 	"go"				=> "Ir",
-	
+
 	// Table
 	"current_page"		=> "Página",
 	"of_pages"			=> "de",
 	"go_to_page"		=> "Ir para página",
-	
+
 	// File uploads
 	"filename"			=> "Nome",
 	"filesize"			=> "Tamanho",
 	"filetype"			=> "Tipo",
 	"filepreview"		=> "Pré-visualizar",
 	"filedelete"		=> "Apagar",
-	
+
 	// Fields
 	"none_selected"		=> "Não Selecionado",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Você tem certeza?",
 	"confirm_confirm"	=> "Confirmar e salvar?",
 	"confirm_cancel"	=> "Cancelar operação atual?",
 	"confirm_delete"	=> "Apagar registro atual?",
-	
+
 	// Yes/No
 	"yes"				=> "Sim",
 	"no"				=> "Não"

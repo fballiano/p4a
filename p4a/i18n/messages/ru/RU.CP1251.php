@@ -1,10 +1,10 @@
 <?
 
 /**
- * MerlinWork: Merlin Web Application Framework.
+ * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,31 +18,29 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
- * The latest version of MerlinWork can be obtained from:
- * {@link http://merlinwork.sourceforge.net}
+ * The latest version of p4a can be obtained from:
+ * {@link http://p4a.sourceforge.net}
  *
- * @link http://merlinwork.sourceforge.net
+ * @link http://p4a.sourceforge.net
  * @link http://www.crealabs.it
  * @link mailto:info@crealabs.it info@crealabs.it
  * @copyright CreaLabs
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package MerlinWork
+ * @package p4a
  */
 
 $messages = array
 (
 	"days"				=> array('Воскресенье' , 'Понедельник' , 'Вторник' , 'Среда' , 'Четверг' , 'Пятница' , 'Суббота'),
 	"months"			=> array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'),
-    
+
 	// Standard Toolbar
 	"big_confirm"		=> "Подтвердить и сохранить.",
 	"big_cancel"		=> "Отменить текущую операцию.",
@@ -59,28 +57,28 @@ $messages = array
 	"little_next"		=> "Перейти к следующей записи.",
 	"little_last"		=> "Перейти к последней записи.",
 	"go"				=> "OK",
-	
+
 	// Table
 	"current_page"		=> "Страница",
 	"of_pages"			=> "из",
 	"go_to_page"		=> "Страница",
-	
+
 	// File uploads
 	"filename"			=> "Имя",
 	"filesize"			=> "Размер",
 	"filetype"			=> "Тип",
 	"filepreview"		=> "Просмотреть",
 	"filedelete"		=> "Удалить",
-	
+
 	// Fields
 	"none_selected"		=> "Ничего не выбрано",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Вы уверены?",
 	"confirm_confirm"	=> "Подтвердить и сохранить?",
 	"confirm_cancel"	=> "Отменить текущую операцию?",
 	"confirm_delete"	=> "Удалить текущую запись?",
-	
+
 	// Yes/No
 	"yes"				=> "Да",
 	"no"				=> "Нет"

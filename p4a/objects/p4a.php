@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -88,7 +86,7 @@
 		 * I18n objects and methods.
 		 * @var i18n
 		 * @access public
-		 * @see I18N
+		 * @see P4A_I18N
 		 */
 		var $i18n = array();
 

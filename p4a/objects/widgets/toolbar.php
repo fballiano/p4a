@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -81,7 +79,7 @@
 		 * @param string			Mnemonic identifier for the object.
 		 * @param string			The icon taken from icon set (file name without extension).
 		 * @access public
-		 * @see BUTTON
+		 * @see P4A_Button
 		 */
 		function &addButton($button_name, $icon = NULL, $position = "left")
 		{

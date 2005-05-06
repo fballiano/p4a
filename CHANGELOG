@@ -1,4 +1,7 @@
 0.15
+- updated TODO
+- disabled P4A_Sheets_Group and tabbed menu because they're not completed
+- updated all copyright informations
 - now p4a_message can handle messages without icons
 - some language fixes in the "products_catalogue" application
 

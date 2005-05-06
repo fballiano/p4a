@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -40,8 +38,8 @@
 
 	/**
 	 * p4a menu system.
-	 * As in every big IDE suc as Sun ONE or Microsoft Visual Studio
-	 * you have the possibiliti to add the top menu for simple
+	 * As in every big IDE such as Sun ONE or Microsoft Visual Studio
+	 * you have the possibility to add the top menu for simple
 	 * organization of masks.
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
@@ -242,6 +240,7 @@
 			}
 			elseif($this->type === 'tabbed' or $this->type === 'tabbed_rounded')
 			{
+				P4A_Error("Sorry, tabbed and tabbed_rounded menues are not yet implemented.");
 				$this->useTemplate('menu_' . $this->type);
 				$aItems1 = array();
 				$aItems2 = array();
@@ -389,7 +388,7 @@
 			if( $label !== NULL ) {
 				$item->setLabel($label);
 			}
-			
+
 			return $item;
 		}
 

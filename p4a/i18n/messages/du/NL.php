@@ -4,7 +4,7 @@
  * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -43,7 +41,7 @@ $messages = array
 	// Date
     "days"				=> array('Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'),
     "months"			=> array('Januari', 'Debruari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'),
-    
+
 	// Standard Toolbar
 	"save"		=> "Bevestigen en opslaan.",
 	"cancel"		=> "Annuleer huidige handeling.",
@@ -60,28 +58,28 @@ $messages = array
 	"next"		=> "Ga naar volgende.",
 	"last"		=> "Ga naar laatste.",
 	"go"				=> "Ga",
-	
+
 	// Table
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "van",
 	"go_to_page"		=> "Ga naar pagina",
-	
+
 	// File uploads
 	"filename"			=> "Naam",
 	"filesize"			=> "Grootte",
 	"filetype"			=> "Type",
 	"filepreview"		=> "Voorbeeld",
 	"filedelete"		=> "Verwijderen",
-	
+
 	// Fields
 	"none_selected"		=> "Niets geselecteerd",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Weet u het zeker?",
 	"confirm_confirm"	=> "Bevestigen en opslaan?",
 	"confirm_cancel"	=> "Annuleer huidige handeling?",
 	"confirm_delete"	=> "Verwijder huidig record?",
-	
+
 	// Yes/No
 	"yes"				=> "Ja",
 	"no"				=> "Nee"

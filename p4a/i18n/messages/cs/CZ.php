@@ -4,7 +4,7 @@
  * MerlinWork: Merlin Web Application Framework.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -43,7 +41,7 @@ $messages = array
 	// Date
     "days"				=> array('Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'),
     "months"			=> array('Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'),
-    
+
 	// Standard Toolbar
 	"save"			=> "Potvrdit a uložit.",
 	"cancel"		=> "Zrušit tuto operaci.",
@@ -60,28 +58,28 @@ $messages = array
 	"next"			=> "Jdi na další.",
 	"last"			=> "Jdi na poslední.",
 	"go"			=> "Jdi",
-	
+
 	// Table
 	"current_page"		=> "Strana",
 	"of_pages"			=> "z",
 	"go_to_page"		=> "Jdi na stranu",
-	
+
 	// File uploads
 	"filename"			=> "Jméno",
 	"filesize"			=> "Velikost",
 	"filetype"			=> "Typ",
 	"filepreview"		=> "Náhled",
 	"filedelete"		=> "Vymazat",
-	
+
 	// Fields
 	"none_selected"		=> "Není vybráno",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Jste si jist?",
 	"confirm_confirm"	=> "Potvrdit a uložit?",
 	"confirm_cancel"	=> "Zrušit tuto operaci?",
 	"confirm_delete"	=> "Vymazat tento záznam?",
-	
+
 	// Yes/No
 	"yes"				=> "Ano",
 	"no"				=> "Ne"

@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -47,7 +45,7 @@
 	// Changing inclusion path
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
-	unset($include_path[ $dot_key ]) ;
+	unset($include_path[ $dot_key ]);
 	$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
 
@@ -84,8 +82,6 @@
 	require_once(dirname(__FILE__) . '/objects/data_source.php');
 	require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
 	require_once(dirname(__FILE__) . '/objects/data_sources/array_source.php');
-	//require_once(dirname(__FILE__) . '/objects/data_sources/db_source.php');
-	//require_once(dirname(__FILE__) . '/objects/data_sources/txt_source.php');
 	require_once(dirname(__FILE__) . '/objects/widget.php');
 
 	//Masks

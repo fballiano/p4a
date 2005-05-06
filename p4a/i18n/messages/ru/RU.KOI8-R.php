@@ -1,10 +1,10 @@
 <?
 
 /**
- * MerlinWork: Merlin Web Application Framework.
+ * P4A - PHP For Applications.
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 
+ * it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -18,31 +18,29 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
- * The latest version of MerlinWork can be obtained from:
- * {@link http://merlinwork.sourceforge.net}
+ * The latest version of p4a can be obtained from:
+ * {@link http://p4a.sourceforge.net}
  *
- * @link http://merlinwork.sourceforge.net
+ * @link http://p4a.sourceforge.net
  * @link http://www.crealabs.it
  * @link mailto:info@crealabs.it info@crealabs.it
  * @copyright CreaLabs
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package MerlinWork
+ * @package p4a
  */
 
 $messages = array
 (
 	"days"				=> array('Þðõìôåõåïûå' , 'Òðïåäåíûïêì' , 'Þæðôïêì' , 'Õôåäâ' , 'Àåæþåôú' , 'Òóæïêçâ' , 'Õè÷÷ðæâ'),
 	"months"			=> array('Óïþâôû', 'Öåþôâíû', 'Îâôæ', 'Âòôåíû', 'Îâë', 'Êáïû', 'Êáíû', 'Âþúèõæ', 'Õåïæó÷ôû', 'Ðìæó÷ôû', 'Ïðó÷ôû', 'Äåìâ÷ôû'),
-    
+
 	// Standard Toolbar
 	"big_confirm"		=> "Òðäæþåôäêæû ê õðéôâïêæû.",
 	"big_cancel"		=> "Ðæîåïêæû æåìèüèá ðòåôâçêá.",
@@ -59,28 +57,28 @@ $messages = array
 	"little_next"		=> "Òåôåëæê ì õíåäèáüåë ÿâòêõê.",
 	"little_last"		=> "Òåôåëæê ì òðõíåäïåë ÿâòêõê.",
 	"go"				=> "OK",
-	
+
 	// Table
 	"current_page"		=> "Õæôâïêçâ",
 	"of_pages"			=> "êÿ",
 	"go_to_page"		=> "Õæôâïêçâ",
-	
+
 	// File uploads
 	"filename"			=> "Êîó",
 	"filesize"			=> "Ôâÿîåô",
 	"filetype"			=> "Æêò",
 	"filepreview"		=> "Òôðõîðæôåæû",
 	"filedelete"		=> "Èäâíêæû",
-	
+
 	// Fields
 	"none_selected"		=> "Ïêàåúð ïå þý÷ôâïð",
-	
+
 	// Confirmations
 	"confirm_general"	=> "Þý èþåôåïý?",
 	"confirm_confirm"	=> "Òðäæþåôäêæû ê õðéôâïêæû?",
 	"confirm_cancel"	=> "Ðæîåïêæû æåìèüèá ðòåôâçêá?",
 	"confirm_delete"	=> "Èäâíêæû æåìèüèá ÿâòêõû?",
-	
+
 	// Yes/No
 	"yes"				=> "Äâ",
 	"no"				=> "Ïåæ"

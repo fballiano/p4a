@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -476,7 +474,7 @@ class P4A_DB_Source extends P4A_Data_Source
 						if (!array_key_exists($name,$this->_multivalue_fields)) {
 							$fields_values[$name] = $field->getNewValue();
 							if ($fields_values[$name] === "") {
-								$fields_values[$name] = NULL;	
+								$fields_values[$name] = NULL;
 							}
 						}
 					}

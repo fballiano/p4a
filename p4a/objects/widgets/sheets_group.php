@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -47,7 +45,7 @@
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_SHEETS_GROUP extends P4A_WIDGET
+	class P4A_Sheets_Group extends P4A_WIDGET
 	{
 		/**
 		 * Here we store all sheets.
@@ -104,8 +102,9 @@
 		 * @param string	The name of the sheet
 		 * @access private
 		 */
-		function &p4a_sheets_group( $name )
+		function &P4A_Sheets_Group( $name )
 		{
+			P4A_Error("Sorry, P4A_Sheets_Group is not yet implemented.");
 			parent::p4a_widget( $name ) ;
 			$this->useTemplate( 'sheets_group_gray' );
 			$this->build("p4a_sheets_group_navigation_bar", "sheets_group_navigation_bar");
