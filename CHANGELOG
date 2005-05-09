@@ -1,11 +1,15 @@
-0.16
+0.17
 - created CREDITS file and moved credits from README
 - updated some copyright informations
+- fixed an error in CHANGELOG
 
-0.15
+0.16
 - updated TODO
 - disabled P4A_Sheets_Group and tabbed menu because they're not completed
 - updated all copyright informations
+
+0.15
+
 - now p4a_message can handle messages without icons
 - some language fixes in the "products_catalogue" application
 
