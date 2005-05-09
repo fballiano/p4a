@@ -1,3 +1,7 @@
+0.16
+- created CREDITS file and moved credits from README
+- updated some copyright informations
+
 0.15
 - updated TODO
 - disabled P4A_Sheets_Group and tabbed menu because they're not completed
