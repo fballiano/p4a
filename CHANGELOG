@@ -1,4 +1,6 @@
 0.17
+- done some PHP5 fixes, seems to work fine but we need more tests
+- updated TODO
 - created CREDITS file and moved credits from README
 - updated some copyright informations
 - fixed an error in CHANGELOG

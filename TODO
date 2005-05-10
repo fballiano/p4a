@@ -1,5 +1,5 @@
-- PHP5 porting
-- check change app in the same browser window
+- check session data for deleting smarty if possible
+- check app change in the same browser window
 - add and test rich_textarea spell check
 - check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)

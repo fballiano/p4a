@@ -148,14 +148,14 @@
 			$this_id = $this->getID();
 			$this_name = $this->getName();
 
-			//todo
 			foreach($this->_objects as $key=>$object_id){
 				if (array_key_exists($object_id, $p4a->objects)) {
 					$p4a->objects[$object_id]->destroy();
 				}
 			}
 
-			$this = null;
+			// removed for php5 compatibility, seems to work fine
+			//$this = null;
 			unset($parent->$this_name);
 			unset($p4a->objects[$this_id]);
 		}
