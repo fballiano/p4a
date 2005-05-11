@@ -1,3 +1,6 @@
+0.18
+- updated rich text editor (FCKeditor 2.0 FC)
+
 0.17
 - done some PHP5 fixes, seems to work fine but we need more tests
 - updated TODO

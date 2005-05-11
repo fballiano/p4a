@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -8,11 +8,8 @@
  * For further information visit:
  * 		http://www.fckeditor.net/
  * 
- * File Name: gr.js
+ * File Name: el.js
  * 	Greek language file.
- * 
- * Version:  2.0 RC3
- * Modified: 2005-03-01 17:26:17
  * 
  * File Authors:
  * 		Spyros Barbatos (sbarbatos{at}users.sourceforge.net)
@@ -120,7 +117,7 @@ SelectionFieldProp	: "Selection Field Properties",	//MISSING
 TextareaProp		: "Textarea Properties",	//MISSING
 FormProp			: "Form Properties",	//MISSING
 
-FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6",	// 2.0: The last entry has been added.
+FontFormats			: "Normal;Formatted;Address;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6",
 
 // Alerts and Messages
 ProcessingXHTML		: "Επεξεργασία XHTML. Παρακαλώ περιμένετε...",
@@ -183,6 +180,7 @@ DlgImgAlignTextTop	: "Κορυφή Κειμένου (Text Top)",
 DlgImgAlignTop		: "Πάνω (Top)",
 DlgImgPreview		: "Προεπισκόπιση",
 DlgImgAlertUrl		: "Εισάγετε την τοποθεσία (URL) της εικόνας",
+DlgImgLinkTab		: "Link",	//MISSING
 
 // Link Dialog
 DlgLnkWindowTitle	: "Υπερσύνδεσμος (Link)",
@@ -438,6 +436,13 @@ DlgDocMeDescr		: "Document Description",	//MISSING
 DlgDocMeAuthor		: "Author",	//MISSING
 DlgDocMeCopy		: "Copyright",	//MISSING
 DlgDocPreview		: "Preview",	//MISSING
+
+// Templates Dialog
+Templates			: "Templates",	//MISSING
+DlgTemplatesTitle	: "Content Templates",	//MISSING
+DlgTemplatesSelMsg	: "Please select the template to open in the editor<br>(the actual contents will be lost):",	//MISSING
+DlgTemplatesLoading	: "Loading templates list. Please wait...",	//MISSING
+DlgTemplatesNoTpl	: "(No templates defined)",	//MISSING
 
 // About Dialog
 DlgAboutAboutTab	: "About",	//MISSING
