@@ -4,6 +4,11 @@ h2 {
 
 body {
 	text-align: left;
+	font-family: sans-serif;
+}
+
+a {
+	color: #0570ff;
 }
 
 .border {
@@ -86,4 +91,5 @@ label {
 #footerContainer {
 	margin-top: 10px;
 	font-size: 90%;
+	text-align: center;
 }

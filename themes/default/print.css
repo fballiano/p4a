@@ -22,7 +22,7 @@ input {
 	border: none;
 	border-bottom: 1px solid black !important;
 	margin-right:10px;
-	font-size: 8px;	
+	font-size: 8px;
 	text-align:left !important;
 }
 
@@ -55,20 +55,19 @@ label {
 	border:0px;
 }
 
-
-A {
+a {
 	text-decoration:none;
 	color: #000000;
 }
 
-BODY {
+body {
 	page: landescape;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color:#000000;
 }
 
-HR {
+hr {
  	margin-top:10px;
 	margin-bottom:10px;
 	border-style:solid;
@@ -76,14 +75,13 @@ HR {
 	height:1px;
 }
 
-IMG {
+img {
 	display:none;
 }
 
-TEXTAREA {
+textarea {
 	border: 1px solid #cccccc;
 }
-
 
 /* ----------- */
 /* P4A CLASSES */
