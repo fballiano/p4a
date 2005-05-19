@@ -82,3 +82,8 @@ label {
 .message img {
 	display: none;
 }
+
+#footerContainer {
+	margin-top: 10px;
+	font-size: 90%;
+}

@@ -301,12 +301,12 @@
 		define('P4A_ICONS_URL', P4A_ROOT_URL . P4A_ICONS_PATH);
 	}
 
-	if (!defined('P4A_ICONS_EXTENSION')){
+	if (!defined('P4A_ICONS_EXTENSION')) {
 		define('P4A_ICONS_EXTENSION', 'png');
 	}
 
 	//Smarty Compile Dir
-	if (!defined('P4A_SMARTY_MASK_COMPILE_DIR')){
+	if (!defined('P4A_SMARTY_MASK_COMPILE_DIR')) {
 		define("P4A_SMARTY_MASK_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)) . "_masks");
 	}
 
@@ -315,29 +315,34 @@
 	}
 
 
-	if (!defined('P4A_SMARTY_WIDGET_COMPILE_DIR')){
+	if (!defined('P4A_SMARTY_WIDGET_COMPILE_DIR')) {
 		define("P4A_SMARTY_WIDGET_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)) . "_widgets");
 	}
 
-	if (! (is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR))) {
+	if (!(is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR))) {
 		mkdir(P4A_SMARTY_WIDGET_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_SMARTY_WIDGET_COMPILE_DIR . " or directory is not readable/writable.");
 	}
 
 	//I18N
-	if (!defined('P4A_LOCALE')){
+	if (!defined('P4A_LOCALE')) {
 		define('P4A_LOCALE', 'en_US');
 	}
 
-	if (!defined('P4A_APPLICATION_LOCALES_PATH')){
+	if (!defined('P4A_APPLICATION_LOCALES_PATH')) {
 		define('P4A_APPLICATION_LOCALES_PATH', P4A_APPLICATION_PATH . '/i18n');
 	}
 
-	if (!defined('P4A_APPLICATION_LOCALES_DIR')){
+	if (!defined('P4A_APPLICATION_LOCALES_DIR')) {
 		define('P4A_APPLICATION_LOCALES_DIR', P4A_APPLICATION_DIR . '/i18n');
 	}
 
-	if (!defined('P4A_APPLICATION_LOCALES_URL')){
+	if (!defined('P4A_APPLICATION_LOCALES_URL')) {
 		define('P4A_APPLICATION_LOCALES_URL', P4A_APPLICATION_URL . '/i18n');
+	}
+
+	// Force handheld rendering
+	if (!defined('P4A_FORCE_HANDHELD_RENDERING')) {
+		define('P4A_FORCE_HANDHELD_RENDERING', false);
 	}
 
 	//P4A SYSTEM CONSTANTS

@@ -1,3 +1,6 @@
+0.19
+- added constant P4A_FORCE_HANDHELD_RENDERING to force handheld rendering on any device (useful to have a handheld preview)
+
 0.18
 - updated rich text editor (FCKeditor 2.0 FC)
 

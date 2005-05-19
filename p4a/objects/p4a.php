@@ -155,7 +155,7 @@
 				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
 			}
 
-			if (!$client->has_feature('css2')) {
+			if (!$client->has_feature('css2') or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
 				$this->css = array();
 				$this->addCSS(P4A_THEME_PATH . "/handheld.css");
@@ -171,6 +171,10 @@
 
 		function isHandheld()
 		{
+			if (P4A_FORCE_HANDHELD_RENDERING) {
+				return true;
+			}
+
 			return $this->handheld;
 		}
 
