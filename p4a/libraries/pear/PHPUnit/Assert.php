@@ -3,7 +3,7 @@
 // +------------------------------------------------------------------------+
 // | PEAR :: PHPUnit                                                        |
 // +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
 // +------------------------------------------------------------------------+
 // | This source file is subject to version 3.00 of the PHP License,        |
 // | that is available at http://www.php.net/license/3_0.txt.               |
@@ -12,14 +12,14 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: Assert.php,v 1.22 2004/12/21 18:25:14 sebastian Exp $
+// $Id: Assert.php,v 1.25 2005/01/31 04:57:16 sebastian Exp $
 //
 
 /**
  * A set of assert methods.
  *
  * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
  * @category    Testing
  * @package     PHPUnit
@@ -208,48 +208,40 @@ class PHPUnit_Assert {
     }
 
     /**
-    * Asserts that an object isn't null.
+    * Asserts that a variable is not NULL.
     *
-    * @param  object
+    * @param  mixed
     * @param  string
     * @access public
     */
-    function assertNotNull($object, $message = '') {
-        if (is_object($object) || is_null($object)) {
-            $message = sprintf(
-              '%sexpected NOT NULL, actual NULL',
+    function assertNotNull($actual, $message = '') {
+        $message = sprintf(
+          '%sexpected NOT NULL, actual NULL',
 
-              !empty($message) ? $message . ' ' : ''
-            );
+          !empty($message) ? $message . ' ' : ''
+        );
 
-            if (is_null($object)) {
-                return $this->fail($message);
-            }
-        } else {
-            $this->fail('Unsupported parameter passed to assertNotNull().');
+        if (is_null($actual)) {
+            return $this->fail($message);
         }
     }
 
     /**
-    * Asserts that an object is null.
+    * Asserts that a variable is NULL.
     *
-    * @param  object
+    * @param  mixed
     * @param  string
     * @access public
     */
-    function assertNull($object, $message = '') {
-        if (is_object($object) || is_null($object)) {
-            $message = sprintf(
-              '%sexpected NULL, actual NOT NULL',
+    function assertNull($actual, $message = '') {
+        $message = sprintf(
+          '%sexpected NULL, actual NOT NULL',
 
-              !empty($message) ? $message . ' ' : ''
-            );
+          !empty($message) ? $message . ' ' : ''
+        );
 
-            if (!is_null($object)) {
-                return $this->fail($message);
-            }
-        } else {
-            $this->fail('Unsupported parameter passed to assertNotNull().');
+        if (!is_null($actual)) {
+            return $this->fail($message);
         }
     }
 

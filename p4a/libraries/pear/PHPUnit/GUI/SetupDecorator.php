@@ -3,7 +3,7 @@
 // +------------------------------------------------------------------------+
 // | PEAR :: PHPUnit                                                        |
 // +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
 // +------------------------------------------------------------------------+
 // | This source file is subject to version 3.00 of the PHP License,        |
 // | that is available at http://www.php.net/license/3_0.txt.               |
@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: SetupDecorator.php,v 1.9 2004/11/25 09:05:22 sebastian Exp $
+// $Id: SetupDecorator.php,v 1.12 2005/05/14 05:58:38 sebastian Exp $
 //
 
 /**
@@ -58,7 +58,7 @@ class PHPUnit_GUI_SetupDecorator
     */
     function PHPUnit_GUI_SetupDecorator(&$gui)
     {
-        $this->_gui = $gui;
+        $this->_gui = &$gui;
     }
 
     /**
@@ -139,7 +139,11 @@ class PHPUnit_GUI_SetupDecorator
                 if (is_file($filename) && $match) {
                     $tmp = str_replace($rootDir, '', $filename);
 
-                    if (strpos($tmp, '/') == 1){
+                    if (strpos($tmp, DIRECTORY_SEPARATOR) === 0) {
+                        $tmp = substr($tmp, 1);
+                    }
+
+                    if (strpos($tmp, '/') === 0) {
                         $tmp = substr($tmp, 1);
                     }
 

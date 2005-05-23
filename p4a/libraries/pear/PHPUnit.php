@@ -3,7 +3,7 @@
 // +------------------------------------------------------------------------+
 // | PEAR :: PHPUnit                                                        |
 // +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
 // +------------------------------------------------------------------------+
 // | This source file is subject to version 3.00 of the PHP License,        |
 // | that is available at http://www.php.net/license/3_0.txt.               |
@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: PHPUnit.php,v 1.13 2004/10/01 06:11:39 sebastian Exp $
+// $Id: PHPUnit.php,v 1.14 2004/12/22 08:06:11 sebastian Exp $
 //
 
 require_once 'PHPUnit/TestCase.php';
@@ -67,7 +67,7 @@ require_once 'PHPUnit/TestSuite.php';
  * </code>
  *
  * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
  * @category    Testing
  * @package     PHPUnit

@@ -48,7 +48,7 @@
                         <input type="checkbox" onClick="unCheckAll()" name="allChecked">
                         (un)check all
                         &nbsp; &nbsp;
-                        show OK <input type="checkbox" name="showOK" <?php echo @$_REQUEST['showOK']?'checked':''?>>
+                        show OK <input type="checkbox" name="showOK" <?php echo @$request['showOK']?'checked':''?>>
                         &nbsp; &nbsp;
                         <input type="submit" name="submitted" value="run tests">
                     </td>
@@ -57,7 +57,7 @@
                 <?php foreach($suiteResults as $aResult): ?>
                     <tr>
                         <th colspan="10">
-                            <input type="checkbox" name="<?php echo $aResult['name'] ?>" <?php echo @$_REQUEST[$aResult['name']]?'checked':'' ?>>
+                            <input type="checkbox" name="<?php echo $aResult['name'] ?>" <?php echo @$request[$aResult['name']]?'checked':'' ?>>
                             <?php echo $aResult['name'] ?>
                             &nbsp;
                             <?php if (isset($aResult['addInfo'])): ?>

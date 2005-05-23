@@ -1,4 +1,5 @@
 0.19
+- upgraded all pear packages
 - added constant P4A_FORCE_HANDHELD_RENDERING to force handheld rendering on any device (useful to have a handheld preview)
 - handheld CSS now has a sans-serif font
 - handheld CSS now has a nice color for all the links

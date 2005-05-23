@@ -3,7 +3,7 @@
 // +------------------------------------------------------------------------+
 // | PEAR :: PHPUnit                                                        |
 // +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
 // +------------------------------------------------------------------------+
 // | This source file is subject to version 3.00 of the PHP License,        |
 // | that is available at http://www.php.net/license/3_0.txt.               |
@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestDecorator.php,v 1.10 2004/10/01 06:11:39 sebastian Exp $
+// $Id: TestDecorator.php,v 1.12 2005/05/14 05:58:38 sebastian Exp $
 //
 
 require_once 'PHPUnit/TestCase.php';
@@ -26,7 +26,7 @@ require_once 'PHPUnit/TestSuite.php';
  * to add behaviour before or after a test is run.
  *
  * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
  * @category    Testing
  * @package     PHPUnit
@@ -51,7 +51,7 @@ class PHPUnit_TestDecorator {
             (is_a($test, 'PHPUnit_TestCase') ||
              is_a($test, 'PHPUnit_TestSuite'))) {
 
-            $this->_test = $test;
+            $this->_test = &$test;
         }
     }
 

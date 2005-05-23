@@ -1,54 +1,36 @@
 <?php
-// +-----------------------------------------------------------------------+
-// | Copyright (c) 2002-2005, Richard Heyes, Lorenzo Alberton              |
-// | All rights reserved.                                                  |
-// |                                                                       |
-// | Redistribution and use in source and binary forms, with or without    |
-// | modification, are permitted provided that the following conditions    |
-// | are met:                                                              |
-// |                                                                       |
-// | o Redistributions of source code must retain the above copyright      |
-// |   notice, this list of conditions and the following disclaimer.       |
-// | o Redistributions in binary form must reproduce the above copyright   |
-// |   notice, this list of conditions and the following disclaimer in the |
-// |   documentation and/or other materials provided with the distribution.|
-// | o The names of the authors may not be used to endorse or promote      |
-// |   products derived from this software without specific prior written  |
-// |   permission.                                                         |
-// |                                                                       |
-// | THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS   |
-// | "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT     |
-// | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR |
-// | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT  |
-// | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, |
-// | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT      |
-// | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, |
-// | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY |
-// | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT   |
-// | (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE |
-// | OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  |
-// |                                                                       |
-// +-----------------------------------------------------------------------+
-// | Authors: Richard Heyes <richard@phpguru.org>                          |
-// |          Lorenzo Alberton <l.alberton at quipo.it>                    |
-// +-----------------------------------------------------------------------+
-//
-// $Id: Common.php,v 1.29 2005/01/17 13:51:25 quipo Exp $
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * File Common.php
+ * Contains the Pager_Common class
  *
- * @package Pager
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: Common.php,v 1.35 2005/04/29 17:09:50 quipo Exp $
+ * @link       http://pear.php.net/package/Pager
  */
+
 /**
  * Two constants used to guess the path- and file-name of the page
- * when the user doesn't set any pther value
+ * when the user doesn't set any other value
  */
 if (substr($_SERVER['PHP_SELF'], -1) == '/') {
     define('CURRENT_FILENAME', '');
     define('CURRENT_PATHNAME', str_replace('\\', '/', $_SERVER['PHP_SELF']));
 } else {
-    define('CURRENT_FILENAME', basename($_SERVER['PHP_SELF']));
+    define('CURRENT_FILENAME', preg_replace('/(.*)\?.*/', '\\1', basename($_SERVER['PHP_SELF'])));
     define('CURRENT_PATHNAME', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 }
 /**
@@ -60,20 +42,22 @@ define('ERROR_PAGER_INVALID',             -2);
 define('ERROR_PAGER_INVALID_PLACEHOLDER', -3);
 define('ERROR_PAGER_INVALID_USAGE',       -4);
 define('ERROR_PAGER_NOT_IMPLEMENTED',     -5);
+
 /**
  * Pager_Common - Common base class for [Sliding|Jumping] Window Pager
+ * Extend this class to write a custom paging class
  *
- * Usage examples can be found in the doc provided
- *
- * @author Richard Heyes <richard@phpguru.org>,
- * @author Lorenzo Alberton <l.alberton at quipo.it>
- * @version  $Id: Common.php,v 1.29 2005/01/17 13:51:25 quipo Exp $
- * @package Pager
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @link       http://pear.php.net/package/Pager
  */
 class Pager_Common
 {
-
-    // {{{ private class vars
+    // {{{ class vars
 
     /**
      * @var integer number of items
@@ -136,22 +120,40 @@ class Pager_Common
     var $_append      = true;
 
     /**
+     * @var string specifies which HTTP method to use
+     * @access private
+     */
+    var $_httpMethod  = 'GET';
+
+    /**
+     * @var boolean whether or not to import submitted data
+     * @access private
+     */
+    var $_importQuery = true;
+
+    /**
      * @var string name of the querystring var for pageID
      * @access private
      */
     var $_urlVar      = 'pageID';
 
     /**
-     * @var string name of the url without the pageID number
+     * @var array data to pass through the link
      * @access private
      */
-    var $_url         = '';
+    var $_linkData    = array();
 
     /**
      * @var array additional URL vars
      * @access private
      */
     var $_extraVars   = array();
+    
+    /**
+     * @var array URL vars to ignore
+     * @access private
+     */
+    var $_excludeVars = array();
 
     /**
      * @var boolean TRUE => expanded mode (for Pager_Sliding)
@@ -379,11 +381,9 @@ class Pager_Common
     {
         $pageID = empty($pageID) ? $this->_currentPage : $pageID;
 
-
         if (!isset($this->_pageData)) {
             $this->_generatePageData();
         }
-
         if (!empty($this->_pageData[$pageID])) {
             return $this->_pageData[$pageID];
         }
@@ -613,55 +613,201 @@ class Pager_Common
     }
 
     // }}}
-    // {{{ _getLinksUrl()
+    // {{{ _renderLink()
+
+    /**
+     * Renders a link using the appropriate method
+     *
+     * @param altText Alternative text for this link (title property)
+     * @param linkText Text contained by this link
+     * @return string The link in string form
+     * @access private
+     */
+    function _renderLink($altText, $linkText)
+    {
+        if ($this->_httpMethod == 'GET') {
+            if ($this->_append) {
+                $href = '?' . $this->_http_build_query_wrapper($this->_linkData);
+            } else {
+                $href = sprintf($this->_fileName, $this->_linkData[$this->_urlVar]);
+            }
+            return sprintf('<a href="%s"%s title="%s">%s</a>',
+                           htmlentities($this->_url . $href),
+                           empty($this->_classString) ? '' : ' '.$this->_classString,
+                           $altText,
+                           $linkText
+            );
+        }
+        if ($this->_httpMethod == 'POST') {
+            return sprintf('<a onclick=\'%s\' href="#"%s title="%s">%s</a>',
+                           $this->_generateFormOnClick($this->_url, $this->_linkData),
+                           empty($this->_classString) ? '' : ' '.$this->_classString,
+                           $altText,
+                           $linkText
+            );
+        }
+        return '';
+    }
+
+    // }}}
+    // {{{ _generateFormOnClick()
+
+    /**
+     * Mimics http_build_query() behavior in the way the data
+     * in $data will appear when it makes it back to the server.
+     *  For example:
+     * $arr =  array('array' => array(array('hello', 'world'),
+     *                                'things' => array('stuff', 'junk'));
+     * http_build_query($arr)
+     * and _generateFormOnClick('foo.php', $arr)
+     * will yield
+     * $_REQUEST['array'][0][0] === 'hello'
+     * $_REQUEST['array'][0][0] === 'world'
+     * $_REQUEST['array']['things'][0] === 'stuff'
+     * $_REQUEST['array']['things'][0] === 'junk'
+     *
+     * However, instead of  generating a query string, it generates
+     * Javascript to create and submit a form.
+     *
+     * @param string $formAction where the form should be submitted
+     * @param array  $data the associative array of names and values
+     * @return string A string of javascript that generates a form and submits it
+     * @access private
+     */
+    function _generateFormOnClick($formAction, $data)
+    {
+        // Check we have an array to work with
+        if (!is_array($data)) {
+            trigger_error(
+                '_generateForm() Parameter 1 expected to be Array or Object. Incorrect value given.',
+                E_USER_WARNING
+            );
+            return false;
+        }
+        $str = 'var form = document.createElement("form"); var input = ""; ';
+        // We /shouldn't/ need to escape the URL ...
+        $str .= sprintf('form.action = "%s"; ', htmlentities($formAction));
+        $str .= sprintf('form.method = "%s"; ', $this->_httpMethod);
+        foreach ($data as $key => $val) {
+            $str .= $this->_generateFormOnClickHelper($val, $key);
+        }
+        $str .= 'document.getElementsByTagName("body")[0].appendChild(form);';
+        $str .= 'form.submit();';
+        return $str;
+    }
+
+    // }}}
+    // {{{ _generateFormOnClickHelper
+
+    /**
+     * This is used by _generateFormOnClick(). 
+     * Recursively processes the arrays, objects, and literal values.
+     *
+     * @param data Data that should be rendered
+     * @param prev The name so far
+     * @return string A string of Javascript that creates form inputs
+     *                representing the data
+     * @access private
+     */
+    function _generateFormOnClickHelper($data, $prev = '')
+    {
+        $str = '';
+        if (is_array($data) || is_object($data)) {
+            // foreach key/visible member
+            foreach ((array)$data as $key => $val) {
+                // append [$key] to prev
+                $tempKey = sprintf('%s[%s]', $prev, $key);
+                $str .= $this->_generateFormOnClickHelper($val, $tempKey);
+            }
+        } else {  // must be a literal value
+            // escape newlines and carriage returns
+            $search  = array("\n", "\r");
+            $replace = array('\n', '\n');
+            $escapedData = str_replace($search, $replace, $data);
+            // am I forgetting any dangerous whitespace?
+            // would a regex be faster?
+            $escapedData = htmlentities($escapedData);
+
+            $str .= 'input = document.createElement("input"); ';
+            $str .= 'input.type = "hidden"; ';
+            $str .= sprintf('input.name = "%s"; ', $prev);
+            $str .= sprintf('input.value = "%s"; ', $escapedData);
+            $str .= 'form.appendChild(input); ';
+        }
+        return $str;
+    }
+
+    // }}}
+    // {{{ _getLinksData()
 
     /**
      * Returns the correct link for the back/pages/next links
      *
-     * @return string Url
+     * @return array Data
      * @access private
      */
-    function _getLinksUrl()
+    function _getLinksData()
     {
-        // Sort out query string to prevent messy urls
-        $querystring = array();
         $qs = array();
-        $arrays = array();
-        if (!empty($_SERVER['QUERY_STRING'])) {
-            $qs = explode('&', str_replace('&amp;', '&', $_SERVER['QUERY_STRING']));
-            for ($i = 0, $cnt = count($qs); $i < $cnt; $i++) {
-                if (strstr($qs[$i], '=') !== false){ // check first if exist a pair
-                    list($name, $value) = explode('=', $qs[$i]);
-                    if ($name != $this->_urlVar) {
-                        $name = rawurldecode($name);
-                        //check for arrays in parameters: site.php?foo[]=1&foo[]=2&foo[]=3
-                        if ((strpos($name, '[') !== false) &&
-                            (strpos($name, ']') !== false)
-                        ) {
-                            $arrays[] = $qs[$i];
-                        } else {
-                            $qs[$name] = $value;
-                        }
-                    }
-                } else {
-                    $qs[$qs[$i]] = '';
-                }
-                unset($qs[$i]);
+        if ($this->_importQuery) {
+            if ($this->_httpMethod == 'POST') {
+                $qs = $_POST;
+            } else if ($this->_httpMethod == 'GET') {
+                $qs = $_GET;
             }
         }
-        if (is_array($this->_extraVars)) {
-            foreach ($this->_extraVars as $name => $value) {
-                $qs[$name] = $value; //eventually overwrite duplicate vars
+        if (count($this->_extraVars)){
+            $this->_recursive_urldecode($this->_extraVars);
+        }
+        $qs = array_merge($qs, $this->_extraVars);
+        foreach ($this->_excludeVars as $exclude) {
+            if (array_key_exists($exclude, $qs)) {
+                unset($qs[$exclude]);
             }
         }
-
-        foreach ($qs as $name => $value) {
-            $querystring[] = $name . '=' . $value;
+        if (count($qs) && get_magic_quotes_gpc()){
+            $this->_recursive_stripslashes($qs);
         }
-        $querystring = array_merge($querystring, array_unique($arrays));
-        $querystring = array_map('htmlentities', $querystring);
+        return $qs;
+    }
 
-        return '?' . implode('&amp;', $querystring) . (!empty($querystring) ? '&amp;' : '') . $this->_urlVar .'=';
+    // }}}
+    // {{{ _recursive_stripslashes()
+    
+    /**
+     * Helper method
+     * @param mixed $var
+     * @access private
+     */
+    function _recursive_stripslashes(&$var)
+    {
+        if (is_array($var)) {
+            foreach (array_keys($var) as $k) {
+                $this->_recursive_stripslashes($var[$k]);
+            }
+        } else {
+            $var = stripslashes($var);
+        }
+    }
+
+    // }}}
+    // {{{ _recursive_urldecode()
+
+    /**
+     * Helper method
+     * @param mixed $var
+     * @access private
+     */
+    function _recursive_urldecode(&$var)
+    {
+        if (is_array($var)) {
+            foreach (array_keys($var) as $k) {
+                $this->_recursive_urldecode($var[$k]);
+            }
+        } else {
+            $trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
+            $var = strtr($var, $trans_tbl);
+        }
     }
 
     // }}}
@@ -687,12 +833,8 @@ class Pager_Common
         }
         $back = '';
         if ($this->_currentPage > 1) {
-            $back = sprintf('<a href="%s" %s title="%s">%s</a>',
-                            ( $this->_append ? $this->_url.$this->getPreviousPageID() :
-                                    $this->_url.sprintf($this->_fileName, $this->getPreviousPageID()) ),
-                            $this->_classString,
-                            $this->_altPrev,
-                            $this->_prevImg)
+            $this->_linkData[$this->_urlVar] = $this->getPreviousPageID();
+            $back = $this->_renderLink($this->_altPrev, $this->_prevImg)
                   . $this->_spacesBefore . $this->_spacesAfter;
         }
         return $back;
@@ -739,18 +881,31 @@ class Pager_Common
         }
         $next = '';
         if ($this->_currentPage < $this->_totalPages) {
+            $this->_linkData[$this->_urlVar] = $this->getNextPageID();
             $next = $this->_spacesAfter
-                 . sprintf('<a href="%s" %s title="%s">%s</a>',
-                            ($this->_append ? $this->_url.$this->getNextPageID() :
-                                $this->_url.sprintf($this->_fileName, $this->getNextPageID())),
-                            $this->_classString,
-                            $this->_altNext,
-                            $this->_nextImg)
-                 . $this->_spacesBefore . $this->_spacesAfter;
+                  . $this->_renderLink($this->_altNext, $this->_nextImg)
+                  . $this->_spacesBefore . $this->_spacesAfter;
         }
         return $next;
     }
 
+    // }}}
+    // {{{ _getFirstLinkTag()
+
+    /**
+     * @return string
+     * @access private
+     */
+    function _getFirstLinkTag()
+    {
+        if ($this->isFirstPage() || ($this->_httpMethod != 'GET')) {
+            return '';
+        }
+        return sprintf('<link rel="first" href="%s" title="%s" />'."\n",
+            $this->_getLinkTagUrl(1),
+            $this->_firstLinkTitle
+        );
+    }
 
     // }}}
     // {{{ _getPrevLinkTag()
@@ -763,14 +918,13 @@ class Pager_Common
      */
     function _getPrevLinkTag()
     {
-        $prevLinkTag = '';
-        if ($this->_currentPage > 1) {
-            $prevLinkTag = sprintf('<link rel="previous" href="%s" title="%s" />'."\n",
-                                   ($this->_append ? $this->_url.$this->getPreviousPageID() :
-                                        $this->_url.sprintf($this->_fileName, $this->getPreviousPageID())),
-                                   $this->_prevLinkTitle);
+        if ($this->isFirstPage() || ($this->_httpMethod != 'GET')) {
+            return '';
         }
-        return $prevLinkTag;
+        return sprintf('<link rel="previous" href="%s" title="%s" />'."\n",
+            $this->_getLinkTagUrl($this->getPreviousPageID()),
+            $this->_prevLinkTitle
+        );
     }
 
     // }}}
@@ -784,33 +938,13 @@ class Pager_Common
      */
     function _getNextLinkTag()
     {
-        $nextLinktag = '';
-        if ($this->_currentPage < $this->_totalPages) {
-            $nextLinktag = sprintf('<link rel="next" href="%s" title="%s" />'."\n",
-                                   ($this->_append ? $this->_url.$this->getNextPageID() :
-                                        $this->_url.sprintf($this->_fileName, $this->getNextPageID())),
-                                   $this->_nextLinkTitle);
-        }
-        return $nextLinktag;
-    }
-
-    // }}}
-    // {{{ _getFirstLinkTag()
-
-    /**
-     * @return string
-     * @access private
-     */
-    function _getFirstLinkTag()
-    {
-        if ($this->isFirstPage()) {
+        if ($this->isLastPage() || ($this->_httpMethod != 'GET')) {
             return '';
-        } else {
-            return sprintf('<link rel="first" href="%s" title="%s" />'."\n",
-                           ($this->_append ? $this->_url.'1' :
-                                $this->_url.sprintf($this->_fileName, 1)),
-                           $this->_firstLinkTitle);
         }
+        return sprintf('<link rel="next" href="%s" title="%s" />'."\n",
+            $this->_getLinkTagUrl($this->getNextPageID()),
+            $this->_nextLinkTitle
+        );
     }
 
     // }}}
@@ -822,16 +956,34 @@ class Pager_Common
      */
     function _getLastLinkTag()
     {
-        if ($this->isLastPage()) {
+        if ($this->isLastPage() || ($this->_httpMethod != 'GET')) {
             return '';
-        } else {
-            return sprintf('<link rel="last" href="%s" title="%s" />'."\n",
-                           ($this->_append ? $this->_url.$this->_totalPages :
-                                $this->_url.sprintf($this->_fileName, $this->_totalPages)),
-                           $this->_lastLinkTitle);
         }
+        return sprintf('<link rel="last" href="%s" title="%s" />'."\n",
+            $this->_getLinkTagUrl($this->_totalPages),
+            $this->_lastLinkTitle
+        );
     }
 
+    // }}}
+    // {{{ _getLinkTagUrl()
+
+    /**
+     * Helper method
+     * @return string the link tag url
+     * @access private
+     */
+    function _getLinkTagUrl($pageID)
+    {
+        $this->_linkData[$this->_urlVar] = $pageID;
+        if ($this->_append) {
+            $href = '?' . $this->_http_build_query_wrapper($this->_linkData);
+        } else {
+            $href = sprintf($this->_fileName, $this->_linkData[$this->_urlVar]);
+        }
+        return htmlentities($this->_url . $href);
+    }
+    
     // }}}
     // {{{ getPerPageSelectBox()
 
@@ -857,6 +1009,7 @@ class Pager_Common
      */
     function getPerPageSelectBox($start=5, $end=30, $step=5, $showAllData=false, $extraParams=array())
     {
+        // FIXME: needs POST support
         $optionText = '%d';
         $attributes = '';
         if (is_string($extraParams)) {
@@ -929,17 +1082,12 @@ class Pager_Common
     {
         if ($this->isFirstPage()) {
             return '';
-        } else {
-            return sprintf('<a href="%s" %s title="%s">%s%s%s</a>',
-                            ( $this->_append ? $this->_url.'1' : $this->_url.sprintf($this->_fileName, 1) ),
-                            $this->_classString,
-                            $this->_altPage.' 1',
-                            $this->_firstPagePre,
-                            $this->_firstPageText,
-                            $this->_firstPagePost)
-                 . $this->_spacesBefore . $this->_spacesAfter;
-
         }
+        $this->_linkData[$this->_urlVar] = 1;
+        return $this->_renderLink(
+                $this->_altPage.' 1',
+                $this->_firstPagePre . $this->_firstPageText . $this->_firstPagePost
+        ) . $this->_spacesBefore . $this->_spacesAfter;
     }
 
     // }}}
@@ -956,15 +1104,12 @@ class Pager_Common
     {
         if ($this->isLastPage()) {
             return '';
-        } else {
-            return sprintf('<a href="%s" %s title="%s">%s%s%s</a>',
-                            ( $this->_append ? $this->_url.$this->_totalPages : $this->_url.sprintf($this->_fileName, $this->_totalPages) ),
-                            $this->_classString,
-                            $this->_altPage.' '.$this->_totalPages,
-                            $this->_lastPagePre,
-                            $this->_lastPageText,
-                            $this->_lastPagePost);
         }
+        $this->_linkData[$this->_urlVar] = $this->_totalPages;
+        return $this->_renderLink(
+                $this->_altPage.' '.$this->_totalPages,
+                $this->_lastPagePre . $this->_lastPageText . $this->_lastPagePost
+        );
     }
 
     // }}}
@@ -981,10 +1126,74 @@ class Pager_Common
         if ($this->_firstPageText == '') {
             $this->_firstPageText = '1';
         }
-
         if ($this->_lastPageText == '') {
             $this->_lastPageText = $this->_totalPages;
         }
+    }
+
+    // }}}
+    // {{{ _http_build_query_wrapper()
+    
+    /**
+     * This is a slightly modified version of the http_build_query() function;
+     * it heavily borrows code from PHP_Compat's http_build_query().
+     * The main change is the usage of htmlentities instead of urlencode,
+     * since it's too aggressive
+     *
+     * @author Stephan Schmidt <schst@php.net>
+     * @author Aidan Lister <aidan@php.net>
+     * @author Lorenzo Alberton <l dot alberton at quipo dot it>
+     * @param array $data
+     * @return string
+     * @access private
+     */
+    function _http_build_query_wrapper($data)
+    {
+        $data = (array)$data;
+        if (empty($data)) {
+            return '';
+        }
+        $separator = ini_get('arg_separator.output');
+        if ($separator == '&amp;') {
+            $separator = '&'; //the string is escaped by htmlentities anyway...
+        }
+        $tmp = array ();
+        foreach ($data as $key => $val) {
+            if (is_scalar($val)) {
+                array_push($tmp, $key.'='.$val);
+                continue;
+            }
+            // If the value is an array, recursively parse it
+            if (is_array($val)) {
+                array_push($tmp, $this->__http_build_query($val, htmlentities($key)));
+                continue;
+            }
+        }
+        return implode($separator, $tmp);
+    }
+
+    // }}}
+    // {{{ __http_build_query()
+
+    /**
+     * Helper function
+     * @author Stephan Schmidt <schst@php.net>
+     * @author Aidan Lister <aidan@php.net>
+     * @access private
+     */
+    function __http_build_query($array, $name)
+    {
+        $tmp = array ();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                array_push($tmp, $this->__http_build_query($value, sprintf('%s[%s]', $name, $key)));
+            } elseif (is_scalar($value)) {
+                array_push($tmp, sprintf('%s[%s]=%s', $name, htmlentities($key), htmlentities($value)));
+            } elseif (is_object($value)) {
+                array_push($tmp, $this->__http_build_query(get_object_vars($value), sprintf('%s[%s]', $name, $key)));
+            }
+        }
+        return implode(ini_get('arg_separator.output'), $tmp);
     }
 
     // }}}
@@ -1027,6 +1236,8 @@ class Pager_Common
             'path',
             'fileName',
             'append',
+            'httpMethod',
+            'importQuery',
             'urlVar',
             'altPrev',
             'altNext',
@@ -1058,11 +1269,12 @@ class Pager_Common
             'sessionVar',
             'pearErrorMode',
             'extraVars',
+            'excludeVars',
             'currentPage',
         );
 
         foreach ($options as $key => $value) {
-            if (in_array($key, $allowed_options) && ($value !== null)) {
+            if (in_array($key, $allowed_options) && (!is_null($value))) {
                 $this->{'_' . $key} = $value;
             }
         }
@@ -1071,22 +1283,21 @@ class Pager_Common
         $this->_path     = rtrim($this->_path, '/');      //strip trailing slash
 
         if ($this->_append) {
-            $this->_fileName = CURRENT_FILENAME; //avoid easy-verified user error;
-            $this->_url = $this->_path.'/'.$this->_fileName.$this->_getLinksUrl();
+            $this->_fileName = CURRENT_FILENAME; //avoid possible user error;
+            $this->_url = $this->_path.'/'.$this->_fileName;
         } else {
             $this->_url = $this->_path;
             if (strncasecmp($this->_fileName, 'javascript', 10) != 0) {
-                $this->_url.'/';
+                $this->_url .= '/';
             }
             if (!strstr($this->_fileName, '%d')) {
                 trigger_error($this->errorMessage(ERROR_PAGER_INVALID_USAGE), E_USER_WARNING);
             }
         }
 
+        $this->_classString = '';
         if (strlen($this->_linkClass)) {
             $this->_classString = 'class="'.$this->_linkClass.'"';
-        } else {
-            $this->_classString = '';
         }
 
         if (strlen($this->_curPageLinkClassName)) {
@@ -1094,16 +1305,13 @@ class Pager_Common
             $this->_curPageSpanPost = '</span>';
         }
 
-        if ($this->_perPage < 1) {   //avoid possible user errors
-            $this->_perPage = 1;
-        }
+        $this->_perPage = max($this->_perPage, 1); //avoid possible user errors
 
         if ($this->_useSessions && !isset($_SESSION)) {
             session_start();
         }
         if (!empty($_REQUEST[$this->_sessionVar])) {
             $this->_perPage = max(1, (int)$_REQUEST[$this->_sessionVar]);
-
             if ($this->_useSessions) {
                 $_SESSION[$this->_sessionVar] = $this->_perPage;
             }
@@ -1117,18 +1325,15 @@ class Pager_Common
             session_write_close();
         }
 
-        for ($i=0; $i<$this->_spacesBeforeSeparator; $i++) {
-            $this->_spacesBefore .= '&nbsp;';
-        }
+        $this->_spacesBefore = str_repeat('&nbsp;', $this->_spacesBeforeSeparator);
+        $this->_spacesAfter  = str_repeat('&nbsp;', $this->_spacesAfterSeparator);
 
-        for ($i=0; $i<$this->_spacesAfterSeparator; $i++) {
-            $this->_spacesAfter .= '&nbsp;';
-        }
-
-        if (isset($_REQUEST[$this->_urlVar])) {
-            $this->_currentPage = (int)$_REQUEST[$this->_urlVar];
+        $request = ($this->_httpMethod == 'POST') ? $_POST : $_GET;
+        if (isset($request[$this->_urlVar]) && empty($options['currentPage'])) {
+            $this->_currentPage = (int)$request[$this->_urlVar];
         }
         $this->_currentPage = max($this->_currentPage, 1);
+        $this->_linkData = $this->_getLinksData();
 
         return PAGER_OK;
     }
@@ -1153,7 +1358,7 @@ class Pager_Common
                 ERROR_PAGER_INVALID_PLACEHOLDER => 'invalid format - use "%d" as placeholder.',
                 ERROR_PAGER_INVALID_USAGE       => 'if $options[\'append\'] is set to false, '
                                                   .' $options[\'fileName\'] MUST contain the "%d" placeholder.',
-                ERROR_PAGER_NOT_IMPLEMENTED     => 'can not create'
+                ERROR_PAGER_NOT_IMPLEMENTED     => 'not implemented'
             );
         }
 

@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: Skeleton.php,v 1.5 2004/11/25 09:06:55 sebastian Exp $
+// $Id: Skeleton.php,v 1.6 2004/12/22 08:06:11 sebastian Exp $
 //
 
 /**
@@ -45,7 +45,7 @@
  * you will see plenty of undefined constant errors.
  *
  * @author      Scott Mattocks <scott@crisscott.com>
- * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
  * @category    Testing
  * @package     PHPUnit

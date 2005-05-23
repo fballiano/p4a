@@ -3,7 +3,7 @@
 // +------------------------------------------------------------------------+
 // | PEAR :: PHPUnit                                                        |
 // +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
 // +------------------------------------------------------------------------+
 // | This source file is subject to version 3.00 of the PHP License,        |
 // | that is available at http://www.php.net/license/3_0.txt.               |
@@ -12,14 +12,14 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestFailure.php,v 1.8 2004/10/01 06:11:39 sebastian Exp $
+// $Id: TestFailure.php,v 1.10 2005/05/14 05:58:38 sebastian Exp $
 //
 
 /**
  * A TestFailure collects a failed test together with the caught exception.
  *
  * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
  * @category    Testing
  * @package     PHPUnit
@@ -45,8 +45,8 @@ class PHPUnit_TestFailure {
     * @access public
     */
     function PHPUnit_TestFailure(&$failedTest, &$thrownException) {
-        $this->_failedTest      = $failedTest;
-        $this->_thrownException = $thrownException;
+        $this->_failedTest      = &$failedTest;
+        $this->_thrownException = &$thrownException;
     }
 
     /**

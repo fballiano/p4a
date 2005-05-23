@@ -1,54 +1,38 @@
 <?php
-// +-----------------------------------------------------------------------+
-// | Copyright (c) 2002-2003, Richard Heyes                                |
-// | All rights reserved.                                                  |
-// |                                                                       |
-// | Redistribution and use in source and binary forms, with or without    |
-// | modification, are permitted provided that the following conditions    |
-// | are met:                                                              |
-// |                                                                       |
-// | o Redistributions of source code must retain the above copyright      |
-// |   notice, this list of conditions and the following disclaimer.       |
-// | o Redistributions in binary form must reproduce the above copyright   |
-// |   notice, this list of conditions and the following disclaimer in the |
-// |   documentation and/or other materials provided with the distribution.|
-// | o The names of the authors may not be used to endorse or promote      |
-// |   products derived from this software without specific prior written  |
-// |   permission.                                                         |
-// |                                                                       |
-// | THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS   |
-// | "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT     |
-// | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR |
-// | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT  |
-// | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, |
-// | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT      |
-// | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, |
-// | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY |
-// | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT   |
-// | (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE |
-// | OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  |
-// |                                                                       |
-// +-----------------------------------------------------------------------+
-// | Authors: Richard Heyes <richard@phpguru.org>                          |
-// |          Lorenzo Alberton <l.alberton at quipo.it>                    |
-// +-----------------------------------------------------------------------+
-//
-// $Id: Pager.php,v 1.15 2004/09/08 16:33:06 quipo Exp $
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * File Pager.php
+ * Contains the Pager class
  *
- * @package Pager
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: Pager.php,v 1.16 2005/04/01 13:04:53 quipo Exp $
+ * @link       http://pear.php.net/package/Pager
  */
+
 /**
  * Pager - Wrapper class for [Sliding|Jumping]-window Pager
+ * Usage examples can be found in the PEAR manual
  *
- * Usage examples can be found in the doc provided
- *
- * @author  Richard Heyes <richard@phpguru.org>,
- * @author  Lorenzo Alberton <l.alberton at quipo.it>
- * @version  $Id: Pager.php,v 1.15 2004/09/08 16:33:06 quipo Exp $
- * @package Pager
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>,
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @link       http://pear.php.net/package/Pager
  */
 class Pager
 {
@@ -69,6 +53,13 @@ class Pager
      *  - append     (bool):   if true pageID is appended as GET value to the
      *                         URL - if false it is embedded in the URL
      *                         according to "fileName" specs
+     *  - httpMethod (string): Specifies the HTTP method to use. Valid values
+     *                         are 'GET' or 'POST'
+     *                         according to "fileName" specs
+     *  - importQuery (bool):  if true (default behaviour), variables and
+     *                         values are imported from the submitted data
+     *                         (query string) and used in the generated links
+     *                         otherwise they're ignored completely
      *  - path       (string): complete path to the page (without the page name)
      *  - fileName   (string): name of the page, with a %d if append=true
      *  - urlVar     (string): name of pageNumber URL var, for example "pageID"
@@ -111,6 +102,7 @@ class Pager
      *               (string): name of CSS class used for current page link.
      *  - clearIfVoid(bool):   if there's only one page, don't display pager.
      *  - extraVars (array):   additional URL vars to be added to the querystring
+     *  - excludeVars (array): URL vars to be excluded in the querystring
      *  - itemData   (array):  array of items to page.
      *  - useSessions (bool):  if true, number of items to display per page is
      *                         stored in the $_SESSION[$_sessionVar] var.
@@ -153,10 +145,10 @@ class Pager
     /**
      * Return a pager based on $mode and $options
      *
-     * @access public
-     * @static
-     * @param  string $options Optional parameters for the storage class
+     * @param  array $options Optional parameters for the storage class
      * @return object Object   Storage object
+     * @static
+     * @access public
      */
     function &factory($options = array())
     {

@@ -1,37 +1,41 @@
 <?php
-// +----------------------------------------------------------------------+
-// | PEAR :: Pager_Sliding                                                |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.0 of the PHP license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Lorenzo Alberton <l.alberton at quipo.it>                    |
-// +----------------------------------------------------------------------+
-//
-// $Id: Sliding.php,v 1.5 2004/01/16 10:29:57 quipo Exp $
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Contains the Pager_Sliding class
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @copyright  2003-2005 Lorenzo Alberton
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: Sliding.php,v 1.7 2005/04/01 13:04:53 quipo Exp $
+ * @link       http://pear.php.net/package/Pager
+ */
+
+/**
+ * require PEAR::Pager_Common base class
+ */
 require_once 'Pager/Common.php';
 
 /**
- * File Sliding.php
- *
- * @package Pager
- */
-/**
  * Pager_Sliding - Generic data paging class  ("sliding window" style)
+ * Usage examples can be found in the PEAR manual
  *
- * Usage examples can be found in the doc provided
- *
- * @author  Lorenzo Alberton <l.alberton at quipo.it>
- * @version $Id: Sliding.php,v 1.5 2004/01/16 10:29:57 quipo Exp $
- * @package Pager
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @copyright  2003-2005 Lorenzo Alberton
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @link       http://pear.php.net/package/Pager
  */
 class Pager_Sliding extends Pager_Common
 {
@@ -93,7 +97,7 @@ class Pager_Sliding extends Pager_Common
      */
     function getPageIdByOffset($index=null) { }
 
-   // }}}
+    // }}}
     // {{{ getPageRangeByPageId()
 
     /**
@@ -120,14 +124,14 @@ class Pager_Sliding extends Pager_Common
                 $max_surplus = ($pageid >= ($this->_totalPages - $this->_delta)) ?
                                 ($pageid - ($this->_totalPages - $this->_delta)) : 0;
             } else {
-                $min_surplus = 0;
-                $max_surplus = 0;
+                $min_surplus = $max_surplus = 0;
             }
-            return array(   max($pageid - $this->_delta - $max_surplus, 1),
-                            min($pageid + $this->_delta + $min_surplus, $this->_totalPages));
-        } else {
-            return array(0, 0);
+            return array(
+                max($pageid - $this->_delta - $max_surplus, 1),
+                min($pageid + $this->_delta + $min_surplus, $this->_totalPages)
+            );
         }
+        return array(0, 0);
     }
 
     // }}}
@@ -173,21 +177,21 @@ class Pager_Sliding extends Pager_Common
         }
 
         return array(
-                    $back,
-                    $pages,
-                    trim($next),
-                    $first,
-                    $last,
-                    $all,
-                    $linkTags,
-                    'back'  => $back,
-                    'pages' => $pages,
-                    'next'  => $next,
-                    'first' => $first,
-                    'last'  => $last,
-                    'all'   => $all,
-                    'linktags' => $linkTags
-                );
+            $back,
+            $pages,
+            trim($next),
+            $first,
+            $last,
+            $all,
+            $linkTags,
+            'back'  => $back,
+            'pages' => $pages,
+            'next'  => $next,
+            'first' => $first,
+            'last'  => $last,
+            'all'   => $all,
+            'linktags' => $linkTags
+        );
     }
 
     // }}}
@@ -199,87 +203,69 @@ class Pager_Sliding extends Pager_Common
      * @return string Links
      * @access private
      */
-    function _getPageLinks()
+    function _getPageLinks($url = '')
     {
         //legacy setting... the preferred way to set an option now
         //is adding it to the constuctor
         if (!empty($url)) {
             $this->_path = $url;
         }
+        
+        //If there's only one page, don't display links
+        if ($this->_clearIfVoid && ($this->_totalPages < 2)) {
+            return '';
+        }
+
         $links = '';
         if ($this->_totalPages > (2 * $this->_delta + 1)) {
             if ($this->_expanded) {
                 if (($this->_totalPages - $this->_delta) <= $this->_currentPage) {
-                    $_expansion_before = $this->_currentPage - ($this->_totalPages - $this->_delta);
+                    $expansion_before = $this->_currentPage - ($this->_totalPages - $this->_delta);
                 } else {
-                    $_expansion_before = 0;
+                    $expansion_before = 0;
                 }
-                for ($i = $this->_currentPage - $this->_delta - $_expansion_before; $_expansion_before; $_expansion_before--, $i++) {
-                    if (($i != $this->_currentPage + $this->_delta)){ // && ($i != $this->_totalPages - 1)) {
-                        $_print_separator_flag = true;
-                    } else {
-                        $_print_separator_flag = false;
-                    }
-
+                for ($i = $this->_currentPage - $this->_delta - $expansion_before; $expansion_before; $expansion_before--, $i++) {
+                    $print_separator_flag = ($i != $this->_currentPage + $this->_delta); // && ($i != $this->_totalPages - 1)
+                    
                     $this->range[$i] = false;
-                    $links .= sprintf('<a href="%s" %s title="%s">%d</a>',
-                                        ( $this->_append ? $this->_url.$i : $this->_url.sprintf($this->_fileName, $i) ),
-                                        $this->_classString,
-                                        $this->_altPage.' '.$i,
-                                        $i)
+                    $this->_linkData[$this->_urlVar] = $i;
+                    $links .= $this->_renderLink($this->_altPage.' '.$i, $i)
                            . $this->_spacesBefore
-                           . ($_print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
+                           . ($print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
                 }
             }
 
-            $_expansion_after = 0;
+            $expansion_after = 0;
             for ($i = $this->_currentPage - $this->_delta; ($i <= $this->_currentPage + $this->_delta) && ($i <= $this->_totalPages); $i++) {
-                if ($i<1) {
-                    $_expansion_after++;
+                if ($i < 1) {
+                    ++$expansion_after;
                     continue;
                 }
 
                 // check when to print separator
-                if (($i != $this->_currentPage + $this->_delta) && ($i != $this->_totalPages )) {
-                    $_print_separator_flag = true;
-                } else {
-                    $_print_separator_flag = false;
-                }
+                $print_separator_flag = (($i != $this->_currentPage + $this->_delta) && ($i != $this->_totalPages));
 
                 if ($i == $this->_currentPage) {
                     $this->range[$i] = true;
-                    $links .= $this->_curPageSpanPre . $i . $this->_curPageSpanPost
-                                 . $this->_spacesBefore
-                                 . ($_print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
+                    $links .= $this->_curPageSpanPre . $i . $this->_curPageSpanPost;
                 } else {
                     $this->range[$i] = false;
-                    $links .= sprintf('<a href="%s" %s title="%s">%d</a>',
-                                        ( $this->_append ? $this->_url.$i : $this->_url.sprintf($this->_fileName, $i) ),
-                                        $this->_classString,
-                                        $this->_altPage.' '.$i,
-                                        $i)
-                                 . $this->_spacesBefore
-                                 . ($_print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
+                    $this->_linkData[$this->_urlVar] = $i;
+                    $links .= $this->_renderLink($this->_altPage.' '.$i, $i);
                 }
+                $links .= $this->_spacesBefore
+                        . ($print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
             }
 
-            if ($this->_expanded && $_expansion_after) {
+            if ($this->_expanded && $expansion_after) {
                 $links .= $this->_separator . $this->_spacesAfter;
-                for ($i = $this->_currentPage + $this->_delta +1; $_expansion_after; $_expansion_after--, $i++) {
-                    if (($_expansion_after != 1)) {
-                       $_print_separator_flag = true;
-                    } else {
-                        $_print_separator_flag = false;
-                    }
-
+                for ($i = $this->_currentPage + $this->_delta +1; $expansion_after; $expansion_after--, $i++) {
+                    $print_separator_flag = ($expansion_after != 1);
                     $this->range[$i] = false;
-                    $links .= sprintf('<a href="%s" %s title="%s">%d</a>',
-                                        ( $this->_append ? $this->_url.$i : $this->_url.sprintf($this->_fileName, $i) ),
-                                        $this->_classString,
-                                        $this->_altPage.' '.$i,
-                                        $i)
-                           . $this->_spacesBefore
-                           . ($_print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
+                    $this->_linkData[$this->_urlVar] = $i;
+                    $links .= $this->_renderLink($this->_altPage.' '.$i, $i)
+                      . $this->_spacesBefore
+                      . ($print_separator_flag ? $this->_separator.$this->_spacesAfter : '');
                 }
             }
 
@@ -288,11 +274,8 @@ class Pager_Sliding extends Pager_Common
             for ($i=1; $i<=$this->_totalPages; $i++) {
                 if ($i != $this->_currentPage) {
                     $this->range[$i] = false;
-                    $links .= sprintf('<a href="%s" %s title="%s">%d</a>',
-                                    ( $this->_append ? $this->_url.$i : $this->_url.sprintf($this->_fileName, $i) ),
-                                    $this->_classString,
-                                    $this->_altPage.' '.$i,
-                                    $i);
+                    $this->_linkData[$this->_urlVar] = $i;
+                    $links .= $this->_renderLink($this->_altPage.' '.$i, $i);
                 } else {
                     $this->range[$i] = true;
                     $links .= $this->_curPageSpanPre . $i . $this->_curPageSpanPost;
@@ -301,12 +284,6 @@ class Pager_Sliding extends Pager_Common
                        . (($i != $this->_totalPages) ? $this->_separator.$this->_spacesAfter : '');
             }
         }
-
-        if ($this->_clearIfVoid) {
-            //If there's only one page, don't display links
-            if ($this->_totalPages < 2) $links = '';
-        }
-
         return $links;
     }
 

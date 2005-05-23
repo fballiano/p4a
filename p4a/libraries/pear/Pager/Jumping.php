@@ -1,61 +1,46 @@
 <?php
-// +-----------------------------------------------------------------------+
-// | Copyright (c) 2002-2003, Richard Heyes, Lorenzo Alberton              |
-// | All rights reserved.                                                  |
-// |                                                                       |
-// | Redistribution and use in source and binary forms, with or without    |
-// | modification, are permitted provided that the following conditions    |
-// | are met:                                                              |
-// |                                                                       |
-// | o Redistributions of source code must retain the above copyright      |
-// |   notice, this list of conditions and the following disclaimer.       |
-// | o Redistributions in binary form must reproduce the above copyright   |
-// |   notice, this list of conditions and the following disclaimer in the |
-// |   documentation and/or other materials provided with the distribution.|
-// | o The names of the authors may not be used to endorse or promote      |
-// |   products derived from this software without specific prior written  |
-// |   permission.                                                         |
-// |                                                                       |
-// | THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS   |
-// | "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT     |
-// | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR |
-// | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT  |
-// | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, |
-// | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT      |
-// | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, |
-// | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY |
-// | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT   |
-// | (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE |
-// | OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  |
-// |                                                                       |
-// +-----------------------------------------------------------------------+
-// | Authors: Richard Heyes <richard@phpguru.org>                          |
-// |          Lorenzo Alberton <l.alberton at quipo.it>                    |
-// +-----------------------------------------------------------------------+
-//
-// $Id: Jumping.php,v 1.5 2004/01/16 10:29:57 quipo Exp $
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+/**
+ * Contains the Pager_Jumping class
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>,
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: Jumping.php,v 1.8 2005/04/01 13:04:53 quipo Exp $
+ * @link       http://pear.php.net/package/Pager
+ */
+
+/**
+ * require PEAR::Pager_Common base class
+ */
 require_once 'Pager/Common.php';
 
 /**
- * File Jumping.php
- *
- * @package Pager
- */
-/**
- * Pager_Jumping - Jumping Window Pager
- *
+ * Pager_Jumping - Generic data paging class  ("jumping window" style)
  * Handles paging a set of data. For usage see the example.php provided.
  *
- * @author Richard Heyes <richard@phpguru.org>,
- * @author Lorenzo Alberton <l.alberton at quipo.it>
- *
- * @version  $Id: Jumping.php,v 1.5 2004/01/16 10:29:57 quipo Exp $
- * @package Pager
+ * @category   HTML
+ * @package    Pager
+ * @author     Lorenzo Alberton <l dot alberton at quipo dot it>
+ * @author     Richard Heyes <richard@phpguru.org>,
+ * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @link       http://pear.php.net/package/Pager
  */
 class Pager_Jumping extends Pager_Common
 {
-
     // {{{ Pager_Jumping()
 
     /**
@@ -165,10 +150,12 @@ class Pager_Jumping extends Pager_Common
         //BC hack
         if (!empty($next_html)) {
             $back_html = $pageID;
-            $pageID = null;
+            $pageID    = null;
+        } else {
+            $back_html = '';
         }
 
-        if ($pageID != null) {
+        if (!is_null($pageID)) {
             $_sav = $this->_currentPage;
             $this->_currentPage = $pageID;
 
@@ -192,26 +179,26 @@ class Pager_Jumping extends Pager_Common
         $all   = $this->links;
         $linkTags = $this->linkTags;
 
-        if ($pageID != null) {
+        if (!is_null($pageID)) {
             $this->_currentPage = $_sav;
         }
 
         return array(
-                    $back,
-                    $pages,
-                    trim($next),
-                    $first,
-                    $last,
-                    $all,
-                    $linkTags,
-                    'back'  => $back,
-                    'pages' => $pages,
-                    'next'  => $next,
-                    'first' => $first,
-                    'last'  => $last,
-                    'all'   => $all,
-                    'linktags' => $linkTags
-                );
+            $back,
+            $pages,
+            trim($next),
+            $first,
+            $last,
+            $all,
+            $linkTags,
+            'back'  => $back,
+            'pages' => $pages,
+            'next'  => $next,
+            'first' => $first,
+            'last'  => $last,
+            'all'   => $all,
+            'linktags' => $linkTags
+        );
     }
 
     // }}}
@@ -225,7 +212,7 @@ class Pager_Jumping extends Pager_Common
      * @return string Links
      * @access private
      */
-    function _getPageLinks($url='')
+    function _getPageLinks($url = '')
     {
         //legacy setting... the preferred way to set an option now
         //is adding it to the constuctor
@@ -233,18 +220,19 @@ class Pager_Jumping extends Pager_Common
             $this->_path = $url;
         }
 
-        $links = '';
+        //If there's only one page, don't display links
+        if ($this->_clearIfVoid && ($this->_totalPages < 2)) {
+            return '';
+        }
 
+        $links = '';
         $limits = $this->getPageRangeByPageId($this->_currentPage);
 
         for ($i=$limits[0]; $i<=min($limits[1], $this->_totalPages); $i++) {
             if ($i != $this->_currentPage) {
                 $this->range[$i] = false;
-                $links .= sprintf('<a href="%s" %s title="%s">%d</a>',
-                                ( $this->_append ? $this->_url.$i : $this->_url.sprintf($this->_fileName, $i) ),
-                                $this->_classString,
-                                $this->_altPage.' '.$i,
-                                $i);
+                $this->_linkData[$this->_urlVar] = $i;
+                $links .= $this->_renderLink($this->_altPage.' '.$i, $i);
             } else {
                 $this->range[$i] = true;
                 $links .= $this->_curPageSpanPre . $i . $this->_curPageSpanPost;
@@ -252,16 +240,9 @@ class Pager_Jumping extends Pager_Common
             $links .= $this->_spacesBefore
                    . (($i != $this->_totalPages) ? $this->_separator.$this->_spacesAfter : '');
         }
-
-        if ($this->_clearIfVoid) {
-            //If there's only one page, don't display links
-            if ($this->_totalPages < 2) $links = '';
-        }
-
         return $links;
     }
 
-    // }}}
     // }}}
 }
 ?>

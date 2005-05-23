@@ -24,8 +24,8 @@ ob_end_clean();
 /**
  * @nodep Gtk
  */
-if ('/home/fabrizio/workspace/p4a/p4a/libraries/pear' != '@'.'include_path'.'@') {
-    ini_set('include_path', '/home/fabrizio/workspace/p4a/p4a/libraries/pear');
+if ('/home/fabrizio/workspace/p4a/p4a/libraries/pear/' != '@'.'include_path'.'@') {
+    ini_set('include_path', '/home/fabrizio/workspace/p4a/p4a/libraries/pear/');
 }
 ini_set('allow_url_fopen', true);
 if (!ini_get('safe_mode')) {
@@ -37,7 +37,7 @@ ini_set('html_errors', false);
 ini_set('magic_quotes_runtime', false);
 set_error_handler('error_handler');
 
-$pear_package_version = "1.3.4";
+$pear_package_version = "1.3.5";
 
 require_once 'PEAR.php';
 require_once 'PEAR/Config.php';

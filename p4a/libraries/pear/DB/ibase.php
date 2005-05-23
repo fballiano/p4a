@@ -1,125 +1,247 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-// +----------------------------------------------------------------------+
-// | PHP Version 4                                                        |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2004 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Sterling Hughes <sterling@php.net>                           |
-// | Maintainer: Daniel Convissor <danielc@php.net>                       |
-// +----------------------------------------------------------------------+
-//
-// $Id: ibase.php,v 1.69 2004/06/24 15:24:56 danielc Exp $
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-// Bugs:
-//  - If dbsyntax is not firebird, the limitQuery may fail
+/**
+ * The PEAR DB driver for PHP's interbase extension
+ * for interacting with Interbase and Firebird databases
+ *
+ * While this class works with PHP 4, PHP's InterBase extension is
+ * unstable in PHP 4.  Use PHP 5.
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Database
+ * @package    DB
+ * @author     Sterling Hughes <sterling@php.net>
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1997-2005 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: ibase.php,v 1.109 2005/03/04 23:12:36 danielc Exp $
+ * @link       http://pear.php.net/package/DB
+ */
 
-
+/**
+ * Obtain the DB_common class so it can be extended from
+ */
 require_once 'DB/common.php';
 
 /**
- * Database independent query interface definition for PHP's Interbase
- * extension.
+ * The methods PEAR DB uses to interact with PHP's interbase extension
+ * for interacting with Interbase and Firebird databases
  *
- * @package  DB
- * @version  $Id: ibase.php,v 1.69 2004/06/24 15:24:56 danielc Exp $
- * @category Database
- * @author   Sterling Hughes <sterling@php.net>
+ * These methods overload the ones declared in DB_common.
+ *
+ * While this class works with PHP 4, PHP's InterBase extension is
+ * unstable in PHP 4.  Use PHP 5.
+ *
+ * NOTICE:  limitQuery() only works for Firebird.
+ *
+ * @category   Database
+ * @package    DB
+ * @author     Sterling Hughes <sterling@php.net>
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1997-2005 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    Release: 1.7.6
+ * @link       http://pear.php.net/package/DB
+ * @since      Class became stable in Release 1.7.0
  */
 class DB_ibase extends DB_common
 {
-
     // {{{ properties
 
+    /**
+     * The DB driver type (mysql, oci8, odbc, etc.)
+     * @var string
+     */
+    var $phptype = 'ibase';
+
+    /**
+     * The database syntax variant to be used (db2, access, etc.), if any
+     * @var string
+     */
+    var $dbsyntax = 'ibase';
+
+    /**
+     * The capabilities of this DB implementation
+     *
+     * The 'new_link' element contains the PHP version that first provided
+     * new_link support for this DBMS.  Contains false if it's unsupported.
+     *
+     * Meaning of the 'limit' element:
+     *   + 'emulate' = emulate with fetch row by number
+     *   + 'alter'   = alter the query
+     *   + false     = skip rows
+     *
+     * NOTE: only firebird supports limit.
+     *
+     * @var array
+     */
+    var $features = array(
+        'limit'         => false,
+        'new_link'      => false,
+        'numrows'       => 'emulate',
+        'pconnect'      => true,
+        'prepare'       => true,
+        'ssl'           => false,
+        'transactions'  => true,
+    );
+
+    /**
+     * A mapping of native error codes to DB error codes
+     * @var array
+     */
+    var $errorcode_map = array(
+        -104 => DB_ERROR_SYNTAX,
+        -150 => DB_ERROR_ACCESS_VIOLATION,
+        -151 => DB_ERROR_ACCESS_VIOLATION,
+        -155 => DB_ERROR_NOSUCHTABLE,
+        -157 => DB_ERROR_NOSUCHFIELD,
+        -158 => DB_ERROR_VALUE_COUNT_ON_ROW,
+        -170 => DB_ERROR_MISMATCH,
+        -171 => DB_ERROR_MISMATCH,
+        -172 => DB_ERROR_INVALID,
+        // -204 =>  // Covers too many errors, need to use regex on msg
+        -205 => DB_ERROR_NOSUCHFIELD,
+        -206 => DB_ERROR_NOSUCHFIELD,
+        -208 => DB_ERROR_INVALID,
+        -219 => DB_ERROR_NOSUCHTABLE,
+        -297 => DB_ERROR_CONSTRAINT,
+        -303 => DB_ERROR_INVALID,
+        -413 => DB_ERROR_INVALID_NUMBER,
+        -530 => DB_ERROR_CONSTRAINT,
+        -551 => DB_ERROR_ACCESS_VIOLATION,
+        -552 => DB_ERROR_ACCESS_VIOLATION,
+        // -607 =>  // Covers too many errors, need to use regex on msg
+        -625 => DB_ERROR_CONSTRAINT_NOT_NULL,
+        -803 => DB_ERROR_CONSTRAINT,
+        -804 => DB_ERROR_VALUE_COUNT_ON_ROW,
+        -904 => DB_ERROR_CONNECT_FAILED,
+        -922 => DB_ERROR_NOSUCHDB,
+        -923 => DB_ERROR_CONNECT_FAILED,
+        -924 => DB_ERROR_CONNECT_FAILED
+    );
+
+    /**
+     * The raw database connection created by PHP
+     * @var resource
+     */
     var $connection;
-    var $phptype, $dbsyntax;
-    var $autocommit = 1;
+
+    /**
+     * The DSN information for connecting to a database
+     * @var array
+     */
+    var $dsn = array();
+
+
+    /**
+     * The number of rows affected by a data manipulation query
+     * @var integer
+     * @access private
+     */
+    var $affected = 0;
+
+    /**
+     * Should data manipulation queries be committed automatically?
+     * @var bool
+     * @access private
+     */
+    var $autocommit = true;
+
+    /**
+     * The prepared statement handle from the most recently executed statement
+     *
+     * {@internal  Mainly here because the InterBase/Firebird API is only
+     * able to retrieve data from result sets if the statemnt handle is
+     * still in scope.}}
+     *
+     * @var resource
+     */
+    var $last_stmt;
+
+    /**
+     * Is the given prepared statement a data manipulation query?
+     * @var array
+     * @access private
+     */
     var $manip_query = array();
+
 
     // }}}
     // {{{ constructor
 
+    /**
+     * This constructor calls <kbd>$this->DB_common()</kbd>
+     *
+     * @return void
+     */
     function DB_ibase()
     {
         $this->DB_common();
-        $this->phptype = 'ibase';
-        $this->dbsyntax = 'ibase';
-        $this->features = array(
-            'prepare' => true,
-            'pconnect' => true,
-            'transactions' => true,
-            'limit' => false
-        );
-        // just a few of the tons of Interbase error codes listed in the
-        // Language Reference section of the Interbase manual
-        $this->errorcode_map = array(
-            -104 => DB_ERROR_SYNTAX,
-            -150 => DB_ERROR_ACCESS_VIOLATION,
-            -151 => DB_ERROR_ACCESS_VIOLATION,
-            -155 => DB_ERROR_NOSUCHTABLE,
-            88   => DB_ERROR_NOSUCHTABLE,
-            -157 => DB_ERROR_NOSUCHFIELD,
-            -158 => DB_ERROR_VALUE_COUNT_ON_ROW,
-            -170 => DB_ERROR_MISMATCH,
-            -171 => DB_ERROR_MISMATCH,
-            -172 => DB_ERROR_INVALID,
-            -204 => DB_ERROR_INVALID,
-            -205 => DB_ERROR_NOSUCHFIELD,
-            -206 => DB_ERROR_NOSUCHFIELD,
-            -208 => DB_ERROR_INVALID,
-            -219 => DB_ERROR_NOSUCHTABLE,
-            -297 => DB_ERROR_CONSTRAINT,
-            -530 => DB_ERROR_CONSTRAINT,
-            -607 => DB_ERROR_NOSUCHTABLE,
-            -803 => DB_ERROR_CONSTRAINT,
-            -551 => DB_ERROR_ACCESS_VIOLATION,
-            -552 => DB_ERROR_ACCESS_VIOLATION,
-            -922 => DB_ERROR_NOSUCHDB,
-            -923 => DB_ERROR_CONNECT_FAILED,
-            -924 => DB_ERROR_CONNECT_FAILED
-        );
     }
 
     // }}}
     // {{{ connect()
 
-    function connect($dsninfo, $persistent = false)
+    /**
+     * Connect to the database server, log in and open the database
+     *
+     * Don't call this method directly.  Use DB::connect() instead.
+     *
+     * PEAR DB's ibase driver supports the following extra DSN options:
+     *   + buffers    The number of database buffers to allocate for the
+     *                 server-side cache.
+     *   + charset    The default character set for a database.
+     *   + dialect    The default SQL dialect for any statement
+     *                 executed within a connection.  Defaults to the
+     *                 highest one supported by client libraries.
+     *                 Functional only with InterBase 6 and up.
+     *   + role       Functional only with InterBase 5 and up.
+     *
+     * @param array $dsn         the data source name
+     * @param bool  $persistent  should the connection be persistent?
+     *
+     * @return int  DB_OK on success. A DB_Error object on failure.
+     */
+    function connect($dsn, $persistent = false)
     {
-        if (!DB::assertExtension('interbase')) {
+        if (!PEAR::loadExtension('interbase')) {
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
         }
-        $this->dsn = $dsninfo;
-        $dbhost = $dsninfo['hostspec'] ?
-                  ($dsninfo['hostspec'] . ':' . $dsninfo['database']) :
-                  $dsninfo['database'];
+
+        $this->dsn = $dsn;
+        if ($dsn['dbsyntax']) {
+            $this->dbsyntax = $dsn['dbsyntax'];
+        }
+        if ($this->dbsyntax == 'firebird') {
+            $this->features['limit'] = 'alter';
+        }
+
+        $params = array(
+            $dsn['hostspec']
+                    ? ($dsn['hostspec'] . ':' . $dsn['database'])
+                    : $dsn['database'],
+            $dsn['username'] ? $dsn['username'] : null,
+            $dsn['password'] ? $dsn['password'] : null,
+            isset($dsn['charset']) ? $dsn['charset'] : null,
+            isset($dsn['buffers']) ? $dsn['buffers'] : null,
+            isset($dsn['dialect']) ? $dsn['dialect'] : null,
+            isset($dsn['role'])    ? $dsn['role'] : null,
+        );
 
         $connect_function = $persistent ? 'ibase_pconnect' : 'ibase_connect';
 
-        $params = array();
-        $params[] = $dbhost;
-        $params[] = $dsninfo['username'] ? $dsninfo['username'] : null;
-        $params[] = $dsninfo['password'] ? $dsninfo['password'] : null;
-        $params[] = isset($dsninfo['charset']) ? $dsninfo['charset'] : null;
-        $params[] = isset($dsninfo['buffers']) ? $dsninfo['buffers'] : null;
-        $params[] = isset($dsninfo['dialect']) ? $dsninfo['dialect'] : null;
-        $params[] = isset($dsninfo['role'])    ? $dsninfo['role'] : null;
-
-        $conn = @call_user_func_array($connect_function, $params);
-        if (!$conn) {
+        $this->connection = @call_user_func_array($connect_function, $params);
+        if (!$this->connection) {
             return $this->ibaseRaiseError(DB_ERROR_CONNECT_FAILED);
-        }
-        $this->connection = $conn;
-        if ($this->dsn['dbsyntax'] == 'firebird') {
-            $this->features['limit'] = 'alter';
         }
         return DB_OK;
     }
@@ -127,6 +249,11 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ disconnect()
 
+    /**
+     * Disconnects from the database server
+     *
+     * @return bool  TRUE on success, FALSE on failure
+     */
     function disconnect()
     {
         $ret = @ibase_close($this->connection);
@@ -137,46 +264,63 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ simpleQuery()
 
+    /**
+     * Sends a query to the database server
+     *
+     * @param string  the SQL query string
+     *
+     * @return mixed  + a PHP result resrouce for successful SELECT queries
+     *                + the DB_OK constant for other successful queries
+     *                + a DB_Error object on failure
+     */
     function simpleQuery($query)
     {
         $ismanip = DB::isManip($query);
         $this->last_query = $query;
         $query = $this->modifyQuery($query);
         $result = @ibase_query($this->connection, $query);
+
         if (!$result) {
             return $this->ibaseRaiseError();
         }
         if ($this->autocommit && $ismanip) {
             @ibase_commit($this->connection);
         }
-        // Determine which queries that should return data, and which
-        // should return an error code only.
-        return $ismanip ? DB_OK : $result;
+        if ($ismanip) {
+            $this->affected = $result;
+            return DB_OK;
+        } else {
+            $this->affected = 0;
+            return $result;
+        }
     }
 
     // }}}
     // {{{ modifyLimitQuery()
 
     /**
-     * This method is used by backends to alter limited queries
-     * Uses the new FIRST n SKIP n Firebird 1.0 syntax, so it is
-     * only compatible with Firebird 1.x
+     * Adds LIMIT clauses to a query string according to current DBMS standards
      *
-     * @param string  $query query to modify
-     * @param integer $from  the row to start to fetching
-     * @param integer $count the numbers of rows to fetch
+     * Only works with Firebird.
      *
-     * @return the new (modified) query
-     * @author Ludovico Magnocavallo <ludo@sumatrasolutions.com>
-     * @access private
+     * @param string $query   the query to modify
+     * @param int    $from    the row to start to fetching (0 = the first row)
+     * @param int    $count   the numbers of rows to fetch
+     * @param mixed  $params  array, string or numeric data to be used in
+     *                         execution of the statement.  Quantity of items
+     *                         passed must match quantity of placeholders in
+     *                         query:  meaning 1 placeholder for non-array
+     *                         parameters or 1 placeholder per array element.
+     *
+     * @return string  the query string with LIMIT clauses added
+     *
+     * @access protected
      */
     function modifyLimitQuery($query, $from, $count, $params = array())
     {
         if ($this->dsn['dbsyntax'] == 'firebird') {
-            //$from++; // SKIP starts from 1, ie SKIP 1 starts from the first record
-                           // (cox) Seems that SKIP starts in 0
-            $query = preg_replace('/^\s*select\s(.*)$/is',
-                                  "SELECT FIRST $count SKIP $from $1", $query);
+            $query = preg_replace('/^([\s(])*SELECT/i',
+                                  "SELECT FIRST $count SKIP $from", $query);
         }
         return $query;
     }
@@ -202,24 +346,26 @@ class DB_ibase extends DB_common
     // {{{ fetchInto()
 
     /**
-     * Fetch a row and insert the data into an existing array.
+     * Places a row from the result set into the given array
      *
      * Formating of the array and the data therein are configurable.
      * See DB_result::fetchInto() for more information.
      *
-     * @param resource $result    query result identifier
-     * @param array    $arr       (reference) array where data from the row
-     *                            should be placed
-     * @param int      $fetchmode how the resulting array should be indexed
-     * @param int      $rownum    the row number to fetch
+     * This method is not meant to be called directly.  Use
+     * DB_result::fetchInto() instead.  It can't be declared "protected"
+     * because DB_result is a separate object.
      *
-     * @return mixed DB_OK on success, null when end of result set is
-     *               reached or on failure
+     * @param resource $result    the query result resource
+     * @param array    $arr       the referenced array to put the data in
+     * @param int      $fetchmode how the resulting array should be indexed
+     * @param int      $rownum    the row number to fetch (0 = first row)
+     *
+     * @return mixed  DB_OK on success, NULL when the end of a result set is
+     *                 reached or on failure
      *
      * @see DB_result::fetchInto()
-     * @access private
      */
-    function fetchInto($result, &$arr, $fetchmode, $rownum=null)
+    function fetchInto($result, &$arr, $fetchmode, $rownum = null)
     {
         if ($rownum !== null) {
             return $this->ibaseRaiseError(DB_ERROR_NOT_CAPABLE);
@@ -237,11 +383,7 @@ class DB_ibase extends DB_common
             $arr = @ibase_fetch_row($result);
         }
         if (!$arr) {
-            if ($errmsg = @ibase_errmsg()) {
-                return $this->ibaseRaiseError(null, $errmsg);
-            } else {
-                return null;
-            }
+            return null;
         }
         if ($this->options['portability'] & DB_PORTABILITY_RTRIM) {
             $this->_rtrimArrayValues($arr);
@@ -255,6 +397,19 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ freeResult()
 
+    /**
+     * Deletes the result set and frees the memory occupied by the result set
+     *
+     * This method is not meant to be called directly.  Use
+     * DB_result::free() instead.  It can't be declared "protected"
+     * because DB_result is a separate object.
+     *
+     * @param resource $result  PHP's query result resource
+     *
+     * @return bool  TRUE on success, FALSE if $result is invalid
+     *
+     * @see DB_result::free()
+     */
     function freeResult($result)
     {
         return @ibase_free_result($result);
@@ -270,8 +425,39 @@ class DB_ibase extends DB_common
     }
 
     // }}}
+    // {{{ affectedRows()
+
+    /**
+     * Determines the number of rows affected by a data maniuplation query
+     *
+     * 0 is returned for queries that don't manipulate data.
+     *
+     * @return int  the number of rows.  A DB_Error object on failure.
+     */
+    function affectedRows()
+    {
+        if (is_integer($this->affected)) {
+            return $this->affected;
+        }
+        return $this->ibaseRaiseError(DB_ERROR_NOT_CAPABLE);
+    }
+
+    // }}}
     // {{{ numCols()
 
+    /**
+     * Gets the number of columns in a result set
+     *
+     * This method is not meant to be called directly.  Use
+     * DB_result::numCols() instead.  It can't be declared "protected"
+     * because DB_result is a separate object.
+     *
+     * @param resource $result  PHP's query result resource
+     *
+     * @return int  the number of columns.  A DB_Error object on failure.
+     *
+     * @see DB_result::numCols()
+     */
     function numCols($result)
     {
         $cols = @ibase_num_fields($result);
@@ -358,9 +544,8 @@ class DB_ibase extends DB_common
      */
     function &execute($stmt, $data = array())
     {
-        if (!is_array($data)) {
-            $data = array($data);
-        }
+        $data = (array)$data;
+        $this->last_parameters = $data;
 
         $types =& $this->prepare_types[(int)$stmt];
         if (count($types) != count($data)) {
@@ -403,6 +588,7 @@ class DB_ibase extends DB_common
         if ($this->autocommit && $this->manip_query[(int)$stmt]) {
             @ibase_commit($this->connection);
         }*/
+        $this->last_stmt = $stmt;
         if ($this->manip_query[(int)$stmt]) {
             $tmp = DB_OK;
         } else {
@@ -412,18 +598,25 @@ class DB_ibase extends DB_common
     }
 
     /**
-     * Free the internal resources associated with a prepared query.
+     * Frees the internal resources associated with a prepared query
      *
-     * @param $stmt The interbase_query resource type
+     * @param resource $stmt           the prepared statement's PHP resource
+     * @param bool     $free_resource  should the PHP resource be freed too?
+     *                                  Use false if you need to get data
+     *                                  from the result set later.
      *
-     * @return bool true on success, false if $result is invalid
+     * @return bool  TRUE on success, FALSE if $result is invalid
+     *
+     * @see DB_ibase::prepare()
      */
-    function freePrepared($stmt)
+    function freePrepared($stmt, $free_resource = true)
     {
         if (!is_resource($stmt)) {
             return false;
         }
-        @ibase_free_query($stmt);
+        if ($free_resource) {
+            @ibase_free_query($stmt);
+        }
         unset($this->prepare_tokens[(int)$stmt]);
         unset($this->prepare_types[(int)$stmt]);
         unset($this->manip_query[(int)$stmt]);
@@ -433,6 +626,14 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ autoCommit()
 
+    /**
+     * Enables or disables automatic commits
+     *
+     * @param bool $onoff  true turns it on, false turns it off
+     *
+     * @return int  DB_OK on success.  A DB_Error object if the driver
+     *               doesn't support auto-committing transactions.
+     */
     function autoCommit($onoff = false)
     {
         $this->autocommit = $onoff ? 1 : 0;
@@ -442,6 +643,11 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ commit()
 
+    /**
+     * Commits the current transaction
+     *
+     * @return int  DB_OK on success.  A DB_Error object on failure.
+     */
     function commit()
     {
         return @ibase_commit($this->connection);
@@ -450,6 +656,11 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ rollback()
 
+    /**
+     * Reverts the current transaction
+     *
+     * @return int  DB_OK on success.  A DB_Error object on failure.
+     */
     function rollback()
     {
         return @ibase_rollback($this->connection);
@@ -460,7 +671,9 @@ class DB_ibase extends DB_common
 
     function transactionInit($trans_args = 0)
     {
-        return $trans_args ? @ibase_trans($trans_args, $this->connection) : @ibase_trans();
+        return $trans_args
+                ? @ibase_trans($trans_args, $this->connection)
+                : @ibase_trans();
     }
 
     // }}}
@@ -471,13 +684,13 @@ class DB_ibase extends DB_common
      *
      * @param string  $seq_name  name of the sequence
      * @param boolean $ondemand  when true, the seqence is automatically
-     *                           created if it does not exist
+     *                            created if it does not exist
      *
-     * @return int  the next id number in the sequence.  DB_Error if problem.
+     * @return int  the next id number in the sequence.
+     *               A DB_Error object on failure.
      *
-     * @internal
-     * @see DB_common::nextID()
-     * @access public
+     * @see DB_common::nextID(), DB_common::getSequenceName(),
+     *      DB_ibase::createSequence(), DB_ibase::dropSequence()
      */
     function nextId($seq_name, $ondemand = true)
     {
@@ -511,11 +724,14 @@ class DB_ibase extends DB_common
     // {{{ createSequence()
 
     /**
-     * Create the sequence
+     * Creates a new sequence
      *
-     * @param string $seq_name the name of the sequence
-     * @return mixed DB_OK on success or DB error on error
-     * @access public
+     * @param string $seq_name  name of the new sequence
+     *
+     * @return int  DB_OK on success.  A DB_Error object on failure.
+     *
+     * @see DB_common::createSequence(), DB_common::getSequenceName(),
+     *      DB_ibase::nextID(), DB_ibase::dropSequence()
      */
     function createSequence($seq_name)
     {
@@ -531,30 +747,37 @@ class DB_ibase extends DB_common
     // {{{ dropSequence()
 
     /**
-     * Drop a sequence
+     * Deletes a sequence
      *
-     * @param string $seq_name the name of the sequence
-     * @return mixed DB_OK on success or DB error on error
-     * @access public
+     * @param string $seq_name  name of the sequence to be deleted
+     *
+     * @return int  DB_OK on success.  A DB_Error object on failure.
+     *
+     * @see DB_common::dropSequence(), DB_common::getSequenceName(),
+     *      DB_ibase::nextID(), DB_ibase::createSequence()
      */
     function dropSequence($seq_name)
     {
-        $sqn = strtoupper($this->getSequenceName($seq_name));
         return $this->query('DELETE FROM RDB$GENERATORS '
-                            . "WHERE RDB\$GENERATOR_NAME='${sqn}'");
+                            . "WHERE RDB\$GENERATOR_NAME='"
+                            . strtoupper($this->getSequenceName($seq_name))
+                            . "'");
     }
 
     // }}}
     // {{{ _ibaseFieldFlags()
 
     /**
-     * get the Flags of a Field
+     * Get the column's flags
      *
-     * @param string $field_name the name of the field
-     * @param string $table_name the name of the table
+     * Supports "primary_key", "unique_key", "not_null", "default",
+     * "computed" and "blob".
      *
-     * @return string The flags of the field ("primary_key", "unique_key", "not_null"
-     *                "default", "computed" and "blob" are supported)
+     * @param string $field_name  the name of the field
+     * @param string $table_name  the name of the table
+     *
+     * @return string  the flags
+     *
      * @access private
      */
     function _ibaseFieldFlags($field_name, $table_name)
@@ -614,47 +837,151 @@ class DB_ibase extends DB_common
     }
 
     // }}}
+    // {{{ ibaseRaiseError()
+
+    /**
+     * Produces a DB_Error object regarding the current problem
+     *
+     * @param int $errno  if the error is being manually raised pass a
+     *                     DB_ERROR* constant here.  If this isn't passed
+     *                     the error information gathered from the DBMS.
+     *
+     * @return object  the DB_Error object
+     *
+     * @see DB_common::raiseError(),
+     *      DB_ibase::errorNative(), DB_ibase::errorCode()
+     */
+    function &ibaseRaiseError($errno = null)
+    {
+        if ($errno === null) {
+            $errno = $this->errorCode($this->errorNative());
+        }
+        $tmp =& $this->raiseError($errno, null, null, null, @ibase_errmsg());
+        return $tmp;
+    }
+
+    // }}}
+    // {{{ errorNative()
+
+    /**
+     * Gets the DBMS' native error code produced by the last query
+     *
+     * @return int  the DBMS' error code.  NULL if there is no error code.
+     *
+     * @since Method available since Release 1.7.0
+     */
+    function errorNative()
+    {
+        if (function_exists('ibase_errcode')) {
+            return @ibase_errcode();
+        }
+        if (preg_match('/^Dynamic SQL Error SQL error code = ([0-9-]+)/i',
+                       @ibase_errmsg(), $m)) {
+            return (int)$m[1];
+        }
+        return null;
+    }
+
+    // }}}
+    // {{{ errorCode()
+
+    /**
+     * Maps native error codes to DB's portable ones
+     *
+     * @param int $nativecode  the error code returned by the DBMS
+     *
+     * @return int  the portable DB error code.  Return DB_ERROR if the
+     *               current driver doesn't have a mapping for the
+     *               $nativecode submitted.
+     *
+     * @since Method available since Release 1.7.0
+     */
+    function errorCode($nativecode = null)
+    {
+        if (isset($this->errorcode_map[$nativecode])) {
+            return $this->errorcode_map[$nativecode];
+        }
+
+        static $error_regexps;
+        if (!isset($error_regexps)) {
+            $error_regexps = array(
+                '/generator .* is not defined/'
+                    => DB_ERROR_SYNTAX,  // for compat. w ibase_errcode()
+                '/table.*(not exist|not found|unknown)/i'
+                    => DB_ERROR_NOSUCHTABLE,
+                '/table .* already exists/i'
+                    => DB_ERROR_ALREADY_EXISTS,
+                '/unsuccessful metadata update .* failed attempt to store duplicate value/i'
+                    => DB_ERROR_ALREADY_EXISTS,
+                '/unsuccessful metadata update .* not found/i'
+                    => DB_ERROR_NOT_FOUND,
+                '/validation error for column .* value "\*\*\* null/i'
+                    => DB_ERROR_CONSTRAINT_NOT_NULL,
+                '/violation of [\w ]+ constraint/i'
+                    => DB_ERROR_CONSTRAINT,
+                '/conversion error from string/i'
+                    => DB_ERROR_INVALID_NUMBER,
+                '/no permission for/i'
+                    => DB_ERROR_ACCESS_VIOLATION,
+                '/arithmetic exception, numeric overflow, or string truncation/i'
+                    => DB_ERROR_INVALID,
+            );
+        }
+
+        $errormsg = @ibase_errmsg();
+        foreach ($error_regexps as $regexp => $code) {
+            if (preg_match($regexp, $errormsg)) {
+                return $code;
+            }
+        }
+        return DB_ERROR;
+    }
+
+    // }}}
     // {{{ tableInfo()
 
     /**
-     * Returns information about a table or a result set.
+     * Returns information about a table or a result set
      *
      * NOTE: only supports 'table' and 'flags' if <var>$result</var>
      * is a table name.
      *
      * @param object|string  $result  DB_result object from a query or a
-     *                                string containing the name of a table
+     *                                 string containing the name of a table.
+     *                                 While this also accepts a query result
+     *                                 resource identifier, this behavior is
+     *                                 deprecated.
      * @param int            $mode    a valid tableInfo mode
-     * @return array  an associative array with the information requested
-     *                or an error object if something is wrong
-     * @access public
-     * @internal
+     *
+     * @return array  an associative array with the information requested.
+     *                 A DB_Error object on failure.
+     *
      * @see DB_common::tableInfo()
      */
     function tableInfo($result, $mode = null)
     {
-        if (isset($result->result)) {
+        if (is_string($result)) {
+            /*
+             * Probably received a table name.
+             * Create a result resource identifier.
+             */
+            $id = @ibase_query($this->connection,
+                               "SELECT * FROM $result WHERE 1=0");
+            $got_string = true;
+        } elseif (isset($result->result)) {
             /*
              * Probably received a result object.
              * Extract the result resource identifier.
              */
             $id = $result->result;
             $got_string = false;
-        } elseif (is_string($result)) {
-            /*
-             * Probably received a table name.
-             * Create a result resource identifier.
-             */
-             $id = @ibase_query($this->connection,
-                                "SELECT * FROM $result WHERE 1=0");
-            $got_string = true;
         } else {
             /*
              * Probably received a result resource identifier.
              * Copy it.
              * Deprecated.  Here for compatibility only.
              */
-             $id = $result;
+            $id = $result;
             $got_string = false;
         }
 
@@ -669,34 +996,28 @@ class DB_ibase extends DB_common
         }
 
         $count = @ibase_num_fields($id);
+        $res   = array();
 
-        // made this IF due to performance (one if is faster than $count if's)
-        if (!$mode) {
-            for ($i=0; $i<$count; $i++) {
-                $info = @ibase_field_info($id, $i);
-                $res[$i]['table'] = $got_string ? $case_func($result) : '';
-                $res[$i]['name']  = $case_func($info['name']);
-                $res[$i]['type']  = $info['type'];
-                $res[$i]['len']   = $info['length'];
-                $res[$i]['flags'] = ($got_string) ? $this->_ibaseFieldFlags($info['name'], $result) : '';
+        if ($mode) {
+            $res['num_fields'] = $count;
+        }
+
+        for ($i = 0; $i < $count; $i++) {
+            $info = @ibase_field_info($id, $i);
+            $res[$i] = array(
+                'table' => $got_string ? $case_func($result) : '',
+                'name'  => $case_func($info['name']),
+                'type'  => $info['type'],
+                'len'   => $info['length'],
+                'flags' => ($got_string)
+                            ? $this->_ibaseFieldFlags($info['name'], $result)
+                            : '',
+            );
+            if ($mode & DB_TABLEINFO_ORDER) {
+                $res['order'][$res[$i]['name']] = $i;
             }
-        } else { // full
-            $res['num_fields']= $count;
-
-            for ($i=0; $i<$count; $i++) {
-                $info = @ibase_field_info($id, $i);
-                $res[$i]['table'] = $got_string ? $case_func($result) : '';
-                $res[$i]['name']  = $case_func($info['name']);
-                $res[$i]['type']  = $info['type'];
-                $res[$i]['len']   = $info['length'];
-                $res[$i]['flags'] = ($got_string) ? $this->_ibaseFieldFlags($info['name'], $result) : '';
-
-                if ($mode & DB_TABLEINFO_ORDER) {
-                    $res['order'][$res[$i]['name']] = $i;
-                }
-                if ($mode & DB_TABLEINFO_ORDERTABLE) {
-                    $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
-                }
+            if ($mode & DB_TABLEINFO_ORDERTABLE) {
+                $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
             }
         }
 
@@ -708,66 +1029,32 @@ class DB_ibase extends DB_common
     }
 
     // }}}
-    // {{{ ibaseRaiseError()
+    // {{{ getSpecialQuery()
 
     /**
-     * Gather information about an error, then use that info to create a
-     * DB error object and finally return that object.
+     * Obtains the query string needed for listing a given type of objects
      *
-     * @param  integer  $db_errno  PEAR error number (usually a DB constant) if
-     *                             manually raising an error
-     * @param  string  $native_errmsg  text of error message if known
-     * @return object  DB error object
-     * @see DB_common::errorCode()
-     * @see DB_common::raiseError()
+     * @param string $type  the kind of objects you want to retrieve
+     *
+     * @return string  the SQL query string or null if the driver doesn't
+     *                  support the object type requested
+     *
+     * @access protected
+     * @see DB_common::getListOf()
      */
-    function &ibaseRaiseError($db_errno = null, $native_errmsg = null)
+    function getSpecialQuery($type)
     {
-        if ($native_errmsg === null) {
-            $native_errmsg = @ibase_errmsg();
+        switch ($type) {
+            case 'tables':
+                return 'SELECT DISTINCT R.RDB$RELATION_NAME FROM '
+                       . 'RDB$RELATION_FIELDS R WHERE R.RDB$SYSTEM_FLAG=0';
+            case 'views':
+                return 'SELECT DISTINCT RDB$VIEW_NAME from RDB$VIEW_RELATIONS';
+            case 'users':
+                return 'SELECT DISTINCT RDB$USER FROM RDB$USER_PRIVILEGES';
+            default:
+                return null;
         }
-        // memo for the interbase php module hackers: we need something similar
-        // to mysql_errno() to retrieve error codes instead of this ugly hack
-        if (preg_match('/^([^0-9\-]+)([0-9\-]+)\s+(.*)$/', $native_errmsg, $m)) {
-            $native_errno = (int)$m[2];
-        } else {
-            $native_errno = null;
-        }
-        // try to map the native error to the DB one
-        if ($db_errno === null) {
-            if ($native_errno) {
-                // try to interpret Interbase error code (that's why we need ibase_errno()
-                // in the interbase module to return the real error code)
-                switch ($native_errno) {
-                    case -204:
-                        if (is_int(strpos($m[3], 'Table unknown'))) {
-                            $db_errno = DB_ERROR_NOSUCHTABLE;
-                        }
-                        break;
-                    default:
-                        $db_errno = $this->errorCode($native_errno);
-                }
-            } else {
-                $error_regexps = array(
-                    '/[tT]able not found/' => DB_ERROR_NOSUCHTABLE,
-                    '/[tT]able .* already exists/' => DB_ERROR_ALREADY_EXISTS,
-                    '/validation error for column .* value "\*\*\* null/' => DB_ERROR_CONSTRAINT_NOT_NULL,
-                    '/violation of [\w ]+ constraint/' => DB_ERROR_CONSTRAINT,
-                    '/conversion error from string/' => DB_ERROR_INVALID_NUMBER,
-                    '/no permission for/' => DB_ERROR_ACCESS_VIOLATION,
-                    '/arithmetic exception, numeric overflow, or string truncation/' => DB_ERROR_DIVZERO
-                );
-                foreach ($error_regexps as $regexp => $code) {
-                    if (preg_match($regexp, $native_errmsg)) {
-                        $db_errno = $code;
-                        $native_errno = null;
-                        break;
-                    }
-                }
-            }
-        }
-        $tmp =& $this->raiseError($db_errno, null, null, null, $native_errmsg);
-        return $tmp;
     }
 
     // }}}
