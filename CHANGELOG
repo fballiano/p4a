@@ -1,4 +1,5 @@
 0.20
+- fixed screen.css bug on Internet Explorer
 - added beforeMoveRow,onMoveRow and afterMoveRow on P4A_Mask::nextRow()
 
 0.19

@@ -458,7 +458,9 @@ fieldset.frame,div.frame {
 
 div.br{
 	clear:both;
-	background:red;
+	height: 1px;
+	line-height: 1px;
+	font-size: 1px;
 }
 
 fieldset.frame {
