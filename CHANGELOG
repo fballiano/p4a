@@ -1,3 +1,6 @@
+0.20
+- added beforeMoveRow,onMoveRow and afterMoveRow on P4A_Mask::nextRow()
+
 0.19
 - upgraded all pear packages
 - added constant P4A_FORCE_HANDHELD_RENDERING to force handheld rendering on any device (useful to have a handheld preview)

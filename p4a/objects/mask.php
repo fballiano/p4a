@@ -488,7 +488,15 @@
 		 */
 		function nextRow()
 		{
-    		$this->data->nextRow();
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+				$this->data->nextRow();
+			}
+
+			$this->actionHandler('afterMoveRow');
 		}
 
 		/**
