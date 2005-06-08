@@ -30,7 +30,7 @@
 [[if $focus_id]]
 <body onload="setFocus('[[$focus_id]]'); correctPNG();">
 [[else]]
-<body>
+<body onload="correctPNG();">
 [[/if]]
 
 [[$mask_open]]

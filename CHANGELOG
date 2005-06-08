@@ -1,3 +1,6 @@
+0.21
+- fixed a png correction related bug on default mask template
+
 0.20
 - fixed screen.css bug on Internet Explorer
 - added beforeMoveRow,onMoveRow and afterMoveRow on P4A_Mask::nextRow()
