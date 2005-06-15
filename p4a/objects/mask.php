@@ -308,6 +308,7 @@
 
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
+			$this->smarty->assign('javascript', $p4a->javascript);
 			$this->smarty->assign('css', $p4a->css);
 
 			if(isset($this->focus_object) and is_object($this->focus_object)){

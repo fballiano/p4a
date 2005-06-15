@@ -1,5 +1,10 @@
 0.21
-- fixed a "png correction" related bug on default mask template
+- some bugfixes in CSS
+- added P4A::addJavascript() and P4A::dropJavascript()
+- changed javascript file inclusion in masks templates
+- updated TODO
+- updated README, removed info about untested browsers
+- ie7 library has been implemented (http://dean.edwards.name/IE7/)
 
 0.20
 - fixed screen.css bug on Internet Explorer

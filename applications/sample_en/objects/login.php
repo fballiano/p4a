@@ -76,6 +76,7 @@ class Login extends P4A_Mask
 		$this->frame->anchorCenter($this->message);
 		$this->frame->anchor($this->username);
 		$this->frame->anchor($this->password);
+		$this->frame->newRow();
 		$this->frame->anchorCenter($this->login);
 		$this->frame->setWidth(300);
 

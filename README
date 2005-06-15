@@ -106,21 +106,22 @@ php/mod_php 4.3.x/5.0.x
 -- P4A compatibility: Workstation Side --
 -----------------------------------------
 
-Gecko browsers (Mozilla 1.x, Netscape 6.x/7.x)
-Internet Explorer 5.x/6.x
-Safari 1.x (testers needed!!)
-Opera 6.x, 7.x (testers needed!!)
-Konqueror 3.x
-Any JavaScript 1.2 browser with css/css2 support
+Tested browsers:
+- Mozilla Firefox 1.x
+- Internet Explorer 5.x, 6.x
+- Konqueror 3.x
+- Opera 7.x 8.x
 
-Nescape 4.x is not supported
+These browsers should work as well:
+- all gecko browsers (Netscape 7.x/8.x, Epiphany, Galeon)
+- all Javascript 1.2/CSS browser
 
 ------------------------------------
 -- P4A compatibility: Mobile Side --
 ------------------------------------
 
-Pocket Internet Explorer for Microsoft Windows Mobile 2003
-Opera 6.x/7.x
+- Pocket Internet Explorer for Microsoft Windows Mobile 2003
+- Opera 6.x/7.x
 
 -------------------
 -- General Notes --
@@ -134,19 +135,6 @@ magic_quotes_gpc must be Off (PHP default).
 You can't switch between two application with the same
 P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
-
---------------------
--- Notes on Opera --
---------------------
-
-P4A default theme does not seem to be fully
-compatible with Opera 6.x, because of the heavy
-CSS2 utilization.
-
-P4A default menu ("drop_down")
-will not run on Opera 6.x, but only on Opera 7.x.
-If Opera 7.x cannot be installed than use differt menu
-style such as "tabbed" or "tabbed_rounded".
 
 -------------
 -- Authors --

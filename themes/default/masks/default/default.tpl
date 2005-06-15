@@ -4,8 +4,11 @@
 <meta http-equiv="content-type" content="text/html; charset=[[$charset]]" />
 <title>[[$application_title]]</title>
 
-<script type="text/javascript" src="[[$theme_path]]/p4a.js"></script>
-[[foreach from=$css key=k item=v ]]
+[[foreach from=$javascript key=k item=v]]
+<script type="text/javascript" src="[[$k]]"></script>
+[[/foreach]]
+
+[[foreach from=$css key=k item=v]]
 <link href="[[$v.0]]" rel="stylesheet" type="text/css" media="[[$v.1]]" />
 [[/foreach]]
 
@@ -28,9 +31,9 @@
 </head>
 
 [[if $focus_id]]
-<body onload="setFocus('[[$focus_id]]'); correctPNG();">
+<body onload="setFocus('[[$focus_id]]')">
 [[else]]
-<body onload="correctPNG();">
+<body>
 [[/if]]
 
 [[$mask_open]]
@@ -48,7 +51,7 @@
 [[/if]]
 
 [[if $top]]
-<div style="background-color:#FAFAFA; border-bottom: 1px solid #CCC;padding:2px">
+<div id="top">
 [[$top]]
 </div>
 [[/if]]

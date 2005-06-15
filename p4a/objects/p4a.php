@@ -120,6 +120,13 @@
 		var $css = array();
 
 		/**
+		 * javascript container.
+		 * @var array
+		 * @access private
+		 */
+		var $javascript = array();
+
+		/**
 		 * Is the browser a handheld?
 		 * @var boolean
 		 * @access private
@@ -142,23 +149,29 @@
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
 
+			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
+
 			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
 			$client =& new phpSniff();
 
-			$this->addCSS(P4A_THEME_PATH . "/screen.css", "all");
-			$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
-			$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
-			$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
+			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
+			$this->addCss(P4A_THEME_PATH . "/screen.css", "print");
+			$this->addCss(P4A_THEME_PATH . "/print.css", "print");
+			$this->addCss(P4A_THEME_PATH . "/handheld.css", "handheld");
 
 			if ($client->browser_is('ie')) {
 				$this->internet_explorer = true;
-				$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
+				$this->addCss(P4A_THEME_PATH . "/iehacks.css");
 			}
 
 			if (!$client->has_feature('css2') or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
 				$this->css = array();
-				$this->addCSS(P4A_THEME_PATH . "/handheld.css");
+				$this->addCss(P4A_THEME_PATH . "/handheld.css");
+			}
+
+			if ($this->isInternetExplorer() and !$this->isHandheld()) {
+				$this->addJavascript(P4A_THEME_PATH . "/ie7/ie7-standard-p.js");
 			}
 
 			$this->init();
@@ -484,7 +497,7 @@
 		}
 
 		/**
-		 * No include CSS
+		 * Drop inclusion of CSS file
 		 * @param string		The URI of CSS.
 		 * @access private
 		 */
@@ -493,6 +506,29 @@
 		{
 			if(isset($this->css[$uri])){
 				unset($this->css[$uri]);
+			}
+		}
+
+		/**
+		 * Include a javascript file
+		 * @param string		The URI of file.
+		 * @access private
+		 */
+		function addJavascript($uri)
+		{
+			$this->javascript[$uri] = null;
+		}
+
+		/**
+		 * Drop inclusion of javascript file
+		 * @param string		The URI of CSS.
+		 * @access private
+		 */
+
+		function dropJavascript($uri)
+		{
+			if(isset($this->javascript[$uri])){
+				unset($this->javascript[$uri]);
 			}
 		}
 	}

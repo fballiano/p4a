@@ -10,16 +10,22 @@ body {
 	border:0px;
 }
 
-#sheetContainer>.sheet,#sheetContainer>fieldset{
+#sheetContainer>.sheet, #sheetContainer>.frame, #sheetContainer>fieldset {
 	margin-left:auto;
 	margin-right:auto;
 }
 
 #topContainer {
-	width:100%;
-	position:fixed;
+	width: 100%;
+	position: fixed;
 	top: 0px;
-	z-index:2;
+	z-index: 2;
+}
+
+#top {
+	background-color: #FAFAFA;
+	border-bottom: 1px solid #CCC;
+	padding: 2px;
 }
 
 #mainContainer {
@@ -38,8 +44,6 @@ body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #4B718A;
-	margin-left:auto;
-	margin-right:auto;
 }
 
 .img_button {
@@ -174,27 +178,15 @@ a.link_button:hover {
 	cursor:pointer;
 }
 
-.field{
-	float:left;
-}
-
-.field_container {
-	float:left;
-}
-
 .no_wrap {
 	white-space: nowrap;
-}
-
-.overflow {
-/* 	overflow: auto; */
 }
 
 label {
 	overflow: visible;
 	display:block;
 	text-align: left;
-  	padding:1px;
+	padding:1px;
 	padding-left:6px;
 	background:#fcfcfc;
 	border:1px solid #fafafa;

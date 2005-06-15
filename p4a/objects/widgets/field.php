@@ -665,7 +665,7 @@
 		 */
 		function getAsText()
 		{
-			$header 		= '<input type="text" class="border_color1 font_normal field" ';
+			$header 		= '<input type="text" class="border_color1 font_normal" ';
 			$close_header 	= '/>';
 
 			if( !$this->isEnabled() ) {
@@ -692,7 +692,7 @@
 			$this->display('language', $p4a->i18n->getLanguage());
 			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
 
-			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal field' $enabled";
+			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal' $enabled";
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
@@ -713,7 +713,7 @@
 		 */
 		function getAsPassword()
 		{
-			$header 		= '<input type="password" class="border_color1 font_normal field" ';
+			$header 		= '<input type="password" class="border_color1 font_normal" ';
 			$close_header 	= '/>';
 
 			if( !$this->isEnabled() ) {
@@ -826,7 +826,7 @@
 		{
 			$p4a =& P4A::singleton();
 
-			$header 			= '<SELECT class="border_box font_normal field" ';
+			$header 			= '<SELECT class="border_box font_normal" ';
 			$close_header 		= '>';
 			$footer				= '</SELECT>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties();
@@ -1095,7 +1095,7 @@
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 
-				$sReturn  = '<table class="border_box field">';
+				$sReturn  = '<table class="border_box">';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
@@ -1208,7 +1208,7 @@
 					}
 				}
 
-				$sReturn  = '<table class="border_box field">' ;
+				$sReturn  = '<table class="border_box">' ;
 				$sReturn .= '<tr><td colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" border="0" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . '></td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
