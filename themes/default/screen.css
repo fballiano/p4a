@@ -414,6 +414,8 @@ select:focus{
 	width: 300px;
 	font-weight: bold;
 	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .message dt {
