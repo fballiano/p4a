@@ -48,18 +48,10 @@
 	class P4A_Menu extends P4A_Widget
 	{
 		/**
-		 * Menu rendering interface type (drop_down|tabbed)
-		 * @var string
-		 * @access private
-		 */
-		var $type = 'drop_down';
-
-		/**
 		 * Menu elements
 		 * @var array
 		 * @access private
 		 */
-		//todo
 		var $items = NULL;
 
 		/**
@@ -198,112 +190,43 @@
 				return;
 			}
 
-			if ($this->type === 'drop_down')
-			{
-				$this->useTemplate('menu_drop_down');
-				$array_items = array();
+			$this->useTemplate('menu');
+			$array_items = array();
 
-				// First level menu
-				while($item =& $this->items->nextItem())
-				{
-					if ($item->isVisible()) {
-						$array_item = array();
-						$array_item['label'] = $item->label;
-						if ((! $item->items->getNumItems())) {
-							$array_item['actions'] = $item->composeStringActions();
-						}
-						$array_item['properties'] = $item->composeStringProperties();
-						$array_item['id'] = $item->getId();
+			// First level menu
+			while($item =& $this->items->nextItem()) {
+				if ($item->isVisible()) {
+					$array_item = array();
+					$array_item['label'] = $item->label;
+					if ((! $item->items->getNumItems())) {
+						$array_item['actions'] = $item->composeStringActions();
+					}
+					$array_item['properties'] = $item->composeStringProperties();
+					$array_item['id'] = $item->getId();
 
-						// Second level menu
-						while($sub_item =& $item->items->nextItem())
-						{
-							if ($sub_item->isVisible()) {
-								$array_sub_item = array();
-								$array_sub_item['label'] = $sub_item->label;
-								$array_sub_item['actions'] = $sub_item->composeStringActions();
-								$array_sub_item['properties'] = $sub_item->composeStringProperties();
-								$array_sub_item['id'] = $sub_item->getId();
-
+					// Second level menu
+					while($sub_item =& $item->items->nextItem()) {
+						if ($sub_item->isVisible()) {
+							$array_sub_item = array();
+							$array_sub_item['label'] = $sub_item->label;
+							$array_sub_item['actions'] = $sub_item->composeStringActions();
+							$array_sub_item['properties'] = $sub_item->composeStringProperties();
+							$array_sub_item['id'] = $sub_item->getId();
 								$array_item['sub_items'][] = $array_sub_item;
-							}
-							unset($sub_item);
 						}
-
-						$array_items[] = $array_item;
-						unset($item);
-					}
-				}
-
-				$this->display('properties', $this->composeStringProperties());
-				$this->display('items', $array_items);
-			}
-			elseif($this->type === 'tabbed' or $this->type === 'tabbed_rounded')
-			{
-				P4A_Error("Sorry, tabbed and tabbed_rounded menues are not yet implemented.");
-				$this->useTemplate('menu_' . $this->type);
-				$aItems1 = array();
-				$aItems2 = array();
-
-				// First level menu
-				foreach($this->items as $key=>$item)
-				{
-
-					if( $this->item_active === NULL ) {
-						$this->setItemActive( $key ) ;
+						unset($sub_item);
 					}
 
-					$aItem = array();
-					$aItem['label'] = $item->label;
-					$aItem['actions'] =	$item->composeStringActions();
-					if ($item->getName() == $this->item_active){
-						$aItem['active'] = TRUE;
-					}else{
-						$aItem['active'] = FALSE;
-					}
-					$aItems1[] = $aItem;
-				}
-
-				// Second level menu
-				while($item =& $this->items->{$this->item_active}->items->nextItem())
-				{
-					$aItem = array();
-					$aItem['label'] = $item->label;
-					$aItem['actions'] =	$item->composeStringActions();
-
-					if( $this->items->{$this->item_active}->item_active === NULL ) {
-						$this->items->{$this->item_active}->setItemActive( $item->getName() ) ;
-					}
-
-					if ($item->getName() == $this->items->{$this->item_active}->item_active){
-						$aItem['active'] = TRUE;
-					}else{
-						$aItem['active'] = FALSE;
-					}
-					$aItems2[] = $aItem;
+					$array_items[] = $array_item;
 					unset($item);
 				}
-
-				$this->display('items1', $aItems1);
-				$this->display('items2', $aItems2);
-
 			}
 
+			$this->display('properties', $this->composeStringProperties());
+			$this->display('items', $array_items);
+
 			return $this->fetchTemplate();
-
 		}
-
-		/**
-		 * Changes the menu type.
-		 * @param string		The type identifier
-		 * @access public
-		 * @see $type
-		 */
-		function setType($type)
-		{
-			$this->type = $type;
-		}
-
 	}
 
 	/**
@@ -326,7 +249,6 @@
 		 * @var array
 		 * @access private
 		 */
-		 //todo
 		var $items = NULL;
 
 		/**
@@ -377,7 +299,6 @@
 		 * @param string		Item's label.
 		 * @access public
 		 */
-		 //todo
 		function &addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
@@ -400,11 +321,10 @@
 		function addSeparator($name)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
-			//todo
+
 			$item->setParent($this->getId());
 			$item->dropAction('onClick');
 			$item->setLabel('');
-
 
 			$item->setProperty('class', 'menuSeparator');
 			$item->setStyleProperty('margin-left', '10px');
@@ -414,7 +334,7 @@
 		}
 
 		/**
-s		 * Removes an element from the element.
+		 * Removes an element from the element.
 		 * @param string		Mnemonic identifier for the element.
 		 * @access public
 		 */

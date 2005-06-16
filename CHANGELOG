@@ -1,4 +1,8 @@
 0.21
+- renamed "menu_drop_down" template to "menu"
+- removed P4A_Menu::setType()
+- removed tabbed menu
+- removed P4A_Sheets_Group widget
 - some bugfixes in CSS
 - added P4A::addJavascript() and P4A::dropJavascript()
 - changed javascript file inclusion in masks templates

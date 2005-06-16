@@ -5,7 +5,6 @@
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
 - migrate to I18Nv2 (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates
-- make SHEETS_GROUP and tabbed MENU work
 - change template engine to flexy
 - if a password is not inserted, reloading the mask we would not like to see the obfuscator
 - check multiple DATE instances on the same page

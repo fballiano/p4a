@@ -101,7 +101,6 @@
 	require_once(dirname(__FILE__) . '/objects/widgets/menu.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/message.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/sheet.php');
-	require_once(dirname(__FILE__) . '/objects/widgets/sheets_group.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/table.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/frames/fieldset.php');
