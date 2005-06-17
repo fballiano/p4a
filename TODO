@@ -1,3 +1,4 @@
+- continue XHTML output conversion
 - check session data for deleting smarty if possible
 - check app change in the same browser window
 - add and test rich_textarea spell check

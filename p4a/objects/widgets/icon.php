@@ -76,6 +76,7 @@ class P4A_Icon extends P4A_Widget
 	function getAsString()
 	{
 		if ($this->isVisible()) {
+			$alt = $this->getLabel();
 			$actions = $this->composeStringActions();
 			$properties = $this->composeStringProperties();
 			$src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
@@ -83,7 +84,7 @@ class P4A_Icon extends P4A_Widget
 				$src .= "_disabled";
 			}
 			$src .= '.' . P4A_ICONS_EXTENSION ;
-			return "<span style='display:block'><img $properties $actions src=\"$src\" /></span>\n";
+			return "<span style='display:block'><img $properties $actions src=\"$src\" alt=\"\" /></span>\n";
 		} else {
 			return "";
 		}

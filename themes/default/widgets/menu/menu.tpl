@@ -2,14 +2,13 @@
         <!-- @import url("[[$tpl_path]]/css/menuDropdown.css"); -->
     </style>
     <script type="text/javascript" src="[[$tpl_path]]/js/menuDropdown.js"></script>
-      <ul name="menu_top" class="menuList" [[$properties]]>
+      <ul class="menuList" [[$properties]]>
          [[foreach item=item from=$items]]
         <li class="menubar">
           [[if $item.actions]]
-		  <a href="#" id="[[$item.id]]" class="actuator" [[$item.actions]] [[$item.properties]]>[[$item.label]]</a>
+		  <a href="#" class="actuator" [[$item.actions]] [[$item.properties]]>[[$item.label]]</a>
           [[else]]
-          <a href="#" id="[[$item.id]]"
-class="actuator" [[$item.properties]]>[[$item.label]]</a>
+          <a href="#" class="actuator" [[$item.properties]]>[[$item.label]]</a>
           [[/if]]
           <ul id="[[$item.id]]Menu" class="menu">
           [[foreach item=sub_item from=$item.sub_items]]

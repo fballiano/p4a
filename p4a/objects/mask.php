@@ -560,13 +560,14 @@
 		function maskOpen()
 		{
 			$this->sOpen  = "";
-			$this->sOpen .= "<form method='post' enctype='multipart/form-data' name='p4a' action='index.php'>\n";
-			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "'>\n";
-			$this->sOpen .= "<input type='hidden' name='_action' value='none'>\n";
-			$this->sOpen .= "<input type='hidden' name='param1'>\n";
-			$this->sOpen .= "<input type='hidden' name='param2'>\n";
-			$this->sOpen .= "<input type='hidden' name='param3'>\n";
-			$this->sOpen .= "<input type='hidden' name='param4'>\n";
+			$this->sOpen .= "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
+			$this->sOpen .= "<div>\n";
+			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
+			$this->sOpen .= "<input type='hidden' name='_action' value='none' />\n";
+			$this->sOpen .= "<input type='hidden' name='param1' />\n";
+			$this->sOpen .= "<input type='hidden' name='param2' />\n";
+			$this->sOpen .= "<input type='hidden' name='param3' />\n";
+			$this->sOpen .= "<input type='hidden' name='param4' />\n";
 
 			return $this->sOpen;
 		}
@@ -578,7 +579,7 @@
 		 */
 		function maskClose()
 		{
-			$this->sClose = "</form>";
+			$this->sClose = "</div>\n</form>";
 			return $this->sClose;
 		}
 

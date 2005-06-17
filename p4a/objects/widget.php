@@ -131,7 +131,6 @@
 		function &p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
 		{
 			parent::p4a_object($name, $prefix, $id);
-			$this->setProperty('name', $this->getId());
 			$this->setProperty('id', $this->getId());
 		}
 
@@ -464,9 +463,11 @@
 		 */
 		function addAction($action, $event = NULL, $require_confirmation = false, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general')
 		{
+			$action = strtolower($action);
+			$event = strtolower($event);
+			
 			// If not specified, the event has the same name of the action
-			if (! $event)
-			{
+			if (!$event) {
 				$event = $action;
 			}
 
@@ -485,8 +486,9 @@
 		 * @param string	Text for confirmation.
 		 * @param string	i18n message id for confirmation.
 		 */
-		function requireConfirmation( $action, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general' )
+		function requireConfirmation($action, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general')
 		{
+			$action = strtolower($action);
 			$this->actions[$action]['require_confirmation'] = true;
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
@@ -497,8 +499,9 @@
 		 * @access public
 		 * @param string	The action.
 		 */
-		function unrequireConfirmation( $action )
+		function unrequireConfirmation($action)
 		{
+			$action = strtolower($action);
 			$this->actions[$action]['require_confirmation'] = false;
 		}
 
@@ -512,14 +515,15 @@
 		 */
 		function changeEvent($action, $event = NULL)
 		{
+			$action = strtolower($action);
+			$event = strtolower($event);
+		
 			// If not specified, the event has the same name of the action
-			if ($event === NULL)
-			{
+			if ($event === NULL) {
 				$event = $action;
 			}
 
-			if (array_key_exists($action, $this->actions))
-			{
+			if (array_key_exists($action, $this->actions)) {
 				$this->actions[$action]['event'] = $event;
 			}
 		}
@@ -532,6 +536,7 @@
 		 */
 		function dropAction($action)
 		{
+			$action = strtolower($action);
 			unset($this->actions[$action]);
 		}
 
@@ -587,24 +592,19 @@
 				$prefix = '';
 				$suffix = '';
 
-				if ($action == 'onReturnPress')
-				{
-					$browser_action = 'onKeyPress';
+				if ($action == 'onreturnpress') {
+					$browser_action = 'onkeypress';
 					$return = 'true';
 					$prefix .= 'if(isReturnPressed(event)){';
 					$suffix .= '}';
 				}
 
-				if ($action_data['require_confirmation'])
-				{
+				if ($action_data['require_confirmation']) {
 					$suffix .= '}';
 
-					if ($action_data['confirmation_text'] === NULL)
-					{
+					if ($action_data['confirmation_text'] === NULL) {
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $p4a->i18n->messages->get($action_data['confirmation_text_handler'])) .'\')){';
-					}
-					else
-					{
+					} else {
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $action_data['confirmation_text'] ) .'\')){';
 					}
 				}

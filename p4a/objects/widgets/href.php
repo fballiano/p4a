@@ -74,7 +74,7 @@
 		 */
 		function composeStringActions()
 		{
-			$sActions = P4A_APPLICATION_URL . '/index.php?action=onClick&object=' . $this->getID();
+			$sActions = P4A_APPLICATION_URL . '/index.php?action=onclick&object=' . $this->getID();
 			return $sActions;
 		}
 

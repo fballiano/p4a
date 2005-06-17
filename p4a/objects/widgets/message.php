@@ -71,7 +71,7 @@
 				$string  = "<dl class='message' $properties $actions>\n";
 				$string .= "<dt>";
 				if (!empty($icon)) {
-					$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' />";
+					$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' alt='' />";
 				}
 				$string .= "</dt>\n";
 				$string .= "<dd>$value</dd>\n";

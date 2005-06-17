@@ -85,9 +85,9 @@
 			}
 
 			if ($this->isEnabled()) {
-				$header 		= '<A href="#" class="link" ';
+				$header 		= '<a href="#" class="link" ';
 				$close_header 	= '>';
-				$footer			= '</A>';
+				$footer			= '</a>';
 				$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 				$sReturn .= $this->getValue();
 				$sReturn .= $footer;

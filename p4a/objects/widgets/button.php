@@ -190,7 +190,7 @@
 
 				$footer .= "\n";
 			}else{
-				$header .= '<INPUT type="button" class="' ;
+				$header .= '<input type="button" class="' ;
 				if( $enabled ) {
 					$header .= 'clickable ';
 				}

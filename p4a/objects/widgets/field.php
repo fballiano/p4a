@@ -183,6 +183,7 @@
 		function &P4A_Field($name, $add_default_data_field = TRUE)
 		{
 			parent::P4A_Widget($name, 'fld');
+			$this->setProperty('name', $this->getId());
 
 			$this->build("p4a_collection", "buttons");
 			$this->setType('text');
@@ -778,9 +779,9 @@
 		 */
 		function getAsHidden()
 		{
-			$header 		= '<INPUT TYPE="hidden" ';
+			$header 		= '<input type="hidden" ';
 			$close_header 	= '>';
-			$footer			= '</INPUT>';
+			$footer			= '</input>';
 
 			$sReturn = $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() .  $close_header;
 			return $sReturn;
@@ -793,9 +794,9 @@
 		 */
 		function getAsLabel()
 		{
-            $header         = '<DIV class="field_as_label" ';
+            $header         = '<div class="field_as_label" ';
             $close_header   = '>';
-            $footer         = '</DIV>';
+            $footer         = '</div>';
             $value			= '';
 
             if ($this->data === NULL) {
@@ -827,9 +828,9 @@
 		{
 			$p4a =& P4A::singleton();
 
-			$header 			= '<SELECT class="border_box font_normal" ';
+			$header 			= '<select class="border_box font_normal" ';
 			$close_header 		= '>';
-			$footer				= '</SELECT>';
+			$footer				= '</select>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties();
 
 			if( !$this->isEnabled() ) {
@@ -842,8 +843,7 @@
 			$description_field	= $this->getSourceDescriptionField() ;
 			$new_value			= $this->getNewValue() ;
 
-			if( $this->isNullAllowed() )
-			{
+			if ($this->isNullAllowed()) {
 				if( $this->null_message === NULL ) {
 					$message = $p4a->i18n->messages->get('none_selected');
 				} else {
@@ -853,14 +853,10 @@
 				$header .= "<option value=''>" . $message . "</option>";
 			}
 
-			foreach( $external_data as $key=>$current )
-			{
-				if ($current[ $value_field ] == $new_value)
-				{
+			foreach ($external_data as $key=>$current) {
+				if ($current[ $value_field ] == $new_value){
 					$selected = "SELECTED";
-				}
-				else
-				{
+				} else {
 					$selected = "";
 				}
 
@@ -1068,7 +1064,7 @@
 
 			if( $this->getNewValue() === NULL )
 			{
-				$header 		= "<div style='float:left'><input type='file' onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' class='border_box font_normal clickable' ";
+				$header 		= "<div style='float:left'><input type='file' onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
 				if (!$this->isEnabled()) {
@@ -1155,7 +1151,7 @@
 			$p4a =& P4A::singleton();
 			if( $this->getNewValue() === NULL )
 			{
-				$header 		= "<div style='float:left'><input onChange='executeEvent(\"" . $this->getID() . "\", \"onChange\");' type='file' class='border_box font_normal clickable' ";
+				$header 		= "<div style='float:left'><input onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
 				if( !$this->isEnabled() ) {
