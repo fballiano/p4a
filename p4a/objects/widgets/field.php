@@ -302,15 +302,17 @@
 		{
 			$set = true ;
 
-			if( $new_value === NULL ) {
+			if ($new_value === NULL) {
 				$new_value = NULL;
-			} elseif ( $this->isFormattable() and $this->isFormatted() ) {
+			} elseif ($this->isFormattable() and $this->isFormatted()) {
 				$new_value = $this->unformat($new_value);
-			} elseif (($this->type == 'password' )
+			} elseif (($this->type == 'password')
 			and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
-						$new_value = md5( $new_value );
+						if (!empty($new_value)) {
+							$new_value = md5($new_value);
+						}
 					case 'none':
 						break;
 					default:
@@ -510,8 +512,7 @@
 		 */
 		function isFormattable()
 		{
-			switch( $this->type )
-			{
+			switch ($this->type) {
 				case 'label':
 				case 'text':
 				case 'textarea':
@@ -720,8 +721,8 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-			if( $this->getNewValue() !== NULL ) {
-				$header        .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
+			if ($this->getNewValue() !== NULL) {
+				$header .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 			}
 
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;

@@ -1,4 +1,5 @@
 0.21
+- fixed a password rendering bug: if a password field is not filled, now you'll not see the obfuscator after submit
 - renamed "menu_drop_down" template to "menu"
 - removed P4A_Menu::setType()
 - removed tabbed menu

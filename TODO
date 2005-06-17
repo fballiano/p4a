@@ -6,7 +6,6 @@
 - migrate to I18Nv2 (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates
 - change template engine to flexy
-- if a password is not inserted, reloading the mask we would not like to see the obfuscator
 - check multiple DATE instances on the same page
 
 ------------------------------------------------------------------------
