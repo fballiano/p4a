@@ -1,3 +1,4 @@
+- rewrite P4A_Menu to make it XHTML/CSS2 only (removing javascript and writing a better template)
 - continue XHTML output conversion
 - check session data for deleting smarty if possible
 - check app change in the same browser window
