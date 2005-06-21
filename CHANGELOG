@@ -10,7 +10,7 @@
 - changed javascript file inclusion in masks templates
 - updated TODO
 - updated README, removed info about untested browsers
-- ie7 library has been implemented (http://dean.edwards.name/IE7/)
+- ie7 (http://dean.edwards.name/IE7/) library has been implemented (thanks to Francesco Dominidiato)
 
 0.20
 - fixed screen.css bug on Internet Explorer
