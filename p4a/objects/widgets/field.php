@@ -358,7 +358,7 @@
 
 		/**
 		 * Sets the field's type.
-		 * @param strings		The type (text|password|textarea|rich_textarea|hidden|label|select|radio|checkbox).
+		 * @param strings		The type (text|password|textarea|rich_textarea|hidden|label|select|radio|checkbox|multiselect|multicheckbox).
 		 * @access public
 		 */
 		function setType($type)
@@ -939,7 +939,7 @@
 				} else {
 					$checked = "";
 				}
-				$sReturn .= "<div><input type='checkbox' id='{$id}[]' name='{$id}[]' value='{$current[$value_field]}' $checked /> {$current[$description_field]}</div>\n";
+				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}[]' name='{$id}[]' value='{$current[$value_field]}' $checked /> {$current[$description_field]}</div>\n";
 			}
 			
 			$sReturn .= "</div>";
@@ -1050,7 +1050,7 @@
 				$checked = '' ;
 			}
 
-			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_none font_normal' value='1' $checked ";
+			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_none' value='1' $checked ";
 			$close_header 	= '>';
 
 			if( !$this->isEnabled() ) {
