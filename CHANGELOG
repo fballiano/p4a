@@ -1,3 +1,10 @@
+0.22
+- fixed a bug in P4A_DB_Source with multivalue fields
+- added P4A_Field::getAsMulticheckbox(), use it with $field->setType('multicheckbox')
+- some code has been beautified
+- updated CREDITS
+- updated TODO
+
 0.21
 - all actions and events are now lowercase, also to print out corrected XHTML
 - fixed a password rendering bug: if a password field is not filled, now you'll not see the obfuscator after submit

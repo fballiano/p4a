@@ -299,33 +299,32 @@
 				$aParams = array();
 				// Removing files from request...
 				// workaround for windows servers
-				foreach($_FILES as $key=>$value) {
+				foreach ($_FILES as $key=>$value) {
 					unset($_REQUEST[$key]);
 				}
 
-				foreach($_REQUEST as $key=>$value) {
+				foreach ($_REQUEST as $key=>$value) {
 					if (substr($key, 0, 3) == 'fld') {
-						if( gettype( $value ) == 'string' ) {
+						if (gettype($value) == 'string') {
 							$this->objects[$key]->setNewValue(stripslashes($value));
 						} else {
 							$this->objects[$key]->setNewValue($value);
 						}
-					} elseif(substr($key, 0, 5) == 'param' and strlen($value) > 0) {
+					} elseif (substr($key, 0, 5) == 'param' and strlen($value) > 0) {
 						$aParams[] = $value;
 					}
 				}
 
-				foreach($_FILES as $key=>$value)
-				{
+				foreach ($_FILES as $key=>$value) {
 					$value['name'] = str_replace( ',', ';', $value['name'] );
 					$value['name'] = P4A_Get_Unique_File_Name( $value['name'], P4A_UPLOADS_TMP_DIR );
 					move_uploaded_file( $value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name'] );
 					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'] ;
 
-					if( ( substr($key, 0, 3) == 'fld' ) and ( $value['error'] == 0 ) ) {
+					if ((substr($key, 0, 3) == 'fld') and ($value['error'] == 0)) {
 						$new_value = $value['name'] . ',' . $value['tmp_name'] . ',' . $value['size'] . ',' . $value['type'] . ',' ;
 
-						if( substr( $value['type'], 0, 5 ) == 'image' ) {
+						if (substr($value['type'], 0, 5) == 'image') {
 							$image_data = getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 							$new_value .= $image_data[0] . ',' . $image_data[1];
 						} else {

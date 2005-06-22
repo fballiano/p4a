@@ -3,11 +3,10 @@
 - check session data for deleting smarty if possible
 - check app change in the same browser window
 - add and test rich_textarea spell check
-- check P4A_Field::getAsMultiCheckbox()
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
-- migrate to I18Nv2 (suspended because of the iconv dependence)
+- migrate to I18Nv2? (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates
-- change template engine to flexy
+- change template engine to flexy?
 - check multiple DATE instances on the same page
 
 ------------------------------------------------------------------------

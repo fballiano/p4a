@@ -878,7 +878,7 @@
 			$actions =& $this->composeStringActions();
 
 			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
-			$sReturn .= "<select multiple='multiple' " . $this->composeStringStyle() . " ";
+			$sReturn .= "<select class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
 			foreach($this->properties as $property_name=>$property_value){
 				if ($property_name == "name") {
 					$property_value .= '[]';
@@ -919,22 +919,31 @@
 
 			$properties =& $this->composeStringProperties();
 			$actions =& $this->composeStringActions();
+			$id = $this->getId();
 
-			$sReturn .= "<input type='hidden' name='".$this->getID()."' value='' />";
-			$sReturn .= "<div>";
-			$sReturn .= "<select multiple='multiple' ";
-			foreach($this->properties as $property_name=>$property_value){
-				if ($property_name == "name") {
-					$property_value .= '[]';
-				}
-				$sReturn .= $property_name . '="' . $property_value . '" ' ;
-			}
-			$sReturn .= "$actions>";
+			$sReturn  = "<div class='font_normal' style='float:left;text-align:left;'>";
+			$sReturn .= "<input type='hidden' id='$id' name='$id' value='' />";
 
 			$external_data		= $this->data->getAll();
 			$value_field		= $this->getSourceValueField();
 			$description_field	= $this->getSourceDescriptionField();
 			$new_value			= $this->getNewValue();
+			
+			foreach ($external_data as $key=>$current) {
+				if (!$new_value) {
+					$new_value = array();
+				}
+				
+				if (in_array($current[$value_field], $new_value)) {
+					$checked = "checked";
+				} else {
+					$checked = "";
+				}
+				$sReturn .= "<div><input type='checkbox' id='{$id}[]' name='{$id}[]' value='{$current[$value_field]}' $checked /> {$current[$description_field]}</div>\n";
+			}
+			
+			$sReturn .= "</div>";
+			return $this->composeLabel() . $sReturn;
 		}
 
 		/**

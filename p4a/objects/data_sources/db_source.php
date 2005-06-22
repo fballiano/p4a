@@ -500,9 +500,11 @@ class P4A_DB_Source extends P4A_Data_Source
 				$pk_value = $this->fields->$pks->getNewValue();
 
 				$fk_values = $this->fields->$fieldname->getNewValue();
-				if (is_string($fk_values)) {
+
+				if (is_string($fk_values) and !empty($fk_values)) {
 					$fk_values = split(",",$fk_values);
 				}
+				
 				$fk_table = $aField["table"];
 				$fk_field = $aField["fk_field"];
 				$fk = $aField["fk"];
