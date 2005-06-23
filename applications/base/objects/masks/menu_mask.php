@@ -26,6 +26,7 @@ class P4A_Menu_Mask extends P4A_Mask
 		$source->addOrder("name");
 		$source->setPk("id");
 		$source->load();
+		$source->fields->id->setSequence("p4a_menu_id");
 		$source->fields->access_level->setDefaultValue(1);
 		$source->fields->visible->setDefaultValue(1);
 		$source->fields->action->setDefaultValue("openMask");
