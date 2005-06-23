@@ -1,3 +1,4 @@
+- take a deep look at MySQL Manager and add many functionalities (eg: frames/fieldset)
 - rewrite P4A_Menu to make it XHTML/CSS2 only (removing javascript and writing a better template)
 - continue XHTML output conversion
 - check session data for deleting smarty if possible
