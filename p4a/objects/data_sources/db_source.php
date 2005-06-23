@@ -446,7 +446,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
 			$query .= $this->_composeGroupPart();
 			$query .= $this->_composeOrderPart($new_order_array);
-
 			$db =& p4a_db::singleton();
 			return $db->getOne($query);
 		}
@@ -480,7 +479,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 				}
 			}
-
+			
 			if ($this->isNew()) {
 				$rs = $db->autoExecute($this->_table, $fields_values, DB_AUTOQUERY_INSERT);
 			} else {
@@ -535,16 +534,13 @@ class P4A_DB_Source extends P4A_Data_Source
 			if(is_string($pks)){
 				$row = $this->getPkRow($this->fields->$pks->getNewValue());
 			}else{
-
 				$pk_values = array();
 				foreach($pks as $pk){
 					$pk_values[] = $this->fields->$pk->getNewValue();
 				}
 				$row = $this->getPkRow($pk_values);
 			}
-
 			$this->resetNumRows();
-
 			if ($row) {
 				foreach($row as $field=>$value){
 					$this->fields->$field->setValue($value);
@@ -671,11 +667,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		if (is_array($pk_key)){
 			for($i=0;$i<count($pk_key);$i++){
-				$pk_string .= "{$pk_key[$i]} = '{$pk_value[$i]}' AND ";
+				$pk_string .= "{$this->_table}.{$pk_key[$i]} = '{$pk_value[$i]}' AND ";
 			}
 			$pk_string = substr($pk_string,0,-4);
 		}else{
-			$pk_string = "$pk_key = '$pk_value' ";
+			$pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
 		}
 
 		if (strlen($where)){

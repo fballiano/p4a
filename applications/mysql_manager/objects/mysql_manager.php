@@ -46,8 +46,10 @@ class mysql_manager extends p4a
 
     function &main()
     {
-        if (isset($this->dsn)){
-            define("P4A_DSN", $this->dsn);
+		if (isset($this->dsn)){
+			if (!(defined("P4A_DSN"))) {
+				define("P4A_DSN", $this->dsn);
+			}
         }
         parent::main();
     }

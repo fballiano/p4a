@@ -108,6 +108,7 @@
 	//Toolbar Extensions
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/actions_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/navigation_toolbar.php');
+	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/simple_toolbar.php');
 	require_once(dirname(__FILE__) . '/objects/widgets/toolbars/standard_toolbar.php');
 
 	//We can have more applications on same site and same browser instance
@@ -117,11 +118,14 @@
 	//Applications Objects Includes
 	session_start();
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
-		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		$_SESSION['P4A_INCLUDES'] = array();
+		if (defined("P4A_REQUIRE_APPLICATION")) {
+			$objects_dir = P4A_ROOT_DIR . '/applications/'. P4A_REQUIRE_APPLICATION .'/objects';
+			P4A_Include_Objects($objects_dir);			
+		}
+		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		P4A_Include_Objects($objects_dir);
 	}
-
 	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {
 		require_once($include_file);
 	}
