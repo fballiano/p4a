@@ -1,3 +1,9 @@
+0.23
+- added possibility to extend a P4A Application
+- added P4A_Base_Application
+- added P4A_Simple_Toolbar
+- fixed a bug in P4A_DB_Source: _composeSelectPkQuery with joined tables
+
 0.22
 - fixed a bug in P4A_DB_Source with multivalue fields
 - added P4A_Field::getAsMulticheckbox(), use it with $field->setType('multicheckbox')
