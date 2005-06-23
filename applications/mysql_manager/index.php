@@ -1,5 +1,5 @@
 <?php
-die();
+
 /**
  * P4A - PHP For Applications.
  *
