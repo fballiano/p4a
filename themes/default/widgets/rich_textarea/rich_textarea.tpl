@@ -1,5 +1,3 @@
-<script type="text/javascript" src="[[$tpl_path]]/fckeditor.js"></script>
-
 [[$content]]
 
 <script type="text/javascript">

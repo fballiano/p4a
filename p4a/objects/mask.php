@@ -113,6 +113,36 @@
 		 * @access private
 		 */
 		var $template_name = NULL;
+		
+		/**
+		 * CSS container.
+		 * @var array
+		 * @access private
+		 */
+		var $_css = array();
+
+		/**
+		 * Temporary javascript container.
+		 * These javascripts are rendered and removed
+		 * @var array
+		 * @access private
+		 */
+		var $_temp_javascript = array();
+		
+		/**
+		 * Temporary CSS container.
+		 * These CSS are rendered and removed
+		 * @var array
+		 * @access private
+		 */
+		var $_temp_css = array();
+
+		/**
+		 * javascript container.
+		 * @var array
+		 * @access private
+		 */
+		var $_javascript = array();
 
 		/**
 		 * Mask constructor.
@@ -305,27 +335,28 @@
 			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
+			
+			foreach ($this->smarty_var as $key=>$value) {
+				if (is_object($value)){
+					$value = $value->getAsString();
+				}
+				$this->smarty->assign($key, $value);
+			}
 
 			$this->smarty->assign('charset', $charset);
 			$this->smarty->assign('title', $this->title);
-			$this->smarty->assign('javascript', $p4a->javascript);
-			$this->smarty->assign('css', $p4a->css);
+			$this->smarty->assign('javascript', array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript));
+			$this->smarty->assign('css', array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css));
 
 			if(isset($this->focus_object) and is_object($this->focus_object)){
  				$this->smarty->assign('focus_id', $this->focus_object->getID());
 			}
 
 			$this->smarty->assign('application_title', $p4a->getTitle());
-
-			foreach($this->smarty_var as $key=>$value)
-			{
-				if (is_object($value)){
-					$value = $value->getAsString();
-				}
-				$this->smarty->assign($key, $value);
-			}
 			$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
 			$this->smarty->display($path_template);
+			$this->clearTempCSS();
+			$this->clearTempJavascript();
 		}
 
 		/**
@@ -589,6 +620,130 @@
 		 */
 		function none()
 		{
+		}
+		
+		/**
+		 * Include CSS
+		 * @param string		The URI of CSS.
+		 * @param string		The CSS media.
+		 * @access public
+		 */
+		function addCss($uri, $media = "screen")
+		{
+			if (!isset($this->_css[$uri])) {
+				$this->_css[$uri] = array();
+			}
+			$this->_css[$uri][$media] = null;
+		}
+
+		/**
+		 * Drop inclusion of CSS file
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropCss($uri)
+		{
+			if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])){
+				unset($this->_css[$uri][$media]);
+				if (empty($this->_css[$uri])) {
+					unset($this->_css);
+				}
+			}
+		}
+		
+		/**
+		 * Include CSS
+		 * These CSS are removed after rendering
+		 * @param string		The URI of CSS.
+		 * @param string		The CSS media.
+		 * @access public
+		 */
+		function addTempCss($uri, $media = "screen")
+		{
+			if (!isset($this->_temp_css[$uri])) {
+				$this->_temp_css[$uri] = array();
+			}
+			$this->_temp_css[$uri][$media] = null;
+		}
+
+		/**
+		 * Drop inclusion of CSS file
+		 * These CSS are removed after rendering
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropTempCss($uri)
+		{
+			if(isset($this->_temp_css[$uri]) and isset($this->_temp_css[$uri][$media])){
+				unset($this->_temp_css[$uri][$media]);
+				if (empty($this->_temp_css[$uri])) {
+					unset($this->_temp_css);
+				}
+			}
+		}
+		
+		/**
+		 * Clear temporary CSS list
+		 * @access public
+		 */
+		function clearTempCss()
+		{
+			$this->_temp_css = array();
+		}
+
+		/**
+		 * Include a javascript file
+		 * @param string		The URI of file.
+		 * @access public
+		 */
+		function addJavascript($uri)
+		{
+			$this->_javascript[$uri] = null;
+		}
+
+		/**
+		 * Drop inclusion of javascript file
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropJavascript($uri)
+		{
+			if(isset($this->_javascript[$uri])){
+				unset($this->_javascript[$uri]);
+			}
+		}
+		
+		/**
+		 * Include a javascript file
+		 * These javascripts are removed after rendering
+		 * @param string		The URI of file.
+		 * @access public
+		 */
+		function addTempJavascript($uri)
+		{
+			$this->_temp_javascript[$uri] = null;
+		}
+
+		/**
+		 * Drop inclusion of javascript file
+		 * These javascripts are removed after rendering
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropTempJavascript($uri)
+		{
+			if(isset($this->_temp_javascript[$uri])){
+				unset($this->_temp_javascript[$uri]);
+			}
+		}
+		
+		/**
+		 * Clear temporary javascript list
+		 * @access public
+		 */
+		function clearTempJavascript()
+		{
+			$this->_temp_javascript = array();
 		}
 	}
 ?>

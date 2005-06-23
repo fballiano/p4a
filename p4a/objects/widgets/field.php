@@ -687,22 +687,29 @@
 			} else {
 				$enabled = " disabled='disabled' ";
 			}
+			
+			$id = $this->getID();
+			$languale = $p4a->i18n->getLanguage();
+			$date_format = $p4a->i18n->datetime->getFormat('date_default');
+			$template_path = P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "date_calendar";
 
-			$this->setProperty('id', $this->getID());
-			$this->useTemplate('date_calendar');
-			$this->display('id', $this->getID());
-			$this->display('language', $p4a->i18n->getLanguage());
-			$this->display('date_format', $p4a->i18n->datetime->getFormat('date_default'));
+			$this->setProperty('id', $id);
 
 			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal' $enabled";
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
-				$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' $enabled />";
+				$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('$id', '$date_format', false, true);\"/>";
 			}
 
-			$close_header .= $this->fetchTemplate();
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			
+			if (!$p4a->isHandheld()) {
+				$p4a->active_mask->addTempCSS("$template_path/calendar.css");
+				$p4a->active_mask->addTempJavascript("$template_path/calendar_stripped.js");
+				$p4a->active_mask->addTempJavascript("$template_path/lang/calendar-en.js");
+				$p4a->active_mask->addTempJavascript("$template_path/p4a.js");
+			}
 
 			return $sReturn;
 		}
@@ -759,7 +766,7 @@
 		function getAsRichTextarea()
 		{
 			$p4a =& P4A::singleton();
-
+			$p4a->active_mask->addTempJavascript(P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "rich_textarea/fckeditor.js");
 			$this->useTemplate('rich_textarea');
 			$this->smarty->get_template_vars();
 			$this->display('id', $this->getID());

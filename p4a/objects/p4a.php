@@ -117,14 +117,14 @@
 		 * @var array
 		 * @access private
 		 */
-		var $css = array();
+		var $_css = array();
 
 		/**
 		 * javascript container.
 		 * @var array
 		 * @access private
 		 */
-		var $javascript = array();
+		var $_javascript = array();
 
 		/**
 		 * Is the browser a handheld?
@@ -488,46 +488,53 @@
 		 * Include CSS
 		 * @param string		The URI of CSS.
 		 * @param string		The CSS media.
-		 * @access private
+		 * @access public
 		 */
 		function addCss($uri, $media = "screen")
 		{
-			$this->css[] = array($uri, $media);
+			if (!isset($this->_css[$uri])) {
+				$this->_css[$uri] = array();
+			}
+			$this->_css[$uri][$media] = null;
 		}
 
 		/**
 		 * Drop inclusion of CSS file
 		 * @param string		The URI of CSS.
-		 * @access private
+		 * @param string		The CSS media.
+		 * @access public
 		 */
 
-		function dropCss($uri)
+		function dropCss($uri, $media = "screen")
 		{
-			if(isset($this->css[$uri])){
-				unset($this->css[$uri]);
+			if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])){
+				unset($this->_css[$uri][$media]);
+				if (empty($this->_css[$uri])) {
+					unset($this->_css);
+				}
 			}
 		}
 
 		/**
 		 * Include a javascript file
 		 * @param string		The URI of file.
-		 * @access private
+		 * @access public
 		 */
 		function addJavascript($uri)
 		{
-			$this->javascript[$uri] = null;
+			$this->_javascript[$uri] = null;
 		}
 
 		/**
 		 * Drop inclusion of javascript file
 		 * @param string		The URI of CSS.
-		 * @access private
+		 * @access public
 		 */
 
 		function dropJavascript($uri)
 		{
-			if(isset($this->javascript[$uri])){
-				unset($this->javascript[$uri]);
+			if(isset($this->_javascript[$uri])){
+				unset($this->_javascript[$uri]);
 			}
 		}
 	}

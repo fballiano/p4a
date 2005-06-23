@@ -8,8 +8,10 @@
 <script type="text/javascript" src="[[$k]]"></script>
 [[/foreach]]
 
-[[foreach from=$css key=k item=v]]
-<link href="[[$v.0]]" rel="stylesheet" type="text/css" media="[[$v.1]]" />
+[[foreach from=$css key=url item=medias]]
+[[foreach from=$medias key=media item=item]]
+<link href="[[$url]]" rel="stylesheet" type="text/css" media="[[$media]]" />
+[[/foreach]]
 [[/foreach]]
 
 <style type="text/css" media="screen">

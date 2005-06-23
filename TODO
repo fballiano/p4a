@@ -7,7 +7,6 @@
 - migrate to I18Nv2? (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates
 - change template engine to flexy?
-- check multiple DATE instances on the same page
 
 ------------------------------------------------------------------------
 If you want to help subscribe our mailing lists at and propose yourself!
