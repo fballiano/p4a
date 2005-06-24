@@ -8,7 +8,7 @@
 - added themes/default/widgets/date_calendar/p4a.js with some javascript code
 - changed the inclusion system for date_calendar and rich_textarea widget, now all javascript/css are included only once
 - added possibility to extend a P4A Application
-- added P4A_Base_Application
+- added P4A_Base_Application (non included in the p4a release because we need documentation)
 - added P4A_Simple_Toolbar
 - fixed a bug in P4A_DB_Source: _composeSelectPkQuery with joined tables
 
