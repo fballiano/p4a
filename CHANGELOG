@@ -1,4 +1,5 @@
 0.23
+- done a lot of work work on XHTML 1.1 validation (still not finished)
 - changed the internal CSS array structure, thus P4A::addCSS() and P4A::dropCSS() are changed
 - added javascript and css local to every mask, thus P4A_Mask::addCss() and P4A_Mask::dropCss() were added
 - added temporary javascript and css local to every mask, thus P4A_Mask::addTempCss() and P4A_Mask::dropTempCss() were added. These javascripts/css are dropped immediately after rendering

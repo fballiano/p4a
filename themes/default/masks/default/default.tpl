@@ -10,7 +10,7 @@
 
 [[foreach from=$css key=url item=medias]]
 [[foreach from=$medias key=media item=item]]
-<link href="[[$url]]" rel="stylesheet" type="text/css" media="[[$media]]" />
+<link href="[[$url]]" rel="stylesheet" type="text/css" media="[[$media]]"></link>
 [[/foreach]]
 [[/foreach]]
 

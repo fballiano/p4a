@@ -787,8 +787,7 @@
 		function getAsHidden()
 		{
 			$header 		= '<input type="hidden" ';
-			$close_header 	= '>';
-			$footer			= '</input>';
+			$close_header 	= '/>';
 
 			$sReturn = $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() .  $close_header;
 			return $sReturn;
@@ -862,7 +861,7 @@
 
 			foreach ($external_data as $key=>$current) {
 				if ($current[ $value_field ] == $new_value){
-					$selected = "SELECTED";
+					$selected = "selected='selected'";
 				} else {
 					$selected = "";
 				}
@@ -905,7 +904,7 @@
 					$new_value = array();
 				}
 				if (in_array($current[$value_field],$new_value)) {
-					$selected = "selected";
+					$selected = "selected='selected'";
 				} else {
 					$selected = "";
 				}
@@ -942,7 +941,7 @@
 				}
 				
 				if (in_array($current[$value_field], $new_value)) {
-					$checked = "checked";
+					$checked = "checked='checked'";
 				} else {
 					$checked = "";
 				}
@@ -1008,9 +1007,8 @@
 			$sheet->properties = array_merge($sheet->properties, $this->properties);
 			$sheet->style = array_merge($sheet->style, $this->style);
 
-			if( $this->isNullAllowed() )
-			{
-				if( $this->null_message === NULL ) {
+			if ($this->isNullAllowed()) {
+				if ($this->null_message === NULL) {
 					$message = $p4a->i18n->messages->get('none_selected');
 				} else {
 					$message = $this->null_message;
@@ -1019,22 +1017,17 @@
 				array_unshift($external_data, array($value_field=>'', $description_field=>$message));
 			}
 
-			foreach( $external_data as $key=>$current )
-			{
-				if ($current[ $value_field ] == $new_value)
-				{
-					$checked = "CHECKED";
-				}
-				else
-				{
+			foreach ($external_data as $key=>$current) {
+				if ($current[ $value_field ] == $new_value) {
+					$checked = "checked='checked'";
+				} else {
 					$checked = "";
 				}
 
-				unset( $sContent ) ;
+				unset($sContent) ;
 				$sContent  = $p4a->i18n->autoFormat( $current[ $description_field ], $this->data->structure[$description_field]['type']);
-				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'>";
-
-				$sheet->anchor( $sContent ) ;
+				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'/>";
+				$sheet->anchor($sContent);
 			}
 
 			$return = $this->composeLabel() . '</td><td>' . $sheet->getAsString();
@@ -1052,13 +1045,13 @@
 			// PostgreSQL uses "t" and "f" to return boolen values
 			// For all the others we assume "1" or "0"
 			if( $this->getNewValue() == 't' or $this->getNewValue() == '1' ) {
-				$checked = 'checked' ;
+				$checked = "checked='checked'" ;
 			} else {
 				$checked = '' ;
 			}
 
-			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0'><input type='checkbox' class='border_none' value='1' $checked ";
-			$close_header 	= '>';
+			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0' /><input type='checkbox' class='border_none' value='1' $checked ";
+			$close_header 	= "/>";
 
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
@@ -1066,7 +1059,6 @@
 
 			$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 			return $this->composeLabel() . $header ;
-			return $this->composeLabel() . '</td><td>' . $header ;
 		}
 
 		/**
@@ -1209,24 +1201,24 @@
 				$height = $this->getNewValue(5);
 				$str_height = '';
 
-				if( $width > $height ) {
-					if( $this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size ) {
+				if ($width > $height) {
+					if ($this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size) {
 						$width = $this->max_thumbnail_size ;
 						$str_width = 'width="' . $width . '"' ;
 					}
 				} else {
-					if( $this->max_thumbnail_size !== NULL and $height > $this->max_thumbnail_size ) {
+					if ($this->max_thumbnail_size !== NULL and $height > $this->max_thumbnail_size) {
 						$height = $this->max_thumbnail_size ;
 						$str_height = 'height="' . $height . '"' ;
 					}
 				}
 
-				$sReturn  = '<table class="border_box">' ;
-				$sReturn .= '<tr><td colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" border="0" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . '></td></tr>';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
+				$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
+				$sReturn .= '<tr><th colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</th></tr>';
+				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}

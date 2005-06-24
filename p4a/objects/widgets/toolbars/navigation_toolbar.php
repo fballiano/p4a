@@ -70,8 +70,8 @@
 			$this->addSeparator();
 
 			$print =& $this->addButton('print', 'print');
-			$print->dropAction('onClick');
-			$print->setProperty('onClick', 'window.print(); return false;');
+			$print->dropAction('onclick');
+			$print->setProperty('onclick', 'window.print(); return false;');
 			$print->setAccessKey("P");
 
 			$exit =& $this->addButton('exit', 'exit', 'right');

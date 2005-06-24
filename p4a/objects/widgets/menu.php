@@ -190,6 +190,10 @@
 				return;
 			}
 
+			$p4a =& p4a::singleton();
+			$template_path = P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "menu";
+			$p4a->active_mask->addTempJavascript("$template_path/js/menuDropdown.js");
+			$p4a->active_mask->addTempCss("$template_path/css/menuDropdown.css");
 			$this->useTemplate('menu');
 			$array_items = array();
 

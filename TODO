@@ -1,8 +1,24 @@
+----------------------
+-- IMPORTANT THINGS --
+----------------------
+
+- take a look at toolbars and decide what to do with enable/disable buttons in the getasstring, after that we've to anify all toolbars
+- add asc/desc alt to table template (ask for translations)
+- add selected alt to table template (ask for translations)
+- change alt/title on table template for next/prev/first/last page (ask for translations)
 - take a deep look at MySQL Manager and add many functionalities (eg: frames/fieldset)
 - rewrite P4A_Menu to make it XHTML/CSS2 only (removing javascript and writing a better template)
-- continue XHTML output conversion
+- continue XHTML output conversion, known issue are:
+  - we cannot use "target" for image preview (should we add javascript popup? it is not accessible? with no target we've to hit "back")
+  - textarea needs rows and cols attributes
+  - html code in rich_textarea is not allowed, what to do?
 - check session data for deleting smarty if possible
 - check app change in the same browser window
+
+----------------
+-- FAR FUTURE --
+----------------
+
 - add and test rich_textarea spell check
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
 - migrate to I18Nv2? (suspended because of the iconv dependence)

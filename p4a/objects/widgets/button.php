@@ -64,7 +64,7 @@
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');
 			$this->setDefaultLabel();
-			if ($icon !== NULL){
+			if ($icon !== NULL) {
 				$this->setIcon($icon);
 			}
 		}
@@ -77,7 +77,7 @@
 		 */
 		function setLabel($value)
 		{
-			$this->setValue( $value );
+			$this->setValue($value);
 		}
 
 		/**
@@ -100,7 +100,7 @@
 		function setValue($value)
 		{
 			parent::setValue($value);
-			$this->setProperty( 'value', $value );
+			$this->setProperty('value', $value);
 		}
 
 		/**
@@ -111,6 +111,7 @@
 		function setIcon($icon)
 		{
 			$this->_icon = $icon;
+			$this->unsetProperty("value");
 		}
 
 		/**
@@ -151,26 +152,25 @@
 
 			$enabled = $this->isEnabled();
 
-			if ($this->_icon != NULL)
-			{
-				if( $enabled ) {
-					$header .= '<a class="link_button" href="#" ' ;
-				}else{
-					$header .= '<span class="link_button" ' ;
+			if ($this->_icon != NULL) {
+				if ($enabled) {
+					$header .= '<a class="link_button" href="#" ';
+				} else {
+					$header .= '<span class="link_button" ';
 				}
 				$footer .= '>';
 
-				$footer .= "<img class=\"img_button" ;
+				$footer .= "<img class=\"img_button";
 
-				if( $enabled ) {
+				if ($enabled) {
 					$footer .= ' clickable';
 				}
-// 				P4A_ICONS_EXTENSION
+				
 				$img_src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
-				if(!$enabled){
+				if (!$enabled) {
 					$img_src .= "_disabled";
 				}
-				$img_src .= '.' . P4A_ICONS_EXTENSION ;
+				$img_src .= '.' . P4A_ICONS_EXTENSION;
 
 				$alt = ucfirst($this->_icon);
 				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
@@ -179,23 +179,23 @@
 					$msg .= htmlentities(" (ALT+$accesskey)");
 				}
 
-				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" " ;
+				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
 				$footer .= ' />';
 
-				if( $enabled ) {
+				if ($enabled) {
 					$footer .= '</a>';
 				} else {
 					$footer .= '</span>';
 				}
 
 				$footer .= "\n";
-			}else{
-				$header .= '<input type="button" class="' ;
-				if( $enabled ) {
+			} else {
+				$header .= '<input type="button" class="';
+				if ($enabled) {
 					$header .= 'clickable ';
 				}
 				$header .= 'border_box font4 no_print" ';
-				if( !$enabled ) {
+				if (!$enabled) {
 					$header .= ' disabled="disabled"';
 				}
 				$footer = ' />' . "\n";
@@ -203,8 +203,8 @@
 
 			$sReturn = "";
 
-			$sReturn .= $header . $this->composeStringProperties() ;
-			if( $enabled ) {
+			$sReturn .= $header . $this->composeStringProperties();
+			if ($enabled) {
 				$sReturn .= $this->composeStringActions();
 			}
 			$sReturn .= $footer;
