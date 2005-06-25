@@ -188,13 +188,12 @@
 		 */
 		function actionHandler($action, $param = NULL)
 		{
-			if ( array_key_exists( $action, $this->_map_actions ))
-			{
+			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
 				$method = $this->_map_actions[$action]['method'];
 				if ($param !== NULL){
 					eval('$return = $interceptor->' . $method . '($this,$param);');
-				}else{
+				} else {
 					eval('$return = $interceptor->' . $method . '($this);');
 				}
 				return $return;
@@ -225,7 +224,7 @@
 		 */
 		function implementMethod($action, &$object, $method )
 		{
-			$object->intercept( $this, $action, $method );
+			$object->intercept($this, $action, $method);
 		}
 
 		/**
@@ -236,12 +235,9 @@
 		 */
 		function isActionTriggered($action)
 		{
-			if ( array_key_exists( $action, $this->_map_actions ))
-			{
+			if (array_key_exists($action, $this->_map_actions)){
 				return true;
-			}
-			else
-			{
+			} else {
 				return false;
 			}
 		}

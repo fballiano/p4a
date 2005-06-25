@@ -191,9 +191,7 @@ class Products extends P4A_Mask
 		$fields->little_photo->setType("image");
 		$fields->big_photo->setType("image");
 
-		$fields->description->label->setWidth(200);
 		$fields->description->setType("rich_textarea");
-		$fields->description->setHeight(400);
 	}
 
 	function saveRow()

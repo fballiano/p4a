@@ -372,9 +372,13 @@
 					$this->setStyleProperty('margin-left', $label_width+20 . "px") ;
 				}
 				break;
-
+			case 'textarea':
+				$this->setWidth(500);
+				$this->setHeight(200);
+				break;
 			case 'rich_textarea':
-				$this->setWidth(586);
+				$this->setWidth(500);
+				$this->setHeight(300);
 				break;
 			}
 		}
@@ -744,9 +748,11 @@
 		 */
 		function getAsTextarea()
 		{
-			$header 		= "<textarea class='border_color1 font_normal' ";
-			$close_header 	= '>';
-			$footer			= '</textarea>';
+			$cols = floor($this->getWidth() / 6) - 4;
+			$rows = floor($this->getHeight() / 13);
+			$header = "<textarea class='border_color1 font_normal' cols='$cols' rows='$rows' ";
+			$close_header = '>';
+			$footer	= '</textarea>';
 
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
