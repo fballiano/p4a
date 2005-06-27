@@ -249,25 +249,11 @@
 	class P4A_Menu_Item extends P4A_Widget
 	{
 		/**
-		 * Tells if the element is currenty active.
-		 * @var boolean
-		 * @access private
-		 */
-		var $active = FALSE;
-
-		/**
 		 * Subelements array.
 		 * @var array
 		 * @access private
 		 */
 		var $items = NULL;
-
-		/**
-		 * Name of the currently active subelement.
-		 * @var array
-		 * @access public
-		 */
-		var $item_active = NULL;
 
 		/**
 		 * Stores the shortkey associated with the element.
@@ -317,7 +303,7 @@
 			$this->setItemPosition($item->getName(), $this->nextFreePosition());
 			$item->setParent($this->getId());
 
-			if( $label !== NULL ) {
+			if ($label !== NULL) {
 				$item->setLabel($label);
 			}
 
@@ -337,7 +323,7 @@
 			$item->dropAction('onClick');
 			$item->setLabel('');
 
-			$item->setProperty('class', 'menuSeparator');
+			$item->setProperty('class', 'menu_separator');
 			$item->setStyleProperty('margin-left', '10px');
 			$item->setStyleProperty('margin-right', '10px');
 
@@ -351,10 +337,10 @@
 		 */
 		function dropItem($name)
 		{
-			if (isset($this->items->$name)){
+			if (isset($this->items->$name)) {
 				$this->items->$name->destroy();
 				unset($this->items->$name);
-			}else{
+			} else {
 				P4A_Error("ITEM NOT FOUND");
 			}
 		}
@@ -366,9 +352,9 @@
 		 */
 		function hasItems()
 		{
-			if ($this->items->getNumItems()){
+			if ($this->items->getNumItems()) {
 				return TRUE;
-			}else{
+			} else {
 				return FALSE;
 			}
 		}
@@ -396,10 +382,9 @@
 		 */
 		function nextFreePosition()
 		{
-			if (count($this->map_items))
-			{
+			if (count($this->map_items)) {
 				return max(array_keys($this->map_items)) + 1;
-			}else{
+			} else {
 				return 1;
 			}
 		}
@@ -418,26 +403,6 @@
 			}else{
 				P4A_Error("NOT SUB ITEM");
 			}
-		}
-
-		/**
-		 * Sets as active the current element.
-		 * @access private
-		 */
-		function setActive()
-		{
-			$p4a =& P4A::singleton();
-			$parent =& $p4a->getObject($this->parent);
-			$parent->setItemActive($this->getName());
-		}
-
-		/**
-		 * Sets as NON active the current element.
-		 * @access private
-		 */
-		function setNoActive()
-		{
-			$this->active = FALSE;
 		}
 
 		/**
@@ -500,10 +465,9 @@
 		function onClick()
 		{
 			// If the current element has subitems, than we pass the action to the subitem
-			if ($this->hasItems()){
+			if ($this->hasItems()) {
 				return $this->items->{$this->getFirstItem()}->onClick();
-			}else{
-				$this->setActive();
+			} else {
 				return $this->actionHandler('onClick');
 			}
 		}
@@ -514,8 +478,16 @@
 				return "";
 			}
 			
-			$sReturn = "<li><a href='#'>" . $this->getLabel() . "</a>";
-			if ($this->items->getNumItems()>0) {
+			$properties = $this->composeStringProperties();
+			
+			if (empty($this->_map_actions["onClick"]["method"])) {
+				$sReturn = "<li><div $properties>" . $this->getLabel() . "</div>";
+			} else {
+				$actions = $this->composeStringActions();
+				$sReturn = "<li><a href='#' $actions $properties>" . $this->getLabel() . "</a>";
+			}
+			
+			if ($this->hasItems()) {
 				$sReturn .= "<ul>";
 				while ($item =& $this->items->nextItem()) {
 					$sReturn .= $item->getAsString();

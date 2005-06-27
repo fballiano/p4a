@@ -10,7 +10,7 @@
 		[[if $headers]]
 		<thead>
 			<tr>
-				<th>&nbsp;</th>
+				<th class="select">&nbsp;</th>
 				[[foreach from=$headers item=header]]				
 				[[if $header.action]]
 				<th class="font3 align_center clickable" [[$header.properties]] [[$header.action]]><img style="float:right;padding:2px;" src="[[$tpl_path]]/images/[[if $header.order]][[$header.order|lower]][[else]]spacer[[/if]].gif" alt="" />

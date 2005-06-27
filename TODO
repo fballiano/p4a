@@ -2,6 +2,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- check the new P4A_Menu and clean it (position is used/useful? parent is used/useful?)
 - remove navigator/mysql_manager related css from screen.css
 - take a look at toolbars and decide what to do with enable/disable buttons in the getasstring, after that we've to anify all toolbars
 - add asc/desc alt to table template (ask for translations)

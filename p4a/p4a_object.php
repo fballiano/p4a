@@ -139,7 +139,6 @@
 		 * Retrieves all children objects and destroy them.
 		 * @access public
 		 */
-		 //todo
 		function destroy()
 		{
 			$p4a =& P4A::singleton();

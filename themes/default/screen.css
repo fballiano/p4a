@@ -323,6 +323,7 @@ select {
 	background: #fafafa;
 	margin-left: 10px;
 	display: block;
+	color: black;
 }
 
 .p4a_menu ul {
@@ -338,15 +339,16 @@ select {
 }
 
 .p4a_menu ul li {
-	margin: 0;
 	width: 120px;
+	margin: 0;
 }
 
-.p4a_menu li a {
+.p4a_menu li a, .p4a_menu li div {
 	display: block;
-	padding: 5px;
 	text-decoration: none;
 	color: black;
+	margin: 0;
+	padding: 5px;
 }
 
 .p4a_menu a:hover, .p4a_menu li:hover {
@@ -463,18 +465,26 @@ legend {
 	border-collapse: collapse;
 	width: 95%;
 }
+
 .table caption{
 	font-size: 12px;
 	font-weight: bold;
 	margin: 5px;
 }
+
+.table .select {
+	width: 19px;
+}
+
 .table td{
 	padding: 2px;
 	border: 2px solid white;
 }
+
 .table_container {
  	float: left;
 }
+
 .table_container .frame{
 	border-top: 1px solid #C6D3DE;
 	background: #fafafa;

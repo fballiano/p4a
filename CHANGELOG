@@ -1,10 +1,11 @@
 0.23
+- removed P4A_Menu_Item::setActive() and P4A_Menu_Item::setNoActive()
 - changed top margin calculation into mask default template (themes/default/masks/default/default.tpl)
 - textarea now have default width=500px, height=200px
 - rich_textarea now have default width=500px, height=300px
 - textarea and rich_textarea also have rows/cols properties, calculated by default when calling the getAsString()
 - removed some garbage from screen.css
-- P4A_Menu is now pure XHTML/CSS (thanks to Justin Koivisto), removed template and javascript
+- P4A_Menu is now pure XHTML/CSS (thanks to Justin Koivisto) and multilevel, removed template and javascript
 - some code/css has been beautified
 - done a lot of work work on XHTML 1.1 validation (still not finished)
 - changed the internal CSS array structure, thus P4A::addCSS() and P4A::dropCSS() are changed
@@ -20,6 +21,7 @@
 - added P4A_Simple_Toolbar
 - fixed a bug in P4A_DB_Source: _composeSelectPkQuery with joined tables
 - updated TODO
+- updated README
 
 0.22
 - fixed a bug in P4A_DB_Source with multivalue fields
