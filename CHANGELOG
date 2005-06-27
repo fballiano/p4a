@@ -19,7 +19,7 @@
 - added possibility to extend a P4A Application
 - added P4A_Base_Application (non included in the p4a release because we need documentation)
 - added P4A_Simple_Toolbar
-- fixed a bug in P4A_DB_Source: _composeSelectPkQuery with joined tables
+- fixed a bug in P4A_DB_Source::_composeSelectPkQuery() with joined tables
 - updated TODO
 - updated README
 
