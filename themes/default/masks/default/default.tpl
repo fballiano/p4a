@@ -15,19 +15,18 @@
 [[/foreach]]
 
 <style type="text/css" media="screen">
-    [[assign var="toppx" value="0"]]
-    [[if isset($menu)]]
-	     [[assign var="toppx" value="25"]]
-    [[/if]]
-    [[if isset($top)]]
-	     [[assign var="toppx" value="55"]]
-    [[/if]]
-    [[if isset($menu) and isset($top)]]
-	     [[assign var="toppx" value="80"]]
-    [[/if]]
+[[if isset($menu) and isset($top)]]
+	[[assign var="toppx" value="70"]]
+[[elseif isset($menu)]]
+	[[assign var="toppx" value="25"]]
+[[elseif isset($top)]]
+	[[assign var="toppx" value="45"]]
+[[else]]
+	[[assign var="toppx" value="0"]]
+[[/if]]
 
 #mainContainer {
-	top:[[$toppx]]px;
+	top: [[$toppx]]px;
 }
 </style>
 </head>
@@ -49,7 +48,7 @@
 <!-- TOP -->
 <div id="topContainer">
 [[if isset($menu)]]
-[[$menu]]
+<div id="menu">[[$menu]]</div>
 [[/if]]
 
 [[if $top]]

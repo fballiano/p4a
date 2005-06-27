@@ -187,14 +187,20 @@
 		function getAsString()
 		{
 			if (!$this->isVisible()) {
-				return;
+				return "";
 			}
+			
+			$sReturn = "";
+			if ($this->items->getNumItems()>0) {
+				$sReturn .= "<ul class='p4a_menu'>";
+				while ($item =& $this->items->nextItem()) {
+					$sReturn .= $item->getAsString();
+				}
+				$sReturn .= "</ul>";
+			}
+			return $sReturn;
 
-			$p4a =& p4a::singleton();
-			$template_path = P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "menu";
-			$p4a->active_mask->addTempJavascript("$template_path/js/menuDropdown.js");
-			$p4a->active_mask->addTempCss("$template_path/css/menuDropdown.css");
-			$this->useTemplate('menu');
+/*
 			$array_items = array();
 
 			// First level menu
@@ -230,6 +236,7 @@
 			$this->display('items', $array_items);
 
 			return $this->fetchTemplate();
+*/
 		}
 	}
 
@@ -500,6 +507,23 @@
 				return $this->actionHandler('onClick');
 			}
 		}
-
+		
+		function getAsString()
+		{
+			if (!$this->isVisible()) {
+				return "";
+			}
+			
+			$sReturn = "<li><a href='#'>" . $this->getLabel() . "</a>";
+			if ($this->items->getNumItems()>0) {
+				$sReturn .= "<ul>";
+				while ($item =& $this->items->nextItem()) {
+					$sReturn .= $item->getAsString();
+				}
+				$sReturn .= "</ul>";
+			}
+			$sReturn .= "</li>";
+			return $sReturn;
+		}
 	}
 ?>
