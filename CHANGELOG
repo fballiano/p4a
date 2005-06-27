@@ -3,7 +3,7 @@
 - changed top margin calculation into mask default template (themes/default/masks/default/default.tpl)
 - textarea now have default width=500px, height=200px
 - rich_textarea now have default width=500px, height=300px
-- textarea and rich_textarea also have rows/cols properties, calculated by default when calling the getAsString()
+- textarea and rich_textarea also have rows/cols properties
 - removed some garbage from screen.css
 - P4A_Menu is now pure XHTML/CSS (thanks to Justin Koivisto) and multilevel, removed template and javascript
 - some code/css has been beautified
@@ -11,7 +11,7 @@
 - changed the internal CSS array structure, thus P4A::addCSS() and P4A::dropCSS() are changed
 - added javascript and css local to every mask, thus P4A_Mask::addCss() and P4A_Mask::dropCss() were added
 - added temporary javascript and css local to every mask, thus P4A_Mask::addTempCss() and P4A_Mask::dropTempCss() were added. These javascripts/css are dropped immediately after rendering
-- changed tha default mask template to reflect the CSS handling changes
+- changed the default mask template to reflect the CSS handling changes
 - fixed a bug with date_calendar widget, now it's possible to have more than one calendars on a mask
 - dropped date_calendar.tpl because it's not used anymore
 - added themes/default/widgets/date_calendar/p4a.js with some javascript code
