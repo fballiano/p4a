@@ -43,8 +43,7 @@
 	 */
 	function P4A_New_Line($number=1)
 	{
-		for($i=0;$i<$number;$i++)
-		{
+		for($i=0;$i<$number;$i++) {
 			print '<br>' . "\n";
 		}
 	}
@@ -56,9 +55,8 @@
 	 */
 	function P4A_Space($number=1)
 	{
-		for($i=0;$i<$number;$i++)
-		{
-			print '&nbsp;' . "\n";
+		for($i=0;$i<$number;$i++) {
+			print "&nbsp;\n";
 		}
 	}
 
@@ -70,8 +68,8 @@
 	 */
 	function P4A_Error($error, $message = '')
 	{
-		if (strlen($message)){
-			$error .= ': ' . $message;
+		if (strlen($message)) {
+			$error .= ": $message";
 		}
 		die($error);
 	}
@@ -140,7 +138,7 @@
 	function P4A_Get_Offset($page_number, $records_number, $page_limit)
 	{
 		$offset = $page_limit * ($page_number -1);
-		if ($offset > $records_number){
+		if ($offset > $records_number) {
 			$offset = $page_limit * (P4A_Get_Num_Pages($records_number, $page_limit) -1);
 		}
 		return $offset;
@@ -153,9 +151,9 @@
 	 * @return integer
 	 */
 	function P4A_Get_Num_Pages($records_number, $page_limit){
-		if ($records_number % $page_limit == 0){
+		if ($records_number % $page_limit == 0) {
 			return $records_number / $page_limit ;
-		}else{
+		} else {
 			return intval(($records_number / $page_limit)) + 1;
 		}
 	}
@@ -170,23 +168,19 @@
 	 */
 	function P4A_Get_Unique_File_Name( $filename, $directory )
 	{
-		$aParts = explode( '.', $filename ) ;
+		$aParts = explode('.', $filename);
 		$base = '' ;
 		$ext = '' ;
 
-		if( sizeof( $aParts ) > 1 )
-		{
+		if (sizeof($aParts) > 1) {
 			$ext = '.' . array_pop( $aParts );
 			$base = join( $aParts, '.' );
-		}
-		else
-		{
+		} else {
 			$base = $filename;
 		}
 
 		$i = 1 ;
-		while( file_exists( $directory . '/' . $filename ) )
-		{
+		while (file_exists("$directory/$filename")) {
 			$filename = $base . '_' . $i . $ext;
 			$i++;
 		}
@@ -211,25 +205,22 @@
 	 */
 	function P4A_Include_Objects($dir)
 	{
-		if (is_dir($dir))
-		{
+		if (is_dir($dir)) {
 			$files = array();
 			$dirs  = array();
 
 			$dh  = opendir($dir);
-			while (false !== ($filename = readdir($dh)))
-			{
+			while (false !== ($filename = readdir($dh))) {
 				if ($filename != '.' and $filename != '..' and $filename != 'CVS'){
 					$files[] = $filename;
 				}
 			}
 			closedir($dh);
 
-			for($i=0;$i<count($files);$i++)
-			{
-				if(is_dir($dir .'/' . $files[$i])){
+			for($i=0;$i<count($files);$i++) {
+				if(is_dir($dir .'/' . $files[$i])) {
 					$dirs[]	= $dir .'/' . $files[$i];
-				}elseif (is_file($dir .'/' . $files[$i]) and (substr($files[$i], -4) == '.php')){
+				} elseif (is_file($dir .'/' . $files[$i]) and (substr($files[$i], -4) == '.php')) {
 					$_SESSION['P4A_INCLUDES'][] = $dir .'/' .$files[$i];
 				}
 			}

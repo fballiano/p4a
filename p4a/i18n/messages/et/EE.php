@@ -69,6 +69,7 @@ $messages = array
 	"filetype"			=> "Tüüp",
 	"filepreview"		=> "Eelvaade",
 	"filedelete"		=> "Kustuta",
+	"filedownload"		=> "Download",
 
 	// Fields
 	"none_selected"		=> "Valimata",

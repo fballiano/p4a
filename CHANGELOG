@@ -1,5 +1,16 @@
 0.24
 - changed XHTML output for textarea and rich_textarea, now HTML code in the value is escaped with htmlspecialchars(), allowing XHTML 1.1 validation
+- added P4A_Quit_Toolbar, with only two buttons: print and quit
+- added P4A_Mask_Image_Preview, system mask to view images preview
+- many changed on the output of Field::getAsFile() ans Field::getAsImage()
+  - removed the HTML links
+  - added preview button for images
+  - added download button
+- changed P4A_Href::composeStringActions(), converted to XHTML parameter separator (&amp; instead of &) (check your php.ini configuration to support this feature)
+- changed P4A_Data_Source::exportAsCSV(), added a die() on the last row
+- renamed toolbar files in p4a/objects/widgets/toolbars
+- some code was beautified
+- updated TODO
 
 0.23
 - removed P4A_Menu_Item::setActive() and P4A_Menu_Item::setNoActive()

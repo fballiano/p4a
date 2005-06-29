@@ -131,12 +131,12 @@
 
 	//Applications Constants
 	if (!defined('P4A_APPLICATION_PATH')) {
-		$dir = dirname($_SERVER["SCRIPT_NAME"]);
-		if ($dir == '/') {
-			$dir = '';
+		$tmp_dir = dirname($_SERVER["SCRIPT_NAME"]);
+		if ($tmp_dir == '/') {
+			$tmp_dir = '';
 		}
 
-		define("P4A_APPLICATION_PATH", $dir);
+		define("P4A_APPLICATION_PATH", $tmp_dir);
 	}
 
 	if (!defined('P4A_APPLICATION_DIR')) {

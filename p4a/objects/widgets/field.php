@@ -1049,14 +1049,14 @@
 		{
 			// PostgreSQL uses "t" and "f" to return boolen values
 			// For all the others we assume "1" or "0"
-			if( $this->getNewValue() == 't' or $this->getNewValue() == '1' ) {
+			if ($this->getNewValue() == 't' or $this->getNewValue() == '1') {
 				$checked = "checked='checked'" ;
 			} else {
 				$checked = '' ;
 			}
 
-			$header 		= "<input type='hidden' name='" . $this->getId() . "' value='0' /><input type='checkbox' class='border_none' value='1' $checked ";
-			$close_header 	= "/>";
+			$header = "<input type='hidden' name='" . $this->getId() . "' value='0' /><input type='checkbox' class='border_none' value='1' $checked ";
+			$close_header = "/>";
 
 			if( !$this->isEnabled() ) {
 				$header .= 'disabled="disabled" ';
@@ -1075,8 +1075,7 @@
 		{
 			$p4a =& P4A::singleton();
 
-			if( $this->getNewValue() === NULL )
-			{
+			if ($this->getNewValue() === NULL) {
 				$header 		= "<div style='float:left'><input type='file' onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
@@ -1084,17 +1083,17 @@
 					$header .= 'disabled="disabled" ';
 				}
 
-				$header		.= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-				$footer		= '';
-				$sReturn	= $header . $footer;
-			}
-			else
-			{
+				$header	.= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+				$sReturn = $header;
+			} else {
 				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$button_file_delete->addAction('onClick');
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
+					
+					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
+					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
 				}
 
 				if ($this->isEnabled()) {
@@ -1107,14 +1106,13 @@
 
 				$sReturn  = '<table class="border_box">';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>';
 			}
 
 			return $this->composeLabel() . $sReturn;
-			return $this->composeLabel() . '</td><td>' . $sReturn;
 		}
 
 		/**
@@ -1124,6 +1122,36 @@
 		function fileDeleteOnClick()
 		{
 			$this->setNewValue(null);
+		}
+		
+		/**
+		 * Action handler for file preview (only images).
+		 * @access public
+		 */
+		function filePreviewOnClick()
+		{
+			$p4a =& p4a::singleton();
+			$p4a->openMask("P4A_Mask_Image_Preview");
+			$p4a->active_mask->image->setValue(P4A_UPLOADS_URL . $this->getNewValue(1));
+		}
+		
+		/**
+		 * Action handler for file download.
+		 * @access public
+		 */
+		function fileDownloadOnClick()
+		{
+			$name = $this->getNewValue(0);
+			$src = P4A_UPLOADS_DIR . $this->getNewValue(1);
+			$size = $this->getNewValue(2);
+			
+			header("Cache-control: private");
+			header("Content-type: application/octet-stream");
+			header("Content-Disposition: attachment; filename=\"$name\"");
+			header("Content-Length: $size");
+
+			echo readfile($src, "r");
+			die();
 		}
 
 		/**
@@ -1162,8 +1190,7 @@
 		function getAsImage()
 		{
 			$p4a =& P4A::singleton();
-			if( $this->getNewValue() === NULL )
-			{
+			if ($this->getNewValue() === NULL) {
 				$header 		= "<div style='float:left'><input onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 				$close_header 	= '></div>';
 
@@ -1171,12 +1198,9 @@
 					$header .= 'disabled="disabled" ';
 				}
 
-				$header		   .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-				$footer			= '';
-				$sReturn		= $header . $footer;
-			}
-			else
-			{
+				$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
+				$sReturn = $header;
+			} else {
 				$mime_type = explode( '/', $this->getNewValue(3) );
 				$mime_type = $mime_type[0];
 
@@ -1184,13 +1208,18 @@
 					return $this->getAsFile();
 				}
 
-				if (! isset($this->buttons->button_file_delete)) {
+				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
+					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
+					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete') );
-					$button_file_delete->addAction('onClick');
+					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
+					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
-					$_SESSION["delete_id"] = $button_file_delete->getID();
+					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
+					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
 				}
 
 				if ($this->isEnabled()) {
@@ -1219,12 +1248,11 @@
 				}
 
 				$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
-				$sReturn .= '<tr><th colspan="2" align="center">' . $p4a->i18n->messages->get('filepreview') . '</th></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(2) . ' bytes</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
 
@@ -1236,9 +1264,9 @@
 		 * @param integer		Max size (width and height)
 		 * @access public
 		 */
-		function setMaxThumbnailSize( $size )
+		function setMaxThumbnailSize($size)
 		{
-			$this->max_thumbnail_size = $size ;
+			$this->max_thumbnail_size = $size;
 		}
 
 		/**
@@ -1247,7 +1275,7 @@
 		 */
 		function unsetMaxThumbnailSize()
 		{
-			$this->max_thumbnail_size = NULL ;
+			$this->max_thumbnail_size = NULL;
 		}
 
 		/**
@@ -1257,7 +1285,7 @@
 		 */
 		function getMaxThumbnailSize()
 		{
-			return $this->max_thumbnail_size ;
+			return $this->max_thumbnail_size;
 		}
 
 		/**
@@ -1267,9 +1295,9 @@
 		 * @access public
 		 * @see P4A_Widget::$label
 		 */
-		function setLabel( $value )
+		function setLabel($value)
 		{
-			$this->label->setLabel( $value );
+			$this->label->setLabel($value);
 		}
 
 		/**
@@ -1311,10 +1339,8 @@
 		function composeStringProperties()
 		{
 			$sReturn = "";
-			foreach($this->properties as $property_name=>$property_value)
-			{
-				if( ! ( ( $this->type == 'password' ) and ( $property_name == 'value' ) ) )
-				{
+			foreach($this->properties as $property_name=>$property_value) {
+				if (!(($this->type == 'password') and ($property_name == 'value'))) {
 					$sReturn .= $property_name . "='" . htmlspecialchars($property_value) . "' " ;
 				}
 			}

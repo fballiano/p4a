@@ -69,6 +69,7 @@ $messages = array
 	"filetype"			=> "Жкт",
 	"filepreview"		=> "Тфрхоржфежы",
 	"filedelete"		=> "Идвнкжы",
+    "filedownload"		=> "Download",
 
 	// Fields
 	"none_selected"		=> "Пкаеър пе юэчфвпр",

@@ -69,6 +69,7 @@ $messages = array
 	"filetype"			=> "Tipo",
 	"filepreview"		=> "Vista previa",
 	"filedelete"		=> "Borrar",
+	"filedownload"		=> "Download",
 
 	// Fields
 	"none_selected"		=> "Ninguno seleccionado",

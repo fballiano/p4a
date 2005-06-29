@@ -37,55 +37,31 @@
  */
 
 	/**
-	 * "HREF" part on a "A" tag.
-	 * The href is built rendering a partial "A" tag,
-	 * the complete "A" tag is {@link LINK}.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
+	 * Image preview mask.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
 	 */
-	class P4A_Href extends P4A_Widget
+	class P4A_Mask_Image_Preview extends P4A_Mask
 	{
-		/**
-		 * Class constructor.
-		 * You can specify an object ID if you want to have the same
-		 * object with always the same ID. This is useful especially
-		 * for web sites (to allow bookmarking and correct spidering).
-		 * @param string		Mnemonic identifier for the object.
-		 * @param string		Object ID, if not specified will be generated.
-		 * @access private
-		 */
-		function &P4A_Href ($name, $id = NULL)
+		function &P4A_Mask_Image_Preview()
 		{
-			$prefix = 'href' ;
+			$this->P4A_Mask();
+			$p4a =& P4A::singleton();
 
-			if( $id === NULL ) {
-				parent::P4A_Widget($name, $prefix);
-			} else {
-				parent::P4A_Widget($name, $prefix, $id);
-			}
+			$this->setTitle($p4a->i18n->messages->get('filepreview'));
+
+			$this->build("P4A_Quit_Toolbar", "toolbar");
+			$this->build("P4A_Image", "image");
+			
+			$this->display("top", $this->toolbar);
+			$this->display("main", $this->image);
 		}
-
-		/**
-		 * Composes a string containing all the actions implemented by the widget.
-		 * In the case of "HREF" we have only the link target.
-		 * @return string
-		 * @access public
-		 */
-		function composeStringActions()
+		
+		function main()
 		{
-			$sActions = P4A_APPLICATION_URL . '/index.php?action=onclick&amp;object=' . $this->getID();
-			return $sActions;
-		}
-
-		/**
-		 * HTML rendered "HREF".
-		 * @return string
-		 * @access public
-		 */
-		function getAsString()
-		{
-			return 'href="' . $this->composeStringActions() .'"';
+			parent::main();
 		}
 	}
+
 ?>

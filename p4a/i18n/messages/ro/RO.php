@@ -69,6 +69,7 @@ $messages = array
 	"filetype"			=> "Tip",
 	"filepreview"		=> "Vizualizare",
 	"filedelete"		=> "Şterge",
+	"filedownload"		=> "Download",
 
 	// Fields
 	"none_selected"		=> "Nimic Selectat",

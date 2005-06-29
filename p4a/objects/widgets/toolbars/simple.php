@@ -37,8 +37,8 @@
  */
 
 	/**
-	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "first", "prev", "next", "last", "new", "delete", "exit" buttons.
+	 * Simple toolbar.
+	 * This toolbar has "confirm", "cancel", "print", "exit" buttons.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a

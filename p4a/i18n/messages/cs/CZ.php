@@ -70,6 +70,7 @@ $messages = array
 	"filetype"			=> "Typ",
 	"filepreview"		=> "Náhled",
 	"filedelete"		=> "Vymazat",
+	"filedownload"		=> "Download",
 
 	// Fields
 	"none_selected"		=> "Není vybráno",

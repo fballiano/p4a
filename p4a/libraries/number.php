@@ -52,27 +52,23 @@
 		 * @param array			The format
 		 * @return string
 		 */
-		function format( $number = null, $format )
+		function format($number = null, $format)
 		{
 			if ($number === null) {
 				return null;
 			}
 
-			if( $format[0] == '*' )
-			{
+			if ($format[0] == '*') {
 				$parts = explode('.', $number);
 
-				if( array_key_exists( 1, $parts ) )
-				{
-					$format[0] = strlen( $parts[1] );
-				}
-				else
-				{
+				if (array_key_exists(1, $parts)) {
+					$format[0] = strlen($parts[1]);
+				} else {
 					$format[0] = 0;
 				}
 			}
 
-			return call_user_func_array( 'number_format' , array_merge( array($number), $format ) );
+			return call_user_func_array('number_format', array_merge(array($number), $format));
 		}
 
 		/**
@@ -84,7 +80,7 @@
 		 * @return string
 		 * @see format()
 		 */
-		function unformat( $number = 0, $format )
+		function unformat($number = 0, $format)
 		{
 			$decimal_separator = $format[1];
 

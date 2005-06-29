@@ -37,55 +37,34 @@
  */
 
 	/**
-	 * "HREF" part on a "A" tag.
-	 * The href is built rendering a partial "A" tag,
-	 * the complete "A" tag is {@link LINK}.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
+	 * Very simple toolbar.
+	 * This toolbar has only "print", "quit" buttons.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
+	 * @see P4A_Toolbar
 	 */
-	class P4A_Href extends P4A_Widget
+	class P4A_Quit_Toolbar extends P4A_Toolbar
 	{
 		/**
-		 * Class constructor.
-		 * You can specify an object ID if you want to have the same
-		 * object with always the same ID. This is useful especially
-		 * for web sites (to allow bookmarking and correct spidering).
-		 * @param string		Mnemonic identifier for the object.
-		 * @param string		Object ID, if not specified will be generated.
+		 * Class costructor.
+		 * @param string				Mnemonic identifier for the object.
+		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &P4A_Href ($name, $id = NULL)
+		function &P4A_Quit_Toolbar($name)
 		{
-			$prefix = 'href' ;
+			parent::P4A_Toolbar($name);
+			$p4a =& p4a::singleton();
+		
+			$print =& $this->addButton('print', 'print');
+			$print->dropAction('onclick');
+			$print->setProperty('onclick', 'window.print(); return false;');
+			$print->setAccessKey("P");
 
-			if( $id === NULL ) {
-				parent::P4A_Widget($name, $prefix);
-			} else {
-				parent::P4A_Widget($name, $prefix, $id);
-			}
-		}
-
-		/**
-		 * Composes a string containing all the actions implemented by the widget.
-		 * In the case of "HREF" we have only the link target.
-		 * @return string
-		 * @access public
-		 */
-		function composeStringActions()
-		{
-			$sActions = P4A_APPLICATION_URL . '/index.php?action=onclick&amp;object=' . $this->getID();
-			return $sActions;
-		}
-
-		/**
-		 * HTML rendered "HREF".
-		 * @return string
-		 * @access public
-		 */
-		function getAsString()
-		{
-			return 'href="' . $this->composeStringActions() .'"';
+			$exit =& $this->addButton('exit', 'exit', 'right');
+			$exit->setAccessKey("X");
+			
+			$p4a->intercept($exit, "onClick", "showPrevMask");
 		}
 	}
-?>

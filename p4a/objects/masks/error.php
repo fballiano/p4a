@@ -37,7 +37,7 @@
  */
 
 	/**
-	 * The listener for general errors mask.
+	 * General errors mask.
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @package p4a
