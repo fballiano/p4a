@@ -1,3 +1,6 @@
+0.24
+- changed XHTML output for textarea and rich_textarea, now HTML code in the value is escaped with htmlspecialchars(), allowing XHTML 1.1 validation
+
 0.23
 - removed P4A_Menu_Item::setActive() and P4A_Menu_Item::setNoActive()
 - changed top margin calculation into mask default template (themes/default/masks/default/default.tpl)

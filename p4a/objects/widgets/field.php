@@ -653,8 +653,7 @@
 			$type   = $this->type;
 			$suffix = '';
 
-			if ($type == 'rich_textarea')
-			{
+			if ($type == 'rich_textarea') {
 				$type = 'textarea';
 				$suffix = $this->getAsRichTextarea();
 			}
@@ -1339,7 +1338,7 @@
 			if ($this->type == 'text' or $this->type == 'hidden' or $this->type == 'hidden' or $this->type == 'date') {
 				return 'value="' . htmlspecialchars($value) . '" ';
 			} elseif($this->type == 'textarea' or $this->type == 'rich_textarea' or $this->type == 'label') {
-				return $value;
+				return htmlspecialchars($value);
 			}
 		}
 
