@@ -1,3 +1,6 @@
+0.25
+- fixed a CSS rendering bug in P4A_Table
+
 0.24
 - changed XHTML output for textarea and rich_textarea, now HTML code in the value is escaped with htmlspecialchars(), allowing XHTML 1.1 validation
 - added P4A_Quit_Toolbar, with only two buttons: print and quit
