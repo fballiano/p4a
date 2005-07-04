@@ -900,7 +900,7 @@
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
 
-			$this->actionHandler('beforeDisplay', &$rows);
+			$this->actionHandler('beforeDisplay', array(&$rows));
 
 			$i = 0;
 			foreach($rows as $row_number=>$row)

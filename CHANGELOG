@@ -1,4 +1,5 @@
 0.25
+- changed P4A_Table_Rows onBeforeDisplay, now we do not pass $rows but array($rows), so you've to check it before upgrade
 - fixed a CSS rendering bug in P4A_Table
 
 0.24
