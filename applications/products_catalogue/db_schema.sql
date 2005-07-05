@@ -1,5 +1,6 @@
 CREATE TABLE categories (
   category_id INTEGER UNSIGNED NOT NULL,
+  parent_id INTEGER UNSIGNED NULL,
   description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(category_id)
@@ -40,3 +41,5 @@ CREATE TABLE products (
       ON UPDATE CASCADE
 )
 TYPE=InnoDB;
+
+

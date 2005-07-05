@@ -125,7 +125,8 @@ class Products extends P4A_Mask
 		$frm=& $this->build("p4a_frame", "frm");
 		$frm->setWidth(730);
 		$frm->anchor($fs_search);
-		$frm->anchor($message);
+		$frm->newRow();
+		$frm->anchorCenter($message);
 		$frm->anchor($table);
   		$frm->anchor($fset);
 
