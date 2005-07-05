@@ -1,5 +1,5 @@
 <div class="border_box table_container" [[$table_properties]]>
-	<table class="table" >
+	<table class="table" style="width: [[$table_width]]" >
 
 		[[if $title]]
 		<caption>
