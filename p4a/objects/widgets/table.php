@@ -200,6 +200,15 @@
 
 			$this->display('expand', $this->expand);
 			$this->display('table_properties', $this->composeStringProperties());
+			$width = $this->getStyleProperty("width");
+			if (substr($width,-2) == "px") {
+				$width = substr($width,0,-2);
+				$width = (integer)$width -20;
+				$width = "{$width}px";
+			} else {
+				$width = "95%";
+			}
+			$this->display('table_width', $width);
 
 			if ($this->toolbar !== NULL and
 				$this->toolbar->isVisible()) {
@@ -978,6 +987,7 @@
 
 			parent::P4A_Frame("table_navigation_bar");
 			$this->build("p4a_collection","buttons");
+			$this->setStyleProperty("float", "none");
 
 			$this->addButton('button_go', 'apply', 'right');
 			$this->buttons->button_go->addAction('onClick');
