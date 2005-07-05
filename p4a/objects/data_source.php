@@ -121,8 +121,7 @@ class P4A_Data_Source extends P4A_Object
 			$this->_pointer--;
 			return $this->row();
 		} elseif($this->_pointer !== $num_rows) {
-			print  $num_rows . $this->_pointer;
-			$this->lastRow();
+			$this->firstRow();
 		}
 		return;
 	}
