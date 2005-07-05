@@ -1,6 +1,8 @@
 0.25
-- changed P4A_Table_Rows onBeforeDisplay, now we do not pass $rows but array($rows), so you've to check it before upgrade
-- fixed a CSS rendering bug in P4A_Table
+- bugfix on P4A_Data_Source::prevRow(), now works well when calling it on the first row of a data source
+- bugfix/beautifications on products_catalogue application
+- bugfix on P4A_Table for a better rendering
+- changed P4A_Table_Rows onBeforeDisplay, we cannot pass $rows by reference, thus you've to return $rows from your action handler
 
 0.24
 - changed XHTML output for textarea and rich_textarea, now HTML code in the value is escaped with htmlspecialchars(), allowing XHTML 1.1 validation

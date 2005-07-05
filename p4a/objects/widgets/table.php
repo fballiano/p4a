@@ -909,7 +909,9 @@
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
 
-			$this->actionHandler('beforeDisplay', array(&$rows));
+			if ($this->isActionTriggered('beforeDisplay')) {
+				$rows = $this->actionHandler('beforeDisplay', $rows);
+			}
 
 			$i = 0;
 			foreach($rows as $row_number=>$row)
