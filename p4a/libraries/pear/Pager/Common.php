@@ -18,7 +18,7 @@
  * @author     Richard Heyes <richard@phpguru.org>
  * @copyright  2003-2005 Lorenzo Alberton, Richard Heyes
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Common.php,v 1.35 2005/04/29 17:09:50 quipo Exp $
+ * @version    CVS: $Id: Common.php,v 1.38 2005/07/04 08:18:42 quipo Exp $
  * @link       http://pear.php.net/package/Pager
  */
 
@@ -162,6 +162,12 @@ class Pager_Common
     var $_expanded    = true;
 
     /**
+     * @var string alt text for "first page" (use "%d" placeholder for page number)
+     * @access private
+     */
+    var $_altFirst     = 'first page';
+
+    /**
      * @var string alt text for "previous page"
      * @access private
      */
@@ -172,6 +178,12 @@ class Pager_Common
      * @access private
      */
     var $_altNext     = 'next page';
+
+    /**
+     * @var string alt text for "last page" (use "%d" placeholder for page number)
+     * @access private
+     */
+    var $_altLast     = 'last page';
 
     /**
      * @var string alt text for "page"
@@ -752,7 +764,7 @@ class Pager_Common
         if ($this->_importQuery) {
             if ($this->_httpMethod == 'POST') {
                 $qs = $_POST;
-            } else if ($this->_httpMethod == 'GET') {
+            } elseif ($this->_httpMethod == 'GET') {
                 $qs = $_GET;
             }
         }
@@ -1085,7 +1097,7 @@ class Pager_Common
         }
         $this->_linkData[$this->_urlVar] = 1;
         return $this->_renderLink(
-                $this->_altPage.' 1',
+                str_replace('%d', 1, $this->_altFirst),
                 $this->_firstPagePre . $this->_firstPageText . $this->_firstPagePost
         ) . $this->_spacesBefore . $this->_spacesAfter;
     }
@@ -1107,7 +1119,7 @@ class Pager_Common
         }
         $this->_linkData[$this->_urlVar] = $this->_totalPages;
         return $this->_renderLink(
-                $this->_altPage.' '.$this->_totalPages,
+                str_replace('%d', $this->_totalPages, $this->_altLast),
                 $this->_lastPagePre . $this->_lastPageText . $this->_lastPagePost
         );
     }
@@ -1186,11 +1198,11 @@ class Pager_Common
         $tmp = array ();
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                array_push($tmp, $this->__http_build_query($value, sprintf('%s[%s]', $name, $key)));
+                array_push($tmp, $this->__http_build_query($value, $name.'%5B'.$key.'%5D'));
             } elseif (is_scalar($value)) {
-                array_push($tmp, sprintf('%s[%s]=%s', $name, htmlentities($key), htmlentities($value)));
+                array_push($tmp, $name.'%5B'.htmlentities($key).'%5D='.htmlentities($value));
             } elseif (is_object($value)) {
-                array_push($tmp, $this->__http_build_query(get_object_vars($value), sprintf('%s[%s]', $name, $key)));
+                array_push($tmp, $this->__http_build_query(get_object_vars($value), $name.'%5B'.$key.'%5D'));
             }
         }
         return implode(ini_get('arg_separator.output'), $tmp);
@@ -1239,8 +1251,10 @@ class Pager_Common
             'httpMethod',
             'importQuery',
             'urlVar',
+            'altFirst',
             'altPrev',
             'altNext',
+            'altLast',
             'altPage',
             'prevImg',
             'nextImg',
@@ -1272,11 +1286,21 @@ class Pager_Common
             'excludeVars',
             'currentPage',
         );
-
+        
         foreach ($options as $key => $value) {
             if (in_array($key, $allowed_options) && (!is_null($value))) {
                 $this->{'_' . $key} = $value;
             }
+        }
+
+        //autodetect http method
+        if (!isset($options['httpMethod'])
+            && !isset($_GET[$this->_urlVar])
+            && isset($_POST[$this->_urlVar])
+        ) {
+            $this->_httpMethod = 'POST';
+        } else {
+            $this->_httpMethod = strtoupper($this->_httpMethod);
         }
 
         $this->_fileName = ltrim($this->_fileName, '/');  //strip leading slash
@@ -1328,9 +1352,8 @@ class Pager_Common
         $this->_spacesBefore = str_repeat('&nbsp;', $this->_spacesBeforeSeparator);
         $this->_spacesAfter  = str_repeat('&nbsp;', $this->_spacesAfterSeparator);
 
-        $request = ($this->_httpMethod == 'POST') ? $_POST : $_GET;
-        if (isset($request[$this->_urlVar]) && empty($options['currentPage'])) {
-            $this->_currentPage = (int)$request[$this->_urlVar];
+        if (isset($_REQUEST[$this->_urlVar]) && empty($options['currentPage'])) {
+            $this->_currentPage = (int)$_REQUEST[$this->_urlVar];
         }
         $this->_currentPage = max($this->_currentPage, 1);
         $this->_linkData = $this->_getLinksData();

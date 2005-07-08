@@ -16,7 +16,7 @@
 // | Author: Chuck Hagenbuch <chuck@horde.org>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: Mail.php,v 1.9 2004/09/03 20:32:50 chagenbu Exp $
+// $Id: Mail.php,v 1.11 2005/06/26 23:37:18 jon Exp $
 
 require_once 'PEAR.php';
 
@@ -26,7 +26,7 @@ require_once 'PEAR.php';
  * useful in multiple mailer backends.
  *
  * @access public
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.11 $
  * @package Mail
  */
 class Mail
@@ -145,10 +145,19 @@ class Mail
 
                 $lines[] = $key . ': ' . $value;
             } elseif (strcasecmp($key, 'Received') === 0) {
+                $received = array();
+                if (is_array($value)) {
+                    foreach ($value as $line) {
+                        $received[] = $key . ': ' . $line;
+                    }
+                }
+                else {
+                    $received[] = $key . ': ' . $value;
+                }
                 // Put Received: headers at the top.  Spam detectors often
                 // flag messages with Received: headers after the Subject:
                 // as spam.
-                array_unshift($lines, $key . ': ' . $value);
+                $lines = array_merge($received, $lines);
             } else {
                 // If $value is an array (i.e., a list of addresses), convert
                 // it to a comma-delimited string of its elements (addresses).

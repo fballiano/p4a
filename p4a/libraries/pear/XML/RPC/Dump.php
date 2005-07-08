@@ -42,7 +42,7 @@ function XML_RPC_Dump($value)
  * @category   Web Services
  * @package    XML_RPC
  * @author     Christian Weiske <cweiske@php.net>
- * @version    Release: 1.2.2
+ * @version    Release: 1.3.2
  * @link       http://pear.php.net/package/XML_RPC
  */
 class XML_RPC_Dump
