@@ -1,6 +1,7 @@
 0.27
+- P4A_I18N_Messages::get() now also accept no params, returning all messages
 - asc/desc/selected alt for images were added to P4A_Table
-- contribs were introduced
+- contribs were introduced, thanks to Major__Tom
 
 0.26
 - PEAR packages were updated fixing some security issues
