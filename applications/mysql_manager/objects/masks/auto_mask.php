@@ -359,7 +359,6 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 	function saveRow()
 	{
 		$result = parent::saveRow();
-		print $result;
 		if (!$result) {
 			$this->error->setValue("Please fill all required fields");
 		}
