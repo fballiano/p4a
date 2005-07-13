@@ -11,6 +11,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- replace smarty with something that's more simple and lightweight
 - P4A_DB_Source without orders clause can't work well, add default order on pk if none is supplied?
 - use P4A_Table->cols->setVisible and deprecate P4A_Table->setVisibleCols
 - check konqueror/handheld for new image/file field type compatibility
@@ -20,7 +21,6 @@
 - take a look at toolbars and decide what to do with enable/disable buttons in the getasstring, after that we've to anify all toolbars
 - change alt/title on table template for next/prev/first/last page (ask for translations)
 - take a deep look at MySQL Manager and add many functionalities (eg: frames/fieldset)
-- check session data for deleting smarty if possible
 - check app change in the same browser window
 
 ----------------
