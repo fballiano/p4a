@@ -18,10 +18,8 @@
  *
  * To contact the authors write to:									<br>
  * CreaLabs															<br>
- * Viale dei Mughetti 13/A											<br>
- * 10151 Torino (Italy)												<br>
- * Tel.:   (+39) 011 735645											<br>
- * Fax:    (+39) 011 735645											<br>
+ * Via Medail, 32													<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -38,7 +36,10 @@
  * @package p4a
  */
 
-
+/**
+ * This widet draws graphs
+ * @author Luca Rossi <Major__Tom@libero.it>
+ */
 class P4A_Graph extends P4A_Widget
 {
 		/**
@@ -54,12 +55,7 @@ class P4A_Graph extends P4A_Widget
 		 * @access private
 		 */
 		var $graphData = array();
-		
-		/**
-		 * Array data for chart.
-		 * @var mixed array
-		 * @access private
-		 */
+
 		var $height = 400;
 		var $width = 400;
 		var $title = "p4a graph";
@@ -135,12 +131,12 @@ class P4A_Graph extends P4A_Widget
 			$this->width = $width;
 		}
 		
-		/*!
-        *  text-data: ('label', y1, y2, y3, ...)
-        *  text-data-single: ('label', data), for some pie charts.
-        *  data-data: ('label', x, y1, y2, y3, ...)
-        *  data-data-error: ('label', x1, y1, e1+, e2-, y2, e2+, e2-, y3, e3+, e3-, ...)
-        */
+		/*
+         * text-data: ('label', y1, y2, y3, ...)
+         * text-data-single: ('label', data), for some pie charts.
+         * data-data: ('label', x, y1, y2, y3, ...)
+         * data-data-error: ('label', x1, y1, e1+, e2-, y2, e2+, e2-, y3, e3+, e3-, ...)
+         */
 		function setDataType($which_dt)
 		{
 			$this->dt->$which_dt;
@@ -179,7 +175,6 @@ class P4A_Graph extends P4A_Widget
     	{
     		$this->ttf = $wich_ttf;
     	}
-    	
    		 
    		/**
 		 * Set the color of the background of the entire image.
@@ -193,7 +188,7 @@ class P4A_Graph extends P4A_Widget
     		$this->bgColor = $which_color;
     	}
     	
-    	 /**
+    	/**
 		 * Set the color of the grid.
 		 * Defaults to "black" $which_color can be either a name like "black" 
 		 * or an rgb color array array(int,int,int).
@@ -210,14 +205,14 @@ class P4A_Graph extends P4A_Widget
 			$this->legendVisible = $visible;
 		}
     	
-    	 /**
+    	/**
 		 * Pick the upper left corner of the legend box with $which_x and $which_y in pixels. 
 		 * $which_type is reserved for future use.
 		 * @access public
 		 * @params $which_x
 		 * @params $which_y
 		 * @params $which_type
-		 */ 
+		 */
     	function SetLegendPixels($which_x,$which_y,$which_type=-1)
     	{
     		$this->legPixX = $which_x;
@@ -225,7 +220,7 @@ class P4A_Graph extends P4A_Widget
     	}
 
     	
-    	 /**
+    	/**
 		 * Set the graph title. 
 		 * @params string title
 		 */
@@ -234,7 +229,7 @@ class P4A_Graph extends P4A_Widget
 			$this->title = $title;
 		}
     
-    	 /**
+    	/**
 		 * Set the X axis label. 
 		 * @params string xlbl
 		 */
@@ -243,7 +238,7 @@ class P4A_Graph extends P4A_Widget
 			$this->xlbl = $xlbl;
 		}
     	
-    	 /**
+    	/**
 		 * Set the Y axis label. 
 		 * @params string ylbl
 		 */
@@ -252,7 +247,7 @@ class P4A_Graph extends P4A_Widget
 			$this->ylbl = $ylbl;
 		}
    
-		 /**
+		/**
 		 * Add a data row to the graph. 
 		 * @params array data
 		 */
@@ -268,11 +263,10 @@ class P4A_Graph extends P4A_Widget
 			if (!$this->isVisible()) {
 				return '';
 			}
-			if (count($this->graphData)>0)
-			{			
-				$id = $this->getId();
 			
-			$string = '<img src="../../contrib/phplot/phplot_wrapper.php?id='.$id.'&p4a_application_name='.P4A_APPLICATION_NAME.'" width="'.$this->width.'" height="'.$this->height.'">';
+			if (count($this->graphData)>0) {
+				$id = $this->getId();
+				$string = '<img src="phplot_wrapper.php?id='.$id.'&p4a_application_name='.P4A_APPLICATION_NAME.'&p4a_root_dir='.P4A_ROOT_DIR.'" width="'.$this->width.'" height="'.$this->height.'">';
 			} else {
 				$string = '<b>Please Initialize Data</b>';
 			}
@@ -282,19 +276,16 @@ class P4A_Graph extends P4A_Widget
 		//
 		function fillGraph()
 		{
-			// populate th graph
+			// populate the graph
 			unset($this->graphData);
 			$this->graphData = array();
 			
-			
 			$rows = $this->data->getAll();
-			foreach ($rows as $row)
-			{
+			foreach ($rows as $row) {
 				//$this->addData(array($row[$this->labelCol], $row[$this->dataCol], $row['value2']));
 				$colStr = $row[$this->labelCol];
-				foreach ($this->dataCols as $col)
-				{
-					$colStr .= ",".$row[$col];
+				foreach ($this->dataCols as $col) {
+					$colStr .= ",{$row[$col]}";
 				}
 				$this->addData(explode(",", $colStr));
 			}
@@ -302,51 +293,38 @@ class P4A_Graph extends P4A_Widget
 		
  		function display()
 		{
-			
+			require "phplot/phplot.php"
 			$this->graph = new PHPlot($this->width, $this->height);
-			
 			$this->graph->setDataType($this->dt);
-			
 			$this->graph->SetErrorBarLineWidth($this->errorBarLineWidth);
-			
 			$this->graph->SetFileFormat($this->fileFormat);		
 			
-			if ($this->ttf <> NULL)
-			{
+			if ($this->ttf <> NULL) {
 				$this->graph->SetUseTTF($this->ttf);
 			}	
 			
-			if ($this->bgColor <> NULL)
-			{
+			if ($this->bgColor <> NULL) {
 				$this->graph->SetBackgroundColor($this->bgColor);
 			}	
 
-			if ($this->gridColor <> NULL)
-			{
+			if ($this->gridColor <> NULL) {
 				$this->graph->SetGridColor($this->gridColor);
 			}	
 			
-			if ($this->legendVisible == true)
-			{
+			if ($this->legendVisible == true) {
 				$this->graph->SetLegend($this->legendCols);
 			}		
 			
-			if ($this->legPixX <> NULL)
-			{
+			if ($this->legPixX <> NULL) {
 				$this->graph->SetLegendPixel($this->legPixX, $this->legPixY, NULL);
 			}
 			
-			$this->graph->setTitle($this->title);			
-			
+			$this->graph->setTitle($this->title);
 			$this->graph->SetXLabel($this->xlbl);
-			
-			$this->graph->SetYLabel($this->ylbl);			
-			
-			$this->graph->setPlotType($this->type);			
-			
-			$this->graph->setDataValues($this->graphData);	
-			
-			$this->graph->SetXDataLabelPos("plotdown");		
+			$this->graph->SetYLabel($this->ylbl);
+			$this->graph->setPlotType($this->type);
+			$this->graph->setDataValues($this->graphData);
+			$this->graph->SetXDataLabelPos("plotdown");
 			
 			return $this->graph->DrawGraph();
 		} 				
