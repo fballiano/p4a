@@ -63,6 +63,9 @@ $messages = array
 	"current_page"		=> "Strana",
 	"of_pages"			=> "z",
 	"go_to_page"		=> "Jdi na stranu",
+	"ascending"			=> "Ascending",
+	"descending"		=> "Descending",
+	"selected"			=> "Selected",
 
 	// File uploads
 	"filename"			=> "Jméno",

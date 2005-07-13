@@ -62,6 +62,9 @@ $messages = array
 	"current_page"		=> "P&aacute;gina",
 	"of_pages"			=> "de",
 	"go_to_page"		=> "Ir a la p&aacute;gina",
+	"ascending"			=> "Ascendente",
+	"descending"		=> "Descendente",
+	"selected"			=> "Seleccionado",
 
 	// File uploads
 	"filename"			=> "Nombre",
@@ -69,7 +72,7 @@ $messages = array
 	"filetype"			=> "Tipo",
 	"filepreview"		=> "Vista previa",
 	"filedelete"		=> "Borrar",
-	"filedownload"		=> "Download",
+	"filedownload"		=> "Descarga",
 
 	// Fields
 	"none_selected"		=> "Ninguno seleccionado",

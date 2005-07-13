@@ -77,20 +77,22 @@
 
 		/**
 		 * Retrieves a message.
+		 * If no param is passed returns all messages in array.
 		 * @access public
 		 * @param string		The first level message id (default).
 		 * @param string		The second level message id (used only when the first level value is an array. Eg: days names).
-		 * @return string
+		 * @return mixed
 		 */
-		function get($first_level_id, $second_level_id = NULL)
+		function get($first_level_id = NULL, $second_level_id = NULL)
 		{
-			if ($second_level_id === NULL) {
+			if ($first_level_id === NULL and $second_level_id === NULL) {
+				return $this->messages;
+			} elseif ($second_level_id === NULL) {
 				if (array_key_exists($first_level_id, $this->messages)){
 					return $this->messages[$first_level_id];
 				} else {
 					return "";
 				}
-
 			} else {
 				return $this->messages[$first_level_id][$second_level_id];
 			}

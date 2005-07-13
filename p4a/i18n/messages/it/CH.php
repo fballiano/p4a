@@ -63,6 +63,9 @@ $messages = array
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "di",
 	"go_to_page"		=> "Vai a pagina",
+	"ascending"			=> "Ascending",
+	"descending"		=> "Descending",
+	"selected"			=> "Selected",
 
 	// File uploads
 	"filename"			=> "Nome",

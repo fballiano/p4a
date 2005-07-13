@@ -1,7 +1,5 @@
-0.28
-- bugfix on mysql_manager application
-
 0.27
+- bugfix on mysql_manager application
 - P4A_I18N_Messages::get() now also accept no params, returning all messages
 - asc/desc/selected alt for images were added to P4A_Table
 - contribs were introduced, thanks to Major__Tom

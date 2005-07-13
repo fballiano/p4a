@@ -193,6 +193,7 @@
 		function getAsString()
 		{
 			$this->clearDisplay();
+			$p4a =& P4A::singleton();
 
 			if (!$this->isVisible()) {
 				return '';
@@ -228,19 +229,8 @@
 			}
 
 			$this->display("title", $this->getTitle());
-			/*
-			if ($this->title_bar !== NULL and
-				$this->title_bar->isVisible())
-			{
-				if ($this->isRollable()) {
-					$this->display('title_bar', $this->title_bar);
-				} else {
-					$this->display('title_bar', $this->title_bar->getValue());
-				}
-			}*/
 
-			if($this->_show_headers)
-			{
+			if($this->_show_headers) {
 				$headers = array();
 				$i = 0;
 
@@ -260,7 +250,7 @@
 
 				$visible_cols = $this->getVisibleCols();
 				foreach($visible_cols as $col_name) {
-// 					if (! $this->cols->$col_name->isVisible()) {
+// 					if (!$this->cols->$col_name->isVisible()) {
 // 						continue;
 // 					}
 					$col =& $this->cols->$col_name;
@@ -296,12 +286,13 @@
 
 			$visible_cols = $this->getVisibleCols();
 
-			if( sizeof( $visible_cols ) > 0 ) {
+			if (sizeof($visible_cols)>0) {
 				$this->display('table_cols', 'TRUE');
 			} else {
 				$this->display('table_cols', NULL);
 			}
-
+			
+			$this->display('i18n', $p4a->i18n->messages->get());
 			return $this->fetchTemplate();
 		}
 

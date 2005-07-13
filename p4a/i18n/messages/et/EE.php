@@ -62,6 +62,9 @@ $messages = array
 	"current_page"		=> "Lehekülg",
 	"of_pages"			=> "kokku",
 	"go_to_page"		=> "Mine leheküljele",
+	"ascending"			=> "Ascending",
+	"descending"		=> "Descending",
+	"selected"			=> "Selected",
 
 	// File uploads
 	"filename"			=> "Nimi",

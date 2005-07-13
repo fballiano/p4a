@@ -63,6 +63,9 @@ $messages = array
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "van",
 	"go_to_page"		=> "Ga naar pagina",
+	"ascending"			=> "Ascending",
+	"descending"		=> "Descending",
+	"selected"			=> "Selected",
 
 	// File uploads
 	"filename"			=> "Naam",

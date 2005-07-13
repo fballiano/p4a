@@ -62,6 +62,9 @@ $messages = array
 	"current_page"		=> "Страница",
 	"of_pages"			=> "из",
 	"go_to_page"		=> "Страница",
+	"ascending"			=> "Ascending",
+	"descending"		=> "Descending",
+	"selected"			=> "Selected",
 
 	// File uploads
 	"filename"			=> "Имя",
