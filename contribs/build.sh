@@ -18,5 +18,7 @@ cp -r $SRCDIR .
 rm -r `find -type d -name 'CVS'`
 rm `find -name '.cvsignore'`
 
-tar zcf $NAME-$VERSION.tar.gz $NAME/*
+cd $NAME
+tar zcf ../$NAME-$VERSION.tar.gz *
+cd ..
 rm -r $NAME
