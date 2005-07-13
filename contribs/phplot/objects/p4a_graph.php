@@ -293,7 +293,7 @@ class P4A_Graph extends P4A_Widget
 		
  		function display()
 		{
-			require "phplot/phplot.php"
+			require "phplot/phplot.php";
 			$this->graph = new PHPlot($this->width, $this->height);
 			$this->graph->setDataType($this->dt);
 			$this->graph->SetErrorBarLineWidth($this->errorBarLineWidth);
