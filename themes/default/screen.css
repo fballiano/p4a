@@ -382,21 +382,22 @@ select {
 /*******************/
 
 .navigator {
-	margin-left: 0px;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	list-style-position: inside;
 }
 
 .navigator ul {
-	margin-left:0px;
-	padding-left:15px;
-	list-style-position:inside;
+	padding-left: 15px;
 }
 
 .navigator a {
-	text-decoration:none;
+	text-decoration: none;
 }
 
 .navigator a:hover {
-	text-decoration:underline;
+	text-decoration: underline;
 }
 
 .navigator .active_node {
