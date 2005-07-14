@@ -221,6 +221,12 @@ label {
 	margin-left: 120px;
 }
 
+.toolbar input {
+	font-weight: normal;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
 /*************/
 /* HTML TAGS */
 /*************/
