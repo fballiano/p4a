@@ -176,7 +176,7 @@
 				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
 				$accesskey = $this->getProperty("accesskey");
 				if (strlen($accesskey) > 0) {
-					$msg .= htmlentities(" (ALT+$accesskey)");
+					$msg = htmlentities("[$accesskey] $msg");
 				}
 
 				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";

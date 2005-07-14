@@ -392,6 +392,10 @@ select {
 	padding-left: 15px;
 }
 
+.navigator li {
+	font-weight: normal;
+}
+
 .navigator a {
 	text-decoration: none;
 }
