@@ -1,4 +1,5 @@
 0.27
+- afterUpload event trigger was added
 - FCKConfig.ProcessHTMLEntities is now off (thanks to Francesco Dominidiato) ;
 - standardized accesskey notation in P4A_Button, now it renders as "[S] Save Row" instead of "Save Row (ALT+S)"
 - bugfix on mysql_manager application

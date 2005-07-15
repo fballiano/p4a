@@ -317,9 +317,9 @@
 
 				foreach ($_FILES as $key=>$value) {
 					$value['name'] = str_replace( ',', ';', $value['name'] );
-					$value['name'] = P4A_Get_Unique_File_Name( $value['name'], P4A_UPLOADS_TMP_DIR );
-					move_uploaded_file( $value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name'] );
-					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'] ;
+					$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
+					move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'];
 
 					if ((substr($key, 0, 3) == 'fld') and ($value['error'] == 0)) {
 						$new_value = $value['name'] . ',' . $value['tmp_name'] . ',' . $value['size'] . ',' . $value['type'] . ',' ;
@@ -332,6 +332,7 @@
 						}
 
 						$this->objects[$key]->setNewValue('{' . $new_value . '}');
+						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
 					}
 				}
 
