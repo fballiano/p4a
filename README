@@ -121,8 +121,9 @@ tested browsers:
 Tested browsers:
 - Mozilla Firefox 1.x
 - Internet Explorer 5.5, 6.0
-- Konqueror 3.x
+- Safari 1.x
 - Opera 7.x 8.x
+- Konqueror 3.x
 
 These browsers should work as well:
 - all gecko browsers (Netscape 7.x/8.x, Epiphany, Galeon)

@@ -1,6 +1,7 @@
 FCKConfig.AutoDetectLanguage = false;
 FCKConfig.StartupFocus = false;
 FCKConfig.ProcessHTMLEntities	= false;
+FCKConfig.ToolbarCanCollapse = false;
 
 FCKConfig.ToolbarSets["p4a"] = [
 	['Cut','Copy','Paste','PasteText','PasteWord','-','Print'],

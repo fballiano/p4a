@@ -49,8 +49,6 @@
 			$this->P4A_Mask();
 			$p4a =& P4A::singleton();
 
-			$this->setTitle($p4a->i18n->messages->get('filepreview'));
-
 			$this->build("P4A_Quit_Toolbar", "toolbar");
 			$this->build("P4A_Image", "image");
 			

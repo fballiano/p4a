@@ -1133,6 +1133,7 @@
 			$p4a =& p4a::singleton();
 			$p4a->openMask("P4A_Mask_Image_Preview");
 			$p4a->active_mask->image->setValue(P4A_UPLOADS_URL . $this->getNewValue(1));
+			$p4a->active_mask->setTitle($this->getNewValue(0));
 		}
 		
 		/**

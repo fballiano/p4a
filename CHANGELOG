@@ -1,3 +1,9 @@
+0.28
+- safari was added to the compatibility list (thanks to Francesco Dominidiato)
+- FCKConfig.ToolbarCanCollapse is now set to off (thanks to Francesco Dominidiato)
+- fixed a bug on image preview mask printing (thanks to Francesco Dominidiato)
+- image preview mask now also show the file name
+
 0.27
 - afterUpload event trigger was added
 - FCKConfig.ProcessHTMLEntities is now off (thanks to Francesco Dominidiato) ;
