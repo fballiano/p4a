@@ -3,6 +3,10 @@ FCKConfig.StartupFocus = false;
 FCKConfig.ProcessHTMLEntities	= false;
 FCKConfig.ToolbarCanCollapse = false;
 
+FCKConfig.LinkUpload = false;
+FCKConfig.ImageUpload = false;
+FCKConfig.FlashUpload = false;
+
 FCKConfig.ToolbarSets["p4a"] = [
 	['Cut','Copy','Paste','PasteText','PasteWord','-','Print'],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],

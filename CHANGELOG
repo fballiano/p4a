@@ -1,8 +1,9 @@
 0.28
+- FCKEditor was update to 2.0
 - safari was added to the compatibility list (thanks to Francesco Dominidiato)
 - FCKConfig.ToolbarCanCollapse is now set to off (thanks to Francesco Dominidiato)
 - fixed a bug on image preview mask printing (thanks to Francesco Dominidiato)
-- image preview mask now also show the file name
+- image preview mask now show the file name in the title
 
 0.27
 - afterUpload event trigger was added
