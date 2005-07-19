@@ -21,7 +21,7 @@ cp -r $SRCDIR .
 cd $PKGDIR
 mkdir codereference-$VERSION
 cd $SRCDIR
-phpdoc -q -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/codereference-$VERSION -i 'pdf/,pear/,smarty/,formats/,messages/' -o 'HTML:frames:earthli'
+phpdoc -q -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/codereference-$VERSION -i 'pdf/,pear/,phpsniff/,smarty/,formats/,messages/' -o 'HTML:frames:earthli'
 
 ##########################
 # cleaning master source #
