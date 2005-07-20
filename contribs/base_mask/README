@@ -1,0 +1,5 @@
+This contrib aims to create a very simple object to extend when needed.
+
+We've only one file: p4a_base_mask.php, containing only 1 class: P4A_Base_Mask.
+
+This mask extends P4A_Mask, instancing a default frame with width=730px
