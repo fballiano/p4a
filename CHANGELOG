@@ -1,4 +1,5 @@
 0.28
+- added a "generic_file" icon (16x16)
 - phpsniff library was removed from phpdocumentor source list
 - FCKEditor was updated to 2.0
 - safari was added to the compatibility list (thanks to Francesco Dominidiato)
