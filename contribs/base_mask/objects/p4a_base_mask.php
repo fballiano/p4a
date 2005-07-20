@@ -50,7 +50,7 @@ class P4A_Base_Mask extends P4A_Mask
 	
 	function P4A_Base_Mask()
 	{
-		parent::p4a_mask();
+		parent::P4A_Mask();
 		$this->build("p4a_frame", "frame");
 		$this->frame->setWidth(730);
 		
