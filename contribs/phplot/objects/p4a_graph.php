@@ -16,10 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * To contact the authors write to:									<br>
+ * To contact the authors write to:								<br>
  * CreaLabs															<br>
  * Via Medail, 32													<br>
- * 10144 Torino (Italy)												<br>
+ * 10144 Torino (Italy)											<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -33,12 +33,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package p4a
+ * @package P4A_Graph
  */
 
 /**
  * This widet draws graphs
  * @author Luca Rossi <Major__Tom@libero.it>
+ * @package P4A_Graph
  */
 class P4A_Graph extends P4A_Widget
 {
