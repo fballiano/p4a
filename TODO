@@ -18,7 +18,6 @@
 - check konqueror/handheld for new image/file field type compatibility
 - check P4A_Field::getAsRadio and clean it (remove sheet, maybe use div)
 - check the new P4A_Menu and clean it (position is used/useful? parent is used/useful?)
-- remove navigator/mysql_manager related css from screen.css
 - take a look at toolbars and decide what to do with enable/disable buttons in the getasstring, after that we've to anify all toolbars
 - change alt/title on table template for next/prev/first/last page (ask for translations)
 - take a deep look at MySQL Manager and add many functionalities (eg: frames/fieldset)

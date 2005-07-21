@@ -1,4 +1,5 @@
 0.28
+- removed some unused CSS from screen.css
 - added a "generic_file" icon (16x16)
 - phpsniff library was removed from phpdocumentor source list
 - FCKEditor was updated to 2.0

@@ -75,8 +75,11 @@ class P4A_DB_Navigator extends P4A_Widget
 			return "";
 		}
 		
+		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
 		$return = "";
+		
+		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_db_navigator.css");
 		
 		$obj_id = $this->getId();
 		$table = $this->source->getTable();
@@ -91,7 +94,7 @@ class P4A_DB_Navigator extends P4A_Widget
 			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
 		}
 		
-		$return .= "<ul class=\"navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
+		$return .= "<ul class=\"p4a_db_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		foreach ($roots as $section) {
 			if ($section[$pk] == $current) {
 				$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>{$section[$this->description]}";
