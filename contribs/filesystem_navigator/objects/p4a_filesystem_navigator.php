@@ -69,6 +69,14 @@ class P4A_Filesystem_Navigator extends P4A_Frame
 		$this->anchor($this->f_folders);
 		$this->anchorLeft($this->f_files);
 	}
+	
+	function getAsString()
+	{
+		$p4a =& p4a::singleton();
+		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_filesystem_navigator.css");
+		
+		return parent::getAsString();
+	}
 }
 
 /**
@@ -160,7 +168,7 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		}
 		
 		$handle = opendir($folder);
-		$return .= "<ul class=\"navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
+		$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		while (false !== ($file = readdir($handle))) {
 			if (is_dir("$folder/$file") and ($file != ".") and ($file != "..") and ($file != "CVS") and ("$folder/$file" != P4A_UPLOADS_TMP_DIR)) {
 				$current = $this->getCurrent();
@@ -293,7 +301,7 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		if (empty($files)) {
 			$this->message->setValue($this->no_files_message);
 		} else {
-			$return .= "<ul class=\"navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/generic_file." . P4A_ICONS_EXTENSION . "')\">";
+			$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/generic_file." . P4A_ICONS_EXTENSION . "')\">";
 			$current = $this->getCurrent();
 			
 			foreach ($files as $file) {
