@@ -38,7 +38,6 @@
  
 /**
  * A mask object with some basic elements
- * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package P4A_Base_Mask
  */
