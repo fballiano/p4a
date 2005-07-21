@@ -387,33 +387,6 @@ select {
 /* END MENU WIDGET */
 /*******************/
 
-.navigator {
-	text-align: left;
-	margin: 0;
-	padding: 0;
-	list-style-position: inside;
-}
-
-.navigator ul {
-	padding-left: 15px;
-}
-
-.navigator li {
-	font-weight: normal;
-}
-
-.navigator a {
-	text-decoration: none;
-}
-
-.navigator a:hover {
-	text-decoration: underline;
-}
-
-.navigator .active_node {
-	font-weight: bold;
-}
-
 .message {
 	width: 300px;
 	font-weight: bold;
