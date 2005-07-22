@@ -1,3 +1,6 @@
+0.29
+- fixed P4A_Table_Col visibility issues
+
 0.28
 - removed some unused CSS from screen.css
 - added a "generic_file" icon (16x16)

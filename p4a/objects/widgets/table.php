@@ -104,8 +104,6 @@
 
 		var $_title = "";
 
-		var $_visible_cols = array();
-
 		var $_auto_navigation_bar = TRUE;
 
 		/**
@@ -474,11 +472,15 @@
 		 */
 		function getVisibleCols()
 		{
-			if ($this->_visible_cols) {
-				return $this->_visible_cols;
-			} else {
-				return $this->getCols();
+			$return = array();
+
+			while ($col =& $this->cols->nextItem()) {
+				if ($col->isVisible()) {
+					$return[] = $col->getName();
+				}
 			}
+
+			return $return;
 		}
 
 		/**
@@ -492,7 +494,7 @@
 
 			while ($col =& $this->cols->nextItem()) {
 				if (!$col->isVisible()) {
-					$return[] = $col;
+					$return[] = $col->getName();
 				}
 			}
 
@@ -505,13 +507,12 @@
 		 * @access public
 		 * @params array	Columns id in indexed array.
 		 */
-		function setVisibleCols( $cols = array() )
+		function setVisibleCols($cols = array())
 		{
 			$this->setInvisibleCols();
 			if (sizeof($cols) == 0) {
 				$cols = $this->getCols();
 			}
-			$this->_visible_cols = $cols;
 
 			foreach ($cols as $col) {
 				if (isset($this->cols->$col)) {
@@ -528,16 +529,17 @@
 		 * @access public
 		 * @params array	Columns id in indexed array.
 		 */
-		function setInvisibleCols( $cols = array() )
+		function setInvisibleCols($cols = array())
 		{
 			if (sizeof( $cols ) == 0) {
 				$cols = $this->getCols();
 			}
 
 			foreach ($cols as $col) {
-				$this->cols->$col->setInvisible();
-				if ($pos = array_search($col, $this->_visible_cols)) {
-					unset($this->_visible_cols[$pos]);
+				if (isset($this->cols->$col)) {
+					$this->cols->$col->setVisible(false);
+				} else {
+					P4A_Error("Unknow column $col");
 				}
 			}
 		}
