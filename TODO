@@ -11,6 +11,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- print stylesheet for rich_textarea
 - do something with file upload on FCKEditor, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
 - replace smarty with something that's more simple and lightweight
 - P4A_DB_Source without orders clause can't work well, add default order on pk if none is supplied?
