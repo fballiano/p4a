@@ -1,6 +1,6 @@
-/* --------- */
+/*************/
 /* HTML TAGS */
-/* --------- */
+/*************/
 
 * {
 	color:black !important;
@@ -79,9 +79,13 @@ textarea {
 	border: 1px solid #cccccc;
 }
 
-/* ----------- */
+/***************/
 /* P4A CLASSES */
-/* ----------- */
+/***************/
+
+#mainMenu {
+	display:none;
+}
 
 #mainContainer {
 	top:0px;
@@ -192,14 +196,6 @@ textarea {
 	display: none;
 }
 
-/*   ----   */
-/*   MENU   */
-/*   ----   */
-
-#mainMenu {
-	display:none;
-}
-/*
-@page rotated {size: landscape}
-TABLE {page: rotated; page-break-before: right}
-*/
+/*******************/
+/* EXTERNAL THINGS */
+/*******************/
