@@ -11,6 +11,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- add possibility to have custom made locale files
 - print stylesheet for rich_textarea
 - do something with file upload on FCKEditor, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
 - replace smarty with something that's more simple and lightweight
