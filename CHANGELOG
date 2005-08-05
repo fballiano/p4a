@@ -1,5 +1,6 @@
 0.29
 - fixed P4A_Table_Col visibility issues
+- fixed a bug about charset in mask's default template
 
 0.28
 - removed some unused CSS from screen.css
