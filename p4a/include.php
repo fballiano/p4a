@@ -124,7 +124,7 @@
 		$_SESSION['P4A_INCLUDES'] = array();
 		if (defined("P4A_REQUIRE_APPLICATION")) {
 			$objects_dir = P4A_ROOT_DIR . '/applications/'. P4A_REQUIRE_APPLICATION .'/objects';
-			P4A_Include_Objects($objects_dir);			
+			P4A_Include_Objects($objects_dir);	
 		}
 		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		P4A_Include_Objects($objects_dir);
