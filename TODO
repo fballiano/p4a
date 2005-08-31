@@ -14,7 +14,7 @@
 - add possibility to have custom made locale files
 - print stylesheet for rich_textarea
 - do something with file upload on FCKEditor, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
-- replace smarty with something that's more simple and lightweight
+- replace smarty with something that's more simple and lightweight (maybe flexy?)
 - P4A_DB_Source without orders clause can't work well, add default order on pk if none is supplied?
 - check konqueror/handheld for new image/file field type compatibility
 - check P4A_Field::getAsRadio and clean it (remove sheet, maybe use div)
@@ -32,7 +32,6 @@
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
 - migrate to I18Nv2? (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates
-- change template engine to flexy?
 
 ------------------------------------------------------------------------
 If you want to help subscribe our mailing lists at and propose yourself!

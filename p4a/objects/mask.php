@@ -153,16 +153,16 @@
 		 */
 		function &p4a_mask($name = null)
 		{
-			//todo controllare
-			if ($name==null){
+			if ($name == null){
 				$name = get_class($this);
 			}
+			$name = strtolower($name);
 			parent::p4a_object($name, 'ma');
 
 			//todo
 			$this->build("p4a_collection", "fields");
 
-            $this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
+			$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');
 		}
 

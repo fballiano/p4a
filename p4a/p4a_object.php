@@ -153,8 +153,6 @@
 				}
 			}
 
-			// removed for php5 compatibility, seems to work fine
-			//$this = null;
 			unset($parent->$this_name);
 			unset($p4a->objects[$this_id]);
 		}
