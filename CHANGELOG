@@ -2,6 +2,7 @@
 - fixed P4A_Table_Col visibility issues
 - fixed a bug about charset in mask's default template
 - fixed a bug within P4A_Mask constructor (internal variable _name is now lowercase)
+- ie7 library was updated to 0.9
 - code cleanup
 
 0.28
