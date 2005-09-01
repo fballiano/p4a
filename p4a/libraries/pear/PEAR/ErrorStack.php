@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: ErrorStack.php,v 1.7.2.5 2005/01/01 21:26:51 cellog Exp $
+// $Id: ErrorStack.php,v 1.7.2.6 2005/08/13 14:15:19 pajoye Exp $
 
 /**
  * Error Stack Implementation
@@ -538,6 +538,10 @@ class PEAR_ErrorStack {
                 'message' => $msg,
                );
 
+        if ($repackage) {
+            $err['repackage'] = $repackage;
+        }
+
         // set up the error message, if necessary
         if ($this->_msgCallback) {
             $msg = call_user_func_array($this->_msgCallback,
@@ -545,9 +549,6 @@ class PEAR_ErrorStack {
             $err['message'] = $msg;
         }        
         
-        if ($repackage) {
-            $err['repackage'] = $repackage;
-        }
         $push = $log = true;
         $die = false;
         // try the overriding callback first
@@ -909,8 +910,10 @@ class PEAR_ErrorStack {
         } else {
             $mainmsg = $stack->getErrorMessageTemplate($err['code']);
         }
+
         $mainmsg = str_replace('%__msg%', $err['message'], $mainmsg);
-        if (count($err['params'])) {
+
+        if (count($err['params']) && count($err['params'])) {
             foreach ($err['params'] as $name => $val) {
                 if (is_array($val)) {
                     // @ is needed in case $val is a multi-dimensional array

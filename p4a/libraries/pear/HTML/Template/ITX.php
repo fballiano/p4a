@@ -16,7 +16,7 @@
 // | Author: Ulf Wendel <ulf.wendel@phpdoc.de>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: ITX.php,v 1.8 2003/03/12 02:25:16 pajoye Exp $
+// $Id: ITX.php,v 1.9 2005/08/14 17:42:38 pajoye Exp $
 //
 
 require_once('HTML/Template/IT.php');
@@ -36,7 +36,7 @@ require_once 'HTML/Template/IT_Error.php';
 *
 * @author   Ulf Wendel <uw@netuse.de>
 * @access   public
-* @version  $Id: ITX.php,v 1.8 2003/03/12 02:25:16 pajoye Exp $
+* @version  $Id: ITX.php,v 1.9 2005/08/14 17:42:38 pajoye Exp $
 * @package  IT[X]
 */
 class HTML_Template_ITX extends HTML_Template_IT {
@@ -824,7 +824,7 @@ class HTML_Template_ITX extends HTML_Template_IT {
             print $message;
         }
 
-        if ($this->haltOnError) {
+        if ($this->haltOnWarning) {
             die($message);
         }
     } // end func warning

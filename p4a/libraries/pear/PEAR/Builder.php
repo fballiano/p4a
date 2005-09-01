@@ -16,7 +16,7 @@
 // | Authors: Stig Sæther Bakken <ssb@php.net>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: Builder.php,v 1.16.2.3 2005/02/17 17:55:01 cellog Exp $
+// $Id: Builder.php,v 1.16.2.4 2005/03/28 16:21:11 cellog Exp $
 
 require_once 'PEAR/Common.php';
 
@@ -277,7 +277,7 @@ class PEAR_Builder extends PEAR_Common
         $inst_dir = "$build_basedir/install-$info[package]-$info[version]";
         $this->log(1, "building in $build_dir");
         if (is_dir($build_dir)) {
-            System::rm('-rf', $build_dir);
+            System::rm(array('-rf', $build_dir));
         }
         if (!System::mkDir(array('-p', $build_dir))) {
             return $this->raiseError("could not create build dir: $build_dir");
@@ -302,7 +302,7 @@ class PEAR_Builder extends PEAR_Common
         if (!@chdir($build_dir)) {
             return $this->raiseError("could not chdir to $build_dir");
         }
-        putenv('PHP_PEAR_VERSION=1.3.5');
+        putenv('PHP_PEAR_VERSION=1.3.6');
         foreach ($to_run as $cmd) {
             $err = $this->_runCommand($cmd, $callback);
             if (PEAR::isError($err)) {

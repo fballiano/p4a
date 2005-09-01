@@ -1,19 +1,24 @@
 <?php
-//
-// +------------------------------------------------------------------------+
-// | PEAR :: PHPUnit                                                        |
-// +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
-// +------------------------------------------------------------------------+
-// | This source file is subject to version 3.00 of the PHP License,        |
-// | that is available at http://www.php.net/license/3_0.txt.               |
-// | If you did not receive a copy of the PHP license and are unable to     |
-// | obtain it through the world-wide-web, please send a note to            |
-// | license@php.net so we can mail you a copy immediately.                 |
-// +------------------------------------------------------------------------+
-//
-// $Id: TestListener.php,v 1.9 2004/12/22 08:06:11 sebastian Exp $
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * PHP Version 4
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Testing
+ * @package    PHPUnit
+ * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: TestListener.php,v 1.11 2005/08/03 09:33:17 sebastian Exp $
+ * @link       http://pear.php.net/package/PHPUnit
+ * @since      File available since Release 1.0.0
+ */
 
 /**
  * A Listener for test progress.
@@ -72,49 +77,60 @@
  * ?>
  * </code>
  *
- * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright   Copyright &copy; 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
- * @category    Testing
- * @package     PHPUnit
+ * @category   Testing
+ * @package    PHPUnit
+ * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    Release: 1.3.0
+ * @link       http://pear.php.net/package/PHPUnit
+ * @since      Class available since Release 1.0.0
  */
 class PHPUnit_TestListener {
     /**
-    * An error occurred.
-    *
-    * @param  object
-    * @param  object
-    * @access public
-    * @abstract
-    */
+     * An error occurred.
+     *
+     * @param  object
+     * @param  object
+     * @access public
+     * @abstract
+     */
     function addError(&$test, &$t) { /*abstract */ }
 
     /**
-    * A failure occurred.
-    *
-    * @param  object
-    * @param  object
-    * @access public
-    * @abstract
-    */
+     * A failure occurred.
+     *
+     * @param  object
+     * @param  object
+     * @access public
+     * @abstract
+     */
     function addFailure(&$test, &$t) { /*abstract */ }
 
     /**
-    * A test ended.
-    *
-    * @param  object
-    * @access public
-    * @abstract
-    */
+     * A test ended.
+     *
+     * @param  object
+     * @access public
+     * @abstract
+     */
     function endTest(&$test) { /*abstract */ }
 
     /**
-    * A test started.
-    *
-    * @param  object
-    * @access public
-    * @abstract
-    */
+     * A test started.
+     *
+     * @param  object
+     * @access public
+     * @abstract
+     */
     function startTest(&$test) { /*abstract */ }
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 ?>

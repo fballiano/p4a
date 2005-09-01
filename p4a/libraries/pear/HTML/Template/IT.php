@@ -16,7 +16,7 @@
 // | Author: Ulf Wendel <ulf.wendel@phpdoc.de>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: IT.php,v 1.6 2003/03/12 02:25:16 pajoye Exp $
+// $Id: IT.php,v 1.9 2005/08/14 18:27:03 pajoye Exp $
 //
 
 require_once('PEAR.php');
@@ -118,7 +118,7 @@ define('IT_UNKNOWN_OPTION',            -6);
  * </code>
  *
  * @author   Ulf Wendel <uw@netuse.de>
- * @version  $Id: IT.php,v 1.6 2003/03/12 02:25:16 pajoye Exp $
+ * @version  $Id: IT.php,v 1.9 2005/08/14 18:27:03 pajoye Exp $
  * @access   public
  * @package  HTML_Template_IT
  */
@@ -426,6 +426,7 @@ class HTML_Template_IT {
                 return $error;
             }
         }
+        return IT_OK;
     }
 
     /**
@@ -787,7 +788,7 @@ class HTML_Template_IT {
         if (!$this->flagCacheTemplatefile ||
             $this->lastTemplatefile != $filename
         ){
-            $template = $this->getfile($filename);
+            $template = $this->getFile($filename);
         }
         $this->lastTemplatefile = $filename;
 
@@ -1004,7 +1005,7 @@ class HTML_Template_IT {
                 IT_BLOCK_NOT_FOUND          => 'Cannot find this block',
                 IT_BLOCK_DUPLICATE          => 'The name of a block must be'.
                                                ' uniquewithin a template.'.
-                                               ' Found "$blockname" twice.'.
+                                               ' Found "' . $blockname . '" twice.'.
                                                'Unpredictable results '.
                                                'may appear.',
                 IT_UNKNOWN_OPTION           => 'Unknown option'

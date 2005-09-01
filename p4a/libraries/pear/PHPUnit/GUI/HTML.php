@@ -1,28 +1,36 @@
 <?php
-//
-// +------------------------------------------------------------------------+
-// | PEAR :: PHPUnit                                                        |
-// +------------------------------------------------------------------------+
-// | Copyright (c) 2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
-// +------------------------------------------------------------------------+
-// | This source file is subject to version 3.00 of the PHP License,        |
-// | that is available at http://www.php.net/license/3_0.txt.               |
-// | If you did not receive a copy of the PHP license and are unable to     |
-// | obtain it through the world-wide-web, please send a note to            |
-// | license@php.net so we can mail you a copy immediately.                 |
-// +------------------------------------------------------------------------+
-//
-// $Id: HTML.php,v 1.17 2005/01/07 07:34:05 sebastian Exp $
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * This class provides a HTML GUI.
+ * PHP Version 4
  *
- * @author      Wolfram Kriesing <wolfram@kriesing.de>
- * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
- * @category    Testing
- * @package     PHPUnit
- * @subpackage  GUI
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Testing
+ * @package    PHPUnit
+ * @author     Wolfram Kriesing <wolfram@kriesing.de>
+ * @copyright  2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: HTML.php,v 1.18 2005/08/03 09:25:31 sebastian Exp $
+ * @link       http://pear.php.net/package/PHPUnit
+ * @since      File available since Release 1.0.0
+ */
+
+/**
+ * HTML GUI.
+ *
+ * @category   Testing
+ * @package    PHPUnit
+ * @author     Wolfram Kriesing <wolfram@kriesing.de>
+ * @copyright  2002-2005 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    Release: 1.3.0
+ * @link       http://pear.php.net/package/PHPUnit
+ * @since      Class available since Release 1.0.0
  */
 class PHPUnit_GUI_HTML
 {
@@ -207,4 +215,12 @@ class PHPUnit_GUI_HTML
         return $ret;
     }
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 ?>

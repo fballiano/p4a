@@ -37,7 +37,7 @@ ini_set('html_errors', false);
 ini_set('magic_quotes_runtime', false);
 set_error_handler('error_handler');
 
-$pear_package_version = "1.3.5";
+$pear_package_version = "1.3.6";
 
 require_once 'PEAR.php';
 require_once 'PEAR/Config.php';
