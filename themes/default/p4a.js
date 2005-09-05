@@ -42,7 +42,7 @@ function isReturnPressed(e)
 
 function setFocus(id)
 {
-	if( (id != null) && (document.forms['p4a'].elements[id] != null) && (document.forms['p4a'].elements[id].disabled == false) ) {
+	if ((id != null) && (id != '') && (document.forms['p4a'].elements[id] != null) && (document.forms['p4a'].elements[id].disabled == false)) {
 		document.forms['p4a'].elements[id].focus();
 	}
 }

@@ -113,34 +113,22 @@ function p4a_check_configuration($additionalDir = null)
     }
     $error .= "</div>";
 
-    // SMARTY COMPILE DIRECTORIES
-    $error .= "<div class='box'>Checking SMARTY COMPILE DIRECTORIES: ";
+    // COMPILE DIRECTORIES
+    $error .= "<div class='box'>Checking COMPILE DIRECTORIES: ";
 
-	if (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_writable(P4A_SMARTY_MASK_COMPILE_DIR)) {
-		$ok1 = true;
-	} elseif (!is_dir(P4A_SMARTY_MASK_COMPILE_DIR)) {
-		if (@System::mkDir("-p " . P4A_SMARTY_MASK_COMPILE_DIR)) {
-			$ok1 = true;
+	if (is_dir(P4A_COMPILE_DIR) and is_writable(P4A_COMPILE_DIR)) {
+		$ok = true;
+	} elseif (!is_dir(P4A_COMPILE_DIR)) {
+		if (@System::mkDir("-p " . P4A_COMPILE_DIR)) {
+			$ok = true;
 		} else {
-			$ok1 = false;
+			$ok = false;
 		}
 	} else {
-		$ok1 = false;
+		$ok = false;
 	}
 
-	if (is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
-		$ok2 = true;
-	} elseif (!is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR)) {
-		if (@System::mkDir("-p " . P4A_SMARTY_WIDGET_COMPILE_DIR)) {
-			$ok2 = true;
-		} else {
-			$ok2 = false;
-		}
-	} else {
-		$ok2 = false;
-	}
-
-    if ($ok1 and $ok2) {
+    if ($ok) {
     	$error .= "<span class='green'>OK</span>";
     } else {
     	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_SMARTY_MASK_COMPILE_DIR . "\" and \"" . P4A_SMARTY_WIDGET_COMPILE_DIR . "\" and set them writable.";

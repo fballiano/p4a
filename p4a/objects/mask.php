@@ -87,13 +87,6 @@
 		var $title = NULL;
 
        	/**
-		 * Template engine object.
-		 * @var object
-		 * @access private
-		 */
-		var $smarty = NULL;
-
-       	/**
 		 * Stores opening code for form.
 		 * @var string
 		 * @access private
@@ -136,6 +129,14 @@
 		 * @access private
 		 */
 		var $_temp_css = array();
+		
+		/**
+		 * Temporary variables container.
+		 * These vars are usally in the templates, removed after main
+		 * @var array
+		 * @access private
+		 */
+		var $_temp_vars = array();
 
 		/**
 		 * javascript container.
@@ -143,6 +144,13 @@
 		 * @access private
 		 */
 		var $_javascript = array();
+		
+		/**
+		 * variables used for templates
+		 * @var array
+		 * @access private
+		 */
+		var $_tpl_vars = array();
 
 		/**
 		 * Mask constructor.
@@ -235,31 +243,8 @@
 		 */
 		function useTemplate($template_name)
 		{
-			$this->use_template = TRUE;
+			$this->use_template = true;
 			$this->template_name = $template_name;
-
-			// If smarty is not yes istanced, than we call it.
-			if (! is_object($this->smarty)){
-				$this->smarty = new Smarty();
-
-				$this->smarty->compile_dir = P4A_SMARTY_MASK_COMPILE_DIR;
-				$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
-				$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
-				$this->displayText('theme_path', P4A_THEME_PATH);
-				$this->displayText('root_path', P4A_ROOT_PATH);
-				$this->displayText('mask_open', $this->maskOpen());
-				$this->displayText('mask_close', $this->maskClose());
-			}
-
-			if (file_exists(P4A_SMARTY_MASK_TEMPLATES_DIR . '/' . $this->template_name)) {
-				$this->smarty->template_dir = P4A_SMARTY_MASK_TEMPLATES_DIR;
-				$this->displayText('tpl_path', P4A_SMARTY_MASK_TEMPLATES_PATH . '/' . $this->template_name);
-				$this->displayText('base_url', P4A_SERVER_URL . P4A_SMARTY_MASK_TEMPLATES_PATH . '/' . $this->template_name . '/');
-			}else{
-				$this->smarty->template_dir = P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR;
-				$this->displayText('tpl_path', P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH . '/' . $this->template_name);
-				$this->displayText('base_url', P4A_SERVER_URL . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH . '/' . $this->template_name . '/');
-			}
 		}
 
 		/**
@@ -278,8 +263,8 @@
 		 */
 		function noUseTemplate()
 		{
-			$this->use_template = FALSE;
-			$this->template_name = NULL;
+			$this->use_template = false;
+			$this->template_name = null;
 		}
 
 		/**
@@ -291,8 +276,7 @@
 		 */
 		function display($variable, &$object)
 		{
-// 			unset($this->smarty_var[$variable]);
-			$this->smarty_var[$variable] =& $object;
+			$this->_tpl_vars[$variable] =& $object;
 		}
 
 		 /**
@@ -303,7 +287,7 @@
 		 */
 		function displayText($variable, $text)
 		{
-			$this->smarty_var[$variable] = $text;
+			$this->_tpl_vars[$variable] = $text;
 		}
 
 		/**
@@ -336,27 +320,37 @@
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
 			
-			foreach ($this->smarty_var as $key=>$value) {
-				if (is_object($value)){
-					$value = $value->getAsString();
+			$tpl_container = (object)'';
+			$tpl_container->charset = $charset;
+			$tpl_container->title = $this->getTitle();
+			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
+			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
+			$tpl_container->application_title = $p4a->getTitle();
+			$tpl_container->mask_open = $this->maskOpen();
+			$tpl_container->mask_close = $this->maskClose();
+			
+			if (is_object($this->focus_object)) {
+				$tpl_container->focus_id = $this->focus_object->getId();
+			}
+			
+			foreach ($this->_tpl_vars as $k=>$v) {
+				if (is_object($v)) {
+					$tpl_container->$k = $v->getAsString();
+				} else {
+					$tpl_container->$k = $v;
 				}
-				$this->smarty->assign($key, $value);
+			}
+			
+			foreach ($this->_temp_vars as $k=>$v) {
+				$tpl_container->$k = $v;
 			}
 
-			$this->smarty->assign('charset', $charset);
-			$this->smarty->assign('title', $this->title);
-			$this->smarty->assign('javascript', array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript));
-			$this->smarty->assign('css', array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css));
-
-			if(isset($this->focus_object) and is_object($this->focus_object)){
- 				$this->smarty->assign('focus_id', $this->focus_object->getID());
-			}
-
-			$this->smarty->assign('application_title', $p4a->getTitle());
-			$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
-			$this->smarty->display($path_template);
+			$template = $this->getTemplateName();
+			print P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
+			
 			$this->clearTempCSS();
 			$this->clearTempJavascript();
+			$this->clearTempVars();
 		}
 
 		/**
@@ -365,10 +359,7 @@
 		 */
 		function clearDisplay()
 		{
-			$this->smarty_var = array();
-			$this->smarty->clear_all_assign();
-			unset($this->smarty);
-			$this->useTemplate($this->template_name);
+			$this->_tpl_vars = array();
 		}
 
 		/**
@@ -590,17 +581,16 @@
 		 */
 		function maskOpen()
 		{
-			$this->sOpen  = "";
-			$this->sOpen .= "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
-			$this->sOpen .= "<div>\n";
-			$this->sOpen .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
-			$this->sOpen .= "<input type='hidden' name='_action' value='none' />\n";
-			$this->sOpen .= "<input type='hidden' name='param1' />\n";
-			$this->sOpen .= "<input type='hidden' name='param2' />\n";
-			$this->sOpen .= "<input type='hidden' name='param3' />\n";
-			$this->sOpen .= "<input type='hidden' name='param4' />\n";
+			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
+			$return .= "<div>\n";
+			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
+			$return .= "<input type='hidden' name='_action' value='none' />\n";
+			$return .= "<input type='hidden' name='param1' />\n";
+			$return .= "<input type='hidden' name='param2' />\n";
+			$return .= "<input type='hidden' name='param3' />\n";
+			$return .= "<input type='hidden' name='param4' />\n";
 
-			return $this->sOpen;
+			return $return;
 		}
 
 		/**
@@ -610,8 +600,7 @@
 		 */
 		function maskClose()
 		{
-			$this->sClose = "</div>\n</form>";
-			return $this->sClose;
+			return "</div>\n</form>";
 		}
 
 		/**
@@ -744,6 +733,37 @@
 		function clearTempJavascript()
 		{
 			$this->_temp_javascript = array();
+		}
+		
+		/**
+		 * Add a temporary variable
+		 * @param string		The URI of file.
+		 * @access public
+		 */
+		function addTempVar($name, $value)
+		{
+			$this->_temp_vars[$name] = $value;
+		}
+
+		/**
+		 * Drop a temporary variable
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropTempVar($name)
+		{
+			if(isset($this->_temp_vars[$name])){
+				unset($this->_temp_vars[$name]);
+			}
+		}
+		
+		/**
+		 * Clear temporary vars list
+		 * @access public
+		 */
+		function clearTempVars()
+		{
+			$this->_temp_vars = array();
 		}
 	}
 ?>

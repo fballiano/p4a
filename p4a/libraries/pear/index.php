@@ -1,5 +1,5 @@
 <?php
-die();
+//die();
 /**
  * Installation of PEAR_Frontend_Web:
  *

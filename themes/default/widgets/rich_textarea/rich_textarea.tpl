@@ -1,25 +1,25 @@
-[[$content]]
+{content}
 
-<script type="text/javascript">
-[[$id]] = new FCKeditor("[[$id]]", "[[$width]]", "[[$height]]");
-[[$id]].BasePath = "[[$tpl_path]]/";
-[[$id]].Config["CustomConfigurationsPath"] = "[[$tpl_path]]/p4aconfig.js";
-[[$id]].Config["DefaultLanguage"] = "[[$language]]";
-[[$id]].ToolbarSet = "p4a";
+{_tpl_vars[open_javascript]:h}
+{getId()} = new FCKeditor("{getId()}", "{getWidth()}", "{getHeight()}");
+{getId()}.BasePath = "{_tpl_vars[theme_path]}/widgets/rich_textarea/";
+{getId()}.Config["CustomConfigurationsPath"] = "{_tpl_vars[theme_path]}/widgets/rich_textarea/p4aconfig.js";
+{getId()}.Config["DefaultLanguage"] = "{_temp_vars[language]}";
+{getId()}.ToolbarSet = "p4a";
 
-[[if $file_upload]]
-[[$id]].Config["LinkBrowser"] = true;
-[[$id]].Config["LinkBrowserURL"] = [[$id]].BasePath + 'editor/filemanager/browser/default/browser.html?Connector=connectors/php/connector.php&ServerPath=[[$upload_path]]';
-[[else]]
-[[$id]].Config["LinkBrowser"] = false;
-[[/if]]
+{if:file_upload}
+{getId()}.Config["LinkBrowser"] = true;
+{getId()}.Config["LinkBrowserURL"] = {getId()}.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=connectors/php/connector.php&ServerPath={_temp_vars[upload_path]}';
+{else:}
+{getId()}.Config["LinkBrowser"] = false;
+{end:}
 
-[[if $image_upload]]
-[[$id]].Config["ImageBrowser"] = true;
-[[$id]].Config["ImageBrowserURL"] = [[$id]].BasePath + 'editor/filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php&ServerPath=[[$upload_path]]';
-[[else]]
-[[$id]].Config["ImageBrowser"] = false;
-[[/if]]
+{if:image_upload}
+{getId()}.Config["ImageBrowser"] = true;
+{getId()}.Config["ImageBrowserURL"] = {getId()}.BasePath + 'editor/filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php&ServerPath={_temp_vars[upload_path]}';
+{else:}
+{getId()}.Config["ImageBrowser"] = false;
+{end:}
 
-[[$id]].ReplaceTextarea();
-</script>
+{getId()}.ReplaceTextarea();
+{_tpl_vars[close_javascript]:h}

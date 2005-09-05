@@ -641,8 +641,7 @@
 		 */
 		function composeStringClassStyle()
 		{
-			if ($this->class_style)
-			{
+			if ($this->class_style) {
 				$sClassStyle = 'class="' . $this->class_style . '" ';
 			}
 			return $sClassStyle;
@@ -656,23 +655,15 @@
 		 */
 		function useTemplate($template_name)
 		{
-			$p4a =& p4a::singleton();
 			$this->use_template = true;
 			$this->template_name = $template_name;
 
-			$this->smarty = new Smarty();
-
-			if (file_exists(P4A_SMARTY_WIDGET_TEMPLATES_DIR . '/' . $template_name)){
-				$this->smarty->template_dir = P4A_SMARTY_WIDGET_TEMPLATES_DIR;
-				$this->display('tpl_path', P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . $template_name);
-			}else{
-				$this->smarty->template_dir = P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR;
-				$this->display('tpl_path', P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH . '/' . $template_name);
-			}
-			$this->smarty->compile_dir = P4A_SMARTY_WIDGET_COMPILE_DIR;
-			$this->smarty->left_delimiter = P4A_SMARTY_LEFT_DELIMITER;
-			$this->smarty->right_delimiter = P4A_SMARTY_RIGHT_DELIMITER;
-			$this->display('handheld', $p4a->isHandheld());
+			$p4a =& p4a::singleton();
+			$this->_tpl_vars["handheld"] = $p4a->isHandheld();
+			$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
+			$this->_tpl_vars["close_javascript"] = '</script>';
+			$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
+			$this->_tpl_vars["default_theme_path"] = P4A_DEFAULT_THEME_PATH;
 		}
 
 		/**
@@ -699,9 +690,9 @@
 				$sDisplay = $var_value;
 			}
 
-			if ($this->use_template){
-				$this->smarty->assign($var_name, $sDisplay);
-			}else{
+			if ($this->use_template) {
+				$this->_tpl_vars[$var_name] = $sDisplay;
+			} else {
 				p4a_error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
 			}
 		}
@@ -712,10 +703,7 @@
 		 */
 		function clearDisplay()
 		{
-			$this->smarty_var = array();
-			$this->smarty->clear_all_assign();
-			unset($this->smarty);
-			$this->useTemplate($this->template_name);
+			$this->_tpl_vars = array();
 		}
 
 		/**
@@ -725,10 +713,10 @@
 		 */
 		function fetchTemplate()
 		{
-			if ($this->use_template){
-				$path_template = $this->template_name . '/' . $this->template_name . '.' . P4A_SMARTY_TEMPLATE_EXSTENSION;
-				return $this->smarty->fetch($path_template);
-			}else{
+			if ($this->use_template) {
+				$template = $this->template_name;
+				return P4A_Template_Engine::getAsString($this, "widgets/{$template}/{$template}.tpl");
+			} else {
 				p4a_error("ERROR: Unable to fetch template, first Call \"use_template\".");
 			}
 		}
@@ -794,6 +782,37 @@
 		function onReturnPress($params = NULL)
 		{
 			return $this->actionHandler('onReturnPress', $params);
+		}
+		
+		/**
+		 * Add a temporary variable
+		 * @param string		The URI of file.
+		 * @access public
+		 */
+		function addTempVar($name, $value)
+		{
+			$this->_temp_vars[$name] = $value;
+		}
+
+		/**
+		 * Drop a temporary variable
+		 * @param string		The URI of CSS.
+		 * @access public
+		 */
+		function dropTempVar($name)
+		{
+			if(isset($this->_temp_vars[$name])){
+				unset($this->_temp_vars[$name]);
+			}
+		}
+		
+		/**
+		 * Clear temporary vars list
+		 * @access public
+		 */
+		function clearTempVars()
+		{
+			$this->_temp_vars = array();
 		}
 	}
 ?>

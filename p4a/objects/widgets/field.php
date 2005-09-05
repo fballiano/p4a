@@ -771,16 +771,12 @@
 		function getAsRichTextarea()
 		{
 			$p4a =& P4A::singleton();
-			$p4a->active_mask->addTempJavascript(P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "rich_textarea/fckeditor.js");
+			$p4a->active_mask->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
 			$this->useTemplate('rich_textarea');
-			$this->smarty->get_template_vars();
-			$this->display('id', $this->getID());
-			$this->display('language', $p4a->i18n->getLanguage());
-			$this->display('width', $this->getWidth());
-			$this->display('height', $this->getHeight());
-			$this->display('file_upload', $this->file_upload);
-			$this->display('image_upload', $this->image_upload);
-			$this->display('upload_path', P4A_UPLOADS_PATH);
+			
+			$this->addTempVar("language", $p4a->i18n->getLanguage());
+			$this->addTempVar("upload_path", P4A_UPLOADS_PATH);
+			
 			return $this->fetchTemplate();
 		}
 

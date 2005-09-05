@@ -183,19 +183,6 @@
 	define('P4A_UPLOADS_TMP_DIR', P4A_SERVER_DIR . P4A_UPLOADS_TMP_PATH);
 	define('P4A_UPLOADS_TMP_URL', P4A_SERVER_URL . P4A_UPLOADS_TMP_PATH);
 
-	//Smarty Options Constants
-	if (!defined('P4A_SMARTY_TEMPLATE_EXSTENSION')){
-		define('P4A_SMARTY_TEMPLATE_EXSTENSION', 'tpl');
-	}
-
-	if (!defined('P4A_SMARTY_LEFT_DELIMITER')){
-		define('P4A_SMARTY_LEFT_DELIMITER', '[[');
-	}
-
-	if (!defined('P4A_SMARTY_RIGHT_DELIMITER')){
-		define('P4A_SMARTY_RIGHT_DELIMITER', ']]');
-	}
-
 	//Themes Path
 	if (!defined('P4A_THEMES_PATH')){
 		define('P4A_THEMES_PATH', P4A_ROOT_PATH . '/themes');
@@ -207,33 +194,15 @@
 	}
 
 	//Default Theme Configuration
-	if (!defined('P4A_DEFAULT_THEME_NAME')){
-		define('P4A_DEFAULT_THEME_NAME', 'default');
+	if (!defined('P4A_DEFAULT_THEME_PATH'	)){
+		define('P4A_DEFAULT_THEME_PATH', P4A_THEMES_PATH . '/default');
 	}
 
-		//mask
-	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH'	)){
-		define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/masks');
-	}
-
-	if (!defined('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR')){
+	if (!defined('P4A_DEFAULT_THEME_DIR')){
 		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', P4A_SERVER_DIR . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
+			define('P4A_DEFAULT_THEME_DIR', P4A_SERVER_DIR . P4A_DEFAULT_THEME_PATH);
 		} else {
-			define('P4A_SMARTY_DEFAULT_MASK_TEMPLATES_DIR', dirname(P4A_ROOT_DIR) . P4A_SMARTY_DEFAULT_MASK_TEMPLATES_PATH);
-		}
-	}
-
-		//widgets
-	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH')){
-		define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH', P4A_THEMES_PATH . '/' . P4A_DEFAULT_THEME_NAME . '/widgets');
-	}
-
-	if (!defined('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR')){
-		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', P4A_SERVER_DIR  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
-		} else {
-			define('P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_DIR', dirname(P4A_ROOT_DIR)  . P4A_SMARTY_DEFAULT_WIDGET_TEMPLATES_PATH );
+			define('P4A_DEFAULT_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_DEFAULT_THEME_PATH);
 		}
 	}
 
@@ -243,38 +212,14 @@
 	}
 
 	if (!defined('P4A_THEME_PATH')){
-		define('P4A_THEME_PATH', P4A_THEMES_PATH . '/' . P4A_THEME_NAME);
+		define('P4A_THEME_PATH', P4A_THEMES_PATH . _DS_ . P4A_THEME_NAME);
 	}
 
-	if (!defined('P4A_THEME_DIR')){
+	if (!defined('P4A_THEME_DIR')) {
 		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_THEME_DIR', P4A_ROOT_DIR . P4A_THEME_PATH);
+			define('P4A_THEME_DIR', P4A_ROOT_DIR . _DS_ . 'themes' . _DS_ . P4A_THEME_NAME);
 		} else {
 			define('P4A_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_THEME_PATH);
-		}
-	}
-		//mask
-	if (!defined('P4A_SMARTY_MASK_TEMPLATES_PATH')){
-		define('P4A_SMARTY_MASK_TEMPLATES_PATH', P4A_THEME_PATH . '/masks');
-	}
-
-	if (!defined('P4A_SMARTY_MASK_TEMPLATES_DIR')){
-		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_SMARTY_MASK_TEMPLATES_DIR', P4A_THEME_DIR . '/masks');
-		} else {
-			define('P4A_SMARTY_MASK_TEMPLATES_DIR', dirname(P4A_THEME_DIR) . '/masks');
-		}
-	}
-		//widgets
-	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_PATH')){
-		define('P4A_SMARTY_WIDGET_TEMPLATES_PATH', P4A_THEME_PATH . '/widgets');
-	}
-
-	if (!defined('P4A_SMARTY_WIDGET_TEMPLATES_DIR')){
-		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', P4A_THEME_DIR . '/widgets');
-		} else {
-			define('P4A_SMARTY_WIDGET_TEMPLATES_DIR', dirname(P4A_THEME_DIR) . '/widgets');
 		}
 	}
 
@@ -297,30 +242,20 @@
 	}
 
 	if (!defined('P4A_ICONS_URL')){
-		//define('P4A_ICONS_URL', P4A_SERVER_URL . P4A_ICONS_PATH);
 		define('P4A_ICONS_URL', P4A_ROOT_URL . P4A_ICONS_PATH);
 	}
 
 	if (!defined('P4A_ICONS_EXTENSION')) {
 		define('P4A_ICONS_EXTENSION', 'png');
 	}
-
-	//Smarty Compile Dir
-	if (!defined('P4A_SMARTY_MASK_COMPILE_DIR')) {
-		define("P4A_SMARTY_MASK_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)) . "_masks");
+	
+	//Template Compile Dir
+	if (!defined('P4A_COMPILE_DIR')) {
+		define("P4A_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)));
 	}
 
-	if (! (is_dir(P4A_SMARTY_MASK_COMPILE_DIR) and is_readable(P4A_SMARTY_MASK_COMPILE_DIR) and is_writable(P4A_SMARTY_MASK_COMPILE_DIR))) {
-		mkdir(P4A_SMARTY_MASK_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_SMARTY_MASK_COMPILE_DIR . " or directory is not readable/writable.");
-	}
-
-
-	if (!defined('P4A_SMARTY_WIDGET_COMPILE_DIR')) {
-		define("P4A_SMARTY_WIDGET_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)) . "_widgets");
-	}
-
-	if (!(is_dir(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_readable(P4A_SMARTY_WIDGET_COMPILE_DIR) and is_writable(P4A_SMARTY_WIDGET_COMPILE_DIR))) {
-		mkdir(P4A_SMARTY_WIDGET_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_SMARTY_WIDGET_COMPILE_DIR . " or directory is not readable/writable.");
+	if (!(is_dir(P4A_COMPILE_DIR) and is_readable(P4A_COMPILE_DIR) and is_writable(P4A_COMPILE_DIR))) {
+		mkdir(P4A_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_COMPILE_DIR . " or directory is not readable/writable.");
 	}
 
 	//I18N
@@ -340,7 +275,7 @@
 		define('P4A_APPLICATION_LOCALES_URL', P4A_APPLICATION_URL . '/i18n');
 	}
 
-	// Force handheld rendering
+	//Force handheld rendering
 	if (!defined('P4A_FORCE_HANDHELD_RENDERING')) {
 		define('P4A_FORCE_HANDHELD_RENDERING', false);
 	}
