@@ -33,22 +33,45 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package P4A_Base_Mask
+ * @package P4A_Filesystem_Navigator
  */
 
 /**
- * 
+ * This widget allows a tree navigation within filesystem.
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package P4A_Filesystem_Navigator
  */
 class P4A_Filesystem_Navigator extends P4A_Frame
 {
+	/**
+	 * @var P4A_Filesystem_Navigator_Folders
+	 * access public
+	 */
 	var $folders = null;
+	
+	/**
+	 * @var P4A_Fieldset
+	 * access public
+	 */
 	var $f_folders = null;
 	
+	/**
+	 * @var P4A_Filesystem_Navigator_Files
+	 * access public
+	 */
 	var $files = null;
+	
+	/**
+	 * @var P4A_Fieldset
+	 * access public
+	 */
 	var $f_files = null;
 	
+	/**
+	 * The constructor.
+	 * @param string		The name of the widget
+	 * @access public
+	 */
 	function P4A_Filesystem_Navigator($name)
 	{
 		parent::P4A_Frame($name);
@@ -69,7 +92,12 @@ class P4A_Filesystem_Navigator extends P4A_Frame
 		$this->anchor($this->f_folders);
 		$this->anchorLeft($this->f_files);
 	}
-	
+
+	/**
+	 * Renders the widget's HTML and returns it.
+	 * @access public
+	 * @return string
+	 */
 	function getAsString()
 	{
 		$p4a =& p4a::singleton();
@@ -80,20 +108,66 @@ class P4A_Filesystem_Navigator extends P4A_Frame
 }
 
 /**
- * 
+ * This widget prints the tree of folders in the base folder.
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package P4A_Filesystem_Navigator
  */
 class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 {
+	/**
+	 * The base folder for exploration
+	 * @var string
+	 * @access private
+	 */
 	var $_base = P4A_UPLOADS_DIR;
+	
+	/**
+	 * The currently selected folder.
+	 * @var string
+	 * @access private
+	 */
 	var $_current = "";
+	
+	/**
+	 * The P4A_Field used to type in the folder name.
+	 * @var P4A_Field
+	 * @access public
+	 */
 	var $create_folder_field = null;
+	
+	/**
+	 * The P4A_Button used to create a folder
+	 * @var P4A_Button
+	 * @access public
+	 */
 	var $create_folder_button = null;
+	
+	/**
+	 * The P4A_Button used to delete a folder.
+	 * @var P4A_Button
+	 * @access public
+	 */
 	var $delete_folder_button = null;
+	
+	/*
+	 * The P4A_Message used to print warnings.
+	 * @var P4A_Message
+	 * @access public
+	 */
 	var $message = null;
+	
+	/**
+	 * The text printed when no folder are present.
+	 * @var string
+	 * @access public
+	 */
 	var $no_folders_message = "";
 
+	/**
+	 * The constructor.
+	 * @param string		The name of the widget
+	 * @access public
+	 */
 	function P4A_Filesystem_Navigator_Folders($name)
 	{
 		parent::P4A_Widget($name);
@@ -113,21 +187,41 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$this->build("P4A_Message", "message");
 	}
 	
+	/**
+	 * Sets the base folder for the exploration.
+	 * @param string		The folder absolute path.
+	 * @access public
+	 */
 	function setBase($folder)
 	{
 		$this->_base = $folder;
 	}
 	
+	/**
+	 * Returns the widget's base folder.
+	 * @return string
+	 * @access public
+	 */
 	function getBase()
 	{
 		return $this->_base;
 	}
 	
+	/**
+	 * Returns the currently selected folder.
+	 * @return string
+	 * @access public
+	 */
 	function getCurrent()
 	{
 		return $this->_current;
 	}
 	
+	/**
+	 * Sets the currently selected folder.
+	 * @param string		The folder path
+	 * @access public
+	 */
 	function setCurrent($folder)
 	{
 		if ((strpos($folder, $this->getBase()) === 0) and is_dir($folder)) {
@@ -135,12 +229,21 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		}
 	}
 	
+	/**
+	 * Resets the currently selected folder pointer.
+	 * @access public
+	 */
 	function resetCurrent()
 	{
 		$this->_current = "";
 	}
 	
-	function hasDirectories()
+	/**
+	 * Returns true if the currently selected folder has folders inside itself.
+	 * @return boolean
+	 * @access public
+	 */
+	function hasFolders()
 	{
 		$base = $this->getBase();
 		$handle = opendir($base);
@@ -153,6 +256,11 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		return false;
 	}
 	
+	/**
+	 * Renders the widget's HTML and returns it.
+	 * @access public
+	 * @return string
+	 */
 	function getAsString($folder = null)
 	{
 		if (!$this->isVisible()) {
@@ -189,6 +297,11 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		return $return;
 	}
 	
+	/**
+	 * Returns the list of files within the currently selected folder.
+	 * @return array
+	 * @access public
+	 */
 	function getFiles()
 	{
 		$return = array();
@@ -206,6 +319,11 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		return $return;
 	}
 	
+	/**
+	 * The onClick event interceptor.
+	 * @param array		All params passed by the HTML form.
+	 * @access private
+	 */
 	function onClick($params)
 	{
 		$p4a =& p4a::singleton();
@@ -215,6 +333,10 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$parent->files->setCurrent(null);
 	}
 	
+	/**
+	 * Creates a folder.
+	 * @access public
+	 */
 	function createFolder()
 	{
 		$folder = $this->create_folder_field->getNewValue();
@@ -228,6 +350,10 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$this->create_folder_field->setNewValue(null);
 	}
 	
+	/**
+	 * Deletes the currently selected folder and all files.
+	 * @access public
+	 */
 	function deleteFolder()
 	{
 		$folder = $this->getCurrent();
@@ -237,18 +363,52 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 }
 
 /**
- * 
+ * This widget prints the list of files in the current directory.
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package P4A_Filesystem_Navigator
  */
 class P4A_Filesystem_Navigator_Files extends P4A_Widget
 {
+	/**
+	 * The currently selected file name.
+	 * @var string
+	 * @access public
+	 */
 	var $_current = "";
+	
+	/**
+	 * The P4A_Message used to print out warnings.
+	 * @var P4A_Message
+	 * @access public
+	 */
 	var $message = null;
+	
+	/**
+	 * The P4A_Field that uploads a file
+	 * @var P4A_Field
+	 * @access public
+	 */
 	var $upload_field = null;
+	
+	/**
+	 * The P4A_Button that deletes a file.
+	 * @var P4A_Button
+	 * @access public
+	 */
 	var $delete_file_button = null;
+	
+	/**
+	 * The text printed when there's no file.
+	 * @var string
+	 * access public
+	 */
 	var $no_files_message = "";
 	
+	/**
+	 * The constructor.
+	 * @param string		The name of the widget
+	 * @access public
+	 */
 	function P4A_Filesystem_Navigator_Files($name)
 	{
 		parent::P4A_Widget($name);
@@ -266,11 +426,21 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		$this->intercept($this->delete_file_button, "onClick", "deleteFile");
 	}
 	
+	/**
+	 * Returns the currently selected file name.
+	 * @return string
+	 * @access public
+	 */
 	function getCurrent()
 	{
 		return $this->_current;
 	}
 	
+	/**
+	 * Sets the currently selected file.
+	 * @param string		The file name
+	 * @access public
+	 */
 	function setCurrent($file)
 	{
 		$p4a =& p4a::singleton();
@@ -282,11 +452,20 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		}
 	}
 	
+	/**
+	 * Resets the curretly selected file pointer.
+	 * @access public
+	 */
 	function resetCurrent()
 	{
 		$this->_current = "";
 	}
 	
+	/**
+	 * Renders the widget's HTML and returns it.
+	 * @access public
+	 * @return string
+	 */
 	function getAsString()
 	{
 		if (!$this->isVisible()) {
@@ -318,6 +497,11 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		return $return;
 	}
 	
+	/**
+	 * The onClick event interceptor.
+	 * @param array		All params passed by the HTML form.
+	 * @access private
+	 */
 	function onClick($params)
 	{
 		$file = $params[0];
@@ -325,6 +509,11 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		$this->actionHandler("afterClick");
 	}
 	
+	/**
+	 * The afterUpload event interceptor.
+	 * @param array		All params passed by the HTML form.
+	 * @access private
+	 */
 	function afterUpload()
 	{
 		$p4a =& p4a::singleton();
@@ -335,6 +524,10 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		$this->upload_field->setNewValue(null);
 	}
 	
+	/**
+	 * Deletes the currently selected file.
+	 * @access public
+	 */
 	function deleteFile()
 	{
 		$p4a =& p4a::singleton();

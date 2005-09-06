@@ -323,8 +323,6 @@
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
-			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
-			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 			$tpl_container->application_title = $p4a->getTitle();
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
@@ -344,6 +342,9 @@
 			foreach ($this->_temp_vars as $k=>$v) {
 				$tpl_container->$k = $v;
 			}
+			
+			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
+			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
 			$template = $this->getTemplateName();
 			print P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");

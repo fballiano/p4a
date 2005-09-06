@@ -16,10 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * To contact the authors write to:									<br>
+ * To contact the authors write to:								<br>
  * CreaLabs															<br>
  * Via Medail, 32													<br>
- * 10144 Torino (Italy)												<br>
+ * 10144 Torino (Italy)											<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
@@ -37,6 +37,8 @@
  */
 
 /**
+ * The template engine for P4A.
+ * This class manages the template engine that P4A uses to render some widgets.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -44,7 +46,7 @@
 class P4A_Template_Engine
 {
 	/**
-	 * Connects to the configured database.
+	 * Retrieve a singleton instance of the P4A template engine.
 	 * @access public
 	 */
 	function &singleton()
@@ -54,6 +56,8 @@ class P4A_Template_Engine
 			$options = array();
 			$options["compileDir"] = P4A_COMPILE_DIR;
 			$options["allowPHP"] = true;
+			$options["globals"] = true;
+			$options["globalfunctions"] = true;
 			$template_engine =& new HTML_Template_Flexy($options);
 			$template_engine->options["templateDir"] = array();
 			$template_engine->options["templateDir"][] = P4A_THEME_DIR;
@@ -62,6 +66,12 @@ class P4A_Template_Engine
 		return $template_engine;
 	}
 	
+	/**
+	 * Renders a template and returns the HTML.
+	 * @param object		The object that contain all the variables that the template should display.
+	 * @param string		The path (with filename and extension) of the template (relative to P4A_THEME_DIR)
+	 * @access public
+	 */
 	function getAsString(&$object, $file_relative_path)
 	{
 		$engine =& P4A_Template_Engine::singleton();

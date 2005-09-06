@@ -37,7 +37,7 @@
  */
 
 /**
- * 
+ * This widget allows a tree navigation within a P4A_DB_Source.
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package P4A_DB_Navigator
  */
@@ -46,7 +46,13 @@ class P4A_DB_Navigator extends P4A_Widget
 	var $source = null;
 	var $recursor = "";
 	var $description = "";
+	var $expand_all = true;
 
+	/**
+	 * The constructor
+	 * @param string		The name of the widget
+	 * @access public
+	 */
 	function P4A_DB_Navigator($name)
 	{
 		parent::P4A_Widget($name);
@@ -54,19 +60,54 @@ class P4A_DB_Navigator extends P4A_Widget
 		$this->intercept($this, "onClick", "onClick");
 	}
 	
+	/**
+	 * Sets the source of the tree, it must be a P4A_DB_Source.
+	 * @param P4A_DB_Source	The DB source to navigate.
+	 * @access public
+	 */
 	function setSource(&$source)
 	{
 		$this->source =& $source;
 	}
 	
+	/**
+	 * Sets the field name used to recursively navigate the P4A_DB_Source.
+	 * @param
+	 * @access public
+	 */
 	function setRecursor($field_name)
 	{
 		$this->recursor = $field_name;
 	}
 	
+	/**
+	 * Sets the field name used to print out the description in the tree.
+	 * @param string		The field name
+	 * @access public
+	 */
 	function setDescription($field_name)
 	{
 		$this->description = $field_name;
+	}
+	
+	/**
+	 * Sets if the tree is expanded or not.
+	 * @param boolean		The value
+	 * @access public
+	 */
+	function expandAll($value = true)
+	{
+		$this->expand_all = $value;
+	}
+	
+	/**
+	 * Sets if the tree is collapsed or not.
+	 * @param boolean		The value
+	 * @access public
+	 */
+	function collapse($value = true)
+	{
+		$this->expand_all = !$value;
 	}
 	
 	function getAsString($id = null)
@@ -110,13 +151,22 @@ class P4A_DB_Navigator extends P4A_Widget
 				$return .= "<li><a href='#' $actions>{$section[$this->description]}</a>";
 			}
 			
-			$return .= $this->getAsString($section[$pk]);
+			if ($this->expand_all) {
+				$return .= $this->getAsString($section[$pk]);
+			} else {
+				
+			}
 			$return .= "</li>\n";
 		}
 		$return .= "</ul>";
 		return $return;
 	}
 
+	/**
+	 * OnClick event interceptor.
+	 * @param array		All the parameters passed by the HTML form
+	 * @access private
+	 */
 	function onClick($params)
 	{
 		$position = $params[0];

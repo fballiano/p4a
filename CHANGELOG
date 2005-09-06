@@ -1,10 +1,13 @@
 0.29
+- Template engine is now Flexy, many constants in config.php were dropped and template were heavily changed
+- ie7 library was updated to 0.9
+- P4A_REQUIRE_APPLICATION now supports application name or application dir
 - fixed P4A_Table_Col visibility issues
 - fixed a bug about charset in mask's default template
 - fixed a bug within P4A_Mask constructor (internal variable _name is now lowercase)
-- ie7 library was updated to 0.9
 - PEAR packages were updated
-- code cleanup
+- P4A_Table::isRollable(), P4A_Table::enableRollup(), P4A_Table::disableRollup(), P4A_Table::rollup(), P4A_Table::expand() and P4A_Table::collapse() were removed
+- code cleanup, documentation added
 
 0.28
 - removed some unused CSS from screen.css

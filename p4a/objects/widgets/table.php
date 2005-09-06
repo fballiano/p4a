@@ -89,21 +89,17 @@
 		var $cols = array();
 
 		/**
-		 * Defines if the table is rollable or not.
-		 * @var boolean
+		 * A title (caption) for the table.
+		 * @var string
 		 * @access private
 		 */
-		var $rollable = TRUE;
-
-		/**
-		 * Decides if the table is collapsed or expanded.
-		 * @var boolean
-		 * @access private
-		 */
-		var $expand = TRUE;
-
 		var $_title = "";
 
+		/**
+		 * Automatically add the navigation bar?
+		 * @var boolean
+		 * @access private
+		 */
 		var $_auto_navigation_bar = TRUE;
 
 		/**
@@ -126,16 +122,14 @@
 		 */
 		function setTitle($title)
 		{
-			/*if ($this->title_bar === NULL){
-				$this->build("p4a_link",'title_bar');
-			}
-			$this->title_bar->setValue($title);
-			$this->title_bar->addAction('onClick');
-			$this->intercept($this->title_bar, 'onClick', 'rollup');
-			*/
 			$this->_title = $title;
 		}
 
+		/**
+		 * Returns the title of the table.
+		 * @return string
+		 * @access public
+		 */
 		function getTitle()
 		{
 			return $this->_title;
@@ -155,9 +149,6 @@
 
 			$this->build("p4a_table_rows", "rows");
 			$this->addNavigationBar();
-// 			if ($this->data->getNumPages() > 1){
-// 				$this->addNavigationBar();
-// 			}
 		}
 
 		/**
@@ -190,15 +181,13 @@
 		 */
 		function getAsString()
 		{
-			$this->clearDisplay();
 			$p4a =& P4A::singleton();
 
 			if (!$this->isVisible()) {
 				return '';
 			}
 
-			$this->display('expand', $this->expand);
-			$this->display('table_properties', $this->composeStringProperties());
+			$this->addTempVar('table_properties', $this->composeStringProperties());
 			$width = $this->getStyleProperty("width");
 			if (substr($width,-2) == "px") {
 				$width = substr($width,0,-2);
@@ -207,26 +196,26 @@
 			} else {
 				$width = "95%";
 			}
-			$this->display('table_width', $width);
+			$this->addTempVar('table_width', $width);
 
 			if ($this->toolbar !== NULL and
 				$this->toolbar->isVisible()) {
-				$this->display('toolbar', $this->toolbar->getAsString());
+				$this->addTempVar('toolbar', $this->toolbar->getAsString());
 			}
 
 			if ($this->navigation_bar !== NULL) {
 				if ($this->_auto_navigation_bar) {
 					if ($this->data->getNumPages() > 1) {
-						$this->display('navigation_bar', $this->navigation_bar);
+						$this->addTempVar('navigation_bar', $this->navigation_bar->getAsString());
 					}
 				} else {
 					if ( $this->navigation_bar->isVisible()) {
-						$this->display('navigation_bar', $this->navigation_bar);
+						$this->addTempVar('navigation_bar', $this->navigation_bar->getAsString());
 					}
 				}
 			}
 
-			$this->display("title", $this->getTitle());
+			$this->addTempVar("title", $this->getTitle());
 
 			if($this->_show_headers) {
 				$headers = array();
@@ -271,30 +260,32 @@
 
 					$i++;
 				}
-				$this->display('headers', $headers);
+				$this->addTempVar('headers', $headers);
 			}
 
 			if ($this->data->getNumRows() > 0){
-				$this->display('table_rows_properties', $this->rows->composeStringProperties());
-				$this->display('table_rows', $this->rows->getRows());
+				$this->addTempVar('table_rows_properties', $this->rows->composeStringProperties());
+				$this->addTempVar('table_rows', $this->rows->getRows());
 			}else{
-				$this->display('table_rows_properties', NULL);
-				$this->display('table_rows', NULL);
+				$this->addTempVar('table_rows_properties', NULL);
+				$this->addTempVar('table_rows', NULL);
 			}
 
 			$visible_cols = $this->getVisibleCols();
 
 			if (sizeof($visible_cols)>0) {
-				$this->display('table_cols', 'TRUE');
+				$this->addTempVar('table_cols', TRUE);
 			} else {
-				$this->display('table_cols', NULL);
+				$this->addTempVar('table_cols', NULL);
 			}
 			
-			$this->display('i18n', $p4a->i18n->messages->get());
+			$this->addTempVar('i18n', $p4a->i18n->messages->get());
 			return $this->fetchTemplate();
 		}
 
-		//todo
+		/**
+		 * TO BE IMPLEMENTED
+		 */
 		function newToolbar($toolbar)
 		{
 			unset($this->toolbar);
@@ -305,7 +296,6 @@
 		 * Adds a generic toolbar to the table.
 		 * @access public
 		 */
-
  		function addToolbar(&$toolbar)
 		{
 			unset($this->toolbar);
@@ -318,9 +308,9 @@
 		 */
 		function showToolbar()
 		{
-			if (is_object($this->toolbar)){
+			if (is_object($this->toolbar)) {
 				$this->toolbar->setVisible();
-			}else{
+			} else {
 				P4A_Error('NO TOOLBAR');
 			}
 		}
@@ -331,9 +321,9 @@
 		 */
 		function hideToolbar()
 		{
-			if (is_object($this->toolbar)){
+			if (is_object($this->toolbar)) {
 				$this->toolbar->setInvisible();
-			}else{
+			} else {
 				P4A_Error('NO TOOLBAR');
 			}
 		}
@@ -342,7 +332,8 @@
 		 * Adds the navigation bar to the table.
 		 * @access public
 		 */
-		function addNavigationBar(){
+		function addNavigationBar()
+		{
 			$this->build("p4a_table_navigation_bar", "navigation_bar");
 		}
 
@@ -352,7 +343,7 @@
 		 */
 		function showNavigationBar()
 		{
-			if ($this->navigation_bar === NULL ){
+			if ($this->navigation_bar === NULL) {
 				$this->addNavigationBar();
 			}
 			$this->navigation_bar->setVisible();
@@ -365,7 +356,7 @@
 		 */
 		function hideNavigationBar()
 		{
-			if ($this->navigation_bar !== NULL ){
+			if ($this->navigation_bar !== NULL) {
 				$this->navigation_bar->setInvisible();
 			}
 			$this->_auto_navigation_bar = FALSE;
@@ -375,8 +366,9 @@
 		 * Sets the title bar visible
 		 * @access public
 		 */
-		function showTitleBar(){
-			if ($this->title_bar !== NULL){
+		function showTitleBar()
+		{
+			if ($this->title_bar !== NULL) {
 				$this->setTitle($this->getName());
 			}
 			$this->title_bar->setVisible();
@@ -399,60 +391,6 @@
 		function hideHeaders()
 		{
 			$this->_show_headers = FALSE;
-		}
-
-		/**
-		 * Returns true if the table is rollable
-		 * @access public
-		 */
-		function isRollable()
-		{
-			return $this->rollable;
-		}
-
-		/**
-		 * Enable table roolup when clicking on table title.
-		 * @access public
-		 */
-		function enableRollup()
-		{
-			$this->rollable = true;
-		}
-
-		/**
-		 * Disable table roolup when clicking on table title.
-		 * @access public
-		 */
-		function disableRollup()
-		{
-			$this->rollable = false;
-		}
-
-		/**
-		 * Sets the table collapsed if it was expanded or sets the table expanded if it was collapsed.
-		 * @access public
-		 */
-		function rollup()
-		{
-			$this->expand = ! $this->expand;
-		}
-
-		/**
-		 * Sets the table expanded.
-		 * @access public
-		 */
-		function expand()
-		{
-			$this->expand = TRUE;
-		}
-
-		/**
-		 * Sets the table collapsed.
-		 * @access public
-		 */
-		function collapse()
-		{
-			$this->expand = FALSE;
 		}
 
 		/**
@@ -877,7 +815,7 @@
 		 * @param string		Measure unit
 		 * @access public
 		 */
-		function setMaxHeight( $height, $unit = 'px' )
+		function setMaxHeight($height, $unit = 'px')
 		{
 			$this->setStyleProperty('max-height', $height . $unit);
 		}
@@ -893,11 +831,8 @@
 
 			$aReturn = array();
 			$parent =& $p4a->getObject($this->getParentID());
-
 			$rows = $parent->data->page(null, false);
-
 			$aCols = $parent->getVisibleCols();
-
 			$limit = $parent->data->getPageLimit();
 			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
@@ -911,6 +846,13 @@
 			{
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
+				
+				if ($i%2 == 0) {
+					$aReturn[$i]['row']['even'] = true;
+				} else {
+					$aReturn[$i]['row']['even'] = false;
+				}
+				
 				if ($row_number + $offset + 1 == $parent->data->getRowNumber()) {
 					$aReturn[$i]['row']['active'] = TRUE;
 				} else {
@@ -922,6 +864,7 @@
 // 						continue;
 // 					}
 					$aReturn[$i]['cells'][$j]['action'] = $action;
+					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
@@ -935,7 +878,6 @@
 						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					}
 
-					$aReturn[$i]['cells'][$j]['row_number'] = $i;
 					$j++;
 				}
 				$i++;

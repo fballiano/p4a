@@ -40,18 +40,16 @@
 	 *
 	 */
 	$dir = dirname(__FILE__);
+	
 	//Configuration container
 	require_once "$dir/config.php";
 
 	// Changing inclusion path
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
-	unset($include_path[ $dot_key ]);
+	unset($include_path[$dot_key]);
 	$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
-
-	//Core
-	require_once "$dir/p4a_object.php";
 
 	//Libraries
 	require_once "$dir/libraries/standard.php";
@@ -63,6 +61,7 @@
 	require_once "$dir/libraries/number.php";
 
 	//Core
+	require_once "$dir/p4a_object.php";
 	require_once "$dir/p4a_error.php";
 	require_once "$dir/p4a_i18n.php";
 	require_once "$dir/p4a_db.php";
@@ -115,7 +114,6 @@
 	require_once "$dir/objects/widgets/toolbars/quit.php";
 
 	//We can have more applications on same site and same browser instance
-
 	session_name('sn_' . preg_replace('~\W~', '_', P4A_APPLICATION_NAME) . '_includes');
 
 	//Applications Objects Includes
@@ -123,7 +121,11 @@
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
 		$_SESSION['P4A_INCLUDES'] = array();
 		if (defined("P4A_REQUIRE_APPLICATION")) {
-			$objects_dir = P4A_ROOT_DIR . '/applications/'. P4A_REQUIRE_APPLICATION .'/objects';
+			if (strpos("/", P4A_REQUIRE_APPLICATION) !== false) {
+				$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
+			} else {
+				$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';
+			}
 			P4A_Include_Objects($objects_dir);	
 		}
 		$objects_dir = P4A_APPLICATION_DIR . '/objects';

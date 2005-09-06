@@ -231,8 +231,7 @@
 			if ($result) {
 				$amp_key = $a[0];
 				$key = $a[2];
-				$label = str_replace($amp_key,"<span class=\"accesskey\">$key</span>",
-						 $label);
+				$label = str_replace($amp_key,"<span class=\"accesskey\">$key</span>", $label);
 				$this->setProperty("accesskey",$key);
 			}
 
@@ -659,6 +658,8 @@
 			$this->template_name = $template_name;
 
 			$p4a =& p4a::singleton();
+			print "CIAO";
+			$this->_tpl_vars["id"] = $this->getID();
 			$this->_tpl_vars["handheld"] = $p4a->isHandheld();
 			$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
 			$this->_tpl_vars["close_javascript"] = '</script>';
@@ -714,8 +715,24 @@
 		function fetchTemplate()
 		{
 			if ($this->use_template) {
+				$tpl_container = (object)'';
+				$tpl_container->width = $this->getWidth();
+				$tpl_container->height = $this->getHeight();
+				
+				foreach ($this->_tpl_vars as $k=>$v) {
+					if (is_object($v)) {
+						$tpl_container->$k = $v->getAsString();
+					} else {
+						$tpl_container->$k = $v;
+					}
+				}
+				
+				foreach ($this->_temp_vars as $k=>$v) {
+					$tpl_container->$k = $v;
+				}
+
 				$template = $this->template_name;
-				return P4A_Template_Engine::getAsString($this, "widgets/{$template}/{$template}.tpl");
+				return P4A_Template_Engine::getAsString($tpl_container, "widgets/{$template}/{$template}.tpl");
 			} else {
 				p4a_error("ERROR: Unable to fetch template, first Call \"use_template\".");
 			}
