@@ -214,7 +214,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 		$type->setType("select");
 		$type->setSource($data_type);
 		$type->allowNull("");
-		if (get_class($wdg) == "p4a_field") {
+		if (strtolwer(get_class($wdg)) == "p4a_field") {
 			$type->setValue($wdg->getType());
 		}
 		$type->addAction("onChange");

@@ -225,7 +225,7 @@
 				$order_field	= NULL;
 				$order_mode		= NULL;
 
-				if ($this->data->getObjectType() == 'p4a_db_source') {
+				if ($this->data->getObjectType() == 'P4A_DB_Source') {
 					$is_orderable = true;
 
 					if ($this->data->hasOrder()) {
@@ -237,9 +237,6 @@
 
 				$visible_cols = $this->getVisibleCols();
 				foreach($visible_cols as $col_name) {
-// 					if (!$this->cols->$col_name->isVisible()) {
-// 						continue;
-// 					}
 					$col =& $this->cols->$col_name;
 					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
@@ -255,7 +252,7 @@
 					$field_name = $data_field->getName();
 					$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
 					if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
-						 $headers[$i]['order'] = $order_mode;
+						 $headers[$i]['order'] = strtolower($order_mode);
 					}
 
 					$i++;
@@ -693,7 +690,7 @@
 		 * Sets the column as formatted.
 		 * @access public
 		 */
-		function setFormatted( $value = true )
+		function setFormatted($value = true)
 		{
 			$this->formatted = $value;
 		}
@@ -715,7 +712,7 @@
 		 * @param string	The formatter name.
 		 * @param string	The format name.
 		 */
-		function setFormat( $formatter_name, $format_name )
+		function setFormat($formatter_name, $format_name)
 		{
 			$this->formatter_name = $formatter_name;
 			$this->format_name = $format_name;
@@ -757,7 +754,7 @@
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
 
-			if ($parent->data->getObjectType() == 'p4a_db_source') {
+			if ($parent->data->getObjectType() == 'P4A_DB_Source') {
 
 				$data_field =& $parent->data->fields->{$this->getName()};
 				$field_name = $data_field->getName();

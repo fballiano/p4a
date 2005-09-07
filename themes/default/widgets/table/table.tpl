@@ -1,7 +1,6 @@
 <div class="border_box table_container" flexy:raw="{table_properties:h}">
 	<table class="table" style="width: {table_width}" >
 		<caption flexy:if="title">{title}</caption>
-
 		<thead flexy:if="headers">
 			<tr>
 				<th class="select">&nbsp;</th>
