@@ -658,7 +658,6 @@
 			$this->template_name = $template_name;
 
 			$p4a =& p4a::singleton();
-			print "CIAO";
 			$this->_tpl_vars["id"] = $this->getID();
 			$this->_tpl_vars["handheld"] = $p4a->isHandheld();
 			$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
