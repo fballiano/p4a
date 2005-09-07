@@ -43,10 +43,40 @@
  */
 class P4A_DB_Navigator extends P4A_Widget
 {
+	/**
+	 * The P4A_DB_Source used for navigation
+	 * @var P4A_DB_Source
+	 * @access private
+	 */
 	var $source = null;
+	
+	/**
+	 * The recursion field name
+	 * @var string
+	 * @access private
+	 */
 	var $recursor = "";
+	
+	/**
+	 * The description field name
+	 * @var string
+	 * @access private
+	 */
 	var $description = "";
+	
+	/**
+	 * Expand whole tree or collapse?
+	 * @var boolean
+	 * @access private
+	 */
 	var $expand_all = true;
+	
+	/**
+	 * Trim after this number of characters
+	 * @var integer
+	 * @access private
+	 */
+	var $trim = 0;
 
 	/**
 	 * The constructor
@@ -91,6 +121,16 @@ class P4A_DB_Navigator extends P4A_Widget
 	}
 	
 	/**
+	 * Trims description after x chars (0 = disabled).
+	 * @param integer		Num of chars
+	 * @access public
+	 */
+	function setTrim($chars)
+	{
+		$this->trim = $chars;
+	}
+	
+	/**
 	 * Sets if the tree is expanded or not.
 	 * @param boolean		The value
 	 * @access public
@@ -118,10 +158,8 @@ class P4A_DB_Navigator extends P4A_Widget
 		
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
-		$return = "";
 		
 		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_db_navigator.css");
-		
 		$obj_id = $this->getId();
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
@@ -129,16 +167,29 @@ class P4A_DB_Navigator extends P4A_Widget
 		$current = $this->source->fields->{$pk}->getValue();
 		$all = $this->source->getAll();
 		
+		return $this->_getAsString(null, $all, $obj_id, $table, $pk, $order, $current);
+	}
+	
+	function _getAsString($id, &$all, $obj_id, $table, $pk, $order, $current, $recurse = true)
+	{
+		$p4a =& p4a::singleton();
+		$db =& p4a_db::singleton();
+		
 		if (empty($id)) {
 			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
 		} else {
 			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
 		}
 		
+		if (empty($roots)) {
+			return "";
+		}
+		
 		$return .= "<ul class=\"p4a_db_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		foreach ($roots as $section) {
 			if ($section[$pk] == $current) {
-				$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>{$section[$this->description]}";
+				$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>";
+				$return .= $this->_trim($section[$this->description]);
 			} else {
 				foreach ($all as $key=>$record) {
 					if ($record[$pk] == $section[$pk]) {
@@ -148,17 +199,43 @@ class P4A_DB_Navigator extends P4A_Widget
 				}
 			
 				$actions = $this->composeStringActions($position);
-				$return .= "<li><a href='#' $actions>{$section[$this->description]}</a>";
+				$description = $this->_trim($section[$this->description]);
+				$return .= "<li><a href='#' $actions>{$description}</a>";
 			}
 			
-			if ($this->expand_all) {
-				$return .= $this->getAsString($section[$pk]);
-			} else {
-				
+			if ($recurse) {
+				if ($this->expand_all) {
+					$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $order, $current);
+				} else {
+					$path = $this->getPath($current, $table, $pk);
+					for ($i=0; $i<sizeof($path); $i++) {
+						if ($section[$pk] == $path[$i][$pk]) {
+							$return .= $this->_getAsString($path[$i][$pk], $all, $obj_id, $table, $pk, $order, $current);
+							break;
+						}
+					}
+				}
 			}
 			$return .= "</li>\n";
 		}
 		$return .= "</ul>";
+		return $return;
+	}
+	
+	function getPath($id, $table, $pk)
+	{
+		$db =& p4a_db::singleton();
+		
+		$section = $db->getRow("SELECT * FROM $table WHERE $pk = '$id'");
+		$return = array();
+		$return[] = $section;
+		
+		if (empty($section[$this->recursor])) {
+			return $return;
+		} else {
+			return array_merge($this->getPath($section[$this->recursor], $table, $pk), $return);
+		}
+		
 		return $return;
 	}
 
@@ -171,6 +248,23 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$position = $params[0];
 		$this->source->row($position);
+	}
+	
+	/**
+	 * Trims a text after a fixed number of characters.
+	 * @param string		The text to be trimmed
+	 * @access private
+	 */
+	function _trim($text)
+	{
+		if ($this->trim > 0) {
+			$len = strlen($text);
+			$text = substr($text, 0, $this->trim);
+			if ($len>$this->trim) {
+				$text .= "...";
+			}
+		}
+		return $text;
 	}
 }
 
