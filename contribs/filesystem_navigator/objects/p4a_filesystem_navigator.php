@@ -122,6 +122,13 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 	var $_base = P4A_UPLOADS_DIR;
 	
 	/**
+	 * The base path for previewing
+	 * @var string
+	 * @access private
+	 */
+	var $_base_path = P4A_UPLOADS_PATH;
+	
+	/**
 	 * The currently selected folder.
 	 * @var string
 	 * @access private
@@ -208,6 +215,26 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 	}
 	
 	/**
+	 * Sets the base path for previewing.
+	 * @param string		The folder absolute path.
+	 * @access public
+	 */
+	function setBasePath($path)
+	{
+		$this->_base_path = $path;
+	}
+	
+	/**
+	 * Returns the widget's base path.
+	 * @return string
+	 * @access public
+	 */
+	function getBasePath()
+	{
+		return $this->_base_path;
+	}
+	
+	/**
 	 * Returns the currently selected folder.
 	 * @return string
 	 * @access public
@@ -261,27 +288,22 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 	 * @access public
 	 * @return string
 	 */
-	function getAsString($folder = null)
+	function getAsString($folder = "")
 	{
 		if (!$this->isVisible()) {
 			return "";
 		}
 		
+		$base = $this->getBase();
 		$obj_id = $this->getId();
 		$return = "";
 		$class = "";
-		
-		if (empty($folder)) {
-			$folder = $this->getBase();
-		}
-		
-		$handle = opendir($folder);
+
+		$handle = opendir("$base/$folder");
 		$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		while (false !== ($file = readdir($handle))) {
-			if (is_dir("$folder/$file") and ($file != ".") and ($file != "..") and ($file != "CVS") and ("$folder/$file" != P4A_UPLOADS_TMP_DIR)) {
-				$current = $this->getCurrent();
-				
-				if ($this->getCurrent() == "$folder/$file") {
+			if (is_dir("$base/$folder/$file") and ($file != ".") and ($file != "..") and ($file != "CVS") and ("$base/$folder/$file" != P4A_UPLOADS_TMP_DIR)) {
+				if ($this->getCurrent() == str_replace("//", "/", "$base/$folder/$file")) {
 					$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>{$file}";
 				} else {
 					$actions = $this->composeStringActions("$folder/$file");
@@ -329,7 +351,7 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$p4a =& p4a::singleton();
 		$parent =& $p4a->getObject($this->getParentID());
 		$folder = $params[0];
-		$this->setCurrent($folder);
+		$this->setCurrent($this->getBase() . $folder);
 		$parent->files->setCurrent(null);
 	}
 	
@@ -405,6 +427,13 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 	var $no_files_message = "";
 	
 	/**
+	 * Adds a preview button
+	 * @var boolean
+	 * @access private
+	 */
+	var $_preview = false;
+	
+	/**
 	 * The constructor.
 	 * @param string		The name of the widget
 	 * @access public
@@ -424,6 +453,16 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		$this->build("P4A_Button", "delete_file_button");
 		$this->delete_file_button->requireConfirmation("onClick");
 		$this->intercept($this->delete_file_button, "onClick", "deleteFile");
+	}
+	
+	/**
+	 * Adds a preview button
+	 * @param boolean		Use the preview or not
+	 * @access public
+	 */
+	function enablePreview($value = true)
+	{
+		$this->_preview = $value;
 	}
 	
 	/**
@@ -475,8 +514,11 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 		$p4a =& p4a::singleton();
 		$parent =& $p4a->getObject($this->getParentID());
 		$files = $parent->folders->getFiles();
+		$base_path = $parent->folders->getBasePath();
+		$base_dir = $parent->folders->getBase();
+		$current_dir = $parent->folders->getCurrent();
 		$return = "";
-		
+
 		if (empty($files)) {
 			$this->message->setValue($this->no_files_message);
 		} else {
@@ -488,7 +530,13 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 					$return .= "<li class='active_node'>$file</li>";
 				} else {
 					$actions = $this->composeStringActions($file);
-					$return .= "<li><a href='#' $actions>$file</a></li>";
+					if ($this->_preview) {
+						$dir = $base_path . str_replace($base_dir, "", $current_dir);
+						$preview = " <a href='$dir/$file' target='_blank'>[preview]</a>";
+					} else {
+						$preview = "";
+					}
+					$return .= "<li><a href='#' $actions>$file</a>$preview</li>";
 				}
 			}
 			$return .= "</ul>";

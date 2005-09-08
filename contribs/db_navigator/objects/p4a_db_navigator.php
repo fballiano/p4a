@@ -174,6 +174,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
+		$return = "";
 		
 		if (empty($id)) {
 			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
