@@ -136,6 +136,13 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 	var $_current = "";
 	
 	/**
+	 * Expand whole tree or collapse?
+	 * @var boolean
+	 * @access private
+	 */
+	var $expand_all = true;
+	
+	/**
 	 * The P4A_Field used to type in the folder name.
 	 * @var P4A_Field
 	 * @access public
@@ -284,6 +291,26 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 	}
 	
 	/**
+	 * Sets if the tree is expanded or not.
+	 * @param boolean		The value
+	 * @access public
+	 */
+	function expandAll($value = true)
+	{
+		$this->expand_all = $value;
+	}
+	
+	/**
+	 * Sets if the tree is collapsed or not.
+	 * @param boolean		The value
+	 * @access public
+	 */
+	function collapse($value = true)
+	{
+		$this->expand_all = !$value;
+	}
+	
+	/**
 	 * Renders the widget's HTML and returns it.
 	 * @access public
 	 * @return string
@@ -302,15 +329,22 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$handle = opendir("$base/$folder");
 		$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		while (false !== ($file = readdir($handle))) {
-			if (is_dir("$base/$folder/$file") and ($file != ".") and ($file != "..") and ($file != "CVS") and ("$base/$folder/$file" != P4A_UPLOADS_TMP_DIR)) {
-				if ($this->getCurrent() == str_replace("//", "/", "$base/$folder/$file")) {
+			$full_path = str_replace("//", "/", "$base/$folder/$file");
+			if (is_dir($full_path) and ($file != ".") and ($file != "..") and ($file != "CVS") and ($full_path != P4A_UPLOADS_TMP_DIR)) {
+				if ($this->getCurrent() == $full_path) {
 					$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>{$file}";
 				} else {
 					$actions = $this->composeStringActions("$folder/$file");
 					$return .= "<li><a href='#' $actions>{$file}</a>";
 				}
-			
-				$return .= $this->getAsString("$folder/$file");
+				
+				if ($this->expand_all) {
+					$return .= $this->getAsString("$folder/$file");
+				} else {
+					if (strpos($this->getCurrent(), $full_path) !== false) {
+						$return .= $this->getAsString("$folder/$file");
+					}
+				}
 				$return .= "</li>\n";
 			}
 		}
