@@ -694,7 +694,7 @@
 			$id = $this->getID();
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
-			$template_path = P4A_SMARTY_WIDGET_TEMPLATES_PATH . '/' . "date_calendar";
+			$template_path = P4A_THEME_PATH . "/widgets/date_calendar";
 
 			$this->setProperty('id', $id);
 
