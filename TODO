@@ -11,6 +11,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- need test on template override and P4A_REQUIRE_APPLICATIONS
 - remove parent id from products_catalogue:categories
 - add possibility to have custom made locale files
 - print stylesheet for rich_textarea
