@@ -225,7 +225,7 @@
 				$order_field	= NULL;
 				$order_mode		= NULL;
 
-				if ($this->data->getObjectType() == 'P4A_DB_Source') {
+				if (strtolower($this->data->getObjectType()) == 'p4a_db_source') {
 					$is_orderable = true;
 
 					if ($this->data->hasOrder()) {
@@ -754,8 +754,7 @@
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
 
-			if ($parent->data->getObjectType() == 'P4A_DB_Source') {
-
+			if (strtolower($parent->data->getObjectType()) == 'p4a_db_source') {
 				$data_field =& $parent->data->fields->{$this->getName()};
 				$field_name = $data_field->getName();
 				$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
