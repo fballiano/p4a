@@ -560,16 +560,17 @@ class P4A_Filesystem_Navigator_Files extends P4A_Widget
 			$current = $this->getCurrent();
 			
 			foreach ($files as $file) {
+				if ($this->_preview) {
+					$dir = $base_path . str_replace($base_dir, "", $current_dir);
+					$preview = " <a href='$dir/$file' target='_blank'>[preview]</a>";
+				} else {
+					$preview = "";
+				}
+				
 				if ($file == $current) {
-					$return .= "<li class='active_node'>$file</li>";
+					$return .= "<li class='active_node'>{$file}{$preview}</li>";
 				} else {
 					$actions = $this->composeStringActions($file);
-					if ($this->_preview) {
-						$dir = $base_path . str_replace($base_dir, "", $current_dir);
-						$preview = " <a href='$dir/$file' target='_blank'>[preview]</a>";
-					} else {
-						$preview = "";
-					}
 					$return .= "<li><a href='#' $actions>$file</a>$preview</li>";
 				}
 			}
