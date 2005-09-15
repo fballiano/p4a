@@ -76,7 +76,7 @@ class P4A_Template_Engine
 	{
 		$engine =& P4A_Template_Engine::singleton();
 		$engine->compile($file_relative_path);
-		return $engine->bufferedOutputObject(&$object);
+		return $engine->bufferedOutputObject($object);
 	}
 }
 
