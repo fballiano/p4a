@@ -61,7 +61,6 @@ class P4A_Template_Engine
 			$template_engine =& new HTML_Template_Flexy($options);
 			$template_engine->options["templateDir"] = array();
 			$template_engine->options["templateDir"][] = P4A_THEME_DIR;
-			$template_engine->options["templateDir"][] = P4A_DEFAULT_THEME_DIR;
 		}
 		return $template_engine;
 	}
