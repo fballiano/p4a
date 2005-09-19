@@ -6,13 +6,13 @@
 				<th class="select">&nbsp;</th>
 				{foreach:headers,header}
 				<th flexy:if="header[action]" class="font3 align_center clickable" flexy:raw="{header[properties]:h}" flexy:raw="{header[action]:h}">
-					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{default_theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
-					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{default_theme_path}/widgets/table/images/spacer.gif" alt="" />
+					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
+					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
 					<a href="#" flexy:raw="{header[action]:h}">{header[value]}</a>
 				</th>
 				<th flexy:if="!header[action]" class="font3 align_center" flexy:raw="{header[properties]:h}">
-					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{default_theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
-					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{default_theme_path}/widgets/table/images/spacer.gif" alt="" />
+					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
+					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
 					{header[value]}
 				</th>
 				{end:}
@@ -22,8 +22,8 @@
 		<tbody flexy:raw="{table_rows_properties:h}" class="overflow" flexy:if="table_rows">
 			<tr flexy:foreach="table_rows,row">
 			    <td>
-					<img flexy:if="row[row][active]" src="{default_theme_path}/widgets/table/images/select.gif" width="18" height="15" alt="{i18n[selected]}" />
-					<img flexy:if="!row[row][active]" src="{default_theme_path}/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
+					<img flexy:if="row[row][active]" src="{theme_path}/widgets/table/images/select.gif" width="18" height="15" alt="{i18n[selected]}" />
+					<img flexy:if="!row[row][active]" src="{theme_path}/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
 			    </td>
 
 				{foreach:row[cells],cell}

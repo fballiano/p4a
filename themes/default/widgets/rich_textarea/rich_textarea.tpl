@@ -2,8 +2,8 @@
 
 {open_javascript:h}
 {id} = new FCKeditor("{id}", "{width}", "{height}");
-{id}.BasePath = "{default_theme_path}/widgets/rich_textarea/";
-{id}.Config["CustomConfigurationsPath"] = "{default_theme_path}/widgets/rich_textarea/p4aconfig.js";
+{id}.BasePath = "{theme_path}/widgets/rich_textarea/";
+{id}.Config["CustomConfigurationsPath"] = "{theme_path}/widgets/rich_textarea/p4aconfig.js";
 {id}.Config["DefaultLanguage"] = "{language}";
 {id}.ToolbarSet = "p4a";
 

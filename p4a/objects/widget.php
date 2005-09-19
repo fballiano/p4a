@@ -663,7 +663,6 @@
 			$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
 			$this->_tpl_vars["close_javascript"] = '</script>';
 			$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
-			$this->_tpl_vars["default_theme_path"] = P4A_DEFAULT_THEME_PATH;
 		}
 
 		/**

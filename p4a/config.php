@@ -193,19 +193,6 @@
 		define('P4A_THEMES_DIR', P4A_ROOT_DIR . P4A_THEMES_PATH);
 	}
 
-	//Default Theme Configuration
-	if (!defined('P4A_DEFAULT_THEME_PATH'	)){
-		define('P4A_DEFAULT_THEME_PATH', P4A_THEMES_PATH . '/default');
-	}
-
-	if (!defined('P4A_DEFAULT_THEME_DIR')){
-		if (P4A_IN_DOCUMENT_ROOT) {
-			define('P4A_DEFAULT_THEME_DIR', P4A_SERVER_DIR . P4A_DEFAULT_THEME_PATH);
-		} else {
-			define('P4A_DEFAULT_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_DEFAULT_THEME_PATH);
-		}
-	}
-
 	//Current Theme Configuration
 	if (!defined('P4A_THEME_NAME')){
 		define('P4A_THEME_NAME', 'default');
@@ -234,7 +221,6 @@
 
 	if (!defined('P4A_ICONS_DIR')){
 		if (P4A_IN_DOCUMENT_ROOT) {
-			//define('P4A_ICONS_DIR', P4A_SERVER_DIR . P4A_ICONS_PATH);
 			define('P4A_ICONS_DIR', P4A_ROOT_DIR . P4A_ICONS_PATH);
 		} else {
 			define('P4A_ICONS_DIR', dirname(P4A_ROOT_DIR) . P4A_ICONS_PATH);
