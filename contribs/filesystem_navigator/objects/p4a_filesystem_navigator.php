@@ -325,10 +325,17 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 		$obj_id = $this->getId();
 		$return = "";
 		$class = "";
+		$dirs = array();
 
 		$handle = opendir("$base/$folder");
-		$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		while (false !== ($file = readdir($handle))) {
+			$files[] = $file;
+		}
+		closedir($handle);
+		natcasesort($files);
+		
+		$return .= "<ul class=\"p4a_filesystem_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
+		foreach ($files as $file) {
 			$full_path = str_replace("//", "/", "$base/$folder/$file");
 			if (is_dir($full_path) and ($file != ".") and ($file != "..") and ($file != "CVS") and ($full_path != P4A_UPLOADS_TMP_DIR)) {
 				if ($this->getCurrent() == $full_path) {
@@ -349,7 +356,6 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 			}
 		}
 		$return .= "</ul>";
-		closedir($handle);
 		return $return;
 	}
 	
@@ -371,7 +377,8 @@ class P4A_Filesystem_Navigator_Folders extends P4A_Widget
 			}
 			closedir($handle);
 		}
-		
+
+		natcasesort($return);
 		return $return;
 	}
 	
