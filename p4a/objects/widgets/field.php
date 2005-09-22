@@ -776,6 +776,8 @@
 			
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
 			$this->addTempVar("upload_path", P4A_UPLOADS_PATH);
+			$this->addTempVar("file_upload", $this->file_upload);
+			$this->addTempVar("image_upload", $this->image_upload);
 			
 			return $this->fetchTemplate();
 		}

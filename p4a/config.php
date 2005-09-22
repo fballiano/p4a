@@ -199,7 +199,7 @@
 	}
 
 	if (!defined('P4A_THEME_PATH')){
-		define('P4A_THEME_PATH', P4A_THEMES_PATH . _DS_ . P4A_THEME_NAME);
+		define('P4A_THEME_PATH', P4A_THEMES_PATH . '/' . P4A_THEME_NAME);
 	}
 
 	if (!defined('P4A_THEME_DIR')) {
