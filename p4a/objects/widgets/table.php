@@ -277,7 +277,9 @@
 			}
 			
 			$this->addTempVar('i18n', $p4a->i18n->messages->get());
-			return $this->fetchTemplate();
+			$return = $this->fetchTemplate();
+			$this->clearTempVars();
+			return $return;
 		}
 
 		/**

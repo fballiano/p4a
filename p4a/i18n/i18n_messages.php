@@ -56,13 +56,11 @@
 		 * Class constructor.
 		 * @param string				The desired language.
 		 * @param string				The desired country.
-		 * @param string				Optional the desired codepage.
 		 * @access private
 		 */
-		function &P4A_I18N_Messages($language, $country, $codepage = NULL)
+		function &P4A_I18N_Messages($language, $country)
 		{
-			$codepage = ($codepage ? ".$codepage" : "");
-			$msg_file = "{$language}/{$country}{$codepage}.php";
+			$msg_file = "{$language}/{$country}.php";
 			include(dirname(__FILE__) . "/messages/{$msg_file}");
 
 			$application_localization = P4A_APPLICATION_LOCALES_DIR . "/{$msg_file}";

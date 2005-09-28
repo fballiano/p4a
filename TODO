@@ -11,9 +11,10 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- setDefaultValue(0) does not work
+- mbstring.func_overload
+- remove fckeditor and use tinymce, integrate fckeditor file manager to browse/upload files inside, maybe remove "media" from fckeditor file manager
 - check if the p4a_listener object is used, otherwise remove it
-- need test on P4A_REQUIRE_APPLICATIONS
-- remove parent id from products_catalogue:categories
 - add possibility to have custom made locale files
 - print stylesheet for rich_textarea
 - check P4A_Field::getAsRadio and clean it (remove P4A_Sheet, maybe use div)

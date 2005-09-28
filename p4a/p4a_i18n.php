@@ -67,13 +67,6 @@
 		var $country = NULL;
 
 		/**
-		 * Here we store the current codepage.
-		 * @var string
-		 * @access private
-		 */
-		var $codepage = NULL;
-
-		/**
 		 * Here we store the current charset. Default is UTF-8.
 		 * @var string
 		 * @access private
@@ -148,27 +141,19 @@
 		{
 			$this->language = strtolower(substr($locale, 0, 2));
 			$this->country = strtoupper(substr($locale, 3, 2));
-			$this->codepage = strtoupper(substr($locale, 6));
 			$this->locale = "{$this->language}_{$this->country}";
-
-			if ($this->codepage) {
-				$this->locale .= ".{$this->codepage}";
+			
+			if (strlen($locale)>5) {
+				$this->charset = substr($locale, 6);
 			}
 
 			$this->setSystemLocale();
 			$this->loadFormats();
 
-			unset( $this->messages ) ;
-			$this->messages =& new p4a_i18n_messages($this->language, $this->country, $this->codepage);
-
-			unset( $this->numbers ) ;
-			$this->numbers =& new p4a_i18n_numbers($this->numbers_formats);
-
-			unset( $this->currency ) ;
-			$this->currency =& new p4a_i18n_currency($this->currency_formats);
-
-			unset( $this->datetime ) ;
-			$this->datetime =& new p4a_i18n_datetime($this->datetime_formats, $this->messages->messages);
+			$this->messages = new p4a_i18n_messages($this->language, $this->country);
+			$this->numbers = new p4a_i18n_numbers($this->numbers_formats);
+			$this->currency = new p4a_i18n_currency($this->currency_formats);
+			$this->datetime = new p4a_i18n_datetime($this->datetime_formats, $this->messages->messages);
 		}
 
 		/**
@@ -180,6 +165,10 @@
 			setlocale(LC_ALL, $this->locale);
 			setlocale(LC_NUMERIC, "C");
 			setlocale(LC_MONETARY, "C");
+			
+			if (extension_loaded('mbstring')) {
+				mb_internal_encoding($this->charset);
+			}
 		}
 
 		/**
@@ -238,20 +227,15 @@
 		 */
 		function loadFormats()
 		{
-			$cp = ($this->codepage ? ".$this->codepage" : "");
-			include(dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$cp}.php");
-
-			if (isset($text_formats['charset'])) {
-				$this->charset = $text_formats['charset'];
+			$charset = "";
+			if ($this->charset != "UTF-8") {
+				$charset = ".{$this->charset}";
 			}
-			unset($text_formats);
+			include(dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$charset}.php");
 
 			$this->numbers_formats = $numbers_formats;
-			unset($numbers_formats);
 			$this->datetime_formats = $datetime_formats;
-			unset($datetime_formats);
 			$this->currency_formats = $currency_formats;
-			unset($currency_formats);
 		}
 
 		/**
@@ -264,8 +248,7 @@
 		 */
 		function autoFormat($value, $type)
 		{
-			switch($type)
-			{
+			switch($type) {
 				case 'date':
 					$value = $this->datetime->formatDateDefault($value);
 					break;
@@ -299,8 +282,7 @@
 		 */
 		function autoUnformat($value, $type)
 		{
-			switch($type)
-			{
+			switch($type) {
 				case 'date':
 					$value = $this->datetime->unformatDateDefault($value);
 					break;

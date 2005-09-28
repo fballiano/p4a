@@ -121,7 +121,7 @@
 	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
 		$_SESSION['P4A_INCLUDES'] = array();
 		if (defined("P4A_REQUIRE_APPLICATION")) {
-			if (strpos("/", P4A_REQUIRE_APPLICATION) !== false) {
+			if (strpos(P4A_REQUIRE_APPLICATION, "/") !== false) {
 				$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
 			} else {
 				$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';

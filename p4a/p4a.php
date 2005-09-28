@@ -40,7 +40,6 @@
 	 */
 
 	//Setting PHP error reporting
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	error_reporting(E_ALL);
 
 	//Disabling magic_quotes_runtime (default)

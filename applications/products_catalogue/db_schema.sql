@@ -1,17 +1,16 @@
-CREATE TABLE categories (
-  category_id INTEGER UNSIGNED NOT NULL,
-  parent_id INTEGER UNSIGNED NULL,
-  description TEXT NOT NULL,
-  visible BOOL NOT NULL,
-  PRIMARY KEY(category_id)
-)
-TYPE=InnoDB;
-
 CREATE TABLE brands (
   brand_id INTEGER UNSIGNED NOT NULL,
   description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(brand_id)
+)
+TYPE=InnoDB;
+
+CREATE TABLE categories (
+  category_id INTEGER UNSIGNED NOT NULL,
+  description TEXT NOT NULL,
+  visible BOOL NOT NULL,
+  PRIMARY KEY(category_id)
 )
 TYPE=InnoDB;
 
@@ -30,15 +29,7 @@ CREATE TABLE products (
   description TEXT NOT NULL,
   PRIMARY KEY(product_id),
   INDEX products_FKIndex1(category_id),
-  INDEX products_FKIndex2(brand_id),
-  FOREIGN KEY(category_id)
-    REFERENCES categories(category_id)
-      ON DELETE NO ACTION
-      ON UPDATE CASCADE,
-  FOREIGN KEY(brand_id)
-    REFERENCES brands(brand_id)
-      ON DELETE NO ACTION
-      ON UPDATE CASCADE
+  INDEX products_FKIndex2(brand_id)
 )
 TYPE=InnoDB;
 
