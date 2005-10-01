@@ -148,15 +148,15 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_group;
 	}
 
-	function addOrder($order, $direction = P4A_ORDER_ASCENDING)
+	function addOrder($field, $direction = P4A_ORDER_ASCENDING)
 	{
-		$this->_order[] = array($order, $direction);
+		$this->_order[$field] = $direction;
 	}
 
-	function setOrder($order, $direction = P4A_ORDER_ASCENDING)
+	function setOrder($field, $direction = P4A_ORDER_ASCENDING)
 	{
 		$this->_order = array();
-		$this->addOrder($order, $direction);
+		$this->addOrder($field, $direction);
 	}
 
 	function getOrder()
@@ -167,6 +167,15 @@ class P4A_DB_Source extends P4A_Data_Source
 	function hasOrder()
 	{
 		return (sizeof($this->_order) > 0);
+	}
+	
+	function dropOrder($field = null)
+	{
+		if ($field === null) {
+			$this->_order = array();
+		} else {
+			unset($this->_order[$field]);
+		}
 	}
 
 	function setQuery($query)
@@ -407,30 +416,28 @@ class P4A_DB_Source extends P4A_Data_Source
 			$new_order_array = array();
 			if ($order = $this->getOrder()){
 				$where_order = "";
-				foreach($order as $o){
-					$field = $o[0];
-					$direction = strtoupper($o[1]);
-
+				foreach($order as $field=>$direction){
+					$direction = strtoupper($direction);
 					$dot_pos = strpos($field, '.');
 
-					if($dot_pos){
+					if ($dot_pos) {
 						$short_fld = substr($field, $dot_pos + 1);
-					}else{
+					} else {
 						$short_fld = $field;
 					}
 
-					if ($this->fields->$short_fld->getAliasOf()){
+					if ($this->fields->$short_fld->getAliasOf()) {
 						$long_fld = $this->fields->$short_fld->getAliasOf();
-					}else{
-						$long_fld = $this->fields->$short_fld->getTable() . "." . $this->fields->$short_fld->getName();
+					} else {
+						$long_fld = $this->fields->$short_fld->getTable() . '.' . $this->fields->$short_fld->getName();
 					}
 
-					if ( $direction == P4A_ORDER_ASCENDING){
-						$where_order .= " ($long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' or $long_fld IS NULL) AND";
-					}else{
+					if ($direction == P4A_ORDER_ASCENDING) {
+						$where_order .= " ($long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' OR $long_fld IS NULL) AND";
+					} else {
 						$where_order .= " $long_fld >= '" . addslashes($this->fields->$short_fld->getValue()) . "' AND";
 					}
-					$new_order_array[] = array($long_fld, $direction);
+					$new_order_array[$long_fld] = $direction;
 				}
 
 				$where_order = substr($where_order, 0, -4);
@@ -762,8 +769,8 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		if ($order){
 			$query .= "ORDER BY ";
-			foreach($order as $o){
-				$query .= "$o[0] $o[1],";
+			foreach($order as $field=>$direction){
+				$query .= "$field $direction,";
 			}
 			$query = substr($query,0, -1) . " ";
 		}

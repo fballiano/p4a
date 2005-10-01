@@ -179,7 +179,7 @@
 					$msg = htmlentities("[$accesskey] $msg");
 				}
 
-				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
+				$footer .= "\" width=\"{$this->_size}\" height=\"{$this->_size}\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
 				$footer .= ' />';
 
 				if ($enabled) {

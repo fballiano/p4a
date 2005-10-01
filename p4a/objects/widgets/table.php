@@ -230,8 +230,7 @@
 
 					if ($this->data->hasOrder()) {
     					$order			= $this->data->getOrder();
-    					$order_field	= $order[0][0];
-    					$order_mode		= $order[0][1];
+    					list($order_field, $order_mode)	= each($order);
 					}
 				}
 

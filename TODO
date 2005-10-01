@@ -12,6 +12,7 @@
 ----------------------
 
 - setDefaultValue(0) does not work
+- pay attention that trans_sid is disabled
 - mbstring.func_overload
 - remove fckeditor and use tinymce, integrate fckeditor file manager to browse/upload files inside, maybe remove "media" from fckeditor file manager
 - check if the p4a_listener object is used, otherwise remove it

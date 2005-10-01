@@ -3,6 +3,8 @@
 - ie7 library was updated to 0.9
 - P4A_REQUIRE_APPLICATION now supports application name or application dir
 - mb_internal_encoding is set to UTF-8 if mbstring extension is available
+- P4A_DB_Source::dropOrder() was added
+- fixed P4A_Button::getAsString(), when icon is rendered, width and height are printed (now we can only have square icons)
 - fixed P4A_Table_Col visibility issues
 - fixed a bug about charset in mask's default template
 - fixed a bug within P4A_Mask constructor (internal variable _name is now lowercase)
