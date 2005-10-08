@@ -193,6 +193,7 @@ class Products extends P4A_Mask
 		$fields->big_photo->setType("image");
 
 		$fields->description->setType("rich_textarea");
+		$fields->description->enableUpload();
 	}
 
 	function saveRow()

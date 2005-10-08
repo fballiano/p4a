@@ -158,20 +158,12 @@
 		var $encryption_type = 'md5';
 
 		/**
-		 * Is image upload enabled on rich text area?
+		 * Is upload enabled on rich text area?
 		 * This is disabled by default for security reasons, enable it only after a well done permission check.
 		 * @var		boolean
 		 * @access	private
 		 */
-		var $image_upload = false;
-
-		/**
-		 * Is file upload enabled on rich text area?
-		 * This is disabled by default for security reasons, enable it only after a well done permission check.
-		 * @var		boolean
-		 * @access	private
-		 */
-		var $file_upload = false;
+		var $upload = false;
 
 		/**
 		 * Class constructor.
@@ -771,13 +763,12 @@
 		function getAsRichTextarea()
 		{
 			$p4a =& P4A::singleton();
-			$p4a->active_mask->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
+			$p4a->active_mask->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 			$this->useTemplate('rich_textarea');
 			
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
 			$this->addTempVar("upload_path", P4A_UPLOADS_PATH);
-			$this->addTempVar("file_upload", $this->file_upload);
-			$this->addTempVar("image_upload", $this->image_upload);
+			$this->addTempVar("upload", $this->upload);
 			
 			return $this->fetchTemplate();
 		}
@@ -1367,14 +1358,9 @@
 			}
 		}
 
-		function enableImageUpload($enable = true)
+		function enableUpload($enable = true)
 		{
-			$this->image_upload = $enable;
-		}
-
-		function enableFileUpload($enable = true)
-		{
-			$this->file_upload = $enable;
+			$this->upload = $enable;
 		}
 	}
 ?>

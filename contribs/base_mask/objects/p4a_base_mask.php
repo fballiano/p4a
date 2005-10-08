@@ -56,6 +56,10 @@ class P4A_Base_Mask extends P4A_Mask
 		$this->build("p4a_message", "warning");
 		$this->frame->anchorCenter($this->warning);
 		
+		$this->build("p4a_message", "info");
+		$this->info->setIcon("info");
+		$this->frame->anchorCenter($this->info);
+		
 		$this->display("main", $this->frame);
 	}
 	

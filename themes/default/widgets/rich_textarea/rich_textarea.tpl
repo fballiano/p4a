@@ -1,25 +1,34 @@
 {content}
 
 {open_javascript:h}
-{id} = new FCKeditor("{id}", "{width}", "{height}");
-{id}.BasePath = "{theme_path}/widgets/rich_textarea/";
-{id}.Config["CustomConfigurationsPath"] = "{theme_path}/widgets/rich_textarea/p4aconfig.js";
-{id}.Config["DefaultLanguage"] = "{language}";
-{id}.ToolbarSet = "p4a";
 
-{if:file_upload}
-{id}.Config["LinkBrowser"] = true;
-{id}.Config["LinkBrowserURL"] = {id}.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=connectors/php/connector.php&ServerPath={upload_path}';
-{else:}
-{id}.Config["LinkBrowser"] = false;
+var p4apopup;
+var p4apopup_field;
+
+tinyMCE.init({
+	mode: "exact",
+	elements : "{id}",
+	theme: "advanced",
+	language: "en",
+	plugins: "table,advhr,advimage,advlink,emotions,preview,flash,searchreplace,print,paste,directionality,fullscreen,noneditable,contextmenu",
+	theme_advanced_buttons1: "cut,copy,paste,pastetext,pasteword,separator,undo,redo,separator,search,replace,separator,ltr,rtl,separator,charmap,separator,removeformat,cleanup,separator,code,preview,fullscreen,print,separator,help",
+	theme_advanced_buttons2: "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,formatselect,separator,sub,sup,bullist,numlist,separator,outdent,indent",
+	theme_advanced_buttons3: "tablecontrols,separator,,link,unlink,anchor,image,separator,visualaid,flash,advhr",
+	theme_advanced_toolbar_location: "top",
+	theme_advanced_toolbar_align: "left",
+	theme_advanced_statusbar_location: "bottom",
+	{if:upload}file_browser_callback: "{id}fileBrowserCallBack",{end:}
+	auto_cleanup_word: true,
+	cleanup_on_startup: true,
+	relative_urls: false
+});
+
+{if:upload}
+function {id}fileBrowserCallBack(field_name, url, type, win) {
+	p4apopup_field = field_name;
+	p4apopup = win;
+	window.open("../filemanager/browser/default/browser.html?Connector=connectors/php/connector.php&ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
+}
 {end:}
 
-{if:image_upload}
-{id}.Config["ImageBrowser"] = true;
-{id}.Config["ImageBrowserURL"] = {id}.BasePath + 'editor/filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php&ServerPath={upload_path}';
-{else:}
-{id}.Config["ImageBrowser"] = false;
-{end:}
-
-{id}.ReplaceTextarea();
 {close_javascript:h}

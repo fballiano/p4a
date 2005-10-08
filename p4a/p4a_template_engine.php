@@ -55,12 +55,11 @@ class P4A_Template_Engine
 		if(!isset($template_engine)) {
 			$options = array();
 			$options["compileDir"] = P4A_COMPILE_DIR;
+			$options["templateDir"] = P4A_THEME_DIR;
 			$options["allowPHP"] = true;
 			$options["globals"] = true;
 			$options["globalfunctions"] = true;
 			$template_engine =& new HTML_Template_Flexy($options);
-			$template_engine->options["templateDir"] = array();
-			$template_engine->options["templateDir"][] = P4A_THEME_DIR;
 		}
 		return $template_engine;
 	}

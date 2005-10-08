@@ -11,13 +11,11 @@
 -- IMPORTANT THINGS --
 ----------------------
 
-- setDefaultValue(0) does not work
+- setDefaultValue(0) does not work, we need setDefaultValue("0") because somewhere there's an empty check
 - pay attention that trans_sid is disabled
 - mbstring.func_overload
-- remove fckeditor and use tinymce, integrate fckeditor file manager to browse/upload files inside, maybe remove "media" from fckeditor file manager
 - check if the p4a_listener object is used, otherwise remove it
 - add possibility to have custom made locale files
-- print stylesheet for rich_textarea
 - check P4A_Field::getAsRadio and clean it (remove P4A_Sheet, maybe use div)
 - check the new P4A_Menu and clean it (position is used/useful? parent is used/useful?) maybe change the addItem, using build?
 - do something with file upload on FCKEditor, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
@@ -31,7 +29,6 @@
 -- FAR FUTURE --
 ----------------
 
-- add and test rich_textarea spell check
 - make toolbars work well with handhelds (if handheld render toolbar as buttons hiding unuseful buttons?)
 - migrate to I18Nv2? (suspended because of the iconv dependence)
 - find standard libraries to format/unformat dates

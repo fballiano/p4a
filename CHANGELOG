@@ -1,3 +1,10 @@
+0.30
+- TinyMCE rich text editor was introduced instead FCKEditor
+- FCKEditor file browser/upload was integrated in tinyMCE
+- P4A_Field::enableUpload() was added
+- P4A_Field::enableFileUpload() and P4A_Field::enableImageUpload() were removed
+- various bugfixes and code beautification
+
 0.29
 - Template engine is now Flexy, many constants in config.php were dropped and template were heavily changed
 - ie7 library was updated to 0.9

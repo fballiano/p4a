@@ -289,6 +289,14 @@ textarea:focus {
 	background-color: #F0F0F0;
 }
 
+.mceToolbarTop * {
+	display:inline;
+}
+
+.mceToolbarTop select * {
+	display:block;
+}
+
 select {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
