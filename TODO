@@ -11,14 +11,11 @@
 -- IMPORTANT THINGS --
 ----------------------
 
-- setDefaultValue(0) does not work, we need setDefaultValue("0") because somewhere there's an empty check
-- pay attention that trans_sid is disabled
-- mbstring.func_overload
 - check if the p4a_listener object is used, otherwise remove it
 - add possibility to have custom made locale files
 - check P4A_Field::getAsRadio and clean it (remove P4A_Sheet, maybe use div)
 - check the new P4A_Menu and clean it (position is used/useful? parent is used/useful?) maybe change the addItem, using build?
-- do something with file upload on FCKEditor, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
+- do something with file upload on tinyMCE, we cannot pass the server path within request, we should have the possibility to import only current p4a settings...
 - P4A_DB_Source without orders clause can't work well, add default order on pk if none is supplied?
 - check konqueror/handheld for new image/file field type compatibility
 - take a look at toolbars and decide what to do with enable/disable buttons in the getasstring, after that we've to anify all toolbars

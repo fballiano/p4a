@@ -331,7 +331,7 @@
 		{
 			$new_value = $this->data_field->getNewValue();
 
-			if ($new_value == NULL) {
+			if ($new_value === NULL) {
 				$new_value = NULL;
 			} elseif ($index === NULL) {
 				if ($this->isFormattable() and $this->isFormatted()) {

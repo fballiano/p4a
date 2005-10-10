@@ -1,0 +1,4 @@
+php_value magic_quotes_gpc 0
+php_value mbstring.func_overload 1
+php_value mbstring.internal_encoding UTF-8
+php_value session.use_trans_sid 0
