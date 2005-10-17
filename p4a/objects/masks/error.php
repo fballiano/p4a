@@ -44,7 +44,7 @@
 	 */
 	class P4A_Mask_Error extends P4A_Mask
 	{
-		function &P4A_Mask_Error()
+		function P4A_Mask_Error()
 		{
 			$this->P4A_Mask();
 			$p4a =& P4A::singleton();

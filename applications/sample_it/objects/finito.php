@@ -7,7 +7,7 @@ D'altra parte questo è solo un esempio ;-)
 */
 class Finito extends P4A_Mask
 {
-	function &Finito()
+	function Finito()
 	{
 		parent::P4A_Mask();
 

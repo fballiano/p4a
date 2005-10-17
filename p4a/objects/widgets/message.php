@@ -43,7 +43,7 @@
 		var $size = 48;
 		var $auto_clear = true;
 
-		function &P4A_Message($name)
+		function P4A_Message($name)
 		{
 			parent::P4A_Widget($name);
 		}

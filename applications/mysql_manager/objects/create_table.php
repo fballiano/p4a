@@ -38,7 +38,7 @@
 
 class My_Create_Table extends P4A_Mask
 {
-	function &My_Create_Table()
+	function My_Create_Table()
 	{
 		parent::P4A_Mask("My_Create_Table");
 

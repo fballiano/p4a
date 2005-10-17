@@ -39,15 +39,19 @@
 	 * The main p4a file.
 	 */
 
-	//Setting PHP error reporting
-	error_reporting(E_ALL);
-
 	//Disabling magic_quotes_runtime (default)
 	ini_set('magic_quotes_runtime','Off');
 	ini_set('magic_quotes_sybase','Off');
 
 	//Main inclusion file
 	require_once(dirname(__FILE__) . '/include.php');
+	
+	//Setting PHP error reporting
+	if (P4A_EXTENDED_ERRORS) {
+		error_reporting(E_ALL);
+	} else {
+		error_reporting(E_ALL ^ E_NOTICE);
+	}
 
 	//We can have more applications on same site and same browser instance
 	session_name('sn_' . preg_replace('~\W~', '_', P4A_APPLICATION_NAME) . '_p4a');

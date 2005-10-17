@@ -38,7 +38,7 @@
 
 class P4A_Menu_Mask extends P4A_Mask
 {
-	function &P4A_Menu_Mask()
+	function P4A_Menu_Mask()
 	{
 		$p4a =& P4A::singleton();
 		

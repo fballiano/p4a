@@ -53,7 +53,7 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &P4A_Line ($name, $id = NULL)
+		function P4A_Line($name, $id = NULL)
 		{
 			$prefix = 'line';
 

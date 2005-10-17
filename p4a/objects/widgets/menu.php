@@ -73,7 +73,7 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &P4A_Menu($name = '')
+		function P4A_Menu($name = '')
 		{
 			parent::P4A_Widget($name);
 			$this->build("P4A_Collection", "items");
@@ -243,7 +243,7 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &P4A_Menu_Item($name)
+		function P4A_Menu_Item($name)
 		{
 			parent::P4A_Widget($name);
 

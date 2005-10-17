@@ -59,7 +59,7 @@
 		 * @param string			The icon taken from icon set (file name without extension).
 		 * @access private
 		 */
-		function &P4A_Button($name, $icon = NULL)
+		function P4A_Button($name, $icon = NULL)
 		{
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');

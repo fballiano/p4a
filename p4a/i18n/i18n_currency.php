@@ -71,7 +71,7 @@
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &P4A_I18N_Currency( &$formats )
+		function P4A_I18N_Currency(&$formats)
 		{
 			$this->formats =& $formats;
 
@@ -86,9 +86,9 @@
 		 * @param string	The format name
 		 * @return array
 		 */
-		function getFormat( $format )
+		function getFormat($format)
 		{
-			return $this->formats[ $format ];
+			return $this->formats[$format];
 		}
 
 		/**
@@ -98,9 +98,9 @@
 		 * @param array		The format array
 		 * @return array
 		 */
-		function setFormat( $format, $value )
+		function setFormat($format, $value)
 		{
-			$this->formats[ $format ] = $value;
+			$this->formats[$format] = $value;
 		}
 
 		/**
@@ -111,9 +111,9 @@
 		 * @param integer	The number of decimals
 		 * @return array
 		 */
-		function setLocalFormat( $format, $format_string, $decimals )
+		function setLocalFormat($format, $format_string, $decimals)
 		{
-			$this->formats[ $format ] = array( $format_string, $decimals, $this->decimal_separator, $this->thousand_separator );
+			$this->formats[$format] = array($format_string, $decimals, $this->decimal_separator, $this->thousand_separator);
 		}
 
 		/**
@@ -125,9 +125,9 @@
 		 * @return mixed
 		 * @see P4A_Number::format()
 		 */
-		function format( $value = 0, $format = NULL )
+		function format($value = 0, $format = NULL)
 		{
-			if( $format === NULL ) {
+			if($format === NULL) {
 				$format = $this->getFormat('local');
 			}
 
@@ -142,7 +142,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function formatLocal( $value = 0 )
+		function formatLocal($value = 0)
 		{
 			return $this->format($value, $this->getFormat('local'));
 		}
@@ -154,7 +154,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function formatInternational( $value = 0 )
+		function formatInternational($value = 0)
 		{
 			return $this->format($value, $this->getFormat('international'));
 		}
@@ -168,9 +168,9 @@
 		 * @return mixed
 		 * @see P4A_Number::format()
 		 */
-		function unformat( $value = 0, $format = NULL )
+		function unformat($value = 0, $format = NULL)
 		{
-			if( $format === NULL ) {
+			if ($format === NULL) {
 				$format = $this->getFormat('local');
 			}
 
@@ -184,7 +184,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function unformatLocal( $value = 0 )
+		function unformatLocal($value = 0)
 		{
 			return $this->unformat($value, $this->getFormat('local'));
 		}
@@ -196,7 +196,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function unformatInternational( $value = 0 )
+		function unformatInternational($value = 0)
 		{
 			return $this->unformat($value, $this->getFormat('international'));
 		}

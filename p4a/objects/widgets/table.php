@@ -107,7 +107,7 @@
 		 * @param string				Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &P4A_Table($name)
+		function P4A_Table($name)
 		{
 			parent::P4A_Widget($name);
 			$this->useTemplate('table');
@@ -550,7 +550,7 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &P4A_Table_Col($name)
+		function P4A_Table_Col($name)
 		{
 			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
@@ -799,7 +799,7 @@
 		 * @param string		Mnemonic identifier for the object
 		 * @access private
 		 */
-		function &P4A_Table_Rows($name = 'rows')
+		function P4A_Table_Rows($name = 'rows')
 		{
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');
@@ -915,7 +915,7 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &P4A_Table_Navigation_Bar()
+		function P4A_Table_Navigation_Bar()
 		{
 			$p4a =& P4A::singleton();
 

@@ -38,7 +38,7 @@
 
 class Products_Catalogue extends P4A
 {
-	function &Products_Catalogue()
+	function Products_Catalogue()
 	{
 		parent::p4a();
 

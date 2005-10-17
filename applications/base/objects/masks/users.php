@@ -38,7 +38,7 @@
 
 class P4A_Users extends P4A_Mask
 {
-	function &P4A_Users()
+	function P4A_Users()
 	{
 		$this->P4A_Mask();
 		$p4a =& P4A::singleton();

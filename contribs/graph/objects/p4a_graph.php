@@ -82,7 +82,7 @@ class P4A_Graph extends P4A_Widget
 		var $rows = NULL;
 		var $cols = array();
 	
-		function &P4A_Graph($name)
+		function P4A_Graph($name)
 		{
 			parent::P4A_Widget($name);
 		}

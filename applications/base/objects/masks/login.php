@@ -38,7 +38,7 @@
 
 	class P4A_Login extends P4A_Mask
 	{
-		function &P4A_Login()
+		function P4A_Login()
 		{
 			$this->P4A_Mask();
 

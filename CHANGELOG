@@ -1,4 +1,8 @@
+0.31
+
+
 0.30
+- PHP 4.4 porting completed (deep tests are needed)
 - sample htaccess was added (needed to set some PHP settings that we can't set at runtime)
 - TinyMCE rich text editor was introduced instead FCKEditor
 - FCKEditor file browser/upload was integrated in tinyMCE

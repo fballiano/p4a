@@ -38,7 +38,7 @@
 
 class Products extends P4A_Mask
 {
-	function &Products()
+	function Products()
 	{
 		$this->p4a_mask();
 		$p4a =& p4a::singleton();

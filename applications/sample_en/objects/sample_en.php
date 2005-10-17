@@ -9,7 +9,7 @@ visualized.
 */
 class Sample_En extends P4A
 {
-	function &Sample_En()
+	function Sample_En()
 	{
 		// First of all let's call p4a constructor
 		parent::p4a();

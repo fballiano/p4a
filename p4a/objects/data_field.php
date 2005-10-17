@@ -86,7 +86,7 @@
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function &p4a_data_field($name)
+		function p4a_data_field($name)
 		{
 			parent::p4a_object((string)$name);
 		}

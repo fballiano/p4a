@@ -40,7 +40,7 @@ class P4A_Base_Application extends p4a
 {
 	var $user_data = array();
 
-	function &P4A_Base_Application()
+	function P4A_Base_Application()
 	{
 		$this->p4a();
 		$this->openMask("p4a_login");

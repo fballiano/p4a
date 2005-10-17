@@ -44,7 +44,7 @@
 	 */
 	class P4A_Mask_Image_Preview extends P4A_Mask
 	{
-		function &P4A_Mask_Image_Preview()
+		function P4A_Mask_Image_Preview()
 		{
 			$this->P4A_Mask();
 			$p4a =& P4A::singleton();

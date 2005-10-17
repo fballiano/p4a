@@ -40,7 +40,7 @@ class P4A_Table_Mask extends P4A_Mask
 {
 	var $_table_name = "";
 
-	function &P4A_Table_Mask($name)
+	function P4A_Table_Mask($name)
 	{
 		$this->_table_name = $name;
 		parent::P4A_Mask();

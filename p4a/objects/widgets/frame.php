@@ -50,7 +50,7 @@ class P4A_Frame extends P4A_Widget
 	var $_map = array();
 	var $_row = 1;
 
-	function &P4A_Frame($name)
+	function P4A_Frame($name)
 	{
 		parent::P4A_Widget($name);
 	}

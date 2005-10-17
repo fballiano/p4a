@@ -56,7 +56,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	var $_filters = array();
 
 
-	function &P4A_DB_Source($name)
+	function P4A_DB_Source($name)
 	{
 		parent::P4A_Data_Source($name);
 		$this->build("P4A_Collection", "fields");

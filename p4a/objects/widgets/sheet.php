@@ -109,9 +109,9 @@
 		 * Sheet construction does nothing but calling his parent constructor.
 		 * @param string	The name of the sheet
 		 */
-		function &P4A_Sheet( $name )
+		function P4A_Sheet($name)
 		{
-			parent::P4A_Widget( $name );
+			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
 			$this->setProperty('cellpadding', '0');
 			$this->setProperty('cellspacing', '0');
@@ -125,17 +125,16 @@
 		 * @param integer	The number of rows of the grid.
 		 * @param integer	The number of columns of the grid.
 		 */
-		function defineGrid( $rows = 1, $cols = 1 )
+		function defineGrid($rows = 1, $cols = 1)
 		{
-			if( $cols == 0 )
-			{
-				$cols = 1 ;
+			if ($cols == 0) {
+				$cols = 1;
 			}
 
-			$this->setNumOfCols( $cols ) ;
-			$this->addRow( $rows ) ;
+			$this->setNumOfCols($cols);
+			$this->addRow($rows);
 
-			$this->grid_defined = true ;
+			$this->grid_defined = true;
 		}
 
 		/**
@@ -155,61 +154,47 @@
 		 * @param integer		The number of colums the widget must occupy.
 		 * @return sheet_cell	The cells where the widget has been anchored.
 		 */
-		function &anchor( &$widget, $row=NULL, $col=1, $rowspan=1, $colspan=1 )
+		function &anchor(&$widget, $row = NULL, $col = 1, $rowspan = 1, $colspan = 1)
 		{
-			if( !$this->isGridDefined() )
-			{
-				$this->defineGrid() ;
+			if (!$this->isGridDefined()) {
+				$this->defineGrid();
 			}
 
-			if( $row === NULL )
-			{
+			if ($row === NULL) {
 				$row = $this->getFreeRow() ;
-			}
-			else
-			{
-				if( $row > $this->getNumOfRows() )
-				{
-					$this->addRow( ( $row - $this->getNumOfRows() ) ) ;
-				}
-				elseif( $this->grid[ $row ][ $col ]->isOccupied() )
-				{
-					P4A_Error( '"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.' ) ;
+			} else {
+				if ($row > $this->getNumOfRows()) {
+					$this->addRow(($row - $this->getNumOfRows()));
+				} elseif ($this->grid[$row][$col]->isOccupied()) {
+					P4A_Error('"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.');
 				}
 			}
 
-			if( $rowspan == 0 )
-			{
+			if ($rowspan == 0) {
 				$rowspan = $this->getNumOfRows() - $row + 1 ;
 			}
 
-			if( $colspan == 0 )
-			{
+			if ($colspan == 0) {
 				$colspan = $this->getNumOfCols() - $col + 1 ;
 			}
 
-			for( $rowcounter = $row; $rowcounter < ( $row + $rowspan ); $rowcounter++ )
-			{
-				for( $colcounter = $col; $colcounter < ( $col + $colspan ); $colcounter++ )
-				{
-					if( $this->grid[ $rowcounter ][ $colcounter ]->isVisible() )
-					{
-						$this->grid[ $rowcounter ][ $colcounter ]->setInvisible() ;
-					}
-					else
-					{
-						P4A_Error( '"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.' ) ;
+			for ($rowcounter = $row; $rowcounter < ($row + $rowspan); $rowcounter++) {
+				for ($colcounter = $col; $colcounter < ($col + $colspan); $colcounter++) {
+					if ($this->grid[$rowcounter][$colcounter]->isVisible()) {
+						$this->grid[$rowcounter][$colcounter]->setInvisible();
+					} else {
+						P4A_Error('"' . $this->getName() . '": Unable to anchor object "' . $widget->getName() . '" on row ' . $row . ' and col ' . $col . '.');
 					}
 				}
 
-				$this->setRowOccupied( $rowcounter ) ;
+				$this->setRowOccupied($rowcounter);
 			}
 
-			$this->grid[ $row ][ $col ]->setVisible();
-			$this->grid[ $row ][ $col ]->anchor( $widget, $rowspan, $colspan ) ;
-			$this->setRowOccupied( $row ) ;
+			$this->grid[$row][$col]->setVisible();
+			$this->grid[$row][$col]->anchor($widget, $rowspan, $colspan);
+			$this->setRowOccupied($row);
 
-			return $this->grid[ $row ][ $col ] ;
+			return $this->grid[$row][$col];
 		}
 
 		/**
@@ -223,7 +208,7 @@
 		 * @return sheet_cell	The cells where the widget has been anchored.
 		 * @see anchor()
 		 */
-		function &anchorText( $text, $row=NULL, $col=1, $rowspan=1, $colspan=1 )
+		function &anchorText($text, $row = NULL, $col = 1, $rowspan = 1, $colspan = 1)
 		{
 			return $this->anchor($text, $row, $col, $rowspan, $colspan);
 		}
@@ -237,9 +222,9 @@
 		 */
 		function &blankRow()
 		{
-			$row = $this->addRow() ;
-			$this->setRowOccupied( $row ) ;
-			return $this->grid[ $row ][ 1 ] ;
+			$row = $this->addRow();
+			$this->setRowOccupied($row);
+			return $this->grid[$row][1];
 		}
 
 		/**
@@ -252,11 +237,11 @@
 		 * @param integer	The new rowspan for the desidered cell.
 		 * @param integer	The new colspan for the desidered cell.
 		 */
-		function respan( $row, $col, $rowspan = 1, $colspan = 1 )
+		function respan($row, $col, $rowspan = 1, $colspan = 1)
 		{
-			$widget =& $this->grid[ $row ][ $col ]->widget ;
-			$this->setFree( $row, $col ) ;
-			$this->anchor( $widget, $row, $col, $rowspan, $colspan ) ;
+			$widget =& $this->grid[$row][$col]->widget;
+			$this->setFree($row, $col);
+			$this->anchor($widget, $row, $col, $rowspan, $colspan);
 		}
 
 		/**
@@ -269,31 +254,26 @@
 		 * @param integer The row index.
 		 * @param integer The column index.
 		 */
-		function setFree( $row, $col )
+		function setFree($row, $col)
 		{
-			$rowspan = $this->grid[ $row ][ $col ]->getProperty( 'rowspan' ) ;
-			$colspan = $this->grid[ $row ][ $col ]->getProperty( 'colspan' ) ;
+			$rowspan = $this->grid[$row][$col]->getProperty('rowspan');
+			$colspan = $this->grid[$row][$col]->getProperty('colspan');
 
-			for( $rowcounter = $row; $rowcounter < ( $row + $rowspan ); $rowcounter++ )
-			{
-				for( $colcounter = $col; $colcounter < ( $col + $colspan ); $colcounter++ )
-				{
-					$this->grid[ $rowcounter ][ $colcounter ]->setFree() ;
-					$this->grid[ $rowcounter ][ $colcounter ]->setVisible() ;
+			for ($rowcounter = $row; $rowcounter < ($row + $rowspan); $rowcounter++) {
+				for ($colcounter = $col; $colcounter < ($col + $colspan); $colcounter++) {
+					$this->grid[$rowcounter][$colcounter]->setFree();
+					$this->grid[$rowcounter][$colcounter]->setVisible();
 				}
 
-				if( $this->checkRowOccupied( $rowcounter ) )
-				{
-					$this->setRowOccupied( $rowcounter ) ;
-				}
-				else
-				{
-					$this->setRowFree( $rowcounter ) ;
+				if ($this->checkRowOccupied($rowcounter)) {
+					$this->setRowOccupied($rowcounter);
+				} else {
+					$this->setRowFree($rowcounter);
 				}
 			}
 
-			$this->grid[ $row ][ $col ]->setProperty( 'rowspan', 1 ) ;
-			$this->grid[ $row ][ $col ]->setProperty( 'colspan', 1 ) ;
+			$this->grid[$row][$col]->setProperty('rowspan', 1);
+			$this->grid[$row][$col]->setProperty('colspan', 1);
 		}
 
 		/**
@@ -304,9 +284,9 @@
 		 * @param integer	The desired row
 		 * @return boolean	Occupational state of the desidered row
 		 */
-		function isRowOccupied( $row )
+		function isRowOccupied($row)
 		{
-			return $this->rows_infos[ $row ][ 'occupied' ] ;
+			return $this->rows_infos[$row]['occupied'];
 		}
 
 		/**
@@ -319,16 +299,15 @@
 		 * @param integer	The desired row
 		 * @return boolean	Occupational state of the desidered row
 		 */
-		function checkRowOccupied( $row )
+		function checkRowOccupied($row)
 		{
-			for( $colcounter = 1; $colcounter <= sizeof( $this->grid[ $row ] ); $colcounter++ )
-			{
-				if( $this->grid[ $row ][ $colcounter ]->isOccupied() ) {
-					return true ;
+			for ($colcounter = 1; $colcounter <= sizeof($this->grid[$row]); $colcounter++) {
+				if ($this->grid[$row][$colcounter]->isOccupied()) {
+					return true;
 				}
 			}
 
-			return false ;
+			return false;
 		}
 
 		/**
@@ -340,20 +319,18 @@
 		 */
 		function getFreeRow()
 		{
-			if( !$this->isGridDefined() )
-			{
-				$this->defineGrid() ;
+			if (!$this->isGridDefined()) {
+				$this->defineGrid();
 			}
 
-			$row = $this->getLastOccupiedRow() ;
+			$row = $this->getLastOccupiedRow();
 			$row++;
 
-			if( $row > $this->rows )
-			{
-				$row = $this->addRow() ;
+			if($row > $this->rows) {
+				$row = $this->addRow();
 			}
 
-			return $row ;
+			return $row;
 		}
 
 	 	/**
@@ -577,7 +554,7 @@
 		 * Class constructor.
 		 * Inizialize the cell setting rowspan and colspan.
 		 */
-		function &P4A_Sheet_Cell($name)
+		function P4A_Sheet_Cell($name)
 		{
 			parent::P4A_Widget( $name ) ;
 			$this->properties[ 'rowspan' ]	= 1 ;

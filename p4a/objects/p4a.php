@@ -144,7 +144,7 @@
 		 * Class constructor.
 		 * @access private
 		 */
-		function &p4a()
+		function p4a()
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;

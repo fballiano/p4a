@@ -55,7 +55,7 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &P4A_Link ($name, $id = NULL)
+		function P4A_Link($name, $id = NULL)
 		{
 			$prefix = 'lnk';
 

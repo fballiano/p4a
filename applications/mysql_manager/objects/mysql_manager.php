@@ -38,13 +38,13 @@
 
 class mysql_manager extends p4a
 {
-    function &mysql_manager()
+    function mysql_manager()
     {
         $this->p4a();
         $this->openMask("db_configuration");
     }
 
-    function &main()
+    function main()
     {
 		if (isset($this->dsn)){
 			if (!(defined("P4A_DSN"))) {

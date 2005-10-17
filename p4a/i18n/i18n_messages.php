@@ -58,7 +58,7 @@
 		 * @param string				The desired country.
 		 * @access private
 		 */
-		function &P4A_I18N_Messages($language, $country)
+		function P4A_I18N_Messages($language, $country)
 		{
 			$msg_file = "{$language}/{$country}.php";
 			include(dirname(__FILE__) . "/messages/{$msg_file}");

@@ -40,7 +40,7 @@ class P4A_Array_Source extends P4A_Data_Source
 {
 	var $_array = array();
 
-	function &P4A_Array_Source($name){
+	function P4A_Array_Source($name){
 		P4A_Data_Source::P4A_Data_Source($name);
 	}
 

@@ -41,7 +41,7 @@ class P4A_XML_Mask extends P4A_Mask
 	var $_xml = array();
 	var $_mandatory_fields = array();
 
-	function &P4A_XML_Mask($mask_name = NULL)
+	function P4A_XML_Mask($mask_name = NULL)
 	{
 		P4A_Mask::P4A_Mask();
 		if ($mask_name) {

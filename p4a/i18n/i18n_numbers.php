@@ -71,7 +71,7 @@
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &P4A_I18N_Numbers( &$formats )
+		function P4A_I18N_Numbers(&$formats)
 		{
 			$this->formats =& $formats;
 
@@ -89,9 +89,9 @@
 		 * @return mixed
 		 * @see P4A_Number::format()
 		 */
-		function format( $number = 0, $format = NULL )
+		function format($number = 0, $format = NULL)
 		{
-			if( $format === NULL ) {
+			if ($format === NULL) {
 				$format = $this->getFormat('float');
 			}
 
@@ -105,7 +105,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function formatInteger( $number = 0 )
+		function formatInteger($number = 0)
 		{
 			return $this->format($number, $this->getFormat('integer'));
 		}
@@ -117,7 +117,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function formatFloat( $number = 0 )
+		function formatFloat($number = 0)
 		{
 			return $this->format($number, $this->getFormat('float'));
 		}
@@ -129,7 +129,7 @@
 		 * @return mixed
 		 * @see format()
 		 */
-		function formatDecimal( $number = 0 )
+		function formatDecimal($number = 0)
 		{
 			return $this->format($number, $this->getFormat('decimal'));
 		}
@@ -143,9 +143,9 @@
 		 * @return mixed
 		 * @see P4A_Number::unformat()
 		 */
-		function unformat( $number = 0, $format = NULL )
+		function unformat($number = 0, $format = NULL)
 		{
-			if( $format === NULL ) {
+			if ($format === NULL) {
 				$format = $this->getFormat('float');
 			}
 
@@ -159,7 +159,7 @@
 		 * @return mixed
 		 * @see unformat()
 		 */
-		function unformatInteger( $number = 0 )
+		function unformatInteger($number = 0)
 		{
 			return $this->unformat($number, $this->getFormat('integer'));
 		}
@@ -171,7 +171,7 @@
 		 * @return mixed
 		 * @see unformat()
 		 */
-		function unformatFloat( $number = 0 )
+		function unformatFloat($number = 0)
 		{
 			return $this->unformat($number, $this->getFormat('float'));
 		}
@@ -183,7 +183,7 @@
 		 * @return mixed
 		 * @see unformat()
 		 */
-		function unformatDecimal( $number = 0 )
+		function unformatDecimal($number = 0)
 		{
 			return $this->unformat($number, $this->getFormat('decimal'));
 		}
@@ -194,9 +194,9 @@
 		 * @param string	The format name
 		 * @return array
 		 */
-		function getFormat( $format )
+		function getFormat($format)
 		{
-			return $this->formats[ $format ];
+			return $this->formats[$format];
 		}
 
 		/**
@@ -206,9 +206,9 @@
 		 * @param array		The format array
 		 * @return array
 		 */
-		function setFormat( $format, $value )
+		function setFormat($format, $value)
 		{
-			$this->formats[ $format ] = $value;
+			$this->formats[$format] = $value;
 		}
 
 		/**
@@ -218,9 +218,9 @@
 		 * @param integer	The number of decimals
 		 * @return array
 		 */
-		function setLocalFormat( $format, $decimals )
+		function setLocalFormat($format, $decimals)
 		{
-			$this->formats[ $format ] = array( $decimals, $this->decimal_separator, $this->thousand_separator );
+			$this->formats[$format] = array($decimals, $this->decimal_separator, $this->thousand_separator);
 		}
 	}
 

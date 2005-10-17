@@ -7,7 +7,7 @@ This is only an example ;-)
 */
 class Finished extends P4A_Mask
 {
-	function &Finished()
+	function Finished()
 	{
 		parent::P4A_Mask();
 

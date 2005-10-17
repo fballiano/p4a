@@ -38,7 +38,7 @@
 
 class Brands extends P4A_Mask
 {
-	function &Brands()
+	function Brands()
 	{
 		$this->p4a_mask();
 		$p4a =& p4a::singleton();

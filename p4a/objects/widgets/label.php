@@ -72,7 +72,7 @@
 		 * @access private
 		 */
 
-		function &P4A_Label($name, $value=NULL)
+		function P4A_Label($name, $value=NULL)
 		{
 			parent::P4A_Widget($name);
 			$this->setLabel($value);

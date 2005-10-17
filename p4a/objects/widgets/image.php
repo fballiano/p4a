@@ -57,7 +57,7 @@
 		 * @param string	The absolute source path of the image.
 		 * @access private
 		 */
-		function &P4A_Image($name, $value = NULL )
+		function P4A_Image($name, $value = NULL )
 		{
 			parent::P4A_Widget($name);
 			if ($value !== NULL){

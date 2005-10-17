@@ -8,7 +8,7 @@ e che lancia la prima maschera che dovrà essere visualizzata.
 */
 class Sample_it extends P4A
 {
-	function &Sample_It()
+	function Sample_It()
 	{
 		//Prima di tutto richiamo il costruttore di p4a
 		parent::p4a();

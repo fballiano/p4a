@@ -55,11 +55,11 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function &P4A_Href ($name, $id = NULL)
+		function P4A_Href ($name, $id = NULL)
 		{
 			$prefix = 'href' ;
 
-			if( $id === NULL ) {
+			if ($id === NULL) {
 				parent::P4A_Widget($name, $prefix);
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);

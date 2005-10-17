@@ -172,7 +172,7 @@
 		 * @param string				If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 		 * @access private
 		 */
-		function &P4A_Field($name, $add_default_data_field = TRUE)
+		function P4A_Field($name, $add_default_data_field = TRUE)
 		{
 			parent::P4A_Widget($name, 'fld');
 			$this->setProperty('name', $this->getId());

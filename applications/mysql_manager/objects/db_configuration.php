@@ -38,7 +38,7 @@
 
 class db_configuration extends p4a_mask
 {
-	function &db_configuration($name)
+	function db_configuration($name)
 	{
 		$this->p4a_mask();
 		$this->setTitle("DB Connection");

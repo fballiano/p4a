@@ -53,7 +53,7 @@
 		/**
 		 * Class constructor.
 		 */
-		function &p4a_error($message=NULL, $object=NULL, $external_object=NULL)
+		function p4a_error($message=NULL, $object=NULL, $external_object=NULL)
 		{
 			$this->data['class']	= NULL;
 			$this->data['function'] = NULL;

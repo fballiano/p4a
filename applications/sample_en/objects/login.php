@@ -7,7 +7,7 @@ authentication.
 */
 class Login extends P4A_Mask
 {
-	function &Login()
+	function Login()
 	{
 		/*
 		Let's call the parent constructor, this line

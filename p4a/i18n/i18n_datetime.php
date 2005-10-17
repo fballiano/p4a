@@ -64,7 +64,7 @@
 		 * @param array				All formats in array.
 		 * @access private
 		 */
-		function &P4A_I18N_Datetime(&$formats, &$locale_vars)
+		function P4A_I18N_Datetime(&$formats, &$locale_vars)
 		{
 			$this->formats =& $formats;
 			$this->locale_vars =& $locale_vars;

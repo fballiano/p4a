@@ -38,7 +38,7 @@
 
 class Categories extends P4A_Mask
 {
-	function &Categories()
+	function Categories()
 	{
 		$this->p4a_mask();
 		$p4a =& p4a::singleton();

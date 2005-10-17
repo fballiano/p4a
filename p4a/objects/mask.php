@@ -159,11 +159,12 @@
 		 * itself into p4a application.
 		 * @param string Object name (identifier).
 		 */
-		function &p4a_mask($name = null)
+		function p4a_mask($name = null)
 		{
-			if ($name == null){
+			if ($name == null) {
 				$name = get_class($this);
 			}
+			
 			$name = strtolower($name);
 			parent::p4a_object($name, 'ma');
 

@@ -49,13 +49,13 @@
 		 * Class constructor.
 		 * @access private
 		 */
-		function &p4a_listener()
+		function p4a_listener()
 		{
 			parent::p4a_object(NULL, 'lst');
 		}
 
 		//todo
-		function  &singleton($name)
+		function &singleton($name)
 		{
 			$p4a =& P4A::singleton();
 

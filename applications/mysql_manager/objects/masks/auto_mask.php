@@ -41,7 +41,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
 	var $table_name = null;
 	var $file_name = null;
 
-	function &P4A_Auto_Mask($name)
+	function P4A_Auto_Mask($name)
 	{
 		$p4a =& p4a::singleton();
 		$host = $p4a->masks->db_configuration->fields->host->getNewValue();

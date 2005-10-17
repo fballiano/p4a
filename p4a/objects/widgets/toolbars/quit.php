@@ -52,7 +52,7 @@
 		 * @param mask					The mask on wich the toolbar will operate.
 		 * @access private
 		 */
-		function &P4A_Quit_Toolbar($name)
+		function P4A_Quit_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
 			$p4a =& p4a::singleton();
