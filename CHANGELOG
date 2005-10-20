@@ -1,5 +1,5 @@
 0.31
-
+- PHP 4.4 P4A_Collection::nextItem() bugfix
 
 0.30
 - PHP 4.4 porting completed (deep tests are needed)
