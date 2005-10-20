@@ -1,6 +1,6 @@
 0.31
 - PHP 4.4 P4A_Collection::nextItem() bugfix
-
+- rich text editor now support image resizing (libGD support needed)
 0.30
 - PHP 4.4 porting completed (deep tests are needed)
 - sample htaccess was added (needed to set some PHP settings that we can't set at runtime)
