@@ -16,11 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * To contact the authors write to:									<br>
- * CreaLabs															<br>
- * Via Medail, 32													<br>
- * 10144 Torino (Italy)												<br>
- * Web:    {@link http://www.crealabs.it}							<br>
+ * To contact the authors write to:                                 <br>
+ * CreaLabs                                                         <br>
+ * Via Medail, 32                                                   <br>
+ * 10144 Torino (Italy)                                             <br>
+ * Web:    {@link http://www.crealabs.it}                           <br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
  * The latest version of p4a can be obtained from:
@@ -38,46 +38,48 @@
 
 class P4A_Collection extends P4A_Object
 {
-	var $_pointer = 0;
+    var $_pointer = 0;
 
-	function p4a_collection($name = null)
-	{
-		parent::p4a_object($name);
-	}
+    function p4a_collection($name = null)
+    {
+        parent::p4a_object($name);
+    }
 
-	//todo da modificare, sbagliata in caso di destroy di un figlio
-	function &nextItem()
-	{
-		$p4a =& P4A::singleton();
-		if ($this->_pointer < $this->getNumItems()){
-			$id = $this->_objects[$this->_pointer];
-			$this->_pointer++;
-			return $p4a->objects[$id];
-		}else{
-			$this->_pointer = 0;
-		}
-	}
+    //todo da modificare, sbagliata in caso di destroy di un figlio
+    function &nextItem()
+    {
+        $p4a =& P4A::singleton();
+        if ($this->_pointer < $this->getNumItems()){
+            $id = $this->_objects[$this->_pointer];
+            $this->_pointer++;
+            return $p4a->objects[$id];
+        }else{
+            $this->_pointer = 0;
+            $ret = NULL; //php 4.4 fix
+            return $ret;
+        }
+    }
 
-	//todo
-	function getNumItems()
-	{
- 		return count($this->_objects);
-	}
+    //todo
+    function getNumItems()
+    {
+        return count($this->_objects);
+    }
 
-	function reset()
-	{
-		$this->_pointer = 0;
-	}
+    function reset()
+    {
+        $this->_pointer = 0;
+    }
 
-	function getNames()
-	{
-		$names = array();
+    function getNames()
+    {
+        $names = array();
 
-		while ($item =& $this->nextItem()) {
-			$names[] = $item->getName();
-		}
+        while ($item =& $this->nextItem()) {
+            $names[] = $item->getName();
+        }
 
-		return $names;
-	}
+        return $names;
+    }
 }
 ?>
