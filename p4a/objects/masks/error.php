@@ -102,7 +102,7 @@
 					$this->external_object->setVisible();
     				ob_start();
     				print_r($e->getExternalObject());
-    				$external_object = nl2br(preg_replace("/ /", '&nbsp;', ob_get_contents()));
+    				$external_object = preg_replace("/ /", '&nbsp;', ob_get_contents());
     				ob_end_clean();
     				$this->external_object->setValue($external_object);
 				}
@@ -129,7 +129,6 @@
 
     			$this->backtrace->setValue($backtrace);
 			}
-
 			parent::main();
 		}
 

@@ -1351,10 +1351,20 @@
 			if (is_array($value)) {
 				$value = join($value, ",");
 			}
-			if ($this->type == 'text' or $this->type == 'hidden' or $this->type == 'hidden' or $this->type == 'date') {
-				return 'value="' . htmlspecialchars($value) . '" ';
-			} elseif($this->type == 'textarea' or $this->type == 'rich_textarea' or $this->type == 'label') {
-				return htmlspecialchars($value);
+			
+			switch ($this->type) {
+				case 'text':
+				case 'hidden':
+				case 'date':
+					return 'value="' . htmlspecialchars($value) . '" ';
+					break;
+				case 'textarea':
+				case 'rich_textarea':
+					return htmlspecialchars($value);
+					break;
+				case 'label':
+					return $value;
+					break;
 			}
 		}
 
