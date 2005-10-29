@@ -1,6 +1,9 @@
 0.31
+- bugfix on P4A_Table, now ordering works well
+- bugfix on P4A_DB_Source, now addOrder() and setOrder always turn the ordering mode to uppercase
 - PHP 4.4 P4A_Collection::nextItem() bugfix
-- rich text editor now support image resizing (libGD support needed)
+- rich text editor now support image resizing (libGD support needed) (disabled by now)
+
 0.30
 - PHP 4.4 porting completed (deep tests are needed)
 - sample htaccess was added (needed to set some PHP settings that we can't set at runtime)
