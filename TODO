@@ -11,6 +11,7 @@
 -- IMPORTANT THINGS --
 ----------------------
 
+- add p4a_tab_pane print/handheld css
 - check if the p4a_listener object is used, otherwise remove it
 - add possibility to have custom made locale files
 - check P4A_Field::getAsRadio and clean it (remove P4A_Sheet, maybe use div)

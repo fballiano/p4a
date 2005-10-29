@@ -104,6 +104,7 @@
 	require_once "$dir/objects/widgets/sheet.php";
 	require_once "$dir/objects/widgets/toolbar.php";
 	require_once "$dir/objects/widgets/table.php";
+	require_once "$dir/objects/widgets/tab_pane.php";
 	require_once "$dir/objects/widgets/frames/fieldset.php";
 
 	//Toolbar Extensions

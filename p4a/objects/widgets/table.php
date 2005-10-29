@@ -229,7 +229,7 @@
 					$is_orderable = true;
 
 					if ($this->data->hasOrder()) {
-    					$order			= $this->data->getOrder();
+    					$order = $this->data->getOrder();
     					list($order_field, $order_mode)	= each($order);
 					}
 				}
@@ -764,22 +764,24 @@
 
 				if ($parent->data->hasOrder()) {
 					$order = $parent->data->getOrder();
-					$order = $order[0];
+					list($order_field, $order_mode)	= each($order);
 
-					if ($order[0] == $complete_field_name or $order[0] == $field_name) {
-    					if ($order[1] == P4A_ORDER_ASCENDING) {
-    						$new_order = P4A_ORDER_DESCENDING;
-    					}
+					if ($order_field == $complete_field_name or $order_field == $field_name) {
+    					if ($order_mode == P4A_ORDER_ASCENDING) {
+    						$order_mode = P4A_ORDER_DESCENDING;
+    					} else {
+							$order_mode = P4A_ORDER_ASCENDING;
+						}
 					} else {
-						$new_order = P4A_ORDER_ASCENDING;
+						$order_mode = P4A_ORDER_ASCENDING;
 					}
 				}
 				if ($data_field->getAliasOf()){
-					$order = $data_field->getName();
+					$order_field = $data_field->getName();
 				}else{
-					$order = $data_field->getTable() . "." . $data_field->getName();
+					$order_field = $data_field->getTable() . "." . $data_field->getName();
 				}
-				$parent->data->setOrder($order, $new_order);
+				$parent->data->setOrder($order_field, $order_mode);
 				$parent->data->updateRowPosition();
 			}
 		}

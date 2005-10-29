@@ -150,7 +150,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function addOrder($field, $direction = P4A_ORDER_ASCENDING)
     {
-        $this->_order[$field] = $direction;
+		$this->_order[$field] = strtoupper($direction);
     }
 
     function setOrder($field, $direction = P4A_ORDER_ASCENDING)
