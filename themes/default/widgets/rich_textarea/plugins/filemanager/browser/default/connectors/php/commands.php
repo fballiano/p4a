@@ -173,7 +173,6 @@ function FileUpload( $resourceType, $currentFolder )
             }
             
             //Image Resizing
-            /*
             if (strpos(mime_content_type($sFilePath), "image") !== false) { //The file is an image?
                 if (function_exists("gd_info") ) { //libGD is installed ?
                 
@@ -223,8 +222,8 @@ function FileUpload( $resourceType, $currentFolder )
                                 
                     }
                 }
-            } //Image Resizing
-            */
+            }
+            //Image Resizing
         }
         else
             $sErrorNumber = '202' ;

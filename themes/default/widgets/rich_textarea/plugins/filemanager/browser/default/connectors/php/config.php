@@ -36,11 +36,9 @@ $Config['DeniedExtensions']['Flash']    = array() ;
 $Config['AllowedExtensions']['Media']   = array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
 $Config['DeniedExtensions']['Media']    = array() ;
 
-/*
 $Config['EnableImageResize'] = false;
 $Config['ImageSize']['small'] = "200x150";
 $Config['ImageSize']['medium'] = "300x225";
 $Config['ImageSize']['large'] = "400x300";
-*/
 
 ?>
