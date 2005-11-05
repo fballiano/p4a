@@ -31,6 +31,8 @@ function searchNext(replacemode) {
 //			wrap : formObj.wrapatend.checked,
 //			wholeword : formObj.wholeword.checked
 		}, false);
+
+	window.focus();
 }
 
 function cancelAction() {

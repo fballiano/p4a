@@ -1,7 +1,7 @@
 /**
  * $RCSfile: form_utils.js,v $
- * $Revision: 1.3 $
- * $Date: 2005/08/23 17:01:40 $
+ * $Revision: 1.5 $
+ * $Date: 2005/10/25 16:01:51 $
  *
  * Various form utilitiy functions.
  *
@@ -9,7 +9,7 @@
  * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
  */
 
-function renderColorPicker(id, target_form_element) {
+function getColorPickerHTML(id, target_form_element) {
 	var html = "";
 
 	html += '<a id="' + id + '_link" href="javascript:void(0);" onkeydown="pickColor(event,\'' + target_form_element +'\');" onmousedown="pickColor(event,\'' + target_form_element +'\');return false;">';
@@ -20,7 +20,7 @@ function renderColorPicker(id, target_form_element) {
 	html += ' width="20" height="16" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
 	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 
-	document.write(html);
+	return html;
 }
 
 function pickColor(e, target_form_element) {
@@ -48,11 +48,11 @@ function setBrowserDisabled(id, state) {
 	}
 }
 
-function renderBrowser(id, target_form_element, type, prefix) {
+function getBrowserHTML(id, target_form_element, type, prefix) {
 	var option = prefix + "_" + type + "_browser_callback";
 	var cb = tinyMCE.getParam(option, tinyMCE.getParam("file_browser_callback"));
 	if (cb == null)
-		return;
+		return "";
 
 	var html = "";
 
@@ -64,7 +64,7 @@ function renderBrowser(id, target_form_element, type, prefix) {
 	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
 	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 
-	document.write(html);
+	return html;
 }
 
 function openBrower(img_id, target_form_element, type, option) {

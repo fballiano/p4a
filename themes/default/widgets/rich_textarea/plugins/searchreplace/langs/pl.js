@@ -1,21 +1,21 @@
 // PL lang variables
 
 tinyMCE.addToLang('',{
-searchreplace_search_desc : 'Znajdz',
-searchreplace_searchnext_desc : 'Znajdz ponownie',
-searchreplace_replace_desc : 'Znajdz/Zastap',
-searchreplace_notfound : 'Ukonczono wyszukiwanie. Poszukiwana fraza nie zostala odnaleziona.',
-searchreplace_search_title : 'Znajdz',
-searchreplace_replace_title : 'Znajdz/Zastap',
-searchreplace_allreplaced : 'Wszystkie wystapienia poszukiwanej frazy zostaly zastapione. ',
-searchreplace_findwhat : 'Znajdz',
-searchreplace_replacewith : 'Zastap',
+searchreplace_search_desc : 'Znajdü',
+searchreplace_searchnext_desc : 'Znajdü ponownie',
+searchreplace_replace_desc : 'Znajdü/Zastπp',
+searchreplace_notfound : 'UkoÒczono wyszukiwanie. Poszukiwana fraza nie zosta≥a odnaleziona.',
+searchreplace_search_title : 'Znajdü',
+searchreplace_replace_title : 'Znajdü/Zastπp',
+searchreplace_allreplaced : 'Wszystkie wystπpienia poszukiwanej frazy zosta≥y zastπpione. ',
+searchreplace_findwhat : 'Znajdü',
+searchreplace_replacewith : 'Zastπp',
 searchreplace_direction : 'Kierunek',
-searchreplace_up : 'Do g√≥ry',
-searchreplace_down : 'Do dolu',
-searchreplace_case : 'Wielkosc liter',
-searchreplace_findnext : 'Znajdz&nbsp;nastepny',
-searchreplace_replace : 'Zastap',
-searchreplace_replaceall : 'Zastap&nbsp;wszystkie',
-searchreplace_cancel : 'Wyjdz'
+searchreplace_up : 'Do gÛry',
+searchreplace_down : 'Do do≥u',
+searchreplace_case : 'WielkoúÊ liter',
+searchreplace_findnext : 'Znajdü&nbsp;nastÍpny',
+searchreplace_replace : 'Zastπp',
+searchreplace_replaceall : 'Zastπp&nbsp;wszystkie',
+searchreplace_cancel : 'Wyjdü'
 });

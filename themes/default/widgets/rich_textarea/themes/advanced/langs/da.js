@@ -1,8 +1,8 @@
 // DK lang variables contributed by Jan Moelgaard
 
 tinyMCE.addToLang('',{
-theme_style_select : 'Stilelementer',
-theme_code_desc : 'Rediger html-kode',
+theme_style_select : '-- Styles --',
+theme_code_desc : 'Rediger HTML kode',
 theme_code_title : 'HTML Kodeeditor',
 theme_code_wordwrap : 'Ombrydning',
 theme_sub_desc : 'S&#230;nket skrift',
@@ -27,7 +27,7 @@ insert_image_align_left : 'Venstre',
 insert_image_align_right : 'H&#248;jre',
 theme_font_size : '-- Font st&#248;rrelse --',
 theme_fontdefault : '-- Font gruppe --',
-theme_block : '-- Format --',
+theme_block : '-- Typografi --',
 theme_paragraph : 'Afsnit',
 theme_div : 'Div',
 theme_address : 'Addresse',
@@ -61,7 +61,7 @@ image_props_desc : 'Billedegenskaber',
 newdocument_desc : 'Nyt dokument',
 class_name : 'Klasse',
 newdocument : 'Er du sikker p&#229;, at du vil slette alt?',
-about_title : 'About TinyMCE',
+about_title : 'Om TinyMCE',
 about : 'Om',
 license : 'Licens',
 plugins : 'Plugins',
@@ -71,6 +71,5 @@ version : 'Version',
 loaded_plugins : 'Indl&#230;ste plugins',
 help : 'Hj&#230;lp',
 not_set : '-- Ikke defineret --',
-close : 'Luk',
-toolbar_focus : 'Jump to tool buttons - Alt+Q, Jump to editor - Alt-Z, Jump to element path - Alt-X'
+close : 'Luk'
 });

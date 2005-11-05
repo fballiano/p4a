@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,he,no');
+tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,he,no,ru,ru_KOI8-R,ru_UTF-8,cy,es,is');
 
 function TinyMCE_advimage_getInfo() {
 	return {
@@ -14,7 +14,8 @@ function TinyMCE_advimage_getInfo() {
 function TinyMCE_advimage_getControlHTML(control_name) {
 	switch (control_name) {
 		case "image":
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvImage\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_advimage" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvImage\');return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_advimage" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>';
 	}
 
 	return "";

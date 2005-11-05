@@ -14,7 +14,7 @@ function TinyMCE_zoom_getInfo() {
  * Returns the HTML contents of the zoom control.
  */
 function TinyMCE_zoom_getControlHTML(control_name) {
-	if (!tinyMCE.isMSIE || tinyMCE.isMSIE5_0)
+	if (!tinyMCE.isMSIE || tinyMCE.isMSIE5_0 || tinyMCE.isOpera)
 		return "";
 
 	switch (control_name) {

@@ -56,7 +56,8 @@ function insertTable() {
 		else
 			elm.style.backgroundImage = '';
 
-		elm.style.borderWidth = border;
+		if (tinyMCE.getParam("inline_styles"))
+			elm.style.borderWidth = border + "px";
 
 		if (tinyMCE.getParam("inline_styles")) {
 			if (width != '')
@@ -150,6 +151,11 @@ function makeAttrib(attrib, value) {
 function init() {
 	tinyMCEPopup.resizeToInnerSize();
 
+	document.getElementById('backgroundimagebrowsercontainer').innerHTML = getBrowserHTML('backgroundimagebrowser','backgroundimage','image','table');
+	document.getElementById('backgroundimagebrowsercontainer').innerHTML = getBrowserHTML('backgroundimagebrowser','backgroundimage','image','table');
+	document.getElementById('bordercolor_pickcontainer').innerHTML = getColorPickerHTML('bordercolor_pick','bordercolor');
+	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor');
+
 	var cols = 2, rows = 2, border = 0, cellpadding = "", cellspacing = "";
 	var align = "", width = "", height = "", bordercolor = "", bgcolor = "", className = "";
 	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "";
@@ -172,7 +178,7 @@ function init() {
 		cols = cols;
 		rows = rowsAr.length;
 
-		st = tinyMCE.parseStyle(tinyMCE.tableElm.style.cssText);
+		st = tinyMCE.parseStyle(tinyMCE.getAttrib(tinyMCE.tableElm, "style"));
 		border = trimSize(getStyle(elm, 'border', 'borderWidth'));
 		cellpadding = tinyMCE.getAttrib(tinyMCE.tableElm, 'cellpadding', "");
 		cellspacing = tinyMCE.getAttrib(tinyMCE.tableElm, 'cellspacing', "");
@@ -256,12 +262,30 @@ function changedBackgroundImage() {
 	formObj.style.value = tinyMCE.serializeStyle(st);
 }
 
+function changedBorder() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
+
+	// Update border width if the element has a color
+	if (formObj.border.value != "" && formObj.bordercolor.value != "")
+		st['border-width'] = formObj.border.value + "px";
+
+	formObj.style.value = tinyMCE.serializeStyle(st);
+}
+
 function changedColor() {
 	var formObj = document.forms[0];
 	var st = tinyMCE.parseStyle(formObj.style.value);
 
 	st['background-color'] = formObj.bgcolor.value;
-	st['border-color'] = formObj.bordercolor.value;
+
+	if (formObj.bordercolor.value != "") {
+		st['border-color'] = formObj.bordercolor.value;
+
+		// Add border-width if it's missing
+		if (!st['border-width'])
+			st['border-width'] = formObj.border.value == "" ? "1px" : formObj.border.value + "px";
+	}
 
 	formObj.style.value = tinyMCE.serializeStyle(st);
 }

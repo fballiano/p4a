@@ -49,6 +49,10 @@
 	text-align: center;
 }
 
+#classlist {
+	width: 180px;
+}
+
 input {
 	width: 280px;
 }

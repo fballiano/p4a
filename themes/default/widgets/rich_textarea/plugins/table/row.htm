@@ -7,7 +7,7 @@
 	<script language="javascript" type="text/javascript" src="jscripts/row.js"></script>
 	<link href="css/row.css" rel="stylesheet" type="text/css" />
 </head>
-<body id="tablerow" onload="init();" style="display: none">
+<body id="tablerow" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
 	<form onsubmit="updateAction();return false;">
 		<div class="tabs">
 			<ul>
@@ -24,7 +24,7 @@
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
 							<td><label for="rowtype">{$lang_table_rowtype}</label></td>
-							<td>
+							<td class="col2">
 								<select id="rowtype" name="rowtype">
 									<option value="thead">{$lang_table_thead}</option>
 									<option value="tbody">{$lang_table_tbody}</option>
@@ -35,7 +35,7 @@
 
 						<tr>
 							<td><label for="align">{$lang_table_align}</label></td>
-							<td>
+							<td class="col2">
 								<select id="align" name="align">
 									<option value="">{$lang_not_set}</option>
 									<option value="center">{$lang_table_align_middle}</option>
@@ -43,18 +43,11 @@
 									<option value="right">{$lang_table_align_right}</option>
 								</select>
 							</td>
-
-							<td><label for="class">{$lang_class_name}</label></td>
-							<td>
-								<select id="class" name="class">
-									<option value="" selected="selected">{$lang_not_set}</option>
-								</select>
-							</td>
 						</tr>
 
 						<tr>
 							<td><label for="valign">{$lang_table_valign}</label></td>
-							<td>
+							<td class="col2">
 								<select id="valign" name="valign">
 									<option value="">{$lang_not_set}</option>
 									<option value="top">{$lang_table_align_top}</option>
@@ -62,9 +55,20 @@
 									<option value="bottom">{$lang_table_align_bottom}</option>
 								</select>
 							</td>
+						</tr>
 
+						<tr>
+							<td><label for="class">{$lang_class_name}</label></td>
+							<td class="col2">
+								<select id="class" name="class">
+									<option value="" selected="selected">{$lang_not_set}</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
 							<td><label for="height">{$lang_table_height}</label></td>
-							<td><input name="height" type="text" id="height" value="" size="4" maxlength="4" onchange="changedSize();" /></td>
+							<td class="col2"><input name="height" type="text" id="height" value="" size="4" maxlength="4" onchange="changedSize();" /></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -109,7 +113,7 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();" /></td>
-										<td><script language="javascript" type="text/javascript">renderBrowser('backgroundimagebrowser','backgroundimage','image','table');</script></td>
+										<td id="backgroundimagebrowsercontainer">&nbsp;</td>
 									</tr>
 								</table>
 							</td> 
@@ -121,7 +125,7 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();" /></td>
-										<td><script language="javascript" type="text/javascript">renderColorPicker('bgcolor_pick','bgcolor');</script></td>
+										<td id="bgcolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
 							</td> 

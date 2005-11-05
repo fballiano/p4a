@@ -10,7 +10,7 @@ function preinit() {
 	var url = tinyMCE.getParam("external_image_list_url");
 	if (url != null) {
 		// Fix relative
-		if (url.charAt(0) != '/')
+		if (url.charAt(0) != '/' && url.indexOf('://') == -1)
 			url = tinyMCE.documentBasePath + "/" + url;
 
 		document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '"></sc'+'ript>');
@@ -45,15 +45,53 @@ function init() {
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 	var elm = inst.getFocusElement();
 	var action = "insert";
+	var html = "";
+
+	// Image list src
+	html = getImageListHTML('imagelistsrc','src','onSelectMainImage');
+	if (html == "")
+		document.getElementById("imagelistsrcrow").style.display = 'none';
+	else
+		document.getElementById("imagelistsrccontainer").innerHTML = html;
+
+	// Image list oversrc
+	html = getImageListHTML('imagelistover','onmouseoversrc');
+	if (html == "")
+		document.getElementById("imagelistoverrow").style.display = 'none';
+	else
+		document.getElementById("imagelistovercontainer").innerHTML = html;
+
+	// Image list outsrc
+	html = getImageListHTML('imagelistout','onmouseoutsrc');
+	if (html == "")
+		document.getElementById("imagelistoutrow").style.display = 'none';
+	else
+		document.getElementById("imagelistoutcontainer").innerHTML = html;
+
+	// Src browser
+	html = getBrowserHTML('srcbrowser','src','image','advimage');
+	document.getElementById("srcbrowsercontainer").innerHTML = html;
+
+	// Over browser
+	html = getBrowserHTML('oversrcbrowser','onmouseoversrc','image','advimage');
+	document.getElementById("onmouseoversrccontainer").innerHTML = html;
+
+	// Out browser
+	html = getBrowserHTML('outsrcbrowser','onmouseoutsrc','image','advimage');
+	document.getElementById("onmouseoutsrccontainer").innerHTML = html;
+
+	// Longdesc browser
+	html = getBrowserHTML('longdescbrowser','longdesc','file','advimage');
+	document.getElementById("longdesccontainer").innerHTML = html;
 
 	// Resize some elements
 	if (isVisible('srcbrowser'))
 		document.getElementById('src').style.width = '260px';
 
-	if (isVisible('overbrowser'))
+	if (isVisible('oversrcbrowser'))
 		document.getElementById('onmouseoversrc').style.width = '260px';
 
-	if (isVisible('outbrowser'))
+	if (isVisible('outsrcbrowser'))
 		document.getElementById('onmouseoutsrc').style.width = '260px';
 
 	if (isVisible('longdescbrowser'))
@@ -84,7 +122,7 @@ function init() {
 			onmouseoutsrc = convertURL(onmouseoutsrc, elm, true);
 
 		// Setup form data
-		var style = tinyMCE.parseStyle(elm.style.cssText);
+		var style = tinyMCE.parseStyle(tinyMCE.getAttrib(elm, "style"));
 		formObj.src.value    = src;
 		formObj.alt.value    = tinyMCE.getAttrib(elm, 'alt');
 		formObj.title.value  = tinyMCE.getAttrib(elm, 'title');
@@ -108,6 +146,8 @@ function init() {
 		else
 			selectByValue(formObj, 'align', getStyle(elm, 'align', 'cssFloat'));
 
+		addClassesToList('classlist', 'advimage_styles');
+
 		selectByValue(formObj, 'classlist', tinyMCE.getAttrib(elm, 'class'));
 		selectByValue(formObj, 'imagelistsrc', src);
 		selectByValue(formObj, 'imagelistover', onmouseoversrc);
@@ -118,9 +158,8 @@ function init() {
 		changeAppearance();
 
 		window.focus();
-	}
-
-	addClassesToList('classlist', 'advimage_styles');
+	} else
+		addClassesToList('classlist', 'advimage_styles');
 
 	// If option enabled default contrain proportions to checked
 	if (tinyMCE.getParam("advimage_constrain_proportions", true))
@@ -280,7 +319,7 @@ function insertAction() {
 		html += makeAttrib('hspace');
 		html += makeAttrib('width');
 		html += makeAttrib('height');
-		html += makeAttrib('onmouseover', onmouseoutsrc);
+		html += makeAttrib('onmouseover', onmouseoversrc);
 		html += makeAttrib('onmouseout', onmouseoutsrc);
 		html += makeAttrib('id');
 		html += makeAttrib('dir');
@@ -295,6 +334,7 @@ function insertAction() {
 		tinyMCEPopup.execCommand("mceInsertContent", false, html);
 	}
 
+	tinyMCE._setEventsEnabled(inst.getBody(), false);
 	tinyMCEPopup.close();
 }
 
@@ -450,14 +490,13 @@ function getSelectValue(form_obj, field_name) {
 	return elm.options[elm.selectedIndex].value;
 }
 
-function renderImageList(elm_id, target_form_element, onchange_func) {
+function getImageListHTML(elm_id, target_form_element, onchange_func) {
 	if (typeof(tinyMCEImageList) == "undefined" || tinyMCEImageList.length == 0)
-		return;
+		return "";
 
 	var html = "";
 
-	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_image_list}</label></td>';
-	html += '<td colspan="2"><select id="' + elm_id + '" name="' + elm_id + '"';
+	html += '<select id="' + elm_id + '" name="' + elm_id + '"';
 	html += ' class="mceImageList" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
 
@@ -469,9 +508,9 @@ function renderImageList(elm_id, target_form_element, onchange_func) {
 	for (var i=0; i<tinyMCEImageList.length; i++)
 		html += '<option value="' + tinyMCEImageList[i][1] + '">' + tinyMCEImageList[i][0] + '</option>';
 
-	html += '</select></td></tr>';
+	html += '</select>';
 
-	document.write(html);
+	return html;
 
 	// tinyMCE.debug('-- image list start --', html, '-- image list end --');
 }

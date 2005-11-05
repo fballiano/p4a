@@ -65,11 +65,5 @@ row_all : 'Opdater alle kolonner i tabellen',
 thead : 'Tabeloverskrift',
 tbody : 'Tabelindhold',
 tfoot : 'Tabelfodnote',
-del : 'Slet tabel',
-scope : 'Scope',
-row : 'Row',
-col : 'Col',
-rowgroup : 'Row Group',
-colgroup : 'Col Group',
-missing_scope: 'Are you sure you want to continue without specifying a scope for this table header cell. Without it, it may be difficult for some users with disabilities to understand the content or data displayed of the table.'
+del : 'Slet tabel'
 });

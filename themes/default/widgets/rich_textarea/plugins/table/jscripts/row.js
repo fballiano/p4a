@@ -1,10 +1,13 @@
 function init() {
 	tinyMCEPopup.resizeToInnerSize();
 
+	document.getElementById('backgroundimagebrowsercontainer').innerHTML = getBrowserHTML('backgroundimagebrowser','backgroundimage','image','table');
+	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor');
+
 	var inst = tinyMCE.selectedInstance;
 	var trElm = tinyMCE.getParentElement(inst.getFocusElement(), "tr");
 	var formObj = document.forms[0];
-	var st = tinyMCE.parseStyle(trElm.style.cssText);
+	var st = tinyMCE.parseStyle(tinyMCE.getAttrib(trElm, "style"));
 
 	// Get table row data
 	var rowtype = trElm.parentNode.nodeName.toLowerCase();

@@ -23,5 +23,5 @@ mouseover : 'כשסמן העכבר מעל התמונה',
 mouseout : 'כשסמן העכבר עוזב את התמונה',
 misc : 'אחר',
 example_img : 'תצוגה&nbsp;מקדימה&nbsp;של&nbsp;מראה',
-missing_alt : 'Are you sure you want to continue without including an Image Description? Without  it the image may not be accessible to some users with disabilities, or to those using a text browser, or browsing the Web with images turned off.'
+missing_alt : 'האם אתה בטוח שברצונך להמשיך מבלי לכלול תיאור של התמונה? ללא תיאור, יתכן כי התמונה לא תהיה נגישה למשתמשים בעלי מוגבלויות, או כאלו המשתמשים בדפדפן טקסטואלי, או שמסיירים ברשת בלי להציג תמונות.'
 });

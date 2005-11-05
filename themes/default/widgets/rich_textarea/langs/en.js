@@ -4,7 +4,7 @@ tinyMCE.addToLang('',{
 bold_desc : 'Bold (Ctrl+B)',
 italic_desc : 'Italic (Ctrl+I)',
 underline_desc : 'Underline (Ctrl+U)',
-striketrough_desc : 'Striketrough',
+striketrough_desc : 'Strikethrough',
 justifyleft_desc : 'Align left',
 justifycenter_desc : 'Align center',
 justifyright_desc : 'Align right',

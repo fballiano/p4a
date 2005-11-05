@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn,cs,da,he,no,de,hu');
+tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn,cs,da,he,no,de,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is,pl');
 
 function TinyMCE_directionality_getInfo() {
 	return {
@@ -14,10 +14,12 @@ function TinyMCE_directionality_getInfo() {
 function TinyMCE_directionality_getControlHTML(control_name) {
     switch (control_name) {
         case "ltr":
-            return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceDirectionLTR\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_ltr" src="{$pluginurl}/images/ltr.gif" title="{$lang_directionality_ltr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceDirectionLTR\');return false;';
+            return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_ltr" src="{$pluginurl}/images/ltr.gif" title="{$lang_directionality_ltr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 
         case "rtl":
-            return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceDirectionRTL\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_rtl" src="{$pluginurl}/images/rtl.gif" title="{$lang_directionality_rtl_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceDirectionRTL\');return false;';
+            return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_rtl" src="{$pluginurl}/images/rtl.gif" title="{$lang_directionality_rtl_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
     }
 
     return "";

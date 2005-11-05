@@ -1,5 +1,5 @@
 /* Import theme	specific language pack */
-tinyMCE.importPluginLanguagePack('searchreplace', 'en,sv,zh_cn,fa,fr_ca,fr,de,pl,pt_br,cs,nl,da,he,no,hu');
+tinyMCE.importPluginLanguagePack('searchreplace', 'en,sv,zh_cn,fa,fr_ca,fr,de,pl,pt_br,cs,nl,da,he,no,hu,ru,ru_KOI8-R,ru_UTF-8,fi,cy,es,is');
 
 function TinyMCE_searchreplace_getInfo() {
 	return {
@@ -14,10 +14,12 @@ function TinyMCE_searchreplace_getInfo() {
 function TinyMCE_searchreplace_getControlHTML(control_name)	{
 	switch (control_name) {
 		case "search":
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearch\',true);" target="_self" onmousedown="return false;"><img id="{$editor_id}_search" src="{$pluginurl}/images/search.gif" title="{$lang_searchreplace_search_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearch\',true);return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_search" src="{$pluginurl}/images/search.gif" title="{$lang_searchreplace_search_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 
 		case "replace":
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearchReplace\',true);" target="_self" onmousedown="return false;"><img id="{$editor_id}_replace" src="{$pluginurl}/images/replace.gif" title="{$lang_searchreplace_replace_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearchReplace\',true);return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_replace" src="{$pluginurl}/images/replace.gif" title="{$lang_searchreplace_replace_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	return "";
@@ -93,13 +95,13 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 				if (value['replacestring'] != null) {
 					template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
 					template['width'] = 320;
-					template['height'] = 120;
+					template['height'] = 120 + (tinyMCE.isNS7 ? 20 : 0);
 					template['width'] += tinyMCE.getLang('lang_searchreplace_replace_delta_width', 0);
 					template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 				} else {
 					template['file'] = '../../plugins/searchreplace/search.htm'; // Relative to theme
 					template['width'] = 310;
-					template['height'] = 105;
+					template['height'] = 105 + (tinyMCE.isNS7 ? 25 : 0);
 					template['width'] += tinyMCE.getLang('lang_searchreplace_search_delta_width', 0);
 					template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 				}
@@ -136,6 +138,11 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 
 					if (value['casesensitive'])
 						flags = flags | 4;
+
+					if (!rng.findText) {
+						alert('This operation is currently not supported by this browser.');
+						return true;
+					}
 
 					// Handle replace all mode
 					if (value['replacemode'] == "all") {

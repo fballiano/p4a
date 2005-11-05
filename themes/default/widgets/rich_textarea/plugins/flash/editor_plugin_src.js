@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu');
+tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is');
 
 function TinyMCE_flash_getInfo() {
 	return {
@@ -19,7 +19,8 @@ function TinyMCE_flash_initInstance(inst) {
 function TinyMCE_flash_getControlHTML(control_name) {
     switch (control_name) {
         case "flash":
-            return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_flash_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');return false;';
+            return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_flash_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
     }
 
     return "";

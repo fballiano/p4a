@@ -71,5 +71,6 @@ version : 'גרסה',
 loaded_plugins : 'תוספים פעילים',
 help : 'עזרה',
 not_set : '-- לא מוגדר --',
-close : 'סגירה'
+close : 'סגירה',
+toolbar_focus : 'עבור אל כפתורי הכלים - Alt+Q, עבור אל העורך - Alt-Z, עבור אל נתיב עיצוב - Alt-X'
 });

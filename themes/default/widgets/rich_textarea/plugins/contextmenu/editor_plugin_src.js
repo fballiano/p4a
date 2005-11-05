@@ -17,8 +17,8 @@ function TinyMCE_contextmenu_getInfo() {
 };
 
 function TinyMCE_contextmenu_initInstance(inst) {
-	// Is not working on MSIE 5.0
-	if (tinyMCE.isMSIE5_0)
+	// Is not working on MSIE 5.0 or Opera no contextmenu event
+	if (tinyMCE.isMSIE5_0 && tinyMCE.isOpera)
 		return;
 
 	// Add hide event handles
@@ -52,6 +52,8 @@ function TinyMCE_contextmenu_onContextMenu(e) {
 	if ((body = tinyMCE.getParentElement(elm, "body")) != null) {
 		for (var n in tinyMCE.instances) {
 			var inst = tinyMCE.instances[n];
+			if (!tinyMCE.isInstance(inst))
+				continue;
 
 			if (body == inst.getBody()) {
 				targetInst = inst;
@@ -161,8 +163,6 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 
 function TinyMCE_contextmenu_hideContextMenu() {
 	TinyMCE_contextmenu_contextMenu.hide();
-
-	return true;
 }
 
 function TinyMCE_contextmenu_commandHandler(command, value) {
@@ -213,7 +213,7 @@ function ContextMenu(settings) {
 	this.html = "";
 
 	// IE Popup
-	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0) {
+	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0 && !tinyMCE.isOpera) {
 		this.pop = window.createPopup();
 		doc = this.pop.document;
 		doc.open();
@@ -276,7 +276,7 @@ ContextMenu.prototype.show = function(x, y) {
 
 	this.contextMenuDiv.innerHTML = html;
 
-	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0) {
+	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0 && !tinyMCE.isOpera) {
 		var width, height;
 
 		// Get dimensions
@@ -298,7 +298,7 @@ ContextMenu.prototype.show = function(x, y) {
 };
 
 ContextMenu.prototype.hide = function() {
-	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0)
+	if (tinyMCE.isMSIE && !tinyMCE.isMSIE5_0 && !tinyMCE.isOpera)
 		this.pop.hide();
 	else
 		this.contextMenuDiv.style.display = "none";

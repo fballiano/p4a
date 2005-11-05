@@ -38,6 +38,9 @@ function resizeInputs() {
 		wWidth = document.body.clientWidth - 18;
 	}
 
-	document.getElementById('frmData').style.height = Math.abs(wHeight) + 'px';
-	document.getElementById('frmData').style.width  = Math.abs(wWidth) + 'px';
+	var elm = document.getElementById('frmData');
+	if (elm) {
+		elm.style.height = Math.abs(wHeight) + 'px';
+		elm.style.width  = Math.abs(wWidth) + 'px';
+	}
 }

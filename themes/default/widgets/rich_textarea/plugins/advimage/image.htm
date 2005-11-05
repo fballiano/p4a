@@ -7,7 +7,7 @@
 	<script language="javascript" type="text/javascript" src="jscripts/functions.js"></script>
 	<link href="css/advimage.css" rel="stylesheet" type="text/css" />
 </head>
-<body id="advimage" onload="init();" style="display: none">
+<body id="advimage" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
     <form onsubmit="insertAction();return false;" action="#"> 
 		<div class="tabs">
 			<ul>
@@ -28,11 +28,14 @@
 								<td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
 									<tr> 
 									  <td><input name="src" type="text" id="src" value="" onchange="showPreviewImage(this.value);" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('srcbrowser','src','image','advimage');</script></td>
+									  <td id="srcbrowsercontainer">&nbsp;</td>
 									</tr>
 								  </table></td>
 							</tr>
-							<script language="javascript" type="text/javascript">renderImageList('imagelistsrc','src','onSelectMainImage');</script>
+							<tr id="imagelistsrcrow">
+								<td class="column1"><label for="imagelistsrc">{$lang_image_list}</label></td>
+								<td colspan="2" id="imagelistsrccontainer">&nbsp;</td>
+							</tr>
 							<tr> 
 								<td class="column1"><label id="altlabel" for="alt">{$lang_insert_image_alt}</label></td> 
 								<td colspan="2"><input id="alt" name="alt" type="text" value="" /></td> 
@@ -70,7 +73,7 @@
 									<option value="right">{$lang_insert_image_align_right}</option> 
 								</select> 
 							</td>
-							<td rowspan="7" valign="top">
+							<td rowspan="6" valign="top">
 								<div class="alignPreview">
 									<img id="alignSampleImg" src="images/sample.gif" alt="{$lang_advimage_example_img}" />
 									Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
@@ -78,15 +81,6 @@
 									edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
 									erat volutpat.
 								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td><label id="classlabel" for="classlist">{$lang_class_name}</label></td>
-							<td>
-								 <select id="classlist" name="classlist">
-									<option value="" selected>{$lang_not_set}</option>
-								 </select>
 							</td>
 						</tr>
 
@@ -125,6 +119,15 @@
 						</tr>
 
 						<tr>
+							<td><label id="classlabel" for="classlist">{$lang_class_name}</label></td>
+							<td colspan="2">
+								 <select id="classlist" name="classlist">
+									<option value="" selected>{$lang_not_set}</option>
+								 </select>
+							</td>
+						</tr>
+
+						<tr>
 							<td class="column1"><label id="stylelabel" for="style">{$lang_advimage_style}</label></td> 
 							<td colspan="2"><input id="style" name="style" type="text" value="" onchange="styleUpdated();" /></td> 
 						</tr>
@@ -150,21 +153,27 @@
 								<td><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('overbrowser','onmouseoversrc','image','advimage');</script></td>
+									  <td id="onmouseoversrccontainer">&nbsp;</td>
 									</tr>
 								  </table></td>
 							</tr>
-							<script language="javascript" type="text/javascript">renderImageList('imagelistover','onmouseoversrc');</script>
+							<tr id="imagelistoverrow">
+								<td class="column1"><label for="imagelistover">{$lang_image_list}</label></td>
+								<td id="imagelistovercontainer">&nbsp;</td>
+							</tr>
 							<tr> 
 								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{$lang_advimage_mouseout}</label></td> 
 								<td class="column2"><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('outbrowser','onmouseoutsrc','image','advimage');</script></td>
+									  <td id="onmouseoutsrccontainer">&nbsp;</td>
 									</tr> 
 								  </table></td> 
 							</tr>
-							<script language="javascript" type="text/javascript">renderImageList('imagelistout','onmouseoutsrc');</script>
+							<tr id="imagelistoutrow">
+								<td class="column1"><label for="imagelistout">{$lang_image_list}</label></td>
+								<td id="imagelistoutcontainer">&nbsp;</td>
+							</tr>
 					</table>
 				</fieldset>
 
@@ -207,7 +216,7 @@
 							<td><table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 									  <td><input id="longdesc" name="longdesc" type="text" value="" /></td>
-									  <td><script language="javascript" type="text/javascript">renderBrowser('longdescbrowser','longdesc','file','advimage');</script></td>
+									  <td id="longdesccontainer">&nbsp;</td>
 									</tr>
 								</table></td> 
 						</tr>

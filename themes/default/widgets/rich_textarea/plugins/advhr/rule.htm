@@ -1,4 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 	<title>{$lang_insert_link_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/rule.js"></script>
@@ -12,7 +13,7 @@
 	-->
 	</style>
 </head>
-<body onload="init();">
+<body onload="tinyMCEPopup.executeOnLoad('init();');">
     <form onsubmit="insertHR();return false;" action="#">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
@@ -40,6 +41,7 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select></td>
+                    </tr>
                     <tr>
                         <td align="right" valign="top"><input type="checkbox" name="noshade" id="noshade" class="radio" /></td>
                         <td><label for="noshade">{$lang_insert_advhr_noshade}</label></td>

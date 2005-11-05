@@ -6,7 +6,7 @@
  * @author Pavel Novák
  * @author Josef Klimosz
  *    
- * $Id$ 
+ * $Id: cs.js,v 1.6 2005/10/18 13:59:21 spocke Exp $ 
  */  
 
 

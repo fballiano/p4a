@@ -1,10 +1,14 @@
 function init() {
 	tinyMCEPopup.resizeToInnerSize();
 
+	document.getElementById('backgroundimagebrowsercontainer').innerHTML = getBrowserHTML('backgroundimagebrowser','backgroundimage','image','table');
+	document.getElementById('bordercolor_pickcontainer').innerHTML = getColorPickerHTML('bordercolor_pick','bordercolor');
+	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor')
+
 	var inst = tinyMCE.selectedInstance;
 	var tdElm = tinyMCE.getParentElement(inst.getFocusElement(), "td,th");
 	var formObj = document.forms[0];
-	var st = tinyMCE.parseStyle(tdElm.style.cssText);
+	var st = tinyMCE.parseStyle(tinyMCE.getAttrib(tdElm, "style"));
 
 	// Get table cell data
 	var celltype = tdElm.nodeName.toLowerCase();
@@ -78,7 +82,7 @@ function updateAction() {
 
 			do {
 				cell = updateCell(cell, true);
-			} while ((cell = nextCell(cell)));
+			} while ((cell = nextCell(cell)) != null);
 
 			break;
 
@@ -90,7 +94,7 @@ function updateAction() {
 
 				do {
 					cell = updateCell(cell, true);
-				} while ((cell = nextCell(cell)));
+				} while ((cell = nextCell(cell)) != null);
 			}
 
 			break;
@@ -103,7 +107,7 @@ function updateAction() {
 }
 
 function nextCell(elm) {
-	while ((elm = elm.nextSibling)) {
+	while ((elm = elm.nextSibling) != null) {
 		if (elm.nodeName == "TD" || elm.nodeName == "TH")
 			return elm;
 	}

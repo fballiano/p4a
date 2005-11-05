@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */ 
-tinyMCE.importPluginLanguagePack('paste', 'en,sv,cs,zh_cn,fr_ca,da,he,no,de,hu'); 
+tinyMCE.importPluginLanguagePack('paste', 'en,sv,cs,zh_cn,fr_ca,da,he,no,de,hu,ru,ru_KOI8-R,ru_UTF-8,fi,es,cy,is,pl'); 
 
 function TinyMCE_paste_getInfo() {
 	return {
@@ -36,14 +36,17 @@ function TinyMCE_paste_handleEvent(e) {
 
 function TinyMCE_paste_getControlHTML(control_name) { 
 	switch (control_name) { 
-		case "pastetext": 
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\', true);" target="_self" onmousedown="return false;"><img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
+		case "pastetext":
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\', true);return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 
-		case "pasteword": 
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\', true);" target="_self" onmousedown="return false;"><img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
+		case "pasteword":
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\', true);return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 
-		case "selectall": 
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');" target="_self" onmousedown="return false;"><img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
+		case "selectall":
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');return false;';
+			return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 	} 
 
 	return ''; 
@@ -53,7 +56,7 @@ function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, 
 	switch (command) { 
 		case "mcePasteText": 
 			if (user_interface) {
-				if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false))
+				if ((tinyMCE.isMSIE && !tinyMCE.isOpera) && !tinyMCE.getParam('paste_use_dialog', false))
 					TinyMCE_paste__insertText(clipboardData.getData("Text"), true); 
 				else { 
 					var template = new Array(); 
@@ -70,7 +73,7 @@ function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, 
 
 		case "mcePasteWord": 
 			if (user_interface) {
-				if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false)) {
+				if ((tinyMCE.isMSIE && !tinyMCE.isOpera) && !tinyMCE.getParam('paste_use_dialog', false)) {
 					var html = TinyMCE_paste__clipboardHTML();
 
 					if (html && html.length > 0)
@@ -102,7 +105,7 @@ function TinyMCE_paste__insertText(content, bLinebreaks) {
 	if (content && content.length > 0) {
 		if (bLinebreaks) { 
 			// Special paragraph treatment 
-			if (tinyMCE.getParam("plaintext_create_paragraphs", true)) { 
+			if (tinyMCE.getParam("paste_create_paragraphs", true)) { 
 				content = tinyMCE.regexpReplace(content, "\r\n\r\n", "</p><p>", "gi"); 
 				content = tinyMCE.regexpReplace(content, "\r\r", "</p><p>", "gi"); 
 				content = tinyMCE.regexpReplace(content, "\n\n", "</p><p>", "gi"); 
@@ -165,9 +168,21 @@ function TinyMCE_paste__insertWordContent(content) {
 		content = content.replace(new RegExp('<br style="page-break-before: always;.*>', 'gi'), '-- page break --'); // Replace pagebreaks
 		content = content.replace(new RegExp('<(!--)([^>]*)(--)>', 'g'), "");  // Word comments
 		content = content.replace(/<\/?span[^>]*>/gi, "");
-		content = content.replace(new RegExp('<(\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
+		content = content.replace(new RegExp('<(\\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
 		content = content.replace(/<\/?font[^>]*>/gi, "");
-		content = content.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3");
+
+		// Strips class attributes.
+		switch (tinyMCE.getParam("paste_strip_class_attributes", "all")) {
+			case "all":
+				content = content.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3");
+				break;
+
+			case "mso":
+				content = content.replace(new RegExp('<(\\w[^>]*) class="?mso([^ |>]*)([^>]*)', 'gi'), "<$1$3");
+				break;
+		}
+
+		content = content.replace(new RegExp('href="?' + TinyMCE_paste__reEscape("" + document.location) + '', 'gi'), 'href="' + tinyMCE.settings['document_base_url']);
 		content = content.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3");
 		content = content.replace(/<\\?\?xml[^>]*>/gi, "");
 		content = content.replace(/<\/?\w+:[^>]*>/gi, "");
@@ -218,6 +233,22 @@ function TinyMCE_paste__insertWordContent(content) {
 		tinyMCE.execCommand("mceInsertContent", false, content);
 		tinyMCE.execCommand("mceCleanup"); // Do normal cleanup
 	}
+}
+
+function TinyMCE_paste__reEscape(s) {
+	var l = "?.\\*[](){}+^$:";
+	var o = "";
+
+	for (var i=0; i<s.length; i++) {
+		var c = s.charAt(i);
+
+		if (l.indexOf(c) != -1)
+			o += '\\' + c;
+		else
+			o += c;
+	}
+
+	return o;
 }
 
 function TinyMCE_paste_convertMiddots(div, search, class_name) {

@@ -1,9 +1,9 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
 tinyMCE.addToLang('',{
-bold_desc : 'מודגש',
-italic_desc : 'נטוי',
-underline_desc : 'קו תחתי',
+bold_desc : 'מודגש (Ctrl+B)',
+italic_desc : 'נטוי (Ctrl+I)',
+underline_desc : 'קו תחתי (Ctrl+U)',
 striketrough_desc : 'קו חוצה',
 justifyleft_desc : 'ישר לשמאל',
 justifycenter_desc : 'ישר למרכז',
@@ -13,8 +13,8 @@ bullist_desc : 'רשימה חסרת סדר',
 numlist_desc : 'רשימה מסודרת',
 outdent_desc : 'הקטן כניסה',
 indent_desc : 'הגדל כניסה',
-undo_desc : 'בטל',
-redo_desc : 'בצע שוב',
+undo_desc : 'בטל (Ctrl+Z)',
+redo_desc : 'בצע שוב (Ctrl+Y)',
 link_desc : 'הכנס/ערוך קישור',
 unlink_desc : 'בטל קישור',
 image_desc : 'הכנס/ערוך תמונה',

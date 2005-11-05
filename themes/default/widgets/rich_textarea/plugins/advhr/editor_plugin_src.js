@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('advhr', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu');
+tinyMCE.importPluginLanguagePack('advhr', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu,ru,ru_KOI8-R,ru_UTF-8,fi,es,cy,is');
 
 function TinyMCE_advhr_getInfo() {
 	return {
@@ -14,7 +14,8 @@ function TinyMCE_advhr_getInfo() {
 function TinyMCE_advhr_getControlHTML(control_name) {
     switch (control_name) {
         case "advhr":
-            return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvancedHr\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_advhr" src="{$pluginurl}/images/advhr.gif" title="{$lang_insert_advhr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvancedHr\');return false;';
+            return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" target="_self" onmousedown="return false;"><img id="{$editor_id}_advhr" src="{$pluginurl}/images/advhr.gif" title="{$lang_insert_advhr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
     }
 
     return "";

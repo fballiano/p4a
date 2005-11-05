@@ -66,10 +66,10 @@ thead : 'כותרת הטבלה',
 tbody : 'גוף הטבלה',
 tfoot : 'סיכום הטבלה',
 del : 'מחק טבלה',
-scope : 'Scope',
-row : 'Row',
-col : 'Col',
-rowgroup : 'Row Group',
-colgroup : 'Col Group',
-missing_scope: 'Are you sure you want to continue without specifying a scope for this table header cell. Without it, it may be difficult for some users with disabilities to understand the content or data displayed of the table.'
+scope : 'תחום',
+row : 'שורה',
+col : 'טור',
+rowgroup : 'קבוצת שורות',
+colgroup : 'קבוצת טורים',
+missing_scope: 'האם אתה בטוח שברצונך להמשיך מבלי לציין את תחום הכותרת של הטבלה? בלי כותרת מוגדרת, יתכן כי משתמשים בעלי מוגבלויות יתקשו להבין את התוכן או המידע המוצגים בטבלה.'
 });

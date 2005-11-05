@@ -28,7 +28,7 @@ function insertHR() {
 		html += '"';
 	}
 	if (formObj.noshade.checked==true) {
-		html += ' noshade';
+		html += ' noshade="noshade"';
 	}
 	html += ' />';
 
