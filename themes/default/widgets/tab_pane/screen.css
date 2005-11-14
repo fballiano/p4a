@@ -1,4 +1,3 @@
-
 .tab_pane .tabs {
 	border: 0px;
 	border-bottom: 1px solid #C6D3DE;
@@ -44,7 +43,6 @@
 }
 
 .tab_pane div.tab_pane_page {
-	/*background-color: Aqua; si potrebbe gestire un background-color del frame contenuto */
 	border: 1px solid #C6D3DE;
 	border-top: 0px;
 	padding-top: 8px;

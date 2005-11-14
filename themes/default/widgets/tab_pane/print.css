@@ -1,0 +1,20 @@
+.tab_pane .tabs {
+	border-bottom: 1px solid black;
+}
+
+.tab_pane .tabs a  {
+	color: black;
+	visibility: hidden;
+	background: red;
+}
+
+.tab_pane .tabs a.active, .tab_pane .tabs a.active:link {
+	visibility: visible;
+	border: 1px solid black;
+	border-bottom: 1px solid white;
+}
+
+.tab_pane div.tab_pane_page {
+	border: 1px solid black;
+	border-top: none;
+}

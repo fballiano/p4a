@@ -1,3 +1,11 @@
+0.33
+- release builder script was updated
+- base application was moved to contribs
+- print css for P4A_Tab_Pane was added
+- some bugfixes/cleanup were done on P4A_Field::getAsRadio()
+- P4A_Message::setValue(0) bug was fixed
+- removed "clean on startup" option from tinymce, seems to cause ie problems
+
 0.32
 - P4A_Tab_Pane was added (Thanks to Francesco Dominidiato)
 - enabled rich text editor image resize (documentation on website)

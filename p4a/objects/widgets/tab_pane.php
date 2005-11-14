@@ -77,10 +77,10 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->intercept($this, "onClick", "tabClick");		
 	}
 
-	// todo : bisognerebbe fare una funzione "add" alla 
-	// collection per poter aggiungere un oggetto esistente senza costruirlo con il buld
+	// todo: we'd like to have a function to add some
+	// existing object without building it
 	function addPage(&$page) {
-		
+		p4a_error("NON YET IMPLEMENTED");
 	}
 
 	/**
@@ -187,6 +187,8 @@ class P4A_Tab_Pane extends P4A_Widget
 		}
 		
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
+		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
+		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 		return $this->fetchTemplate();
 	}
 	

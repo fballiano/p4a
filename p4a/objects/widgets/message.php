@@ -60,7 +60,7 @@
 
 		function getAsString()
 		{
-			if ($this->isVisible() and $this->getValue()) {
+			if ($this->isVisible() and strlen($this->getValue())) {
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
 				$value = $this->getValue();

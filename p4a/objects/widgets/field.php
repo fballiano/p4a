@@ -991,15 +991,9 @@
 			$new_value			= $this->getNewValue();
 
 			$enabled = '';
-			if( !$this->isEnabled() ) {
+			if (!$this->isEnabled()) {
 				$enabled = 'disabled="disabled" ';
 			}
-
-			$sheet =& new p4a_sheet('radio_sheet');
-			$sheet->setProperty('class', 'border_box');
-
-			$sheet->properties = array_merge($sheet->properties, $this->properties);
-			$sheet->style = array_merge($sheet->style, $this->style);
 
 			if ($this->isNullAllowed()) {
 				if ($this->null_message === NULL) {
@@ -1012,20 +1006,18 @@
 			}
 
 			foreach ($external_data as $key=>$current) {
-				if ($current[ $value_field ] == $new_value) {
+				if ($current[$value_field] == $new_value) {
 					$checked = "checked='checked'";
 				} else {
 					$checked = "";
 				}
 
-				unset($sContent) ;
-				$sContent  = $p4a->i18n->autoFormat( $current[ $description_field ], $this->data->structure[$description_field]['type']);
-				$sContent .= "<input " . $enabled . " class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[ $value_field ]) ."'/>";
-				$sheet->anchor($sContent);
+				$sContent .= "<div><input $enabled class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
+				$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->structure[$description_field]['type']);
+				$sContent .= '</div>';
 			}
 
-			$return = $this->composeLabel() . '</td><td>' . $sheet->getAsString();
-			$sheet->destroy();
+			$return = $this->composeLabel() . "<div class='font_normal' style='float:left;text-align:left;'>$sContent</div>";
 			return $return;
 		}
 
