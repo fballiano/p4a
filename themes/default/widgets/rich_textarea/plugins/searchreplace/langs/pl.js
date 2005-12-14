@@ -1,21 +1,23 @@
 // PL lang variables
+// fixed by Wooya
+// http://www.mfusion.prv.pl
 
 tinyMCE.addToLang('',{
-searchreplace_search_desc : 'Znajdü',
-searchreplace_searchnext_desc : 'Znajdü ponownie',
-searchreplace_replace_desc : 'Znajdü/Zastπp',
+searchreplace_search_desc : 'Znajdº',
+searchreplace_searchnext_desc : 'Znajdº ponownie',
+searchreplace_replace_desc : 'Znajdº/Zast±p',
 searchreplace_notfound : 'UkoÒczono wyszukiwanie. Poszukiwana fraza nie zosta≥a odnaleziona.',
-searchreplace_search_title : 'Znajdü',
-searchreplace_replace_title : 'Znajdü/Zastπp',
-searchreplace_allreplaced : 'Wszystkie wystπpienia poszukiwanej frazy zosta≥y zastπpione. ',
-searchreplace_findwhat : 'Znajdü',
-searchreplace_replacewith : 'Zastπp',
+searchreplace_search_title : 'Znajdº',
+searchreplace_replace_title : 'Znajdº/Zast±p',
+searchreplace_allreplaced : 'Wszystkie wyst±pienia poszukiwanej frazy zosta≥y zast±pione. ',
+searchreplace_findwhat : 'Znajdº',
+searchreplace_replacewith : 'Zast±p',
 searchreplace_direction : 'Kierunek',
 searchreplace_up : 'Do gÛry',
 searchreplace_down : 'Do do≥u',
-searchreplace_case : 'WielkoúÊ liter',
-searchreplace_findnext : 'Znajdü&nbsp;nastÍpny',
-searchreplace_replace : 'Zastπp',
-searchreplace_replaceall : 'Zastπp&nbsp;wszystkie',
-searchreplace_cancel : 'Wyjdü'
+searchreplace_case : 'Wielko∂Ê liter',
+searchreplace_findnext : 'Znajdº&nbsp;nastÍpny',
+searchreplace_replace : 'Zast±p',
+searchreplace_replaceall : 'Zast±p&nbsp;wszystkie',
+searchreplace_cancel : 'Wyjdº'
 });

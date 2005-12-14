@@ -1,9 +1,27 @@
-// Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
-//Çë·ÃÎÊ http://www.cube316.net/ ÒÔ»ñÈ¡TinyMCEµ&Auml;&Ouml;ĞÎ&Auml;&Ouml;§³&Ouml;
+// Simplified Chinese lang variables contributed by tom_cat (thomaswangyang@gmail.com)
 
-tinyMCE.addToLang('',{
-insert_image_alt2 : 'Í¼Æ¬±êÌâ',
-insert_image_onmousemove : 'Ìæ´úÍ¼Ïñ',
-insert_image_mouseover : 'Êó±êÒÆÉÏÊ±',
-insert_image_mouseout : 'Êó±êÒÆ¿ªÊ±'
+tinyMCE.addToLang('advimage',{
+tab_general : 'Ò»°ã',
+tab_appearance : 'ÏÔÊ¾',
+tab_advanced : '¸ß¼¶',
+general : 'Ò»°ã',
+title : '±êÌâ',
+preview : 'Ô¤ÀÀ',
+constrain_proportions : 'Ô¼ÊøÊôĞÔ',
+langdir : 'ÊéĞ´·½Ïò',
+langcode : 'ÓïÑÔ±àÂë',
+long_desc : '³¤ÃèÊöÁ´½Ó',
+style : '·ç¸ñ',
+classes : 'Àà',
+ltr : '´Ó×óÖÁÓÒ',
+rtl : '´ÓÓÒÖÁ×ó',
+id : '±íÊ¶',
+image_map : 'Í¼Æ¬¶ÔÓ¦',
+swap_image : 'µ÷»»Í¼Æ¬',
+alt_image : 'ºòÑ¡Í¼Æ¬',
+mouseover : 'Êó±êÔÚÉÏÃæÊ±',
+mouseout : 'Êó±êÀë¿ªÊ±',
+misc : 'ÔÓÏî',
+example_img : 'Appearance&nbsp;preview&nbsp;image',
+missing_alt : 'ÄúÈ·ÈÏÒªÔÚÃ»ÓĞÍ¼Æ¬ËµÃ÷µÄÇé¿öÏÂ¼ÌĞøÂğ£¿ ÕâÑùÆäËû¹Ø±ÕÍ¼Æ¬ä¯ÀÀµÄÓÃ»§½«ÎŞ·¨×¢Òâµ½ÄãÔÚÕâÀïÓĞÍ¼Æ¬¡£'
 });

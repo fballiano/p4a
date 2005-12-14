@@ -1,3 +1,7 @@
+0.34
+- TinyMCE was updated to 2.0.1
+- PEAR packages were updated
+
 0.33
 - release builder script was updated
 - base application was moved to contribs

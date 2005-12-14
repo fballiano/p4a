@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('iespell', 'cs,el,en,fr_ca,it,ko,sv,zh_cn,fr,de,pl,pt_br,nl,da,he,no,ru,ru_KOI8-R,ru_UTF-8,fi,cy,es,is');
+tinyMCE.importPluginLanguagePack('iespell', 'cs,el,en,fr_ca,it,ko,sv,zh_cn,fr,de,pl,pt_br,nl,da,he,nb,ru,ru_KOI8-R,ru_UTF-8,nn,fi,cy,es,is,zh_tw,zh_tw_utf8,sk');
 
 function TinyMCE_iespell_getInfo() {
 	return {

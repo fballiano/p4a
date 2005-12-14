@@ -1,7 +1,6 @@
-// Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
-//Çë·ÃÎÊ http://www.cube316.net/ ÒÔ»ñÈ¡TinyMCEµ&Auml;&Ouml;ĞÎ&Auml;&Ouml;§³&Ouml;
+// Simplified Chinese lang variables contributed by tom_cat (thomaswangyang@gmail.com)
 
 tinyMCE.addToLang('',{
-directionality_ltr_desc : '´Ó×óÍùÓÒµ&Auml;·½Ïò',
-directionality_rtl_desc : '´ÓÓÒÍù×óµ&Auml;·½Ïò'
+directionality_ltr_desc : '·½Ïò´Ó×óÍùÓÒ',
+directionality_rtl_desc : '·½Ïò´ÓÓÒÍù×ó'
 });
