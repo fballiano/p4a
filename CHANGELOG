@@ -2,6 +2,8 @@
 - P4A_Table_Col can show image thumbnail: P4A_Table_Col::setType("image")
 - P4A_Button can show icon and label at the same time
 - rich text editor support original image reduction: $Config['ImageSize']['__original__'] = "800x800";
+- a little spanish translation bug was fixed
+- minor changes to tab_pane widget css were made
 
 0.34
 - TinyMCE was updated to 2.0.1
