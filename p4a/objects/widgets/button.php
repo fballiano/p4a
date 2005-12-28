@@ -63,10 +63,13 @@
 		{
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');
-			$this->setDefaultLabel();
 			if ($icon !== NULL) {
 				$this->setIcon($icon);
 			}
+			
+			$this->setDefaultLabel();
+			$this->setValue($this->getLabel());
+			$this->setLabel("");
 		}
 
 		/**
@@ -75,10 +78,10 @@
 		 * @param string	The value
 		 * @access public
 		 */
-		function setLabel($value)
+		/*function setLabel($value)
 		{
 			$this->setValue($value);
-		}
+		}*/
 
 		/**
 		 * Returns the label for the button.
@@ -86,10 +89,10 @@
 		 * @access public
 		 * @return string
 		 */
-		function getLabel()
+		/*function getLabel()
 		{
-			return $this->getValue();
-		}
+			return $this->label;
+		}*/
 
 		/**
 		 * Sets the value for the button.
@@ -160,7 +163,7 @@
 				}
 				$footer .= '>';
 
-				$footer .= "<img class=\"img_button";
+				$footer .= "<img style=\"display:inline;vertical-align:middle\" class=\"img_button";
 
 				if ($enabled) {
 					$footer .= ' clickable';
@@ -182,12 +185,17 @@
 				$footer .= "\" width=\"{$this->_size}\" height=\"{$this->_size}\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
 				$footer .= ' />';
 
+				if ($this->getLabel()) {
+					$footer .= '<span style="margin:5px;">' . $this->getLabel() . '</span>';
+				}				
+				
 				if ($enabled) {
 					$footer .= '</a>';
 				} else {
 					$footer .= '</span>';
 				}
-
+				
+				
 				$footer .= "\n";
 			} else {
 				$header .= '<input type="button" class="';

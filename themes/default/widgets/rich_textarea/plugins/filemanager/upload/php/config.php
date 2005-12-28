@@ -4,16 +4,16 @@
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
+ *      http://www.opensource.org/licenses/lgpl-license.php
  * 
  * For further information visit:
- * 		http://www.fckeditor.net/
+ *      http://www.fckeditor.net/
  * 
  * File Name: config.php
- * 	Configuration file for the PHP File Uploader.
+ *  Configuration file for the PHP File Uploader.
  * 
  * File Authors:
- * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
+ *      Frederico Caldeira Knabben (fredck@fckeditor.net)
  */
 
 global $Config ;
@@ -24,13 +24,18 @@ $Config['Enabled'] = false ;
 // Path to uploaded files relative to the document root.
 $Config['UserFilesPath'] = '/UserFiles/' ;
 
-$Config['AllowedExtensions']['File']	= array() ;
-$Config['DeniedExtensions']['File']		= array('php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
+$Config['AllowedExtensions']['File']    = array() ;
+$Config['DeniedExtensions']['File']     = array('php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
 
-$Config['AllowedExtensions']['Image']	= array('jpg','gif','jpeg','png') ;
-$Config['DeniedExtensions']['Image']	= array() ;
+$Config['AllowedExtensions']['Image']   = array('jpg','gif','jpeg','png') ;
+$Config['DeniedExtensions']['Image']    = array() ;
 
-$Config['AllowedExtensions']['Flash']	= array('swf','fla') ;
-$Config['DeniedExtensions']['Flash']	= array() ;
+$Config['AllowedExtensions']['Flash']   = array('swf','fla') ;
+$Config['DeniedExtensions']['Flash']    = array() ;
+
+$Config['EnableImageResize'] = true;
+$Config['ImageSize']['small'] = "200x150";
+$Config['ImageSize']['medium'] = "300x225";
+$Config['ImageSize']['large'] = "400x300";
 
 ?>

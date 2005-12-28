@@ -187,6 +187,13 @@
 
 		return $filename;
 	}
+	
+	function P4A_Get_Valid_File_Name($filename) 
+	{
+		$filename = str_replace(" ","_",$filename);
+		$filename = preg_replace("/[^A-Za-z0-9_\-\.]/","",$filename);
+		return $filename;
+	}
 
 	/**
 	 * Returns the microtime.

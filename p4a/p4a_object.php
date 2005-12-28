@@ -194,6 +194,8 @@
 					eval('$return = $interceptor->' . $method . '($this);');
 				}
 				return $return;
+			} else {
+				return NULL;
 			}
 		}
 

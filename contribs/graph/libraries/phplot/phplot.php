@@ -3923,8 +3923,8 @@ class PHPlot {
                 $this->DrawDots();
             }
             break;
-        case 'points';
-            if ( $this->data_type == 'data-data-error') {
+        case 'points':
+		            if ( $this->data_type == 'data-data-error') {
                 $this->DrawDotsError();
             } else {
                 $this->DrawDots();

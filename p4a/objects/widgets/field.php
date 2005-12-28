@@ -306,6 +306,7 @@
 						if (!empty($new_value)) {
 							$new_value = md5($new_value);
 						}
+						break;
 					case 'none':
 						break;
 					default:
@@ -767,7 +768,7 @@
 			$this->useTemplate('rich_textarea');
 			
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
-			$this->addTempVar("upload_path", P4A_UPLOADS_PATH);
+			$this->addTempVar("upload_path", P4A_UPLOADS_PATH . "/" . $this->getUploadSubpath());
 			$this->addTempVar("upload", $this->upload);
 			
 			return $this->fetchTemplate();
