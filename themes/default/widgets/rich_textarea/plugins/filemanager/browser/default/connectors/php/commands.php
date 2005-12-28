@@ -173,7 +173,7 @@ function FileUpload( $resourceType, $currentFolder )
             }
             
             //Image Resizing
-            if (strpos(mime_content_type($sFilePath), "image") !== false) { //The file is an image?
+            if ( strpos(mime_content_type($sFilePath), "image") !== FALSE ) { //The file is an image?
                 if (function_exists("gd_info") ) { //libGD is installed ?
                 
                     if (array_key_exists("EnableImageResize",$Config) 
@@ -183,7 +183,7 @@ function FileUpload( $resourceType, $currentFolder )
                         if (strpos(mime_content_type($sFilePath), "png")) {
                             $createfunction = "imagecreatefrompng";
                             $savefunction = "imagepng";
-                        } elseif (strpos(mime_content_type($sFileUrl), "jpeg")) {
+                        } elseif (strpos(mime_content_type($sFilePath), "jpeg")) {
                             $createfunction = "imagecreatefromjpeg";
                             $savefunction = "imagejpeg";
                         }
@@ -208,22 +208,26 @@ function FileUpload( $resourceType, $currentFolder )
                                 $im = $createfunction($sFilePath);
                                 imagecopyresampled($im_new, $im, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
                                 
-                                $sNewFileName = RemoveExtension($sFileName) . "_{$size}.{$sExtension}";
-                                $sNewFilePath = $sServerDir . $sNewFileName ;
+                                if ($size == "__original__") {
+                                	$sNewFilePath = $sFilePath;
+                                } else {
+                                	$sNewFileName = RemoveExtension( $sFileName) . "_{$size}.{$sExtension}";
+                                	$sNewFilePath = $sServerDir . $sNewFileName ;
+                                }
                                 $savefunction($im_new, $sNewFilePath);
                                 
-                                if (is_file($sNewFilePath)) {
-                                    $oldumask = umask(0);
-                                    chmod($sNewFilePath, 0777);
-                                    umask($oldumask) ;
+                                if ( is_file( $sNewFilePath ) )
+                                {
+                                    $oldumask = umask(0) ;
+                                    chmod( $sNewFilePath, 0777 ) ;
+                                    umask( $oldumask ) ;
                                 }
                             }                
                         } 
                                 
                     }
                 }
-            }
-            //Image Resizing
+            } //Image Resizing           
         }
         else
             $sErrorNumber = '202' ;
@@ -236,11 +240,5 @@ function FileUpload( $resourceType, $currentFolder )
     echo '</script>' ;
 
     exit ;
-}
-
-function debug($text) {
-    $f = fopen("/tmp/debug","a");
-    fwrite($f, "$text\n");
-    fclose($f);
 }
 ?>
