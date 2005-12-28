@@ -546,13 +546,17 @@
 		var $orderable = true;
 
 		/**
+		 * Type of the column
+		 * @access private
+		 * @var string
+		 */
+		var $_type = "text";
+
+		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
 		 */
-		 
-		var $_type = "text";
-		  
 		function P4A_Table_Col($name)
 		{
 			parent::P4A_Widget($name);
@@ -751,12 +755,22 @@
 		{
 			return $this->orderable;
 		}
-		
+
+		/**
+		 * Sets the type of the column (text|image)
+		 * @access public
+		 * @param string
+		 */
 		function setType($type)
 		{
 			$this->_type = $type;
 		}
-		
+
+		/**
+		 * Gets the type of the column (text|image)
+		 * @access public
+		 * @return string
+		 */		
 		function getType()
 		{
 			return $this->_type;
