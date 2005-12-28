@@ -161,9 +161,7 @@
 				} else {
 					$header .= '<span class="link_button" ';
 				}
-				$footer .= '>';
-
-				$footer .= "<img style=\"display:inline;vertical-align:middle\" class=\"img_button";
+				$footer .= '><img class="img_button"';
 
 				if ($enabled) {
 					$footer .= ' clickable';

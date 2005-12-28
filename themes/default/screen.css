@@ -48,6 +48,8 @@ body {
 }
 
 .img_button {
+	display: inline;
+	vertical-align: middle;
 	border: 1px solid #FAFAFA;
 	padding-left:3px;
 	padding-right:3px;
