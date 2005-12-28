@@ -45,7 +45,7 @@
 .tab_pane div.tab_pane_page {
 	border: 1px solid #C6D3DE;
 	border-top: 0px;
-	padding-top: 8px;
+	padding: 10px 15px;
 	display: block;
 	position: relative;
 	overflow: auto;
