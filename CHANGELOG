@@ -1,5 +1,7 @@
 0.35
-- P4A_Table_Col can show image thumbnail 
+- P4A_Table_Col can show image thumbnail: P4A_Table_Col::setType("image")
+- P4A_Button can show icon and label at the same time
+
 0.34
 - TinyMCE was updated to 2.0.1
 - PEAR packages were updated
