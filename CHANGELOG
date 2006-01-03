@@ -1,3 +1,8 @@
+0.36
+- added CHANGELOG, README, COPYING and TODO files to code reference
+- backward compatibility issue with P4A_Button was fixed
+- a "find" icon was added (32x32)
+
 0.35
 - P4A_Table_Col can show image thumbnail: P4A_Table_Col::setType("image")
 - P4A_Button can show icon and label at the same time
@@ -33,7 +38,7 @@
 - PHP 4.4 porting completed (deep tests are needed)
 - sample htaccess was added (needed to set some PHP settings that we can't set at runtime)
 - TinyMCE rich text editor was introduced instead FCKEditor
-- FCKEditor file browser/upload was integrated in tinyMCE
+- CKEditor file browser/upload was integrated in tinyMCE
 - P4A_Field::enableUpload() was added
 - P4A_Field::enableFileUpload() and P4A_Field::enableImageUpload() were removed
 - fixed the setDefaultValue(0) bug

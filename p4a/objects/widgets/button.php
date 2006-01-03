@@ -68,8 +68,6 @@
 			}
 			
 			$this->setDefaultLabel();
-			$this->setValue($this->getLabel());
-			$this->setLabel("");
 		}
 
 		/**
@@ -78,21 +76,16 @@
 		 * @param string	The value
 		 * @access public
 		 */
-		/*function setLabel($value)
+		function setLabel($value)
 		{
+			parent::setLabel($value);
 			$this->setValue($value);
-		}*/
-
-		/**
-		 * Returns the label for the button.
-		 * It'a a wrapper for get_value().
-		 * @access public
-		 * @return string
-		 */
-		/*function getLabel()
+		}
+		
+		function setDefaultLabel()
 		{
-			return $this->label;
-		}*/
+			$this->setValue(ucwords(str_replace('_', ' ', $this->getName())));
+		}
 
 		/**
 		 * Sets the value for the button.
