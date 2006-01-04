@@ -1,0 +1,40 @@
+------------------
+-- Introduction --
+------------------
+
+MySQL Manager is a big project for creating an automatic application wizard.
+
+Simply connect MySQL Manager to your existing database and you will have
+a perfectly running web application to manage it.
+
+MySQL Manager is very different from phpMyAdmin, because phpMyAdmin has been
+created primarily to view and modify the database structure, mysql_manager
+instead is done to allow developers have an application to use to insert
+data into the database without having to write a line of code!
+In a far (we hope not so much :)) future we hope that MySQL Manager could
+become an alternative to Microsoft Access, for the ease of use and the power
+of developing we applications without programming knowledge.
+
+MySQL Manager understands relations between tables, so you will automagically
+see combo box where a field is relationated to another and so on.
+
+MySQL Manager will let you modify your web application with a simple
+POINT AND CLICK graphic interface. Click on "EDIT" menu item and start
+playing around. All modifies are saved to XML files.
+
+MySQL Manager EDIT system may work only on Mozilla browsers.
+
+MySQL Manager, as p4a, has a big PEAR integration, so primary keys are managed
+trought sequences. You sould have no AUTOINCREMENT primary keys in your table
+structure, simple INTEGER fields will correctly work.
+
+-------------
+-- Authors --
+-------------
+
+Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+Andrea Giardina <andrea.giardina@crealabs.it>
+
+CREALABS
+Via Medail, 32 - 10144 Torino - Italy
+http://www.crealabs.it - info@crealabs.it

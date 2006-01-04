@@ -1,3 +1,7 @@
+0.37
+- MySQL Manager was removed from the main package and released as a contrib
+- Base application contrib was released
+
 0.36
 - added CHANGELOG, README, COPYING and TODO files to code reference
 - backward compatibility issue with P4A_Button was fixed

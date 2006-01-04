@@ -20,5 +20,6 @@ rm `find -name '.cvsignore'`
 
 cd $NAME
 tar zcf ../$NAME-$VERSION.tar.gz *
+phpdoc -q -d "$SRCDIR" -ti "$NAME" -dn 'p4a-contribs' -dc 'P4A Contribs' -i 'libraries/' -pp on -dh off -t $PKGDIR/codereference-$VERSION -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
 cd ..
 rm -r $NAME

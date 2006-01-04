@@ -18,7 +18,6 @@
 - P4A_DB_Source without orders clause can't work well, add default order on pk if none is supplied?
 - check konqueror/handheld for new image/file field type compatibility
 - change alt/title on table template for next/prev/first/last page (ask for translations)
-- take a deep look at MySQL Manager and add many functionalities (eg: frames/fieldset)
 
 ----------------
 -- FAR FUTURE --

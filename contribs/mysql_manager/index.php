@@ -33,15 +33,19 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package P4A_Base_Application
+ * @package MySQL_Manager
  */
 
-define("P4A_DSN", 'mysql://root:@localhost/p4a_base_application');
-define("P4A_EXTENDED_ERRORS",TRUE);
-
+//define("P4A_EXTENDED_ERRORS", TRUE);
 require_once( dirname(__FILE__) . '/../../p4a.php' );
 
-$app =& p4a::singleton("p4a_base_application");
-$app->main();
+$p4a =& p4a::singleton("mysql_manager");
+$check = p4a_check_configuration(dirname(__FILE__) . '/xml');
+
+if (is_string($check)) {
+	print $check;
+} else {
+	$p4a->main();
+}
 
 ?>

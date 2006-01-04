@@ -33,7 +33,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package p4a
+ * @package P4A_Base_Application
  */
 
 	class P4A_Login extends P4A_Mask

@@ -33,15 +33,32 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package P4A_Base_Application
+ * @package MySQL_Manager
  */
 
-define("P4A_DSN", 'mysql://root:@localhost/p4a_base_application');
-define("P4A_EXTENDED_ERRORS",TRUE);
+class My_Table_Source extends P4A_Array_Source
+{
+	var $_table_name;
 
-require_once( dirname(__FILE__) . '/../../p4a.php' );
+	function &load($table_name)
+	{
+		$db =& P4A_DB::singleton();
+		$this->_table_name = $table_name;
+		$table_array = $this->getTableArray();
+		return parent::load($table_array);
+	}
 
-$app =& p4a::singleton("p4a_base_application");
-$app->main();
+	function getTableArray()
+	{
+		$db =& P4A_DB::singleton();
+		$table_name = $this->_table_name;
+		return $db->getAll("desc $table_name");
+	}
 
+	function reload()
+	{
+ 		$this->_array = $this->getTableArray();
+	}
+
+}
 ?>

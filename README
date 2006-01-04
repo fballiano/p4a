@@ -36,34 +36,6 @@ We've also included a schema model image (db_schema.png) and the
 DBDesigner source for that (db_schema.xml), so you can better
 understand what that db does.
 
-In the application directory you should have seen another project:
-
-	mysql_manager
-
-mysql_manager is a big project for creating an automatic application wizard.
-Simply connect mysql_manager to your existing database and you will have
-a perfectly running web application to manage it.
-mysql_manager is very different from phpMyAdmin, because phpMyAdmin has been
-created primarily to view and modify the database structure, mysql_manager
-instead is done to allow developers have an application to use to insert
-data into the database without having to write a line of code!
-In a far (we hope not so much :)) future we hope that mysql_manager could
-become an alternative to Microsoft Access, for the ease of use and the power
-of developing we applications without programming knowledge.
-
-mysql_manager understand relations between tables, so you will automagically
-see combo box where a field is relationated to another and so on.
-
-mysql_manager will let you modify your web application with a simple
-POINT AND CLICK grafic interface. Click on "EDIT" menu item and start
-playing around. All modifies are saved to XML files.
-
-mysql_manager EDIT system works only on Mozilla browsers.
-
-mysql_manager, as p4a, has a big PEAR integration, so primary keys are managed
-trought sequences. You sould have no AUTOINCREMENT primary keys in your table
-structure, simple INTEGER fields will correctly work.
-
 --------------------------
 - ADVANCED INSTALLATION --
 --------------------------
