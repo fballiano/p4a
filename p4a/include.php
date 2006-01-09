@@ -89,6 +89,7 @@
 	require_once "$dir/objects/masks/image_preview.php";
 
 	//Widget Extensions
+	require_once "$dir/objects/widgets/box.php";
 	require_once "$dir/objects/widgets/button.php";
 	require_once "$dir/objects/widgets/canvas.php";
 	require_once "$dir/objects/widgets/field.php";
