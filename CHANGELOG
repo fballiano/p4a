@@ -1,6 +1,5 @@
 0.38
-- added 32x32 find and find_disabled icons to default theme
-- added the P4A_Box widget
+- P4A_Box widget was added, it renders raw html
 
 0.37
 - MySQL Manager was removed from the main package and released as a contrib
@@ -46,7 +45,7 @@
 - PHP 4.4 porting completed (deep tests are needed)
 - sample htaccess was added (needed to set some PHP settings that we can't set at runtime)
 - TinyMCE rich text editor was introduced instead FCKEditor
-- FCKEditor file browser/upload was integrated in tinyMCE
+- CKEditor file browser/upload was integrated in tinyMCE
 - P4A_Field::enableUpload() was added
 - P4A_Field::enableFileUpload() and P4A_Field::enableImageUpload() were removed
 - fixed the setDefaultValue(0) bug
