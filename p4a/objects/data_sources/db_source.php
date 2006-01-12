@@ -38,6 +38,8 @@
 
 class P4A_DB_Source extends P4A_Data_Source
 {
+    var $_DSN = "";
+    
     var $_pk = NULL;
 
     var $_select = "";
@@ -60,6 +62,16 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         parent::P4A_Data_Source($name);
         $this->build("P4A_Collection", "fields");
+    }
+    
+    function setDSN($DSN)
+    {
+    	$this->_DSN = $DSN;
+    }
+    
+    function getDSN()
+    {
+    	return $this->_DSN;
     }
 
     function setTable($table)
@@ -236,7 +248,7 @@ class P4A_DB_Source extends P4A_Data_Source
             p4a_error("ERRORE");
         }
 
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
 
         $query = $this->_composeSelectStructureQuery();
         $rs = $db->limitQuery($query,0,1);
@@ -258,7 +270,7 @@ class P4A_DB_Source extends P4A_Data_Source
                     continue;
                 }
                 $this->fields->build("p4a_data_field",$field_name);
-
+				$this->fields->$field_name->setDSN($this->getDSN());
                 if ($col['type'] == "int" and $col['len'] == 1) {
                     $col['type'] = "tinyint";
                 }
@@ -341,14 +353,14 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getPkRow($pk)
     {
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectPkQuery($pk);
         return $db->getRow($query);
     }
 
     function row($num_row = NULL, $move_pointer = TRUE)
     {
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
 
         $query = $this->_composeSelectQuery();
 
@@ -397,7 +409,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getNumRows()
     {
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectCountQuery();
 
         if ($this->_num_rows === NULL) {
@@ -453,7 +465,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
             $query .= $this->_composeGroupPart();
             $query .= $this->_composeOrderPart($new_order_array);
-            $db =& p4a_db::singleton();
+            $db =& P4A_DB::singleton($this->getDSN());
             return $db->getOne($query);
         }
     }
@@ -466,7 +478,7 @@ class P4A_DB_Source extends P4A_Data_Source
     function saveRow($fields_values = array(), $pk_values = array())
     {
         if(!$this->isReadOnly()) {
-            $db =& P4A_DB::singleton();
+            $db =& P4A_DB::singleton($this->getDSN());
             if (empty($fields_values)) {
                 while($field =& $this->fields->nextItem()) {
 
@@ -563,7 +575,7 @@ class P4A_DB_Source extends P4A_Data_Source
     function deleteRow()
     {
         if (!$this->isReadOnly()) {
-            $db =& P4A_DB::singleton();
+            $db =& P4A_DB::singleton($this->getDSN());
             $table = $this->getTable();
 
             $pks = $this->getPK();
@@ -597,7 +609,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getAll($from = 0, $count = 0)
     {
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectQuery();
 
         if ($from == 0 and $count == 0) {
@@ -802,7 +814,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function addMultivalueField($fieldname, $table, $fk = NULL, $fk_field = NULL)
     {
-        $db =& P4A_DB::singleton();
+        $db =& P4A_DB::singleton($this->getDSN());
 
         $this->_multivalue_fields[$fieldname]['table'] = $table;
 
@@ -830,11 +842,13 @@ class P4A_DB_Source extends P4A_Data_Source
         $this->_multivalue_fields[$fieldname]['fk_field'] = $fk_field;
 
         $this->fields->build("P4A_Data_Field",$fieldname);
+    	$this->fields->$fieldname->setDSN($this->getDSN());
     }
 
     function __sleep()
     {
         $this->resetNumRows();
+		P4A_DB::close($this->getDSN());
         return array_keys(get_object_vars($this));
     }
 }

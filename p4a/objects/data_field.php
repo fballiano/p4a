@@ -159,6 +159,16 @@
 		{
 			return $this->is_read_only;
 		}
+		
+		function setDSN($DSN)
+		{
+			$this->_DSN = $DSN;
+		}
+		
+		function getDSN()
+		{
+			return $this->_DSN;
+		}
 
 		function setDefaultValue($value = NULL)
 		{
@@ -179,7 +189,7 @@
 			if ($this->sequence === NULL) {
 				return $this->default_value;
 			} else {
-				$db =& p4a_db::singleton();
+				$db =& P4A_DB::singleton($this->getDSN());
 				return $db->nextId($this->sequence);
 			}
 		}

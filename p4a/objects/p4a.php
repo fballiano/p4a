@@ -282,7 +282,6 @@
 		function main()
 		{
 			$this->i18n->setSystemLocale();
-			P4A_DB::connect();
 
 			$this->actionHandler('main');
 
@@ -343,8 +342,6 @@
 			if (is_object($this->active_mask)) {
 				$this->active_mask->main();
 			}
-
-			P4A_DB::close();
 
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));

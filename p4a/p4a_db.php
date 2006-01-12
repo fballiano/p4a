@@ -49,24 +49,34 @@ class P4A_DB
 	 * @access public
 	 * @throws onDBConnectionError
 	 */
-	function &singleton()
+	function &singleton($DSN = "")
   	{
-		static $db;
-		if(!isset($db) or $db == null) {
-			if(defined("P4A_DSN")) {
-				$db = DB::connect(P4A_DSN);
-    			if (DB::isError($db)) {
-					$e = new P4A_ERROR('Database connection failed', $this, $db);
+		//If DSN is not specified I use default connection
+		if (!strlen($DSN) and defined("P4A_DSN")){
+			$DSN = P4A_DSN;
+		}
+		
+		if (strlen($DSN)) {
+			$dbconn = base64_encode($DSN);
+			$dbconn = "db" . str_replace(array('=','+','/'),'',$dbconn);
+			global $$dbconn; //static $$ doesn't work 
+		}
+		
+		if(!isset($$dbconn) or $$dbconn == null) {
+			if(strlen($DSN)) {
+				$$dbconn = DB::connect($DSN);
+    			if (DB::isError($$dbconn)) {
+					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
-    			$db->setFetchMode(DB_FETCHMODE_ASSOC);
+    			$$dbconn->setFetchMode(DB_FETCHMODE_ASSOC);
 			} else {
-				$db = null;
+				$$dbconn = null;
 			}
 		}
-		return $db;
+		return $$dbconn;
 	}
 
 	/**
@@ -74,18 +84,18 @@ class P4A_DB
 	 * Database is configured by setting P4A_DSN constant.
 	 * @access private
 	 */
-	function &connect()
+	function &connect($DSN = "")
 	{
-		return P4A_DB::singleton();
+		return P4A_DB::singleton($DSN);
 	}
 
 	/**
 	 * Close the connection to the database.
 	 * @access private
 	 */
-	function close()
+	function close($DSN = "")
 	{
-		$db = P4A_DB::singleton();
+		$db = P4A_DB::singleton($DSN);
 		if(is_object($db)) {
 			$db->disconnect();
 		}
