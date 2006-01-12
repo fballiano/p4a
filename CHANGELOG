@@ -1,5 +1,11 @@
 0.38
 - P4A_Box widget was added, it renders raw html
+- added multiple database connection support
+- added setDSN method to p4a_db_source
+- added getDSN method to p4a_db_source
+- added setDSN method to p4a_data_field
+- added getDSN method to p4a_data_field
+- minor changes
 
 0.37
 - MySQL Manager was removed from the main package and released as a contrib

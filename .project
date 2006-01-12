@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>p4a</name>
+	<name>p4a-cvs</name>
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.trustudio.php.core.phpBuilder</name>
+			<name>org.trustudio.php.core.PHPscriptbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.trustudio.oss.core.ossnature</nature>
-		<nature>org.trustudio.php.core.phpNature</nature>
+		<nature>org.trustudio.oss.core.scriptnature</nature>
+		<nature>org.trustudio.php.core.phpnature</nature>
 	</natures>
 </projectDescription>
