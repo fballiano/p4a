@@ -2,9 +2,6 @@
 
 {open_javascript:h}
 
-var p4apopup;
-var p4apopup_field;
-
 tinyMCE.init({
 	mode: "exact",
 	elements : "{id}",
@@ -24,9 +21,9 @@ tinyMCE.init({
 
 {if:upload}
 function {id}fileBrowserCallBack(field_name, url, type, win) {
-	p4apopup_field = field_name;
-	p4apopup = win;
-	window.open("../filemanager/browser/default/browser.html?Connector=connectors/php/connector.php&ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
+	tinyfck_field = field_name;
+	tinyfck = win;
+	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php&ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
 }
 {end:}
 

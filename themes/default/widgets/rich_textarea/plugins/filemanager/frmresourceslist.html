@@ -8,6 +8,8 @@
  * For further information visit:
  * 		http://www.fckeditor.net/
  * 
+ * "Support Open Source software. What about a donation today?"
+ * 
  * File Name: frmresourceslist.html
  * 	This page shows all resources available in a folder in the File Browser.
  * 
@@ -89,11 +91,11 @@ function OpenFolder( folderPath )
 }
 
 function OpenFile( fileUrl )
-{
-	window.parent.opener.p4apopup.document.forms[0].elements[window.parent.opener.p4apopup_field].value = fileUrl;
-	window.parent.opener.p4apopup.document.forms[0].elements[window.parent.opener.p4apopup_field].onchange();
-	window.parent.close();
-	window.parent.opener.p4apopup.focus();
+{	
+	window.top.opener.tinyfck.document.forms[0].elements[window.top.opener.tinyfck_field].value = fileUrl;
+	window.top.opener.tinyfck.document.forms[0].elements[window.top.opener.tinyfck_field].onchange();
+	window.top.close();
+	window.top.opener.tinyfck.focus();
 }
 
 function LoadResources( resourceType, folderPath )
