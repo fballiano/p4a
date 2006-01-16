@@ -50,7 +50,7 @@ function OnSubmit()
 function OnUploadCompleted( errorNumber, data )
 {
 	// Reset the Upload Worker Frame.
-	window.parent.frames['frmUploadWorker'].location = '../../../../blank.htm' ;
+	window.parent.frames['frmUploadWorker'].location = '../../../fckblank.html' ;
 	
 	// Reset the upload form (On IE we must do a little trick to avout problems).
 	if ( document.all )

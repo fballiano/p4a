@@ -6,7 +6,7 @@
 - added getDSN method to p4a_data_field
 - minor changes
 - P4A_Box widget was added, it renders raw html
-- Rich Text Editor was updated to TinyFCK 0.3
+- Rich Text Editor was updated to TinyFCK 0.4
 - Rich Text Editor image resizing was modularized a bit
 - bugfix on RTE image resize
 - minor changes

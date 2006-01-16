@@ -28,10 +28,9 @@
 	});
 
 	function fileBrowserCallBack(field_name, url, type, win) {
-		upload_path = '/tinyfck/uploads';
 		tinyfck_field = field_name;
 		tinyfck = win;
-		window.open("../filemanager/browser.html?Connector=connectors/php/connector.php&ServerPath=" + upload_path, "tinyfck", "modal,width=600,height=400");
+		window.open("../../filemanager/browser.html?Connector=connectors/php/connector.php", "tinyfck", "modal,width=600,height=400");
 	}
 </script>
 <!-- /TinyMCE -->

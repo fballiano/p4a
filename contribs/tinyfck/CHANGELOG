@@ -1,3 +1,7 @@
+0.4
+- switched to standard FCK's file manager, now ALL CONNECTORS (php, asp, perl, python etc.) are working
+- fixed a bug with the "flash upload button"
+
 0.3
 - fixed bug 1405839: upload button invisible
 

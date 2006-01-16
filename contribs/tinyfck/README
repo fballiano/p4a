@@ -22,11 +22,12 @@ nothing less, nothing more.
 
 TinyFCK package contains:
  * a TinyMCE release (absolutely not patched, this is the original TinyMCE)
- * a patched version of FCKEditor file manager/uploader for PHP
+ * a patched version of FCKEditor file manager/uploader
  * an example documenting configuration
-
-At the moment tinyFCK works only with PHP, porting to other languages 
-may come but help is needed, write us if you can contribute!
+ 
+Upload connectors are disabled by default for security reasons, look at the
+code of every connector to enable it. Connectors are in 
+filemanager/connectors directory.
 
 -------------
 -- Authors --

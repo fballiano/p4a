@@ -1,11 +1,12 @@
 <?php
 
-if (function_exists("mime_content_type") and strpos(mime_content_type($sFilePath), "image") !== FALSE ) { //The file is an image?
+if (array_key_exists("EnableImageResize",$Config) 
+    and $Config['EnableImageResize'] == true) { //Image Resize is enabled?
+
     if (function_exists("gd_info")) { //libGD is installed ?
-    
-        if (array_key_exists("EnableImageResize",$Config) 
-            and $Config['EnableImageResize'] == true) { //Image Resize is enabled?
-            
+		if (function_exists("mime_content_type") 
+			and strpos(mime_content_type($sFilePath), "image") !== FALSE ) { //The file is an image?    
+			
             $createfunction = "";
             if (strpos(mime_content_type($sFilePath), "png")) {
                 $createfunction = "imagecreatefrompng";
@@ -24,7 +25,7 @@ if (function_exists("mime_content_type") and strpos(mime_content_type($sFilePath
                         $new_height = $new_width / ($width /$height);
                     } else {
                         $new_width = $new_height * ($width /$height);
-                    }                
+                    }
                 } else {
                     $new_width = $width;
                     $new_height = $height;

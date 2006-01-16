@@ -20,8 +20,6 @@
 
 function GetUrlFromPath( $resourceType, $folderPath )
 {
-	$resourceType = '';
-	
 	if ( $resourceType == '' )
 		return RemoveFromEnd( $GLOBALS["UserFilesPath"], '/' ) . $folderPath ;
 	else
@@ -35,8 +33,6 @@ function RemoveExtension( $fileName )
 
 function ServerMapFolder( $resourceType, $folderPath )
 {
-	$resourceType = '';
-	
 	// Get the resource type directory.
 	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . $resourceType . '/' ;
 
