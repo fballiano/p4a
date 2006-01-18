@@ -725,7 +725,7 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-			if ($this->getNewValue() !== NULL) {
+			if (strlen($this->getNewValue()) > 0) {
 				$header .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 			}
 
