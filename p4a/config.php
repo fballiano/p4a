@@ -270,6 +270,10 @@
 	if (!defined('P4A_EXTENDED_ERRORS')){
 		define('P4A_EXTENDED_ERRORS', false);
 	}
+	
+	if (!defined('P4A_DENIED_EXTENSIONS')) {
+		define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
+	}
 
 	define('P4A_ORDER_ASCENDING','ASC');
 	define('P4A_ORDER_DESCENDING','DESC');

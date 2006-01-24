@@ -1,5 +1,14 @@
+0.40
+- TinyFCK was updated to 0.5
+
 0.39
 - fixed bug 1407473 (password obfuscator was shown also on null values)
+- feature request 1413696 (removing non existing file does not produce a fatal error anymore)
+- P4A_DENIED_EXTENSIONS constant was added
+- P4A_Get_File_Extension() function was added to library
+- P4A_Is_Extension_Allowed() function was added to library
+- fixed bug 1404846 (when uploading a file with denied extension you'll get a fatal error)
+- some methods were documented in the code reference
 
 0.38
 - Multiple DB connection support was added

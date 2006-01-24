@@ -188,6 +188,12 @@
 		return $filename;
 	}
 	
+	/**
+	 * Strips "strange" chars from filename.
+	 * @access public
+	 * @return string
+	 * @param string
+	 */
 	function P4A_Get_Valid_File_Name($filename) 
 	{
 		$filename = str_replace(" ","_",$filename);
@@ -209,6 +215,7 @@
 	/**
 	 * Includes all p4a objects for the application.
 	 * @access private
+	 * @param string
 	 */
 	function P4A_Include_Objects($dir)
 	{
@@ -236,5 +243,28 @@
 				P4A_Include_Objects($subdir);
 			}
 		}
+	}
+	
+	/**
+	 * Returns the extension of the passed file path/url.
+	 * @access public
+	 * @return string
+	 * @param string
+	 */
+	function P4A_Get_File_Extension($url)
+	{
+		return substr(strrchr($url, '.'), 1);
+	}
+	
+	/**
+	 * Check if the extension is allowed to be uploaded
+	 * @access public
+	 * @return boolean
+	 * @param string
+	 */
+	function P4A_Is_Extension_Allowed($extension)
+	{
+		$allow = explode('|', P4A_DENIED_EXTENSIONS);
+		return !in_array(strtolower($extension), $allow);
 	}
 ?>

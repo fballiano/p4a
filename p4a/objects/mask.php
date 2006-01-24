@@ -453,7 +453,7 @@
 						} else {
 							if ($new_value === NULL) {
 								$path = $target_dir . '/' . $a_old_value[0];
-								if (!@unlink($path)) {
+								if (!@unlink($path) and @file_exists($path)) {
 									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
@@ -462,7 +462,7 @@
 								$field->setNewValue(NULL);
 							} elseif ($new_value!=$old_value) {
 								$path = $target_dir . '/' . $a_old_value[0];
-								if (!@unlink($path)) {
+								if (!@unlink($path) and @file_exists($path)) {
 									$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
 									if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 										die();
