@@ -16,7 +16,7 @@
 // | Authors:  Alan Knowles <alan@akbkhome>                               |
 // +----------------------------------------------------------------------+
 //
-// $Id: Tag.php,v 1.23 2005/10/10 05:01:19 alan_k Exp $
+// $Id: Tag.php,v 1.27 2005/12/20 01:42:08 alan_k Exp $
 /* FC/BC compatibility with php5 */
 if ( (substr(phpversion(),0,1) < 5) && !function_exists('clone')) {
     eval('function clone($t) { return $t; }');
@@ -31,7 +31,7 @@ if ( (substr(phpversion(),0,1) < 5) && !function_exists('clone')) {
 * one instance of these exists for each namespace.
 *
 *
-* @version    $Id: Tag.php,v 1.23 2005/10/10 05:01:19 alan_k Exp $
+* @version    $Id: Tag.php,v 1.27 2005/12/20 01:42:08 alan_k Exp $
 */
 
 class HTML_Template_Flexy_Compiler_Flexy_Tag 
@@ -557,10 +557,14 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
             $bits = explode(':',$tag);
             $tag = $bits[1];
         }
-         
-        $method = 'parseTag'.$tag;
-        if (!method_exists($this,$method)) {
-            return false;
+        
+        if (in_array(strtolower($tag), array('menulist','textbox','checkbox'))) {
+            $method = 'parseXulTag';
+        } else {
+            $method = 'parseTag'.$tag;
+            if (!method_exists($this,$method)) {
+                return false;
+            }
         }
         
         if (($this->element->getAttribute('NAME') === false) &&
@@ -624,7 +628,9 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
                 $id = 'tmpId'. (++$tmpId);
                 $this->element->attributes['id'] = $id;
                 $this->element->ucAttributes['ID'] = $id;
-            } 
+            } else {
+                $id = $this->element->getAttribute('ID');
+            }
             $mergeWithName =  true;
         }
         
@@ -753,6 +759,8 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
                 $ename = $this->element->getAttribute('ID');
                 $printfvar = 'sprintf(\''.$ename .'\','.$this->element->toVar($var) .')';
             }
+            
+            
             if ($this->element->getAttribute('ID')) {
                 $idvar     = 'sprintf(\''.$this->element->getAttribute('ID') .'\','.$this->element->toVar($var) .')';
                 $idreplace = '$this->elements['.$printfvar.']->attributes[\'id\'] = '.$idvar.';';
@@ -777,8 +785,11 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
             //    $name = substr($name,0,-2);
             //}
             return  $ret . 
-                '$element = $this->elements[\''.$id.'\'];
-                $element = $this->mergeElement($element,$this->elements[\''.$name.'\']);
+                '
+                $element = $this->elements[\''.$id.'\'];
+                if (isset($this->elements[\''.$name.'\'])) {
+                    $element = $this->mergeElement($element,$this->elements[\''.$name.'\']);
+                }
                 echo  $element->toHtml();' . $unset; 
         
         }
@@ -1019,10 +1030,11 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
     * @return   object HTML_Template_Flexy_Element
     * @access   public
     */
-    function toElement($element) 
+    function toElement($element,$stripspaces  = false) 
     {
         require_once 'HTML/Template/Flexy/Element.php';
         $ret = new HTML_Template_Flexy_Element;
+        
         
         if (strtolower(get_class($element)) != 'html_template_flexy_token_tag') {
             $this->compiler->addStringToGettext($element->value);
@@ -1031,6 +1043,10 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
         
         
         $ret->tag = strtolower($element->tag);
+        
+        if ($ret->tag == 'menulist') {  // for XUL menulist, remove the white space between tags..
+            $stripspaces = true;
+        }
         
         $ats = $element->getAttributes();
         
@@ -1054,7 +1070,10 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
             if (!is_object($element->children[$i])) {
                 continue;
             }
-            $ret->children[] = $this->toElement($element->children[$i]);
+            if ($stripspaces && (strtolower(get_class($element->children[$i])) != 'html_template_flexy_token_tag')) {
+                continue;
+            }
+            $ret->children[] = $this->toElement($element->children[$i],$stripspaces);
         }
         return $ret;
     }
@@ -1084,13 +1103,13 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
     
     
      /**
-    * Deal with XUL MenuItems
+    * Deal with XUL tags
     *
     * @return   string | false = html output or ignore (just output the tag)
     * @access   public
     */
   
-    function parseTagMenuList() 
+    function parseXulTag() 
     {
         
         // does it contain any flexy tags??
@@ -1101,6 +1120,7 @@ class HTML_Template_Flexy_Compiler_Flexy_Tag
         return $this->compiler->appendPhp(
             $this->getElementPhp( $this->element->getAttribute('ID')));
     }
+     
      /**
     * Recursively search for any flexy:if flexy:foreach or {xxxx} tags inside tags..
     *

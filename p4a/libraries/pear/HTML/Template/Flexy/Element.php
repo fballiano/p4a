@@ -17,7 +17,7 @@
 // | Based on HTML_Common by: Adam Daniel <adaniel1@eesus.jnj.com>        |
 // +----------------------------------------------------------------------+
 //
-// $Id: Element.php,v 1.37 2005/10/10 05:36:08 alan_k Exp $
+// $Id: Element.php,v 1.46 2005/12/20 01:45:06 alan_k Exp $
 
 /**
  * Lightweight HTML Element builder and render
@@ -141,7 +141,7 @@ class HTML_Template_Flexy_Element {
     {
         $strAttr = '';
         $xhtmlclose = '';
-        
+        $charset = empty($GLOBALS['HTML_Template_Flexy']['options']['charset']) ? 'ISO-8859-1' : $GLOBALS['HTML_Template_Flexy']['options']['charset'];
         foreach ($this->attributes as $key => $value) {
         
             // you shouldn't do this, but It shouldnt barf when you do..
@@ -168,8 +168,12 @@ class HTML_Template_Flexy_Element {
                 }
             } else {
                 // dont replace & with &amp;
-                $strAttr .= ' ' . $key . '="' . 
-                    str_replace('&amp;','&',htmlspecialchars($value)) . '"';
+                if ($this->tag == 'textbox') {  // XUL linefeed fix.
+                    $value = str_replace("\n", '&#13;', htmlspecialchars($value,ENT_COMPAT,$charset));
+                } else {
+                    $value = str_replace('&amp;nbsp;','&nbsp;',htmlspecialchars($value,ENT_COMPAT,$charset));
+                }
+                $strAttr .= ' ' . $key . '="' . $value  . '"';
             }
             
         }
@@ -247,7 +251,7 @@ class HTML_Template_Flexy_Element {
                             return;
                         }
                         //print_r($this); echo "SET TO "; serialize($value);
-                        if (substr($this->attributes['name'],-2) == '[]') {
+                        if (isset($this->attributes['name']) && (substr($this->attributes['name'],-2) == '[]')) {
                             if (is_array($value) && 
                                 in_array((string) $this->attributes['value'],$value)
                                 ) {
@@ -368,7 +372,8 @@ class HTML_Template_Flexy_Element {
                 }
                 return;
             case 'textarea':
-                $this->children = array(htmlspecialchars($value));
+                $charset = empty($GLOBALS['HTML_Template_Flexy']['options']['charset']) ? 'ISO-8859-1' : $GLOBALS['HTML_Template_Flexy']['options']['charset'];
+                $this->children = array(htmlspecialchars($value,ENT_COMPAT,$charset));
                 return;
             case '':  // dummy objects.
                 $this->value = $value;
@@ -376,6 +381,8 @@ class HTML_Template_Flexy_Element {
                 
             // XUL elements
             case 'menulist':
+            case 'textbox':
+            case 'checkbox':
                 require_once 'HTML/Template/Flexy/Element/Xul.php';
                 HTML_Template_Flexy_Element_Xul::setValue($this,$value);
                 return ;
@@ -418,6 +425,7 @@ class HTML_Template_Flexy_Element {
             return;
         }
         
+        $charset = empty($GLOBALS['HTML_Template_Flexy']['options']['charset']) ? 'ISO-8859-1' : $GLOBALS['HTML_Template_Flexy']['options']['charset'];
         
         $tag = strtolower($this->tag);
         $namespace = '';
@@ -439,11 +447,13 @@ class HTML_Template_Flexy_Element {
                 $child = new HTML_Template_Flexy_Element($namespace . 'optgroup',array('label'=>$k));
                 foreach($v as $kk=>$vv) {
                     $atts=array();
-                    if (($kk != $vv) && !$noValue) {
+                    if (($kk !== $vv) && !$noValue) {
                         $atts = array('value'=>$kk);
+                    } else {
+                        $atts = array('value'=>$vv);
                     }
                     $add = new HTML_Template_Flexy_Element($namespace . 'option',$atts);
-                    $add->children = array(htmlspecialchars($vv));
+                    $add->children = array(htmlspecialchars($vv,ENT_COMPAT,$charset));
                     $child->children[] = $add;
                 }
                 $this->children[] = $child;
@@ -456,7 +466,7 @@ class HTML_Template_Flexy_Element {
                 $atts = array('value'=>$v);
             }
             $add = new HTML_Template_Flexy_Element($namespace . 'option',$atts);
-            $add->children = array(htmlspecialchars($v));
+            $add->children = array(htmlspecialchars($v,ENT_COMPAT,$charset));
             $this->children[] = $add;
         }
        

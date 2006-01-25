@@ -16,7 +16,7 @@
 // | Author: Alan Knowles <alan@akbkhome.com>                             |
 // +----------------------------------------------------------------------+
 //
-// $Id: Xul.php,v 1.4 2004/08/17 03:50:27 alan_k Exp $
+// $Id: Xul.php,v 1.6 2005/11/09 08:29:13 alan_k Exp $
 
 /**
  * Extension HTML Element builder and render to provide features for Xul
@@ -57,7 +57,8 @@ class HTML_Template_Flexy_Element_Xul {
                 if (!is_a($element->children[0],'HTML_Template_Flexy_Element')) {
                     // oh sh*t big problem!
                     return HTML_Template_Flexy::raiseError(
-                        __CLASS__ . '::setValue expected a menupopup as the child of a menuitem?', 
+                        __CLASS__ . '::setValue expected a Flexy Element as the child of a menuitem but got something else! '. 
+                            print_r($element,true), 
                         HTML_TEMPLATE_FLEXY_ERROR_SYNTAX,
                         HTML_TEMPLATE_FLEXY_ERROR_DIE);
                 }
@@ -93,7 +94,18 @@ class HTML_Template_Flexy_Element_Xul {
                 }
                  
                 return;
-             
+            
+            case 'textbox':
+                $this->attributes['value'] = $value;
+                return;
+                
+            case 'checkbox':
+                if (!isset($this->attributes['value'])) {
+                    return; // should be an error condition really...
+                }
+                $this->attributes['checked'] = ($value == $this->attributes['value']) ? 'true' : 'false';
+                return;
+                
         }
             
         

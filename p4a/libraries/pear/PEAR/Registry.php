@@ -15,9 +15,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Registry.php,v 1.143 2005/10/31 05:06:43 cellog Exp $
+ * @version    CVS: $Id: Registry.php,v 1.145 2006/01/06 04:47:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -41,9 +41,9 @@ define('PEAR_REGISTRY_ERROR_CHANNEL_FILE', -6);
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -690,7 +690,7 @@ class PEAR_Registry extends PEAR
     {
         $fp = @fopen($this->filemap, 'r');
         if (!$fp) {
-            return $this->raiseError('PEAR_Registry: could not open filemap', PEAR_REGISTRY_ERROR_FILE, null, null, $php_errormsg);
+            return $this->raiseError('PEAR_Registry: could not open filemap "' . $this->filemap . '"', PEAR_REGISTRY_ERROR_FILE, null, null, $php_errormsg);
         }
         clearstatcache();
         $rt = get_magic_quotes_runtime();

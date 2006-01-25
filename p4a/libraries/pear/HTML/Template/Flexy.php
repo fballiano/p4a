@@ -62,7 +62,7 @@ define('HTML_TEMPLATE_FLEXY_ERROR_DIE',8);  // FATAL DEATH
 *
 *
 *
-* @version    $Id: Flexy.php,v 1.93 2005/01/25 04:39:06 alan_k Exp $
+* @version    $Id: Flexy.php,v 1.96 2005/12/20 01:45:06 alan_k Exp $
 */
 class HTML_Template_Flexy  
 {
@@ -133,6 +133,8 @@ class HTML_Template_Flexy
                                         //  'Translation2' => new Translation2('dataobjectsimple','')
                                         
       
+        'charset'       => 'ISO-8859-1',    // charset used with htmlspecialchars to render data.
+                                            // experimental
         
         // output options           ------------------------------------------
         'strict'        => false,       // All elements in the template must be defined - 
@@ -168,7 +170,7 @@ class HTML_Template_Flexy
     * @var string
     * @access public
     */
-    var $gettextStringsFile;
+    var $getTextStringsFile;
     /**
     * The serialized elements array file.
     *
@@ -510,6 +512,8 @@ class HTML_Template_Flexy
                 $$_k = &$this->assign->references[$_k];
             }
         }
+        // used by Flexy Elements etc..
+        $GLOBALS['_HTML_TEMPLATE_FLEXY']['options']  = $this->options;
         
         include($this->compiledTemplate);
         

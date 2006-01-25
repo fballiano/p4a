@@ -16,7 +16,7 @@
 // | Authors:  nobody <nobody@localhost>                                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: Translator.php,v 1.5 2004/07/26 04:39:24 alan_k Exp $
+// $Id: Translator.php,v 1.8 2006/01/09 03:05:01 alan_k Exp $
 //
 //  Controller Type Class providing translation faciliites
 //
@@ -52,6 +52,11 @@ class HTML_Template_Flexy_Translator {
         'compileDir'        => '',        
         'url_rewrite'       => '',              // for image rewriting.. -- needs better thinking through!
         'appURL'            => '',              // url to translation too : eg. /admin/translator.php
+        'Translation2'      => array(
+                                'driver' => 'dataobjectsimple', 
+                                'options' => 'translations'
+                            ),
+
     );
     /**
     * app URL (copied from above)
@@ -112,6 +117,9 @@ class HTML_Template_Flexy_Translator {
         if (!strlen($this->options['url_rewrite'])) {
             $this->options['url_rewrite'] = $o['url_rewrite'];
         }
+        if (empty($this->options['Translation2'])) {
+            $this->options['Translation2'] = $o['Translation2'];
+        }
         $this->appURL = $this->options['appURL'];
         $this->languages = $this->options['targetLangs'];
     }
@@ -135,15 +143,24 @@ class HTML_Template_Flexy_Translator {
         $displayLang = isset($get['translate']) ? $get['translate'] : 
             (isset($post['translate']) ? $post['translate'] : false);
             
-        if ($displayLang === false) {
-          
+        if ($displayLang === false) {          
             return;
         }
         require_once 'Translation2/Admin.php';
-        $trd = &new Translation2_Admin('dataobjectsimple', 'translations' );
+          
+        $driver = $this->options['Translation2']['driver'];
+        $options = $this->options['Translation2']['options'];
+        $usingGT = ($driver == 'gettext');
+        $usingDO = ($driver == 'dataobjectsimple');
+        $trd = &Translation2_Admin::factory($driver, $options);
+        
+        
+        
         //$trd->setDecoratedLang('en');
         foreach($this->options['targetLangs'] as $l) {
-            $trd->createNewLang(array('lang_id'=>$l));
+            $trd->addLang(array(
+                'lang_id' => $l
+            ));
         }
         
         // back to parent if no language selected..
@@ -163,11 +180,13 @@ class HTML_Template_Flexy_Translator {
         $t = explode(' ',microtime()); $start= $t[0] + $t[1];
      
         require_once 'Translation2.php';
-        $tr = &new Translation2('dataobjectsimple','translations');
+        $tr = &Translation2::factory($driver, $options);
         $tr->setLang($displayLang);
         
-        //$suggestions = &new Translation2('dataobjectsimple','translations');
-        //$suggestions->setLang($displayLang);
+        if (!$usingDO) {
+            $suggestions = &Translation2::factory($driver, $options);
+            $suggestions->setLang($displayLang);
+        }
         
         $this->compileAll();
         
@@ -179,29 +198,47 @@ class HTML_Template_Flexy_Translator {
         //DB_DataObject::debugLevel(1);
         $this->loadTranslations();
         $this->loadTranslations($displayLang);
+        if ($usingDO) {
+            $this->loadTranslations();
+            $this->loadTranslations($displayLang);
+        }
         
         $all = array();
+        
+        if ($usingGT) {
+            $trd->storage->begin();
+        }
+        $displayLangClean = str_replace('.', '_', $displayLang);
+                 
         foreach($this->words as $page=>$words) {
             $status[$page] = array();
             $tr->setPageID($page);
             // pages....
-            
+            if (isset($post['_clear']) && !PEAR::isError($p = $trd->getPage($page, $displayLang))) {
+                $diff = array_diff(array_keys($p), $words);
+                if (count($diff)) {
+                    foreach ($diff as $string) {
+                        $trd->remove($string, $page);
+                    }
+                }
+            }
+
             foreach ($words as $word) {
             
-                if (!trim(strlen($word))) { 
+                if (!strlen(trim($word))) { 
                     continue;
                 }
                 
                 $md5 = md5($page.':'.$word);
                 
-                //$value = $tr->get($word);
-                $value = $this->getTranslation($page,$word,$displayLang);
+                $value = $usingDO ? $this->getTranslation($page,$word,$displayLang) : $tr->get($word);
+                
                 // we posted something..
-                if (isset($post[$displayLang][$md5])) {
-                    $nval = get_magic_quotes_gpc() ? stripslashes($post[$displayLang][$md5]) : $post[$displayLang][$md5];
+                if (isset($post[$displayLangClean][$md5])) {
+                    // eak we shouldnt really deal with magic_quotes!!!
+                    $nval = str_replace("\r\n", "\n", get_magic_quotes_gpc() ? stripslashes($post[$_displayLang][$md5]) : $post[$_displayLang][$md5]);
                     
                     if ($value != $nval) {
-                    
                         $trd->add($word,$page,array($displayLang=>$nval));
                         $value = $nval;
                     }
@@ -223,20 +260,31 @@ class HTML_Template_Flexy_Translator {
                 $add->to   = $value;
                 if (!$add->to || ($add->from == $add->to)) {
                     $add->untranslated = true;
-                    $add->suggest = implode(', ', $this->getSuggestions($word, $displayLang));
-                    //$suggest = $suggestions->get($word);
-                    //if ($suggest && ($suggest  != $word)) {
-                    //    $add->suggest = $suggestions->get($word);
-                    //}
+                    
+                    if ($usingDO) {
+                        $add->suggest = implode(', ', $this->getSuggestions($word, $displayLang));
+                    } else {
+                        $suggest = $suggestions->get($word);
+                        if ($suggest && ($suggest != $word)) {
+                            $add->suggest = $suggest;
+                        }
+                    }
+                    
+                    
                 }
 
                 $add->md5 = $md5;
-                $add->short = (bool) (strlen($add->from) < 30);
+                // show big or small text entry..
+                $add->short = (bool) (strlen($add->from) < 30 && strstr($add->from, "\n") === false);
+                
                 $status[$page][] = $add;
             
                  
             }
             
+        }
+        if ($usingGT) {
+            $trd->storage->commit();
         }
         $t = explode(' ',microtime()); $total= $t[0] + $t[1] -  $start;
         //printf("Built All in %0.2fs<BR>",$total);

@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Remote.php,v 1.74 2005/09/11 18:00:20 cellog Exp $
+ * @version    CVS: $Id: Remote.php,v 1.75 2006/01/06 04:47:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -38,9 +38,9 @@ require_once 'PEAR/Config.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */

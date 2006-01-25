@@ -13,7 +13,7 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/PEAR
@@ -35,9 +35,9 @@ require_once 'PEAR/Validate.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -85,11 +85,18 @@ class PEAR_Dependency2
                               $state = PEAR_VALIDATE_INSTALLING)
     {
         $this->_config = &$config;
-        $this->_registry = &$config->getRegistry();
         if (!class_exists('PEAR_DependencyDB')) {
             require_once 'PEAR/DependencyDB.php';
         }
+        if (isset($installoptions['packagingroot'])) {
+            // make sure depdb is in the right location
+            $config->setInstallRoot($installoptions['packagingroot']);
+        }
+        $this->_registry = &$config->getRegistry();
         $this->_dependencydb = &PEAR_DependencyDB::singleton($config);
+        if (isset($installoptions['packagingroot'])) {
+            $config->setInstallRoot(false);
+        }
         $this->_options = $installoptions;
         $this->_state = $state;
         if (!class_exists('OS_Guess')) {
@@ -518,7 +525,7 @@ class PEAR_Dependency2
      */
     function getPEARVersion()
     {
-        return '1.4.5';
+        return '1.4.6';
     }
 
     function validatePearinstallerDependency($dep)

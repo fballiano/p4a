@@ -16,9 +16,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Downloader.php,v 1.94 2005/10/29 21:23:19 cellog Exp $
+ * @version    CVS: $Id: Downloader.php,v 1.96 2006/01/06 04:47:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.0
  */
@@ -43,9 +43,9 @@ define('PEAR_INSTALLER_ERROR_NO_PREF_STATE', 2);
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.0
  */
@@ -1277,6 +1277,10 @@ class PEAR_Downloader extends PEAR_Common
     function downloadHttp($url, &$ui, $save_dir = '.', $callback = null, $lastmodified = null,
                           $accept = false)
     {
+        static $redirect = 0;
+        // allways reset , so we are clean case of error
+        $wasredirect = $redirect;
+        $redirect = 0;
         if ($callback) {
             call_user_func($callback, 'setup', array(&$ui));
         }
@@ -1365,7 +1369,7 @@ class PEAR_Downloader extends PEAR_Common
             $ifmodifiedsince = ($lastmodified ? "If-Modified-Since: $lastmodified\r\n" : '');
         }
         $request .= "Host: $host:$port\r\n" . $ifmodifiedsince .
-            "User-Agent: PEAR/1.4.5/PHP/" . PHP_VERSION . "\r\n";
+            "User-Agent: PEAR/1.4.6/PHP/" . PHP_VERSION . "\r\n";
         if (isset($this)) { // only pass in authentication for non-static calls
             $username = $config->get('username');
             $password = $config->get('password');
@@ -1385,16 +1389,31 @@ class PEAR_Downloader extends PEAR_Common
         $request .= "\r\n";
         fwrite($fp, $request);
         $headers = array();
+        $reply = 0;
         while (trim($line = fgets($fp, 1024))) {
             if (preg_match('/^([^:]+):\s+(.*)\s*$/', $line, $matches)) {
                 $headers[strtolower($matches[1])] = trim($matches[2]);
             } elseif (preg_match('|^HTTP/1.[01] ([0-9]{3}) |', $line, $matches)) {
-                if ($matches[1] == 304 && ($lastmodified || ($lastmodified === false))) {
+                $reply = (int) $matches[1];
+                if ($reply == 304 && ($lastmodified || ($lastmodified === false))) {
                     return false;
                 }
-                if ($matches[1] != 200) {
+                if (! in_array($reply, array(200, 301, 302, 303, 305, 307))) {
                     return PEAR::raiseError("File http://$host:$port$path not valid (received: $line)");
                 }
+            }
+        }
+        if ($reply != 200) {
+            if (isset($headers['location'])) {
+                if ($wasredirect < 5) {
+                    $redirect = $wasredirect + 1;
+                    return $this->downloadHttp($headers['location'],
+                            $ui, $save_dir, $callback, $lastmodified, $accept);
+                } else {
+                    return PEAR::raiseError("File http://$host:$port$path not valid (redirection looped more than 5 times)");
+                }
+            } else {
+                return PEAR::raiseError("File http://$host:$port$path not valid (redirected but no location)");
             }
         }
         if (isset($headers['content-disposition']) &&

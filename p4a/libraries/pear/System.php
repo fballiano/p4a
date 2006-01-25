@@ -13,9 +13,9 @@
  * @category   pear
  * @package    System
  * @author     Tomas V.V.Cox <cox@idecnet.com>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: System.php,v 1.51 2005/11/16 03:28:56 cellog Exp $
+ * @version    CVS: $Id: System.php,v 1.53 2006/01/06 04:47:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -53,9 +53,9 @@ $GLOBALS['_System_temp_files'] = array();
 * @category   pear
 * @package    System
 * @author     Tomas V.V. Cox <cox@idecnet.com>
-* @copyright  1997-2005 The PHP Group
+* @copyright  1997-2006 The PHP Group
 * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
-* @version    Release: 1.4.5
+* @version    Release: 1.4.6
 * @link       http://pear.php.net/package/PEAR
 * @since      Class available since Release 0.1
 */
@@ -447,7 +447,12 @@ class System
     */
     function which($program, $fallback = false)
     {
-        // avaible since 4.3.0RC2
+        // enforce API
+        if (!is_string($program) || '' == $program) {
+            return $fallback;
+        }
+
+        // available since 4.3.0RC2
         if (defined('PATH_SEPARATOR')) {
             $path_delim = PATH_SEPARATOR;
         } else {
