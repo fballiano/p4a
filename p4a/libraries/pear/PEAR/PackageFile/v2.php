@@ -13,7 +13,7 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/PEAR
@@ -27,9 +27,9 @@ require_once 'PEAR/ErrorStack.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -658,12 +658,17 @@ class PEAR_PackageFile_v2
             if (isset($this->_packageInfo['contents']['dir']['attribs']['baseinstalldir'])) {
                 if (isset($this->_packageInfo['contents']['dir']['file'][0])) {
                     foreach ($this->_packageInfo['contents']['dir']['file'] as $i => $file) {
+                        if (isset($file['attribs']['baseinstalldir'])) {
+                            continue;
+                        }
                         $this->_packageInfo['contents']['dir']['file'][$i]['attribs']['baseinstalldir']
                             = $this->_packageInfo['contents']['dir']['attribs']['baseinstalldir'];
                     }
                 } else {
-                    $this->_packageInfo['contents']['dir']['file']['attribs']['baseinstalldir']
-                        = $this->_packageInfo['contents']['dir']['attribs']['baseinstalldir'];
+                    if (!isset($this->_packageInfo['contents']['dir']['file']['attribs']['baseinstalldir'])) {
+                       $this->_packageInfo['contents']['dir']['file']['attribs']['baseinstalldir']
+                            = $this->_packageInfo['contents']['dir']['attribs']['baseinstalldir'];
+                    }
                 }
             }
         }
@@ -705,7 +710,7 @@ class PEAR_PackageFile_v2
             foreach ($dir['file'] as $file) {
                 $attrs = $file['attribs'];
                 $name = $attrs['name'];
-                if ($baseinstall) {
+                if ($baseinstall && !isset($attrs['baseinstalldir'])) {
                     $attrs['baseinstalldir'] = $baseinstall;
                 }
                 $attrs['name'] = empty($path) ? $name : $path . '/' . $name;

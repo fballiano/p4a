@@ -76,7 +76,6 @@
 	//Objects
 	require_once "$dir/objects/p4a.php";
 	require_once "$dir/objects/mask.php";
-	require_once "$dir/objects/listener.php";
 	require_once "$dir/objects/collection.php";
 	require_once "$dir/objects/data_field.php";
 	require_once "$dir/objects/data_source.php";

@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Install.php,v 1.109 2005/10/26 19:37:14 cellog Exp $
+ * @version    CVS: $Id: Install.php,v 1.112 2006/01/06 04:47:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -34,9 +34,9 @@ require_once 'PEAR/Command/Common.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -81,7 +81,12 @@ class PEAR_Command_Install extends PEAR_Command_Common
                 'installroot' => array(
                     'shortopt' => 'R',
                     'arg' => 'DIR',
-                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT)',
+                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT), use packagingroot for RPM',
+                    ),
+                'packagingroot' => array(
+                    'shortopt' => 'P',
+                    'arg' => 'DIR',
+                    'doc' => 'root directory used when packaging files, like RPM packaging',
                     ),
                 'ignore-errors' => array(
                     'doc' => 'force install even if there were errors',
@@ -162,7 +167,12 @@ four ways of specifying packages.
                 'installroot' => array(
                     'shortopt' => 'R',
                     'arg' => 'DIR',
-                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT)',
+                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT), use packagingroot for RPM',
+                    ),
+                'packagingroot' => array(
+                    'shortopt' => 'P',
+                    'arg' => 'DIR',
+                    'doc' => 'root directory used when packaging files, like RPM packaging',
                     ),
                 'ignore-errors' => array(
                     'doc' => 'force install even if there were errors',
@@ -218,7 +228,7 @@ More than one package may be specified at once.
                 'installroot' => array(
                     'shortopt' => 'R',
                     'arg' => 'DIR',
-                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT)',
+                    'doc' => 'root directory used when installing files (ala PHP\'s INSTALL_ROOT), use packagingroot for RPM',
                     ),
                 'ignore-errors' => array(
                     'doc' => 'force install even if there were errors',
@@ -342,6 +352,12 @@ Run post-installation scripts in package <package>, if any exist.
         }
         if ($command == 'upgrade') {
             $options['upgrade'] = true;
+        }
+        if (isset($options['installroot']) && isset($options['packagingroot'])) {
+            return $this->raiseError('ERROR: cannot use both --installroot and --packagingroot');
+        }
+        if (isset($options['packagingroot']) && $this->config->get('verbose') > 2) {
+            $this->ui->outputData('using package root: ' . $options['packagingroot']);
         }
         $reg = &$this->config->getRegistry();
         if ($command == 'upgrade-all') {

@@ -1,5 +1,9 @@
 0.40
 - TinyFCK was updated to 0.5
+- P4A_Listener was removed because it was obsolete and unused
+- P4A_Menu was totally refactored, dropping some methods
+- PEAR packages were updated and cleaned out (now we only have PEAR 1.4.6, Console_Getopt 1.2, DB 1.7.6, HTML_Template_Flexy 1.2.4)
+- some code reference was written
 
 0.39
 - fixed bug 1407473 (password obfuscator was shown also on null values)

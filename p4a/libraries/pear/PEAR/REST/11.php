@@ -13,7 +13,7 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/PEAR
@@ -31,9 +31,9 @@ require_once 'PEAR/REST.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.6
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.3
  */
@@ -137,7 +137,8 @@ class PEAR_REST_11
                 }
                 if ($latest) {
                     if (isset($packageinfo['deps'])) {
-                        if (!isset($packageinfo['deps'][0])) {
+                        if (!is_array($packageinfo['deps']) ||
+                              !isset($packageinfo['deps'][0])) {
                             $packageinfo['deps'] = array($packageinfo['deps']);
                         }
                     }
