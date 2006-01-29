@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * P4A - PHP For Applications.
@@ -17,6 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * To contact the authors write to:									<br>
+ * CreaLabs															<br>
  * Via Medail, 32													<br>
  * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
@@ -35,28 +36,26 @@
  * @package p4a
  */
 
-$numbers_formats = array
-(
-	"integer" =>  array('0', ',', '.'),
-	"decimal" =>  array('2', ',', '.'),
-	"float"   =>  array('*', ',', '.')
-);
+define('P4A_I18N_DECIMAL_SEPARATOR', ',');
+define('P4A_I18N_THOUSAND_SEPARATOR', '.');
+
+require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	"%d/%m/%Y",
-	"date_medium"	=>	"%d/%M/%Y",
-	"date_long"		=>	"%d de %F de %Y",
-	"date_full"		=>	"%d de %F de %Y",
+	"date_default"	=>	'%d/%m/%Y',
+	"date_medium"	=>	'%d-%b-%Y',
+	"date_long"		=>	'%d de %B de %Y',
+	"date_full"		=>	'%A, %d de %B de %Y',
 
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
+	"time_default"	=>	'%H:%M',
+	"time_long"		=>	'%H:%M:%S'
 );
 
 $currency_formats = array
 (
-	"local"			=>  array('R$ %', '2', ',', '.'),
-	"international"	=>  array('% BRL', '2', ',', '.')
+	"local"         => array('% R$', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('% BRL', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
 
 ?>

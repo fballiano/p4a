@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * P4A - PHP For Applications.
@@ -36,28 +36,17 @@
  * @package p4a
  */
 
-$numbers_formats = array
-(
-	"integer" => array('0', ',', '.'),
-	"decimal" => array('2', ',', '.'),
-	"float"   => array('*', ',', '.')
-);
+define('P4A_I18N_DECIMAL_SEPARATOR', '.');
+define('P4A_I18N_THOUSAND_SEPARATOR', ',');
 
-$datetime_formats = array
-(
-	"date_default"	=>	"%d-%m-%Y",
-	"date_medium"	=>	"%d %b %Y",
-	"date_long"		=>	"%d %B %Y",
-	"date_full"		=>	"%A, %d %B %Y",
+require dirname(dirname(__FILE__)) . '/defaults.php';
 
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
-);
+// we need date and time formats
 
 $currency_formats = array
 (
-	"local"         => array('&euro; %', '2', ',', '.'),
-	"international" => array('% EUR'   , '2', ',', '.')
+	"local"         => array('د.ت. %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('TND  %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
 
 ?>

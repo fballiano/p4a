@@ -38,37 +38,37 @@
 
 $messages = array
 (
-    "days"				=> array('Domingo' , 'Lunes' , 'Martes' , 'Mi&eacute;rcoles' , 'Jueves' , 'Viernes' , 'S&aacute;bado'),
+    "days"				=> array('Domingo' , 'Lunes' , 'Martes' , 'Miércoles' , 'Jueves' , 'Viernes' , 'Sábado'),
 	"months"			=> array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'),
 
 	// Standard Toolbar
 	"save"			=> "Confirmar y guardar.",
-	"cancel"		=> "Cancelar operaci&oacute;n.",
+	"cancel"		=> "Cancelar operación.",
 	"new"			=> "Insertar registro nuevo.",
 	"delete"		=> "Borrar registro actual.",
 	"first"			=> "Ir al primero.",
 	"prev"			=> "Ir al anterior.",
 	"next"			=> "Ir al siguiente.",
-	"last"			=> "Ir al &uacute;ltimo.",
+	"last"			=> "Ir al último.",
 	"print"			=> "Imprimir.",
 	"exit"			=> "Salir.",
 	"first"			=> "Ir al primero.",
 	"prev"			=> "Ir al anterior.",
 	"next"			=> "Ir al siguiente.",
-	"last"			=> "Ir al &uacute;ltimo.",
+	"last"			=> "Ir al último.",
 	"go"			=> "Ir",
 
 	// Table
-	"current_page"		=> "P&aacute;gina",
+	"current_page"		=> "Página",
 	"of_pages"			=> "de",
-	"go_to_page"		=> "Ir a la p&aacute;gina",
+	"go_to_page"		=> "Ir a la página",
 	"ascending"			=> "Ascendente",
 	"descending"		=> "Descendente",
 	"selected"			=> "Seleccionado",
 
 	// File uploads
 	"filename"			=> "Nombre",
-	"filesize"			=> "Tama&ntilde;o",
+	"filesize"			=> "Tamaño",
 	"filetype"			=> "Tipo",
 	"filepreview"		=> "Vista previa",
 	"filedelete"		=> "Borrar",
@@ -78,13 +78,13 @@ $messages = array
 	"none_selected"		=> "Ninguno seleccionado",
 
 	// Confirmations
-	"confirm_general"	=> "&iquest;Est&aacute;s seguro?",
-	"confirm_confirm"	=> "&iquest;Confirmar y guardar?",
-	"confirm_cancel"	=> "&iquest;Cancelar operaci&oacute;n actual?",
-	"confirm_delete"	=> "&iquest;Borrar registro actual?",
+	"confirm_general"	=> "¿Estás seguro?",
+	"confirm_confirm"	=> "¿Confirmar y guardar?",
+	"confirm_cancel"	=> "¿Cancelar operación actual?",
+	"confirm_delete"	=> "¿Borrar registro actual?",
 
 	// Yes/No
-	"yes"				=> "S&iacute",
+	"yes"				=> "Sí",
 	"no"				=> "No"
 );
 

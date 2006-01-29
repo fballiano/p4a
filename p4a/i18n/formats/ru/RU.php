@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * P4A - PHP For Applications.
@@ -36,28 +36,26 @@
  * @package p4a
  */
 
-$numbers_formats = array
-(
-	"integer" =>  array('0', '.', ','),
-	"decimal" =>  array('2', '.', ','),
-	"float"   =>  array('*', '.', ',')
-);
+define('P4A_I18N_DECIMAL_SEPARATOR', '.');
+define('P4A_I18N_THOUSAND_SEPARATOR', ' ');
+
+require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	"%d.%m.%Y",
-	"date_medium"	=>	"%d %M %y",
-	"date_long"		=>	"%d %M %Y",
-	"date_full"		=>	"%d %F %Y",
+	"date_default"	=>	'%d/%m/%Y',
+	"date_medium"	=>	'%d-%b-$Y',
+	"date_long"		=>	'%d %B %Y',
+	"date_full"		=>	'%A, %d %B %Y',
 
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
+	"time_default"	=>	'%H:%M',
+	"time_long"		=>	'%H:%M:%S'
 );
 
 $currency_formats = array
 (
-	"local"			=>  array('Руб.%', '2', '.', ','),
-	"international"	=>  array('RUR %', '2', '.', ',')
+	"local"         => array('% руб', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('% RUR', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
 
 ?>

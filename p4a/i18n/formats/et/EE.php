@@ -36,28 +36,17 @@
  * @package p4a
  */
 
-$numbers_formats = array
-(
-	"integer" =>  array('0', ',', ' '),
-	"decimal" =>  array('2', ',', ' '),
-	"float"   =>  array('*', ',', ' ')
-);
+define('P4A_I18N_DECIMAL_SEPARATOR', ',');
+define('P4A_I18N_THOUSAND_SEPARATOR', ' ');
 
-$datetime_formats = array
-(
-	"date_default"	=>	"%m.%d.%Y",
-	"date_medium"	=>	"%d. %b %Y",
-	"date_long"		=>	"%d. %B %Y. a.",
-	"date_full"		=>	"%A, %d. %B, %Y. a.",
+require dirname(dirname(__FILE__)) . '/defaults.php';
 
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
-);
+// we need date and time formats
 
 $currency_formats = array
 (
-	"local"			=>  array('% kr.' ,    '2', ',', ' '),
-	"international"	=>  array('EEK %' , '2', '.', ',')
+	"local"         => array('kr %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('EEK  %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
 
 ?>

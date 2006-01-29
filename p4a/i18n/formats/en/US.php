@@ -36,28 +36,26 @@
  * @package p4a
  */
 
-$numbers_formats = array
-(
-	"integer" =>  array('0', '.', ','),
-	"decimal" =>  array('2', '.', ','),
-	"float"   =>  array('*', '.', ',')
-);
+define('P4A_I18N_DECIMAL_SEPARATOR', '.');
+define('P4A_I18N_THOUSAND_SEPARATOR', ',');
+
+require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	"%m/%d/%Y",
-	"date_medium"	=>	"%b %d, %Y",
-	"date_long"		=>	"%B %d, %Y",
-	"date_full"		=>	"%A, %B %d, %Y",
+	"date_default"	=>	'%d/%m/%Y',
+	"date_medium"	=>	'%d-%b-%Y',
+	"date_long"		=>	'%d %B %Y',
+	"date_full"		=>	'%A, %d %B %Y',
 
-	"time_default"	=>	"%H:%M",
-	"time_long"		=>	"%H:%M:%S"
+	"time_default"	=>	'%H:%M',
+	"time_long"		=>	'%H:%M:%S'
 );
 
 $currency_formats = array
 (
-	"local"			=>  array('$%' ,    '2', '.', ','),
-	"international"	=>  array('USD %' , '2', '.', ',')
+	"local"         => array('$%', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('USD %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
 
 ?>
