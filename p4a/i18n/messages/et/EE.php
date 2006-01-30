@@ -52,19 +52,19 @@ $messages = array
 	"prev"				=> "Eelmine kirje",
 	"next"				=> "Järgmine kirje",
 	"last"				=> "Viimane kirje",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "Mine esimesele lehele",
+	"prev_page"			=> "Mine eelmisele lehele",
+	"next_page"			=> "Mine järgmisele lehele",
+	"last_page"			=> "Mine viimasele lehele",
 	"go"				=> "Mine",
 
 	// Table
 	"current_page"		=> "Lehekülg",
 	"of_pages"			=> "kokku",
 	"go_to_page"		=> "Mine leheküljele",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "Kasvav",
+	"descending"		=> "Kahanev",
+	"selected"			=> "Valitud",
 
 	// File uploads
 	"filename"			=> "Nimi",
@@ -72,7 +72,7 @@ $messages = array
 	"filetype"			=> "Tüüp",
 	"filepreview"		=> "Eelvaade",
 	"filedelete"		=> "Kustuta",
-	"filedownload"		=> "Download",
+	"filedownload"		=> "Laadi alla",
 
 	// Fields
 	"none_selected"		=> "Valimata",

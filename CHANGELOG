@@ -2,6 +2,8 @@
 - many translations added, look at http://p4a.sourceforge.net/translations
 - a few translation strings were added (for P4A_Table)
 - fixed some bugs with the i18n/l10n engine
+- Portuguese translation completed (thanks to Tiago)
+- Estonian translation completed (thanks to Eero)
 
 0.40
 - TinyFCK was updated to 0.5

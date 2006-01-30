@@ -53,19 +53,19 @@ $messages = array
 	"prev"				=> "Ir para o anterior",
 	"next"				=> "Ir para o próximo",
 	"last"				=> "Ir para o último",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "Ir para a página inícial",
+	"prev_page"			=> "Ir para a página anterior",
+	"next_page"			=> "Ir para a página seguinte",
+	"last_page"			=> "Ir para a última página",
 	"go"				=> "Ir",
 
 	// Table
 	"current_page"		=> "Página",
 	"of_pages"			=> "de",
 	"go_to_page"		=> "Ir para página",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "Ascendente",
+	"descending"		=> "Descendente",
+	"selected"			=> "Selecionado",
 
 	// File uploads
 	"filename"			=> "Nome",
