@@ -1,4 +1,4 @@
-<?php
+<?
 
 /**
  * P4A - PHP For Applications.
@@ -36,57 +36,6 @@
  * @package p4a
  */
 
-$messages = array
-(
-	// Date
-    "days"				=> array('Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'),
-    "months"			=> array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'),
-
-	// Standard Toolbar
-	"save"		=> "Conferma e memorizza",
-	"cancel"	=> "Annulla l'operazione",
-	"new"		=> "Inserisci un nuovo elemento",
-	"delete"	=> "Elimina l'elemento corrente",
-	"first"		=> "Vai al primo elemento",
-	"prev"		=> "Vai all'elemento precedente",
-	"next"		=> "Vai al prossimo elemento",
-	"last"		=> "Vai all'ultimo elemento",
-	"print"		=> "Stampa",
-	"exit"		=> "Esci",
-	"first"		=> "Vai al primo elemento",
-	"prev"		=> "Vai all'elemento precedente",
-	"next"		=> "Vai al prossimo elemento",
-	"last"		=> "Vai all'ultimo elemento",
-	"go"		=> "Vai",
-
-	// Table
-	"current_page"		=> "Pagina",
-	"of_pages"			=> "di",
-	"go_to_page"		=> "Vai a pagina",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
-
-	// File uploads
-	"filename"			=> "Nome",
-	"filesize"			=> "Dimensione",
-	"filetype"			=> "Tipo",
-	"filepreview"		=> "Anteprima",
-	"filedelete"		=> "Elimina",
-	"filedownload"		=> "Scarica",
-
-	// Fields
-	"none_selected"		=> "Nessun Valore Selezionato",
-
-	// Confirmations
-	"confirm_general"	=> "Sei sicuro?",
-	"confirm_confirm"	=> "Confermare e memorizzare?",
-	"confirm_cancel"	=> "Annullare l'operazione?",
-	"confirm_delete"	=> "Eliminare l'elemento?",
-
-	// Yes/No
-	"yes"				=> "Sì",
-	"no"				=> "No"
-);
+require dirname(__FILE__) . '/IT.php';
 
 ?>

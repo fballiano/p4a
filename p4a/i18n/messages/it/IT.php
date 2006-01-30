@@ -39,25 +39,25 @@
 $messages = array
 (
 	// Date
-    "days"				=> array('Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'),
-    "months"			=> array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'),
+    "days"		=> array('Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'),
+    "months"	=> array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'),
 
 	// Standard Toolbar
-	"save"		=> "Conferma e memorizza",
-	"cancel"	=> "Annulla l'operazione",
-	"new"		=> "Inserisci un nuovo elemento",
-	"delete"	=> "Elimina l'elemento corrente",
-	"first"		=> "Vai al primo elemento",
-	"prev"		=> "Vai all'elemento precedente",
-	"next"		=> "Vai al prossimo elemento",
-	"last"		=> "Vai all'ultimo elemento",
-	"print"		=> "Stampa",
-	"exit"		=> "Esci",
-	"first"		=> "Vai al primo elemento",
-	"prev"		=> "Vai all'elemento precedente",
-	"next"		=> "Vai al prossimo elemento",
-	"last"		=> "Vai all'ultimo elemento",
-	"go"		=> "Vai",
+	"save"				=> "Conferma e memorizza",
+	"cancel"			=> "Annulla l'operazione",
+	"new"				=> "Inserisci un nuovo elemento",
+	"delete"			=> "Elimina l'elemento corrente",
+	"print"				=> "Stampa",
+	"exit"				=> "Esci",
+	"first"				=> "Vai al primo elemento",
+	"prev"				=> "Vai all'elemento precedente",
+	"next"				=> "Vai al prossimo elemento",
+	"last"				=> "Vai all'ultimo elemento",
+	"first_page"		=> "Vai alla prima pagina",
+	"prev_page"			=> "Vai alla pagina precedente",
+	"next_page"			=> "Vai alla prossima pagina",
+	"last_page"			=> "Vai all'ultima pagina",
+	"go"				=> "Vai",
 
 	// Table
 	"current_page"		=> "Pagina",

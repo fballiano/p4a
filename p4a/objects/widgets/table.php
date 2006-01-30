@@ -991,6 +991,11 @@
 				$this->addButton('button_prev', 'prev', 'right');
 				$this->addButton('button_first', 'first', 'right');
 			}
+			
+			$this->buttons->button_last->setValue("last_page");
+			$this->buttons->button_next->setValue("next_page");
+			$this->buttons->button_prev->setValue("prev_page");
+			$this->buttons->button_first->setValue("first_page");
 
 			$this->buttons->button_last->addAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');

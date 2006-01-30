@@ -36,57 +36,6 @@
  * @package p4a
  */
 
-$messages = array
-(
-	// Date
-    "days"				=> array('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'),
-    "months"			=> array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'),
-
-	// Standard Toolbar
-	"save"		=> "Confirmar e salvar.",
-	"cancel"		=> "Cancelar operação atual.",
-	"new"			=> "Inserir novo registro.",
-	"delete"		=> "Apagar registro atual.",
-	"first"			=> "Ir para o primeiro.",
-	"prev"			=> "Ir para o anterior.",
-	"next"			=> "Ir para o próximo.",
-	"last"			=> "Ir para o último.",
-	"print"			=> "Imprimir.",
-	"exit"			=> "Sair.",
-	"first"		=> "Ir para o primeiro.",
-	"prev"		=> "Ir para o anterior.",
-	"next"		=> "Ir para o próximo.",
-	"last"		=> "Ir para o último.",
-	"go"				=> "Ir",
-
-	// Table
-	"current_page"		=> "Página",
-	"of_pages"			=> "de",
-	"go_to_page"		=> "Ir para página",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
-
-	// File uploads
-	"filename"			=> "Nome",
-	"filesize"			=> "Tamanho",
-	"filetype"			=> "Tipo",
-	"filepreview"		=> "Pré-visualizar",
-	"filedelete"		=> "Apagar",
-	"filedownload"		=> "Download",
-
-	// Fields
-	"none_selected"		=> "Não Selecionado",
-
-	// Confirmations
-	"confirm_general"	=> "Você tem certeza?",
-	"confirm_confirm"	=> "Confirmar e salvar?",
-	"confirm_cancel"	=> "Cancelar operação atual?",
-	"confirm_delete"	=> "Apagar registro atual?",
-
-	// Yes/No
-	"yes"				=> "Sim",
-	"no"				=> "Não"
-);
+require dirname(__FILE__) . '/PT.php';
 
 ?>

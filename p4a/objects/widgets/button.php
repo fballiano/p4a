@@ -167,12 +167,18 @@
 				$img_src .= '.' . P4A_ICONS_EXTENSION;
 
 				$alt = ucfirst($this->_icon);
-				$msg = htmlentities($p4a->i18n->messages->get($this->_icon));
+				
+				$msg = $p4a->i18n->messages->get($this->getValue());
+				if (empty($msg)) {
+					$msg = $p4a->i18n->messages->get($this->_icon);
+				}
+				
 				$accesskey = $this->getProperty("accesskey");
 				if (strlen($accesskey) > 0) {
-					$msg = htmlentities("[$accesskey] $msg");
+					$msg = "[$accesskey] $msg";
 				}
 
+				$msg = htmlspecialchars($msg);
 				$footer .= "\" width=\"{$this->_size}\" height=\"{$this->_size}\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
 				$footer .= ' />';
 
@@ -185,7 +191,6 @@
 				} else {
 					$footer .= '</span>';
 				}
-				
 				
 				$footer .= "\n";
 			} else {
@@ -201,13 +206,11 @@
 			}
 
 			$sReturn = "";
-
 			$sReturn .= $header . $this->composeStringProperties();
 			if ($enabled) {
 				$sReturn .= $this->composeStringActions();
 			}
 			$sReturn .= $footer;
-
 			return $sReturn;
 		}
 	}

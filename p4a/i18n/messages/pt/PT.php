@@ -1,4 +1,4 @@
-<?php
+<?
 
 /**
  * P4A - PHP For Applications.
@@ -38,54 +38,55 @@
 
 $messages = array
 (
-   "days"				=> array('Pühapäev' , 'Esmaspäev' , 'Teisipäev' , 'Kolmapäev' , 'Neljapäev' , 'Reede' , 'Laupäev'),
-	"months"			=> array('Jaanuar', 'Veebruar', 'Märts', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember'),
+	// Date
+    "days"				=> array('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'),
+    "months"			=> array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'),
 
 	// Standard Toolbar
-	"save"				=> "Kinnita ja salvesta",
-	"cancel"			=> "Katkesta käesolev operatsioon",
-	"new"				=> "Lisa uus kirje",
-	"delete"			=> "Kustuta käesolev kirje",
-	"print"				=> "Prindi",
-	"exit"				=> "Välju",
-	"first"				=> "Esimene kirje",
-	"prev"				=> "Eelmine kirje",
-	"next"				=> "Järgmine kirje",
-	"last"				=> "Viimane kirje",
+	"save"				=> "Confirmar e salvar.",
+	"cancel"			=> "Cancelar operação atual",
+	"new"				=> "Inserir novo registro",
+	"delete"			=> "Apagar registro atual",
+	"print"				=> "Imprimir",
+	"exit"				=> "Sair",
+	"first"				=> "Ir para o primeiro.",
+	"prev"				=> "Ir para o anterior",
+	"next"				=> "Ir para o próximo",
+	"last"				=> "Ir para o último",
 	"first_page"		=> "Go to the first page",
 	"prev_page"			=> "Go to the previous page",
 	"next_page"			=> "Go to the next page",
 	"last_page"			=> "Go to the last page",
-	"go"				=> "Mine",
+	"go"				=> "Ir",
 
 	// Table
-	"current_page"		=> "Lehekülg",
-	"of_pages"			=> "kokku",
-	"go_to_page"		=> "Mine leheküljele",
+	"current_page"		=> "Página",
+	"of_pages"			=> "de",
+	"go_to_page"		=> "Ir para página",
 	"ascending"			=> "Ascending",
 	"descending"		=> "Descending",
 	"selected"			=> "Selected",
 
 	// File uploads
-	"filename"			=> "Nimi",
-	"filesize"			=> "Suurus",
-	"filetype"			=> "Tüüp",
-	"filepreview"		=> "Eelvaade",
-	"filedelete"		=> "Kustuta",
+	"filename"			=> "Nome",
+	"filesize"			=> "Tamanho",
+	"filetype"			=> "Tipo",
+	"filepreview"		=> "Pré-visualizar",
+	"filedelete"		=> "Apagar",
 	"filedownload"		=> "Download",
 
 	// Fields
-	"none_selected"		=> "Valimata",
+	"none_selected"		=> "Não Selecionado",
 
 	// Confirmations
-	"confirm_general"	=> "Oled kindel?",
-	"confirm_confirm"	=> "Kindel, et salvestan?",
-	"confirm_cancel"	=> "Katkestada käesolev operatsioon?",
-	"confirm_delete"	=> "Kustutada see kirje?",
+	"confirm_general"	=> "Você tem certeza?",
+	"confirm_confirm"	=> "Confirmar e salvar?",
+	"confirm_cancel"	=> "Cancelar operação atual?",
+	"confirm_delete"	=> "Apagar registro atual?",
 
 	// Yes/No
-	"yes"				=> "Jah",
-	"no"				=> "Ei"
+	"yes"				=> "Sim",
+	"no"				=> "Não"
 );
 
 ?>
