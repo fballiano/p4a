@@ -323,7 +323,7 @@
 		}
 
 		/**
-		 * Returns the "new_value" for the field.
+		 * Returns the "new_value" for the field (with locale formatting).
 		 * @param integer		If the value is an array that we can return only one element.
 		 * @return string
 		 * @access public
@@ -333,14 +333,39 @@
 			$new_value = $this->data_field->getNewValue();
 
 			if ($new_value === NULL) {
-				$new_value = NULL;
+				// $new_value = NULL;
 			} elseif ($index === NULL) {
 				if ($this->isFormattable() and $this->isFormatted()) {
 					$new_value = $this->format($new_value);
 				}
-            } elseif(is_array($new_value)) {
+            } elseif (is_array($new_value)) {
                 $new_value = $new_value[$index];
-            } elseif( substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
+            } elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
+                $tmp_value = substr($new_value, 1, -1);
+                $tmp_value = explode("," , $tmp_value);
+                $new_value = $tmp_value[$index];
+            }
+
+            return $new_value;
+		}
+		
+		/**
+		 * Returns the "new_value" for the field (without locale formatting).
+		 * @param integer		If the value is an array that we can return only one element.
+		 * @return string
+		 * @access public
+		 */
+		function getUnformattedNewValue($index = NULL)
+		{
+			$new_value = $this->data_field->getNewValue();
+
+			if ($new_value === NULL) {
+				// $new_value = NULL;
+			} elseif ($index === NULL) {
+				// $new_value = $new_value;
+            } elseif (is_array($new_value)) {
+                $new_value = $new_value[$index];
+            } elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
                 $tmp_value = substr($new_value, 1, -1);
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];

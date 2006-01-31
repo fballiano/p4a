@@ -230,7 +230,7 @@ class P4A_DB_Source extends P4A_Data_Source
         $filters = array();
         foreach ($this->_filters as $string=>$obj) {
             if (is_object($obj)) {
-                $value = $obj->getNewValue();
+                $value = $obj->getUnformattedNewValue();
                 if (strlen($value)) {
                     $filters[] = str_replace('?',$value,$string);
                 }
