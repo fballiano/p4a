@@ -4,6 +4,10 @@
 - fixed some bugs with the i18n/l10n engine
 - Portuguese translation completed (thanks to Tiago)
 - Estonian translation completed (thanks to Eero)
+- Spanish translation completed (thanks to Vanesa Callejo)
+- Russian translation completed (thanks to Юрий Бб)
+- Norvegian translation added (thanks to Jostein)
+- bugfix on P4A_DB_Source::getFilters(), filtering with formatted fields now works
 
 0.40
 - TinyFCK was updated to 0.5

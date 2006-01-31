@@ -52,19 +52,19 @@ $messages = array
 	"prev"				=> "Перейти к предыдущей записи",
 	"next"				=> "Перейти к следующей записи",
 	"last"				=> "Перейти к последней записи",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "На первую страницу",
+	"prev_page"			=> "К предыдущей странице",
+	"next_page"			=> "К следующей странице",
+	"last_page"			=> "На последнюю страницу",
 	"go"				=> "Вперед",
 
 	// Table
 	"current_page"		=> "Страница",
 	"of_pages"			=> "из",
 	"go_to_page"		=> "Перейти к странице",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "По возрастанию",
+	"descending"		=> "По убыванию",
+	"selected"			=> "выбранное",
 
 	// File uploads
 	"filename"			=> "Имя",
@@ -72,7 +72,7 @@ $messages = array
 	"filetype"			=> "Тип",
 	"filepreview"		=> "Просмотреть",
 	"filedelete"		=> "Удалить",
-	"filedownload"		=> "Download",
+	"filedownload"		=> "Скачать",
 
 	// Fields
 	"none_selected"		=> "Ничего не выбрано",
