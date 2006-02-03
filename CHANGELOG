@@ -1,3 +1,7 @@
+0.42
+- bugfix on P4A_DB_Source::getFilters(), filtering now works with fields and data_fields
+- French translation completed
+
 0.41
 - many translations added, look at http://p4a.sourceforge.net/translations
 - a few translation strings were added (for P4A_Table)

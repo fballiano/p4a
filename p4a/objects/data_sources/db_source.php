@@ -230,9 +230,17 @@ class P4A_DB_Source extends P4A_Data_Source
         $filters = array();
         foreach ($this->_filters as $string=>$obj) {
             if (is_object($obj)) {
-                $value = $obj->getUnformattedNewValue();
-                if (strlen($value)) {
-                    $filters[] = str_replace('?',$value,$string);
+				$class = strtolower(get_class($obj));
+				if ($class == 'p4a_field') {
+					$value = $obj->data_field->getNewValue();
+				} elseif ($class == 'p4a_data_field') {
+					$value = $obj->getNewValue();
+				} else {
+					P4A_Error('FILTER CAN ONLY BE APPLIED TO P4A_Field OR P4A_Data_Field');
+				}
+				
+                if (is_string($value) and !empty($value)) {
+                    $filters[] = str_replace('?', $value, $string);
                 }
             } else {
                 unset($this->_filters[$string]);

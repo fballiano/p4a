@@ -53,19 +53,19 @@ $messages = array
 	"prev"				=> "Retourner à l'élément précédent",
 	"next"				=> "Aller à l'élément suivant",
 	"last"				=> "Aller au dernier élément",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "Aller à la première page",
+	"prev_page"			=> "Aller à la page précédente",
+	"next_page"			=> "Aller à la page suivante",
+	"last_page"			=> "Aller à la dernière page",
 	"go"				=> "Aller",
 
 	// Table
 	"current_page"		=> "Page",
 	"of_pages"			=> "de",
 	"go_to_page"		=> "Aller à la page",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "Ascendant",
+	"descending"		=> "Descendant",
+	"selected"			=> "Sélectioné",
 
 	// File uploads
 	"filename"			=> "Nom",
@@ -73,7 +73,7 @@ $messages = array
 	"filetype"			=> "Type",
 	"filepreview"		=> "Aperçu",
 	"filedelete"		=> "Détruire",
-	"filedownload"		=> "Download",
+	"filedownload"		=> "Télécharger",
 
 	// Fields
 	"none_selected"		=> "Aucun élément sélectionné",
