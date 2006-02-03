@@ -36,3 +36,17 @@ CREATE TABLE `users` (
 ) TYPE=MyISAM;
 
 INSERT INTO `users` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3',10,'p4a_menu_mask',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+CREATE TABLE `p4a_menu_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+INSERT INTO `p4a_menu_id_seq` VALUES (3);
+
+CREATE TABLE `users_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+INSERT INTO `users_id_seq` VALUES (1);

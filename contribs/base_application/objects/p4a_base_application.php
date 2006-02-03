@@ -100,4 +100,5 @@ class P4A_Base_Application extends p4a
 		}
 	}
 }
+
 ?>

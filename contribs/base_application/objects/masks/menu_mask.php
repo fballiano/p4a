@@ -148,4 +148,5 @@ class P4A_Menu_Mask extends P4A_Mask
 		return $value;
 	}
 }
+
 ?>

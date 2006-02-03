@@ -105,4 +105,5 @@ class P4A_Users extends P4A_Mask
 		$this->display("main",$frm);
 	}
 }
+
 ?>

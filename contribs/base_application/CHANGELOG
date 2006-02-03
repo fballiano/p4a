@@ -1,2 +1,8 @@
+0.2
+- P4A_EXTENDED_ERRORS is now off by default
+- some bugfixes in db.sql
+- messages are now in english
+- triggered onReturnPress in the login mask
+
 0.1
 - Initial release
