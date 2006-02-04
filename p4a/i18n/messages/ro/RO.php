@@ -52,19 +52,19 @@ $messages = array
 	"prev"				=> "Continuă la anteriorul",
 	"next"				=> "Continuă la următorul",
 	"last"				=> "Continuă la ultimul",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "Dute la prima pagină",
+	"prev_page"			=> "Dute la pagina anterioară",
+	"next_page"			=> "Dute la pagina următoare",
+	"last_page"			=> "Dute la ultima pagină",
 	"go"				=> "Continuă",
 
 	// Table
 	"current_page"		=> "Pagina",
 	"of_pages"			=> "din",
 	"go_to_page"		=> "Continuă la pagina",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "Aşcendent",
+	"descending"		=> "Deşendent",
+	"selected"			=> "Selectată",
 
 	// File uploads
 	"filename"			=> "Nume",

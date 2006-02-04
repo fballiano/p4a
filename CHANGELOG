@@ -1,3 +1,6 @@
+0.43
+- Romanian translation completed (thanks to Andrew Rimmer)
+
 0.42
 - bugfix on P4A_DB_Source::getFilters(), filtering now works with fields and data_fields
 - French translation completed
