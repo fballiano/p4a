@@ -1,5 +1,8 @@
 0.43
 - Romanian translation completed (thanks to Andrew Rimmer)
+- P4A_Table now supports left/right alignment based on data type
+- some bugfixes on print css
+- minor bugfixes and beautifications
 
 0.42
 - bugfix on P4A_DB_Source::getFilters(), filtering now works with fields and data_fields

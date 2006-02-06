@@ -27,8 +27,8 @@
 			    </td>
 
 				{foreach:row[cells],cell}
-				<td flexy:if="cell[row_even]" class="background1 clickable table_cell" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
-				<td flexy:if="!cell[row_even]" class="background2 clickable table_cell" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
+				<td flexy:if="cell[row_even]" class="background1 clickable table_cell {cell[type]}" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
+				<td flexy:if="!cell[row_even]" class="background2 clickable table_cell {cell[type]}" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
 				{end:}
 			</tr>
 		</tbody>

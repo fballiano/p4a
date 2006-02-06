@@ -475,6 +475,10 @@ legend {
 	border: 2px solid white;
 }
 
+.table td.integer, .table td.decimal, .table td.float, .table td.date, .table td.time{
+	text-align: right;
+}
+
 .table_container .frame{
 	border-top: 1px solid #C6D3DE;
 	background: #fafafa;

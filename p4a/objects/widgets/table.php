@@ -111,7 +111,6 @@
 		{
 			parent::P4A_Widget($name);
 			$this->useTemplate('table');
-			$this->setStyleProperty('border-collapse', 'collapse');
 		}
 
 		/**
@@ -868,8 +867,7 @@
 			}
 
 			$i = 0;
-			foreach($rows as $row_number=>$row)
-			{
+			foreach($rows as $row_number=>$row) {
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
 				
@@ -886,19 +884,17 @@
 				}
 
 				foreach($aCols as $col_name) {
-// 					if (! $parent->cols->$col_name->isVisible()) {
-// 						continue;
-// 					}
 					$aReturn[$i]['cells'][$j]['action'] = $action;
 					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
+					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
 					} elseif ($parent->cols->$col_name->getType() == "image"){
 						$value = $row[$col_name];
-						$value = substr($value,1,-1);
-						$value = explode(",",$value);
-						$image_src = P4A_UPLOADS_PATH . "/". $value[1];
+						$value = substr($value, 1, -1);
+						$value = explode(", ", $value);
+						$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
 						$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' />";	
 					} elseif ($parent->cols->$col_name->isFormatted()) {
 						if (($parent->cols->$col_name->formatter_name === NULL) and ($parent->cols->$col_name->format_name === NULL)) {

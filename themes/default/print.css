@@ -172,6 +172,10 @@ textarea {
 	display:visible;
 }
 
+.table_container .frame{
+	border-top: 1px solid black;
+}
+
 .table_cell {
 	padding-top: 7px;
 	padding-bottom:7px;
