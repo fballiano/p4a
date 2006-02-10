@@ -1242,17 +1242,21 @@
 				if ($width > $height) {
 					if ($this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size) {
 						$width = $this->max_thumbnail_size ;
-						$str_width = 'width="' . $width . '"' ;
+						$str_width = "width=\"$width\"" ;
 					}
 				} else {
 					if ($this->max_thumbnail_size !== NULL and $height > $this->max_thumbnail_size) {
 						$height = $this->max_thumbnail_size ;
-						$str_height = 'height="' . $height . '"' ;
+						$str_height = "height=\"$height\"" ;
 					}
 				}
 
 				$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
-				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+				if (P4A_GD) {
+					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+				} else {
+					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+				}
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';

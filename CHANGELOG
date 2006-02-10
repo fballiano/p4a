@@ -1,4 +1,7 @@
 0.43
+- phpThumb 1.6.2 was added in libraries
+- if GD are installed image preview call phpThumb to generate thumbnails
+- gettext like __("string") function has been added, alias of $p4a->i18n->messages->get("string")
 - German translation completed (thanks to ibus)
 - Romanian translation completed (thanks to Andrew and Giorgio Rimmer)
 - P4A_Table now supports left/right alignment based on data type

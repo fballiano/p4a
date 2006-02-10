@@ -81,7 +81,7 @@
 		 * @param string		The second level message id (used only when the first level value is an array. Eg: days names).
 		 * @return string
 		 */
-		function get($first_level_id = NULL, $second_level_id = NULL)
+		function get($first_level_id = null, $second_level_id = null)
 		{
 			if (empty($first_level_id) and empty($second_level_id )) {
 				return '';
@@ -89,12 +89,12 @@
 				if (array_key_exists($first_level_id, $this->messages)){
 					return $this->messages[$first_level_id];
 				}
-				return '';
+				return $first_level_id;
 			} elseif(array_key_exists($first_level_id, $this->messages) and array_key_exists($second_level_id, $this->messages[$first_level_id])) {
 				return $this->messages[$first_level_id][$second_level_id];
 			}
 			
-			return '';
+			return $first_level_id;
 		}
 		
 		/**

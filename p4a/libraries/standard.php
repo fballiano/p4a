@@ -267,4 +267,16 @@
 		$allow = explode('|', P4A_DENIED_EXTENSIONS);
 		return !in_array(strtolower($extension), $allow);
 	}
+	
+	/**
+	 * Returns an i18n translated string (like gettext)
+	 * @access public
+	 * @return string
+	 * @param string string to be translated
+	 */
+	function __($string)
+	{
+		$p4a =& p4a::singleton();
+		return $p4a->i18n->messages->get($string);
+	}
 ?>

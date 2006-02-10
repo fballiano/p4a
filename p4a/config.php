@@ -283,4 +283,12 @@
 	define('P4A_DATE', '%Y-%m-%d');
 	define('P4A_TIME', '%H:%M:%S');
 	define('P4A_DATETIME', '%Y-%m-%d %H:%M:%S');
+	
+	if (!defined('P4A_GD') and function_exists('ImageJPEG') and 
+		function_exists('ImagePNG') and function_exists('ImageGIF')) {
+		define('P4A_GD', true);
+	} else {
+		define('P4A_GD', false);
+	}
+	
 ?>
