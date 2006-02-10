@@ -23,7 +23,7 @@ tinyMCE.init({
 function {id}fileBrowserCallBack(field_name, url, type, win) {
 	tinyfck_field = field_name;
 	tinyfck = win;
-	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php&ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
+	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php&amp;ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
 }
 {end:}
 

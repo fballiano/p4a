@@ -1,6 +1,9 @@
 0.43
+- German translation completed (thanks to ibus)
 - Romanian translation completed (thanks to Andrew and Giorgio Rimmer)
 - P4A_Table now supports left/right alignment based on data type
+- many improvements for handheld rendering
+- some bugfixes on XHTML validation
 - some bugfixes on print css
 - minor bugfixes and beautifications
 

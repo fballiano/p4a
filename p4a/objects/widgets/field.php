@@ -1083,15 +1083,13 @@
 			$p4a =& P4A::singleton();
 
 			if ($this->getNewValue() === NULL) {
-				$header 		= "<div style='float:left'><input type='file' onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' class='border_box font_normal clickable' ";
-				$close_header 	= '></div>';
+				$sReturn = "<div style='float:left'><input type='file' onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' class='border_box font_normal clickable' ";
 
 				if (!$this->isEnabled()) {
-					$header .= 'disabled="disabled" ';
+					$sReturn .= 'disabled="disabled" ';
 				}
 
-				$header	.= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-				$sReturn = $header;
+				$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 			} else {
 				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
@@ -1199,15 +1197,13 @@
 		{
 			$p4a =& P4A::singleton();
 			if ($this->getNewValue() === NULL) {
-				$header 		= "<div style='float:left'><input onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
-				$close_header 	= '></div>';
+				$sReturn = "<div style='float:left'><input onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 
 				if( !$this->isEnabled() ) {
-					$header .= 'disabled="disabled" ';
+					$sReturn .= 'disabled="disabled" ';
 				}
 
-				$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-				$sReturn = $header;
+				$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 			} else {
 				$mime_type = explode( '/', $this->getNewValue(3) );
 				$mime_type = $mime_type[0];

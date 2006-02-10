@@ -971,27 +971,26 @@
 
 			if ($p4a->isHandheld()) {
 				$this->addButton('button_first');
-				$this->buttons->button_first->setLabel("<<");
+				$this->buttons->button_first->setLabel('<<');
 				$this->addButton('button_prev');
-				$this->buttons->button_prev->setLabel("<");
+				$this->buttons->button_prev->setLabel('<');
 				$this->addButton('button_next');
-				$this->buttons->button_next->setLabel(">");
+				$this->buttons->button_next->setLabel('>');
 				$this->addButton('button_last');
-				$this->buttons->button_last->setLabel(">>");
+				$this->buttons->button_last->setLabel('>>');
 
 				$this->buttons->button_go->setVisible(false);
 				$this->buttons->field_num_page->setVisible(false);
 			} else {
 				$this->addButton('button_last', 'last', 'right');
+				$this->buttons->button_last->setValue("last_page");
 				$this->addButton('button_next', 'next', 'right');
+				$this->buttons->button_next->setValue("next_page");
 				$this->addButton('button_prev', 'prev', 'right');
+				$this->buttons->button_prev->setValue("prev_page");
 				$this->addButton('button_first', 'first', 'right');
+				$this->buttons->button_first->setValue("first_page");
 			}
-			
-			$this->buttons->button_last->setValue("last_page");
-			$this->buttons->button_next->setValue("next_page");
-			$this->buttons->button_prev->setValue("prev_page");
-			$this->buttons->button_first->setValue("first_page");
 
 			$this->buttons->button_last->addAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');

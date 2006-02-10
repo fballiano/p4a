@@ -148,13 +148,13 @@
 
 			$enabled = $this->isEnabled();
 
-			if ($this->_icon != NULL) {
+			if ($this->_icon != NULL and !$p4a->isHandheld()) {
 				if ($enabled) {
 					$header .= '<a class="link_button" href="#" ';
 				} else {
 					$header .= '<span class="link_button" ';
 				}
-				$footer .= '><img class="img_button"';
+				$footer .= '><img class="img_button';
 
 				if ($enabled) {
 					$footer .= ' clickable';
@@ -211,6 +211,30 @@
 				$sReturn .= $this->composeStringActions();
 			}
 			$sReturn .= $footer;
+			return $sReturn;
+		}
+		
+		/**
+		 * Composes a string containing all the HTML properties of the widget.
+		 * Note: it will also contain the name and the value.
+		 * @return string
+		 * @access public
+		 */
+		function composeStringProperties()
+		{
+			$sReturn = "";
+			$p4a =& p4a::singleton();
+			$properties = $this->properties;
+			
+			if ($this->_icon != NULL and !$p4a->isHandheld() and isset($properties['value'])) {
+				unset($properties['value']);
+			}
+			
+			foreach ($properties as $property_name=>$property_value) {
+				$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;
+			}
+
+			$sReturn .= $this->composeStringStyle();
 			return $sReturn;
 		}
 	}
