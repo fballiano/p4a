@@ -47,8 +47,7 @@ you. We use the debian standard way, extract the framework and put it in
 
 edit your Apache's httpd.conf and add this lines:
 
-Alias /p4a/icons /usr/share/p4a/icons
-Alias /p4a/themes /usr/share/p4a/themes
+Alias /p4a /usr/share/p4a
 <Directory /usr/share/p4a>
  Order allow,deny
  Allow from all

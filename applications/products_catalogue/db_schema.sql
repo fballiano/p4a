@@ -1,36 +1,29 @@
 CREATE TABLE brands (
-  brand_id INTEGER UNSIGNED NOT NULL,
+  brand_id INTEGER NOT NULL,
   description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(brand_id)
-)
-TYPE=InnoDB;
+);
 
 CREATE TABLE categories (
-  category_id INTEGER UNSIGNED NOT NULL,
+  category_id INTEGER NOT NULL,
   description TEXT NOT NULL,
   visible BOOL NOT NULL,
   PRIMARY KEY(category_id)
-)
-TYPE=InnoDB;
+);
 
 CREATE TABLE products (
   product_id VARCHAR(50) NOT NULL,
-  brand_id INTEGER UNSIGNED NOT NULL,
-  category_id INTEGER UNSIGNED NOT NULL,
+  brand_id INTEGER NOT NULL,
+  category_id INTEGER NOT NULL,
   model TEXT NOT NULL,
   purchasing_price DECIMAL(10,2) NOT NULL,
   selling_price DECIMAL(10,2) NOT NULL,
-  discount INTEGER UNSIGNED NOT NULL,
+  discount INTEGER NOT NULL,
   little_photo TEXT NULL,
   big_photo TEXT NULL,
   is_new BOOL NOT NULL,
   visible BOOL NOT NULL,
   description TEXT NOT NULL,
-  PRIMARY KEY(product_id),
-  INDEX products_FKIndex1(category_id),
-  INDEX products_FKIndex2(brand_id)
-)
-TYPE=InnoDB;
-
-
+  PRIMARY KEY(product_id)
+);
