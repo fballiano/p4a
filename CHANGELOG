@@ -1,3 +1,5 @@
+0.44
+
 0.43
 - phpThumb 1.6.2 was added in libraries
 - if GD are installed image preview call phpThumb to generate thumbnails
