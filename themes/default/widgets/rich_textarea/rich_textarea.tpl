@@ -16,7 +16,8 @@ tinyMCE.init({
 	theme_advanced_statusbar_location: "bottom",
 	{if:upload}file_browser_callback: "{id}fileBrowserCallBack",{end:}
 	auto_cleanup_word: true,
-	relative_urls: false
+	relative_urls: false,
+	apply_source_formatting: true
 });
 
 {if:upload}
