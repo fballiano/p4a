@@ -30,6 +30,8 @@
 
 	function fileBrowserCallBack(field_name, url, type, win) {
 		var connector = "../../filemanager/browser.html?Connector=connectors/php/connector.php";
+		var enableAutoTypeSelection = true;
+		
 		var cType;
 		var tinyfck_field = field_name;
 		var tinyfck = win;
@@ -46,8 +48,8 @@
 				break;
 		}
 		
-		if (cType) {
-			connector += "?Type="+cType;
+		if (enableAutoTypeSelection && cType) {
+			connector += "?Type=" + cType;
 		}
 		
 		window.open(connector, "tinyfck", "modal,width=600,height=400");
