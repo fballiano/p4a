@@ -1,5 +1,6 @@
 0.44
 - TinyFCK was updated to 0.7
+- locales were rebuilt with a new conversion engine, fixing some bugs
 
 0.43
 - phpThumb 1.6.2 was added in libraries

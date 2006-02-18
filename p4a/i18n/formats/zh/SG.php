@@ -41,7 +41,16 @@ define('P4A_I18N_THOUSAND_SEPARATOR', ',');
 
 require dirname(dirname(__FILE__)) . '/defaults.php';
 
-// we need date and time formats
+$datetime_formats = array
+(
+	"date_default"	=>	'%d/%m/%Y',
+	"date_medium"	=>	'%d-%b-%Y',
+	"date_long"		=>	'%d %b %Y',
+	"date_full"		=>	'%d %B %Y',
+
+	"time_default"	=>	'%p %l:%M',
+	"time_long"		=>	'%p %l:%M'
+);
 
 $currency_formats = array
 (
