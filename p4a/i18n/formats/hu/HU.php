@@ -43,10 +43,10 @@ require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	'%Y-%m-%d',
-	"date_medium"	=>	'%Y. %b. %d.',
+	"date_default"	=>	'%Y.%m.%d.',
+	"date_medium"	=>	'%Y.%m.%d.',
 	"date_long"		=>	'%Y. %B %d.',
-	"date_full"		=>	'%Y. %B %d., %A',
+	"date_full"		=>	'%Y. %B %d.',
 
 	"time_default"	=>	'%H:%M',
 	"time_long"		=>	'%H:%M:%S'

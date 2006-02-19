@@ -45,8 +45,8 @@ $datetime_formats = array
 (
 	"date_default"	=>	'%d.%m.%Y',
 	"date_medium"	=>	'%d.%m.%Y',
-	"date_long"		=>	'%d %B %Y',
-	"date_full"		=>	'%A, %d %B %Y',
+	"date_long"		=>	'%d. %B %Y',
+	"date_full"		=>	'%A, %d. %B %Y',
 
 	"time_default"	=>	'%H:%M',
 	"time_long"		=>	'%H:%M:%S'

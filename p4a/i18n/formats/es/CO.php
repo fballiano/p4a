@@ -44,9 +44,9 @@ require dirname(dirname(__FILE__)) . '/defaults.php';
 $datetime_formats = array
 (
 	"date_default"	=>	'%d/%m/%Y',
-	"date_medium"	=>	'%d-%b-%Y',
-	"date_long"		=>	'%d %B %Y',
-	"date_full"		=>	'%A, %d de %B de %Y',
+	"date_medium"	=>	'%d/%m/%Y',
+	"date_long"		=>	'%d de %B de %Y',
+	"date_full"		=>	'%A %d de %B de %Y',
 
 	"time_default"	=>	'%H:%M',
 	"time_long"		=>	'%H:%M:%S'

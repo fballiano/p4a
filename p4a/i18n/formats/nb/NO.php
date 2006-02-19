@@ -44,12 +44,12 @@ require dirname(dirname(__FILE__)) . '/defaults.php';
 $datetime_formats = array
 (
 	"date_default"	=>	'%d.%m.%Y',
-	"date_medium"	=>	'%d.%b.%Y',
+	"date_medium"	=>	'%d. %b. %Y',
 	"date_long"		=>	'%d. %B %Y',
 	"date_full"		=>	'%A %d. %B %Y',
 
-	"time_default"	=>	'%H:%M',
-	"time_long"		=>	'%H:%M:%S'
+	"time_default"	=>	'%H.%M',
+	"time_long"		=>	'%H.%M.%S'
 );
 
 $currency_formats = array

@@ -43,13 +43,13 @@ require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	'%d/%m/%Y',
-	"date_medium"	=>	'%d-%b-%Y',
-	"date_long"		=>	'%d %B %Y',
-	"date_full"		=>	'%A, %d de %B de %Y',
+	"date_default"	=>	'%m/%d/%Y',
+	"date_medium"	=>	'%m/%d/%Y',
+	"date_long"		=>	'%d de %B de %Y',
+	"date_full"		=>	'%A %d de %B de %Y',
 
-	"time_default"	=>	'%H:%M',
-	"time_long"		=>	'%H:%M:%S'
+	"time_default"	=>	'%l:%M %p',
+	"time_long"		=>	'%l:%M:%S %p'
 );
 
 $currency_formats = array
