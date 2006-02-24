@@ -165,14 +165,14 @@ a.mceTiledButton img {
 /* MSIE specific rules */
 
 * html a.mceButtonNormal img, * html a.mceButtonSelected img, * html a.mceButtonDisabled img {
-	border: 0px !important;
+	border: 0 !important;
 	margin-top: 2px;
 	margin-bottom: 1px;
 }
 
 * html a.mceButtonDisabled img {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
-	border: 0px !important;
+	border: 0 !important;
 }
 
 * html a.mceButtonDisabled {
@@ -180,7 +180,7 @@ a.mceTiledButton img {
 }
 
 * html a.mceButtonNormal, * html a.mceButtonSelected {
-	border: 1px solid #F0F0EE;
+	border: 1px solid #F0F0EE !important;
 	cursor: default;
 }
 
@@ -189,7 +189,7 @@ a.mceTiledButton img {
 }
 
 * html a.mceButtonNormal:hover, * html a.mceButtonSelected:hover {
-	border: 1px solid #0A246A;
+	border: 1px solid #0A246A !important;
 	cursor: default;
 	background-color: #B6BDD2;
 }

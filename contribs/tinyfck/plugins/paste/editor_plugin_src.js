@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.33 $
- * $Date: 2006/02/12 13:31:52 $
+ * $Revision: 1.35 $
+ * $Date: 2006/02/23 13:02:37 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -96,9 +96,11 @@ var TinyMCE_PastePlugin = {
 		switch (e.type) {
 			case "paste":
 				var html = TinyMCE_PastePlugin._clipboardHTML();
+				var r, inst = tinyMCE.selectedInstance;
 
-				// Removes italic, strong etc
-				tinyMCE.execCommand('delete');
+				// Removes italic, strong etc, the if was needed due to bug #1437114
+				if (inst && (r = inst.getRng()) && r.text.length > 0)
+					tinyMCE.execCommand('delete');
 
 				if (html && html.length > 0)
 					tinyMCE.execCommand('mcePasteWord', false, html);
@@ -190,8 +192,13 @@ var TinyMCE_PastePlugin = {
 			content = content.replace(/<o:p><\/o:p>/gi, "");
 			content = content.replace(new RegExp('<br style="page-break-before: always;.*>', 'gi'), '-- page break --'); // Replace pagebreaks
 			content = content.replace(new RegExp('<(!--)([^>]*)(--)>', 'g'), "");  // Word comments
-			content = content.replace(/<\/?span[^>]*>/gi, "");
-			content = content.replace(new RegExp('<(\\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
+
+			if (tinyMCE.getParam("paste_remove_spans", true))
+				content = content.replace(/<\/?span[^>]*>/gi, "");
+
+			if (tinyMCE.getParam("paste_remove_styles", true))
+				content = content.replace(new RegExp('<(\\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
+
 			content = content.replace(/<\/?font[^>]*>/gi, "");
 
 			// Strips class attributes.

@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_template_src.js,v $
- * $Revision: 1.90 $
- * $Date: 2006/02/13 15:09:28 $
+ * $Revision: 1.91 $
+ * $Date: 2006/02/15 18:42:03 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -542,16 +542,12 @@ var TinyMCE_AdvancedTheme = {
 				}
 
 				// External toolbar changes
-				if (toolbarLocation == "external")
-				{
+				if (toolbarLocation == "external") {
 					var bod = document.body;
 					var elm = document.createElement ("div");
-					
-					toolbarHTML = tinyMCE.replaceVars(toolbarHTML, tinyMCE.settings);
-					toolbarHTML = tinyMCE.replaceVars(toolbarHTML, tinyMCELang);
+
 					toolbarHTML = tinyMCE.replaceVar(toolbarHTML, 'style_select_options', styleSelectHTML);
-					toolbarHTML = tinyMCE.replaceVar(toolbarHTML, "editor_id", editorId);
-					toolbarHTML = tinyMCE.applyTemplate(toolbarHTML);
+					toolbarHTML = tinyMCE.applyTemplate(toolbarHTML, {editor_id : editorId});
 
 					elm.className = "mceToolbarExternal";
 					elm.id = editorId+"_toolbar";
@@ -563,14 +559,11 @@ var TinyMCE_AdvancedTheme = {
 					tinyMCE.getInstanceById(editorId).toolbarElement = elm;
 
 					//template['html'] = '<div id="mceExternalToolbar" align="center" class="mceToolbarExternal"><table width="100%" border="0" align="center"><tr><td align="center">'+toolbarHTML+'</td></tr></table></div>' + template["html"];
-				}
-				else
-				{
+				} else {
 					tinyMCE.getInstanceById(editorId).toolbarElement = null;
 				}
 
-				if (statusbarLocation == "bottom")
-				{
+				if (statusbarLocation == "bottom") {
 					template['html'] += '<tr><td class="mceStatusbarBottom" height="1">' + statusbarHTML + '</td></tr>';
 					deltaHeight -= 23;
 				}

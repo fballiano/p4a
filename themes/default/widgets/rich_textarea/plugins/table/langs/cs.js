@@ -4,7 +4,7 @@
  *  
  * @author Michi
  *  
- * $Id: cs.js,v 1.11 2006/01/11 14:25:50 spocke Exp $ 
+ * $Id: cs.js,v 1.12 2006/02/23 13:02:37 spocke Exp $ 
  */  
 
 tinyMCE.addToLang('table',{
@@ -80,6 +80,3 @@ rowgroup : 'Skupina řádků',
 colgroup : 'Skupina sloupců',
 missing_scope: 'Jste si jistý(á), že chcete pokračovat bez vyplnění rozsahu pro tuto buňku tabulky? Bez něj může být težké handicapovaným uživatelům porozumět obsahu nebo datům obsažených v tabulce.'
 });
-
-});
-

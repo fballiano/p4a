@@ -53,10 +53,10 @@ $messages = array
 	"prev"				=> "Jdi na předchozí",
 	"next"				=> "Jdi na další",
 	"last"				=> "Jdi na poslední",
-	"first_page"		=> "Go to the first page",
-	"prev_page"			=> "Go to the previous page",
-	"next_page"			=> "Go to the next page",
-	"last_page"			=> "Go to the last page",
+	"first_page"		=> "Jdi na první stránu",
+	"prev_page"			=> "Jdi na předchozí stránu",
+	"next_page"			=> "Jdi na další stránu",
+	"last_page"			=> "Jdi na poslední stránu",
 	"go"				=> "Jdi",
 
 	// Table
