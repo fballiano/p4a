@@ -1,4 +1,4 @@
-<?php
+<?
 
 /**
  * P4A - PHP For Applications.
@@ -36,6 +36,6 @@
  * @package p4a
  */
 
-require dirname(dirname(__FILE__)) . '/no/NO.php';
+require dirname(__FILE__) . '/NL.php';
 
 ?>

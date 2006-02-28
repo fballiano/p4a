@@ -884,6 +884,7 @@
 				}
 
 				foreach($aCols as $col_name) {
+					$aReturn[$i]['cells'][$j]['value'] = '';
 					$aReturn[$i]['cells'][$j]['action'] = $action;
 					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
@@ -892,10 +893,17 @@
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
 					} elseif ($parent->cols->$col_name->getType() == "image"){
 						$value = $row[$col_name];
-						$value = substr($value, 1, -1);
-						$value = explode(",", $value);
-						$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
-						$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' />";	
+						if (!empty($value)) {
+							$value = substr($value, 1, -1);
+							$value = explode(',', $value);
+							$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
+							if (P4A_GD) {
+								$image_src = P4A_ROOT_PATH . "/p4a/libraries/phpthumb/phpThumb.php?src=$image_src&amp;h=40";
+								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' alt='' />";
+							} else {
+								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' alt='' />";
+							}
+						}
 					} elseif ($parent->cols->$col_name->isFormatted()) {
 						if (($parent->cols->$col_name->formatter_name === NULL) and ($parent->cols->$col_name->format_name === NULL)) {
 							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->autoFormat($row[$col_name], $parent->data->fields->$col_name->getType());
