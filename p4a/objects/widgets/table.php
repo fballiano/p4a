@@ -893,7 +893,7 @@
 					} elseif ($parent->cols->$col_name->getType() == "image"){
 						$value = $row[$col_name];
 						$value = substr($value, 1, -1);
-						$value = explode(", ", $value);
+						$value = explode(",", $value);
 						$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
 						$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' />";	
 					} elseif ($parent->cols->$col_name->isFormatted()) {
