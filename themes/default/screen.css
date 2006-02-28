@@ -460,6 +460,10 @@ legend {
 	width: inherit;
 }
 
+.table th a {
+	display:block;
+}
+
 .table caption{
 	font-size: 12px;
 	font-weight: bold;
