@@ -5,7 +5,7 @@
 			<tr>
 				<th class="select">&nbsp;</th>
 				{foreach:headers,header}
-				<th flexy:if="header[action]" class="font3 align_center clickable" flexy:raw="{header[properties]:h}" flexy:raw="{header[action]:h}">
+				<th flexy:if="header[action]" class="font3 align_center clickable" flexy:raw="{header[properties]:h}">
 					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
 					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
 					<a href="#" flexy:raw="{header[action]:h}">{header[value]}</a>
