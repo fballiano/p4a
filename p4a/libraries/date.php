@@ -247,12 +247,12 @@
 	        $nucleus_counter = 1;
 
 	    	$iso			= array();
-	    	$iso['year']	= '0';
-	    	$iso['month']	= '01';
-	    	$iso['day']		= '01';
-	    	$iso['hour']	= '00';
-	    	$iso['minute']	= '00';
-	    	$iso['second']	= '00';
+	    	$iso['year']	= 0;
+	    	$iso['month']	= 0;
+	    	$iso['day']		= 0;
+	    	$iso['hour']	= 0;
+	    	$iso['minute']	= 0;
+	    	$iso['second']	= 0;
 			$map['am_pm']   = 'am';
 
 	        for ($strpos = 0; $strpos < strlen($format); $strpos++) {
@@ -409,7 +409,6 @@
 	        	foreach ($map as $key=>$nucleus) {
 					if ($key == 'am_pm') {
 						if (strtolower($res[$nucleus]) == 'pm') {
-							print_r($iso);
 							$iso['hour'] += 12;
 						}
 						continue;
@@ -417,6 +416,9 @@
 					$iso[$key] += $res[$nucleus];
 	        	}
 	        }
+			
+			if ($iso['month'] == 0) $iso['month'] = 1;
+	    	if ($iso['day'] == 0) $iso['day'] = 1;
 
 	        if (defined('P4A_DATETIME') and ($output_format == P4A_DATETIME)) {
 	        	return "{$iso['year']}-{$iso['month']}-{$iso['day']} {$iso['hour']}:{$iso['minute']}:{$iso['second']}";
