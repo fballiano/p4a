@@ -100,6 +100,15 @@
 
 	    	$aDate = P4A_Date::parse($date);
 	        $output = "";
+			
+			if (preg_match("/%[pP]/", $format)) {
+				if ($aDate['hour'] < 12) {
+					$aDate['am_pm'] = 'AM';
+				} else {
+					$aDate['hour'] -= 12;
+					$aDate['am_pm'] = 'PM';
+				}
+			}
 
 	        for($strpos = 0; $strpos < strlen($format); $strpos++) {
 	            $char = substr($format,$strpos,1);
@@ -133,6 +142,7 @@
 	                case "E":
 	                    $output .= P4A_Date::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
+					case "l":
 	                case "H":
 	                    $output .= sprintf("%02d", $aDate['hour']);
 	                    break;
@@ -171,10 +181,7 @@
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
 	                case "p":
-	                    $output .= $aDate['hour'] >= 12 ? "pm" : "am";
-	                    break;
-	                case "P":
-	                    $output .= $aDate['hour'] >= 12 ? "PM" : "AM";
+	                    $output .= $aDate['am_pm'];
 	                    break;
 	                case "r":
 	                    $hour = ($aDate['hour'] + 1) > 12 ? $aDate['hour'] - 12 : $aDate['hour'];
@@ -233,7 +240,7 @@
 	     * @param array localization strings
 	     * @return string
 	     */
-	    function unformat( $date, $format, $output_format = P4A_DATETIME, $locale_vars = NULL )
+	    function unformat($date, $format, $output_format = P4A_DATETIME, $locale_vars = NULL)
 	    {
 	        $regexp = "";
 	        $map = array();
@@ -246,11 +253,12 @@
 	    	$iso['hour']	= '00';
 	    	$iso['minute']	= '00';
 	    	$iso['second']	= '00';
+			$map['am_pm']   = 'am';
 
-	        for($strpos = 0; $strpos < strlen($format); $strpos++) {
+	        for ($strpos = 0; $strpos < strlen($format); $strpos++) {
 	            $char = substr($format,$strpos,1);
 	            if ($char == "%") {
-	                $nextchar = substr($format,$strpos + 1,1);
+	                $nextchar = substr($format, $strpos + 1, 1);
 	                switch ($nextchar) {
 	                case "a":
 	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
@@ -288,6 +296,7 @@
 	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::date_to_days($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
+					case "l":
 	                case "H":
 	                    $regexp .= '([0-9]{1,2})';
 	                    $map['hour'] = $nucleus_counter++;
@@ -301,7 +310,7 @@
 	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
 	                    $output .= P4A_Date::julian_date($aDate['year'],$aDate['month'],$aDate['day']);
 	                    break;
-	                case "m":
+					case "m":
 	                    $regexp .= '([0-9]{1,2})';
 	                    $map['month'] = $nucleus_counter++;
 	                    break;
@@ -331,13 +340,10 @@
 	                    $minutes = $offmins % 60;
 	                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
 	                    break;
+					case "P":
 	                case "p":
-	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= $aDate['hour'] >= 12 ? "pm" : "am";
-	                    break;
-	                case "P":
-	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
-	                    $output .= $aDate['hour'] >= 12 ? "PM" : "AM";
+						$regexp .= '(am|AM|aM|Am|pm|PM|pM|Pm)?';
+						$map['am_pm'] = $nucleus_counter++;
 	                    break;
 	                case "r":
 	                	p4a_error("P4A_Date::unformat(): reverse formatting with '%$nextchar' in format is not implemented.");
@@ -387,29 +393,37 @@
 	                    $regexp .= $char.$nextchar;
 	                }
 	                $strpos++;
-	            } elseif ( $char == '/' or $char == '-' ) {
+	            } elseif ($char == '/' or $char == '-') {
 	            	$regexp .= '[\/-]';
-	            } elseif ( $char == '.' or $char == ':' ) {
+	            } elseif ($char == '.' or $char == ':') {
 	            	$regexp .= '[\.:]';
+				} elseif ($char == ' ') {
+					$regexp .= '\s*';
 	            } else {
 	                $regexp .= $char;
 	            }
 	        }
-
-	        if( ereg($regexp, $date, $res) )
-	        {
-	        	foreach( $map as $key=>$nucleus )
-	        	{
-	        		$iso[$key] = $res[$nucleus];
+			
+			$regexp = trim($regexp);
+	        if (preg_match("/$regexp/", $date, $res)) {
+	        	foreach ($map as $key=>$nucleus) {
+					if ($key == 'am_pm') {
+						if (strtolower($res[$nucleus]) == 'pm') {
+							print_r($iso);
+							$iso['hour'] += 12;
+						}
+						continue;
+					}
+					$iso[$key] += $res[$nucleus];
 	        	}
 	        }
 
-	        if( defined( 'P4A_DATETIME' ) and ( $output_format == P4A_DATETIME ) ) {
-	        	return $iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'];
-	        } elseif( defined( 'P4A_DATE' ) and ( $output_format == P4A_DATE ) ) {
-	        	return $iso['year'] . '-' . $iso['month'] . '-' . $iso['day'];
+	        if (defined('P4A_DATETIME') and ($output_format == P4A_DATETIME)) {
+	        	return "{$iso['year']}-{$iso['month']}-{$iso['day']} {$iso['hour']}:{$iso['minute']}:{$iso['second']}";
+	        } elseif (defined('P4A_DATE') and ($output_format == P4A_DATE)) {
+	        	return "{$iso['year']}-{$iso['month']}-{$iso['day']}";
 	        } else {
-	        	return P4A_Date::format($iso['year'] . '-' . $iso['month'] . '-' . $iso['day'] . ' ' . $iso['hour'] . ':' . $iso['minute'] . ':' . $iso['second'], $output_format, $locale_vars );
+	        	return P4A_Date::format("{$iso['year']}-{$iso['month']}-{$iso['day']} {$iso['hour']}:{$iso['minute']}:{$iso['second']}", $output_format, $locale_vars);
 	        }
 	    }
 
@@ -420,7 +434,7 @@
 	     * @param string the date
 	     * @return array
 	     */
-	    function parse( $date )
+	    function parse($date)
 	    {
 	    	$return				= array();
 	    	$return['year']		= '0';
@@ -430,37 +444,37 @@
 	    	$return['minute']	= '00';
 	    	$return['second']	= '00';
 
-            if( ereg("([0-9]{1,4})",$date,$regs) ) {
+            if (ereg("([0-9]{1,4})", $date, $regs)) {
             	$return['year'] = $regs[1];
             } else {
             	return $return;
 	    	}
 
-            if( ereg("[0-9]{1,4}-([0-9]{1,2})",$date,$regs) ) {
-            	$return['month'] = sprintf("%02d",$regs[1]);
+            if (ereg("[0-9]{1,4}-([0-9]{1,2})", $date, $regs)) {
+            	$return['month'] = sprintf("%02d", $regs[1]);
             } else {
             	return $return;
 	    	}
 
-            if( ereg("[0-9]{1,4}-[0-9]{1,2}-([0-9]{1,2})",$date,$regs) ) {
-            	$return['day'] = sprintf("%02d",$regs[1]);
+            if (ereg("[0-9]{1,4}-[0-9]{1,2}-([0-9]{1,2})", $date, $regs)) {
+            	$return['day'] = sprintf("%02d", $regs[1]);
             } else {
             	return $return;
 	    	}
 
-            if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ]([0-9]{1,2})",$date,$regs) ) {
-            	$return['hour'] = sprintf("%02d",$regs[1]);
+            if (ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ]([0-9]{1,2})", $date, $regs)) {
+            	$return['hour'] = sprintf("%02d", $regs[1]);
             } else {
             	return $return;
 	    	}
 
-            if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:([0-9]{1,2})",$date,$regs) ) {
+            if (ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:([0-9]{1,2})", $date, $regs)) {
             	$return['minute'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
 	    	}
 
-            if( ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:[0-9]{1,2}:([0-9]{1,2})",$date,$regs) ) {
+            if (ereg("[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[ ][0-9]{1,2}:[0-9]{1,2}:([0-9]{1,2})", $date, $regs)) {
             	$return['second'] = sprintf("%02d",$regs[1]);
             } else {
             	return $return;
@@ -519,7 +533,7 @@
 	    {
 	        $weekday = P4A_Date::day_of_week($year, $month, $day);
 
-			if( $locale_vars === NULL ) {
+			if ($locale_vars === NULL) {
 				$locale_vars = P4A_Date::get_weekdays_names();
 			}
 
@@ -560,7 +574,6 @@
 	            floor($year / 100) + 77);
 
 	        $weekday_number = (($day - 7 * floor($day / 7)));
-
 	        return $weekday_number;
 	    }
 

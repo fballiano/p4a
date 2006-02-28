@@ -2,6 +2,7 @@
 - dutch translation added (thanks to fidodildo)
 - fixed a bug on P4A_Table_Col of image type
 - P4A_Table now use GD (iv available) to display images thumbnails
+- fixed an error on "am/pm" management in reverse formatting of time data
 
 0.44
 - TinyFCK was updated to 0.8
