@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * MerlinWork: Merlin Web Application Framework.
@@ -63,9 +63,9 @@ $messages = array
 	"current_page"		=> "Strana",
 	"of_pages"			=> "z",
 	"go_to_page"		=> "Jdi na stranu",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	"ascending"			=> "Vzestupně",
+	"descending"		=> "Sestupně",
+	"selected"			=> "Vybraný",
 
 	// File uploads
 	"filename"			=> "Jméno",
@@ -73,7 +73,7 @@ $messages = array
 	"filetype"			=> "Typ",
 	"filepreview"		=> "Náhled",
 	"filedelete"		=> "Vymazat",
-	"filedownload"		=> "Download",
+	"filedownload"		=> "Stáhnout",
 
 	// Fields
 	"none_selected"		=> "Není vybráno",

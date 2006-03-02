@@ -253,7 +253,6 @@
 	    	$iso['hour']	= 0;
 	    	$iso['minute']	= 0;
 	    	$iso['second']	= 0;
-			$map['am_pm']   = 'am';
 
 	        for ($strpos = 0; $strpos < strlen($format); $strpos++) {
 	            $char = substr($format,$strpos,1);
