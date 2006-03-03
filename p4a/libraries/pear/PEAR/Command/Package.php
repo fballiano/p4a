@@ -18,7 +18,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Package.php,v 1.115 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Package.php,v 1.118 2006/02/21 00:59:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -730,27 +730,46 @@ used for automated conversion or learning the format.
         $a = &new PEAR_Installer($ui);
         return $a;
     }
+    
+    /**
+     * For unit testing purposes
+     */
+    function &getCommandPackaging(&$ui, &$config)
+    {
+        if (!class_exists('PEAR_Command_Packaging')) {
+            @include_once 'PEAR/Command/Packaging.php';
+        }
+        
+        if (class_exists('PEAR_Command_Packaging')) {
+            $a = &new PEAR_Command_Packaging($ui, $config);
+        } else {
+            $a = null;
+        }
+        return $a;
+    }
 
     // {{{ doMakeRPM()
-
-    /*
-
-    (cox)
-
-    TODO:
-        - Fill the rpm dependencies in the template file.
-
-    IDEAS:
-        - Instead of mapping the role to rpm vars, perhaps it's better
-          to use directly the pear cmd to install the files by itself
-          in %postrun so:
-          pear -d php_dir=%{_libdir}/php/pear -d test_dir=.. <package>
-    */
 
     function doMakeRPM($command, $options, $params)
     {
         require_once 'System.php';
         require_once 'Archive/Tar.php';
+
+        // Check to see if PEAR_Command_Packaging is installed, and
+        // transparently switch to use the "make-rpm-spec" command from it
+        // instead, if it does. Otherwise, continue to use the old version
+        // of "makerpm" supplied with this package (PEAR).
+        $packaging_cmd = $this->getCommandPackaging($this->ui, $this->config);
+        if ($packaging_cmd !== null) {
+            $this->ui->outputData('PEAR_Command_Packaging is installed; using '.
+                'newer "make-rpm-spec" command instead');
+            return $packaging_cmd->run('make-rpm-spec', $options, $params);
+        } else {
+            $this->ui->outputData('WARNING: "pear makerpm" is now deprecated; an '.
+              'improved version is available via "pear make-rpm-spec", which '.
+              'is available by installing PEAR_Command_Packaging');
+        }
+        
         if (sizeof($params) != 1) {
             return $this->raiseError("bad parameter(s), try \"help $command\"");
         }

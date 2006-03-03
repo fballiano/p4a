@@ -18,7 +18,7 @@
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Downloader.php,v 1.96 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Downloader.php,v 1.98 2006/02/02 17:16:51 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.0
  */
@@ -45,7 +45,7 @@ define('PEAR_INSTALLER_ERROR_NO_PREF_STATE', 2);
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.0
  */
@@ -278,6 +278,10 @@ class PEAR_Downloader extends PEAR_Common
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
             $err = $params[$i]->initialize($param);
             PEAR::staticPopErrorHandling();
+            if (!$err) {
+                // skip parameters that were missed by preferred_state
+                continue;
+            }
             if (PEAR::isError($err)) {
                 if (!isset($this->_options['soft'])) {
                     $this->log(0, $err->getMessage());
@@ -309,7 +313,14 @@ class PEAR_Downloader extends PEAR_Common
                         '" to update');
                 }
                 if ($params[$i] && !isset($this->_options['downloadonly'])) {
-                    $checkdir = $this->config->get('php_dir', null, $params[$i]->getChannel());
+                    if (isset($this->_options['packagingroot'])) {
+                        $checkdir = $this->_prependPath(
+                            $this->config->get('php_dir', null, $params[$i]->getChannel()),
+                            $this->_options['packagingroot']);
+                    } else {
+                        $checkdir = $this->config->get('php_dir',
+                            null, $params[$i]->getChannel());
+                    }
                     while ($checkdir && $checkdir != '/' && !file_exists($checkdir)) {
                         $checkdir = dirname($checkdir);
                     }
@@ -703,6 +714,7 @@ class PEAR_Downloader extends PEAR_Common
                         break;
                     }
                 }
+                $this->configSet('default_channel', $curchannel);
                 return PEAR::raiseError('Unknown remote channel: ' . $remotechannel);
             } while (false);
         }
@@ -719,6 +731,7 @@ class PEAR_Downloader extends PEAR_Common
                 $url = $rest->getDownloadURL($base, $parr, $state, false);
             }
             if (PEAR::isError($url)) {
+                $this->configSet('default_channel', $curchannel);
                 return $url;
             }
             if ($parr['channel'] != $curchannel) {
@@ -1369,7 +1382,7 @@ class PEAR_Downloader extends PEAR_Common
             $ifmodifiedsince = ($lastmodified ? "If-Modified-Since: $lastmodified\r\n" : '');
         }
         $request .= "Host: $host:$port\r\n" . $ifmodifiedsince .
-            "User-Agent: PEAR/1.4.6/PHP/" . PHP_VERSION . "\r\n";
+            "User-Agent: PEAR/1.4.7/PHP/" . PHP_VERSION . "\r\n";
         if (isset($this)) { // only pass in authentication for non-static calls
             $username = $config->get('username');
             $password = $config->get('password');

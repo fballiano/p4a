@@ -17,7 +17,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Registry.php,v 1.145 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Registry.php,v 1.147 2006/02/04 06:04:29 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -43,7 +43,7 @@ define('PEAR_REGISTRY_ERROR_CHANNEL_FILE', -6);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -1063,7 +1063,11 @@ class PEAR_Registry extends PEAR
             if ($ent{0} == '.' || substr($ent, -4) != '.reg') {
                 continue;
             }
-            $channellist[] = substr($ent, 0, -4);
+            if ($ent == '__uri.reg') {
+                $channellist[] = '__uri';
+                continue;
+            }
+            $channellist[] = str_replace('_', '/', substr($ent, 0, -4));
         }
         closedir($dp);
         if (!in_array('pear.php.net', $channellist)) {

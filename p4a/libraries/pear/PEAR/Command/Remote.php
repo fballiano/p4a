@@ -17,7 +17,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Remote.php,v 1.87 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Remote.php,v 1.89 2006/01/23 19:05:52 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -37,7 +37,7 @@ require_once 'PEAR/REST.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -480,6 +480,8 @@ parameter.
     {
         // make certain that dependencies are ignored
         $options['downloadonly'] = 1;
+        // eliminate error messages for preferred_state-related errors
+        $options['ignorepreferred_state'] = 1;
         $downloader = &$this->getDownloader($options);
         $downloader->setDownloadDir(getcwd());
         $errors = array();
@@ -490,10 +492,9 @@ parameter.
         }
         $errors = $downloader->getErrorMsgs();
         if (count($errors)) {
-            $errinfo = array();
-            $errinfo['data'] = array($errors);
-            $errinfo['headline'] = 'Download Errors';
-            $this->ui->outputData($errinfo);
+            foreach ($errors as $error) {
+                $this->ui->outputData($error);
+            }
             return $this->raiseError("$command failed");
         }
         $downloaded = $downloader->getDownloadedPackages();

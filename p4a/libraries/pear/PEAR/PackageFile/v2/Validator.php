@@ -45,6 +45,10 @@ class PEAR_PackageFile_v2_Validator
     /**
      * @var int
      */
+    var $_filesValid = 0;
+    /**
+     * @var int
+     */
     var $_curState = 0;
     /**
      * @param PEAR_PackageFile_v2
@@ -1709,6 +1713,8 @@ class PEAR_PackageFile_v2_Validator
     function analyzeSourceCode($file, $string = false)
     {
         if (!function_exists("token_get_all")) {
+            $this->_stack->push(__FUNCTION__, 'error', array('file' => $file),
+                'Parser error: token_get_all() function must exist to analyze source code');
             return false;
         }
         if (!defined('T_DOC_COMMENT')) {
