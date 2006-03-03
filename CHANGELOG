@@ -1,6 +1,8 @@
-0.46
+0.99.0
 - slovak translation was added (thank to Tomas Lopasovsky)
 - czech translation was completed (thanks to hanny)
+- fixed a bug with non ordered P4A_DB_Source in P4A_Table
+- minor bugfixes
 
 0.45
 - dutch translation added (thanks to fidodildo)
