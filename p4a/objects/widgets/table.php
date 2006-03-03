@@ -787,7 +787,7 @@
 				$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
 
 				$new_order = P4A_ORDER_ASCENDING;
-
+				$order_mode = P4A_ORDER_ASCENDING;
 				if ($parent->data->hasOrder()) {
 					$order = $parent->data->getOrder();
 					list($order_field, $order_mode)	= each($order);
