@@ -550,7 +550,7 @@ class P4A_DB_Source extends P4A_Data_Source
                     if (DB::isError($sth)) {
                         P4A_Error($sth->getMessage());
                     }
-                    $res =& $db->executeMultiple($sth, $fk_values);
+                    $res = $db->executeMultiple($sth, $fk_values);
 
                     if (DB::isError($res)) {
                         P4A_Error($res->getMessage());
