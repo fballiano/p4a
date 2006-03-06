@@ -1,12 +1,87 @@
 <?php
 
-// generated on ubuntu linux with I18Nv2 0.11.3 and DateTime-Locale-0.22
+// generated with locale data 1.3
 
+header('Content-type: text/plain; charset=UTF-8'); 
 error_reporting(E_ALL ^ E_NOTICE);
-ini_set("include_path", ".:../../p4a/libraries/pear:I18Nv2");
-require "I18Nv2/I18Nv2.php";
-require "System.php";
+ini_set('include_path', '.;../../p4a/libraries/pear');
+set_time_limit(0);
+require 'XML/Unserializer.php';
+require 'System.php';
 
+System::rm('-r output');
+System::mkDir('-p output');
+
+$locales = array();
+$options = array('complexType'=>'array', 'returnResult'=>true, 'keyAttribute'=>'type');
+$unserializer = new XML_Unserializer($options);
+
+// reading files
+$dh = opendir('data');
+while (false !== ($file = readdir($dh))) {
+	if (substr_count($file, '_') == 1 and substr_count($file, '#') == 0) {
+		$locales[] = str_replace('.xml', '', $file);
+	}
+}
+
+foreach ($locales as $locale) {
+	print "\n-- $locale --\n";
+	list($language, $nation) = explode('_', $locale);
+	
+	$end = $unserializer->unserialize(file_get_contents("data/$locale.xml"));
+	$mid = $unserializer->unserialize(file_get_contents("data/$language.xml"));
+	$root = $unserializer->unserialize(file_get_contents("data/root.xml"));
+	
+	$date_short = extract_date_format('short', $end, $mid, $root);
+	$date_medium = extract_date_format('medium', $end, $mid, $root);
+	$date_long = extract_date_format('long', $end, $mid, $root);
+	$date_full = extract_date_format('full', $end, $mid, $root);
+	
+	if (check($date_short) and check($date_medium) and check($date_long) and check($date_full)) {
+		System::mkDir("-p output/$language");
+	} else {
+		print "\nNON VALIDO\n";
+	}
+	
+	flush();
+}
+
+function extract_date_format($type, $end, $mid, $root)
+{
+	if (isset($end['dates']['calendars']['gregorian']['dateFormats'][$type]['dateFormat']['pattern'])) {
+		$date = $end['dates']['calendars']['gregorian']['dateFormats'][$type]['dateFormat']['pattern'];
+	} elseif (isset($mid['dates']['calendars']['gregorian']['dateFormats'][$type]['dateFormat']['pattern'])) {
+		$date = $mid['dates']['calendars']['gregorian']['dateFormats'][$type]['dateFormat']['pattern'];
+	} else {
+		$date = $root['dates']['calendars']['gregorian'][1]['dateFormats'][$type]['dateFormat']['pattern'];
+	}
+	
+	if (is_array($date)) {
+		$date = $date[0];
+	}
+	
+	return parse_date($date);
+}
+
+function parse_date($date)
+{
+	$date = strtolower(trim($date));
+	print "$date\n";
+	$p = array('/yyyy/', '/yy/', '/mmmm/', '/mmm/', '/mm/', '/eeee/', '/dd/', '/([^%])d/', "/'(.*)'/");
+	$r = array('%Y', '%Y', '%B', '%b', '%m', '%A', '%d', '$1%e', '$1');
+	$date = preg_replace($p, $r, $date);
+	print "$date\n\n";
+	return $date;
+}
+
+function check($string) {
+	if (empty($string)) return false;
+	if (substr_count($string, '?') > 0) return false;
+	return true;
+}
+
+/*******************************************************************/
+die();
 system('rm -r output');
 $locales = file('locales');
 $clean_locales = array();

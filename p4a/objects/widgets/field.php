@@ -900,8 +900,8 @@
 		{
 			$p4a =& P4A::singleton();
 
-			$properties =& $this->composeStringProperties();
-			$actions =& $this->composeStringActions();
+			$properties = $this->composeStringProperties();
+			$actions = $this->composeStringActions();
 
 			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
 			$sReturn .= "<select class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
@@ -943,8 +943,8 @@
 		{
 			$p4a =& P4A::singleton();
 
-			$properties =& $this->composeStringProperties();
-			$actions =& $this->composeStringActions();
+			$properties = $this->composeStringProperties();
+			$actions = $this->composeStringActions();
 			$id = $this->getId();
 
 			$sReturn  = "<div class='font_normal' style='float:left;text-align:left;'>";

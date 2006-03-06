@@ -128,11 +128,11 @@
 					$class = "dd_inline";
 				}
 				$sReturn  = "<dl>";
-				$sReturn .= "<dt><img $properties $actions /></dt>";
+				$sReturn .= "<dt><img alt='' $properties $actions /></dt>";
 				$sReturn .= "<dd class=\"$class\">$label</dd>";
 				$sReturn .= "</dl>\n";
 			}else{
-				$sReturn  = "<img $properties $actions />\n";
+				$sReturn  = "<img alt='' $properties $actions />\n";
 			}
 
 			return $sReturn;
