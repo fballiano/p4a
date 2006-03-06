@@ -955,6 +955,7 @@
 			$description_field	= $this->getSourceDescriptionField();
 			$new_value			= $this->getNewValue();
 			
+			$i = 0;
 			foreach ($external_data as $key=>$current) {
 				if (!$new_value) {
 					$new_value = array();
@@ -965,7 +966,8 @@
 				} else {
 					$checked = "";
 				}
-				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}[]' name='{$id}[]' value='{$current[$value_field]}' $checked /> {$current[$description_field]}</div>\n";
+				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}_{$i}' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}'>{$current[$description_field]}</label></div>\n";
+				$i++;
 			}
 			
 			$sReturn .= "</div>";
