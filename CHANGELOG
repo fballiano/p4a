@@ -1,7 +1,7 @@
 0.99.1
-- minor bugfixes
+- the "new" icon was changes from "pencil" to "document"
 - getAsMulticheckbox now rendered with checkbox + label
-- some references bugfixes for php 4.4
+- minor bugfixes
 
 0.99.0
 - slovak translation was added (thank to Tomas Lopasovsky)
