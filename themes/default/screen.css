@@ -185,7 +185,7 @@ a.link_button:hover {
 	white-space: nowrap;
 }
 
-label {
+.label {
 	overflow: visible;
 	display:block;
 	text-align: left;
