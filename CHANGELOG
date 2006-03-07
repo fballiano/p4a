@@ -1,5 +1,7 @@
 0.99.1
 - minor bugfixes
+- getAsMulticheckbox now rendered with checkbox + label
+- some references bugfixes for php 4.4
 
 0.99.0
 - slovak translation was added (thank to Tomas Lopasovsky)
