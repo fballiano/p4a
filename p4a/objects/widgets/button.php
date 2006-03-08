@@ -67,7 +67,7 @@
 				$this->setIcon($icon);
 			}
 			
-			$this->setDefaultLabel();
+			$this->setValue($name);
 		}
 
 		/**
@@ -80,11 +80,6 @@
 		{
 			parent::setLabel($value);
 			$this->setValue($value);
-		}
-		
-		function setDefaultLabel()
-		{
-			$this->setValue(ucwords(str_replace('_', ' ', $this->getName())));
 		}
 
 		/**
@@ -107,7 +102,6 @@
 		function setIcon($icon)
 		{
 			$this->_icon = $icon;
-			$this->unsetProperty("value");
 		}
 
 		/**
@@ -137,18 +131,16 @@
 		 */
 		function getAsString()
 		{
-			$p4a =& P4A::singleton();
-
-			if (! $this->isVisible()) {
-				return NULL;
+			if (!$this->isVisible()) {
+				return '';
 			}
 
+			$p4a =& P4A::singleton();
 			$header = '' ;
 			$footer = '' ;
-
 			$enabled = $this->isEnabled();
 
-			if ($this->_icon != NULL and !$p4a->isHandheld()) {
+			if ($this->_icon != null and !$p4a->isHandheld()) {
 				if ($enabled) {
 					$header .= '<a class="link_button" href="#" ';
 				} else {
@@ -160,17 +152,15 @@
 					$footer .= ' clickable';
 				}
 				
-				$img_src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
+				$img_src = P4A_ICONS_PATH . "/{$this->_size}/{$this->_icon}";
 				if (!$enabled) {
 					$img_src .= "_disabled";
 				}
 				$img_src .= '.' . P4A_ICONS_EXTENSION;
-
-				$alt = ucfirst($this->_icon);
 				
-				$msg = $p4a->i18n->messages->get($this->getValue());
+				$msg = __($this->getValue());
 				if (empty($msg)) {
-					$msg = $p4a->i18n->messages->get($this->_icon);
+					$msg = __($this->_icon);
 				}
 				
 				$accesskey = $this->getProperty("accesskey");
@@ -179,30 +169,29 @@
 				}
 
 				$msg = htmlspecialchars($msg);
-				$footer .= "\" src=\"$img_src\" alt=\"$alt\" title=\"$msg\" ";
+				$footer .= "\" src=\"$img_src\" alt=\"$msg\" title=\"$msg\" ";
 				$footer .= ' />';
 
 				if ($this->getLabel()) {
 					$footer .= '<span style="margin:5px;">' . $this->getLabel() . '</span>';
-				}				
+				}
 				
 				if ($enabled) {
 					$footer .= '</a>';
 				} else {
 					$footer .= '</span>';
 				}
-				
-				$footer .= "\n";
 			} else {
 				$header .= '<input type="button" class="';
 				if ($enabled) {
 					$header .= 'clickable ';
 				}
 				$header .= 'border_box font4 no_print" ';
+				$header .= 'value="' . htmlspecialchars(__($this->getValue())) . '" ';
 				if (!$enabled) {
 					$header .= ' disabled="disabled"';
 				}
-				$footer = ' />' . "\n";
+				$footer = ' />';
 			}
 
 			$sReturn = "";
@@ -210,7 +199,7 @@
 			if ($enabled) {
 				$sReturn .= $this->composeStringActions();
 			}
-			$sReturn .= $footer;
+			$sReturn .= "$footer\n";
 			return $sReturn;
 		}
 		
@@ -226,7 +215,7 @@
 			$p4a =& p4a::singleton();
 			$properties = $this->properties;
 			
-			if ($this->_icon != NULL and !$p4a->isHandheld() and isset($properties['value'])) {
+			if (isset($properties['value'])) {
 				unset($properties['value']);
 			}
 			

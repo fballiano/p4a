@@ -2,6 +2,7 @@
 - the "new" icon was changes from "pencil" to "document"
 - getAsMulticheckbox now rendered with checkbox + label
 - a system was introduced to avoid browser's back/forward problems
+- bugfix on P4A_Button, now l10n labels work again
 - minor bugfixes
 
 0.99.0

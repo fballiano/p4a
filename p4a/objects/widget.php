@@ -289,7 +289,7 @@
 		 */
 		function getProperty($property)
 		{
-			if ( array_key_exists( $property, $this->properties ) ) {
+			if (array_key_exists($property, $this->properties)) {
 				return $this->properties[$property];
 			} else {
 				return null;
@@ -570,20 +570,20 @@
 			$sParams = '';
   			$sActions = '';
 
-  			if (is_string($params) or is_numeric($params)){
-  				$sParams =  ", '" . $params . "'";
-  			}elseif(is_array($params) and count($params)){
+  			if (is_string($params) or is_numeric($params)) {
+  				$sParams =  ", '{$params}'";
+  			} elseif (is_array($params) and count($params)) {
   				$sParams = ", ";
-  				foreach($params as $param){
-  					$sParams .= "'" . $param . "', ";
+  				foreach ($params as $param) {
+  					$sParams .= "'{$param}', ";
   				}
   				$sParams = substr($sParams, 0, -2);
   			}
 
   			foreach ($this->actions as $action=>$action_data)
 			{
-				if( !$this->isEnabled() ) {
-					return NULL;
+				if (!$this->isEnabled()) {
+					return null;
 				}
 
 				$browser_action = $action;
@@ -621,13 +621,11 @@
 		function composeStringStyle()
 		{
 			$sStyle = '';
-			foreach($this->style as $property=>$property_value)
-			{
+			foreach($this->style as $property=>$property_value) {
 				$sStyle .= "$property:$property_value;";
 			}
 
-			if ($sStyle)
-			{
+			if ($sStyle) {
 				$sStyle = 'style="' . substr($sStyle, 0, -1) . '" ';
 			}
 			return $sStyle;
