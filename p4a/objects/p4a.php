@@ -139,6 +139,13 @@
 		 * @access private
 		 */
 		var $internet_explorer = false;
+		
+		/**
+		 * Counter to avoid browser's back/forward
+		 * @var integer
+		 * @access private
+		 */
+		var $_action_history_id = 0;
 
 		/**
 		 * Class constructor.
@@ -282,14 +289,16 @@
 		function main()
 		{
 			$this->i18n->setSystemLocale();
-
 			$this->actionHandler('main');
 
 			// Processing get and post.
-			if (array_key_exists('_object', $_REQUEST) &&
-				array_key_exists('_action', $_REQUEST) &&
-				$_REQUEST['_action'] &&
-				$_REQUEST['_object'] &&
+			if (array_key_exists('_object', $_REQUEST) and
+				array_key_exists('_action', $_REQUEST) and
+				array_key_exists('_action_id', $_REQUEST) and
+				$_REQUEST['_object'] and
+				$_REQUEST['_action'] and
+				$_REQUEST['_action_id'] and
+				$_REQUEST['_action_id'] == $this->getActionHistoryId() and
 				isset($this->objects[$_REQUEST['_object']]))
 			{
 				$object = $_REQUEST['_object'];
@@ -347,6 +356,7 @@
 				$action_return = $this->objects[$object]->$action($aParams);
 			}
 
+			$this->_action_history_id++;
 			if (is_object($this->active_mask)) {
 				$this->active_mask->main();
 			}
@@ -510,7 +520,6 @@
 		 * @param string		The CSS media.
 		 * @access public
 		 */
-
 		function dropCss($uri, $media = "screen")
 		{
 			if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])){
@@ -536,12 +545,21 @@
 		 * @param string		The URI of CSS.
 		 * @access public
 		 */
-
 		function dropJavascript($uri)
 		{
 			if(isset($this->_javascript[$uri])){
 				unset($this->_javascript[$uri]);
 			}
+		}
+		
+		/**
+		 * Action history ID is used to avoid browser's back/forward
+		 * @access public
+		 * @return integer
+		 */
+		function getActionHistoryId()
+		{
+			return $this->_action_history_id;
 		}
 	}
 ?>

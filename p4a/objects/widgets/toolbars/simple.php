@@ -55,6 +55,10 @@
 		function P4A_Simple_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
+			
+			$new =& $this->addButton('new', 'new');
+			$new->setProperty("accesskey", "N");
+			
 			$save =& $this->addButton('save', 'save');
 			$save->setAccessKey("S");
 
@@ -62,9 +66,6 @@
 			$cancel->setAccessKey("Z");
 
 			$this->addSeparator();
-
-			$new =& $this->addButton('new', 'new');
-			$new->setProperty("accesskey", "N");
 
 			$this->addButton('delete', 'delete');
 			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');

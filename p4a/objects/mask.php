@@ -583,10 +583,13 @@
 		 */
 		function maskOpen()
 		{
+			$p4a =& p4a::singleton();
+			
 			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
 			$return .= "<div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
+			$return .= "<input type='hidden' name='_action_id' value='" . $p4a->getActionHistoryId() . "' />\n";
 			$return .= "<input type='hidden' name='param1' />\n";
 			$return .= "<input type='hidden' name='param2' />\n";
 			$return .= "<input type='hidden' name='param3' />\n";
