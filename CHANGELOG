@@ -1,7 +1,7 @@
 0.99.1
 - the "new" icon was changes from "pencil" to "document"
 - getAsMulticheckbox now rendered with checkbox + label
-- a system was introduced to avoid browser's back problems
+- a system was introduced to avoid browser's back/forward problems
 - minor bugfixes
 
 0.99.0
