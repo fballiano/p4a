@@ -37,7 +37,7 @@
  */
 
 	/**
-	 * The label is a space where you can put strings that will be read-only.
+	 * The label is associated to an input field, do not use it otherwise.
 	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
 	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
 	 * @package p4a

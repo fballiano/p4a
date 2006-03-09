@@ -3,7 +3,7 @@
 - getAsMulticheckbox now rendered with checkbox + label
 - a system was introduced to avoid browser's back/forward problems
 - bugfix on P4A_Button, now l10n labels work again
-- minor bugfixes
+- minor bugfixes and documentation changes
 
 0.99.0
 - slovak translation was added (thank to Tomas Lopasovsky)

@@ -54,8 +54,8 @@
 		{main:h}
 	</div>
 
-	<!-- Please leave our links, can you think it's a small price for p4a? :-)) -->
-	<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a></div>
+	<!-- The following line is a copyright note, you've to keep it as is, we think it's a small price for P4A. -->
+	<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a></div>
 </div>
 
 {mask_close:h}

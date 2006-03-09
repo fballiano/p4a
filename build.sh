@@ -19,9 +19,9 @@ cp -r $SRCDIR .
 ###########################
 
 cd $PKGDIR
-mkdir codereference-$VERSION
+mkdir code-reference
 cd $SRCDIR
-phpdoc -q -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/codereference-$VERSION -i 'pdf/,pear/,phpsniff/,phpthumb/,formats/,messages/' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
+phpdoc -q -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'pdf/,pear/,phpsniff/,phpthumb/,formats/,messages/' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
 
 ##########################
 # cleaning master source #
@@ -43,7 +43,7 @@ rm `find -name '.cvsignore'`
 
 cd $PKGDIR
 rm -r p4a/docs
-cp -r codereference-$VERSION p4a/docs
+cp -r code-reference p4a/docs
 
 ##############################
 # creating framework package #
@@ -55,4 +55,12 @@ mv p4a p4a-$VERSION
 tar cf p4a-$VERSION.tar p4a-$VERSION
 gzip p4a-$VERSION.tar
 
+zip -r p4a-$VERSION.zip p4a-$VERSION
+
 rm -r p4a-$VERSION
+
+###################################
+# creating documentation zip file #
+###################################
+
+zip -r code-reference.zip code-reference
