@@ -1,3 +1,7 @@
+0.99.2
+- chinese translation was added (thanks to Tony Kimball)
+- bugfix on XHTML validation for P4A_Field::getAsDate()
+
 0.99.1
 - the "new" icon was changes from "pencil" to "document"
 - getAsMulticheckbox now rendered with checkbox + label

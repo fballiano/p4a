@@ -709,14 +709,11 @@
 				$enabled = " disabled='disabled' ";
 			}
 			
-			$id = $this->getID();
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
 			$template_path = P4A_THEME_PATH . "/widgets/date_calendar";
 
-			$this->setProperty('id', $id);
-
-			$header 	   = "<input type='text' id='" . $this->getID() . "' class='border_color1 font_normal' $enabled";
+			$header 	   = "<input type='text' class='border_color1 font_normal' $enabled";
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
