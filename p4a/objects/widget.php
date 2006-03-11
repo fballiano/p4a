@@ -314,7 +314,7 @@
 		 */
 		function unsetStyleProperty($property)
 		{
-			unset( $this->style[$property] );
+			unset($this->style[$property]);
 		}
 
 		function setAccessKey($key) {
@@ -336,7 +336,7 @@
 			if( array_key_exists( $property, $this->style ) ) {
 				return $this->style[$property];
 			} else {
-				return NULL;
+				return null;
 			}
 		}
 
@@ -348,12 +348,12 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setWidth($value = NULL, $unit = 'px')
+		function setWidth($value = null, $unit = 'px')
 		{
 			if (is_numeric($value)) {
 				$value = $value . $unit;
 			}
-			if ($value === NULL) {
+			if ($value === null) {
 				$this->unsetStyleProperty('width');
 			} else {
 				$this->setStyleProperty('width', $value);
@@ -380,12 +380,12 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setHeight($value = NULL, $unit = 'px')
+		function setHeight($value = null, $unit = 'px')
 		{
 			if (is_numeric($value)) {
 				$value = $value . $unit;
 			}
-			if ($value === NULL) {
+			if ($value === null) {
 				$this->unsetStyleProperty('height');
 			} else {
 				$this->setStyleProperty('height', $value);
@@ -410,9 +410,9 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setBgcolor( $value )
+		function setBgcolor($value)
 		{
-			$this->setStyleProperty( 'background-color', $value ) ;
+			$this->setStyleProperty('background-color', $value) ;
 		}
 
 		/**
@@ -422,7 +422,7 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setBgimage( $value )
+		function setBgimage($value)
 		{
 			$this->setStyleProperty('background-image', "url('" . $value . "')");
 		}
@@ -434,7 +434,7 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setFontWeight( $value )
+		function setFontWeight($value)
 		{
 			$this->setStyleProperty('font-weight', $value);
 		}
@@ -446,7 +446,7 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setFontColor( $value )
+		function setFontColor($value)
 		{
 			$this->setStyleProperty('color', $value);
 		}
@@ -460,7 +460,7 @@
 		 * @param string	Text for confirmation.
 		 * @param string	i18n message id for confirmation.
 		 */
-		function addAction($action, $event = NULL, $require_confirmation = false, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general')
+		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
@@ -485,7 +485,7 @@
 		 * @param string	Text for confirmation.
 		 * @param string	i18n message id for confirmation.
 		 */
-		function requireConfirmation($action, $confirmation_text = NULL, $confirmation_text_handler = 'confirm_general')
+		function requireConfirmation($action, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
 		{
 			$action = strtolower($action);
 			$this->actions[$action]['require_confirmation'] = true;
@@ -518,7 +518,7 @@
 			$event = strtolower($event);
 		
 			// If not specified, the event has the same name of the action
-			if ($event === NULL) {
+			if ($event === null) {
 				$event = $action;
 			}
 
@@ -547,7 +547,7 @@
 		 */
 		function composeStringProperties()
 		{
-			$sReturn = "";
+			$sReturn = '';
 			foreach ($this->properties as $property_name=>$property_value) {
 				$sReturn .= $property_name . '="' . $property_value . '" ' ;
 			}
@@ -583,7 +583,7 @@
   			foreach ($this->actions as $action=>$action_data)
 			{
 				if (!$this->isEnabled()) {
-					return null;
+					return '';
 				}
 
 				$browser_action = $action;
@@ -638,6 +638,7 @@
 		 */
 		function composeStringClassStyle()
 		{
+			$sClassStyle = '';
 			if ($this->class_style) {
 				$sClassStyle = 'class="' . $this->class_style . '" ';
 			}
@@ -652,25 +653,20 @@
 		 */
 		function useTemplate($template_name)
 		{
-			$this->use_template = true;
-			$this->template_name = $template_name;
-
-			$p4a =& p4a::singleton();
-			$this->_tpl_vars["id"] = $this->getID();
-			$this->_tpl_vars["handheld"] = $p4a->isHandheld();
-			$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
-			$this->_tpl_vars["close_javascript"] = '</script>';
-			$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
-		}
-
-		/**
-		 * Unsets template informations for the widget.
-		 * @access public
-		 */
-		function noUseTemplate()
-		{
-			$this->use_template = FALSE;
-			$this->template_name = NULL;
+			if ($template_name === false) {
+				$this->use_template = false;
+				$this->template_name = null;
+			} else {
+				$this->use_template = true;
+				$this->template_name = $template_name;
+	
+				$p4a =& p4a::singleton();
+				$this->_tpl_vars["id"] = $this->getID();
+				$this->_tpl_vars["handheld"] = $p4a->isHandheld();
+				$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
+				$this->_tpl_vars["close_javascript"] = '</script>';
+				$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
+			}
 		}
 
 		/**
@@ -683,7 +679,7 @@
 			$sDisplay = '';
 			if (is_object($var_value)) {
 				$sDisplay = $var_value->getAsString();
-			}else{
+			} else {
 				$sDisplay = $var_value;
 			}
 
@@ -698,7 +694,7 @@
 		 * Empties the template engine variables' stack.
 		 * @access public
 		 */
-		function clearDisplay()
+		function clearTemplateVars()
 		{
 			$this->_tpl_vars = array();
 		}
