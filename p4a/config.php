@@ -206,7 +206,7 @@
 		if (P4A_IN_DOCUMENT_ROOT) {
 			define('P4A_THEME_DIR', P4A_ROOT_DIR . _DS_ . 'themes' . _DS_ . P4A_THEME_NAME);
 		} else {
-			define('P4A_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_THEME_PATH);
+			define('P4A_THEME_DIR', P4A_THEMES_DIR . P4A_THEME_PATH);
 		}
 	}
 
