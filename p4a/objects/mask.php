@@ -244,8 +244,13 @@
 		 */
 		function useTemplate($template_name)
 		{
-			$this->use_template = true;
-			$this->template_name = $template_name;
+			if ($template_name === false) {
+				$this->use_template = false;
+				$this->template_name = null;
+			} else {
+				$this->use_template = true;
+				$this->template_name = $template_name;
+			}
 		}
 
 		/**
@@ -256,16 +261,6 @@
 		function getTemplateName()
 		{
 			return $this->template_name;
-		}
-
-		/**
-		 * Tells the object that we'll not use a template.
-		 * @access public
-		 */
-		function noUseTemplate()
-		{
-			$this->use_template = false;
-			$this->template_name = null;
 		}
 
 		/**
@@ -324,6 +319,7 @@
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
+			$tpl_container->theme_path = P4A_THEME_PATH;
 			$tpl_container->application_title = $p4a->getTitle();
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
@@ -359,7 +355,7 @@
 		 * Removes every template variable assigned.
 		 * @access public
 		 */
-		function clearDisplay()
+		function clearTemplateVars()
 		{
 			$this->_tpl_vars = array();
 		}
