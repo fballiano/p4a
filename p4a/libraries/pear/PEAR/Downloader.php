@@ -18,7 +18,7 @@
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Downloader.php,v 1.98 2006/02/02 17:16:51 cellog Exp $
+ * @version    CVS: $Id: Downloader.php,v 1.99 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.0
  */
@@ -45,7 +45,7 @@ define('PEAR_INSTALLER_ERROR_NO_PREF_STATE', 2);
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.7
+ * @version    Release: 1.4.8
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.0
  */
@@ -301,6 +301,10 @@ class PEAR_Downloader extends PEAR_Common
                         require_once 'System.php';
                     }
                     $curchannel = &$this->_registry->getChannel($params[$i]->getChannel());
+                    if (PEAR::isError($curchannel)) {
+                        PEAR::staticPopErrorHandling();
+                        return $this->raiseError($curchannel);
+                    }
                     $a = $this->downloadHttp('http://' . $params[$i]->getChannel() .
                         '/channel.xml', $this->ui,
                         System::mktemp(array('-d')), null, $curchannel->lastModified());
@@ -719,6 +723,9 @@ class PEAR_Downloader extends PEAR_Common
             } while (false);
         }
         $chan = &$this->_registry->getChannel($parr['channel']);
+        if (PEAR::isError($chan)) {
+            return $chan;
+        }
         $version = $this->_registry->packageInfo($parr['package'], 'version',
             $parr['channel']);
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
@@ -857,6 +864,9 @@ class PEAR_Downloader extends PEAR_Common
             unset($parr['state']);
         }
         $chan = &$this->_registry->getChannel($remotechannel);
+        if (PEAR::isError($chan)) {
+            return $chan;
+        }
         $version = $this->_registry->packageInfo($dep['name'], 'version',
             $remotechannel);
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
@@ -964,6 +974,9 @@ class PEAR_Downloader extends PEAR_Common
             $package = "http://pear.php.net/get/$package";
         } else {
             $chan = $this->_registry->getChannel($channel);
+            if (PEAR::isError($chan)) {
+                return '';
+            }
             $package = "http://" . $chan->getServer() . "/get/$package";
         }
         if (!extension_loaded("zlib")) {
@@ -1382,7 +1395,7 @@ class PEAR_Downloader extends PEAR_Common
             $ifmodifiedsince = ($lastmodified ? "If-Modified-Since: $lastmodified\r\n" : '');
         }
         $request .= "Host: $host:$port\r\n" . $ifmodifiedsince .
-            "User-Agent: PEAR/1.4.7/PHP/" . PHP_VERSION . "\r\n";
+            "User-Agent: PEAR/1.4.8/PHP/" . PHP_VERSION . "\r\n";
         if (isset($this)) { // only pass in authentication for non-static calls
             $username = $config->get('username');
             $password = $config->get('password');

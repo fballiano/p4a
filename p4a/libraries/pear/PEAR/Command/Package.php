@@ -18,7 +18,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Package.php,v 1.118 2006/02/21 00:59:13 cellog Exp $
+ * @version    CVS: $Id: Package.php,v 1.119 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -823,6 +823,9 @@ used for automated conversion or learning the format.
                 $alias = 'PEAR';
             } else {
                 $chan = &$reg->getChannel($pf->getChannel());
+                if (PEAR::isError($chan)) {
+                    return $this->raiseError($chan);
+                }
                 $alias = $chan->getAlias();
                 $alias = strtoupper($alias);
                 $info['possible_channel'] = $pf->getChannel() . '/';
@@ -892,6 +895,9 @@ used for automated conversion or learning the format.
         foreach ($cfg as $k) {
             if ($k == 'master_server') {
                 $chan = $reg->getChannel($pf->getChannel());
+                if (PEAR::isError($chan)) {
+                    return $this->raiseError($chan);
+                }
                 $info[$k] = $chan->getServer();
                 continue;
             }
@@ -918,6 +924,9 @@ used for automated conversion or learning the format.
                     if (isset($dep['channel']) && $dep['channel'] != 'pear.php.net' &&
                           $dep['channel'] != 'pecl.php.net') {
                         $chan = &$reg->getChannel($dep['channel']);
+                        if (PEAR::isError($chan)) {
+                            return $this->raiseError($chan);
+                        }
                         $package = strtoupper($chan->getAlias()) . '::' . $dep['name'];
                     } else {
                         $package = 'PEAR::' . $dep['name'];
@@ -961,6 +970,9 @@ used for automated conversion or learning the format.
                     foreach ($deps['required']['package'] as $dep) {
                         if ($dep['channel'] != 'pear.php.net' &&  $dep['channel'] != 'pecl.php.net') {
                             $chan = &$reg->getChannel($dep['channel']);
+                            if (PEAR::isError($chan)) {
+                                return $this->raiseError($chan);
+                            }
                             $package = strtoupper($chan->getAlias()) . '::' . $dep['name'];
                         } else {
                             $package = 'PEAR::' . $dep['name'];

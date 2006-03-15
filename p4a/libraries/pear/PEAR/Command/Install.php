@@ -16,7 +16,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Install.php,v 1.114 2006/02/06 00:36:27 cellog Exp $
+ * @version    CVS: $Id: Install.php,v 1.115 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -36,7 +36,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.7
+ * @version    Release: 1.4.8
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -371,6 +371,9 @@ Run post-installation scripts in package <package>, if any exist.
                 }
                 $this->config->set('default_channel', $channel);
                 $chan = &$reg->getChannel($channel);
+                if (PEAR::isError($chan)) {
+                    return $this->raiseError($chan);
+                }
                 if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
                       $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
                     $dorest = true;

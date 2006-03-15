@@ -17,7 +17,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Remote.php,v 1.89 2006/01/23 19:05:52 cellog Exp $
+ * @version    CVS: $Id: Remote.php,v 1.90 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -37,7 +37,7 @@ require_once 'PEAR/REST.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.7
+ * @version    Release: 1.4.8
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -158,6 +158,13 @@ parameter.
 
     function _checkChannelForStatus($channel, $chan)
     {
+        if (PEAR::isError($chan)) {
+            $this->raiseError($chan);
+        }
+        if (!is_a($chan, 'PEAR_ChannelFile')) {
+            return $this->raiseError('Internal corruption error: invalid channel "' .
+                $channel . '"');
+        }
         $rest = new PEAR_REST($this->config);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $a = $rest->downloadHttp('http://' . $channel .
@@ -188,7 +195,9 @@ parameter.
         $channel = $parsed['channel'];
         $this->config->set('default_channel', $channel);
         $chan = $reg->getChannel($channel);
-        $this->_checkChannelForStatus($channel, $chan);
+        if (PEAR::isError($e = $this->_checkChannelForStatus($channel, $chan))) {
+            return $e;
+        }
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
@@ -233,7 +242,9 @@ parameter.
             }
         }
         $chan = $reg->getChannel($channel);
-        $this->_checkChannelForStatus($channel, $chan);
+        if (PEAR::isError($e = $this->_checkChannelForStatus($channel, $chan))) {
+            return $e;
+        }
         $list_options = false;
         if ($this->config->get('preferred_state') == 'stable') {
             $list_options = true;
@@ -299,7 +310,9 @@ parameter.
             $list_options = true;
         }
         $chan = $reg->getChannel($channel);
-        $this->_checkChannelForStatus($channel, $chan);
+        if (PEAR::isError($e = $this->_checkChannelForStatus($channel, $chan))) {
+            return $e;
+        }
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.1', $this->config->get('preferred_mirror'))) {
             // use faster list-all if available
@@ -415,7 +428,9 @@ parameter.
             }
         }
         $chan = $reg->getChannel($channel);
-        $this->_checkChannelForStatus($channel, $chan);
+        if (PEAR::isError($e = $this->_checkChannelForStatus($channel, $chan))) {
+            return $e;
+        }
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
@@ -535,7 +550,9 @@ parameter.
             }
             $caption = $channel . ' Available Upgrades';
             $chan = $reg->getChannel($channel);
-            $this->_checkChannelForStatus($channel, $chan);
+            if (PEAR::isError($e = $this->_checkChannelForStatus($channel, $chan))) {
+                return $e;
+            }
             if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
                   $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
                 $rest = &$this->config->getREST('1.0', array());

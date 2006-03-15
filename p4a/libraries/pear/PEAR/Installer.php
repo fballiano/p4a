@@ -18,7 +18,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Installer.php,v 1.228 2006/02/21 00:59:13 cellog Exp $
+ * @version    CVS: $Id: Installer.php,v 1.228.2.1 2006/03/05 20:07:52 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -42,7 +42,7 @@ define('PEAR_INSTALLER_NOBINARY', -240);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.7
+ * @version    Release: 1.4.8
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -351,7 +351,7 @@ class PEAR_Installer extends PEAR_Downloader
                     } elseif ($a['type'] == 'pear-config') {
                         if ($a['to'] == 'master_server') {
                             $chan = $this->_registry->getChannel($channel);
-                            if ($chan) {
+                            if (!PEAR::isError($chan)) {
                                 $to = $chan->getServer();
                             } else {
                                 $to = $this->config->get($a['to'], null, $channel);
