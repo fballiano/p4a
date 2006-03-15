@@ -4,6 +4,7 @@
 - removed scrollbar's css for better css validation
 - P4A_Widget::noUseTemplate() was removed because wrong, you can do P4A_Widget::useTemplate(false) instead
 - P4A_Widget::clearDisplay() was renamed to P4A_Widget::clearTemplateVars()
+- PEAR was updated to 1.4.8
 
 0.99.1
 - the "new" icon was changes from "pencil" to "document"
