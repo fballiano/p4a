@@ -1,16 +1,20 @@
 <div class="border_box table_container" flexy:raw="{table_properties:h}">
 	<table class="table" style="width: {table_width}" >
 		<caption flexy:if="title">{title}</caption>
+		
+		<col class="select" />
+		<col flexy:foreach="table_cols,col" flexy:raw="{col[properties]:h}" />
+		
 		<thead flexy:if="headers">
 			<tr>
-				<th class="select">&nbsp;</th>
+				<th>&nbsp;</th>
 				{foreach:headers,header}
-				<th flexy:if="header[action]" class="font3 align_center clickable" flexy:raw="{header[properties]:h}">
+				<th flexy:if="header[action]" class="font3 align_center clickable">
 					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
 					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
 					<a href="#" flexy:raw="{header[action]:h}">{header[value]}</a>
 				</th>
-				<th flexy:if="!header[action]" class="font3 align_center" flexy:raw="{header[properties]:h}">
+				<th flexy:if="!header[action]" class="font3 align_center">
 					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
 					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
 					{header[value]}
@@ -32,7 +36,6 @@
 				{end:}
 			</tr>
 		</tbody>
-
 	</table>
  	{navigation_bar:h}
 </div>

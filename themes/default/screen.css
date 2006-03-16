@@ -453,8 +453,8 @@ legend {
 	width: inherit;
 }
 
-.table th a {
-	display:block;
+.table th a, .table td a {
+	display: block;
 }
 
 .table caption{

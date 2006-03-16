@@ -197,18 +197,18 @@
 			}
 			$this->addTempVar('table_width', $width);
 
-			if ($this->toolbar !== NULL and
+			if ($this->toolbar !== null and
 				$this->toolbar->isVisible()) {
 				$this->addTempVar('toolbar', $this->toolbar->getAsString());
 			}
 
-			if ($this->navigation_bar !== NULL) {
+			if ($this->navigation_bar !== null) {
 				if ($this->_auto_navigation_bar) {
 					if ($this->data->getNumPages() > 1) {
 						$this->addTempVar('navigation_bar', $this->navigation_bar->getAsString());
 					}
 				} else {
-					if ( $this->navigation_bar->isVisible()) {
+					if ($this->navigation_bar->isVisible()) {
 						$this->addTempVar('navigation_bar', $this->navigation_bar->getAsString());
 					}
 				}
@@ -221,8 +221,8 @@
 				$i = 0;
 
 				$is_orderable	= false;
-				$order_field	= NULL;
-				$order_mode		= NULL;
+				$order_field	= null;
+				$order_mode		= null;
 
 				if (strtolower($this->data->getObjectType()) == 'p4a_db_source') {
 					$is_orderable = true;
@@ -236,9 +236,8 @@
 				$visible_cols = $this->getVisibleCols();
 				foreach($visible_cols as $col_name) {
 					$col =& $this->cols->$col_name;
-					$headers[$i]['properties']	= $col->composeStringProperties();
 					$headers[$i]['value']		= $col->getLabel();
-					$headers[$i]['order']		= NULL;
+					$headers[$i]['order']		= null;
 
 					if ($col->isOrderable()) {
 						$headers[$i]['action'] = $col->composeStringActions();
@@ -257,21 +256,22 @@
 				}
 				$this->addTempVar('headers', $headers);
 			}
+			
+			$table_cols = array();
+			foreach ($visible_cols as $col_name) {
+				$col =& $this->cols->$col_name;
+				$a = array();
+				$a['properties'] = $col->composeStringProperties();
+				$table_cols[] = $a;
+			}
+			$this->addTempVar('table_cols', $table_cols);
 
 			if ($this->data->getNumRows() > 0){
 				$this->addTempVar('table_rows_properties', $this->rows->composeStringProperties());
 				$this->addTempVar('table_rows', $this->rows->getRows());
-			}else{
-				$this->addTempVar('table_rows_properties', NULL);
-				$this->addTempVar('table_rows', NULL);
-			}
-
-			$visible_cols = $this->getVisibleCols();
-
-			if (sizeof($visible_cols)>0) {
-				$this->addTempVar('table_cols', TRUE);
 			} else {
-				$this->addTempVar('table_cols', NULL);
+				$this->addTempVar('table_rows_properties', null);
+				$this->addTempVar('table_rows', null);
 			}
 			
 			$this->addTempVar('i18n', $p4a->i18n->messages->get());
