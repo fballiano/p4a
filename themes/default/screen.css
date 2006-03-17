@@ -453,6 +453,10 @@ legend {
 	width: inherit;
 }
 
+.table th {
+	white-space: nowrap;
+}
+
 .table th a, .table td a {
 	display: block;
 }

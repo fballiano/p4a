@@ -1,3 +1,9 @@
+0.99.3
+- indonesian translation added (thanks to Akhmad Daniel Sembiring)
+- japanese translation added (thanks to Tony Kimball)
+- P4A_DB_Source now correctly handle multiordering/multipk
+- fixed a bug that prevented the DHTML calendar to show correctly
+
 0.99.2
 - chinese translation was added (thanks to Tony Kimball)
 - bugfix on XHTML validation for P4A_Field::getAsDate()

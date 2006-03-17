@@ -709,6 +709,7 @@
 				$enabled = " disabled='disabled' ";
 			}
 			
+			$id = $this->getId();
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
 			$template_path = P4A_THEME_PATH . "/widgets/date_calendar";
