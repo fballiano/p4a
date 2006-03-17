@@ -173,7 +173,20 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getOrder()
     {
-        return $this->_order;
+        $pk = $this->getPk();
+        $order = $this->_order;
+        if (is_string($pk)) {
+        	if (!array_key_exists($pk,$order)) {
+        		$order[$pk] = P4A_ORDER_ASCENDING;
+        	}
+        } elseif (is_array($pk)) {
+        	foreach ($pk as $p) {
+        		if (!array_key_exists($p,$order)) {
+        			$order[$p] = P4A_ORDER_ASCENDING;
+        		}        		
+        	}
+        }
+        return $order;
     }
 
     function hasOrder()
@@ -325,15 +338,19 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
 
     //          If field is not on main table is not updatable
-                if ($col['table'] != $main_table){
+            	if (!strlen($col['table'])) {
+            		$this->fields->$field_name->setReadOnly();
+            	} elseif ($col['table'] != $main_table){
                     $this->fields->$field_name->setReadOnly();
-                }
+                	$this->fields->$field_name->setTable($col['table']);
+                } else {
+                	$this->fields->$field_name->setTable($col['table']);
+            	}
 
                 if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
                     $this->fields->$field_name->setAliasOf($alias_of);
                 }
 
-                $this->fields->$field_name->setTable($col['table']);
             }
         }
     }
@@ -375,6 +392,10 @@ class P4A_DB_Source extends P4A_Data_Source
 
         if ($num_row === NULL) {
             $num_row = $this->_pointer;
+        }
+        
+        if ($num_row == 0) {
+        	$num_row = 1;	
         }
 
         $rs = $db->limitQuery($query, $num_row - 1, 1);
@@ -434,10 +455,10 @@ class P4A_DB_Source extends P4A_Data_Source
             $query .= $this->_composeFromPart();
 
             $new_order_array = array();
+            $new_order_array_values = array();
             if ($order = $this->getOrder()){
                 $where_order = "";
-                foreach($order as $field=>$direction){
-                    $direction = strtoupper($direction);
+                foreach($order as $field=>$direction){;
                     $dot_pos = strpos($field, '.');
 
                     if ($dot_pos) {
@@ -449,18 +470,38 @@ class P4A_DB_Source extends P4A_Data_Source
                     if ($this->fields->$short_fld->getAliasOf()) {
                         $long_fld = $this->fields->$short_fld->getAliasOf();
                     } else {
-                        $long_fld = $this->fields->$short_fld->getTable() . '.' . $this->fields->$short_fld->getName();
+                    	$table = (string)$this->fields->$short_fld->getTable();
+                    	if (strlen($table)) {
+                    		$table = "{$table}.";
+                    	}
+                        $long_fld = $table . $this->fields->$short_fld->getName();
                     }
 
-                    if ($direction == P4A_ORDER_ASCENDING) {
-                        $where_order .= " ($long_fld <= '" . addslashes($this->fields->$short_fld->getValue()) . "' OR $long_fld IS NULL) AND";
-                    } else {
-                        $where_order .= " $long_fld >= '" . addslashes($this->fields->$short_fld->getValue()) . "' AND";
-                    }
+					$p_order = "";
+					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
+						$p_order .= "$p_long_fld = '$p_value' AND ";
+					} 
+					/*
+					where order_field < "value" or (order_field="value" and pk1 <
+					"valuepk1") or ( order_field="value" and pk1 = "valuepk1" and
+					pk2<"valuepk2")
+					*/
+					
+					if ($direction == P4A_ORDER_ASCENDING) {
+						$operator = '<';
+						$null_case = " OR $long_fld IS NULL ";
+					} else {
+						$operator = '>';
+						$null_case = '';
+					}
+					$value = addslashes($this->fields->$short_fld->getValue());
+					$where_order .= " ($p_order ($long_fld $operator '$value' $null_case)) OR ";
+
                     $new_order_array[$long_fld] = $direction;
+                    $new_order_array_values[$long_fld] = $value;
                 }
 
-                $where_order = substr($where_order, 0, -4);
+                $where_order = substr($where_order, 0, -3);
                 $where = $this->_composeWherePart();
                 if ($where != ''){
                     $query .= "$where AND $where_order ";
@@ -474,7 +515,8 @@ class P4A_DB_Source extends P4A_Data_Source
             $query .= $this->_composeGroupPart();
             $query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
-            return $db->getOne($query);
+            print $query;
+            return $db->getOne($query) + 1;
         }
     }
 
