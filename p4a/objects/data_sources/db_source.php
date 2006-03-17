@@ -339,7 +339,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
     //          If field is not on main table is not updatable
             	if (!strlen($col['table'])) {
-            		$this->fields->$field_name->setReadOnly();
+            		if (count($this->getJoin())) {
+            			$this->fields->$field_name->setReadOnly();
+            		} else {
+						$this->fields->$field_name->setTable($main_table);
+            		}
             	} elseif ($col['table'] != $main_table){
                     $this->fields->$field_name->setReadOnly();
                 	$this->fields->$field_name->setTable($col['table']);
