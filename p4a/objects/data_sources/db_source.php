@@ -515,7 +515,7 @@ class P4A_DB_Source extends P4A_Data_Source
             $query .= $this->_composeGroupPart();
             $query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
-            print $query;
+
             return $db->getOne($query) + 1;
         }
     }
