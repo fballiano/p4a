@@ -124,6 +124,16 @@ You can't switch between two application with the same
 P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
 
+------------------
+-- KNOWN ISSUES --
+------------------
+
+If you use PostgreSQL, when you create a P4A_DB_Source and use
+the AddJoin() method, the db_source could be read only beacause
+of the lack of some features with some PHP versions... thus you'll
+have to do a setTable("tablename") for every field of the db_source
+and do a setReadOnly(false).
+
 -------------
 -- Authors --
 -------------
