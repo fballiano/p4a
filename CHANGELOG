@@ -3,6 +3,7 @@
 - japanese translation added (thanks to Tony Kimball)
 - P4A_DB_Source now correctly handle multiordering/multipk
 - fixed a bug that prevented the DHTML calendar to show correctly
+- fixed a bug with P4A_DB_Source::setPageLimit(0)
 
 0.99.2
 - chinese translation was added (thanks to Tony Kimball)
