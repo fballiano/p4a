@@ -184,7 +184,12 @@ class P4A_Data_Source extends P4A_Object
 	{
 		$row_number = $this->_pointer;
 		$page_limit = $this->_page_limit;
-		return intval(($row_number - 1) / $page_limit) + 1;
+		
+		if ($page_limit)  {
+			return intval(($row_number - 1) / $page_limit) + 1;
+		} else {
+			return 1;
+		}
 	}
 
 	function page($num_page = NULL, $move_pointer=TRUE)
