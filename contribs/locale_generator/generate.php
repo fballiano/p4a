@@ -36,11 +36,28 @@ foreach ($locales as $locale) {
 	$date_medium = extract_date_format('medium', $end, $mid, $root);
 	$date_long = extract_date_format('long', $end, $mid, $root);
 	$date_full = extract_date_format('full', $end, $mid, $root);
+	$time_medium = extract_time_format('medium', $end, $mid, $root);
 	
 	if (check($date_short) and check($date_medium) and check($date_long) and check($date_full)) {
 		System::mkDir("-p output/$language");
+		
+		$towrite = file_get_contents('template.php');
+		
+		//$towrite = str_replace('[DS]', addslashes($i['mon_decimal_point']), $towrite);
+		//$towrite = str_replace('[TS]', addslashes($i['mon_thousands_sep']), $towrite);
+		
+		$towrite = str_replace('[DATE_DEFAULT]', $date_short, $towrite);
+		$towrite = str_replace('[DATE_MEDIUM]', $date_medium, $towrite);
+		$towrite = str_replace('[DATE_LONG]', $date_long, $towrite);
+		$towrite = str_replace('[DATE_FULL]', $date_full, $towrite);
+		
+		//$towrite = str_replace('[TIME_DEFAULT]', $dates[4], $towrite);
+		//$towrite = str_replace('[TIME_LONG]', $dates[5], $towrite);
+		$fp = fopen("output/$language/$nation.php", 'w');
+		fwrite($fp, $towrite);
+		fclose($fp);
 	} else {
-		print "\nNON VALIDO\n";
+		print "\n---------------------------------------------------------NON VALIDO\n";
 	}
 	
 	flush();
@@ -65,13 +82,62 @@ function extract_date_format($type, $end, $mid, $root)
 
 function parse_date($date)
 {
-	$date = strtolower(trim($date));
+	$splitter = "/('.*?')/";
+	$date = trim($date);
 	print "$date\n";
-	$p = array('/yyyy/', '/yy/', '/mmmm/', '/mmm/', '/mm/', '/eeee/', '/dd/', '/([^%])d/', "/'(.*)'/");
-	$r = array('%Y', '%Y', '%B', '%b', '%m', '%A', '%d', '$1%e', '$1');
-	$date = preg_replace($p, $r, $date);
-	print "$date\n\n";
-	return $date;
+	
+	$date = str_replace("''", '__SINGLE_QUOTE__', $date);
+	$split = preg_split($splitter, $date, -1, PREG_SPLIT_DELIM_CAPTURE);
+	$return = '';
+	
+	$p = array("/'(.*?)'/", '/yyyy/i', '/yy/i', '/mmmm/i', '/mmm/i', '/mm/i', '/(^|[^%])m/i', '/eeee/i', '/eee/i', '/dd/i', '/(^|[^%])d/i','/g/i');
+	$r = array('$1', '%Y', '%Y', '%B', '%b', '%m', '$1%m', '%A', '%a', '%d', '$1%e', '%Z');
+	
+	foreach ($split as $part) {
+		if (preg_match($splitter, $part)) {
+			$part = substr($part, 1, -1);
+		} else {
+			$part = preg_replace($p, $r, $part);
+		}
+		$return .= $part;
+	}
+	
+	if (preg_match("/(^|[^%])\w/", $return)) {
+		print '---------------------------------------------------------';
+	}
+	$return = str_replace('__SINGLE_QUOTE__', "\'", $return);
+	print "$return\n\n";
+	return $return;
+}
+
+function extract_time_format($type, $end, $mid, $root)
+{
+	if (isset($end['dates']['calendars']['gregorian']['timeFormats'][$type]['timeFormat']['pattern'])) {
+		$time = $end['dates']['calendars']['gregorian']['timeFormats'][$type]['timeFormat']['pattern'];
+	} elseif (isset($mid['dates']['calendars']['gregorian']['timeFormats'][$type]['timeFormat']['pattern'])) {
+		$time = $mid['dates']['calendars']['gregorian']['timeFormats'][$type]['timeFormat']['pattern'];
+	} else {
+		$time = $root['dates']['calendars']['gregorian'][1]['timeFormats'][$type][1]['timeFormat']['pattern'];
+	}
+	
+	if (is_array($time)) {
+		$time = $time[0];
+	}
+	
+	return parse_time($time);
+}
+
+function parse_time($time)
+{
+	print "$time\n";
+	$p = array("/HH/", "/h/", "/mm/i", "/ss/i", "/a/i");
+	$r = array('%H', '%I', '%M', '%S', '%p');
+	$return = preg_replace($p, $r, $time);
+	
+	if (preg_match("/[^%][a-zA-Z]/", $return)) die("ERRORE!!! $time $return");
+	
+	print "$return\n";
+	return $return;
 }
 
 function check($string) {

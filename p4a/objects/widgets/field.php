@@ -376,7 +376,7 @@
 
 		/**
 		 * Sets the field's type.
-		 * @param strings		The type (text|password|textarea|rich_textarea|hidden|label|select|radio|checkbox|multiselect|multicheckbox).
+		 * @param strings		The type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|multiselect|multicheckbox).
 		 * @access public
 		 */
 		function setType($type)

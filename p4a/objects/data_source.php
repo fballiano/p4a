@@ -168,6 +168,11 @@ class P4A_Data_Source extends P4A_Object
 		return $this->_page_limit;
 	}
 
+	/**
+	 * Returns the number of pages in the data source
+	 * @return integer
+	 * @access public
+	 */
 	function getNumPages()
 	{
 		$num_rows = $this->getNumRows();
@@ -176,10 +181,19 @@ class P4A_Data_Source extends P4A_Object
 		if ($num_rows == 0) {
 			return 0;
 		} else {
- 			return intval( ($num_rows - 1) / $page_limit ) + 1;
+			if ($page_limit)  {
+				return intval(($num_rows - 1) / $page_limit) + 1;
+			} else {
+				return 1;
+			}
 		}
 	}
 
+	/**
+	 * Returns the number of the current page
+	 * @return integer
+	 * @access public
+	 */
 	function getNumPage()
 	{
 		$row_number = $this->_pointer;
@@ -192,6 +206,11 @@ class P4A_Data_Source extends P4A_Object
 		}
 	}
 
+	/**
+	 * Returns a page of date (some rows)
+	 * @return array
+	 * @access public
+	 */
 	function page($num_page = NULL, $move_pointer=TRUE)
 	{
 		$limit = $this->getPageLimit();
