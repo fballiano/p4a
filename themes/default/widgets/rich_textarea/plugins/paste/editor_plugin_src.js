@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.35 $
- * $Date: 2006/02/23 13:02:37 $
+ * $Revision: 1.36 $
+ * $Date: 2006/03/20 12:03:44 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -289,11 +289,12 @@ var TinyMCE_PastePlugin = {
 		var bull = String.fromCharCode(8226);
 
 		var nodes = div.getElementsByTagName("p");
+		var prevul;
 		for (var i=0; i<nodes.length; i++) {
 			var p = nodes[i];
 
 			// Is middot
-			if (p.innerHTML.indexOf(search) != -1) {
+			if (p.innerHTML.indexOf(search) == 0) {
 				var ul = document.createElement("ul");
 
 				if (class_name)
@@ -307,9 +308,37 @@ var TinyMCE_PastePlugin = {
 				// Add the rest
 				var np = p.nextSibling;
 				while (np) {
-					// Not element or middot paragraph
-					if (np.nodeType != 1 || np.innerHTML.indexOf(search) == -1)
-						break;
+				        // If the node is whitespace, then
+				        // ignore it and continue on.
+				        if (np.nodeType == 3 && /^\s$/m.test(np.nodeValue)) {
+				                np = np.nextSibling;
+				                continue;
+				        }
+					
+					if (search == mdot) {
+					        if (np.nodeType == 1 && /^o(\s+|&nbsp;)/.test(np.innerHTML)) {
+					                // Second level of nesting
+					                if (!prevul) {
+					                        prevul = ul;
+					                        ul = document.createElement("ul");
+					                        prevul.appendChild(ul);
+					                }
+					                np.innerHTML = np.innerHTML.replace(/^o/, '');
+					        } else {
+					                // Pop the stack if we're going back up to the first level
+					                if (prevul) {
+					                        ul = prevul;
+					                        prevul = null;
+					                }
+					                // Not element or middot paragraph
+					                if (np.nodeType != 1 || np.innerHTML.indexOf(search) != 0)
+					                        break;
+					        }
+					} else {
+					        // Not element or middot paragraph
+					        if (np.nodeType != 1 || np.innerHTML.indexOf(search) != 0)
+					                break;
+				        }
 
 					var cp = np.nextSibling;
 					var li = document.createElement("li");

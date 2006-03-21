@@ -87,7 +87,7 @@
 
 <cfif not config.enabled>
 
-	<cfset xmlContent = "<Error number=""1"" text=""This connector is disabled. Please check the 'editor/filemanager/browser/default/connectors/cfm/config.cfm' file"" />">
+	<cfset xmlContent = "<Error number=""1"" text=""This connector is disabled. Please check the 'editor/filemanager/connectors/cfm/config.cfm' file"" />">
 	
 <cfelseif find("..",url.currentFolder)>
 	

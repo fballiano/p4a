@@ -59,7 +59,7 @@ require 'upload_fck.pl';
 ##
 # SECURITY: REMOVE/COMMENT THE FOLLOWING LINE TO ENABLE THIS CONNECTOR.
 ##
-&SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/browser/default/connectors/perl/connector.cgi" file' ) ;
+&SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/connectors/perl/connector.cgi" file' ) ;
 
 	&read_input();
 

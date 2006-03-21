@@ -48,11 +48,13 @@ $Config['DeniedExtensions']['Media']	= array() ;
 $Config['EnableImageResize'] = false;
  
 // thumbnails dimensions
-$Config['ImageSize']['small'] = "200x150";
-$Config['ImageSize']['medium'] = "300x225";
-$Config['ImageSize']['large'] = "400x300";
+//$Config['ImageSize']['small'] = "200x150";
+//$Config['ImageSize']['medium'] = "300x225";
+//$Config['ImageSize']['large'] = "400x300";
  
 // this line is used to reduce the original image size
-$Config['ImageSize']['__original__'] = "800x800";
+//$Config['ImageSize']['__original__'] = "800x800";
+
+@include 'p4a_image_resize_config.php';
 
 ?>

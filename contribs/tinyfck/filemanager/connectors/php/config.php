@@ -21,7 +21,7 @@
 global $Config ;
 
 // SECURITY: You must explicitelly enable this "connector". (Set it to "true").
-$Config['Enabled'] = false ;
+$Config['Enabled'] = true ;
 
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = '/UserFiles/' ;

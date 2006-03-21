@@ -25,7 +25,7 @@ include('basexml.php') ;
 include('commands.php') ;
 
 if ( !$Config['Enabled'] )
-	SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/browser/default/connectors/php/config.php" file' ) ;
+	SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/connectors/php/config.php" file' ) ;
 
 // Get the "UserFiles" path.
 $GLOBALS["UserFilesPath"] = '' ;

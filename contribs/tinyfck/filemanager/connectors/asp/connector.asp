@@ -29,7 +29,7 @@ Option Explicit
 <%
 
 If ( ConfigIsEnabled = False ) Then
-	SendError 1, "This connector is disabled. Please check the ""editor/filemanager/browser/default/connectors/asp/config.asp"" file"
+	SendError 1, "This connector is disabled. Please check the ""editor/filemanager/connectors/asp/config.asp"" file"
 End If
 
 ' Get the "UserFiles" path.
