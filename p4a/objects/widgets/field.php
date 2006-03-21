@@ -718,7 +718,7 @@
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
-				$close_header .= "<input type='button' value='...' id='" . $this->getID() . "button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('$id', '$date_format', false, true);\"/>";
+				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('$id', '$date_format', false, true);\"/>";
 			}
 
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
