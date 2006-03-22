@@ -54,8 +54,8 @@
 		 */
 		function format($number = null, $format)
 		{
-			if ($number === null) {
-				return null;
+			if (empty($number)) {
+				return '';
 			}
 
 			if ($format[0] == '*') {

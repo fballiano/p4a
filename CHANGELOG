@@ -1,6 +1,10 @@
 0.99.4
-- tinyFCK updated to 0.9
+- tinyFCK updated to 0.10
 - a bug with rich textarea upload was fixed
+- a bug with null dates/numbers formatting was fixed
+- XHTML width/height for P4A_Button were restored
+- now P4A_Button::setSize() supports width and height with WIDTHxHEIGHT format
+- a minor bugfix on P4A_Table CSS was made
 
 0.99.3
 - indonesian translation added (thanks to Akhmad Daniel Sembiring)

@@ -94,8 +94,8 @@
 	     */
 	    function format($date = NULL, $format, $locale_vars = NULL)
 	    {
-	    	if( $date === NULL ) {
-	    		$date = P4A_Date::now('%Y-%m-%d %H:%M:%S');
+	    	if (empty($date)) {
+	    		return '';
 	    	}
 
 	    	$aDate = P4A_Date::parse($date);

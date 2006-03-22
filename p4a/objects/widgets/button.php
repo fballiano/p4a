@@ -116,7 +116,7 @@
 
 		function setSize($size)
 		{
-			$this->_size = $size;
+			$this->_size = strtolower($size);
 		}
 
 		function getSize()
@@ -141,6 +141,14 @@
 			$enabled = $this->isEnabled();
 
 			if ($this->_icon != null and !$p4a->isHandheld()) {
+				$size = $this->getSize();
+				if (strpos($size, 'x') !== false) {
+					list($width, $height) = explode('x', $size);
+				} else {
+					$width = $size;
+					$height = $size;
+				}
+				
 				if ($enabled) {
 					$header .= '<a class="link_button" href="#" ';
 				} else {
@@ -152,7 +160,7 @@
 					$footer .= ' clickable';
 				}
 				
-				$img_src = P4A_ICONS_PATH . "/{$this->_size}/{$this->_icon}";
+				$img_src = P4A_ICONS_PATH . "/{$height}/{$this->_icon}";
 				if (!$enabled) {
 					$img_src .= "_disabled";
 				}
@@ -167,9 +175,9 @@
 				if (strlen($accesskey) > 0) {
 					$msg = "[$accesskey] $msg";
 				}
-
+				
 				$msg = htmlspecialchars($msg);
-				$footer .= "\" src=\"$img_src\" alt=\"$msg\" title=\"$msg\" ";
+				$footer .= "\" src=\"$img_src\" alt=\"$msg\" title=\"$msg\" width=\"$width\" height=\"$height\" ";
 				$footer .= ' />';
 
 				if ($this->getLabel()) {

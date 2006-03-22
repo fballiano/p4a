@@ -453,12 +453,12 @@ legend {
 	width: inherit;
 }
 
-.table th {
-	white-space: nowrap;
+.table th a {
+	margin: 5px;
 }
 
 .table th a, .table td a {
-	display: block;
+	display: block;	
 }
 
 .table caption{

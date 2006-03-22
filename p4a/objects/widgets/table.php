@@ -905,7 +905,7 @@
 							}
 						}
 					} elseif ($parent->cols->$col_name->isFormatted()) {
-						if (($parent->cols->$col_name->formatter_name === NULL) and ($parent->cols->$col_name->format_name === NULL)) {
+						if (($parent->cols->$col_name->formatter_name === null) and ($parent->cols->$col_name->format_name === null)) {
 							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->autoFormat($row[$col_name], $parent->data->fields->$col_name->getType());
 						} else {
 							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat($parent->cols->$col_name->format_name));

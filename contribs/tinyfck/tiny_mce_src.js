@@ -3,8 +3,8 @@
 
 function TinyMCE_Engine() {
 	this.majorVersion = "2";
-	this.minorVersion = "0.5";
-	this.releaseDate = "2006-03-21";
+	this.minorVersion = "0.5.1";
+	this.releaseDate = "2006-03-22";
 
 	this.instances = new Array();
 	this.switchClassCache = new Array();
@@ -4556,7 +4556,7 @@ TinyMCE_Engine.prototype.setInnerHTML = function(e, h) {
 		h = h.replace(/\s\/>/g, '>');
 
 		// Since MSIE auto generated emtpy P tags some times we must tell it to keep the real ones
-		h = h.replace(/<p([^>]*)><\/p>/gi, '<p$1 mce_keep="true">&nbsp;</p>'); // Keep empty paragraphs
+		h = h.replace(/<p([^>]*)>\u00A0?<\/p>/gi, '<p$1 mce_keep="true">&nbsp;</p>'); // Keep empty paragraphs
 		h = h.replace(/<p([^>]*)>&nbsp;<\/p>/gi, '<p$1 mce_keep="true">&nbsp;</p>'); // Keep empty paragraphs
 
 		// Remove first comment
