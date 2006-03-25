@@ -902,7 +902,6 @@ class P4A_DB_Source extends P4A_Data_Source
     function __sleep()
     {
         $this->resetNumRows();
-		P4A_DB::close($this->getDSN());
         return array_keys(get_object_vars($this));
     }
 }

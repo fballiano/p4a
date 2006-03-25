@@ -1,5 +1,6 @@
 0.99.5
 - a bug in P4A_Data_Source was fixed
+- a bug with P4A_DB_Source::__sleep was fixed
 
 0.99.4
 - tinyFCK updated to 0.10
