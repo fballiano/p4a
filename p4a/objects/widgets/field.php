@@ -1039,7 +1039,7 @@
 				}
 
 				$sContent .= "<div><input $enabled class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
-				$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->structure[$description_field]['type']);
+				$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType());
 				$sContent .= '</div>';
 			}
 
