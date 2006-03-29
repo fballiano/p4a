@@ -72,7 +72,7 @@ class P4A_Data_Source extends P4A_Object
 	function newRow()
 	{
 		$this->_pointer = 0;
-		while($field =& $this->fields->nextItem()) {
+		while ($field =& $this->fields->nextItem()) {
 			$field->setDefaultValue();
 		}
 	}
@@ -107,7 +107,7 @@ class P4A_Data_Source extends P4A_Object
 		if ($num_rows > ($this->_pointer-1)) {
 			$this->_pointer = 1;
 			return $this->row();
-		} elseif($this->_pointer !== $num_rows) {
+		} elseif( $this->_pointer !== $num_rows) {
 			$this->newRow();
 		}
 		return;
@@ -120,7 +120,7 @@ class P4A_Data_Source extends P4A_Object
 		if ($this->_pointer > 1){
 			$this->_pointer--;
 			return $this->row();
-		} elseif($this->_pointer !== $num_rows) {
+		} elseif ($this->_pointer !== $num_rows) {
 			$this->firstRow();
 		}
 		return;
@@ -133,7 +133,7 @@ class P4A_Data_Source extends P4A_Object
 		if ($num_rows > $this->_pointer) {
 			$this->_pointer++;
 			return $this->row();
-		}elseif(($num_rows == 0) and (!$this->isNew())){
+		} elseif (($num_rows == 0) and (!$this->isNew())) {
 			return $this->newRow();
 		}
 		return;
@@ -146,7 +146,7 @@ class P4A_Data_Source extends P4A_Object
 		if ($num_rows > $this->_pointer or $num_rows < $this->_pointer) {
 			$this->_pointer = $num_rows;
 			return $this->row();
-		} elseif($this->_pointer !== $num_rows) {
+		} elseif ($this->_pointer !== $num_rows) {
 			$this->newRow();
 		}
 		return;

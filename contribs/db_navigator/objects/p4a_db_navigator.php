@@ -188,6 +188,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		
 		$return .= "<ul class=\"p4a_db_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		foreach ($roots as $section) {
+			if ($this->actionHandler('beforeRenderElement', $section) == ABORT) {
+				continue;
+			}
+			
 			if ($section[$pk] == $current) {
 				$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>";
 				$return .= $this->_trim($section[$this->description]);
@@ -248,7 +252,8 @@ class P4A_DB_Navigator extends P4A_Widget
 	function onClick($params)
 	{
 		$position = $params[0];
-		$this->source->row($position);
+		$row = $this->source->row($position);
+		return $this->actionHandler('afterClick', $row); 
 	}
 	
 	/**
