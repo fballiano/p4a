@@ -359,6 +359,27 @@ class P4A_DB_Source extends P4A_Data_Source
         }
     }
 
+	function getFieldName($field)
+	{
+		$dot_pos = strpos($field, '.');
+
+        if ($dot_pos) {
+        	$short_fld = substr($field, $dot_pos + 1);
+        } else {
+        	$short_fld = $field;
+        }
+
+        if ($this->fields->$short_fld->getAliasOf()) {
+        	$long_fld = $this->fields->$short_fld->getAliasOf();
+        } else {
+        	$table = (string)$this->fields->$short_fld->getTable();
+            if (strlen($table)) {
+            	$table = "{$table}.";
+            }
+            $long_fld = $table . $this->fields->$short_fld->getName();
+        }
+		return array($long_fld,$short_fld);
+	}
 
     function isReadOnly($value=NULL)
     {
@@ -463,23 +484,7 @@ class P4A_DB_Source extends P4A_Data_Source
             if ($order = $this->getOrder()){
                 $where_order = "";
                 foreach($order as $field=>$direction){;
-                    $dot_pos = strpos($field, '.');
-
-                    if ($dot_pos) {
-                        $short_fld = substr($field, $dot_pos + 1);
-                    } else {
-                        $short_fld = $field;
-                    }
-
-                    if ($this->fields->$short_fld->getAliasOf()) {
-                        $long_fld = $this->fields->$short_fld->getAliasOf();
-                    } else {
-                    	$table = (string)$this->fields->$short_fld->getTable();
-                    	if (strlen($table)) {
-                    		$table = "{$table}.";
-                    	}
-                        $long_fld = $table . $this->fields->$short_fld->getName();
-                    }
+                    list($long_fld,$short_fld) = $this->getFieldName($field);
 
 					$p_order = "";
 					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
@@ -604,9 +609,9 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
             }
 
-            if(is_string($pks)){
+            if (is_string($pks)) {
                 $row = $this->getPkRow($this->fields->$pks->getNewValue());
-            }else{
+            } else {
                 $pk_values = array();
                 foreach($pks as $pk){
                     $pk_values[] = $this->fields->$pk->getNewValue();
@@ -703,7 +708,7 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         if ($this->getQuery()){
             $query =  $this->getQuery();
-        }else{
+        } else {
             $query  = $this->_composeSelectPart();
             $query .= $this->_composeFromPart();
             $query .= $this->_composeWherePart();
@@ -717,7 +722,7 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         if ($this->getQuery()){
             $query =  $this->getQuery();
-        }else{
+        } else {
             $query  = $this->_composeSelectPart();
             $query .= $this->_composeFromPart();
             $query .= $this->_composeWherePart();
@@ -747,9 +752,9 @@ class P4A_DB_Source extends P4A_Data_Source
             $pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
         }
 
-        if (strlen($where)){
+        if (strlen($where)) {
             $where .= "AND " . $pk_string;
-        }else{
+        } else {
             $where = "WHERE " . $pk_string;
         }
 
@@ -764,7 +769,7 @@ class P4A_DB_Source extends P4A_Data_Source
         $query = "SELECT ";
         if ($select_part = $this->getSelect()){
             $query .= "$select_part ";
-        }else{
+        } else {
             if ($this->_use_fields_aliases){
                 foreach($this->getFields() as $field_name=>$field_alias){
                     if ($field_alias != "" and $field_alias != "*"){
@@ -774,12 +779,12 @@ class P4A_DB_Source extends P4A_Data_Source
                     }
                 }
                 $query = substr($query,0, -1) . " ";
-            }elseif($fields = $this->getFields()){
+            } elseif($fields = $this->getFields()) {
                 foreach($fields as $field_name){
                     $query .= "$field_name,";
                 }
                 $query = substr($query,0, -1) . " ";
-            }else{
+            } else {
                 $query .= "* ";
             }
         }
@@ -796,7 +801,7 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         $query = "FROM {$this->_table} ";
 
-        foreach($this->_join as $join){
+        foreach ($this->_join as $join) {
             $query .= "{$join[0]} JOIN {$join[1]} ON ({$join[2]}) ";
         }
         return $query;
@@ -812,7 +817,7 @@ class P4A_DB_Source extends P4A_Data_Source
         foreach ($filters as $filter) {
             $query .= "($filter) AND ";
         }
-        if (strlen($query) > 0 ) {
+        if (strlen($query) > 0) {
             $query = " WHERE " . substr($query,0,-4);
         }
         return $query;
@@ -835,8 +840,10 @@ class P4A_DB_Source extends P4A_Data_Source
         }
         if ($order){
             $query .= "ORDER BY ";
+            
             foreach($order as $field=>$direction){
-                $query .= "$field $direction,";
+            	list($long_fld,$short_fld) = $this->getFieldName($field);
+                $query .= "$long_fld $direction,";
             }
             $query = substr($query,0, -1) . " ";
         }
@@ -905,4 +912,5 @@ class P4A_DB_Source extends P4A_Data_Source
         return array_keys(get_object_vars($this));
     }
 }
+
 ?>

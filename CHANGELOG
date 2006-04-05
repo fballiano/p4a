@@ -1,3 +1,8 @@
+0.99.6
+- a bug with mt_MT locale was fixed
+- a complete syntax check was done on all files
+- a bug with P4A_DB_Source about multiple join with homonym	fields was fixed
+
 0.99.5
 - a bug in P4A_Data_Source was fixed
 - a bug with P4A_DB_Source::__sleep was fixed

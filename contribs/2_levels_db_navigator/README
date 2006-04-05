@@ -1,0 +1,26 @@
+------------------
+-- Introduction --
+------------------
+
+This widget allows a tree navigation within 2 nested P4A_DB_Source.
+
+It supports two modes:
+ - expanded (all tree is always expanded)
+ - collapsed (all tree is always collapsed, only the current branch is expanded)
+ 
+-------------
+-- Sponsor --
+-------------
+
+This contrib was initially sponsored by Orange021 (http://www.orange021.com).
+
+-------------
+-- Authors --
+-------------
+
+Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+Andrea Giardina <andrea.giardina@crealabs.it>
+
+CREALABS
+Via Medail, 32 - 10144 Torino - Italy
+http://www.crealabs.it - info@crealabs.it

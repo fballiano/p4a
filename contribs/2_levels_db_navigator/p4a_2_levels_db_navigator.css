@@ -1,0 +1,27 @@
+.p4a_2_levels_db_navigator {
+	text-align: left;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	list-style-position: inside;
+}
+
+.p4a_2_levels_db_navigator ul {
+	padding-left: 15px;
+}
+
+.p4a_2_levels_db_navigator a {
+	text-decoration: none;
+}
+
+.p4a_2_levels_db_navigator a:hover {
+	text-decoration: underline;
+}
+
+.p4a_2_levels_db_navigator .active_node {
+	font-weight: bold;
+}
+
+.p4a_2_levels_db_navigator .active_node li {
+	font-weight: normal;
+}
