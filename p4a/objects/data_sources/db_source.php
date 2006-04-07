@@ -694,20 +694,23 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function _composeSelectCountQuery()
     {
-        if (!$this->getQuery()){
+        if ($this->getQuery()) {
+			$query = preg_replace("/SELECT.*?FROM/isu", $this->_composeSelectCountPart() . " FROM", $this->getQuery());
+        } else {
             $query  = $this->_composeSelectCountPart();
             $query .= $this->_composeFromPart();
             $query .= $this->_composeWherePart();
             $query .= $this->_composeGroupPart();
-//          $query .= $this->_composeOrderPart();
-            return $query;
+            //$query .= $this->_composeOrderPart();
         }
+		
+		return $query;
     }
 
     function _composeSelectStructureQuery()
     {
-        if ($this->getQuery()){
-            $query =  $this->getQuery();
+        if ($this->getQuery()) {
+            $query  = $this->getQuery();
         } else {
             $query  = $this->_composeSelectPart();
             $query .= $this->_composeFromPart();
