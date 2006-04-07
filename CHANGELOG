@@ -1,3 +1,7 @@
+0.99.7
+- added a "clone" function to emulate php5 cloning system
+- a php5 warning bug was solved
+
 0.99.6
 - a bug with mt_MT locale was fixed
 - a complete syntax check was done on all files

@@ -186,10 +186,10 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 		
 		// copying data sources because we need to move them without changing the original ones
 		
-		$root_source = $this->root_source;
+		$root_source = clone($this->root_source);
 		$root_row = $root_source->row();
 		$root_pk = $root_source->getPk();
-		$nested_source = $this->nested_source;
+		$nested_source = clone($this->nested_source);
 		$nested_row = $nested_source->row();
 		$nested_pk = $nested_source->getPk();
 		

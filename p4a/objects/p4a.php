@@ -201,8 +201,8 @@
 		function &singleton($class_name = "p4a")
 		{
 			if (!isset($_SESSION["p4a"])) {
-				//$_SESSION["p4a"] =& new $class_name(); //this line crashes apache!!!
-				return new $class_name();
+				$a =& new $class_name();
+				return $a;
 			} else {
 				return $_SESSION["p4a"];
 			}

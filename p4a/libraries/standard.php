@@ -35,6 +35,10 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
+ 
+if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
+	eval('function clone($object) {return $object;}');
+}
 
 	/**
 	 * Prints out one or many HTML "new lines".
