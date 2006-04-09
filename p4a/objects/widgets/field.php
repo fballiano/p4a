@@ -1015,6 +1015,7 @@
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
 			$new_value			= $this->getNewValue();
+			$sContent			= "";
 
 			$enabled = '';
 			if (!$this->isEnabled()) {

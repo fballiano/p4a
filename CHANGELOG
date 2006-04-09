@@ -2,6 +2,7 @@
 - added a "clone" function to emulate php5 cloning system
 - a php5 warning bug was solved
 - P4A_DB_Source::setQuery() now automatically generates the counting query
+- bug n. 1467199 on P4A_Field::getAsString() was solved
 
 0.99.6
 - a bug with mt_MT locale was fixed
