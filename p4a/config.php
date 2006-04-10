@@ -241,7 +241,7 @@
 	}
 
 	if (!(is_dir(P4A_COMPILE_DIR) and is_readable(P4A_COMPILE_DIR) and is_writable(P4A_COMPILE_DIR))) {
-		mkdir(P4A_COMPILE_DIR) or die("ERROR: Unable to create directory " . P4A_COMPILE_DIR . " or directory is not readable/writable.");
+		@mkdir(P4A_COMPILE_DIR) or die("ERROR: Unable to create directory \"" . P4A_COMPILE_DIR . "\" or directory is not readable/writable. Tip: check session.save_path in your php.ini file.");
 	}
 
 	//I18N
