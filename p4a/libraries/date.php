@@ -418,6 +418,9 @@
 			
 			if ($iso['month'] == 0) $iso['month'] = 1;
 	    	if ($iso['day'] == 0) $iso['day'] = 1;
+			
+			$iso['month'] = str_pad($iso['month'], 2, 0, STR_PAD_LEFT);
+			$iso['day'] = str_pad($iso['day'], 2, 0, STR_PAD_LEFT);
 
 	        if (defined('P4A_DATETIME') and ($output_format == P4A_DATETIME)) {
 	        	return "{$iso['year']}-{$iso['month']}-{$iso['day']} {$iso['hour']}:{$iso['minute']}:{$iso['second']}";

@@ -1,3 +1,6 @@
+0.99.8
+- a bugfix about P4A_Date::unformat was fixed (1468679 - string padding)
+
 0.99.7
 - added a "clone" function to emulate php5 cloning system
 - a php5 warning bug was solved
