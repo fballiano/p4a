@@ -39,12 +39,12 @@
 $messages = array
 (
 	// Date
-    "days"		=> array('Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'),
-    "months"	=> array('Stycznia', 'Lutego', 'Marca', 'Kwietnia', 'Maja', 'Czerwca', 'Lipca', 'Sierpnia', 'Września', 'Października', 'Listopada', 'Grudnia'),
+    "days"				=> array('Niedziela' , 'Poniedziałek' , 'Wtorek' , 'Środa' , 'Czwartek' , 'Piątek' , 'Sobota'),
+	"months"			=> array('Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'),
 
 	// Standard Toolbar
 	"save"				=> "Potwierdź i zapisz",
-	"cancel"			=> "Przerwij tę operację",
+	"cancel"			=> "Przerwij bieżącą operację",
 	"new"				=> "Wstaw nowy rekord",
 	"delete"			=> "Skasuj bieżący rekord",
 	"print"				=> "Drukuj",
@@ -62,7 +62,7 @@ $messages = array
 	// Table
 	"current_page"		=> "Strona",
 	"of_pages"			=> "z",
-	"go_to_page"		=> "Przejdź do strony",
+	"go_to_page"		=> "Wyświetl stronę",
 	"ascending"			=> "Rosnąco",
 	"descending"		=> "Malejąco",
 	"selected"			=> "Zaznaczone",
@@ -72,15 +72,15 @@ $messages = array
 	"filesize"			=> "Rozmiat",
 	"filetype"			=> "Typ",
 	"filepreview"		=> "Podgląd",
-	"filedelete"		=> "Kasowanie",
-	"filedownload"		=> "Pobieranie",
+	"filedelete"		=> "Skasuj",
+	"filedownload"		=> "Pobierz",
 
 	// Fields
 	"none_selected"		=> "Niczego nie zaznaczono",
 
 	// Confirmations
-	"confirm_general"	=> "Jesteś pewien?",
-	"confirm_confirm"	=> "Potwierdzić i zapisać?",
+	"confirm_general"	=> "Na pewno?",
+	"confirm_confirm"	=> "Zatwierdzić i zapisać?",
 	"confirm_cancel"	=> "Czy przerwać bieżącą operację?",
 	"confirm_delete"	=> "Czy skasować bieżący rekord?",
 
