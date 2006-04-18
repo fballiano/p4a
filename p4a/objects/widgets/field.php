@@ -204,7 +204,7 @@
 
 			if (! $data_field->isReadOnly())
 			{
-				switch($data_field->getType()) {
+				switch(strtolower($data_field->getType())) {
 					case 'date':
 						$this->setType('date');
 						break;

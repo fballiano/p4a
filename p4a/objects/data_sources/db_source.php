@@ -287,6 +287,7 @@ class P4A_DB_Source extends P4A_Data_Source
             $array_fields = $this->getFields();
             foreach($info as $col){
                 $field_name = $col["name"];
+				$col['type'] = strtolower($col['type']);
                 if(isset($this->fields->$field_name)){
                     continue;
                 }
