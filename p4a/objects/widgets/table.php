@@ -48,7 +48,7 @@
 	{
 		/**
 		 * Data source associated with the table.
-		 * @var string
+		 * @var data_source
 		 * @access private
 		 */
 		var $data = NULL;
@@ -70,7 +70,7 @@
 		/**
 		 * All the table's rows.
 		 * @var rows
-		 * @access private
+		 * @access public
 		 */
 		var $rows = NULL;
 
@@ -84,7 +84,7 @@
 		/**
 		 * Stores the table's structure (table_cols).
 		 * @var array
-		 * @access private
+		 * @access public
 		 */
 		var $cols = array();
 
@@ -950,6 +950,13 @@
 	class P4A_Table_Navigation_Bar extends P4A_Frame
 	{
 		/**
+		 * Buttons collection
+		 * @var p4a_collection
+		 * @access public
+		 */
+		var $buttons = null;
+		
+		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
 		 * @access private
@@ -959,7 +966,7 @@
 			$p4a =& P4A::singleton();
 
 			parent::P4A_Frame("table_navigation_bar");
-			$this->build("p4a_collection","buttons");
+			$this->build("p4a_collection", "buttons");
 			$this->setStyleProperty("float", "none");
 
 			$this->addButton('button_go', 'apply', 'right');

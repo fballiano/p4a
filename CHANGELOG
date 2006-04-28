@@ -1,3 +1,6 @@
+1.0
+- some minor beautifications
+
 0.99.8
 - a bugfix about P4A_Date::unformat was fixed (1468679 - string padding)
 - Polish translation was updated

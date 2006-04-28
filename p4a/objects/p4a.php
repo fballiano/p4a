@@ -411,7 +411,7 @@
 
 				$this->setActiveMask($mask_name);
 			}
-			$this->actionHandler( 'afterOpenMask' );
+			$this->actionHandler('afterOpenMask');
 			return $this->active_mask;
 		}
 
