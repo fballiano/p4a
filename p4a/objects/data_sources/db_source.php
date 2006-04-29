@@ -412,9 +412,7 @@ class P4A_DB_Source extends P4A_Data_Source
     function row($num_row = NULL, $move_pointer = TRUE)
     {
         $db =& P4A_DB::singleton($this->getDSN());
-
         $query = $this->_composeSelectQuery();
-
 
         if ($num_row === NULL) {
             $num_row = $this->_pointer;
@@ -430,7 +428,7 @@ class P4A_DB_Source extends P4A_Data_Source
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
-        }else{
+        } else {
             $row = $rs->fetchRow();
 
             if ($move_pointer) {
@@ -445,7 +443,7 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
             }
 
-            foreach($this->_multivalue_fields as $fieldname=>$mv){
+            foreach ($this->_multivalue_fields as $fieldname=>$mv) {
                 $fk = $mv["fk"];
                 $fk_field = $mv["fk_field"];
                 $table = $mv["table"];
