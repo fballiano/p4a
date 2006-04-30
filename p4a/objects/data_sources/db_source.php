@@ -409,12 +409,12 @@ class P4A_DB_Source extends P4A_Data_Source
         return $db->getRow($query);
     }
 
-    function row($num_row = NULL, $move_pointer = TRUE)
+    function row($num_row = null, $move_pointer = true)
     {
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectQuery();
 
-        if ($num_row === NULL) {
+        if ($num_row === null) {
             $num_row = $this->_pointer;
         }
         
@@ -432,15 +432,23 @@ class P4A_DB_Source extends P4A_Data_Source
             $row = $rs->fetchRow();
 
             if ($move_pointer) {
-                if (!empty($row)) {
-                    $this->_pointer = $num_row;
-
-                    foreach($row as $field=>$value){
-                        $this->fields->$field->setValue($value);
-                    }
-                } elseif ($this->getNumRows() == 0) {
-                    $this->newRow();
-                }
+				if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+				
+				if ($this->isActionTriggered('onMoveRow')) {
+					if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+				} else {
+	                if (!empty($row)) {
+	                    $this->_pointer = $num_row;
+	
+	                    foreach($row as $field=>$value){
+	                        $this->fields->$field->setValue($value);
+	                    }
+	                } elseif ($this->getNumRows() == 0) {
+	                    $this->newRow();
+	                }
+				}
+				
+				$this->actionHandler('afterMoveRow');
             }
 
             foreach ($this->_multivalue_fields as $fieldname=>$mv) {

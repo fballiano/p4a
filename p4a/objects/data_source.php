@@ -211,12 +211,12 @@ class P4A_Data_Source extends P4A_Object
 	 * @return array
 	 * @access public
 	 */
-	function page($num_page = NULL, $move_pointer=TRUE)
+	function page($num_page = null, $move_pointer=true)
 	{
 		$limit = $this->getPageLimit();
 		$num_pages = $this->getNumPages();
 
-		if ($num_page === NULL) {
+		if ($num_page === null) {
 			$num_page = $this->getNumPage();
 		} elseif (($num_page < 1) or ($num_page > $num_pages)) {
 			return;
@@ -226,11 +226,19 @@ class P4A_Data_Source extends P4A_Object
 		$rows = $this->getAll($offset, $limit);
 
 		if ($move_pointer) {
-			$this->_pointer = $offset + 1;
-			$row = $rows[0];
-			foreach($row as $field=>$value) {
-				$this->fields->$field->setValue($value);
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+			
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+				$this->_pointer = $offset + 1;
+				$row = $rows[0];
+				foreach($row as $field=>$value) {
+					$this->fields->$field->setValue($value);
+				}
 			}
+			
+			$this->actionHandler('afterMoveRow');
 		}
 		return $rows;
 	}

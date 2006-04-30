@@ -71,15 +71,23 @@ class P4A_Array_Source extends P4A_Data_Source
 		}
 
 		if ($move_pointer) {
-			if (!empty($row)) {
-				$this->_pointer = $num_row;
-
-				foreach($row as $field=>$value){
-					$this->fields->$field->setValue($value);
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+			
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+				if (!empty($row)) {
+					$this->_pointer = $num_row;
+	
+					foreach($row as $field=>$value){
+						$this->fields->$field->setValue($value);
+					}
+				} elseif ($this->getNumRows() == 0) {
+					$this->newRow();
 				}
-			} elseif ($this->getNumRows() == 0) {
-				$this->newRow();
 			}
+			
+			$this->actionHandler('afterMoveRow');
 		}
 
 		return $row;
