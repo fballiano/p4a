@@ -1,3 +1,6 @@
+1.0
+- P4A_Array_Source::load() now can be called more than one time to change the data inside the array_source
+
 0.99.9
 - P4A_Data_Source, P4A_DB_Source and P4A_Array_Source now trigger beforeMoveRow, onMoveRow and afterMoveRow events
 - P4A_Mask's beforeMoveRow, onMoveRow and afterMoveRow triggers are declared as "deprecated" and will be removed in 1.2

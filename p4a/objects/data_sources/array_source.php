@@ -39,14 +39,18 @@
 class P4A_Array_Source extends P4A_Data_Source
 {
 	var $_array = array();
+	var $fields = null;
 
 	function P4A_Array_Source($name){
-		P4A_Data_Source::P4A_Data_Source($name);
+		parent::P4A_Data_Source($name);
 	}
 
 	function load($array)
 	{
-		$this->build("P4A_Collection", "fields");
+		if (!is_object($this->fields)) {
+			$this->build("P4A_Collection", "fields");
+		}
+		
 		$this->_array = array();
 		$this->_array[-1] = array();
 
@@ -56,7 +60,9 @@ class P4A_Array_Source extends P4A_Data_Source
 
 		$first_row = $array[0];
 		foreach ($first_row as $field_name=>$value) {
-			$this->fields->build("p4a_data_field",$field_name);
+			if (!isset($this->fields->$field_name)) {
+				$this->fields->build("p4a_data_field", $field_name);
+			}
 			$this->_array[-1][$field_name] = "";
 		}
 	}
