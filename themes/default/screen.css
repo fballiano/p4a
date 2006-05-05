@@ -219,10 +219,6 @@ a.link_button:hover {
 	text-decoration: none;
 }
 
-.field_as_label {
-	margin-left: 120px;
-}
-
 .toolbar input {
 	font-weight: normal;
 	margin-top: 10px;

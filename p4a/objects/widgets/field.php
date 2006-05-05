@@ -818,7 +818,7 @@
 		 */
 		function getAsLabel()
 		{
-            $header         = '<div class="field_as_label" ';
+            $header         = '<div ';
             $close_header   = '>';
             $footer         = '</div>';
             $value			= '';

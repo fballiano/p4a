@@ -1,6 +1,8 @@
-1.0
+0.99.10
 - P4A_Array_Source::load() now can be called more than one time to change the data inside the array_source
 - TinyFCK was updated to 0.12
+- a bug about invisible labels for read-only P4A_Field was solved
+- a bug with P4A_I18N_Messages::get() was solved
 
 0.99.9
 - P4A_Data_Source, P4A_DB_Source and P4A_Array_Source now trigger beforeMoveRow, onMoveRow and afterMoveRow events

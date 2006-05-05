@@ -83,14 +83,14 @@
 		 */
 		function get($first_level_id = null, $second_level_id = null)
 		{
-			if (empty($first_level_id) and empty($second_level_id )) {
+			if ($first_level_id === null and $second_level_id === null) {
 				return '';
-			} elseif (empty($second_level_id)) {
-				if (array_key_exists($first_level_id, $this->messages)){
+			} elseif ($second_level_id === null) {
+				if (array_key_exists($first_level_id, $this->messages)) {
 					return $this->messages[$first_level_id];
 				}
 				return $first_level_id;
-			} elseif(array_key_exists($first_level_id, $this->messages) and array_key_exists($second_level_id, $this->messages[$first_level_id])) {
+			} elseif (array_key_exists($first_level_id, $this->messages) and array_key_exists($second_level_id, $this->messages[$first_level_id])) {
 				return $this->messages[$first_level_id][$second_level_id];
 			}
 			
