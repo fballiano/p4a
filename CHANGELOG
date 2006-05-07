@@ -3,6 +3,7 @@
 - TinyFCK was updated to 0.12
 - a bug about invisible labels for read-only P4A_Field was solved
 - a bug with P4A_I18N_Messages::get() was solved
+- Slovenian translation was added (thanks to Jernej Zorec)
 
 0.99.9
 - P4A_Data_Source, P4A_DB_Source and P4A_Array_Source now trigger beforeMoveRow, onMoveRow and afterMoveRow events
@@ -12,7 +13,7 @@
 0.99.8
 - a bugfix about P4A_Date::unformat was fixed (1468679 - string padding)
 - Polish translation was updated
-- Danish translation was added (thank to spinello)
+- Danish translation was added (thanks to spinello)
 - PEAR was updated to 1.4.9
 - some minor bugfixes were made
 
