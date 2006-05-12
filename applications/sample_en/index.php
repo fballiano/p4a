@@ -22,7 +22,7 @@ define("P4A_LOCALE", 'en_US');
 //define("P4A_DSN", 'mysql://root:@localhost/sample_en');
 
 // Including p4a
-require_once(dirname(__FILE__) . '/../../p4a.php');
+require_once dirname(__FILE__) . '/../../p4a.php';
 
 /*
 Now we instance the application with the singleton

@@ -215,6 +215,7 @@
 			}
 
 			$this->addTempVar("title", $this->getTitle());
+			$visible_cols = $this->getVisibleCols();
 
 			if($this->_show_headers) {
 				$headers = array();
@@ -233,7 +234,6 @@
 					}
 				}
 
-				$visible_cols = $this->getVisibleCols();
 				foreach($visible_cols as $col_name) {
 					$col =& $this->cols->$col_name;
 					$headers[$i]['value']		= $col->getLabel();

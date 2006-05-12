@@ -628,7 +628,7 @@
 	        	$locale_vars = P4A_Date::get_months_names();
 			}
 
-	        return $locale_vars[$month];
+	        return $locale_vars[$month-1];
 	    }
 
 	    /**

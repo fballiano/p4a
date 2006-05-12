@@ -104,6 +104,17 @@
 			$this->buttons->$name->setStyleProperty("float", $position);
 			return $this->buttons->$name;
 		}
+		
+		/**
+		 * Adds a label object.
+		 * @access public
+		 */
+		function addLabel($name, $text, $position = "left")
+		{
+			$this->buttons->build('p4a_box', $name);
+			$this->buttons->$name->setValue($text);
+			$this->buttons->$name->setStyleProperty("float", $position);
+		}
 
 		/**
 		 * Adds a spacer image of the desidered width.

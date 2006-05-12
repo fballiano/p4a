@@ -1,3 +1,10 @@
+1.0
+- now is possible to do P4A_Widget::useTemplate('dir/file')
+- P4A_Toolbar::addLabel() method was added
+- a bug on P4A_Date::get_month_name() was fixed
+- a bug on P4A_Table was fixed
+- some minor beautifications were done
+
 0.99.10
 - P4A_Array_Source::load() now can be called more than one time to change the data inside the array_source
 - TinyFCK was updated to 0.12

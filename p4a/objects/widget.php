@@ -52,21 +52,21 @@
 		 * @access private
 		 * @var string
 		 */
-		var $value = NULL;
+		var $value = null;
 
 		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
 		 * @var boolean
 		 */
-		var $enabled = TRUE;
+		var $enabled = true;
 
 		/**
 		 * Defines object visibility.
 		 * @access private
 		 * @var boolean
 		 */
-		var $visible = TRUE;
+		var $visible = true;
 
 		/**
 		 * Keeps the association between an action and its listener.
@@ -88,7 +88,7 @@
 		 * @access public
 		 * @var mixed
 		 */
-		var $label = NULL;
+		var $label = null;
 
 		/**
 		 * Keeps all the HTML properties for the widget.
@@ -118,7 +118,14 @@
 		 * @access public
 		 * @var string
 		 */
-		var $template_name = NULL;
+		var $template_name = null;
+		
+		/**
+		 * Temporary variables (destroyed after rendering)
+		 * @access private
+		 * @var array
+		 */
+		var $_temp_vars = array();
 
 		/**
 		 * Class constructor.
@@ -128,7 +135,7 @@
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
 		 * @access private
 		 */
-		function p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
+		function p4a_widget($name = null, $prefix = 'wdg', $id = null)
 		{
 			parent::p4a_object($name, $prefix, $id);
 			$this->setProperty('id', $this->getId());
@@ -711,6 +718,13 @@
 				$tpl_container->width = $this->getWidth();
 				$tpl_container->height = $this->getHeight();
 				
+				if (strpos($this->template_name, '/') !== false) {
+					list($template_dir, $template_file) = explode('/', $this->template_name);
+				} else {
+					$template_dir = $this->template_name;
+					$template_file = $this->template_name;
+				}
+				
 				foreach ($this->_tpl_vars as $k=>$v) {
 					if (is_object($v)) {
 						$tpl_container->$k = $v->getAsString();
@@ -723,8 +737,7 @@
 					$tpl_container->$k = $v;
 				}
 
-				$template = $this->template_name;
-				return P4A_Template_Engine::getAsString($tpl_container, "widgets/{$template}/{$template}.tpl");
+				return P4A_Template_Engine::getAsString($tpl_container, "widgets/{$template_dir}/{$template_file}.tpl");
 			} else {
 				p4a_error("ERROR: Unable to fetch template, first Call \"use_template\".");
 			}
