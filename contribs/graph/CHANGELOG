@@ -1,2 +1,5 @@
+0.2
+- fixed a small bug in P4A_Graph::setDataType()
+
 0.1
 - Initial release

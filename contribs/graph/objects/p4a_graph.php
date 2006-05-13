@@ -132,7 +132,7 @@ class P4A_Graph extends P4A_Widget
 			$this->width = $width;
 		}
 		
-		/*
+		/**
          * text-data: ('label', y1, y2, y3, ...)
          * text-data-single: ('label', data), for some pie charts.
          * data-data: ('label', x, y1, y2, y3, ...)
@@ -140,7 +140,7 @@ class P4A_Graph extends P4A_Widget
          */
 		function setDataType($which_dt)
 		{
-			$this->dt->$which_dt;
+			$this->dt = $which_dt;
 		}
 		
 		// User Function: Can be: bars, lines, linepoints, area, points, and pie
