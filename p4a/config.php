@@ -122,7 +122,7 @@
 	}
 
 	if (!defined('P4A_LIBRARIES_DIR')){
-	 	 define('P4A_LIBRARIES_DIR', P4A_ROOT_DIR . P4A_LIBRARIES_PATH) ;
+	 	 define('P4A_LIBRARIES_DIR', P4A_ROOT_DIR . '/libraries') ;
 	}
 
 	if (!defined('P4A_LIBRARIES_URL')){

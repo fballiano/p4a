@@ -3,6 +3,7 @@
 - P4A_Toolbar::addLabel() method was added
 - a bug on P4A_Date::get_month_name() was fixed
 - a bug on P4A_Table was fixed
+- a bug with framework-wide libraries was fixed
 - some minor beautifications were done
 
 0.99.10
