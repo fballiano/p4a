@@ -4,6 +4,7 @@
 - a bug on P4A_Date::get_month_name() was fixed
 - a bug on P4A_Table was fixed
 - a bug with framework-wide libraries was fixed
+- P4A_Frame can now handle if an anchored object was destroyed
 - some minor beautifications were done
 
 0.99.10
