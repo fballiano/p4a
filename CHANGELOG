@@ -1,4 +1,4 @@
-1.0
+0.99.11
 - now is possible to do P4A_Widget::useTemplate('dir/file')
 - P4A_Toolbar::addLabel() method was added
 - a bug on P4A_Date::get_month_name() was fixed
