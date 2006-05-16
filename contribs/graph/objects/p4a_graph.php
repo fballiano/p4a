@@ -349,6 +349,8 @@ class P4A_Graph extends P4A_Widget
 				$this->graph->SetLegendPixel($this->legPixX, $this->legPixY, NULL);
 			}
 			
+			$this->graph->SetXLabelAngle($this->xla);
+			$this->graph->SetYLabelAngle($this->yla);
 			$this->graph->setTitle($this->title);
 			$this->graph->SetXLabel($this->xlbl);
 			$this->graph->SetYLabel($this->ylbl);
