@@ -55,6 +55,11 @@
 		function P4A_Navigation_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
+			$this->addDefaultButtons();
+		}
+		
+		function addDefaultButtons()
+		{
 			$first =& $this->addButton('first', 'first');
 			$first->setAccessKey(8);
 

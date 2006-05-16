@@ -55,6 +55,11 @@
 		function P4A_Quit_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
+			$this->addDefaultButtons();
+		}
+		
+		function addDefaultButtons()
+		{
 			$p4a =& p4a::singleton();
 		
 			$print =& $this->addButton('print', 'print');

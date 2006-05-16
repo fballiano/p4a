@@ -55,7 +55,12 @@
 		function P4A_Actions_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
-
+			$this->addDefaultButtons();
+		}
+		
+		
+		function addDefaultButtons()
+		{
 			$save =& $this->addButton('save', 'save');
 			$save->setAccessKey("S");
 

@@ -5,6 +5,7 @@
 - a bug on P4A_Table was fixed
 - a bug with framework-wide libraries was fixed
 - P4A_Frame can now handle if an anchored object was destroyed
+- P4A_Toolbar(s) constructor was splitted to allow better customization
 - some minor beautifications were done
 
 0.99.10

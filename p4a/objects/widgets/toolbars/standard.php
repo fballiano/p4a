@@ -55,7 +55,11 @@
 		function P4A_Standard_Toolbar($name)
 		{
 			parent::P4A_Toolbar($name);
-			
+			$this->addDefaultButtons();
+		}
+		
+		function addDefaultButtons()
+		{
 			$new =& $this->addButton('new', 'new');
 			$new->setProperty("accesskey", "N");
 			
