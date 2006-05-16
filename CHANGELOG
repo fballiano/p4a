@@ -1,3 +1,6 @@
+0.99.12
+- Persian translation was added (thanks to JraNil)
+
 0.99.11
 - now is possible to do P4A_Widget::useTemplate('dir/file')
 - P4A_Toolbar::addLabel() method was added
