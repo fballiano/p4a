@@ -73,6 +73,9 @@ class P4A_Graph extends P4A_Widget
 		var $legendCols = array();
 		var $legPixX = NULL;
 		var $legPixY = NULL;
+		var $xla=NULL;
+		var $yla=NULL;
+		var $mode="db";
 		
 		var $dataCols = array();
 		var $labelCol = NULL;
@@ -133,6 +136,8 @@ class P4A_Graph extends P4A_Widget
 		}
 		
 		/**
+		 * Set the data type of the graph
+		 * Can be
          * text-data: ('label', y1, y2, y3, ...)
          * text-data-single: ('label', data), for some pie charts.
          * data-data: ('label', x, y1, y2, y3, ...)
@@ -154,6 +159,28 @@ class P4A_Graph extends P4A_Widget
 		function setPlotType($type)
 		{
 			$this->type = $type;
+		}
+		
+		/**
+		 * Set the text angle for X tick and data labels in degrees
+		 * Can be only 0 or 90 if default fonts of GD are used
+		 * @param int $type.
+		 * @access public
+		 */
+		function setXLabelAngle($xla=0)
+		{
+			$this->xla = $xla;
+		}
+		
+		/**
+		 * Set the text angle for Y tick and data labels in degrees
+		 * Can be only 0 or 90 if default fonts of GD are used
+		 * @param int $type.
+		 * @access public
+		 */
+		function setYLabelAngle($yla=0)
+		{
+			$this->yla = $yla;
 		}
 		
 		// Width of the Error Bars in Pixels. If not set then uses "line_width" to set the width of the error_bar lines.
@@ -259,7 +286,9 @@ class P4A_Graph extends P4A_Widget
 	
 		function getAsString()
 		{
-			$this->fillGraph();
+			if($this->mode=="db") {
+				$this->fillGraph();
+			}
 			
 			if (!$this->isVisible()) {
 				return '';
