@@ -225,7 +225,7 @@ class P4A_Graph extends P4A_Widget
 		 */ 
     	function SetGridColor ($which_color)
     	{
-    		$this->gridColor = $wich_color;
+    		$this->gridColor = $which_color;
     	}
 		
 		function setLegendVisible($visible)
