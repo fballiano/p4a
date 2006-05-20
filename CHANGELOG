@@ -1,5 +1,7 @@
 0.99.12
 - Persian translation was added (thanks to JraNil)
+- PEAR::Calendar 0.5.3 was added to libraries
+- PEAR::Date 1.4.6 was added to libraries
 
 0.99.11
 - now is possible to do P4A_Widget::useTemplate('dir/file')

@@ -1,0 +1,55 @@
+.p4a_calendar_header {
+	padding: 2px 0px;
+	margin: 0;
+	height: 1px;
+}
+
+.p4a_calendar {
+	border-collapse:collapse;
+	width: 100%;
+	height: 95%;
+}
+
+.p4a_calendar table {
+	width: 100%;
+}
+
+.p4a_calendar td {
+	vertical-align:top;
+}
+
+.p4a_calendar td td {
+	text-align: left;
+	font-size: 80%;
+}
+
+.p4a_calendar td th {
+	border-bottom: 1px solid #C6D3DE;
+}
+
+.p4a_calendar .p4a_calendar_weeknumber, .p4a_calendar td th:hover, .p4a_calendar_week_header:hover {
+	cursor: pointer;
+}
+
+.p4a_calendar_week_header {
+	width: 13%;
+	height: 1px;
+	white-space: nowrap;
+}
+
+.p4a_calendar_week_header2 {
+	white-space: nowrap;
+	width: 1px;
+}
+
+.p4a_calendar_week td, .p4a_calendar_day td {
+	border: 1px solid #C6D3DE;
+	font-size: 80%;
+	text-align: left;
+	padding: 3px;
+}
+
+.p4a_calendar_appointment {
+	font-weight: bold;
+	font-size: 100%;
+}
