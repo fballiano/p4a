@@ -1,3 +1,7 @@
+0.99.13
+- P4A_Frame, P4A_Canvas and P4A_Sheet now checks if object were destroyed before rendering
+- some code beautification were done
+
 0.99.12
 - Persian translation was added (thanks to JraNil)
 - Catalan translation was added (thanks to Alvaro Gilabert)

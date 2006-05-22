@@ -106,10 +106,10 @@ class P4A_Frame extends P4A_Widget
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
-				//TODO: unset the object ids from _map array
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
 				} else {
+					unset($p4a->objects[$obj["id"]]);
 					$as_string = '';
 				}
 				if (strlen($as_string)>0) {

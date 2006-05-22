@@ -326,7 +326,7 @@
 			$row = $this->getLastOccupiedRow();
 			$row++;
 
-			if($row > $this->rows) {
+			if ($row > $this->rows) {
 				$row = $this->addRow();
 			}
 
@@ -341,30 +341,24 @@
 		 */
 		function addRow( $rows = 1 )
 		{
-			if( $rows > 0 )
-			{
-				$row_pointer = $this->rows + 1 ;
-			}
-			else
-			{
-				$row_pointer = $this->rows ;
+			if ($rows > 0) {
+				$row_pointer = $this->rows + 1;
+			} else {
+				$row_pointer = $this->rows;
 			}
 
-			$cols = $this->getNumOfCols() ;
-			if( $cols == 0 )
-			{
-				$this->setNumOfCols( 1 ) ;
-				$cols = 1 ;
+			$cols = $this->getNumOfCols();
+			if ($cols == 0) {
+				$this->setNumOfCols(1);
+				$cols = 1;
 			}
 
-			for( $row_counter = $row_pointer; $row_counter <= ( $row_pointer + $rows ); $row_counter++ )
-			{
+			for ($row_counter = $row_pointer; $row_counter <= ( $row_pointer + $rows ); $row_counter++) {
 				$this->grid[ $row_counter ] = array() ;
 				$this->rows_infos[ $row_counter ] = array() ;
 				$this->rows_infos[ $row_counter ][ 'occupied' ] = false ;
 
-				for( $cols_counter = 1; $cols_counter <= $cols; $cols_counter++ )
-				{
+				for( $cols_counter = 1; $cols_counter <= $cols; $cols_counter++ ) {
 					$cell =& $this->build("p4a_sheet_cell", $row_counter . '_' .  $cols_counter);
 					$this->grid[ $row_counter ][ $cols_counter ] =& $cell;
 					$this->grid[ $row_counter ][ $cols_counter ]->setProperty('align', $this->default_align);
@@ -373,8 +367,8 @@
 				}
 			}
 
-			$this->setNumOfRows( $this->getNumOfRows() + $rows ) ;
-			return $row_pointer ;
+			$this->setNumOfRows($this->getNumOfRows() + $rows);
+			return $row_pointer;
 		}
 
 		/**
@@ -384,7 +378,7 @@
 		 */
 		function getNumOfRows()
 		{
-			return $this->rows ;
+			return $this->rows;
 		}
 
 		/**
@@ -394,15 +388,13 @@
 		 */
 		function getLastOccupiedRow()
 		{
-			for( $rowcounter = $this->rows; $rowcounter >= 1; $rowcounter-- )
-			{
-				if( array_key_exists( 'occupied', $this->rows_infos[ $rowcounter ] ) and $this->rows_infos[ $rowcounter ][ 'occupied' ] )
-				{
-					return $rowcounter ;
+			for ($rowcounter = $this->rows; $rowcounter >= 1; $rowcounter--) {
+				if (array_key_exists('occupied', $this->rows_infos[$rowcounter]) and $this->rows_infos[$rowcounter]['occupied']) {
+					return $rowcounter;
 				}
 			}
 
-			return 0 ;
+			return 0;
 		}
 
 		/**
@@ -411,9 +403,9 @@
 		 * @access private
 		 * @param integer	The index of the row.
 		 */
-		function setLastOccupiedRow( $index )
+		function setLastOccupiedRow($index)
 		{
-			$this->last_occupied_row = $index ;
+			$this->last_occupied_row = $index;
 		}
 
 		/**
@@ -421,9 +413,9 @@
 		 * @access private
 		 * @param integer	The index of the row
 		 */
-		function setRowOccupied( $index )
+		function setRowOccupied($index)
 		{
-			$this->rows_infos[ $index ][ 'occupied' ] = true ;
+			$this->rows_infos[$index]['occupied'] = true ;
 		}
 
 		/**
@@ -431,9 +423,9 @@
 		 * @access private
 		 * @param integer	The index of the row
 		 */
-		function setRowFree( $index )
+		function setRowFree($index)
 		{
-			$this->rows_infos[ $index ][ 'occupied' ] = false ;
+			$this->rows_infos[$index]['occupied'] = false ;
 		}
 
 		/**
@@ -443,7 +435,7 @@
 		 */
 		function getNumOfCols()
 		{
-			return $this->cols ;
+			return $this->cols;
 		}
 
 		/**
@@ -451,9 +443,9 @@
 		 * @access private
 		 * @param integer	The number of rows in the sheet
 		 */
-		function setNumOfRows( $rows )
+		function setNumOfRows($rows)
 		{
-			$this->rows = $rows ;
+			$this->rows = $rows;
 		}
 
 		/**
@@ -461,9 +453,9 @@
 		 * @access private
 		 * @param integer	The desired row
 		 */
-		function setNumOfCols( $cols )
+		function setNumOfCols($cols)
 		{
-			$this->cols = $cols ;
+			$this->cols = $cols;
 		}
 
 		/**
@@ -473,27 +465,24 @@
 		 */
 		function getAsString()
 		{
-			if ($this->isVisible())
-			{
+			if ($this->isVisible()) {
     			$header			= "<table class='sheet' ";
     			$close_header	= ">\n" ;
     			$footer			= "</table>" ;
     			$content		= "" ;
 
-    			for( $row_counter = 1; $row_counter <= ( $this->getNumOfRows() ); $row_counter++ )
-    			{
+    			for( $row_counter = 1; $row_counter <= ( $this->getNumOfRows() ); $row_counter++ ) {
     				$content .= " <tr>\n" ;
 
-    				for( $col_counter = 1; $col_counter <= ( $this->getNumOfCols() ); $col_counter++ )
-    				{
-    					$content .= "  " . $this->grid[ $row_counter ][ $col_counter ]->getAsString() . "\n" ;
+    				for( $col_counter = 1; $col_counter <= ( $this->getNumOfCols() ); $col_counter++ ) {
+    					$content .= "  " . $this->grid[$row_counter][$col_counter]->getAsString() . "\n" ;
     				}
 
     				$content .= " </tr>\n" ;
     			}
 
     			return $header . $this->composeStringProperties() . $close_header . $content . $footer ;
-			}else{
+			} else {
 				return '';
 			}
 		}
@@ -505,7 +494,7 @@
 		 */
 		function isGridDefined()
 		{
-			return $this->grid_defined ;
+			return $this->grid_defined;
 		}
 
 		/**
@@ -541,14 +530,14 @@
 		 * @access private
 		 * @var boolean
 		 */
-		var $occupied		= false ;
+		var $occupied = false;
 
 		/**
 		 * Reference to the anchored widget.
 		 * @access public
 		 * @var widget
 		 */
-		var $widget			= NULL ;
+		var $widget	= null;
 
 		/**
 		 * Class constructor.
@@ -556,11 +545,11 @@
 		 */
 		function P4A_Sheet_Cell($name)
 		{
-			parent::P4A_Widget( $name ) ;
-			$this->properties[ 'rowspan' ]	= 1 ;
-			$this->properties[ 'colspan' ]	= 1 ;
-			//$this->properties[ 'nowrap' ]	= 'nowrap' ;
-			$this->properties[ 'valign' ]	= 'top' ;
+			parent::P4A_Widget($name);
+			$this->properties[ 'rowspan'] = 1;
+			$this->properties['colspan'] = 1;
+			//$this->properties['nowrap'] = 'nowrap';
+			$this->properties['valign']	= 'top';
 		}
 
 		/**
@@ -569,14 +558,14 @@
 		 * @param integer	The number of rows to occupy.
 		 * @param integer	The numer of columns to occupy.
 		 */
-		function anchor( &$widget, $rowspan = 1, $colspan = 1 )
+		function anchor(&$widget, $rowspan = 1, $colspan = 1)
 		{
-			unset ($this->widget) ;
-			$this->widget =& $widget ;
-			$this->setOccupied() ;
+			unset($this->widget);
+			$this->widget =& $widget;
+			$this->setOccupied();
 
-			$this->setProperty( 'rowspan', $rowspan ) ;
-			$this->setProperty( 'colspan', $colspan ) ;
+			$this->setProperty( 'rowspan', $rowspan );
+			$this->setProperty( 'colspan', $colspan );
 		}
 
 		/**
@@ -586,33 +575,24 @@
 		 */
 		function getAsString()
 		{
-			$header			= "<td class='sheet_cell' " ;
-			$close_header	= ">" ;
-			$footer			= "</td>" ;
+			$header			= "<td class='sheet_cell' ";
+			$close_header	= ">";
+			$footer			= "</td>";
 
-			if( $this->isOccupied() )
-			{
-				if( is_object( $this->widget ) )
-				{
-					$content = $this->widget->getAsString() ;
+			if ($this->isOccupied()) {
+				if (is_object($this->widget)) {
+					$content = $this->widget->getAsString();
+				} else {
+					$content = $this->widget;
 				}
-				else
-				{
-					$content = $this->widget ;
-				}
-			}
-			else
-			{
-				$content = '&nbsp;' ;
+			} else {
+				$content = '&nbsp;';
 			}
 
-			if( $this->isVisible() )
-			{
-				return $header . $this->composeStringProperties() . $close_header . $content . $footer ;
-			}
-			else
-			{
-				return '' ;
+			if ($this->isVisible()) {
+				return $header . $this->composeStringProperties() . $close_header . $content . $footer;
+			} else {
+				return '';
 			}
 		}
 
@@ -622,7 +602,7 @@
 		 */
 		function isOccupied()
 		{
-			return $this->occupied ;
+			return $this->occupied;
 		}
 
 		/**
@@ -631,7 +611,7 @@
 		 */
 		function isFree()
 		{
-			return !$this->occupied ;
+			return !$this->occupied;
 		}
 
 		/**
@@ -639,7 +619,7 @@
 		 */
 		function setOccupied()
 		{
-			$this->occupied = true ;
+			$this->occupied = true;
 		}
 
 		/**
@@ -647,8 +627,8 @@
 		 */
 		function setFree()
 		{
-			unset( $this->widget ) ;
-			$this->occupied = false ;
+			unset($this->widget);
+			$this->occupied = false;
 		}
 	}
 

@@ -82,15 +82,17 @@ class P4A_Canvas extends P4A_Widget
 		$string  = "";
 
 		foreach(array_keys($this->objects) as $key){
-			$object =& $this->objects[$key][0];
-			$top = ($this->objects[$key][1] * $this->top) + $this->offset_top;
-			$left = ($this->objects[$key][2] * $this->left) + $this->offset_left;
-			$unit = $this->unit;
-
-			$string .= "<div style='position:absolute;top:{$top}{$unit};left:{$left}{$unit};'>\n";
-			$string .= $object->getAsString() . "\n";
-			$string .= "</div>\n\n";
-			unset($object);
+			if (is_object($object)) {
+				$object =& $this->objects[$key][0];
+				$top = ($this->objects[$key][1] * $this->top) + $this->offset_top;
+				$left = ($this->objects[$key][2] * $this->left) + $this->offset_left;
+				$unit = $this->unit;
+	
+				$string .= "<div style='position:absolute;top:{$top}{$unit};left:{$left}{$unit};'>\n";
+				$string .= $object->getAsString() . "\n";
+				$string .= "</div>\n\n";
+				unset($object);
+			}
 		}
 		return $string;
 	}
