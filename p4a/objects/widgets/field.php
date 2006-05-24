@@ -299,8 +299,7 @@
 				$new_value = NULL;
 			} elseif ($this->isFormattable() and $this->isFormatted()) {
 				$new_value = $this->unformat($new_value);
-			} elseif (($this->type == 'password')
-			and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
+			} elseif (($this->type == 'password') and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
 						if (!empty($new_value)) {
@@ -312,8 +311,7 @@
 					default:
 						P4A_Error('unknown encryption type:' . $this->getEncryptionType());
 				}
-			} elseif (($this->type == 'password')
-			and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
+			} elseif (($this->type == 'password') and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
 				$set = false;
 			}
 
@@ -633,15 +631,11 @@
 		function unformat( $value )
 		{
 			$p4a =& P4A::singleton();
-			if( strlen( $value ) > 0 )
-			{
-				if( ( $this->formatter_name !== NULL ) and ( $this->format_name !== NULL ) )
-				{
-					$value = $p4a->i18n->{$this->formatter_name}->unformat( $value, $p4a->i18n->{$this->formatter_name}->getFormat( $this->format_name ) );
-				}
-				else
-				{
-					$value = $p4a->i18n->autoUnformat( $value, $this->data_field->getType() );
+			if (strlen($value) > 0) {
+				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
+					$value = $p4a->i18n->{$this->formatter_name}->unformat($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
+				} else {
+					$value = $p4a->i18n->autoUnformat($value, $this->data_field->getType());
 				}
 			}
 

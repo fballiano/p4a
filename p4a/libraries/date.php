@@ -94,7 +94,7 @@
 	     */
 	    function format($date = NULL, $format, $locale_vars = NULL)
 	    {
-	    	if (empty($date)) {
+	    	if ($date === null) {
 	    		return '';
 	    	}
 

@@ -54,7 +54,7 @@
 		 */
 		function format($number = null, $format)
 		{
-			if (empty($number)) {
+			if ($number === null) {
 				return '';
 			}
 
