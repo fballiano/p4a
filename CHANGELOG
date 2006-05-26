@@ -1,4 +1,4 @@
-0.99.13
+1.0
 - P4A_Frame, P4A_Canvas and P4A_Sheet now checks if object were destroyed before rendering
 - a bug in P4A_Number::format was fixed (it prevented setNewValue(0) to work)
 - some code beautification were done
