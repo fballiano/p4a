@@ -91,6 +91,7 @@ class P4A_Frame extends P4A_Widget
 
 	function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "";
 		}
@@ -100,7 +101,7 @@ class P4A_Frame extends P4A_Widget
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 
-		$string  = "<div class='frame' $properties $actions >";
+		$string  = "<div id='{$id}' class='frame' $properties $actions >";
 		foreach($this->_map as $objs){
 			$one_visible = false;
 			$row = "\n<div class='row'>";
