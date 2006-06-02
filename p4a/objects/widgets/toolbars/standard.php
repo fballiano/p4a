@@ -57,7 +57,7 @@
 			parent::P4A_Toolbar($name);
 			$this->addDefaultButtons();
 		}
-			
+		
 		function addDefaultButtons()
 		{
 			$new =& $this->addButton('new', 'new');
