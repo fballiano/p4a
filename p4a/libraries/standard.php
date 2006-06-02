@@ -115,7 +115,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	 * Converts an array into a "file" value.
 	 * @access public
 	 * @param array		The file.
-	 * @return array
+	 * @return string
 	 */
 	function P4A_Array2file($aFile)
 	{
@@ -129,6 +129,34 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 		$aFileNew[] = $aFile['height'];
 		$sFile = '{' . join(',' , $aFileNew ) . '}';
 		return $sFile;
+	}
+	
+	/**
+	 * Converts a file path into a "file" format value
+	 * @access public
+	 * @param string	The filename
+	 * @param string	The uploads dir
+	 * @return string	The "file"
+	 */
+	
+	function P4A_Filename2File($filename,$uploads_dir)
+	{
+		if (!is_file($filename)) {
+			return FALSE;
+		} else {
+			$aFile['name'] = basename($filename);
+			$aFile['path'] = str_replace($uploads_dir,'',$filename);
+			$aFile['size'] = filesize($filename);
+			$aFile['type'] = mime_content_type($filename);
+			list($type,$subtype) = explode('/',$aFile['type']);
+			if ($type == 'image') {
+				list($aFile['width'],$aFile['height']) = getimagesize($filename);
+			} else {
+				$aFile['width'] = NULL;
+				$aFile['height'] = NULL;
+			}
+			return P4A_Array2File($aFile);
+ 		}
 	}
 
 	/**
