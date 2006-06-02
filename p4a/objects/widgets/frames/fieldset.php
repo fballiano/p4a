@@ -65,6 +65,7 @@ class P4A_Fieldset extends P4A_Frame
 
 	function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "";
 		}
@@ -73,7 +74,7 @@ class P4A_Fieldset extends P4A_Frame
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 
-		$string  = "<fieldset class='frame' $properties $actions >";
+		$string  = "<fieldset id='$id' class='frame' $properties $actions >";
 		if ($this->getTitle()) {
 			$string  .= "<legend>" . $this->getTitle() . "</legend>";
 		}
