@@ -326,7 +326,7 @@
 			$row = $this->getLastOccupiedRow();
 			$row++;
 
-			if($row > $this->rows) {
+			if ($row > $this->rows) {
 				$row = $this->addRow();
 			}
 
@@ -342,15 +342,15 @@
 		function addRow( $rows = 1 )
 		{
 			if ($rows > 0) {
-				$row_pointer = $this->rows + 1 ;
+				$row_pointer = $this->rows + 1;
 			} else {
-				$row_pointer = $this->rows ;
+				$row_pointer = $this->rows;
 			}
 
-			$cols = $this->getNumOfCols() ;
+			$cols = $this->getNumOfCols();
 			if ($cols == 0) {
-				$this->setNumOfCols( 1 ) ;
-				$cols = 1 ;
+				$this->setNumOfCols(1);
+				$cols = 1;
 			}
 
 			for ($row_counter = $row_pointer; $row_counter <= ( $row_pointer + $rows ); $row_counter++) {
@@ -367,8 +367,8 @@
 				}
 			}
 
-			$this->setNumOfRows( $this->getNumOfRows() + $rows ) ;
-			return $row_pointer ;
+			$this->setNumOfRows($this->getNumOfRows() + $rows);
+			return $row_pointer;
 		}
 
 		/**
@@ -378,7 +378,7 @@
 		 */
 		function getNumOfRows()
 		{
-			return $this->rows ;
+			return $this->rows;
 		}
 
 		/**
@@ -390,11 +390,11 @@
 		{
 			for ($rowcounter = $this->rows; $rowcounter >= 1; $rowcounter--) {
 				if (array_key_exists('occupied', $this->rows_infos[$rowcounter]) and $this->rows_infos[$rowcounter]['occupied']) {
-					return $rowcounter ;
+					return $rowcounter;
 				}
 			}
 
-			return 0 ;
+			return 0;
 		}
 
 		/**
@@ -403,9 +403,9 @@
 		 * @access private
 		 * @param integer	The index of the row.
 		 */
-		function setLastOccupiedRow( $index )
+		function setLastOccupiedRow($index)
 		{
-			$this->last_occupied_row = $index ;
+			$this->last_occupied_row = $index;
 		}
 
 		/**
@@ -413,9 +413,9 @@
 		 * @access private
 		 * @param integer	The index of the row
 		 */
-		function setRowOccupied( $index )
+		function setRowOccupied($index)
 		{
-			$this->rows_infos[ $index ][ 'occupied' ] = true ;
+			$this->rows_infos[$index]['occupied'] = true ;
 		}
 
 		/**
@@ -423,9 +423,9 @@
 		 * @access private
 		 * @param integer	The index of the row
 		 */
-		function setRowFree( $index )
+		function setRowFree($index)
 		{
-			$this->rows_infos[ $index ][ 'occupied' ] = false ;
+			$this->rows_infos[$index]['occupied'] = false ;
 		}
 
 		/**
@@ -435,7 +435,7 @@
 		 */
 		function getNumOfCols()
 		{
-			return $this->cols ;
+			return $this->cols;
 		}
 
 		/**
@@ -443,9 +443,9 @@
 		 * @access private
 		 * @param integer	The number of rows in the sheet
 		 */
-		function setNumOfRows( $rows )
+		function setNumOfRows($rows)
 		{
-			$this->rows = $rows ;
+			$this->rows = $rows;
 		}
 
 		/**
@@ -453,9 +453,9 @@
 		 * @access private
 		 * @param integer	The desired row
 		 */
-		function setNumOfCols( $cols )
+		function setNumOfCols($cols)
 		{
-			$this->cols = $cols ;
+			$this->cols = $cols;
 		}
 
 		/**
@@ -475,14 +475,14 @@
     				$content .= " <tr>\n" ;
 
     				for( $col_counter = 1; $col_counter <= ( $this->getNumOfCols() ); $col_counter++ ) {
-    					$content .= "  " . $this->grid[ $row_counter ][ $col_counter ]->getAsString() . "\n" ;
+    					$content .= "  " . $this->grid[$row_counter][$col_counter]->getAsString() . "\n" ;
     				}
 
     				$content .= " </tr>\n" ;
     			}
 
     			return $header . $this->composeStringProperties() . $close_header . $content . $footer ;
-			}else{
+			} else {
 				return '';
 			}
 		}
@@ -494,7 +494,7 @@
 		 */
 		function isGridDefined()
 		{
-			return $this->grid_defined ;
+			return $this->grid_defined;
 		}
 
 		/**
@@ -530,7 +530,7 @@
 		 * @access private
 		 * @var boolean
 		 */
-		var $occupied		= false ;
+		var $occupied = false;
 
 		/**
 		 * Reference to the anchored widget.
@@ -545,11 +545,11 @@
 		 */
 		function P4A_Sheet_Cell($name)
 		{
-			parent::P4A_Widget( $name ) ;
-			$this->properties[ 'rowspan' ]	= 1 ;
-			$this->properties[ 'colspan' ]	= 1 ;
-			//$this->properties[ 'nowrap' ]	= 'nowrap' ;
-			$this->properties[ 'valign' ]	= 'top' ;
+			parent::P4A_Widget($name);
+			$this->properties[ 'rowspan'] = 1;
+			$this->properties['colspan'] = 1;
+			//$this->properties['nowrap'] = 'nowrap';
+			$this->properties['valign']	= 'top';
 		}
 
 		/**
@@ -558,14 +558,14 @@
 		 * @param integer	The number of rows to occupy.
 		 * @param integer	The numer of columns to occupy.
 		 */
-		function anchor( &$widget, $rowspan = 1, $colspan = 1 )
+		function anchor(&$widget, $rowspan = 1, $colspan = 1)
 		{
-			unset ($this->widget) ;
-			$this->widget =& $widget ;
-			$this->setOccupied() ;
+			unset($this->widget);
+			$this->widget =& $widget;
+			$this->setOccupied();
 
-			$this->setProperty( 'rowspan', $rowspan ) ;
-			$this->setProperty( 'colspan', $colspan ) ;
+			$this->setProperty( 'rowspan', $rowspan );
+			$this->setProperty( 'colspan', $colspan );
 		}
 
 		/**
@@ -575,24 +575,24 @@
 		 */
 		function getAsString()
 		{
-			$header			= "<td class='sheet_cell' " ;
-			$close_header	= ">" ;
-			$footer			= "</td>" ;
+			$header			= "<td class='sheet_cell' ";
+			$close_header	= ">";
+			$footer			= "</td>";
 
 			if ($this->isOccupied()) {
 				if (is_object($this->widget)) {
-					$content = $this->widget->getAsString() ;
+					$content = $this->widget->getAsString();
 				} else {
-					$content = $this->widget ;
+					$content = $this->widget;
 				}
 			} else {
-				$content = '&nbsp;' ;
+				$content = '&nbsp;';
 			}
 
 			if ($this->isVisible()) {
-				return $header . $this->composeStringProperties() . $close_header . $content . $footer ;
+				return $header . $this->composeStringProperties() . $close_header . $content . $footer;
 			} else {
-				return '' ;
+				return '';
 			}
 		}
 
@@ -602,7 +602,7 @@
 		 */
 		function isOccupied()
 		{
-			return $this->occupied ;
+			return $this->occupied;
 		}
 
 		/**
@@ -611,7 +611,7 @@
 		 */
 		function isFree()
 		{
-			return !$this->occupied ;
+			return !$this->occupied;
 		}
 
 		/**
@@ -619,7 +619,7 @@
 		 */
 		function setOccupied()
 		{
-			$this->occupied = true ;
+			$this->occupied = true;
 		}
 
 		/**
@@ -627,8 +627,8 @@
 		 */
 		function setFree()
 		{
-			unset( $this->widget ) ;
-			$this->occupied = false ;
+			unset($this->widget);
+			$this->occupied = false;
 		}
 	}
 
