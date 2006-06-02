@@ -1,3 +1,9 @@
+1.1
+- P4A_Filename2File was added to P4A Standard library
+- First BETA Ajax integration
+- addAjaxAction method was added to p4a_widget class
+- redesign method (ajax) was added to p4a_widget class
+
 1.0
 - P4A_Frame, P4A_Canvas and P4A_Sheet now checks if object were destroyed before rendering
 - a bug in P4A_Number::format was fixed (it prevented setNewValue(0) to work)
