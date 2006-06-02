@@ -131,6 +131,7 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return '';
 			}
@@ -208,6 +209,7 @@
 				$sReturn .= $this->composeStringActions();
 			}
 			$sReturn .= "$footer\n";
+			$sReturn = "<span id='$id'>{$sReturn}</span>";
 			return $sReturn;
 		}
 		

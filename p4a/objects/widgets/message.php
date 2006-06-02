@@ -60,6 +60,7 @@
 
 		function getAsString()
 		{
+			$id = $this->getId();
 			if ($this->isVisible() and strlen($this->getValue())) {
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
@@ -83,8 +84,11 @@
 			if ($this->auto_clear) {
 				$this->setValue("");
 			}
-
-			return $string;
+			if ($string) {
+				return "<span id='$id'>$string</span>";
+			} else {
+				return "<span id='$id' class='invisible'></span>";
+			}
 		}
 
 

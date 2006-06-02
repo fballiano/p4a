@@ -104,7 +104,7 @@
 			$this->buttons->$name->setStyleProperty("float", $position);
 			return $this->buttons->$name;
 		}
-		
+
 		/**
 		 * Adds a label object.
 		 * @access public
@@ -194,6 +194,7 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return '';
 			}
@@ -205,7 +206,7 @@
 			}
  			$string .= "<div class='br'></div>\n";
 			$string .= "</div>\n\n";
-			return $string;
+			return "<span id='$id'>$string</span>";
 		}
 
 	}

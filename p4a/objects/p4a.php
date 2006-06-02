@@ -146,6 +146,8 @@
 		 * @access private
 		 */
 		var $_action_history_id = 0;
+		
+		var $_to_redesign = array();
 
 		/**
 		 * Class constructor.
@@ -157,7 +159,7 @@
 			$_SESSION["p4a"] =& $this;
 
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-
+			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
 			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
 			$client =& new phpSniff();
 
@@ -298,7 +300,7 @@
 				$_REQUEST['_object'] and
 				$_REQUEST['_action'] and
 				$_REQUEST['_action_id'] and
-				$_REQUEST['_action_id'] == $this->getActionHistoryId() and
+				//$_REQUEST['_action_id'] == $this->getActionHistoryId() and
 				isset($this->objects[$_REQUEST['_object']]))
 			{
 				$object = $_REQUEST['_object'];
@@ -357,13 +359,33 @@
 			}
 
 			$this->_action_history_id++;
-			if (is_object($this->active_mask)) {
+			if (array_key_exists('_ajax',$_REQUEST)
+				and $_REQUEST['_ajax']) {
+				$this->responseXML();
+			} elseif (is_object($this->active_mask)) {
 				$this->active_mask->main();
-			}
+			} 
 
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));
 			flush();
+		}
+		
+		function responseXML()
+		{
+			print "<root>";
+			for ($i=0;$i<count($this->_to_redesign);$i++) {
+				$id = $this->_to_redesign[$i];
+				$object =& $this->getObject($id);
+				print "<widget object_id='$id'>";
+				print "<string><![CDATA[";
+				print $object->getAsString();
+				print "]]></string>";
+				print "</widget>";
+				unset($this->_to_redesign[$i]);
+			}
+			
+			print "</root>";
 		}
 
 		/**
@@ -560,6 +582,11 @@
 		function getActionHistoryId()
 		{
 			return $this->_action_history_id;
+		}
+		
+		function redesign($id)
+		{
+			$this->_to_redesign[] = $id;
 		}
 	}
 ?>

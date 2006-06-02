@@ -114,6 +114,7 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (! $this->isVisible()) {
 				return NULL;
 			}
@@ -134,7 +135,7 @@
 			}else{
 				$sReturn  = "<img alt='' $properties $actions />\n";
 			}
-
+			$sReturn = "<span id='$id'>$sReturn</span>";
 			return $sReturn;
 		}
 	}

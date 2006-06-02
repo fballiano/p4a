@@ -73,7 +73,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		parent::P4A_Widget($name);
 		$this->useTemplate('tab_pane');
 		$this->build("P4A_Collection", "pages");
-		$this->addAction("onClick");
+		$this->addAjaxAction("onClick");
 		$this->intercept($this, "onClick", "tabClick");		
 	}
 
@@ -129,6 +129,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	function tabClick($page, $params)
 	{
 		$this->setActivePage($params[0]);
+		$this->redesign();
 	}	
 
 	/**
@@ -185,6 +186,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		if ($active_page->isVisible()) {
 			$this->addTempVar('active_page', $active_page->getAsString());
 		}
+		$this->addTempVar('id',$this->getId());
 		
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');

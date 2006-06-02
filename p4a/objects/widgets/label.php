@@ -112,7 +112,7 @@
 				return '';
 			}
 
-			$header	= '<label class="label" ';
+			$header	= '<label ' . $this->getId() . ' class="label" ';
 			$close_header = '>';
 			$footer	= '</label>'  .  "\n";
 

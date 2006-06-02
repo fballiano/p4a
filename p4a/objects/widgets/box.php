@@ -60,13 +60,14 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
 				$string = '';
 			} else {
 				$properties = $this->composeStringProperties();
 				$actions = $this->composeStringActions();
 				$value = $this->getValue();
-				$string = "<div $properties $actions>$value</div>";
+				$string = "<div id='$id' $properties $actions>$value</div>";
 			}
 
 			return $string;

@@ -633,9 +633,9 @@
 			$p4a =& P4A::singleton();
 			if (strlen($value) > 0) {
 				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
-					$value = $p4a->i18n->{$this->formatter_name}->unformat($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
+					$value = $p4a->i18n->{$this->formatter_name}->unformat( $value, $p4a->i18n->{$this->formatter_name}->getFormat( $this->format_name ) );
 				} else {
-					$value = $p4a->i18n->autoUnformat($value, $this->data_field->getType());
+					$value = $p4a->i18n->autoUnformat( $value, $this->data_field->getType() );
 				}
 			}
 
@@ -658,8 +658,9 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (! $this->isVisible()) {
-				return NULL;
+				return "<span id='{$id}' class='invisible'></span>";
 			}
 
 			$type   = $this->type;
@@ -672,7 +673,8 @@
 
 			$new_method = 'getAs' . $type;
 			$string = $this->$new_method();
-			return $string . $suffix ;
+			$sReturn =  $string . $suffix ;
+			return "<span id='{$id}'>{$sReturn}</span>";
 		}
 
 		/**
@@ -706,7 +708,6 @@
 			$id = $this->getId();
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
-			$template_path = P4A_THEME_PATH . "/widgets/date_calendar";
 
 			$header 	   = "<input type='text' class='border_color1 font_normal' $enabled";
 			$close_header  = "/>";
@@ -716,13 +717,6 @@
 			}
 
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
-			
-			if (!$p4a->isHandheld()) {
-				$p4a->active_mask->addTempCSS("$template_path/calendar.css");
-				$p4a->active_mask->addTempJavascript("$template_path/calendar_stripped.js");
-				$p4a->active_mask->addTempJavascript("$template_path/lang/calendar-en.js");
-				$p4a->active_mask->addTempJavascript("$template_path/p4a.js");
-			}
 
 			return $sReturn;
 		}
@@ -757,9 +751,10 @@
 		 */
 		function getAsTextarea()
 		{
+			$id = $this->getId();
 			$cols = floor($this->getWidth() / 6) - 4;
 			$rows = floor($this->getHeight() / 13);
-			$header = "<textarea class='border_color1 font_normal' cols='$cols' rows='$rows' ";
+			$header = "<textarea id='{$id}textarea' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
 			$close_header = '>';
 			$footer	= '</textarea>';
 
@@ -780,8 +775,7 @@
 		 */
 		function getAsRichTextarea()
 		{
-			$p4a =& P4A::singleton();
-			$p4a->active_mask->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
+			$p4a =& p4a::singleton();
 			$this->useTemplate('rich_textarea');
 			
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
@@ -812,7 +806,7 @@
 		 */
 		function getAsLabel()
 		{
-            $header         = '<div ';
+            $header         = '<div class="field_as_label" ';
             $close_header   = '>';
             $footer         = '</div>';
             $value			= '';

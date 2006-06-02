@@ -52,21 +52,21 @@
 		 * @access private
 		 * @var string
 		 */
-		var $value = null;
+		var $value = NULL;
 
 		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
 		 * @var boolean
 		 */
-		var $enabled = true;
+		var $enabled = TRUE;
 
 		/**
 		 * Defines object visibility.
 		 * @access private
 		 * @var boolean
 		 */
-		var $visible = true;
+		var $visible = TRUE;
 
 		/**
 		 * Keeps the association between an action and its listener.
@@ -88,7 +88,7 @@
 		 * @access public
 		 * @var mixed
 		 */
-		var $label = null;
+		var $label = NULL;
 
 		/**
 		 * Keeps all the HTML properties for the widget.
@@ -118,8 +118,8 @@
 		 * @access public
 		 * @var string
 		 */
-		var $template_name = null;
-		
+		var $template_name = NULL;
+
 		/**
 		 * Temporary variables (destroyed after rendering)
 		 * @access private
@@ -135,10 +135,10 @@
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
 		 * @access private
 		 */
-		function p4a_widget($name = null, $prefix = 'wdg', $id = null)
+		function p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
 		{
 			parent::p4a_object($name, $prefix, $id);
-			$this->setProperty('id', $this->getId());
+			//$this->setProperty('id', $this->getId());
 		}
 
 		/**
@@ -467,7 +467,7 @@
 		 * @param string	Text for confirmation.
 		 * @param string	i18n message id for confirmation.
 		 */
-		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = FALSE)
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
@@ -483,8 +483,13 @@
 			$this->actions[$action]['require_confirmation'] = $require_confirmation;
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
+			$this->actions[$action]['ajax'] = $ajax;
 		}
-
+		
+		function addAjaxAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		{
+			$this->addAction($action,$event,$require_confirmation,$confirmation_text,$confirmation_text_handler,TRUE);
+		}
 		/**
 		 * Requires confirmation for an action.
 		 * @access public
@@ -614,8 +619,12 @@
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $action_data['confirmation_text'] ) .'\')){';
 					}
 				}
-
-				$sActions .= $browser_action . '="' . $prefix . 'executeEvent(\'' . $this->getId() . '\', \'' . $action_data['event'] . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" ';
+				if ($action_data['ajax']) {
+					$execute = 'executeAjaxEvent';
+				} else {
+					$execute = 'executeEvent';
+				}
+				$sActions .= $browser_action . '="' . $prefix . "{$execute}('" . $this->getId() . '\', \'' . $action_data['event'] . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" ';
 			}
 			return $sActions;
 		}
@@ -835,6 +844,13 @@
 		function clearTempVars()
 		{
 			$this->_temp_vars = array();
+		}
+		
+		function redesign()
+		{
+			$p4a =& p4a::singleton();
+			$id = $this->getId();
+			$p4a->redesign($id);
 		}
 	}
 ?>

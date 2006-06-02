@@ -75,7 +75,7 @@
 				return NULL;
 			}
 
-			$header 		= '<hr noshade class="color2" ';
+			$header 		= '<hr ' .$this->getId(). 'noshade class="color2" ';
 			$close_header 	= '/>';
 			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 

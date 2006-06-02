@@ -316,6 +316,15 @@
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
 			
+			$template_calendar_path = P4A_THEME_PATH . "/widgets/date_calendar";			
+			if (!$p4a->isHandheld()) {
+				$this->addTempCSS("$template_calendar_path/calendar.css");
+				$this->addTempJavascript("$template_calendar_path/calendar_stripped.js");
+				$this->addTempJavascript("$template_calendar_path/lang/calendar-en.js");
+				$this->addTempJavascript(P4A_THEME_PATH . "/p4a.js");
+				//$this->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
+			}
+			
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
@@ -585,6 +594,7 @@
 			$return .= "<div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
+			$return .= "<input type='hidden' name='_ajax' value='0' />\n";
 			$return .= "<input type='hidden' name='_action_id' value='" . $p4a->getActionHistoryId() . "' />\n";
 			$return .= "<input type='hidden' name='param1' />\n";
 			$return .= "<input type='hidden' name='param2' />\n";

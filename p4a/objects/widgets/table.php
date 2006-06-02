@@ -185,7 +185,7 @@
 			if (!$this->isVisible()) {
 				return '';
 			}
-
+			$this->addTempVar('id', $this->getId());
 			$this->addTempVar('table_properties', $this->composeStringProperties());
 			$width = $this->getStyleProperty("width");
 			if (substr($width,-2) == "px") {
@@ -273,7 +273,6 @@
 				$this->addTempVar('table_rows_properties', null);
 				$this->addTempVar('table_rows', null);
 			}
-			
 			$this->addTempVar('i18n', $p4a->i18n->messages->get());
 			$return = $this->fetchTemplate();
 			$this->clearTempVars();
@@ -1007,16 +1006,16 @@
 				$this->buttons->button_first->setValue("first_page");
 			}
 
-			$this->buttons->button_last->addAction('onClick');
+			$this->buttons->button_last->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
 
-			$this->buttons->button_next->addAction('onClick');
+			$this->buttons->button_next->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
 
-			$this->buttons->button_prev->addAction('onClick');
+			$this->buttons->button_prev->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
 
-			$this->buttons->button_first->addAction('onClick');
+			$this->buttons->button_first->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
 		}
 
@@ -1068,6 +1067,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->nextPage();
+			$parent->redesign();
 		}
 
 		/**
@@ -1079,6 +1079,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->prevPage();
+			$parent->redesign();			
 		}
 
 		/**
@@ -1090,6 +1091,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->firstPage();
+			$parent->redesign();			
 		}
 
 		/**
@@ -1101,6 +1103,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->lastPage();
+			$parent->redesign();			
 		}
 
 		/**

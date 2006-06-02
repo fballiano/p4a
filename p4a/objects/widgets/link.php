@@ -80,6 +80,7 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return '';
 			}
@@ -94,8 +95,8 @@
 			} else {
 				$sReturn = $this->getValue();
 			}
-
-			return $sReturn;
+			
+			return "<span id='$id'>$sReturn</span>";
 		}
 	}
 ?>
