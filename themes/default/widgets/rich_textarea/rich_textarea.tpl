@@ -4,7 +4,7 @@
 
 tinyMCE.init({
 	mode: "exact",
-	elements : "{id}",
+	elements : "{id}textarea",
 	theme: "advanced",
 	language: "en",
 	plugins: "table,advhr,advimage,advlink,emotions,preview,flash,searchreplace,print,paste,directionality,fullscreen,noneditable,contextmenu",
@@ -24,7 +24,7 @@ tinyMCE.init({
 function {id}fileBrowserCallBack(field_name, url, type, win) {
 	tinyfck_field = field_name;
 	tinyfck = win;
-	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php?ServerPath={upload_path}", "{id}", "modal,width=600,height=400");
+	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php?ServerPath={upload_path}", "{id}textarea", "modal,width=600,height=400");
 }
 {end:}
 
