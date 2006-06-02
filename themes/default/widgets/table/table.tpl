@@ -1,4 +1,4 @@
-<div class="border_box table_container" flexy:raw="{table_properties:h}">
+<div class="border_box table_container" id="{id}" flexy:raw="{table_properties:h}">
 	<table class="table" style="width: {table_width}" >
 		<caption flexy:if="title">{title}</caption>
 		

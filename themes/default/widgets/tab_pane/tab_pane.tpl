@@ -1,4 +1,4 @@
-<div class="tab_pane" flexy:raw="{tab_pane_properties:h}">
+<div class="tab_pane" id="{id}" flexy:raw="{tab_pane_properties:h}">
 <ul class="tabs">
 {foreach:tabs,tab}
 <li>
