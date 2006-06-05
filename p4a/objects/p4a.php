@@ -361,7 +361,7 @@
 			$this->_action_history_id++;
 			if (array_key_exists('_ajax',$_REQUEST)
 				and $_REQUEST['_ajax']) {
-				$this->responseXML();
+				$this->raiseXMLReponse();
 			} elseif (is_object($this->active_mask)) {
 				$this->active_mask->main();
 			} 
@@ -371,7 +371,7 @@
 			flush();
 		}
 		
-		function responseXML()
+		function raiseXMLReponse()
 		{
 			print "<root>";
 			for ($i=0;$i<count($this->_to_redesign);$i++) {
