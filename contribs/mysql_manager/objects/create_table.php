@@ -64,7 +64,7 @@ class My_Create_Table extends P4A_Mask
 
 		$table_name =& $this->table_name->getNewValue();
 		$result = $db->query("CREATE TABLE $table_name (id int)");
-		if (!DB::isError($result)) {
+		if (!MDB2::isError($result)) {
 			$menu_item =& $p4a->menu->items->tables->addItem($table_name);
 			$p4a->intercept($menu_item,"onClick","tableOpenClick");
 			$p4a->menu->items->tables->items->$table_name->onClick();

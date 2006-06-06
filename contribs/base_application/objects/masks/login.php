@@ -94,7 +94,7 @@ class P4A_Login extends P4A_Mask
 		$pass = $this->pass->getNewValue();
 					
 		$db =& P4A_DB::singleton();
-		$user_data = $db->getRow("SELECT * FROM users WHERE user = '$user' AND pass = '$pass'");
+		$user_data = $db->queryRow("SELECT * FROM users WHERE user = '$user' AND pass = '$pass'");
 		if (!$user_data) {
 			$this->error->setValue("Username or passoword are wrong!");
 		} else {

@@ -457,9 +457,9 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $pk = $this->getPk();
                 $pk_value = $this->fields->$pk->getNewValue();
-                $fk_values = $db->getCol("SELECT $fk_field
-                                          FROM $table
-                                          WHERE $fk='$pk_value'");
+                $fk_values = $db->queryCol("SELECT $fk_field
+                                            FROM $table
+                                            WHERE $fk='$pk_value'");
                 $this->fields->$fieldname->setValue($fk_values);
                 $row[$fieldname] = $fk_values;
             }

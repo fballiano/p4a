@@ -52,7 +52,7 @@ class My_Table_Source extends P4A_Array_Source
 	{
 		$db =& P4A_DB::singleton();
 		$table_name = $this->_table_name;
-		return $db->getAll("desc $table_name");
+		return $db->queryAll("desc $table_name");
 	}
 
 	function reload()

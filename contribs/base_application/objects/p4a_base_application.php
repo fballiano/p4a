@@ -62,10 +62,10 @@ class P4A_Base_Application extends p4a
 		$menu =& $this->build("p4a_menu","menu");
 
 		$db =& P4A_DB::singleton();
-		$items = $db->getAll("SELECT a.*, b.name AS parent_name, b.position AS parent_position
-							  FROM menu AS a
-						      LEFT JOIN menu AS b on (a.parent_id=b.id)
-							  ORDER BY parent_position,position,parent_name,name");
+		$items = $db->queryAll("SELECT a.*, b.name AS parent_name, b.position AS parent_position
+							    FROM menu AS a
+						        LEFT JOIN menu AS b on (a.parent_id=b.id)
+							    ORDER BY parent_position,position,parent_name,name");
 
 		foreach ($items as $item) {
 			$parent_name = $item["parent_name"];

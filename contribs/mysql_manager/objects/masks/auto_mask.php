@@ -65,7 +65,7 @@ class P4A_Auto_Mask extends P4A_XML_Mask
         $db =& p4a_db::singleton();
 
 		$name = $this->table_name;
-		$create_table_info = $db->getRow("show create table $name");
+		$create_table_info = $db->queryRow("show create table $name");
 
 		$create_table_info = $create_table_info["Create Table"];
 		$match = '/FOREIGN KEY \(`(\w*)`\) REFERENCES `(\w*)\` \(`(\w*)`\)/';

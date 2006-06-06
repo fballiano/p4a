@@ -1,3 +1,6 @@
+0.3
+- ported to MDB2
+
 0.2
 - P4A_EXTENDED_ERRORS is now off by default
 - some bugfixes in db.sql

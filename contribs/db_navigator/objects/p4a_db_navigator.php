@@ -177,9 +177,9 @@ class P4A_DB_Navigator extends P4A_Widget
 		$return = "";
 		
 		if (empty($id)) {
-			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
+			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
 		} else {
-			$roots = $db->getAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
+			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
 		}
 		
 		if (empty($roots)) {
@@ -231,7 +231,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$db =& p4a_db::singleton();
 		
-		$section = $db->getRow("SELECT * FROM $table WHERE $pk = '$id'");
+		$section = $db->queryRow("SELECT * FROM $table WHERE $pk = '$id'");
 		$return = array();
 		$return[] = $section;
 		

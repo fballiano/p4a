@@ -102,7 +102,7 @@ class db_configuration extends p4a_mask
 		define("P4A_DSN", $p4a->dsn);
 		$db =& p4a_db::singleton();
 
-		$tables =& $db->getCol("show tables");
+		$tables =& $db->queryCol("show tables");
 		$menu =& $p4a->build("p4a_menu", "menu");
 		$menu->addItem("masks", "&Masks");
 		$menu->addItem("tables", "&Tables");
