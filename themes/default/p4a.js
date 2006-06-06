@@ -89,7 +89,7 @@ function xmlhttpPost(strURL, strSubmit, strResultFunc)
 	}
 	
 	if (!xmlHttpReq) {
-		alert("Sorry, your browser do not support this software");
+		alert("Sorry, your browser does not support this software");
 	}
 	
 	xmlHttpReq.open('POST', strURL, true);
@@ -111,7 +111,7 @@ function processAjaxResponse(response)
    		if (string_tag) {
    			string_data = string_tag.firstChild.data;
    		}
-   		redesign(object_id,string_data);
+   		redesign(object_id, string_data);
 	}	
 }        
 
