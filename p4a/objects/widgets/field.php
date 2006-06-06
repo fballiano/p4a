@@ -1099,7 +1099,7 @@
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 
 				$sReturn  = '<table class="border_box">';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left"><a target="_blank" href="' . $src . '">' . $this->getNewValue(0) . '</a></td></tr>';
+				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
