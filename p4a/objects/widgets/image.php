@@ -115,8 +115,8 @@
 		function getAsString()
 		{
 			$id = $this->getId();
-			if (! $this->isVisible()) {
-				return NULL;
+			if (!$this->isVisible()) {
+				return '';
 			}
 
 			$label = $this->getLabel();
@@ -132,7 +132,7 @@
 				$sReturn .= "<dt><img alt='' $properties $actions /></dt>";
 				$sReturn .= "<dd class=\"$class\">$label</dd>";
 				$sReturn .= "</dl>\n";
-			}else{
+			} else {
 				$sReturn  = "<img alt='' $properties $actions />\n";
 			}
 			$sReturn = "<span id='$id'>$sReturn</span>";

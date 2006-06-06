@@ -84,7 +84,13 @@ class P4A_Fieldset extends P4A_Frame
 
 			foreach ($row as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
-				$as_string = $object->getAsString();
+				
+				if (is_object($object)) {
+					$as_string = $object->getAsString();
+				} else {
+					unset($p4a->objects[$obj["id"]]);
+					$as_string = '';
+				}
 
 				if (strlen($as_string)>0) {
 					$one_visible = true;

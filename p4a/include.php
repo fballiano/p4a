@@ -55,7 +55,7 @@
 	require_once "$dir/libraries/standard.php";
 	require_once "$dir/libraries/check_configuration.php";
 	require_once "$dir/libraries/pear/PEAR/Common.php";
-	require_once "$dir/libraries/pear/DB.php";
+	require_once "$dir/libraries/pear/MDB2.php";
 	require_once "$dir/libraries/pear/HTML/Template/Flexy.php";
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";

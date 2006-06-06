@@ -188,14 +188,14 @@
 			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
 				$method = $this->_map_actions[$action]['method'];
-				if ($param !== NULL){
+				if ($param !== null){
 					eval('$return = $interceptor->' . $method . '($this,$param);');
 				} else {
 					eval('$return = $interceptor->' . $method . '($this);');
 				}
 				return $return;
 			} else {
-				return NULL;
+				return null;
 			}
 		}
 

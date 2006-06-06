@@ -1,10 +1,15 @@
-1.1
+1.1.0
 - P4A_Filename2File was added to P4A Standard library
 - First BETA Ajax integration
 - addAjaxAction method was added to p4a_widget class
 - redesign method (ajax) was added to p4a_widget class
+- scriptaculos 1.6.1 was added to the default theme
+- PEAR::DB was dropped in favour of PEAR::MDB2 (PEAR::DB was abandoned by its developers)
+- MDB2-2.0.3, MDB2_Driver_mssql-1.0.0, MDB2_Driver_mysql-1.0.3, MDB2_Driver_mysqli-1.0.3, MDB2_Driver_oci8-0.2.6, MDB2_Driver_pgsql-1.0.3, MDB2_Driver_sqlite-1.0.2 were installed
+- a bug on IE file download under SSL was fixed
+- some minor bugfixes
 
-1.0
+1.0.0
 - P4A_Frame, P4A_Canvas and P4A_Sheet now checks if object were destroyed before rendering
 - a bug in P4A_Number::format was fixed (it prevented setNewValue(0) to work)
 - some code beautification were done

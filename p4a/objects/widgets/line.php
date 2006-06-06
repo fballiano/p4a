@@ -72,7 +72,7 @@
 		function getAsString()
 		{
 			if (!$this->isVisible()) {
-				return NULL;
+				return null;
 			}
 
 			$header 		= '<hr ' .$this->getId(). 'noshade class="color2" ';

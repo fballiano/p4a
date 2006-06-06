@@ -264,7 +264,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function load()
     {
-
         if (!$this->getQuery() and !$this->getTable()){
             p4a_error("ERRORE");
         }
@@ -272,17 +271,16 @@ class P4A_DB_Source extends P4A_Data_Source
         $db =& P4A_DB::singleton($this->getDSN());
 
         $query = $this->_composeSelectStructureQuery();
-        $rs = $db->limitQuery($query,0,1);
+		$db->setLimit(1, 0);
+		$rs = $db->query($query);
 
-        if (DB::isError($rs)) {
+        if (MDB2::isError($rs)) {
             $e = new P4A_ERROR('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
         } else {
-
-            $info = $db->tableInfo($rs);
-
+            $info = $db->reverse->tableInfo($rs);
             $main_table = $this->getTable();
             $array_fields = $this->getFields();
             foreach($info as $col){
@@ -293,7 +291,7 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
                 $this->fields->build("p4a_data_field",$field_name);
 				$this->fields->$field_name->setDSN($this->getDSN());
-                if ($col['type'] == "int" and $col['len'] == 1) {
+                if ($col['type'] == "int" and $col['length'] == 1) {
                     $col['type'] = "tinyint";
                 }
 
@@ -406,7 +404,7 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectPkQuery($pk);
-        return $db->getRow($query);
+        return $db->queryRow($query);
     }
 
     function row($num_row = null, $move_pointer = true)
@@ -422,8 +420,9 @@ class P4A_DB_Source extends P4A_Data_Source
         	$num_row = 1;	
         }
 
-        $rs = $db->limitQuery($query, $num_row - 1, 1);
-        if (DB::isError($rs)) {
+        $db->setLimit(1, $num_row - 1);
+		$rs = $db->query($query);
+        if (MDB2::isError($rs)) {
             $e = new P4A_ERROR('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
@@ -473,8 +472,8 @@ class P4A_DB_Source extends P4A_Data_Source
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectCountQuery();
 
-        if ($this->_num_rows === NULL) {
-            $this->_num_rows = (int)$db->getOne($query);
+        if ($this->_num_rows === null) {
+            $this->_num_rows = (int)$db->queryOne($query);
         }
 
         return $this->_num_rows;
@@ -532,7 +531,7 @@ class P4A_DB_Source extends P4A_Data_Source
             //$query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
 
-            return $db->getOne($query) + 1;
+            return $db->queryOne($query) + 1;
         }
     }
 
@@ -566,12 +565,12 @@ class P4A_DB_Source extends P4A_Data_Source
             }
             
             if ($this->isNew()) {
-                $rs = $db->autoExecute($this->_table, $fields_values, DB_AUTOQUERY_INSERT);
+                $rs = $db->extended->autoExecute($this->_table, $fields_values, MDB2_AUTOQUERY_INSERT);
             } else {
-                $rs = $db->autoExecute($this->_table, $fields_values, DB_AUTOQUERY_UPDATE, $this->_composePkString());
+                $rs = $db->extended->autoExecute($this->_table, $fields_values, MDB2_AUTOQUERY_UPDATE, $this->_composePkString());
             }
 
-            if (DB::isError($rs)) {
+            if (MDB2::isError($rs)) {
                 $e = new P4A_ERROR('A query has returned an error', $this, $rs);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
@@ -594,23 +593,23 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk = $aField["fk"];
 
                 $sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
-                if (DB::isError($sth)) {
+                if (MDB2::isError($sth)) {
                     P4A_Error($sth->getMessage());
                 }
                 $res =& $db->execute($sth, $pk_value);
 
-                if (DB::isError($res)) {
+                if (MDB2::isError($res)) {
                     P4A_Error($res->getMessage());
                 }
 
                 if ($fk_values) {
                     $sth = $db->prepare("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)");
-                    if (DB::isError($sth)) {
+                    if (MDB2::isError($sth)) {
                         P4A_Error($sth->getMessage());
                     }
                     $res = $db->executeMultiple($sth, $fk_values);
 
-                    if (DB::isError($res)) {
+                    if (MDB2::isError($res)) {
                         P4A_Error($res->getMessage());
                     }
                 }
@@ -652,7 +651,7 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk = $aField["fk"];
 
                 $sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
-                if (DB::isError($sth)) {
+                if (MDB2::isError($sth)) {
                     P4A_Error($sth->getMessage());
                 }
                 $res =& $db->execute($sth, $pk_value);
@@ -660,7 +659,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
             $rs = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
 
-            if (DB::isError($rs)) {
+            if (MDB2::isError($rs)) {
                 $e = new P4A_ERROR('A query has returned an error', $this, $rs);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
@@ -679,12 +678,13 @@ class P4A_DB_Source extends P4A_Data_Source
         $query = $this->_composeSelectQuery();
 
         if ($from == 0 and $count == 0) {
-            $rows = $db->getAll($query);
+            $rows = $db->queryAll($query);
         }else{
             $rows = array();
-            $rs = $db->limitQuery($query, $from, $count);
+            $db->setLimit($count, $from);
+			$rs = $db->query($query);
 
-            if (DB::isError($rs)) {
+            if (MDB2::isError($rs)) {
                 $e = new P4A_ERROR('A query has returned an error', $this, $rs);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();

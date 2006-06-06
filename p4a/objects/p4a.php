@@ -374,7 +374,7 @@
 		function raiseXMLReponse()
 		{
 			print "<root>";
-			for ($i=0;$i<count($this->_to_redesign);$i++) {
+			for ($i=0; $i<count($this->_to_redesign); $i++) {
 				$id = $this->_to_redesign[$i];
 				$object =& $this->getObject($id);
 				print "<widget object_id='$id'>";
@@ -467,13 +467,12 @@
 		 * @param string		The mask's name.
 		 * @access private
 		 */
-		 //todo
 		function maskExists($mask_name)
 		{
 			if (array_key_exists($mask_name, $this->masks)){
-				return TRUE;
-			}else{
-				return FALSE;
+				return true;
+			} else {
+				return false;
 			}
 		}
 
@@ -487,7 +486,7 @@
 			$object_id = $object->getId();
 			if (array_key_exists($object_id, $this->objects)){
 				ERROR('DUPLICATE OBJECT');
-			}else{
+			} else {
 				$this->objects[$object_id] = &$object;
 			}
 		}
@@ -497,8 +496,9 @@
 		{
 			if (array_key_exists($object_id, $this->objects)){
 				return $this->objects[$object_id];
-			}else{
-				return null;
+			} else {
+				$return = null;
+				return $return;
 			}
 		}
 

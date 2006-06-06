@@ -349,7 +349,7 @@ class P4A_Data_Source extends P4A_Object
 
 		$output = $this->getAsCSV($separator, $fields_names);
 
-		header("Cache-control: private");
+		//header("Cache-control: private"); //disabled because causes IE to crash under SSL
 		header("Content-Type: text/comma-separated-values; charset=" . $p4a->i18n->getCharset());
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Content-Length: " . strlen($output));

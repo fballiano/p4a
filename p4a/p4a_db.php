@@ -64,14 +64,17 @@ class P4A_DB
 		
 		if(!isset($$dbconn) or $$dbconn == null) {
 			if(strlen($DSN)) {
-				$$dbconn = DB::connect($DSN);
-    			if (DB::isError($$dbconn)) {
+				$$dbconn = MDB2::factory($DSN);
+    			if (MDB2::isError($$dbconn)) {
 					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
-    			$$dbconn->setFetchMode(DB_FETCHMODE_ASSOC);
+    			$$dbconn->setFetchMode(MDB2_FETCHMODE_ASSOC);
+				$$dbconn->setOption('seqcol_name', 'id');
+				$$dbconn->loadModule('Reverse', null, true);
+				$$dbconn->loadModule('Extended', null, false);
 			} else {
 				$$dbconn = null;
 			}

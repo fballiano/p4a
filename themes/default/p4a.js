@@ -26,7 +26,7 @@ function isReturnPressed(e)
 {
 	var characterCode;
 
-	if(e && e.which) {
+	if (e && e.which) {
 		e = e;
 		characterCode = e.which;
 	} else {
@@ -34,7 +34,7 @@ function isReturnPressed(e)
 		characterCode = e.keyCode;
 	}
 
-	if(characterCode == 13) {
+	if (characterCode == 13) {
 		return true;
 	} else {
 		return false;
@@ -68,7 +68,7 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 	}
 
 	query_string = form2string(document.forms['p4a']);
-	xmlhttpPost('index.php',query_string,'processResponse');
+	xmlhttpPost('index.php',query_string,'processAjaxResponse');
 }
 
 function xmlhttpPost(strURL, strSubmit, strResultFunc)
@@ -95,10 +95,10 @@ function xmlhttpPost(strURL, strSubmit, strResultFunc)
 	xmlHttpReq.send(strSubmit);
 }
 
-function processResponse(response)
+function processAjaxResponse(response)
 {
 	widgets = response.getElementsByTagName('widget');
-	for (i = 0; i < widgets.length; i++) {
+	for (i=0; i<widgets.length; i++) {
    		object_id = widgets[i].attributes[0].value;
    		string_tag = widgets[i].getElementsByTagName('string').item(0);
    		if (string_tag) {
