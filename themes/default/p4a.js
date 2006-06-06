@@ -75,14 +75,21 @@ function xmlhttpPost(strURL, strSubmit, strResultFunc)
 {
 	var xmlHttpReq = false;
 	
-	// Mozilla/Safari
 	if (window.XMLHttpRequest) {
 		xmlHttpReq = new XMLHttpRequest();
 		xmlHttpReq.overrideMimeType('text/xml');
+	} else if (window.ActiveXObject) {
+		try {
+			xmlHttpReq = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {}
+		}
 	}
-	// IE
-	else if (window.ActiveXObject) {
-		xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+	
+	if (!xmlHttpReq) {
+		alert("Sorry, your browser do not support this software");
 	}
 	
 	xmlHttpReq.open('POST', strURL, true);
