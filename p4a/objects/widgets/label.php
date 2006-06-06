@@ -112,9 +112,10 @@
 				return '';
 			}
 
-			$header	= '<label ' . $this->getId() . ' class="label" ';
-			$close_header = '>';
-			$footer	= '</label>'  .  "\n";
+			$id = $this->getId();
+			$header	= "<label id='{$id}' class='label' ";
+			$close_header = ">";
+			$footer	= "</label>\n";
 
 			$string = $header . $this->composeStringProperties() .
 						$this->composeStringActions() .
