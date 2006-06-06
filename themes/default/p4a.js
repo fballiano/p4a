@@ -112,7 +112,7 @@ function processAjaxResponse(response)
    			string_data = string_tag.firstChild.data;
    		}
    		redesign(object_id, string_data);
-	}	
+	}
 }        
 
 function redesign(object_id, string_data)

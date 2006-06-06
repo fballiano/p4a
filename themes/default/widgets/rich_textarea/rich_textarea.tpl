@@ -1,5 +1,7 @@
 {content}
 
+<script type="text/javascript" src="{theme_path}/widgets/rich_textarea/tiny_mce.js"></script>
+
 {open_javascript:h}
 
 tinyMCE.init({
