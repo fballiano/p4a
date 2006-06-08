@@ -10,6 +10,7 @@
 - P4A_Data_Source::firstRow(), P4A_Data_Source::nextRow(), P4A_Data_Source::prevRow() and P4A_Data_Source::lastRow() now support the "move pointer" parameter
 - P4A_Table movements now won't move the data source pointer
 - P4A_Table movements are now ajax triggered
+- a loader spinner was added
 - some minor bugfixes and beautifications
 
 1.0.0
