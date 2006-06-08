@@ -50,6 +50,8 @@ function setFocus(id)
 
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
+	showLoading();
+	
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
@@ -67,57 +69,33 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 		document.forms['p4a'].onsubmit();
 	}
 
-	query_string = form2string(document.forms['p4a']);
-	xmlhttpPost('index.php',query_string,'processAjaxResponse');
-}
-
-function xmlhttpPost(strURL, strSubmit, strResultFunc)
-{
-	var xmlHttpReq = false;
-	
-	if (window.XMLHttpRequest) {
-		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.overrideMimeType('text/xml');
-	} else if (window.ActiveXObject) {
-		try {
-			xmlHttpReq = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-			} catch (e) {}
-		}
+	var query_string = form2string(document.forms['p4a']);
+	var ajax_params = {
+		method: 'post',
+		parameters: query_string,
+		onComplete: function(response) {processAjaxResponse(response)}
 	}
 	
-	if (!xmlHttpReq) {
-		alert("Sorry, your browser does not support this software");
-	}
-	
-	xmlHttpReq.open('POST', strURL, true);
-	xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	xmlHttpReq.onreadystatechange = function() {
-		if (xmlHttpReq.readyState == 4) {
-			eval(strResultFunc + '(xmlHttpReq.responseXML);');
-		}
-	}
-	xmlHttpReq.send(strSubmit);
+	new Ajax.Request('index.php', ajax_params);
 }
 
 function processAjaxResponse(response)
 {
-	widgets = response.getElementsByTagName('widget');
+	document.forms['p4a']._action_id.value = response.responseXML.getElementsByTagName('ajax-response')[0].attributes[0].value;
+	var widgets = response.responseXML.getElementsByTagName('widget');
 	for (i=0; i<widgets.length; i++) {
-   		object_id = widgets[i].attributes[0].value;
-   		string_tag = widgets[i].getElementsByTagName('string').item(0);
-   		if (string_tag) {
-   			string_data = string_tag.firstChild.data;
+   		var object_id = widgets[i].attributes[0].value;
+   		var html = widgets[i].getElementsByTagName('html').item(0);
+   		if (html) {
+   			$(object_id).parentNode.innerHTML = html.firstChild.data;
    		}
-   		redesign(object_id, string_data);
+   		
+   		var javascript = widgets[i].getElementsByTagName('javascript').item(0);
+   		if (javascript) {
+   			eval(javascript.firstChild.data);
+   		}
 	}
-}        
-
-function redesign(object_id, string_data)
-{
-	$(object_id).parentNode.innerHTML = string_data;
+	hideLoading();
 }
 
 function form2string(form)
@@ -140,4 +118,14 @@ function form2string(form)
 	}
 	
 	return sReturn.substr(0, sReturn.length - 1);
+}
+
+function showLoading()
+{
+	Element.show('_loading');
+}
+
+function hideLoading()
+{
+	Element.hide('_loading');
 }

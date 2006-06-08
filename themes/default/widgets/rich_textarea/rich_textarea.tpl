@@ -1,7 +1,5 @@
 {content}
 
-<script type="text/javascript" src="{theme_path}/widgets/rich_textarea/tiny_mce.js"></script>
-
 {open_javascript:h}
 
 tinyMCE.init({
@@ -23,7 +21,7 @@ tinyMCE.init({
 });
 
 {if:upload}
-function {id}fileBrowserCallBack(field_name, url, type, win) {
+{id}fileBrowserCallBack = function(field_name, url, type, win) {
 	tinyfck_field = field_name;
 	tinyfck = win;
 	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php?ServerPath={upload_path}", "{id}textarea", "modal,width=600,height=400");

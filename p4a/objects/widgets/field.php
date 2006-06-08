@@ -659,7 +659,7 @@
 		function getAsString()
 		{
 			$id = $this->getId();
-			if (! $this->isVisible()) {
+			if (!$this->isVisible()) {
 				return "<span id='{$id}' class='invisible'></span>";
 			}
 
@@ -687,7 +687,7 @@
 			$header 		= '<input type="text" class="border_color1 font_normal" ';
 			$close_header 	= '/>';
 
-			if( !$this->isEnabled() ) {
+			if (!$this->isEnabled()) {
 				$header .= 'disabled="disabled" ';
 			}
 
@@ -709,11 +709,11 @@
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
 
-			$header 	   = "<input type='text' class='border_color1 font_normal' $enabled";
+			$header 	   = "<input id='{$id}input' type='text' class='border_color1 font_normal' $enabled";
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
-				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('$id', '$date_format', false, true);\"/>";
+				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('{$id}input', '$date_format', false, true);\"/>";
 			}
 
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
@@ -732,7 +732,7 @@
 			$header 		= '<input type="password" class="border_color1 font_normal" ';
 			$close_header 	= '/>';
 
-			if( !$this->isEnabled() ) {
+			if (!$this->isEnabled()) {
 				$header .= 'disabled="disabled" ';
 			}
 
@@ -758,11 +758,11 @@
 			$close_header = '>';
 			$footer	= '</textarea>';
 
-			if( !$this->isEnabled() ) {
+			if (!$this->isEnabled()) {
 				$header .= 'disabled="disabled" ';
 			}
 
-			$sReturn  = $this->composeLabel() . "<div class='br'></div>" . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
+			$sReturn  = $this->composeLabel() . "<div class='br'></div>{$header}" . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;
 			return $sReturn;
@@ -811,7 +811,7 @@
             $footer         = '</div>';
             $value			= '';
 
-            if ($this->data === NULL) {
+            if ($this->data === null) {
 				$value = nl2br($this->composeStringValue());
             } else {
 				$external_data		= $this->data->getAll() ;
@@ -819,8 +819,8 @@
 				$description_field	= $this->getSourceDescriptionField() ;
 
     			foreach ($external_data as $key=>$current) {
-    				if ($current[ $value_field ] == $this->getNewValue()) {
-    					$value = $current[ $description_field ] ;
+    				if ($current[$value_field] == $this->getNewValue()) {
+    					$value = $current[$description_field] ;
     				}
     			}
 
@@ -845,7 +845,7 @@
 			$footer				= '</select>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties();
 
-			if( !$this->isEnabled() ) {
+			if (!$this->isEnabled()) {
 				$header .= 'disabled="disabled" ';
 			}
 
@@ -856,7 +856,7 @@
 			$new_value			= $this->getNewValue() ;
 
 			if ($this->isNullAllowed()) {
-				if( $this->null_message === NULL ) {
+				if ($this->null_message === null) {
 					$message = $p4a->i18n->messages->get('none_selected');
 				} else {
 					$message = $this->null_message;
@@ -872,8 +872,8 @@
 					$selected = "";
 				}
 
-				$sContent  = "<option $selected value='" . htmlspecialchars($current[ $value_field ]) ."'>";
-				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
+				$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
+				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType()));
 				$sContent .= "</option>";
 
 				$header .= $sContent;
@@ -885,11 +885,11 @@
 		function getAsMultiselect()
 		{
 			$p4a =& P4A::singleton();
-
+			$id = $this->getID();
 			$properties = $this->composeStringProperties();
 			$actions = $this->composeStringActions();
 
-			$sReturn  = "<input type='hidden' name='".$this->getID()."' value='' />";
+			$sReturn  = "<input type='hidden' name='$id' value='' />";
 			$sReturn .= "<select class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
 			foreach($this->properties as $property_name=>$property_value){
 				if ($property_name == "name") {
@@ -928,13 +928,12 @@
 		function getAsMulticheckbox()
 		{
 			$p4a =& P4A::singleton();
-
+			$id = $this->getID();
 			$properties = $this->composeStringProperties();
 			$actions = $this->composeStringActions();
-			$id = $this->getId();
 
 			$sReturn  = "<div class='font_normal' style='float:left;text-align:left;'>";
-			$sReturn .= "<input type='hidden' id='$id' name='$id' value='' />";
+			$sReturn .= "<input type='hidden' name='$id' value='' />";
 
 			$external_data		= $this->data->getAll();
 			$value_field		= $this->getSourceValueField();
@@ -952,7 +951,7 @@
 				} else {
 					$checked = "";
 				}
-				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}_{$i}' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}'>{$current[$description_field]}</label></div>\n";
+				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
 				$i++;
 			}
 			
@@ -1070,9 +1069,10 @@
 		function getAsFile()
 		{
 			$p4a =& P4A::singleton();
+			$id = $this->getID();
 
-			if ($this->getNewValue() === NULL) {
-				$sReturn = "<div style='float:left'><input type='file' onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' class='border_box font_normal clickable' ";
+			if ($this->getNewValue() === null) {
+				$sReturn = "<div style='float:left'><input type='file' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
@@ -1185,10 +1185,12 @@
 		function getAsImage()
 		{
 			$p4a =& P4A::singleton();
-			if ($this->getNewValue() === NULL) {
-				$sReturn = "<div style='float:left'><input onchange='executeEvent(\"" . $this->getID() . "\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
+			$id = $this->getID();
+			
+			if ($this->getNewValue() === null) {
+				$sReturn = "<div style='float:left'><input onchange='executeEvent(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 
-				if( !$this->isEnabled() ) {
+				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
 				}
 

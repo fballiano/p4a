@@ -158,8 +158,13 @@
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
 
-			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
+			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
+			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
+			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
+			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
+			
 			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
 			$client =& new phpSniff();
 
@@ -300,7 +305,7 @@
 				$_REQUEST['_object'] and
 				$_REQUEST['_action'] and
 				$_REQUEST['_action_id'] and
-				//$_REQUEST['_action_id'] == $this->getActionHistoryId() and
+				$_REQUEST['_action_id'] == $this->getActionHistoryId() and
 				isset($this->objects[$_REQUEST['_object']]))
 			{
 				$object = $_REQUEST['_object'];
@@ -359,12 +364,11 @@
 			}
 
 			$this->_action_history_id++;
-			if (array_key_exists('_ajax',$_REQUEST)
-				and $_REQUEST['_ajax']) {
+			if ($_REQUEST['_ajax']) {
 				$this->raiseXMLReponse();
 			} elseif (is_object($this->active_mask)) {
 				$this->active_mask->main();
-			} 
+			}
 
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));
@@ -373,19 +377,33 @@
 		
 		function raiseXMLReponse()
 		{
-			print "<root>";
+			$script_detector = '(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)';
+			
+			header('Content-Type: text/xml');
+			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
+			
 			for ($i=0; $i<count($this->_to_redesign); $i++) {
 				$id = $this->_to_redesign[$i];
 				$object =& $this->getObject($id);
-				print "<widget object_id='$id'>";
-				print "<string><![CDATA[";
-				print $object->getAsString();
-				print "]]></string>";
+				$as_string = $object->getAsString();
+				
+				$javascript_codes = array();
+				$javascript = '';
+				$html = preg_replace("/{$script_detector}/", '', $as_string);
+				preg_match_all("/{$script_detector}/", $as_string, $javascript_codes);
+				$javascript_codes = $javascript_codes[1];
+				foreach ($javascript_codes as $code) {
+					$javascript .= "$code\n\n";
+				}
+				
+				print "<widget id='$id'>";
+				print "<html><![CDATA[{$html}]]></html>";
+				print "<javascript><![CDATA[{$javascript}]]></javascript>";
 				print "</widget>";
 				unset($this->_to_redesign[$i]);
 			}
 			
-			print "</root>";
+			print "</ajax-response>";
 		}
 
 		/**

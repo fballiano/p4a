@@ -969,14 +969,13 @@
 			$this->setStyleProperty("float", "none");
 
 			$this->addButton('button_go', 'apply', 'right');
-			$this->buttons->button_go->addAction('onClick');
 			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
 
 			$field_num_page =& $this->buttons->build('p4a_field', 'field_num_page');
 			$field_num_page->label->setStyleProperty("text-align", "right");
 			$field_num_page->label->setWidth(80);
 			$this->buttons->field_num_page->setWidth(30);
-			$this->buttons->field_num_page->addAction('onReturnPress');
+			$this->buttons->field_num_page->addAjaxAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
 			$this->anchorRight($field_num_page);
 
@@ -1006,22 +1005,16 @@
 				$this->buttons->button_first->setValue("first_page");
 			}
 
-			$this->buttons->button_last->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-
-			$this->buttons->button_next->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
-
-			$this->buttons->button_prev->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
-
-			$this->buttons->button_first->addAjaxAction('onClick');
 			$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
 		}
 
 		function addButton($button_name, $icon = null, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);
+			$button->addAjaxAction('onClick');
 
 			if (strlen($icon)>0) {
 				$button->setIcon($icon);
@@ -1079,7 +1072,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->prevPage();
-			$parent->redesign();			
+			$parent->redesign();
 		}
 
 		/**
@@ -1091,7 +1084,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->firstPage();
-			$parent->redesign();			
+			$parent->redesign();
 		}
 
 		/**
@@ -1103,7 +1096,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->lastPage();
-			$parent->redesign();			
+			$parent->redesign();
 		}
 
 		/**
@@ -1115,6 +1108,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent->data->page($this->buttons->field_num_page->getNewValue());
+			$parent->redesign();
 		}
 
 	}

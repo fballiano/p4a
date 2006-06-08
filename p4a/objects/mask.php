@@ -316,13 +316,12 @@
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
 			
-			$template_calendar_path = P4A_THEME_PATH . "/widgets/date_calendar";			
 			if (!$p4a->isHandheld()) {
-				$this->addTempCSS("$template_calendar_path/calendar.css");
-				$this->addTempJavascript("$template_calendar_path/calendar_stripped.js");
-				$this->addTempJavascript("$template_calendar_path/lang/calendar-en.js");
+				$this->addTempCSS(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css");
+				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
+				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 				$this->addTempJavascript(P4A_THEME_PATH . "/p4a.js");
-				//$this->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 			}
 			
 			$tpl_container = (object)'';
@@ -592,6 +591,7 @@
 			
 			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
 			$return .= "<div>\n";
+			$return .= "<div id='_loading'><img src='/p4a/icons/default/loading.gif' /> Loading... </div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
 			$return .= "<input type='hidden' name='_ajax' value='0' />\n";

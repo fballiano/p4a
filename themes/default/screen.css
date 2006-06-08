@@ -299,6 +299,21 @@ select {
 	color:#4B718A;
 }
 
+#_loading {
+	background: red;
+	color: white;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 100;
+	padding: 5px;
+}
+
+#_loading img {
+	float: left;
+	margin-right: 10px;
+}
+
 /***********************************************************/
 /* MENU WIDGET                                             */
 /* original code by Justin Koivisto - http://www.koivi.com */

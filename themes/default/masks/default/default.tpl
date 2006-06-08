@@ -27,7 +27,7 @@
 </style>
 </head>
 
-<body onload="setFocus('{focus_id}')">
+<body onload="setFocus('{focus_id}');hideLoading();">
 
 {mask_open:h}
 

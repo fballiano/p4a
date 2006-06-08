@@ -61,7 +61,6 @@ class P4A_DB_Source extends P4A_Data_Source
     function P4A_DB_Source($name)
     {
         parent::P4A_Data_Source($name);
-        $this->build("P4A_Collection", "fields");
     }
     
     function setDSN($DSN)
