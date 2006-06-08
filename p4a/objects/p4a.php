@@ -364,7 +364,7 @@
 			}
 
 			$this->_action_history_id++;
-			if ($_REQUEST['_ajax']) {
+			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
 				$this->raiseXMLReponse();
 			} elseif (is_object($this->active_mask)) {
 				$this->active_mask->main();
