@@ -74,7 +74,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->useTemplate('tab_pane');
 		$this->build("P4A_Collection", "pages");
 		$this->addAjaxAction("onClick");
-		$this->intercept($this, "onClick", "tabClick");		
+		$this->intercept($this, "onClick", "tabClick");
 	}
 
 	// todo: we'd like to have a function to add some

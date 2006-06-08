@@ -478,17 +478,17 @@ class P4A_DB_Source extends P4A_Data_Source
         return $this->_num_rows;
     }
 
-    function getRowPosition(){
-        if (!$this->getQuery()){
-
+    function getRowPosition()
+	{
+        if (!$this->getQuery()) {
             $query  = $this->_composeSelectCountPart();
             $query .= $this->_composeFromPart();
 
             $new_order_array = array();
             $new_order_array_values = array();
-            if ($order = $this->getOrder()){
+            if ($order = $this->getOrder()) {
                 $where_order = "";
-                foreach($order as $field=>$direction){;
+                foreach($order as $field=>$direction) {
                     list($long_fld,$short_fld) = $this->getFieldName($field);
 
 					$p_order = "";
@@ -517,12 +517,12 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $where_order = substr($where_order, 0, -3);
                 $where = $this->_composeWherePart();
-                if ($where != ''){
+                if ($where != '') {
                     $query .= "$where AND $where_order ";
-                }else{
+                } else {
                     $query .= " WHERE $where_order ";
                 }
-            }else{
+            } else {
                 $query .= $this->_composeWherePart();
             }
 
@@ -548,7 +548,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
                     if ($field->getAliasOf()) {
                         $name = $field->getAliasOf();
-                    }else{
+                    } else {
                         $name = $field->getName();
                     }
 
@@ -580,7 +580,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
             foreach ($this->_multivalue_fields as $fieldname=>$aField) {
                 $pk_value = $this->fields->$pks->getNewValue();
-
                 $fk_values = $this->fields->$fieldname->getNewValue();
 
                 if (is_string($fk_values) and !empty($fk_values)) {
@@ -729,7 +728,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function _composeSelectQuery()
     {
-        if ($this->getQuery()){
+        if ($this->getQuery()) {
             $query =  $this->getQuery();
         } else {
             $query  = $this->_composeSelectPart();
@@ -752,12 +751,12 @@ class P4A_DB_Source extends P4A_Data_Source
         $pk_key = $this->getPK();
         $pk_string = "";
 
-        if (is_array($pk_key)){
+        if (is_array($pk_key)) {
             for($i=0;$i<count($pk_key);$i++){
                 $pk_string .= "{$this->_table}.{$pk_key[$i]} = '{$pk_value[$i]}' AND ";
             }
             $pk_string = substr($pk_string,0,-4);
-        }else{
+        } else {
             $pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
         }
 
@@ -835,7 +834,7 @@ class P4A_DB_Source extends P4A_Data_Source
     function _composeGroupPart()
     {
         $query = "";
-        if ($group = $this->getGroup()){
+        if ($group = $this->getGroup()) {
             $query .= "GROUP BY " . join($group, ",") . " ";
         }
         return $query;
@@ -844,13 +843,13 @@ class P4A_DB_Source extends P4A_Data_Source
     function _composeOrderPart($order = array())
     {
         $query = "";
-        if (!$order){
+        if (!$order) {
             $order = $this->getOrder();
         }
-        if ($order){
+        if ($order) {
             $query .= "ORDER BY ";
             
-            foreach($order as $field=>$direction){
+            foreach ($order as $field=>$direction) {
             	list($long_fld,$short_fld) = $this->getFieldName($field);
                 $query .= "$long_fld $direction,";
             }

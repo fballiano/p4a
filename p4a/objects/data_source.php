@@ -243,27 +243,27 @@ class P4A_Data_Source extends P4A_Object
 		return $rows;
 	}
 
-	function firstPage()
+	function firstPage($move_pointer=true)
 	{
-		return $this->page(1);
+		return $this->page(1, $move_pointer);
 	}
 
-	function prevPage()
-	{
-		$current_page = $this->getNumPage();
-		return $this->page($current_page - 1);
-	}
-
-	function nextPage()
+	function prevPage($move_pointer=true)
 	{
 		$current_page = $this->getNumPage();
-		return $this->page($current_page + 1);
+		return $this->page($current_page - 1, $move_pointer);
 	}
 
-	function lastPage()
+	function nextPage($move_pointer=true)
+	{
+		$current_page = $this->getNumPage();
+		return $this->page($current_page + 1, $move_pointer);
+	}
+
+	function lastPage($move_pointer=true)
 	{
 		$num_pages = $this->getNumPages();
-		return $this->page($num_pages);
+		return $this->page($num_pages, $move_pointer);
 	}
 
 	function setPk($pk)
@@ -276,7 +276,8 @@ class P4A_Data_Source extends P4A_Object
 		return $this->_pk;
 	}
 
-	function getPkValues(){
+	function getPkValues()
+	{
 		$pks = $this->getPk();
 
 		if (is_string($pks)) {

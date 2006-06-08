@@ -51,35 +51,35 @@
 		 * @var data_source
 		 * @access private
 		 */
-		var $data = NULL;
+		var $data = null;
 
 		/**
 		 * The gui widgets to allow table navigation.
 		 * @var table_navigation_bar
 		 * @access private
 		 */
-		var $navigation_bar = NULL;
+		var $navigation_bar = null;
 
 		/**
 		 * The table toolbar.
 		 * @var toolbar
 		 * @access private
 		 */
-		var $toolbar = NULL;
+		var $toolbar = null;
 
 		/**
 		 * All the table's rows.
 		 * @var rows
 		 * @access public
 		 */
-		var $rows = NULL;
+		var $rows = null;
 
 		/**
 		 * Decides if the table will show the "field's header" row.
 		 * @var boolean
 		 * @access private
 		 */
-		var $_show_headers = TRUE;
+		var $_show_headers = true;
 
 		/**
 		 * Stores the table's structure (table_cols).
@@ -100,7 +100,14 @@
 		 * @var boolean
 		 * @access private
 		 */
-		var $_auto_navigation_bar = TRUE;
+		var $_auto_navigation_bar = true;
+		
+		/**
+		 * Wich page is shown?
+		 * @var integer
+		 * @access private
+		 */
+		var $_current_page_number = 1;
 
 		/**
 		 * Class constructor.
@@ -476,6 +483,26 @@
 					P4A_Error("Unknow column $col");
 				}
 			}
+		}
+		
+		/**
+		 * Returns the current page number
+		 * @access public
+		 * @return integer
+		 */
+		function getCurrentPageNumber()
+		{
+			return $this->_current_page_number;
+		}
+		
+		/**
+		 * Sets the current page number
+		 * @access public
+		 * @params integer
+		 */
+		function setCurrentPageNumber($page)
+		{
+			$this->_current_page_number = $page;
 		}
 	}
 
@@ -855,10 +882,11 @@
 
 			$aReturn = array();
 			$parent =& $p4a->getObject($this->getParentID());
-			$rows = $parent->data->page(null, false);
+			$num_page = $parent->getCurrentPageNumber();
+			$num_page_from_data_source = $parent->data->getNumPage();
+			$rows = $parent->data->page($num_page, false);
 			$aCols = $parent->getVisibleCols();
 			$limit = $parent->data->getPageLimit();
-			$num_page = $parent->data->getNumPage();
 			$offset = $parent->data->getOffset();
 
 			if ($this->isActionTriggered('beforeDisplay')) {
@@ -876,10 +904,10 @@
 					$aReturn[$i]['row']['even'] = false;
 				}
 				
-				if ($row_number + $offset + 1 == $parent->data->getRowNumber()) {
-					$aReturn[$i]['row']['active'] = TRUE;
+				if (($num_page == $num_page_from_data_source) and ($row_number + $offset + 1 == $parent->data->getRowNumber())) {
+					$aReturn[$i]['row']['active'] = true;
 				} else {
-					$aReturn[$i]['row']['active'] = FALSE;
+					$aReturn[$i]['row']['active'] = false;
 				}
 
 				foreach($aCols as $col_name) {
@@ -890,7 +918,7 @@
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
-					} elseif ($parent->cols->$col_name->getType() == "image"){
+					} elseif ($parent->cols->$col_name->getType() == "image") {
 						$value = $row[$col_name];
 						if (!empty($value)) {
 							$value = substr($value, 1, -1);
@@ -1032,20 +1060,15 @@
 			$parent =& $p4a->getObject($this->getParentID());
 
 			$this->buttons->field_num_page->setLabel( $p4a->i18n->messages->get('go_to_page'));
-			$this->buttons->field_num_page->setNewValue($parent->data->getNumPage());
-			$num_pages = $parent->data->getNumPages();
-
-			if ($num_pages < 1) {
-				$num_pages = 1;
-			}
+			$this->buttons->field_num_page->setNewValue($parent->getCurrentPageNumber());
 
 			$current_page  = $p4a->i18n->messages->get('current_page');
 			$current_page .= ' ';
-			$current_page .= $parent->data->getNumPage();
+			$current_page .= $parent->getCurrentPageNumber();
 			$current_page .= ' ';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
 			$current_page .= ' ';
-			$current_page .= $num_pages;
+			$current_page .= $parent->data->getNumPages();
 			$current_page .= ' ';
 			$this->buttons->current_page->setValue($current_page);
 			return parent::getAsString();
@@ -1059,7 +1082,15 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			$parent->data->nextPage();
+			
+			$num_page = $parent->getCurrentPageNumber() + 1;
+			$num_pages = $parent->data->getNumPages();
+			
+			if ($num_page > $num_pages) {
+				$num_page -= 1;
+			}
+			
+			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
 
@@ -1071,7 +1102,13 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			$parent->data->prevPage();
+			
+			$num_page = $parent->getCurrentPageNumber() - 1;
+			if ($num_page < 1) {
+				$num_page = 1;
+			}
+			
+			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
 
@@ -1083,7 +1120,7 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			$parent->data->firstPage();
+			$parent->setCurrentPageNumber(1);
 			$parent->redesign();
 		}
 
@@ -1095,7 +1132,7 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			$parent->data->lastPage();
+			$parent->setCurrentPageNumber($parent->data->getNumPages());
 			$parent->redesign();
 		}
 
@@ -1107,7 +1144,17 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			$parent->data->page($this->buttons->field_num_page->getNewValue());
+			
+			$num_page = (int)$this->buttons->field_num_page->getNewValue();
+			$num_pages = $parent->data->getNumPages();
+			
+			if ($num_page < 1) {
+				$num_page = 1;
+			} elseif ($num_page > $num_pages) {
+				$num_page = $num_pages;
+			}
+			
+			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
 
