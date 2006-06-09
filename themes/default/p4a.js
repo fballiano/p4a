@@ -1,5 +1,3 @@
-var IE7_PNG_SUFFIX = ".png";
-
 function executeEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	if (!param1) param1 = "";
@@ -95,6 +93,8 @@ function processAjaxResponse(response)
    			eval(javascript.firstChild.data);
    		}
 	}
+	
+	if (window.fixPng) fixPng();
 	hideLoading();
 }
 
@@ -122,10 +122,10 @@ function form2string(form)
 
 function showLoading()
 {
-	Element.show('_loading');
+	Element.show('p4a_loading');
 }
 
 function hideLoading()
 {
-	Element.hide('_loading');
+	Element.hide('p4a_loading');
 }

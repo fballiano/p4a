@@ -17,9 +17,13 @@ body {
 
 #topContainer {
 	width: 100%;
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	z-index: 2;
+}
+
+body>#topContainer {
+	position: fixed;
 }
 
 #top {
@@ -229,6 +233,10 @@ a.link_button:hover {
 	display:none;
 }
 
+.clearFix {
+	clear: both;
+}
+
 /*************/
 /* HTML TAGS */
 /*************/
@@ -299,17 +307,22 @@ select {
 	color:#4B718A;
 }
 
-#_loading {
+#p4a_loading {
 	background: red;
 	color: white;
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	right: 0px;
 	z-index: 100;
 	padding: 5px;
+	float: right;
 }
 
-#_loading img {
+body>#p4a_loading {
+	position: fixed;
+}
+
+#p4a_loading img {
 	float: left;
 	margin-right: 10px;
 }
@@ -322,12 +335,6 @@ select {
 #menu {
 	background: #fafafa;
 	border-bottom: 1px solid #ccc;
-}
-
-#menu:after {
-	display: block;
-	clear: both;
-	content: "";
 }
 
 .p4a_menu {

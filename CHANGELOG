@@ -11,6 +11,7 @@
 - P4A_Table movements now won't move the data source pointer
 - P4A_Table movements are now ajax triggered
 - a loader spinner was added
+- ie7 javascript library was dropped and some ie fixes were introduced
 - some minor bugfixes and beautifications
 
 1.0.0

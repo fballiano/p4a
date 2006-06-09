@@ -185,7 +185,7 @@
 			}
 
 			if ($this->isInternetExplorer() and !$this->isHandheld()) {
-				$this->addJavascript(P4A_THEME_PATH . "/ie7/ie7-standard-p.js");
+				$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
 			}
 
 			$this->init();
