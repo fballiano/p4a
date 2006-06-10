@@ -13,7 +13,8 @@ input:focus {
 }
 
 select {
-	border-color: 1px solid white !important;
+	border: 1px solid white !important;
+	border-bottom: 1px solid black !important;
 	padding: 2px;
 }
 
@@ -165,10 +166,6 @@ textarea {
 
 .toolbar {
 	display: none;
-}
-
-.label {
-	display: visible;
 }
 
 .table_container .frame{

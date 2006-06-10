@@ -22,7 +22,7 @@ body {
 	z-index: 2;
 }
 
-body>#topContainer {
+*>#topContainer {
 	position: fixed;
 }
 
@@ -229,12 +229,8 @@ a.link_button:hover {
 	margin-right: 10px;
 }
 
-.invisible {
-	display:none;
-}
-
-.clearFix {
-	clear: both;
+.hidden {
+	display: none;
 }
 
 /*************/
@@ -318,7 +314,7 @@ select {
 	float: right;
 }
 
-body>#p4a_loading {
+*>#p4a_loading {
 	position: fixed;
 }
 
@@ -452,11 +448,8 @@ fieldset.frame,div.frame {
 	clear: both;
 }
 
-div.br{
+.br{
 	clear: both;
-	height: 1px;
-	line-height: 1px;
-	font-size: 1px;
 }
 
 fieldset.frame {
