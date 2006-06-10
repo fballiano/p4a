@@ -108,12 +108,16 @@ function form2string(form)
 		switch (e.type) {
 			case 'checkbox':
 			case 'radio':
-				if (e.checked) {
-					sReturn += e.name + '=' + escape(e.value) + '&';
+				value = new String(e.value);
+				if (e.checked && value.length>0) {
+					sReturn += e.name + '=' + escape(value) + '&';
 				}
 				break;
 			default:
-				sReturn += e.name + '=' + escape(e.value) + '&';
+				value = new String(e.value);
+				if (value.length>0) {
+					sReturn += e.name + '=' + escape(value) + '&';
+				}
 		}
 	}
 	
