@@ -53,11 +53,11 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function P4A_Line($name, $id = NULL)
+		function P4A_Line($name, $id = null)
 		{
 			$prefix = 'line';
 
-			if ($id === NULL) {
+			if ($id === null) {
 				parent::P4A_Widget($name, $prefix);
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);
@@ -71,11 +71,12 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return null;
+				return "<div id='$id' class='hidden'></div>";
 			}
 
-			$header 		= '<hr ' .$this->getId(). 'noshade class="color2" ';
+			$header 		= '<hr ' . $id . 'noshade class="color2" ';
 			$close_header 	= '/>';
 			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 

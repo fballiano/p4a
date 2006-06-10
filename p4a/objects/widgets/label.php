@@ -72,7 +72,7 @@
 		 * @access private
 		 */
 
-		function P4A_Label($name, $value=NULL)
+		function P4A_Label($name, $value=null)
 		{
 			parent::P4A_Widget($name);
 			$this->setLabel($value);
@@ -93,7 +93,7 @@
 		 * @param string Label's value.
 		 * @access public
 		 */
-		function setValue($value=NULL)
+		function setValue($value=null)
 		{
 			$this->setLabel($value);
 		}
@@ -108,11 +108,11 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return '';
+				return "<span id='$id' class='hidden'></span>";
 			}
 
-			$id = $this->getId();
 			$header	= "<label id='{$id}' class='label' ";
 			$close_header = ">";
 			$footer	= "</label>\n";

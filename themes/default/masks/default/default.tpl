@@ -39,7 +39,7 @@
 <div id="topContainer">
 	<div id="menu" flexy:if="menu">
 		{menu:h}
-	<div class="clearFix"></div>
+		<div class="br"></div>
 	</div>
 	
 	<div id="top" flexy:if="top">

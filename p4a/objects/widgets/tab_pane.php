@@ -138,8 +138,9 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */	
 	function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return '';
+			return "<div id='$id' class='hidden'></div>";
 		}
 		
 		$p4a =& p4a::singleton();

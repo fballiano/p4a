@@ -49,14 +49,14 @@
 		 * @var mixed
 		 * @access public
 		 */
-		var $data = NULL;
+		var $data = null;
 
        	/**
 		 * The mask's data browser.
 		 * @var DATA_BROWSER
 		 * @access public
 		 */
-		var $data_browser = NULL;
+		var $data_browser = null;
 
        	/**
 		 * The fields collection
@@ -84,28 +84,28 @@
 		 * @var string
 		 * @access private
 		 */
-		var $title = NULL;
+		var $title = null;
 
        	/**
 		 * Stores opening code for form.
 		 * @var string
 		 * @access private
 		 */
-		var $sOpen = NULL;
+		var $sOpen = null;
 
 		/**
 		 * The object with active focus
 		 * @var object
 		 * @access private
 		 */
-		var $focus_object = NULL;
+		var $focus_object = null;
 
 		/**
 		 * Currently used template name.
 		 * @var string
 		 * @access private
 		 */
-		var $template_name = NULL;
+		var $template_name = null;
 		
 		/**
 		 * CSS container.
@@ -591,7 +591,7 @@
 			
 			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
 			$return .= "<div>\n";
-			$return .= "<div id='p4a_loading'><img src='/p4a/icons/default/loading.gif' /> Loading... </div>\n";
+			$return .= "<div id='p4a_loading'><img src='/p4a/icons/default/loading.gif' alt='' /> Loading... </div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
 			$return .= "<input type='hidden' name='_ajax' value='0' />\n";

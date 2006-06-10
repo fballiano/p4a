@@ -55,11 +55,11 @@
 		 * @param string		Object ID, if not specified will be generated.
 		 * @access private
 		 */
-		function P4A_Link($name, $id = NULL)
+		function P4A_Link($name, $id = null)
 		{
 			$prefix = 'lnk';
 
-			if ($id === NULL) {
+			if ($id === null) {
 				parent::P4A_Widget($name, $prefix);
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);
@@ -82,7 +82,7 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return '';
+				return "<span id='$id' class='hidden'></span>";
 			}
 
 			if ($this->isEnabled()) {

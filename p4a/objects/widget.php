@@ -849,8 +849,7 @@
 		function redesign()
 		{
 			$p4a =& p4a::singleton();
-			$id = $this->getId();
-			$p4a->redesign($id);
+			$p4a->redesign($this->getId());
 		}
 	}
 ?>

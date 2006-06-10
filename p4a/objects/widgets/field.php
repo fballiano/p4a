@@ -660,7 +660,7 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return "<span id='{$id}' class='invisible'></span>";
+				return "<span id='{$id}' class='hidden'></span>";
 			}
 
 			$type   = $this->type;
@@ -674,7 +674,7 @@
 			$new_method = 'getAs' . $type;
 			$string = $this->$new_method();
 			$sReturn =  $string . $suffix ;
-			return "<span id='{$id}'>{$sReturn}</span>";
+			return "<div id='{$id}'>{$sReturn}</div>";
 		}
 
 		/**

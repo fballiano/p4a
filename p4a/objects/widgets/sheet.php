@@ -465,6 +465,7 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if ($this->isVisible()) {
     			$header			= "<table class='sheet' ";
     			$close_header	= ">\n" ;
@@ -483,7 +484,7 @@
 
     			return $header . $this->composeStringProperties() . $close_header . $content . $footer ;
 			} else {
-				return '';
+				return "<div id='$id' class='hidden'></div>";
 			}
 		}
 

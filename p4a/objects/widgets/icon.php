@@ -76,19 +76,19 @@ class P4A_Icon extends P4A_Widget
 	function getAsString()
 	{
 		$id = $this->getId();
-		if ($this->isVisible()) {
-			$alt = $this->getLabel();
-			$actions = $this->composeStringActions();
-			$properties = $this->composeStringProperties();
-			$src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
-			if(!$this->isEnabled()){
-				$src .= "_disabled";
-			}
-			$src .= '.' . P4A_ICONS_EXTENSION ;
-			return "<span id='$id' style='display:block'><img $properties $actions src=\"$src\" alt=\"\" /></span>\n";
-		} else {
-			return "";
+		if (!$this->isVisible()) {
+			return "<span id='$id' class='hidden'></span>";
 		}
+		
+		$alt = $this->getLabel();
+		$actions = $this->composeStringActions();
+		$properties = $this->composeStringProperties();
+		$src = P4A_ICONS_PATH . '/' . $this->_size .  '/' . $this->_icon;
+		if(!$this->isEnabled()){
+			$src .= "_disabled";
+		}
+		$src .= '.' . P4A_ICONS_EXTENSION ;
+		return "<span id='$id' style='display:block'><img $properties $actions src=\"$src\" alt=\"\" /></span>\n";
 	}
 }
 ?>

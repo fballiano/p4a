@@ -190,7 +190,7 @@
 			$p4a =& P4A::singleton();
 
 			if (!$this->isVisible()) {
-				return '';
+				return '<div id="' . $this->getId() . '">';
 			}
 			$this->addTempVar('id', $this->getId());
 			$this->addTempVar('table_properties', $this->composeStringProperties());

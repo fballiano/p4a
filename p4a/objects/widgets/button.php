@@ -63,7 +63,7 @@
 		{
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');
-			if ($icon !== NULL) {
+			if ($icon !== null) {
 				$this->setIcon($icon);
 			}
 			
@@ -133,7 +133,7 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return '';
+				return "<span id='$id' class='hidden'></span>";
 			}
 
 			$p4a =& P4A::singleton();

@@ -142,8 +142,9 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return "";
+				return "<div id='$id' class='hidden'></div>";
 			}
 			
 			$sReturn = "";
@@ -207,11 +208,11 @@
 		 * @param string		Item's label.
 		 * @access public
 		 */
-		function &addItem($name, $label = NULL)
+		function &addItem($name, $label = null)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 
-			if ($label !== NULL) {
+			if ($label !== null) {
 				$item->setLabel($label);
 			}
 

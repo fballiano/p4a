@@ -93,7 +93,7 @@ class P4A_Frame extends P4A_Widget
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return "";
+			return "<div id='$id' class='hidden'></div>";
 		}
 
 		$p4a =& P4A::singleton();

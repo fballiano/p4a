@@ -67,7 +67,7 @@ class P4A_Fieldset extends P4A_Frame
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return "";
+			return "<div id='$id' class='hidden'></div>";
 		}
 
 		$p4a = P4A::singleton();

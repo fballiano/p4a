@@ -196,17 +196,17 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return '';
+				return "<div id='$id' class='hidden'></div>";
 			}
 
 			$properties = $this->composeStringProperties();
-			$string   = "<div class='toolbar' $properties >";
+			$string   = "<div id='$id' class='toolbar' $properties >";
 			while($button =& $this->buttons->nextItem()) {
   				$string .= $button->getAsString();
 			}
  			$string .= "<div class='br'></div>\n";
 			$string .= "</div>\n\n";
-			return "<span id='$id'>$string</span>";
+			return $string;
 		}
 
 	}

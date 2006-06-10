@@ -62,15 +62,13 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				$string = '';
-			} else {
-				$properties = $this->composeStringProperties();
-				$actions = $this->composeStringActions();
-				$value = $this->getValue();
-				$string = "<div id='$id' $properties $actions>$value</div>";
+				return "<div id='$id' class='hidden'></div>";
 			}
 
-			return $string;
+			$properties = $this->composeStringProperties();
+			$actions = $this->composeStringActions();
+			$value = $this->getValue();
+			return "<div id='$id' $properties $actions>$value</div>";
 		}
 	}
 ?>

@@ -116,7 +116,7 @@
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {
-				return '';
+				return "<span id='$id' class='hidden'></span>";
 			}
 
 			$label = $this->getLabel();
@@ -125,7 +125,7 @@
 			if ($label) {
 				if ($this->getLabelPosition() == 'bottom') {
 					$class = "dd_block";
-				}else{
+				} else {
 					$class = "dd_inline";
 				}
 				$sReturn  = "<dl>";
