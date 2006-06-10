@@ -377,13 +377,12 @@
 		
 		function raiseXMLReponse()
 		{
+			ob_start();
 			$script_detector = '(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)';
 			
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
-			
-			for ($i=0; $i<count($this->_to_redesign); $i++) {
-				$id = $this->_to_redesign[$i];
+			foreach ($this->_to_redesign as $id) {
 				$object =& $this->getObject($id);
 				$as_string = $object->getAsString();
 				
@@ -396,14 +395,21 @@
 					$javascript .= "$code\n\n";
 				}
 				
-				print "<widget id='$id'>";
-				print "<html><![CDATA[{$html}]]></html>";
-				print "<javascript><![CDATA[{$javascript}]]></javascript>";
-				print "</widget>";
-				unset($this->_to_redesign[$i]);
+				print "\n<widget id='$id'>\n";
+				print "<html><![CDATA[{$html}]]></html>\n";
+				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+				print "</widget>\n";
+			}
+			print "</ajax-response>";
+			
+			if (P4A_AJAX_DEBUG) {
+				$fp = @fopen(ini_get("session.save_path") . '/p4a_ajax_debug.txt', 'w');
+				@fwrite($fp, ob_get_contents());
+				@fclose($fp);
 			}
 			
-			print "</ajax-response>";
+			ob_end_flush();
+			$this->_to_redesign = array();
 		}
 
 		/**

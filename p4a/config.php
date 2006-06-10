@@ -274,10 +274,14 @@
 	if (!defined('P4A_DENIED_EXTENSIONS')) {
 		define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
 	}
+	
+	if (!defined('P4A_AJAX_DEBUG')) {
+		define('P4A_AJAX_DEBUG', false);
+	}
 
-	define('P4A_ORDER_ASCENDING','ASC');
-	define('P4A_ORDER_DESCENDING','DESC');
-	define('P4A_NULL','P4A_NULL');
+	define('P4A_ORDER_ASCENDING', 'ASC');
+	define('P4A_ORDER_DESCENDING', 'DESC');
+	define('P4A_NULL', 'P4A_NULL');
 	define('PROCEED', 'P4A_PROCEED');
 	define('ABORT', 'P4A_ABORT');
 	define('P4A_DATE', '%Y-%m-%d');
