@@ -12,7 +12,8 @@
 - P4A_Table movements are now ajax triggered
 - a loader spinner was added
 - ie7 javascript library was dropped and some ie fixes were introduced
-- P4A_AJAX_DEBUG constant was introduced (creates p4a_ajax_debug.txt file under session.save_path directory)
+- P4A_AJAX_DEBUG constant was added (creates p4a_ajax_debug.txt file under session.save_path directory)
+- P4A_AJAX_ENABLED constant was added (automatically disabled on handhelds)
 - some minor bugfixes and beautifications
 
 1.0.0

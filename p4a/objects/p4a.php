@@ -148,6 +148,7 @@
 		var $_action_history_id = 0;
 		
 		var $_to_redesign = array();
+		var $_ajax_enabled = P4A_AJAX_ENABLED;
 
 		/**
 		 * Class constructor.
@@ -182,6 +183,7 @@
 				$this->handheld = true;
 				$this->css = array();
 				$this->addCss(P4A_THEME_PATH . "/handheld.css");
+				$this->_ajax_enabled = false;
 			}
 
 			if ($this->isInternetExplorer() and !$this->isHandheld()) {
@@ -203,6 +205,11 @@
 			}
 
 			return $this->handheld;
+		}
+		
+		function isAjaxEnabled()
+		{
+			return $this->_ajax_enabled;
 		}
 
 		function &singleton($class_name = "p4a")

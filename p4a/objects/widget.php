@@ -466,8 +466,9 @@
 		 * @param boolean	Action Requires confirmation?.
 		 * @param string	Text for confirmation.
 		 * @param string	i18n message id for confirmation.
+		 * @param boolean	is an ajax action?
 		 */
-		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = FALSE)
+		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = false)
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
@@ -486,10 +487,21 @@
 			$this->actions[$action]['ajax'] = $ajax;
 		}
 		
+		/**
+		 * Adds an ajax action to the implemented actions stack for the widget.
+		 * @access public
+		 * @param string	The action's name.
+		 * @param string	The JavaScript event that triggers.
+		 * @param boolean	Action Requires confirmation?.
+		 * @param string	Text for confirmation.
+		 * @param string	i18n message id for confirmation.
+		 */
 		function addAjaxAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
 		{
-			$this->addAction($action,$event,$require_confirmation,$confirmation_text,$confirmation_text_handler,TRUE);
+			$p4a =& p4a::singleton();
+			$this->addAction($action, $event, $require_confirmation, $confirmation_text, $confirmation_text_handler, $p4a->isAjaxEnabled());
 		}
+		
 		/**
 		 * Requires confirmation for an action.
 		 * @access public

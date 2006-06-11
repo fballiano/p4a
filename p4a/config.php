@@ -275,6 +275,10 @@
 		define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
 	}
 	
+	if (!defined('P4A_AJAX_ENABLED')) {
+		define('P4A_AJAX_ENABLED', true);
+	}
+	
 	if (!defined('P4A_AJAX_DEBUG')) {
 		define('P4A_AJAX_DEBUG', false);
 	}
