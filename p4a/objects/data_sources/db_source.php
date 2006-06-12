@@ -284,45 +284,28 @@ class P4A_DB_Source extends P4A_Data_Source
             $array_fields = $this->getFields();
             foreach($info as $col){
                 $field_name = $col["name"];
-				$col['type'] = strtolower($col['type']);
+				$col['type'] = strtolower($col['mdb2type']);
                 if(isset($this->fields->$field_name)){
                     continue;
                 }
                 $this->fields->build("p4a_data_field",$field_name);
 				$this->fields->$field_name->setDSN($this->getDSN());
-                if ($col['type'] == "int" and $col['length'] == 1) {
-                    $col['type'] = "tinyint";
+                if ($col['type'] == 'integer' and $col['length'] == 1) {
+                    $col['type'] = 'boolean';
                 }
 
                 switch($col['type']) {
-                    case 'bit':
-                    case 'bool':
                     case 'boolean':
-                    case 'tinyint':
                         $this->fields->$field_name->setType('boolean');
                         break;
-                    case 'numeric':
-                    case 'real':
                     case 'float':
                         $this->fields->$field_name->setType('float');
                         break;
                     case 'decimal':
                         $this->fields->$field_name->setType('decimal');
                         break;
-                    case 'int':
-                    case 'int2':
-                    case 'int4':
-                    case 'int8':
-                    case 'long':
                     case 'integer':
                         $this->fields->$field_name->setType('integer');
-                        break;
-                    case 'char':
-                    case 'string':
-                    case 'varchar':
-                    case 'varchar2':
-                    case 'text':
-                        $this->fields->$field_name->setType('text');
                         break;
                     case 'date':
                         $this->fields->$field_name->setType('date');
@@ -335,7 +318,7 @@ class P4A_DB_Source extends P4A_Data_Source
                         break;
                 }
 
-    //          If field is not on main table is not updatable
+				// if field is not on main table is not updatable
             	if (!strlen($col['table'])) {
             		if (count($this->getJoin())) {
             			$this->fields->$field_name->setReadOnly();
@@ -379,21 +362,22 @@ class P4A_DB_Source extends P4A_Data_Source
 		return array($long_fld,$short_fld);
 	}
 
-    function isReadOnly($value=NULL)
+    function isReadOnly($value=null)
     {
-        if ($value !== NULL){
+        if ($value !== null) {
             $this->_is_read_only = $value;
         }
+		
         if ($this->_is_read_only or !$this->getPk()){
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    function isSortable($value=NULL)
+    function isSortable($value=null)
     {
-        if ($value !== NULL){
+        if ($value !== null) {
             $this->_is_sortable = $value;
         }
         return $this->_is_sortable;
