@@ -517,15 +517,7 @@
 		 */
 		function nextRow()
 		{
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-			} else {
-				$this->data->nextRow();
-			}
-
-			$this->actionHandler('afterMoveRow');
+			$this->data->nextRow();
 		}
 
 		/**
@@ -534,15 +526,7 @@
 		 */
 		function prevRow()
 		{
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-			} else {
-    			$this->data->prevRow();
-			}
-
-			$this->actionHandler('afterMoveRow');
+			$this->data->prevRow();
 		}
 
 		/**
@@ -551,15 +535,7 @@
 		 */
 		function lastRow()
 		{
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-			} else {
-    			$this->data->lastRow();
-			}
-
-			$this->actionHandler('afterMoveRow');
+			$this->data->lastRow();
 		}
 
 		/**
@@ -568,15 +544,7 @@
 		 */
 		function firstRow()
 		{
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-			} else {
-    			$this->data->firstRow();
-			}
-
-			$this->actionHandler('afterMoveRow');
+			$this->data->firstRow();
 		}
 
 

@@ -14,6 +14,7 @@
 - ie7 javascript library was dropped and some ie fixes were introduced
 - P4A_AJAX_DEBUG constant was added (creates p4a_ajax_debug.txt file under session.save_path directory)
 - P4A_AJAX_ENABLED constant was added (automatically disabled on handhelds)
+- P4A_Mask's beforeMoveRow, onMoveRow and afterMoveRow triggers were deleted (they were mark as deprecated)
 - some minor bugfixes and beautifications
 
 1.0.0

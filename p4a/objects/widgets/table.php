@@ -586,7 +586,7 @@
 		{
 			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
-			$this->addAction('onClick');
+			$this->addAjaxAction('onClick');
 		}
 
 		/**
@@ -806,6 +806,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
+			$parent->redesign();
 
 			if (strtolower($parent->data->getObjectType()) == 'p4a_db_source') {
 				$data_field =& $parent->data->fields->{$this->getName()};
@@ -830,7 +831,7 @@
 				}
 				if ($data_field->getAliasOf()){
 					$order_field = $data_field->getName();
-				}else{
+				} else {
 					$order_field = $data_field->getTable() . "." . $data_field->getName();
 				}
 				$parent->data->setOrder($order_field, $order_mode);

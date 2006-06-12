@@ -81,8 +81,9 @@
 			}
 
 			if ($this->auto_clear) {
-				$this->setValue("");
+				$this->setValue('');
 			}
+			
 			if ($string) {
 				return "<span id='$id'>$string</span>";
 			} else {

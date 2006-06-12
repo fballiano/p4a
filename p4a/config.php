@@ -104,11 +104,11 @@
 
 	if (!defined('P4A_ROOT_PATH')){
 		if (strpos(P4A_ROOT_DIR, P4A_SERVER_DIR) === false) {
-			define('P4A_IN_DOCUMENT_ROOT', false) ;
-			define('P4A_ROOT_PATH', "/p4a") ;
+			define('P4A_IN_DOCUMENT_ROOT', false);
+			define('P4A_ROOT_PATH', '/p4a');
 		} else {
-			define('P4A_IN_DOCUMENT_ROOT', true) ;
-			define('P4A_ROOT_PATH', str_replace( '\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR))) ;
+			define('P4A_IN_DOCUMENT_ROOT', true);
+			define('P4A_ROOT_PATH', str_replace('\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR)));
 		}
 	}
 
