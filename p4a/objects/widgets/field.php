@@ -187,7 +187,7 @@
 
 			//Label
  			$this->build("P4A_Label", "label");
-			$this->label->setProperty("for",$this->getId());
+			$this->label->setProperty("for", $this->getId() . 'input');
 			$this->setDefaultLabel();
 		}
 
@@ -202,8 +202,7 @@
 		{
 			unset($this->data_field);
 
-			if (! $data_field->isReadOnly())
-			{
+			if (!$data_field->isReadOnly()) {
 				switch(strtolower($data_field->getType())) {
 					case 'date':
 						$this->setType('date');
@@ -212,7 +211,7 @@
 						$this->setType('checkbox');
 						break;
 				}
-			}else{
+			} else {
 				$this->setType('label');
 			}
 			$this->data_field =& $data_field;
@@ -234,7 +233,7 @@
 				$visualization_data_type = $this->data_field->getType();
 			}
 
-			switch( $visualization_data_type ) {
+			switch ($visualization_data_type) {
 				case 'integer':
 				case 'decimal':
 				case 'float':
@@ -277,11 +276,11 @@
         function getStringValue()
         {
             $value = $this->data_field->getValue();
-            if (is_array($value)){
+            if (is_array($value)) {
                 $sReturn = implode(', ', $value);
                 $sReturn = '{' . $sReturn . '}';
                 return $sReturn;
-            }else {
+            } else {
                 return $value;
             }
         }
@@ -295,8 +294,8 @@
 		{
 			$set = true ;
 
-			if ($new_value === NULL) {
-				$new_value = NULL;
+			if ($new_value === null) {
+				$new_value = null;
 			} elseif ($this->isFormattable() and $this->isFormatted()) {
 				$new_value = $this->unformat($new_value);
 			} elseif (($this->type == 'password') and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
@@ -326,13 +325,13 @@
 		 * @return string
 		 * @access public
 		 */
-		function getNewValue($index = NULL)
+		function getNewValue($index = null)
 		{
 			$new_value = $this->data_field->getNewValue();
 
-			if ($new_value === NULL) {
-				// $new_value = NULL;
-			} elseif ($index === NULL) {
+			if ($new_value === null) {
+				// $new_value = null;
+			} elseif ($index === null) {
 				if ($this->isFormattable() and $this->isFormatted()) {
 					$new_value = $this->format($new_value);
 				}
@@ -353,13 +352,13 @@
 		 * @return string
 		 * @access public
 		 */
-		function getUnformattedNewValue($index = NULL)
+		function getUnformattedNewValue($index = null)
 		{
 			$new_value = $this->data_field->getNewValue();
 
-			if ($new_value === NULL) {
-				// $new_value = NULL;
-			} elseif ($index === NULL) {
+			if ($new_value === null) {
+				// $new_value = null;
+			} elseif ($index === null) {
 				// $new_value = $new_value;
             } elseif (is_array($new_value)) {
                 $new_value = $new_value[$index];
@@ -684,7 +683,8 @@
 		 */
 		function getAsText()
 		{
-			$header 		= '<input type="text" class="border_color1 font_normal" ';
+			$id = $this->getId();
+			$header 		= "<input id='{$id}input' type='text' class='border_color1 font_normal' ";
 			$close_header 	= '/>';
 
 			if (!$this->isEnabled()) {
@@ -729,8 +729,9 @@
 		 */
 		function getAsPassword()
 		{
-			$header 		= '<input type="password" class="border_color1 font_normal" ';
-			$close_header 	= '/>';
+			$id = $this->getId();
+			$header = "<input id='{$id}input' type='password' class='border_color1 font_normal' ";
+			$close_header = '/>';
 
 			if (!$this->isEnabled()) {
 				$header .= 'disabled="disabled" ';
@@ -754,7 +755,7 @@
 			$id = $this->getId();
 			$cols = floor($this->getWidth() / 6) - 4;
 			$rows = floor($this->getHeight() / 13);
-			$header = "<textarea id='{$id}textarea' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
+			$header = "<textarea id='{$id}input' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
 			$close_header = '>';
 			$footer	= '</textarea>';
 
@@ -839,8 +840,9 @@
 		function getAsSelect()
 		{
 			$p4a =& P4A::singleton();
+			$id = $this->getId();
 
-			$header 			= '<select class="border_box font_normal" ';
+			$header 			= "<select id='{$id}input' class='border_box font_normal' ";
 			$close_header 		= '>';
 			$footer				= '</select>';
 			$header			   .= $this->composeStringActions() . $this->composeStringProperties();
@@ -889,8 +891,8 @@
 			$properties = $this->composeStringProperties();
 			$actions = $this->composeStringActions();
 
-			$sReturn  = "<input type='hidden' name='$id' value='' />";
-			$sReturn .= "<select class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
+			$sReturn  = "<input type='hidden' name='{$id}' id='{$id}input' value='' />";
+			$sReturn .= "<select id='{$id}input' class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
 			foreach($this->properties as $property_name=>$property_value){
 				if ($property_name == "name") {
 					$property_value .= '[]';
@@ -933,7 +935,7 @@
 			$actions = $this->composeStringActions();
 
 			$sReturn  = "<div class='font_normal' style='float:left;text-align:left;'>";
-			$sReturn .= "<input type='hidden' name='$id' value='' />";
+			$sReturn .= "<input type='hidden' name='$id' id='{$id}input' value='' />";
 
 			$external_data		= $this->data->getAll();
 			$value_field		= $this->getSourceValueField();
@@ -997,6 +999,7 @@
 		function getAsRadio()
 		{
 			$p4a =& P4A::singleton();
+			$id = $this->getId();
 
 			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
@@ -1026,12 +1029,16 @@
 					$checked = "";
 				}
 
-				$sContent .= "<div><input $enabled class='radio' name='" . $this->getID() . "' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
+				$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
+				$sContent .= "<label for='{$id}_{$key}input'>";
 				$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType());
+				$sContent .= "</label>";
 				$sContent .= '</div>';
 			}
-
+			
+			$this->label->unsetProperty('for');
 			$return = $this->composeLabel() . "<div class='font_normal' style='float:left;text-align:left;'>$sContent</div>";
+			$this->label->setProperty('for', "{id}input");
 			return $return;
 		}
 
@@ -1050,7 +1057,8 @@
 				$checked = '' ;
 			}
 
-			$header = "<input type='hidden' name='" . $this->getId() . "' value='0' /><input type='checkbox' class='border_none' value='1' $checked ";
+			$id = $this->getId();
+			$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' class='border_none' value='1' $checked ";
 			$close_header = "/>";
 
 			if( !$this->isEnabled() ) {
@@ -1072,7 +1080,7 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input type='file' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
+				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
@@ -1097,6 +1105,7 @@
 				}
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
+				$this->label->unsetProperty('for');
 
 				$sReturn  = '<table class="border_box">';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
@@ -1106,7 +1115,9 @@
 				$sReturn .= '</table>';
 			}
 
-			return $this->composeLabel() . $sReturn;
+			$sReturn = $this->composeLabel() . $sReturn;
+			$this->label->setProperty('for', "{id}input");
+			return $return;
 		}
 
 		/**
@@ -1188,7 +1199,7 @@
 			$id = $this->getID();
 			
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input onchange='executeEvent(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
+				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';

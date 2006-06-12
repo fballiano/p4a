@@ -4,7 +4,7 @@
 
 tinyMCE.init({
 	mode: "exact",
-	elements : "{id}textarea",
+	elements : "{id}input",
 	theme: "advanced",
 	language: "en",
 	plugins: "table,advhr,advimage,advlink,emotions,preview,flash,searchreplace,print,paste,directionality,fullscreen,noneditable,contextmenu",
