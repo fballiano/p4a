@@ -50,21 +50,21 @@
 		 * @access private
 		 * @var array
 		 */
-		var $formats = NULL;
+		var $formats = null;
 
 		/**
 		 * The decimal separator.
 		 * @access private
 		 * @var string
 		 */
-		var $decimal_separator = NULL;
+		var $decimal_separator = null;
 
 		/**
 		 * The thousand separator.
 		 * @access private
 		 * @var string
 		 */
-		var $thousand_separator = NULL;
+		var $thousand_separator = null;
 
 		/**
 		 * Class constructor.
@@ -89,9 +89,9 @@
 		 * @return mixed
 		 * @see P4A_Number::format()
 		 */
-		function format($number = 0, $format = NULL)
+		function format($number = 0, $format = null)
 		{
-			if ($format === NULL) {
+			if ($format === null) {
 				$format = $this->getFormat('float');
 			}
 
