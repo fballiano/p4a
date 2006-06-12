@@ -316,14 +316,6 @@
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
 			
-			if (!$p4a->isHandheld()) {
-				$this->addTempCSS(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css");
-				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
-				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
-				$this->addTempJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
-				$this->addTempJavascript(P4A_THEME_PATH . "/p4a.js");
-			}
-			
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();

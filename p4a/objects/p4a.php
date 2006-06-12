@@ -158,32 +158,29 @@
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
+			$this->detectClient();
 
 			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
-			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
-			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
-			$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
-			
-			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
-			$client =& new phpSniff();
+			if (!$this->isHandheld()) {
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
+			}
 
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "print");
 			$this->addCss(P4A_THEME_PATH . "/print.css", "print");
 			$this->addCss(P4A_THEME_PATH . "/handheld.css", "handheld");
 
-			if ($client->browser_is('ie')) {
-				$this->internet_explorer = true;
+			if ($this->isInternetExplorer()) {
 				$this->addCss(P4A_THEME_PATH . "/iehacks.css");
 			}
 
-			if (!$client->has_feature('css2') or P4A_FORCE_HANDHELD_RENDERING) {
-				$this->handheld = true;
+			if ($this->isHandheld()) {
 				$this->css = array();
 				$this->addCss(P4A_THEME_PATH . "/handheld.css");
-				$this->_ajax_enabled = false;
 			}
 
 			if ($this->isInternetExplorer() and !$this->isHandheld()) {
@@ -191,6 +188,21 @@
 			}
 
 			$this->init();
+		}
+		
+		function detectClient()
+		{
+			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
+			$client = new phpSniff();
+			
+			if ($client->browser_is('ie')) {
+				$this->internet_explorer = true;
+			}
+			
+			if (!$client->has_feature('css2') or P4A_FORCE_HANDHELD_RENDERING) {
+				$this->handheld = true;
+				$this->_ajax_enabled = false;
+			}
 		}
 
 		function isInternetExplorer()
