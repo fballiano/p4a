@@ -133,7 +133,7 @@
 		}
 
 		/**
-		 * Sets the desidered locale (it_IT|en_UK|en_US). Locale name can contain codepage (ru_RU.KOI-8|ru_RU.CP1251).
+		 * Sets the desidered locale (it_IT|en_UK|en_US).
 		 * @param string				The desired locale.
 		 * @access public
 		 */

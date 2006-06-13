@@ -963,7 +963,7 @@
 
 			if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
 
-			if ($parent->data->row($aParams[0] + $parent->data->getOffset() + 1) == ABORT) return ABORT;
+			if ($parent->data->row($aParams[0] + (($parent->getCurrentPageNumber() - 1) * $parent->data->getPageLimit()) + 1) == ABORT) return ABORT;
 
 			if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
 		}

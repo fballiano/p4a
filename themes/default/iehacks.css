@@ -1,3 +1,7 @@
 .message dt {
 	float:left;
 }
+
+fieldset.frame {
+	float: left;
+}

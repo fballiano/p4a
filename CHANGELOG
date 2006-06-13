@@ -1,8 +1,8 @@
-1.1.0
+1.99.0
 - P4A_Filename2File was added to P4A Standard library
-- ajax implementation
+- ajax support was added
 - addAjaxAction method was added to p4a_widget class
-- redesign method (ajax) was added to p4a_widget class
+- P4A_Widget::redesign() method was added (for ajax)
 - scriptaculos 1.6.1 was added to the default theme
 - PEAR::DB was dropped in favour of PEAR::MDB2 (PEAR::DB was abandoned by its developers)
 - MDB2-2.0.3, MDB2_Driver_mssql-1.0.0, MDB2_Driver_mysql-1.0.3, MDB2_Driver_mysqli-1.0.3, MDB2_Driver_oci8-0.2.6, MDB2_Driver_pgsql-1.0.3, MDB2_Driver_sqlite-1.0.2 were installed
@@ -16,6 +16,8 @@
 - P4A_AJAX_ENABLED constant was added (automatically disabled on handhelds)
 - P4A_Mask's beforeMoveRow, onMoveRow and afterMoveRow triggers were deleted (they were mark as deprecated)
 - data type autodetection was ported to MDB2 datatypes
+- P4A_Menu_Item now supports icons (setIcon() and getIcon())
+- a bug about P4A_Fieldset on IE was fixed
 - many minor bugfixes and beautifications
 
 1.0.0

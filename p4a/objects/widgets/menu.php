@@ -172,21 +172,28 @@
 		 * @var P4A_Collection
 		 * @access private
 		 */
-		var $items = NULL;
+		var $items = null;
 		
 		/**
 		 * The element/subelement currently active.
 		 * @var menu_item
 		 * @access private
 		 */
-		var $_active_item = NULL;
+		var $_active_item = null;
 
 		/**
 		 * Stores the shortkey associated with the element.
 		 * @var string
 		 * @access private
 		 */
-		var $key = NULL;
+		var $key = null;
+		
+		/**
+		 * Icon associated to the element
+		 * @var string
+		 * @access private
+		 */
+		var $_icon = null;
 
 		/**
 		 * Class constructor.
@@ -242,9 +249,9 @@
 		function hasItems()
 		{
 			if ($this->items->getNumItems()) {
-				return TRUE;
+				return true;
 			} else {
-				return FALSE;
+				return false;
 			}
 		}
 
@@ -288,6 +295,26 @@
 		{
 			$this->unsetProperty('accesskey');
 		}
+		
+		/**
+		 * Sets the icon
+		 * @access public
+		 * @param string
+		 */
+		function setIcon($icon)
+		{
+			$this->_icon = $icon;
+		}
+		
+		/**
+		 * Gets icon name
+		 * @access public
+		 * @return string
+		 */
+		function getIcon()
+		{
+			return $this->_icon;
+		}
 
 		/**
 		 * What is executed on a click on the element.
@@ -311,13 +338,26 @@
 				return "";
 			}
 			
+			$p4a =& p4a::singleton();
 			$properties = $this->composeStringProperties();
+			if ($p4a->isHandheld()) {
+				$icon = '';
+			} else {
+				$icon = $this->getIcon();
+				if ($icon) {
+					$icon_disabled = '';
+					if (!$this->isEnabled()) {
+						$icon_disabled = '_disabled';
+					}
+					$icon = "<img src='" . P4A_ICONS_PATH . "/16/{$icon}{$icon_disabled}." . P4A_ICONS_EXTENSION . "' alt='' />";
+				}
+			}
 			
-			if (empty($this->_map_actions["onClick"]["method"])) {
-				$sReturn = "<li><div $properties>" . $this->getLabel() . "</div>";
+			if (empty($this->_map_actions["onClick"]["method"]) or !$this->isEnabled()) {
+				$sReturn = "<li>$icon<div $properties>" . $this->getLabel() . "</div>";
 			} else {
 				$actions = $this->composeStringActions();
-				$sReturn = "<li><a href='#' $actions $properties>" . $this->getLabel() . "</a>";
+				$sReturn = "<li>$icon<a href='#' $actions $properties>" . $this->getLabel() . "</a>";
 			}
 			
 			if ($this->hasItems()) {
