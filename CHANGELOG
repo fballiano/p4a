@@ -1,3 +1,6 @@
+1.99.1
+- P4A_ICONS_PATH is now used to generate the spinner path
+
 1.99.0
 - P4A_Filename2File was added to P4A Standard library
 - ajax support was added
