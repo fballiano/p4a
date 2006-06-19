@@ -80,8 +80,8 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
 
         $table = $db->quote($table, 'text');
         $field_name = $db->quote($field_name, 'text');
-        $query = 'SELECT column_name name, data_type type';
-        $query.= ', data_length length, nullable, data_default "default"';
+        $query = 'SELECT column_name name, data_type "type", nullable, data_default "default"';
+        $query.= ', COALESCE(data_precision, data_length) "length", data_scale "scale"';
         $query.= ' FROM user_tab_columns';
         $query.= ' WHERE (table_name='.$table.' OR table_name='.strtoupper($table).')';
         $query.= ' AND (column_name='.$field_name.' OR column_name='.strtoupper($field_name).')';
@@ -106,7 +106,7 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
         }
         list($types, $length, $unsigned, $fixed) = $db->datatype->mapNativeDatatype($column);
         $notnull = false;
-        if (array_key_exists('nullable', $column) && $column['nullable'] == 'N') {
+        if (!empty($column['nullable']) && $column['nullable'] == 'N') {
             $notnull = true;
         }
         $default = false;
@@ -119,24 +119,23 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
                 $default = '';
             }
         }
-        $definition = array();
+
+        $definition[0] = array('notnull' => $notnull);
+        if ($length > 0) {
+            $definition[0]['length'] = $length;
+        }
+        if (!is_null($unsigned)) {
+            $definition[0]['unsigned'] = $unsigned;
+        }
+        if (!is_null($fixed)) {
+            $definition[0]['fixed'] = $fixed;
+        }
+        if ($default !== false) {
+            $definition[0]['default'] = $default;
+        }
         foreach ($types as $key => $type) {
-            $definition[$key] = array(
-                'type' => $type,
-                'notnull' => $notnull,
-            );
-            if ($length > 0) {
-                $definition[$key]['length'] = $length;
-            }
-            if (!is_null($unsigned)) {
-                $definition[$key]['unsigned'] = $unsigned;
-            }
-            if (!is_null($fixed)) {
-                $definition[$key]['fixed'] = $fixed;
-            }
-            if ($default !== false) {
-                $definition[$key]['default'] = $default;
-            }
+            $definition[$key] = $definition[0];
+            $definition[$key]['type'] = $type;
         }
         return $definition;
     }
@@ -198,14 +197,14 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
                     }
                 }
                 $definition['fields'][$column_name] = array();
-                if (array_key_exists('descend', $colrow)) {
+                if (!empty($colrow['descend'])) {
                     $definition['fields'][$column_name]['sorting'] =
                         ($colrow['descend'] == 'ASC' ? 'ascending' : 'descending');
                 }
             }
             $result->free();
         }
-        if (!array_key_exists('fields', $definition)) {
+        if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
                 'getTableIndexDefinition: it was not specified an existing table index');
         }
@@ -273,7 +272,7 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
             }
         }
         $result->free();
-        if (!array_key_exists('fields', $definition)) {
+        if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
                 'getTableConstraintDefinition: it was not specified an existing table constraint');
         }
@@ -403,23 +402,24 @@ class MDB2_Driver_Reverse_oci8 extends MDB2_Driver_Reverse_Common
                  * Probably received a result object.
                  * Extract the result resource identifier.
                  */
-                $result = $result->getResource();
+                $resource = $result->getResource();
             }
 
             $res = array();
 
-            $count = @OCINumCols($result);
+            $count = $result->numCols();
             if ($mode) {
                 $res['num_fields'] = $count;
             }
             for ($i = 0; $i < $count; $i++) {
-                $res[$i] = array(
+                $column = array(
                     'table'  => '',
-                    'name'   => $case_func(@OCIColumnName($result, $i+1)),
-                    'type'   => @OCIColumnType($result, $i+1),
-                    'length' => @OCIColumnSize($result, $i+1),
+                    'name'   => $case_func(@OCIColumnName($resource, $i+1)),
+                    'type'   => @OCIColumnType($resource, $i+1),
+                    'length' => @OCIColumnSize($resource, $i+1),
                     'flags'  => '',
                 );
+                $res[$i] = $column;
                 $res[$i]['mdb2type'] = $db->datatype->mapNativeDatatype($res[$i]);
                 if ($mode & MDB2_TABLEINFO_ORDER) {
                     $res['order'][$res[$i]['name']] = $i;

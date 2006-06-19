@@ -677,9 +677,9 @@ class MDB2_Driver_Manager_Common extends MDB2_Module_Common
         $table = $db->quoteIdentifier($table, true);
         $name = $db->quoteIdentifier($db->getIndexName($name), true);
         $query = "ALTER TABLE $table ADD CONSTRAINT $name";
-        if (array_key_exists('primary', $definition) && $definition['primary']) {
+        if (!empty($definition['primary'])) {
             $query.= ' PRIMARY KEY';
-        } elseif (array_key_exists('unique', $definition) && $definition['unique']) {
+        } elseif (!empty($definition['unique'])) {
             $query.= ' UNIQUE';
         }
         $fields = array();

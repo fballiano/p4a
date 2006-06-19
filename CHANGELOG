@@ -1,5 +1,12 @@
 1.99.1
 - P4A_ICONS_PATH is now used to generate the spinner path
+- PEAR::MDB2 was updated to 2.1.0
+- PEAR::MDB2_Driver_mssql was updated to 1.1.0
+- PEAR::MDB2_Driver_mysql was updated to 1.1.0
+- PEAR::MDB2_Driver_mysqli was updated to 1.1.0
+- PEAR::MDB2_Driver_oci8 was updated to 0.3.0
+- PEAR::MDB2_Driver_pgsql was updated to 1.1.0
+- PEAR::MDB2_Driver_sqlite was updated to 1.1.0
 
 1.99.0
 - P4A_Filename2File was added to P4A Standard library

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------+
 // | PHP versions 4 and 5                                                 |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1998-2004 Manuel Lemos, Tomas V.V.Cox,                 |
+// | Copyright (c) 1998-2006 Manuel Lemos, Tomas V.V.Cox,                 |
 // | Stig. S. Bakken, Lukas Smith, Frank M. Kromann                       |
 // | All rights reserved.                                                 |
 // +----------------------------------------------------------------------+
@@ -89,7 +89,8 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
              * Probably received a table name.
              * Create a result resource identifier.
              */
-            $id = $db->_doQuery("SELECT TOP 0 * FROM $result", false);
+            $query = 'SELECT TOP 0 * FROM '.$db->quoteIdentifier($result);
+            $id =& $db->_doQuery($query, false);
             if (PEAR::isError($id)) {
                 return $id;
             }
@@ -133,6 +134,7 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
             $res['num_fields'] = $count;
         }
 
+        $db->loadModule('Datatype', null, true);
         for ($i = 0; $i < $count; $i++) {
             $res[$i] = array(
                 'table' => $got_string ? $case_func($result) : '',
@@ -143,8 +145,11 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
                 'flags' => $got_string
                            ? $this->_mssql_field_flags($result, @mssql_field_name($id, $i)) : '',
             );
-            // todo: implement $db->datatype->mapNativeDatatype();
-            $res[$i]['mdb2type'] = $res[$i]['type'];
+            $mdb2type_info = $db->datatype->mapNativeDatatype($res[$i]);
+            if (PEAR::isError($mdb2type_info)) {
+               return $mdb2type_info;
+            }
+            $res[$i]['mdb2type'] = $mdb2type_info[0][0];
             if ($mode & MDB2_TABLEINFO_ORDER) {
                 $res['order'][$res[$i]['name']] = $i;
             }
@@ -202,6 +207,7 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
             $res = $db->queryAll("EXEC SP_HELPINDEX[$table]", null, MDB2_FETCHMODE_ASSOC);
 
             foreach ($res as $val) {
+                $val = array_change_key_case($val, CASE_LOWER);
                 $keys = explode(', ', $val['index_keys']);
 
                 if (sizeof($keys) > 1) {
@@ -225,7 +231,7 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
             $res = $db->queryAll("EXEC SP_COLUMNS[$table]", null, MDB2_FETCHMODE_ASSOC);
 
             foreach ($res as $val) {
-                $val = array_change_key_case($val, $db->options['field_case']);
+                $val = array_change_key_case($val, CASE_LOWER);
                 if ($val['nullable'] == '0') {
                     $this->_add_flag($flags[$val['column_name']], 'not_null');
                 }
@@ -238,7 +244,7 @@ class MDB2_Driver_Reverse_mssql extends MDB2_Driver_Reverse_Common
             }
         }
 
-        if (array_key_exists($column, $flags)) {
+        if (!empty($flags[$column])) {
             return(implode(' ', $flags[$column]));
         }
         return '';

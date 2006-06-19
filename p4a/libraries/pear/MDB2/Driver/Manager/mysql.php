@@ -247,19 +247,19 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
 
         $options_strings = array();
 
-        if (array_key_exists('comment', $options)) {
+        if (!empty($options['comment'])) {
             $options_strings['comment'] = 'COMMENT = '.$db->quote($options['comment'], 'text');
         }
 
-        if (array_key_exists('charset', $options)) {
+        if (!empty($options['charset'])) {
             $options_strings['charset'] = 'DEFAULT CHARACTER SET '.$options['charset'];
-            if (array_key_exists('collate', $options)) {
+            if (!empty($options['collate'])) {
                 $options_strings['charset'].= ' COLLATE '.$options['collate'];
             }
         }
 
         $type = false;
-        if (array_key_exists('type', $options)) {
+        if (!empty($options['type'])) {
             $type = $options['type'];
         } elseif ($db->options['default_table_type']) {
             $type = $db->options['default_table_type'];
@@ -397,12 +397,12 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
         }
 
         $query = '';
-        if (array_key_exists('name', $changes)) {
+        if (!empty($changes['name'])) {
             $change_name = $db->quoteIdentifier($changes['name'], true);
             $query .= 'RENAME TO ' . $change_name;
         }
 
-        if (array_key_exists('add', $changes)) {
+        if (!empty($changes['add']) && is_array($changes['add'])) {
             foreach ($changes['add'] as $field_name => $field) {
                 if ($query) {
                     $query.= ', ';
@@ -411,7 +411,7 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (array_key_exists('remove', $changes)) {
+        if (!empty($changes['remove']) && is_array($changes['remove'])) {
             foreach ($changes['remove'] as $field_name => $field) {
                 if ($query) {
                     $query.= ', ';
@@ -422,13 +422,13 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
         }
 
         $rename = array();
-        if (array_key_exists('rename', $changes)) {
+        if (!empty($changes['rename']) && is_array($changes['rename'])) {
             foreach ($changes['rename'] as $field_name => $field) {
                 $rename[$field['name']] = $field_name;
             }
         }
 
-        if (array_key_exists('change', $changes)) {
+        if (!empty($changes['change']) && is_array($changes['change'])) {
             foreach ($changes['change'] as $field_name => $field) {
                 if ($query) {
                     $query.= ', ';
@@ -444,7 +444,7 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (!empty($rename)) {
+        if (!empty($rename) && is_array($rename)) {
             foreach ($rename as $rename_name => $renamed_field) {
                 if ($query) {
                     $query.= ', ';
@@ -659,7 +659,7 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
         $query = "CREATE INDEX $name ON $table";
         $fields = array();
         foreach ($definition['fields'] as $field => $fieldinfo) {
-            if (array_key_exists('length', $fieldinfo)) {
+            if (!empty($fieldinfo['length'])) {
                 $fields[] = $db->quoteIdentifier($field, true) . '(' . $fieldinfo['length'] . ')';
             } else {
                 $fields[] = $db->quoteIdentifier($field, true);
@@ -775,10 +775,10 @@ class MDB2_Driver_Manager_mysql extends MDB2_Driver_Manager_Common
 
         $type = '';
         $name = $db->quoteIdentifier($db->getIndexName($name), true);
-        if (array_key_exists('primary', $definition) && $definition['primary']) {
+        if (!empty($definition['primary'])) {
             $type = 'PRIMARY';
             $name = 'KEY';
-        } elseif (array_key_exists('unique', $definition) && $definition['unique']) {
+        } elseif (!empty($definition['unique'])) {
             $type = 'UNIQUE';
         }
 

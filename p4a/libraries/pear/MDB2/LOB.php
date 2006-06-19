@@ -98,7 +98,7 @@ class MDB2_LOB
             return false;
         }
         $url = parse_url($path);
-        if (!array_key_exists('host', $url) && !array_key_exists('user', $url)) {
+        if (empty($url['host'])) {
             return false;
         }
         $this->db_index = (int)$url['host'];

@@ -379,14 +379,14 @@ class MDB2
     function &factory($dsn, $options = false)
     {
         $dsninfo = MDB2::parseDSN($dsn);
-        if (!array_key_exists('phptype', $dsninfo)) {
+        if (empty($dsninfo['phptype'])) {
             $err =& MDB2::raiseError(MDB2_ERROR_NOT_FOUND,
                 null, null, 'no RDBMS driver specified');
             return $err;
         }
         $class_name = 'MDB2_Driver_'.$dsninfo['phptype'];
 
-        $debug = (is_array($options) && array_key_exists('debug', $options) && $options['debug']);
+        $debug = (!empty($options['debug']));
         $err = MDB2::loadClass($class_name, $debug);
         if (PEAR::isError($err)) {
             return $err;
@@ -1053,29 +1053,31 @@ class MDB2_Driver_Common extends PEAR
      * MDB2_Driver_Common::setOption().
      * The list of available option includes:
      * <ul>
-     *  <li>$options['ssl'] -> determines if ssl should be used for connections</li>
-     *  <li>$options['field_case'] -> determines what case to force on field/table names</li>
-     *  <li>$options['disable_query'] -> determines if queries should be executed</li>
-     *  <li>$options['result_class'] -> class used for result sets</li>
-     *  <li>$options['buffered_result_class'] -> class used for buffered result sets</li>
-     *  <li>$options['result_wrap_class'] -> class used to wrap result sets into</li>
+     *  <li>$options['ssl'] -> boolean: determines if ssl should be used for connections</li>
+     *  <li>$options['field_case'] -> CASE_LOWER|CASE_UPPER: determines what case to force on field/table names</li>
+     *  <li>$options['disable_query'] -> boolean: determines if queries should be executed</li>
+     *  <li>$options['result_class'] -> string: class used for result sets</li>
+     *  <li>$options['buffered_result_class'] -> string: class used for buffered result sets</li>
+     *  <li>$options['result_wrap_class'] -> string: class used to wrap result sets into</li>
      *  <li>$options['result_buffering'] -> boolean should results be buffered or not?</li>
-     *  <li>$options['fetch_class'] -> class to use when fetch mode object is used</li>
-     *  <li>$options['persistent'] -> boolean persistent connection?</li>
-     *  <li>$options['debug'] -> integer numeric debug level</li>
-     *  <li>$options['debug_handler'] -> string function/method that captures debug messages</li>
-     *  <li>$options['default_text_field_length'] -> default text field length to use</li>
-     *  <li>$options['lob_buffer_length'] -> integer LOB buffer length</li>
-     *  <li>$options['log_line_break'] -> string line-break format</li>
-     *  <li>$options['idxname_format'] -> string pattern for index name</li>
-     *  <li>$options['seqname_format'] -> string pattern for sequence name</li>
-     *  <li>$options['seqcol_name'] -> string sequence column name</li>
-     *  <li>$options['quote_identifier'] -> if identifier quoting should be done when check_option is used</li>
-     *  <li>$options['use_transactions'] -> boolean</li>
-     *  <li>$options['decimal_places'] -> integer</li>
-     *  <li>$options['portability'] -> portability constant</li>
-     *  <li>$options['modules'] -> short to long module name mapping for __call()</li>
-     *  <li>$options['emulate_prepared'] -> force prepared statements to be emulated</li>
+     *  <li>$options['fetch_class'] -> string: class to use when fetch mode object is used</li>
+     *  <li>$options['persistent'] -> boolean: persistent connection?</li>
+     *  <li>$options['debug'] -> integer: numeric debug level</li>
+     *  <li>$options['debug_handler'] -> string: function/method that captures debug messages</li>
+     *  <li>$options['default_text_field_length'] -> integer: default text field length to use</li>
+     *  <li>$options['lob_buffer_length'] -> integer: LOB buffer length</li>
+     *  <li>$options['log_line_break'] -> string: line-break format</li>
+     *  <li>$options['idxname_format'] -> string: pattern for index name</li>
+     *  <li>$options['seqname_format'] -> string: pattern for sequence name</li>
+     *  <li>$options['seqcol_name'] -> string: sequence column name</li>
+     *  <li>$options['quote_identifier'] -> boolean: if identifier quoting should be done when check_option is used</li>
+     *  <li>$options['use_transactions'] -> boolean: if transaction use should be enabled</li>
+     *  <li>$options['decimal_places'] -> integer: number of decimal places to handle</li>
+     *  <li>$options['portability'] -> integer: portability constant</li>
+     *  <li>$options['modules'] -> array: short to long module name mapping for __call()</li>
+     *  <li>$options['emulate_prepared'] -> boolean: force prepared statements to be emulated</li>
+     *  <li>$options['datatype_map'] -> array: map user defined datatypes to other primitive datatypes</li>
+     *  <li>$options['datatype_map_callback'] -> array: callback function/method that should be called</li>
      * </ul>
      *
      * @var     array
@@ -1104,7 +1106,7 @@ class MDB2_Driver_Common extends PEAR
             'seqname_format' => '%s_seq',
             'seqcol_name' => 'sequence',
             'quote_identifier' => false,
-            'use_transactions' => false,
+            'use_transactions' => true,
             'decimal_places' => 2,
             'portability' => MDB2_PORTABILITY_ALL,
             'modules' => array(
@@ -1116,6 +1118,8 @@ class MDB2_Driver_Common extends PEAR
                 'fc' => 'Function',
             ),
             'emulate_prepared' => false,
+            'datatype_map' => array(),
+            'datatype_map_callback' => array(),
         );
 
     /**
@@ -1123,7 +1127,14 @@ class MDB2_Driver_Common extends PEAR
      * @var     string
      * @access  protected
      */
-    var $escape_quotes = '';
+    var $escape_quotes = "'";
+
+    /**
+     * escape character
+     * @var     string
+     * @access  protected
+     */
+    var $escape_identifier = '"';
 
     /**
      * warnings
@@ -1488,8 +1499,9 @@ class MDB2_Driver_Common extends PEAR
     function debug($message, $scope = '', $is_manip = null)
     {
         if ($this->options['debug'] && $this->options['debug_handler']) {
-            call_user_func_array($this->options['debug_handler'], array(&$this, $scope, $message, $is_manip));
+            return call_user_func_array($this->options['debug_handler'], array(&$this, $scope, $message, $is_manip));
         }
+        return null;
     }
     // }}}
 
@@ -1552,11 +1564,8 @@ class MDB2_Driver_Common extends PEAR
      *   + mysql
      *   + mysqli
      *   + oci8
-     *   + odbc(access)
-     *   + odbc(db2)
      *   + pgsql
      *   + sqlite
-     *   + sybase
      *
      * InterBase doesn't seem to be able to use delimited identifiers
      * via PHP 4.  They work fine under PHP 5.
@@ -1573,7 +1582,8 @@ class MDB2_Driver_Common extends PEAR
         if ($check_option && !$this->options['quote_identifier']) {
             return $str;
         }
-        return '"' . str_replace('"', '""', $str) . '"';
+        $str = str_replace($this->escape_identifier, $this->escape_identifier.$this->escape_identifier, $str);
+        return $this->escape_identifier . $str . $this->escape_identifier;
     }
     // }}}
 
@@ -1864,6 +1874,37 @@ class MDB2_Driver_Common extends PEAR
     }
     // }}}
 
+    // {{{ connect()
+
+    /**
+     * Connect to the database
+     *
+     * @return true on success, MDB2 Error Object on failure
+     */
+    function connect()
+    {
+        return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+            'connect: method not implemented');
+    }
+    // }}}
+
+    // {{{ setCharset()
+
+    /**
+     * Set the charset on the current connection
+     *
+     * @param string    charset
+     * @param resource  connection handle
+     *
+     * @return true on success, MDB2 Error Object on failure
+     */
+    function setCharset($charset, $connection = null)
+    {
+        return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+            'setCharset: method not implemented');
+    }
+    // }}}
+
     // {{{ function disconnect($force = true)
 
     /**
@@ -2061,7 +2102,13 @@ class MDB2_Driver_Common extends PEAR
     function &_doQuery($query, $is_manip = false, $connection = null, $database_name = null)
     {
         $this->last_query = $query;
-        $this->debug($query, 'query', $is_manip);
+        $result = $this->debug($query, 'query', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         $err =& $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
             '_doQuery: method not implemented');
         return $err;
@@ -2405,11 +2452,8 @@ class MDB2_Driver_Common extends PEAR
             if (isset($fields[$name]['null']) && $fields[$name]['null']) {
                 $value = 'NULL';
             } else {
-                if (isset($fields[$name]['type'])) {
-                    $value = $this->quote($fields[$name]['value'], $fields[$name]['type']);
-                } else {
-                    $value = $fields[$name]['value'];
-                }
+                $type = isset($fields[$name]['type']) ? $fields[$name]['type'] : null;
+                $value = $this->quote($fields[$name]['value'], $type);
             }
             $values[$name] = $value;
             if (isset($fields[$name]['key']) && $fields[$name]['key']) {
@@ -2496,8 +2540,13 @@ class MDB2_Driver_Common extends PEAR
         $offset = $this->offset;
         $limit = $this->limit;
         $this->offset = $this->limit = 0;
-        $this->debug($query, 'prepare', $is_manip);
-        $positions = array();
+        $result = $this->debug($query, 'prepare', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         $placeholder_type_guess = $placeholder_type = null;
         $question = '?';
         $colon = ':';
@@ -2545,7 +2594,7 @@ class MDB2_Driver_Common extends PEAR
                 if (is_null($placeholder_type)) {
                     $placeholder_type = $query[$p_position];
                     $question = $colon = $placeholder_type;
-                    if (is_array($types) && !empty($types)) {
+                    if (!empty($types) && is_array($types)) {
                         if ($placeholder_type == ':') {
                             if (is_int(key($types))) {
                                 $types_tmp = $types;
@@ -3249,17 +3298,16 @@ class MDB2_Result_Common extends MDB2_Result
      * Retrieve the names of columns returned by the DBMS in a query result or
      * from the cache.
      *
-     * @return  mixed   associative array variable
-     *       that holds the names of columns. The indexes of the array are
-     *       the column names mapped to lower case and the values are the
-     *       respective numbers of the columns starting from 0. Some DBMS may
-     *       not return any columns when the result set does not contain any
-     *       rows.
-     *      a MDB2 error on failure
+     * @param   bool    If set to true the values are the column names,
+     *                  otherwise the names of the columns are the keys.
+     * @return  mixed   Array variable that holds the names of columns or an
+     *                  MDB2 error on failure.
+     *                  Some DBMS may not return any columns when the result set
+     *                  does not contain any rows.
      *
      * @access  public
      */
-    function getColumnNames()
+    function getColumnNames($reverse = false)
     {
         if (!isset($this->column_names)) {
             $result = $this->_getColumnNames();
@@ -3267,6 +3315,9 @@ class MDB2_Result_Common extends MDB2_Result
                 return $result;
             }
             $this->column_names = $result;
+        }
+        if ($reverse) {
+            return array_reverse($this->column_names);
         }
         return $this->column_names;
     }
@@ -3277,13 +3328,10 @@ class MDB2_Result_Common extends MDB2_Result
     /**
      * Retrieve the names of columns returned by the DBMS in a query result.
      *
-     * @return  mixed   associative array variable
-     *       that holds the names of columns. The indexes of the array are
-     *       the column names mapped to lower case and the values are the
-     *       respective numbers of the columns starting from 0. Some DBMS may
-     *       not return any columns when the result set does not contain any
-     *       rows.
-     *      a MDB2 error on failure
+     * @return  mixed   Array variable that holds the names of columns as keys
+     *                  or an MDB2 error on failure.
+     *                  Some DBMS may not return any columns when the result set
+     *                  does not contain any rows.
      *
      * @access  private
      */
@@ -3627,14 +3675,16 @@ class MDB2_Statement_Common
      */
     function &execute($values = null, $result_class = true, $result_wrap_class = false)
     {
+        if (is_null($this->positions)) {
+            return $this->db->raiseError(MDB2_ERROR, null, null,
+                'execute: Prepared statement has already been freed');
+        }
+
         if (!empty($values)) {
             $values = (array)$values;
             $this->bindValueArray($values);
         }
         $result =& $this->_execute($result_class, $result_wrap_class);
-        if (is_numeric($result)) {
-            $this->rownum = $result - 1;
-        }
         return $result;
     }
     // }}}
@@ -3653,6 +3703,7 @@ class MDB2_Statement_Common
      */
     function &_execute($result_class = true, $result_wrap_class = false)
     {
+        $this->last_query = $this->query;
         $query = '';
         $last_position = 0;
         foreach ($this->positions as $parameter => $current_position) {
@@ -3665,7 +3716,7 @@ class MDB2_Statement_Common
             if (!isset($value)) {
                 $value_quoted = 'NULL';
             } else {
-                $type = array_key_exists($parameter, $this->types) ? $this->types[$parameter] : null;
+                $type = !empty($this->types[$parameter]) ? $this->types[$parameter] : null;
                 $value_quoted = $this->db->quote($value, $type);
                 if (PEAR::isError($value_quoted)) {
                     return $value_quoted;
@@ -3698,6 +3749,21 @@ class MDB2_Statement_Common
      */
     function free()
     {
+        if (is_null($this->positions)) {
+            return $this->db->raiseError(MDB2_ERROR, null, null,
+                'free: Prepared statement has already been freed');
+        }
+
+        $this->statement = null;
+        $this->positions = null;
+        $this->query = null;
+        $this->types = null;
+        $this->result_types = null;
+        $this->limit = null;
+        $this->is_manip = null;
+        $this->offset = null;
+        $this->values = null;
+
         return MDB2_OK;
     }
     // }}}
@@ -3799,10 +3865,14 @@ function MDB2_closeOpenTransactions()
  * default debug output handler
  *
  * @param   object  reference to an MDB2 database object
+ * @param   string  usually the method name that triggered the debug call:
+ *                  for example 'query', 'prepare', 'execute', 'parameters',
+ *                  'beginTransaction', 'commit', 'rollback'
  * @param   string  message that should be appended to the debug variable
+ * @param   bool    in case of a query if its a DML statement
  *
- * @return  string  the corresponding error message, of false
- *                  if the error code was unknown
+ * @return  void|string optionally return a modified message, this allows
+ *                      rewriting a query before being issued or prepared
  *
  * @access  public
  */
@@ -3810,6 +3880,7 @@ function MDB2_defaultDebugOutput(&$db, $scope, $message, $is_manip = null)
 {
     $db->debug_output.= $scope.'('.$db->db_index.'): ';
     $db->debug_output.= $message.$db->getOption('log_line_break');
+    return $message;
 }
 // }}}
 

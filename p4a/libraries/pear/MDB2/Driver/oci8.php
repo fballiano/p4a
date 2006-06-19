@@ -57,6 +57,8 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
     // {{{ properties
     var $escape_quotes = "'";
 
+    var $escape_identifier = '"';
+
     var $uncommitedqueries = 0;
 
     // }}}
@@ -296,13 +298,15 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
                 $connection = @$connect_function($username, $password, null, $charset);
             }
         } else {
-            if (isset($this->dsn['charset']) && !empty($this->dsn['charset'])) {
-                return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                    'Unable to set client charset: '.$this->dsn['charset']);
-            }
-
             $connect_function = $persistent ? 'OCIPLogon' : 'OCILogon';
             $connection = @$connect_function($username, $password, $sid);
+
+            if (!empty($this->dsn['charset'])) {
+                $result = $this->setCharset($this->dsn['charset'], $connection);
+                if (PEAR::isError($result)) {
+                    return $result;
+                }
+            }
         }
 
         if (!$connection) {
@@ -496,9 +500,13 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
             }
             if ($limit > 0) {
                 // taken from http://svn.ez.no/svn/ezcomponents/packages/Database
-                $min = $offset + 1;
                 $max = $offset + $limit;
-                $query = "SELECT * FROM (SELECT a.*, ROWNUM rn FROM ($query) a WHERE ROWNUM <= $max) WHERE rn >= $min";
+                if ($offset > 0) {
+                    $min = $offset + 1;
+                    $query = "SELECT * FROM (SELECT a.*, ROWNUM mdb2rn FROM ($query) a WHERE ROWNUM <= $max) WHERE mdb2rn >= $min";
+                } else {
+                    $query = "SELECT a.* FROM ($query) a WHERE ROWNUM <= $max";
+                }
             }
         }
         return $query;
@@ -519,7 +527,13 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
     function &_doQuery($query, $is_manip = false, $connection = null, $database_name = null)
     {
         $this->last_query = $query;
-        $this->debug($query, 'query', $is_manip);
+        $result = $this->debug($query, 'query', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         if ($this->getOption('disable_query')) {
             if ($is_manip) {
                 return 0;
@@ -644,11 +658,21 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
      */
     function &prepare($query, $types = null, $result_types = null, $lobs = array())
     {
+        if ($this->options['emulate_prepared']) {
+            $obj =& parent::prepare($query, $types, $result_types, $lobs);
+            return $obj;
+        }
         $is_manip = ($result_types === MDB2_PREPARE_MANIP);
         $offset = $this->offset;
         $limit = $this->limit;
         $this->offset = $this->limit = 0;
-        $this->debug($query, 'prepare', $is_manip);
+        $result = $this->debug($query, 'prepare', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         $query = $this->_modifyQuery($query, $is_manip, $limit, $offset);
         $placeholder_type_guess = $placeholder_type = null;
         $question = '?';
@@ -698,7 +722,7 @@ class MDB2_Driver_oci8 extends MDB2_Driver_Common
                 if (is_null($placeholder_type)) {
                     $placeholder_type = $query[$p_position];
                     $question = $colon = $placeholder_type;
-                    if (is_array($types) && !empty($types)) {
+                    if (!empty($types) && is_array($types)) {
                         if ($placeholder_type == ':') {
                             if (is_int(key($types))) {
                                 $types_tmp = $types;
@@ -869,7 +893,10 @@ class MDB2_Result_oci8 extends MDB2_Result_Common
             }
             $null = null;
             return $null;
-
+        }
+        // remove additional column at the end
+        if ($this->offset > 0) {
+            array_pop($row);
         }
         if ($this->db->options['portability'] & MDB2_PORTABILITY_RTRIM) {
             $this->db->_fixResultArrayValues($row, MDB2_PORTABILITY_RTRIM);
@@ -898,12 +925,10 @@ class MDB2_Result_oci8 extends MDB2_Result_Common
     /**
      * Retrieve the names of columns returned by the DBMS in a query result.
      *
-     * @return mixed associative array variable
-     *      that holds the names of columns. The indexes of the array are
-     *      the column names mapped to lower case and the values are the
-     *      respective numbers of the columns starting from 0. Some DBMS may
-     *      not return any columns when the result set does not contain any
-     *      rows.
+     * @return  mixed   Array variable that holds the names of columns as keys
+     *                  or an MDB2 error on failure.
+     *                  Some DBMS may not return any columns when the result set
+     *                  does not contain any rows.
      * @access private
      */
     function _getColumnNames()
@@ -946,6 +971,9 @@ class MDB2_Result_oci8 extends MDB2_Result_Common
             return $this->db->raiseError(null, null, null,
                 'numCols: Could not get column count');
         }
+        if ($this->offset > 0) {
+            --$cols;
+        }
         return $cols;
     }
 
@@ -960,16 +988,16 @@ class MDB2_Result_oci8 extends MDB2_Result_Common
      */
     function free()
     {
-        $free = @OCIFreeCursor($this->result);
-        if (!$free) {
-            if (!$this->result) {
-                return MDB2_OK;
+        if (is_resource($this->result) && $this->db->connection) {
+            $free = @OCIFreeCursor($this->result);
+            if ($free === false) {
+                return $this->db->raiseError(null, null, null,
+                    'free: Could not free result');
             }
-            return $this->db->raiseError(null, null, null,
-                'free: Could not free result');
         }
         $this->result = false;
         return MDB2_OK;
+
     }
 }
 
@@ -1012,6 +1040,10 @@ class MDB2_BufferedResult_oci8 extends MDB2_Result_oci8
             && ($row = @OCIFetchInto($this->result, $buffer, OCI_RETURN_NULLS))
         ) {
             ++$this->buffer_rownum;
+            // remove additional column at the end
+            if ($this->offset > 0) {
+                array_pop($buffer);
+            }
             $this->buffer[$this->buffer_rownum] = $buffer;
         }
 
@@ -1163,7 +1195,7 @@ class MDB2_BufferedResult_oci8 extends MDB2_Result_oci8
     {
         $this->buffer = null;
         $this->buffer_rownum = null;
-        $free = parent::free();
+        return parent::free();
     }
 }
 
@@ -1189,6 +1221,10 @@ class MDB2_Statement_oci8 extends MDB2_Statement_Common
      */
     function &_execute($result_class = true, $result_wrap_class = false)
     {
+        if (is_null($this->statement)) {
+            $result =& parent::_execute($result_class, $result_wrap_class);
+            return $result;
+        }
         $this->db->last_query = $this->query;
         $this->db->debug($this->query, 'execute', $this->is_manip);
         $this->db->debug($this->values, 'parameters', $this->is_manip);
@@ -1307,7 +1343,7 @@ class MDB2_Statement_oci8 extends MDB2_Statement_Common
         }
 
         $result =& $this->db->_wrapResult($this->statement, $this->result_types,
-            $result_class, $result_wrap_class);
+            $result_class, $result_wrap_class, $this->limit, $this->offset);
         return $result;
     }
 
@@ -1322,11 +1358,19 @@ class MDB2_Statement_oci8 extends MDB2_Statement_Common
      */
     function free()
     {
-        if (!@OCIFreeStatement($this->statement)) {
-            return $this->db->raiseError(null, null, null,
+        if (is_null($this->positions)) {
+            return $this->db->raiseError(MDB2_ERROR, null, null,
+                'free: Prepared statement has already been freed');
+        }
+        $result = MDB2_OK;
+
+        if (!is_null($this->statement) && !@OCIFreeStatement($this->statement)) {
+            $result = $this->db->raiseError(null, null, null,
                 'free: Could not free statement');
         }
-        return MDB2_OK;
+
+        parent::free();
+        return $result;
     }
 }
 ?>

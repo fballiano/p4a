@@ -158,7 +158,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
             if ($field_name == $column['name']) {
                 list($types, $length, $unsigned, $fixed) = $db->datatype->mapNativeDatatype($column);
                 $notnull = false;
-                if (array_key_exists('notnull', $column)) {
+                if (!empty($column['notnull'])) {
                     $notnull = $column['notnull'];
                 }
                 $default = false;
@@ -169,30 +169,29 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
                     }
                 }
                 $autoincrement = false;
-                if (array_key_exists('autoincrement', $column) && $column['autoincrement']) {
+                if (!empty($column['autoincrement'])) {
                     $autoincrement = true;
                 }
-                $definition = array();
+
+                $definition[0] = array('notnull' => $notnull);
+                if ($length > 0) {
+                    $definition[0]['length'] = $length;
+                }
+                if (!is_null($unsigned)) {
+                    $definition[0]['unsigned'] = $unsigned;
+                }
+                if (!is_null($fixed)) {
+                    $definition[0]['fixed'] = $fixed;
+                }
+                if ($default !== false) {
+                    $definition[0]['default'] = $default;
+                }
+                if ($autoincrement !== false) {
+                    $definition[0]['autoincrement'] = $autoincrement;
+                }
                 foreach ($types as $key => $type) {
-                    $definition[$key] = array(
-                        'type' => $type,
-                        'notnull' => $notnull,
-                    );
-                    if ($length > 0) {
-                        $definition[$key]['length'] = $length;
-                    }
-                    if (!is_null($unsigned)) {
-                        $definition[$key]['unsigned'] = $unsigned;
-                    }
-                    if (!is_null($fixed)) {
-                        $definition[$key]['fixed'] = $fixed;
-                    }
-                    if ($default !== false) {
-                        $definition[$key]['default'] = $default;
-                    }
-                    if ($autoincrement !== false) {
-                        $definition[$key]['autoincrement'] = $autoincrement;
-                    }
+                    $definition[$key] = $definition[0];
+                    $definition[$key]['type'] = $type;
                 }
                 return $definition;
             }
@@ -262,7 +261,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
             }
         }
 
-        if (!array_key_exists('fields', $definition)) {
+        if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
                 'getTableIndexDefinition: it was not specified an existing table index');
         }
@@ -303,7 +302,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         }
         if (!$sql) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableIndexDefinition: it was not specified an existing table index');
+                'getTableConstraintDefinition: it was not specified an existing table index');
         }
 
         $sql = strtolower($sql);
@@ -330,7 +329,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
             }
         }
 
-        if (!array_key_exists('fields', $definition)) {
+        if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
                 'getTableConstraintDefinition: it was not specified an existing table constraint');
         }

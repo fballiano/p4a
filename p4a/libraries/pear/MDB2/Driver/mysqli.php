@@ -58,6 +58,8 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
     // {{{ properties
     var $escape_quotes = "\\";
 
+    var $escape_identifier = '`';
+
     // }}}
     // {{{ constructor
 
@@ -87,7 +89,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
         $this->supported['result_introspection'] = true;
         $this->supported['prepared_statements'] = 'emulated';
 
-        $this->options['default_table_type'] = null;
+        $this->options['default_table_type'] = 'INNODB';
         $this->options['multi_query'] = false;
     }
 
@@ -173,33 +175,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
         if (PEAR::isError($connection)) {
             return $connection;
         }
-        return @mysqli_escape_string($connection, $text);
-    }
-
-    // }}}
-    // {{{ quoteIdentifier()
-
-    /**
-     * Quote a string so it can be safely used as a table or column name
-     *
-     * Quoting style depends on which database driver is being used.
-     *
-     * MySQL can't handle the backtick character (<kbd>`</kbd>) in
-     * table or column names.
-     *
-     * @param string $str  identifier name to be quoted
-     * @param bool   $check_option  check the 'quote_identifier' option
-     *
-     * @return string  quoted identifier string
-     *
-     * @access public
-     */
-    function quoteIdentifier($str, $check_option = false)
-    {
-        if ($check_option && !$this->options['quote_identifier']) {
-            return $str;
-        }
-        return '`' . $str . '`';
+        return @mysqli_real_escape_string($connection, $text);
     }
 
     // }}}
@@ -362,11 +338,11 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
             }
         }
 
-        if (isset($this->dsn['charset']) && !empty($this->dsn['charset'])
-            && !@mysqli_query('SET character_set_client = '.$this->quote($this->dsn['charset'], 'text'), $connection)
-        ) {
-            return $this->raiseError(null, null, null,
-                'Unable to set client charset: '.$this->dsn['charset']);
+        if (!empty($this->dsn['charset'])) {
+            $result = $this->setCharset($this->dsn['charset'], $connection);
+            if (PEAR::isError($result)) {
+                return $result;
+            }
         }
 
         $this->connection = $connection;
@@ -418,6 +394,40 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
     }
 
     // }}}
+    // {{{ setCharset()
+
+    /**
+     * Set the charset on the current connection
+     *
+     * @param string    charset
+     * @param resource  connection handle
+     *
+     * @return true on success, MDB2 Error Object on failure
+     */
+    function setCharset($charset, $connection = null)
+    {
+        if (is_null($connection)) {
+            $connection = $this->getConnection();
+            if (PEAR::isError($connection)) {
+                return $connection;
+            }
+        }
+
+        if (function_exists('mysqli_set_charset')) {
+            $result = @mysqli_set_charset($connection, $charset);
+        } else {
+            $query = 'SET character_set_client = '.$this->quote($charset, 'text');
+            $result = @mysqli_query($query, $connection);
+        }
+
+        if (!$result) {
+            return $this->raiseError(null, null, null,
+                'setCharset: Unable to set client charset: '.$charset);
+        }
+        return MDB2_OK;
+    }
+
+    // }}}
     // {{{ disconnect()
 
     /**
@@ -457,7 +467,13 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
     function &_doQuery($query, $is_manip = false, $connection = null, $database_name = null)
     {
         $this->last_query = $query;
-        $this->debug($query, 'query', $is_manip);
+        $result = $this->debug($query, 'query', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         if ($this->options['disable_query']) {
             if ($is_manip) {
                 return 0;
@@ -486,9 +502,13 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
             }
         }
 
-        $function = $this->options['multi_query'] ? 'mysqli_multi_query' :
-            ($this->options['result_buffering'] ? 'mysqli_query' : 'mysqli_unbuffered_query');
-        $result = @$function($connection, $query);
+        if ($this->options['multi_query']) {
+            $result = mysqli_multi_query($connection, $query);
+        } else {
+            $resultmode = $this->options['result_buffering'] ? MYSQLI_USE_RESULT : MYSQLI_USE_RESULT;
+            $result = mysqli_query($connection, $query);
+        }
+
         if (!$result) {
             $err = $this->raiseError(null, null, null,
                 '_doQuery: Could not execute statement');
@@ -647,7 +667,13 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
         $limit = $this->limit;
         $this->offset = $this->limit = 0;
         $query = $this->_modifyQuery($query, $is_manip, $limit, $offset);
-        $this->debug($query, 'prepare', $is_manip);
+        $result = $this->debug($query, 'prepare', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         $placeholder_type_guess = $placeholder_type = null;
         $question = '?';
         $colon = ':';
@@ -823,7 +849,8 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
             if (isset($fields[$name]['null']) && $fields[$name]['null']) {
                 $value = 'NULL';
             } else {
-                $value = $this->quote($fields[$name]['value'], $fields[$name]['type']);
+                $type = isset($fields[$name]['type']) ? $fields[$name]['type'] : null;
+                $value = $this->quote($fields[$name]['value'], $type);
             }
             $values.= $value;
             if (isset($fields[$name]['key']) && $fields[$name]['key']) {
@@ -1027,16 +1054,10 @@ class MDB2_Result_mysqli extends MDB2_Result_Common
     /**
      * Retrieve the names of columns returned by the DBMS in a query result.
      *
-     * @return mixed                an associative array variable
-     *                              that will hold the names of columns. The
-     *                              indexes of the array are the column names
-     *                              mapped to lower case and the values are the
-     *                              respective numbers of the columns starting
-     *                              from 0. Some DBMS may not return any
-     *                              columns when the result set does not
-     *                              contain any rows.
-     *
-     *                              a MDB2 error on failure
+     * @return  mixed   Array variable that holds the names of columns as keys
+     *                  or an MDB2 error on failure.
+     *                  Some DBMS may not return any columns when the result set
+     *                  does not contain any rows.
      * @access private
      */
     function _getColumnNames()
@@ -1122,13 +1143,12 @@ class MDB2_Result_mysqli extends MDB2_Result_Common
      */
     function free()
     {
-        $free = @mysqli_free_result($this->result);
-        if (!$free) {
-            if (is_null($free) || !$this->result) {
-                return MDB2_OK;
+        if (is_object($this->result) && $this->db->connection) {
+            $free = @mysqli_free_result($this->result);
+            if ($free === false) {
+                return $this->db->raiseError(null, null, null,
+                    'free: Could not free result');
             }
-            return $this->db->raiseError(null, null, null,
-                'free: Could not free result');
         }
         $this->result = false;
         return MDB2_OK;
@@ -1387,7 +1407,7 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
             }
 
             $result =& $this->db->_wrapResult($result, $this->result_types,
-                $result_class, $result_wrap_class);
+                $result_class, $result_wrap_class, $this->limit, $this->offset);
         } else {
             if (!@mysqli_stmt_execute($this->statement)) {
                 $err =& $this->db->raiseError(null, null, null,
@@ -1405,7 +1425,7 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
             }
 
             $result =& $this->db->_wrapResult($this->statement, $this->result_types,
-                $result_class, $result_wrap_class);
+                $result_class, $result_wrap_class, $this->limit, $this->offset);
         }
 
         return $result;
@@ -1422,25 +1442,29 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
      */
     function free()
     {
-        if (is_null($this->statement)) {
-            return parent::free();
+        if (is_null($this->positions)) {
+            return $this->db->raiseError(MDB2_ERROR, null, null,
+                'free: Prepared statement has already been freed');
         }
+        $result = MDB2_OK;
 
-        if (!is_object($this->statement)) {
+        if (is_object($this->statement)) {
+            if (!@mysqli_stmt_close($this->statement)) {
+                $result = $this->db->raiseError(null, null, null,
+                    'free: Could not free statement');
+            }
+        } elseif (!is_null($this->statement)) {
             $connection = $this->db->getConnection();
             if (PEAR::isError($connection)) {
                 return $connection;
             }
 
             $query = 'DEALLOCATE PREPARE '.$this->statement;
-            return $this->db->_doQuery($query, true, $connection);
+            $result = $this->db->_doQuery($query, true, $connection);
         }
 
-        if (!@mysqli_stmt_close($this->statement)) {
-            return $this->db->raiseError(null, null, null,
-                'free: Could not free statement');
-        }
-        return MDB2_OK;
-    }
+        parent::free();
+        return $result;
+   }
 }
 ?>

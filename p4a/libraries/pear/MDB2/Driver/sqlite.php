@@ -58,6 +58,8 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
     // {{{ properties
     var $escape_quotes = "'";
 
+    var $escape_identifier = '"';
+
     var $_lasterror = '';
 
     var $fix_assoc_fields_names = false;
@@ -87,7 +89,7 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         $this->supported['transactions'] = true;
         $this->supported['sub_selects'] = true;
         $this->supported['auto_increment'] = true;
-        $this->supported['primary_key'] =  false; // requires alter table implementation
+        $this->supported['primary_key'] = false; // requires alter table implementation
         $this->supported['result_introspection'] = false; // not implemented
         $this->supported['prepared_statements'] = 'emulated';
 
@@ -322,9 +324,11 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
                 return $this->raiseError(MDB2_ERROR_CONNECT_FAILED);
             }
 
-            if (isset($this->dsn['charset']) && !empty($this->dsn['charset'])) {
-                return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                    'Unable to set client charset: '.$this->dsn['charset']);
+            if (!empty($this->dsn['charset'])) {
+                $result = $this->setCharset($this->dsn['charset'], $connection);
+                if (PEAR::isError($result)) {
+                    return $result;
+                }
             }
 
             $this->connection = $connection;
@@ -399,7 +403,13 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
     function &_doQuery($query, $is_manip = false, $connection = null, $database_name = null)
     {
         $this->last_query = $query;
-        $this->debug($query, 'query', $is_manip);
+        $result = $this->debug($query, 'query', $is_manip);
+        if ($result) {
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+            $query = $result;
+        }
         if ($this->options['disable_query']) {
             if ($is__manip) {
                 return 0;
@@ -611,7 +621,8 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
             if (isset($fields[$name]['null']) && $fields[$name]['null']) {
                 $value = 'NULL';
             } else {
-                $value = $this->quote($fields[$name]['value'], $fields[$name]['type']);
+                $type = isset($fields[$name]['type']) ? $fields[$name]['type'] : null;
+                $value = $this->quote($fields[$name]['value'], $type);
             }
             $values.= $value;
             if (isset($fields[$name]['key']) && $fields[$name]['key']) {
@@ -814,16 +825,10 @@ class MDB2_Result_sqlite extends MDB2_Result_Common
     /**
      * Retrieve the names of columns returned by the DBMS in a query result.
      *
-     * @return mixed                an associative array variable
-     *                              that will hold the names of columns. The
-     *                              indexes of the array are the column names
-     *                              mapped to lower case and the values are the
-     *                              respective numbers of the columns starting
-     *                              from 0. Some DBMS may not return any
-     *                              columns when the result set does not
-     *                              contain any rows.
-     *
-     *                              a MDB2 error on failure
+     * @return  mixed   Array variable that holds the names of columns as keys
+     *                  or an MDB2 error on failure.
+     *                  Some DBMS may not return any columns when the result set
+     *                  does not contain any rows.
      * @access private
      */
     function _getColumnNames()

@@ -81,5 +81,19 @@ class MDB2_Driver_Function_pgsql extends MDB2_Driver_Function_Common
         return $db->query($query, $types, $result_class, $result_wrap_class);
     }
     // }}}
+    // {{{ random()
+
+    /**
+     * return string to call a function to get random value inside an SQL statement
+     *
+     * @return return string to generate float between 0 and 1
+     * @access public
+     */
+    function random()
+    {
+        return 'RANDOM()';
+    }
+
+    // }}}
 }
 ?>

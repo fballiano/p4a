@@ -123,9 +123,9 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
 
         switch ($field['type']) {
         case 'text':
-            $length = array_key_exists('length', $field)
+            $length = !empty($field['length'])
                 ? $field['length'] : $db->options['default_text_field_length'];
-            $fixed = array_key_exists('fixed', $field) ? $field['fixed'] : false;
+            $fixed = !empty($field['fixed']) ? $field['fixed'] : false;
             return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$db->options['default_text_field_length'].')')
                 : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
         case 'clob':
@@ -133,8 +133,8 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
         case 'blob':
             return 'BYTEA';
         case 'integer':
-            if (array_key_exists('autoincrement', $field) && $field['autoincrement']) {
-                if (array_key_exists('length', $field)) {
+            if (!empty($field['autoincrement'])) {
+                if (!empty($field['length'])) {
                     $length = $field['length'];
                     if ($length > 4) {
                         return 'BIGSERIAL PRIMARY KEY';
@@ -142,7 +142,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
                 }
                 return 'SERIAL PRIMARY KEY';
             }
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 2) {
                     return 'SMALLINT';
@@ -164,8 +164,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
         case 'float':
             return 'FLOAT8';
         case 'decimal':
-            $length = array_key_exists('length', $field)
-                ? $field['length'] : 18;
+            $length = !empty($field['length']) ? $field['length'] : 18;
             return 'NUMERIC('.$length.','.$db->options['decimal_places'].')';
         }
     }
@@ -203,23 +202,22 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             return $db;
         }
 
-        if (array_key_exists('unsigned', $field) && $field['unsigned']) {
+        if (!empty($field['unsigned'])) {
             $db->warnings[] = "unsigned integer field \"$name\" is being declared as signed integer";
         }
-        if (array_key_exists('autoincrement', $field) && $field['autoincrement']) {
+        if (!empty($field['autoincrement'])) {
             $name = $db->quoteIdentifier($name, true);
             return $name.' '.$this->getTypeDeclaration($field);
         }
         $default = '';
         if (array_key_exists('default', $field)) {
             if ($field['default'] === '') {
-                $field['default'] = (array_key_exists('notnull', $field) && $field['notnull'])
-                    ? 0 : null;
+                $field['default'] = (!empty($field['notnull'])) ? 0 : null;
             }
             $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
         }
 
-        $notnull = (array_key_exists('notnull', $field) && $field['notnull']) ? ' NOT NULL' : '';
+        $notnull = (!empty($field['notnull'])) ? ' NOT NULL' : '';
         $name = $db->quoteIdentifier($name, true);
         return $name.' '.$this->getTypeDeclaration($field).$default.$notnull;
     }
@@ -260,7 +258,8 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
         if (!$quote) {
             return $value;
         }
-        return "'".pg_escape_bytea($value)."'";
+        $value = pg_escape_bytea($value);
+        return "'".$value."'";
     }
 
     // }}}
@@ -278,10 +277,11 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      */
     function _quoteBoolean($value, $quote)
     {
+        $value = $value ? 't' : 'f';
         if (!$quote) {
-            return ($value ? 't' : 'f');
+            return $value;
         }
-        return ($value ? "'t'" : "'f'");
+        return "'".$value."'";
     }
 
     // }}}
@@ -298,7 +298,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
     {
         $db_type = preg_replace('/\d/','', strtolower($field['type']) );
         $length = $field['length'];
-        if ($length == '-1' && array_key_exists('atttypmod', $field)) {
+        if ($length == '-1' && !empty($field['atttypmod'])) {
             $length = $field['atttypmod'] - 4;
         }
         if ((int)$length <= 0) {
@@ -355,7 +355,6 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
                 }
             } elseif (strstr($db_type, 'text')) {
                 $type[] = 'clob';
-                $type = array_reverse($type);
             }
             if ($fixed !== false) {
                 $fixed = true;
@@ -419,7 +418,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
     // {{{ mapPrepareDatatype()
 
     /**
-     * Maps an mdb2 datatype to mysqli prepare type
+     * Maps an mdb2 datatype to native prepare type
      *
      * @param string $type
      * @return string
@@ -427,6 +426,19 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      */
     function mapPrepareDatatype($type)
     {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+
+        if (!empty($db->options['datatype_map'][$type])) {
+            $type = $db->options['datatype_map'][$type];
+            if (!empty($db->options['datatype_map_callback'][$type])) {
+                $parameter = array('type' => $type);
+                return call_user_func_array($db->options['datatype_map_callback'][$type], array(&$db, __FUNCTION__, $parameter));
+            }
+        }
+
         switch ($type) {
             case 'integer':
                 return 'int';

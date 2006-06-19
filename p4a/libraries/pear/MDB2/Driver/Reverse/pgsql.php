@@ -77,7 +77,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
             return $result;
         }
 
-        $column = $db->queryRow("SELECT
+        $query = "SELECT
                     a.attname AS name, t.typname AS type, a.attlen AS length, a.attnotnull,
                     a.atttypmod, a.atthasdef,
                     (SELECT substring(pg_get_expr(d.adbin, d.adrelid) for 128)
@@ -90,14 +90,21 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
                         AND NOT a.attisdropped
                         AND a.attnum > 0
                         AND a.attname = ".$db->quote($field_name, 'text')."
-                    ORDER BY a.attnum", null, MDB2_FETCHMODE_ASSOC);
+                    ORDER BY a.attnum";
+        $column = $db->queryRow($query, null, MDB2_FETCHMODE_ASSOC);
         if (PEAR::isError($column)) {
             return $column;
         }
+
+        if (empty($column)) {
+            return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
+                'getTableFieldDefinition: it was not specified an existing table column');
+        }
+
         $column = array_change_key_case($column, CASE_LOWER);
         list($types, $length, $unsigned, $fixed) = $db->datatype->mapNativeDatatype($column);
         $notnull = false;
-        if (array_key_exists('attnotnull', $column) && $column['attnotnull'] == 't') {
+        if (!empty($column['attnotnull']) && $column['attnotnull'] == 't') {
             $notnull = true;
         }
         $default = null;

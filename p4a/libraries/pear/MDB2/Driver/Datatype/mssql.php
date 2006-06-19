@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP versions 4 and 5                                                 |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1998-2004 Manuel Lemos, Tomas V.V.Cox,                 |
+// | Copyright (c) 1998-2006 Manuel Lemos, Tomas V.V.Cox,                 |
 // | Stig. S. Bakken, Lukas Smith                                         |
 // | All rights reserved.                                                 |
 // +----------------------------------------------------------------------+
@@ -125,18 +125,21 @@ class MDB2_Driver_Datatype_mssql extends MDB2_Driver_Datatype_Common
 
         switch ($field['type']) {
         case 'text':
-            return array_key_exists('length', $field)
-                ? 'VARCHAR ('.$field['length'].')' : 'TEXT';
+            $length = !empty($field['length'])
+                ? $field['length'] : false;
+            $fixed = !empty($field['fixed']) ? $field['fixed'] : false;
+            return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$db->options['default_text_field_length'].')')
+                : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
         case 'clob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 8000) {
-                    return "VARCHAR($length)";
+                    return 'VARCHAR('.$length.')';
                 }
              }
              return 'TEXT';
         case 'blob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 8000) {
                     return "VARBINARY($length)";
@@ -156,8 +159,7 @@ class MDB2_Driver_Datatype_mssql extends MDB2_Driver_Datatype_Common
         case 'float':
             return 'FLOAT';
         case 'decimal':
-            $length = array_key_exists('length', $field)
-                ? $field['length'] : 18;
+            $length = !empty($field['length']) ? $field['length'] : 18;
             return 'DECIMAL('.$length.','.$db->options['decimal_places'].')';
         }
         return '';
@@ -178,30 +180,87 @@ class MDB2_Driver_Datatype_mssql extends MDB2_Driver_Datatype_Common
      */
     function _quoteBLOB($value, $quote)
     {
-        $value = $this->_readFile($value);
         if (!$quote) {
             return $value;
         }
-        return bin2hex("0x".$value);
+        $value = bin2hex("0x".$this->_readFile($value));
+        return $value;
     }
 
     // }}}
-    // {{{ _quoteBoolean()
+    // {{{ mapNativeDatatype()
 
     /**
-     * Convert a text value into a DBMS specific format that is suitable to
-     * compose query statements.
+     * Maps a native array description of a field to a MDB2 datatype and length
      *
-     * @param string $value text string value that is intended to be converted.
-     * @param bool $quote determines if the value should be quoted and escaped
-     * @return string text string that represents the given argument value in
-     *       a DBMS specific format.
-     * @access protected
+     * @param array  $field native field description
+     * @return array containing the various possible types, length, sign, fixed
+     * @access public
      */
-    function _quoteBoolean($value, $quote)
+    function mapNativeDatatype($field)
     {
-        return ($value ? 1 : 0);
+        $db_type = preg_replace('/\d/','', strtolower($field['type']) );
+        $length = $field['length'];
+        if ((int)$length <= 0) {
+            $length = null;
+        }
+        $type = array();
+        // todo: unsigned handling seems to be missing
+        $unsigned = $fixed = null;
+        switch ($db_type) {
+        case 'bit':
+            $type[0] = 'boolean';
+            break;
+        case 'int':
+            $type[0] = 'integer';
+            break;
+        case 'datetime':
+            $type[0] = 'timestamp';
+            break;
+        case 'float':
+        case 'real':
+        case 'numeric':
+            $type[0] = 'float';
+            break;
+        case 'decimal':
+        case 'money':
+            $type[0] = 'decimal';
+            break;
+        case 'text':
+        case 'varchar':
+            $fixed = false;
+        case 'char':
+            $type[0] = 'text';
+            if ($length == '1') {
+                $type[] = 'boolean';
+                if (preg_match('/^[is|has]/', $field['name'])) {
+                    $type = array_reverse($type);
+                }
+            } elseif (strstr($db_type, 'text')) {
+                $type[] = 'clob';
+            }
+            if ($fixed !== false) {
+                $fixed = true;
+            }
+            break;
+        case 'image':
+        case 'varbinary':
+            $type[] = 'blob';
+            $length = null;
+            break;
+        default:
+            $db =& $this->getDBInstance();
+            if (PEAR::isError($db)) {
+                return $db;
+            }
+
+            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'mapNativeDatatype: unknown database attribute type: '.$db_type);
+        }
+
+        return array($type, $length, $unsigned, $fixed);
     }
+    // }}}
 }
 
 ?>

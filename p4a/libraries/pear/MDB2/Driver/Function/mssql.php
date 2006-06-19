@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------+
 // | PHP versions 4 and 5                                                 |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1998-2004 Manuel Lemos, Tomas V.V.Cox,                 |
+// | Copyright (c) 1998-2006 Manuel Lemos, Tomas V.V.Cox,                 |
 // | Stig. S. Bakken, Lukas Smith                                         |
 // | All rights reserved.                                                 |
 // +----------------------------------------------------------------------+
@@ -46,6 +46,7 @@
 //
 
 require_once 'MDB2/Driver/Function/Common.php';
+
 // {{{ class MDB2_Driver_Function_mssql
 /**
  * MDB2 MSSQL driver for the function modules
@@ -79,20 +80,61 @@ class MDB2_Driver_Function_mssql extends MDB2_Driver_Function_Common
         }
 
         $query = 'EXECUTE '.$name;
-        $query .= $params ? '('.implode(', ', $params).')' : '';
+        $query .= $params ? ' '.implode(', ', $params) : '';
         return $db->query($query, $types, $result_class, $result_wrap_class);
+    }
+
+    // }}}
+    // {{{ now()
+
+    /**
+     * Return string to call a variable with the current timestamp inside an SQL statement
+     * There are three special variables for current date and time:
+     * - CURRENT_TIMESTAMP (date and time, TIMESTAMP type)
+     * - CURRENT_DATE (date, DATE type)
+     * - CURRENT_TIME (time, TIME type)
+     *
+     * @return string to call a variable with the current timestamp
+     * @access public
+     */
+    function now($type = 'timestamp')
+    {
+        switch ($type) {
+        case 'time':
+        case 'date':
+        case 'timestamp':
+        default:
+            return 'GETDATE()';
+        }
+    }
+
+    // }}}
+    // {{{ substring()
+
+    /**
+     * return string to call a function to get a substring inside an SQL statement
+     *
+     * @return string to call a function to get a substring
+     * @access public
+     */
+    function substring($value, $position = 1, $length = null)
+    {
+        if (!is_null($length)) {
+            return "SUBSTRING($value, $position, $length)";
+        }
+        return "SUBSTRING($value, $position, LEN($value) - $position + 1)";
     }
 
     // }}}
     // {{{ concat()
 
     /**
-     * returns string to concatenate two or more string parameters
+     * Returns string to concatenate two or more string parameters
      *
      * @param string $value1
      * @param string $value2
      * @param string $values...
-     * @return string to caoncatenate two strings
+     * @return string to concatenate two strings
      * @access public
      **/
     function concat($value1, $value2)

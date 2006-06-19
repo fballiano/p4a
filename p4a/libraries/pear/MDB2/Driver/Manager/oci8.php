@@ -279,7 +279,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
             return $result;
         }
         foreach ($fields as $field_name => $field) {
-            if (array_key_exists('autoincrement', $field) && $field['autoincrement']) {
+            if (!empty($field['autoincrement'])) {
                 return $this->_makeAutoincrement($field_name, $name);
             }
         }
@@ -424,7 +424,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
 
         $name = $db->quoteIdentifier($name, true);
 
-        if (array_key_exists('add', $changes)) {
+        if (!empty($changes['add']) && is_array($changes['add'])) {
             $fields = array();
             foreach ($changes['add'] as $field_name => $field) {
                 $fields[] = $db->getDeclaration($field['type'], $field_name, $field, $name);
@@ -435,7 +435,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (array_key_exists('change', $changes)) {
+        if (!empty($changes['change']) && is_array($changes['change'])) {
             $fields = array();
             foreach ($changes['change'] as $field_name => $field) {
                 $fields[] = $field_name. ' ' . $db->getDeclaration($field['definition']['type'], '', $field['definition']);
@@ -446,7 +446,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (array_key_exists('rename', $changes)) {
+        if (!empty($changes['rename']) && is_array($changes['rename'])) {
             foreach ($changes['rename'] as $field_name => $field) {
                 $field_name = $db->quoteIdentifier($field_name, true);
                 $query = "ALTER TABLE $name RENAME COLUMN $field_name TO ".$db->quoteIdentifier($field['name']);
@@ -457,7 +457,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (array_key_exists('remove', $changes)) {
+        if (!empty($changes['remove']) && is_array($changes['remove'])) {
             $fields = array();
             foreach ($changes['remove'] as $field_name => $field) {
                 $fields[] = $db->quoteIdentifier($field_name, true);
@@ -468,7 +468,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
             }
         }
 
-        if (array_key_exists('name', $changes)) {
+        if (!empty($changes['name'])) {
             $change_name = $db->quoteIdentifier($changes['name'], true);
             $result = $db->exec("ALTER TABLE $name RENAME TO ".$change_name);
             if (PEAR::isError($result)) {

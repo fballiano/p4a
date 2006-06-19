@@ -92,7 +92,7 @@ class MDB2_Driver_Function_mysql extends MDB2_Driver_Function_Common
      * @param string $value1
      * @param string $value2
      * @param string $values...
-     * @return string to caoncatenate two strings
+     * @return string to concatenate two strings
      * @access public
      **/
     function concat($value1, $value2)

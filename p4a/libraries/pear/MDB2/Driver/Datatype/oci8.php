@@ -115,16 +115,16 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
 
         switch ($field['type']) {
         case 'text':
-            $length = array_key_exists('length', $field)
+            $length = !empty($field['length'])
                 ? $field['length'] : $db->options['default_text_field_length'];
-            $fixed = array_key_exists('fixed', $field) ? $field['fixed'] : false;
+            $fixed = !empty($field['fixed']) ? $field['fixed'] : false;
             return $fixed ? 'CHAR('.$length.')' : 'VARCHAR2('.$length.')';
         case 'clob':
             return 'CLOB';
         case 'blob':
             return 'BLOB';
         case 'integer':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 return 'NUMBER('.$field['length'].')';
             }
             return 'INT';
@@ -355,7 +355,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
         $db_type = strtolower($field['type']);
         $type = array();
         $length = $unsigned = $fixed = null;
-        if (array_key_exists('length', $field)) {
+        if (!empty($field['length'])) {
             $length = $field['length'];
         }
         switch ($db_type) {
@@ -396,7 +396,9 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             $type[] = 'float';
             break;
         case 'number':
-            if (strpos($length, ',') === false) {
+            if (!empty($field['scale'])) {
+                $type[] = 'decimal';
+            } else {
                 $type[] = 'integer';
                 if ($length == '1') {
                     $type[] = 'boolean';
@@ -404,20 +406,15 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
                         $type = array_reverse($type);
                     }
                 }
-            } else {
-                $type[] = 'decimal';
             }
             break;
         case 'long':
-            if ($decimal == 'binary') {
-                $type[] = 'blob';
-            }
-            $type[] = 'clob';
             $type[] = 'text';
-            break;
-        case 'blob':
         case 'clob':
         case 'nclob':
+            $type[] = 'clob';
+            break;
+        case 'blob':
         case 'raw':
         case 'long raw':
         case 'bfile':

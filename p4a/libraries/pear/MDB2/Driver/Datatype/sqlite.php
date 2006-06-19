@@ -92,13 +92,13 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
 
         switch ($field['type']) {
         case 'text':
-            $length = array_key_exists('length', $field)
+            $length = !empty($field['length'])
                 ? $field['length'] : false;
-            $fixed = array_key_exists('fixed', $field) ? $field['fixed'] : false;
+            $fixed = !empty($field['fixed']) ? $field['fixed'] : false;
             return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$db->options['default_text_field_length'].')')
                 : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
         case 'clob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYTEXT';
@@ -110,7 +110,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             }
             return 'LONGTEXT';
         case 'blob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYBLOB';
@@ -122,7 +122,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             }
             return 'LONGBLOB';
         case 'integer':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 2) {
                     return 'SMALLINT';
@@ -145,8 +145,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             return 'DOUBLE'.($db->options['fixed_float'] ? '('.
                 ($db->options['fixed_float']+2).','.$db->options['fixed_float'].')' : '');
         case 'decimal':
-            $length = array_key_exists('length', $field)
-                ? $field['length'] : 18;
+            $length = !empty($field['length']) ? $field['length'] : 18;
             return 'DECIMAL('.$length.','.$db->options['decimal_places'].')';
         }
         return '';
@@ -189,20 +188,19 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
         }
 
         $default = $autoinc = $notnull = '';
-        if (array_key_exists('autoincrement', $field) && $field['autoincrement']) {
+        if (!empty($field['autoincrement'])) {
             $autoinc = ' PRIMARY KEY';
         } else {
             if (array_key_exists('default', $field)) {
                 if ($field['default'] === '') {
-                    $field['default'] = (array_key_exists('notnull', $field) && $field['notnull'])
-                        ? 0 : null;
+                    $field['default'] = (!empty($field['notnull'])) ? 0 : null;
                 }
                 $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
             }
-            $notnull = (array_key_exists('notnull', $field) && $field['notnull']) ? ' NOT NULL' : '';
+            $notnull = (!empty($field['notnull'])) ? ' NOT NULL' : '';
         }
 
-        $unsigned = (array_key_exists('unsigned', $field) && $field['unsigned']) ? ' UNSIGNED' : '';
+        $unsigned = (!empty($field['unsigned'])) ? ' UNSIGNED' : '';
         $name = $db->quoteIdentifier($name, true);
         return $name.' '.$this->getTypeDeclaration($field).$unsigned.$default.$notnull.$autoinc;
     }
@@ -220,8 +218,8 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
     function mapNativeDatatype($field)
     {
         $db_type = strtolower($field['type']);
-        $length = array_key_exists('length', $field) ? $field['length'] : null;
-        $unsigned = array_key_exists('unsigned', $field) ? $field['unsigned'] : null;
+        $length = !empty($field['length']) ? $field['length'] : null;
+        $unsigned = !empty($field['unsigned']) ? $field['unsigned'] : null;
         $fixed = null;
         $type = array();
         switch ($db_type) {
@@ -234,30 +232,30 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             if (preg_match('/^[is|has]/', $field['name'])) {
                 $type = array_reverse($type);
             }
-            $unsigned = preg_match('/ unsigned/i', $db_type);
+            $unsigned = preg_match('/ unsigned/i', $field['type']);
             $length = 1;
             break;
         case 'smallint':
             $type[] = 'integer';
-            $unsigned = preg_match('/ unsigned/i', $db_type);
+            $unsigned = preg_match('/ unsigned/i', $field['type']);
             $length = 2;
             break;
         case 'mediumint':
             $type[] = 'integer';
-            $unsigned = preg_match('/ unsigned/i', $db_type);
+            $unsigned = preg_match('/ unsigned/i', $field['type']);
             $length = 3;
             break;
         case 'int':
         case 'integer':
         case 'serial':
             $type[] = 'integer';
-            $unsigned = preg_match('/ unsigned/i', $db_type);
+            $unsigned = preg_match('/ unsigned/i', $field['type']);
             $length = 4;
             break;
         case 'bigint':
         case 'bigserial':
             $type[] = 'integer';
-            $unsigned = preg_match('/ unsigned/i', $db_type);
+            $unsigned = preg_match('/ unsigned/i', $field['type']);
             $length = 8;
             break;
         case 'clob':
@@ -277,7 +275,6 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
                 }
             } elseif (strstr($db_type, 'text')) {
                 $type[] = 'clob';
-                $type = array_reverse($type);
             }
             if ($fixed !== false) {
                 $fixed = true;

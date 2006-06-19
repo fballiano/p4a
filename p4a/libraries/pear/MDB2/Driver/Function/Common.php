@@ -152,13 +152,27 @@ class MDB2_Driver_Function_Common extends MDB2_Module_Common
      * @param string $value1
      * @param string $value2
      * @param string $values...
-     * @return string to caoncatenate two strings
+     * @return string to concatenate two strings
      * @access public
      */
     function concat($value1, $value2)
     {
         $args = func_get_args();
         return "(".implode(' || ', $args).")";
+    }
+
+    // }}}
+    // {{{ random()
+
+    /**
+     * return string to call a function to get random value inside an SQL statement
+     *
+     * @return return string to generate float between 0 and 1
+     * @access public
+     */
+    function random()
+    {
+        return 'RAND()';
     }
 
     // }}}

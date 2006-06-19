@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------+
 // | PHP versions 4 and 5                                                 |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1998-2004 Manuel Lemos, Tomas V.V.Cox,                 |
+// | Copyright (c) 1998-2006 Manuel Lemos, Tomas V.V.Cox,                 |
 // | Stig. S. Bakken, Lukas Smith                                         |
 // | All rights reserved.                                                 |
 // +----------------------------------------------------------------------+
@@ -46,6 +46,7 @@
 //
 
 require_once 'MDB2/Driver/Manager/Common.php';
+
 // {{{ class MDB2_Driver_Manager_mssql
 /**
  * MDB2 MSSQL driver for the management modules
@@ -53,11 +54,11 @@ require_once 'MDB2/Driver/Manager/Common.php';
  * @package MDB2
  * @category Database
  * @author  Frank M. Kromann <frank@kromann.info>
+ * @author  David Coallier <davidc@php.net>
  */
 class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
 {
     // {{{ createDatabase()
-
     /**
      * create a new database
      *
@@ -76,11 +77,11 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         $query = "CREATE DATABASE $name";
         if ($db->options['database_device']) {
             $query.= ' ON '.$db->options['database_device'];
-            $query.= $db->options['database_size'] ? '='.$db->options['database_size'] : '';
+            $query.= $db->options['database_size'] ? '=' .
+                     $db->options['database_size'] : '';
         }
         return $db->standaloneQuery($query, null, true);
     }
-
     // }}}
     // {{{ dropDatabase()
 
@@ -222,29 +223,22 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         }
 
         $query = '';
-        if (array_key_exists('add', $changes)) {
-            if ($query) {
-                $query.= ', ';
-            }
-            $query.= 'ADD ';
+        if (!empty($changes['add']) && is_array($changes['add'])) {
             foreach ($changes['add'] as $field_name => $field) {
                 if ($query) {
                     $query.= ', ';
                 }
-                $query.= $db->getDeclaration($field['type'], $field_name, $field);
+                $query.= 'ADD ' . $db->getDeclaration($field['type'], $field_name, $field);
             }
         }
-        if (array_key_exists('remove', $changes)) {
-            if ($query) {
-            $query.= ', ';
-            }
-            $query.= 'DROP COLUMN';
+
+        if (!empty($changes['remove']) && is_array($changes['remove'])) {
             foreach ($changes['remove'] as $field_name => $field) {
                 if ($query) {
                     $query.= ', ';
                 }
-                // todo: this looks wrong ..
-                $query.= $db->getDeclaration($field['type'], $field_name, $field);
+                $field_name = $db->quoteIdentifier($field_name, true);
+                $query.= 'DROP COLUMN ' . $field_name;
             }
         }
 
@@ -255,10 +249,8 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         $name = $db->quoteIdentifier($name, true);
         return $db->exec("ALTER TABLE $name $query");
     }
-
     // }}}
     // {{{ listTables()
-
     /**
      * list all tables in the current database
      *
@@ -285,14 +277,13 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
             }
         }
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            $result = array_map(($db->options['field_case'] == CASE_LOWER ? 'strtolower' : 'strtoupper'), $result);
+            $result = array_map(($db->options['field_case'] == CASE_LOWER ?
+                        'strtolower' : 'strtoupper'), $result);
         }
         return $result;
     }
-
     // }}}
     // {{{ listTableFields()
-
     /**
      * list all fields in a tables in the current database
      *
@@ -308,6 +299,7 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         }
 
         $table = $db->quoteIdentifier($table, true);
+        $db->setLimit(1);
         $result2 = $db->query("SELECT * FROM $table");
         if (PEAR::isError($result2)) {
             return $result2;
@@ -319,7 +311,6 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         }
         return array_flip($result);
     }
-
     // }}}
     // {{{ listTableIndexes()
 
@@ -348,12 +339,13 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
                 $pk_name  = strtoupper($pk_name);
             }
         }
-        $query = "EXEC sp_statistics @table_name='$table'";
+        $table = $db->quote($table, 'text');
+        $query = "EXEC sp_statistics @table_name=$table";
         $indexes = $db->queryCol($query, 'text', $key_name);
         if (PEAR::isError($indexes)) {
             return $indexes;
         }
-        $query = "EXEC sp_pkeys @table_name='$table'";
+        $query = "EXEC sp_pkeys @table_name=$table";
         $pk_all = $db->queryCol($query, 'text', $pk_name);
         $result = array();
         foreach ($indexes as $index) {
@@ -369,8 +361,84 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
     }
 
     // }}}
-    // {{{ createSequence()
+    // {{{ listTableTriggers()
+    /**
+     * This function will be called to
+     * display all the triggers from the current
+     * database ($db->getDatabase()).
+     *
+     * @access public
+     * @param  string $table      The name of the table from the
+     *                            previous database to query against.
+     * @return mixed Array of the triggers if the query
+     *               is successful, otherwise, false which
+     *               could be a db error if the db is not
+     *               instantiated or could be the results
+     *               of the error that occured during the
+     *               query'ing of the sysobject module.
+     */
+    function listTableTriggers($table = null)
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
 
+        $table = $db->quote($table, 'text');
+        $query = "SELECT name FROM sysobjects WHERE xtype = 'TR'";
+        if (!is_null($table)) {
+            $query .= "AND object_name(parent_obj) = $table";
+        }
+
+        $result = $db->queryCol($query);
+        if (PEAR::isError($results)) {
+            return $result;
+        }
+
+        if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE &&
+            $db->options['field_case'] == CASE_LOWER)
+        {
+            $result = array_map(($db->options['field_case'] == CASE_LOWER ?
+                'strtolower' : 'strtoupper'), $result);
+        }
+        return $result;
+    }
+    // }}}
+    // {{{ listViews()
+    /**
+     * This function is a simple method that lists
+     * all the views that are set on a db instance
+     * (The db connected to it)
+     *
+     * @access public
+     * @return mixed Error on failure or array of views for a database.
+     */
+    function listViews()
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+
+        $query = "SELECT name
+                   FROM sysobjects
+                    WHERE xtype = 'V'";
+
+        $result = $db->queryCol($query);
+        if (PEAR::isError($results)) {
+            return $result;
+        }
+
+        if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE &&
+            $db->options['field_case'] == CASE_LOWER)
+        {
+            $result = array_map(($db->options['field_case'] == CASE_LOWER ?
+                          'strtolower' : 'strtoupper'), $result);
+        }
+        return $result;
+    }
+    // }}}
+    // {{{ createSequence()
     /**
      * create sequence
      *
@@ -400,6 +468,7 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
             return MDB2_OK;
         }
 
+
         $query = "SET IDENTITY_INSERT $sequence_name ON ".
                  "INSERT INTO $sequence_name ($seqcol_name) VALUES ($start)";
         $res = $db->exec($query);
@@ -410,23 +479,19 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
 
         $result = $db->exec("DROP TABLE $sequence_name");
         if (PEAR::isError($result)) {
-            return $db->raiseError(MDB2_ERROR, null, null,
-                   'createSequence: could not drop inconsistent sequence table ('.
-                   $result->getMessage().' ('.$result->getUserInfo(). '))');
+            return $db->raiseError($result, null, null,
+                'createSequence: could not drop inconsistent sequence table');
         }
 
-        return $db->raiseError(MDB2_ERROR, null, null,
-               'createSequence: could not create sequence table ('.
-               $res->getMessage(). ' ('.$res->getUserInfo(). '))');
+        return $db->raiseError($res, null, null,
+            'createSequence: could not create sequence table');
     }
-
     // }}}
     // {{{ dropSequence()
-
     /**
-     * drop existing sequence
+     * This function drops an existing sequence
      *
-     * @param string    $seq_name     name of the sequence to be dropped
+     * @param string $seq_name name of the sequence to be dropped
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
@@ -440,10 +505,8 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
         $sequence_name = $db->quoteIdentifier($db->getSequenceName($seq_name), true);
         return $db->exec("DROP TABLE $sequence_name");
     }
-
     // }}}
     // {{{ listSequences()
-
     /**
      * list all sequences in the current database
      *
@@ -469,7 +532,8 @@ class MDB2_Driver_Manager_mssql extends MDB2_Driver_Manager_Common
             }
         }
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            $result = array_map(($db->options['field_case'] == CASE_LOWER ? 'strtolower' : 'strtoupper'), $result);
+            $result = array_map(($db->options['field_case'] == CASE_LOWER ?
+                          'strtolower' : 'strtoupper'), $result);
         }
         return $result;
     }

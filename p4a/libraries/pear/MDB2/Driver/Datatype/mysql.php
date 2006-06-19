@@ -92,13 +92,13 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
 
         switch ($field['type']) {
         case 'text':
-            $length = array_key_exists('length', $field)
+            $length = !empty($field['length'])
                 ? $field['length'] : false;
-            $fixed = array_key_exists('fixed', $field) ? $field['fixed'] : false;
+            $fixed = !empty($field['fixed']) ? $field['fixed'] : false;
             return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR(255)')
                 : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
         case 'clob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYTEXT';
@@ -110,7 +110,7 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
             }
             return 'LONGTEXT';
         case 'blob':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYBLOB';
@@ -122,7 +122,7 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
             }
             return 'LONGBLOB';
         case 'integer':
-            if (array_key_exists('length', $field)) {
+            if (!empty($field['length'])) {
                 $length = $field['length'];
                 if ($length <= 1) {
                     return 'TINYINT';
@@ -148,7 +148,7 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
         case 'float':
             return 'DOUBLE';
         case 'decimal':
-            $length = array_key_exists('length', $field) ? $field['length'] : 18;
+            $length = !empty($field['length']) ? $field['length'] : 18;
             return 'DECIMAL('.$length.','.$db->options['decimal_places'].')';
         }
         return '';
@@ -191,44 +191,21 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
         }
 
         $default = $autoinc = '';;
-        if (array_key_exists('autoincrement', $field) && $field['autoincrement']) {
+        if (!empty($field['autoincrement'])) {
             $autoinc = ' AUTO_INCREMENT PRIMARY KEY';
         } else {
             if (array_key_exists('default', $field)) {
                 if ($field['default'] === '') {
-                    $field['default'] = (array_key_exists('notnull', $field) && $field['notnull'])
-                        ? 0 : null;
+                    $field['default'] = (!empty($field['notnull'])) ? 0 : null;
                 }
                 $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
             }
         }
 
-        $unsigned = (array_key_exists('unsigned', $field) && $field['unsigned']) ? ' UNSIGNED' : '';
-        $notnull = (array_key_exists('notnull', $field) && $field['notnull']) ? ' NOT NULL' : '';
+        $unsigned = (!empty($field['unsigned'])) ? ' UNSIGNED' : '';
+        $notnull = (!empty($field['notnull'])) ? ' NOT NULL' : '';
         $name = $db->quoteIdentifier($name, true);
         return $name.' '.$this->getTypeDeclaration($field).$unsigned.$default.$notnull.$autoinc;
-    }
-
-    // }}}
-    // {{{ _quoteBLOB()
-
-    /**
-     * Convert a text value into a DBMS specific format that is suitable to
-     * compose query statements.
-     *
-     * @param string $value text string value that is intended to be converted.
-     * @param bool $quote determines if the value should be quoted and escaped
-     * @return string  text string that represents the given argument value in
-     *                 a DBMS specific format.
-     * @access protected
-     */
-    function _quoteBLOB($value, $quote)
-    {
-        $value = $this->_readFile($value);
-        if (!$quote) {
-            return $value;
-        }
-        return "'".addslashes($value)."'";
     }
 
     // }}}
@@ -248,7 +225,7 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
         if ($db_type == 'national') {
             $db_type = strtok('(), ');
         }
-        if (array_key_exists('length', $field)) {
+        if (!empty($field['length'])) {
             $length = $field['length'];
             $decimal = '';
         } else {
@@ -308,7 +285,6 @@ class MDB2_Driver_Datatype_mysql extends MDB2_Driver_Datatype_Common
                 if ($decimal == 'binary') {
                     $type[] = 'blob';
                 }
-                $type = array_reverse($type);
             }
             if ($fixed !== false) {
                 $fixed = true;
