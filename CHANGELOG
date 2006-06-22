@@ -7,6 +7,7 @@
 - PEAR::MDB2_Driver_oci8 was updated to 0.3.0
 - PEAR::MDB2_Driver_pgsql was updated to 1.1.0
 - PEAR::MDB2_Driver_sqlite was updated to 1.1.0
+- beforeClick and afterClick were added to P4A_Table_Col class
 
 1.99.0
 - P4A_Filename2File was added to P4A Standard library

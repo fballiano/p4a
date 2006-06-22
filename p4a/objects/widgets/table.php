@@ -803,6 +803,10 @@
 
 		function onClick()
 		{
+			if ($this->isActionTriggered('beforeClick')) {
+				$this->actionHandler('beforeClick');
+			}
+			
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
@@ -836,6 +840,10 @@
 				}
 				$parent->data->setOrder($order_field, $order_mode);
 				$parent->data->updateRowPosition();
+			}
+			
+			if ($this->isActionTriggered('afterClick')) {
+				$this->actionHandler('beforeafterClickClick');
 			}
 		}
 	}
