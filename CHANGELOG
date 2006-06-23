@@ -8,6 +8,9 @@
 - PEAR::MDB2_Driver_pgsql was updated to 1.1.0
 - PEAR::MDB2_Driver_sqlite was updated to 1.1.0
 - beforeClick and afterClick were added to P4A_Table_Col class
+- a bug was fixed in P4A_Canvas::getAsString();
+- a bug with P4A_Mask::dropCSS() and P4A_Mask::dropTempCSS() was solved
+- P4A_Date can now unformat dates with less then 4 digits year notation
 
 1.99.0
 - P4A_Filename2File was added to P4A Standard library

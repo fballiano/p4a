@@ -601,9 +601,9 @@
 		 * @param string		The URI of CSS.
 		 * @access public
 		 */
-		function dropCss($uri)
+		function dropCss($uri, $media = "screen")
 		{
-			if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])){
+			if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])) {
 				unset($this->_css[$uri][$media]);
 				if (empty($this->_css[$uri])) {
 					unset($this->_css);
@@ -632,9 +632,9 @@
 		 * @param string		The URI of CSS.
 		 * @access public
 		 */
-		function dropTempCss($uri)
+		function dropTempCss($uri, $media = "screen")
 		{
-			if(isset($this->_temp_css[$uri]) and isset($this->_temp_css[$uri][$media])){
+			if(isset($this->_temp_css[$uri]) and isset($this->_temp_css[$uri][$media])) {
 				unset($this->_temp_css[$uri][$media]);
 				if (empty($this->_temp_css[$uri])) {
 					unset($this->_temp_css);
