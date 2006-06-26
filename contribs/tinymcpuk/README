@@ -1,0 +1,36 @@
+-------------------------------------------------
+-- TinyMCPUK - TinyMCE with file/image manager --
+-------------------------------------------------
+
+TinyMCPUK brings you the powerful TinyMCE plus
+the MCPUK file manager and ImageManager
+strictly integrated together.
+
+-------------
+-- Details --
+-------------
+
+TinyFCK package contains:
+ * a TinyMCE release (absolutely not patched, this is the original TinyMCE)
+ * a patched version of Martin Kronstad's MCPUK/ImageManager integration
+ * an example documenting configuration
+ 
+TinyKCPUK is only available for PHP.
+
+-------------
+-- Authors --
+-------------
+
+Copyrights are holded by the authors of FCKEditor (http://www.fckeditor.net),
+TinyMCE (http://tinymce.moxiecode.com), MCPUK (http://mcpuk.net),
+ImageManager (http://www.zhuo.org) and the first integrator Martin Kronstad
+(http://fckeditor.prosjektweb.net) at the same way of support, 
+what we've done is only integrate the projects.
+
+The idea of TinyMCPUK and the integration is developed by CreaLabs (http://www.crealabs.it).
+
+----------------------
+-- Official website --
+----------------------
+
+http://p4a.sourceforge.net/tinymcpuk
