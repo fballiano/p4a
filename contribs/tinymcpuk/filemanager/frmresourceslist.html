@@ -171,14 +171,14 @@ function OpenFolder( folderPath )
 function OpenFile( fileUrl )  
 {  
 	fileUrl=unescape(fileUrl); 
-	window.top.opener.tinyfck.document.forms[0].elements[window.top.opener.tinyfck_field].value = fileUrl;  
+	window.top.opener.tinymcpuk.document.forms[0].elements[window.top.opener.tinymcpuk_field].value = fileUrl;  
  
-	if (window.top.opener.tinyfck.document.forms[0].elements[window.top.opener.tinyfck_field].onchange != null) {
-		window.top.opener.tinyfck.document.forms[0].elements[window.top.opener.tinyfck_field].onchange();  
+	if (window.top.opener.tinymcpuk.document.forms[0].elements[window.top.opener.tinymcpuk_field].onchange != null) {
+		window.top.opener.tinymcpuk.document.forms[0].elements[window.top.opener.tinymcpuk_field].onchange();  
 	}
  
 	window.top.close();  
-	window.top.opener.tinyfck.focus();  
+	window.top.opener.tinymcpuk.focus();  
 }  
 
 function DeleteFile( fileName, fileUrl )

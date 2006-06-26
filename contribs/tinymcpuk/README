@@ -10,7 +10,7 @@ strictly integrated together.
 -- Details --
 -------------
 
-TinyFCK package contains:
+TinyMCPUK package contains:
  * a TinyMCE release (absolutely not patched, this is the original TinyMCE)
  * a patched version of Martin Kronstad's MCPUK/ImageManager integration
  * an example documenting configuration
