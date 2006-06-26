@@ -1,5 +1,9 @@
+rich_textarea_loaded = false;
+
 function executeEvent(object_name, action_name, param1, param2, param3, param4)
 {
+	if (rich_textarea_loaded) tinyMCE.triggerSave();
+	
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
@@ -49,6 +53,10 @@ function setFocus(id)
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	showLoading();
+	if (rich_textarea_loaded) {
+		tinyMCE.triggerSave();
+		rich_textarea_loaded = false;
+	}
 	
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";

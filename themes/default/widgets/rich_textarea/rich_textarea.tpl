@@ -2,6 +2,8 @@
 
 {open_javascript:h}
 
+rich_textarea_loaded = true;
+
 tinyMCE.init({
 	mode: "exact",
 	elements : "{id}input",
@@ -18,7 +20,8 @@ tinyMCE.init({
 	auto_cleanup_word: true,
 	relative_urls: false,
 	apply_source_formatting: true,
-	add_form_submit_trigger: false
+	add_form_submit_trigger: false,
+	add_unload_trigger: false
 });
 
 {if:upload}
