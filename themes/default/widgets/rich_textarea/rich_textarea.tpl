@@ -17,7 +17,8 @@ tinyMCE.init({
 	{if:upload}file_browser_callback: "{id}fileBrowserCallBack",{end:}
 	auto_cleanup_word: true,
 	relative_urls: false,
-	apply_source_formatting: true
+	apply_source_formatting: true,
+	add_form_submit_trigger: false
 });
 
 {if:upload}

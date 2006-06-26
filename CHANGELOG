@@ -1,3 +1,6 @@
+1.99.2
+- a TinyFCK/ajax bug was solved
+
 1.99.1
 - P4A_ICONS_PATH is now used to generate the spinner path
 - PEAR::MDB2 was updated to 2.1.0
