@@ -397,18 +397,17 @@
 		function raiseXMLReponse()
 		{
 			ob_start();
-			$script_detector = '(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)';
+			$script_detector = '<script.*?>(.*?)<\/script>';
 			
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
 			foreach ($this->_to_redesign as $id) {
 				$object =& $this->getObject($id);
 				$as_string = $object->getAsString();
-				
 				$javascript_codes = array();
 				$javascript = '';
-				$html = preg_replace("/{$script_detector}/", '', $as_string);
-				preg_match_all("/{$script_detector}/", $as_string, $javascript_codes);
+				$html = preg_replace("/{$script_detector}/si", '', $as_string);
+				preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
 				$javascript_codes = $javascript_codes[1];
 				foreach ($javascript_codes as $code) {
 					$javascript .= "$code\n\n";
@@ -418,6 +417,7 @@
 				print "<html><![CDATA[{$html}]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";
+								
 			}
 			print "</ajax-response>";
 			

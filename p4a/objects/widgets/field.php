@@ -378,6 +378,11 @@
 		 */
 		function setType($type)
 		{
+			$p4a =& p4a::singleton();
+			if ($p4a->isHandheld() and $type == 'rich_textarea') {
+				$type = 'textarea';
+			}
+			
 			$this->type = $type;
 
 			switch($type) {

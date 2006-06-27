@@ -1,5 +1,6 @@
 1.99.2
 - a TinyFCK/ajax bug was solved
+- rich_textarea is automatically disabled on handhelds
 
 1.99.1
 - P4A_ICONS_PATH is now used to generate the spinner path

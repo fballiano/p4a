@@ -2,7 +2,14 @@
 
 {open_javascript:h}
 
-rich_textarea_loaded = true;
+instance = tinyMCE.getInstanceById('{id}input');
+if (instance) {
+	for (var i in tinyMCE.instances) {
+		if (tinyMCE.instances[i] == instance) {
+			tinyMCE.execCommand('mceAddControl', true, '{id}input');
+		}
+	}
+}
 
 tinyMCE.init({
 	mode: "exact",
@@ -21,7 +28,8 @@ tinyMCE.init({
 	relative_urls: false,
 	apply_source_formatting: true,
 	add_form_submit_trigger: false,
-	add_unload_trigger: false
+	add_unload_trigger: false,
+	strict_loading_mode: true
 });
 
 {if:upload}
@@ -31,5 +39,7 @@ tinyMCE.init({
 	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php?ServerPath={upload_path}", "{id}textarea", "modal,width=600,height=400");
 }
 {end:}
+
+tinyMCE.onLoad();
 
 {close_javascript:h}
