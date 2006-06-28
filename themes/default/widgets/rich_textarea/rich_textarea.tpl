@@ -40,6 +40,4 @@ tinyMCE.init({
 }
 {end:}
 
-tinyMCE.onLoad();
-
 {close_javascript:h}

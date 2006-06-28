@@ -1,3 +1,7 @@
+1.99.3
+- a TinyFCK/ajax bug was solved
+- P4A_Table_Col afterClick event bug was solved
+
 1.99.2
 - a TinyFCK/ajax bug was solved
 - rich_textarea is automatically disabled on handhelds

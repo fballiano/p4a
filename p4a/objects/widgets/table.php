@@ -843,7 +843,7 @@
 			}
 			
 			if ($this->isActionTriggered('afterClick')) {
-				$this->actionHandler('beforeafterClickClick');
+				$this->actionHandler('afterClick');
 			}
 		}
 	}
