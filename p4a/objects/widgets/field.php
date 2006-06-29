@@ -1122,7 +1122,7 @@
 
 			$sReturn = $this->composeLabel() . $sReturn;
 			$this->label->setProperty('for', "{id}input");
-			return $return;
+			return $sReturn;
 		}
 
 		/**
