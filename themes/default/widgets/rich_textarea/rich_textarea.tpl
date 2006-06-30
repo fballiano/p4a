@@ -2,10 +2,12 @@
 
 {open_javascript:h}
 
-instance = tinyMCE.getInstanceById('{id}input');
+var doOnLoad = true;
+var instance = tinyMCE.getInstanceById('{id}input');
 if (instance) {
 	for (var i in tinyMCE.instances) {
 		if (tinyMCE.instances[i] == instance) {
+			doOnLoad = false;
 			tinyMCE.execCommand('mceAddControl', true, '{id}input');
 		}
 	}
@@ -39,5 +41,9 @@ tinyMCE.init({
 	window.open("../filemanager/browser.html?Connector=connectors/php/connector.php?ServerPath={upload_path}", "{id}textarea", "modal,width=600,height=400");
 }
 {end:}
+
+if (doOnLoad) {
+	tinyMCE.onLoad();
+}
 
 {close_javascript:h}
