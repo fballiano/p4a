@@ -3,6 +3,7 @@
 - P4A_Table_Col afterClick event bug was solved
 - the default .htaccess was removed
 - a bug in P4A_Field::getAsFile() was fixed
+- greek translation was added (thanks to Ζαχαρίας Σδρέγας)
 
 1.99.2
 - a TinyFCK/ajax bug was solved
