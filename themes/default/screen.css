@@ -288,11 +288,11 @@ textarea:focus {
 	background-color: #F0F0F0;
 }
 
-.mceToolbarTop * {
+.mceToolbarTop *, .mceToolbar * {
 	display:inline;
 }
 
-.mceToolbarTop select * {
+.mceToolbarTop select *, .mceToolbar select * {
 	display:block;
 }
 
@@ -349,7 +349,7 @@ select {
 .p4a_menu .accesskey {
 	color: black;
 }
-    
+
 .p4a_menu li {
 	float: left;
 	background: #fafafa;
@@ -394,7 +394,7 @@ select {
 	margin-left: 120px;
 }
 
-.p4a_menu li:hover ul ul,              
+.p4a_menu li:hover ul ul,
 .p4a_menu li:hover ul ul ul,
 .p4a_menu li:hover ul ul ul ul,
 .p4a_menu li:hover ul ul ul ul ul{
@@ -478,7 +478,7 @@ legend {
 }
 
 .table th a, .table td a {
-	display: block;	
+	display: block;
 }
 
 .table caption{

@@ -166,6 +166,20 @@
 		var $upload = false;
 
 		/**
+		 * rich textarea theme/toolbar (advanced|simple)
+		 * @var string
+		 * @access private
+		 */
+		var $rich_textarea_theme = 'advanced';
+
+		/**
+		 * buttons for rich textarea toolbars
+		 * @var array
+		 * @access private
+		 */
+		var $rich_textarea_toolbars = array();
+
+		/**
 		 * Class constructor.
 		 * Istances the widget, sets name and initializes its value.
 		 * @param string				Mnemonic identifier for the object.
@@ -184,6 +198,11 @@
 			if ($add_default_data_field){
 				$this->build("P4A_Data_Field", "data_field");
 			}
+
+			//Rich textarea things
+			$this->setRichTextareaToolbar(0, 'cut,copy,paste,pastetext,pasteword,separator,undo,redo,separator,search,replace,separator,ltr,rtl,separator,charmap,separator,removeformat,cleanup,separator,code,preview,fullscreen,print,separator,help');
+			$this->setRichTextareaToolbar(1, 'bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,formatselect,separator,sub,sup,bullist,numlist,separator,outdent,indent');
+			$this->setRichTextareaToolbar(2, 'tablecontrols,separator,link,unlink,anchor,image,separator,visualaid,flash,advhr');
 
 			//Label
  			$this->build("P4A_Label", "label");
@@ -345,7 +364,7 @@
 
             return $new_value;
 		}
-		
+
 		/**
 		 * Returns the "new_value" for the field (without locale formatting).
 		 * @param integer		If the value is an array that we can return only one element.
@@ -382,7 +401,7 @@
 			if ($p4a->isHandheld() and $type == 'rich_textarea') {
 				$type = 'textarea';
 			}
-			
+
 			$this->type = $type;
 
 			switch($type) {
@@ -709,7 +728,7 @@
 			} else {
 				$enabled = " disabled='disabled' ";
 			}
-			
+
 			$id = $this->getId();
 			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
@@ -783,11 +802,15 @@
 		{
 			$p4a =& p4a::singleton();
 			$this->useTemplate('rich_textarea');
-			
+
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
 			$this->addTempVar("upload_path", P4A_UPLOADS_PATH . "/" . $this->getUploadSubpath());
 			$this->addTempVar("upload", $this->upload);
-			
+			$this->addTempVar("theme", $this->getRichTextareaTheme());
+			$this->addTempVar("toolbar1", $this->getRichTextareaToolbar(0));
+			$this->addTempVar("toolbar2", $this->getRichTextareaToolbar(1));
+			$this->addTempVar("toolbar3", $this->getRichTextareaToolbar(2));
+
 			return $this->fetchTemplate();
 		}
 
@@ -946,13 +969,13 @@
 			$value_field		= $this->getSourceValueField();
 			$description_field	= $this->getSourceDescriptionField();
 			$new_value			= $this->getNewValue();
-			
+
 			$i = 0;
 			foreach ($external_data as $key=>$current) {
 				if (!$new_value) {
 					$new_value = array();
 				}
-				
+
 				if (in_array($current[$value_field], $new_value)) {
 					$checked = "checked='checked'";
 				} else {
@@ -961,7 +984,7 @@
 				$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
 				$i++;
 			}
-			
+
 			$sReturn .= "</div>";
 			return $this->composeLabel() . $sReturn;
 		}
@@ -1040,7 +1063,7 @@
 				$sContent .= "</label>";
 				$sContent .= '</div>';
 			}
-			
+
 			$this->label->unsetProperty('for');
 			$return = $this->composeLabel() . "<div class='font_normal' style='float:left;text-align:left;'>$sContent</div>";
 			$this->label->setProperty('for', "{id}input");
@@ -1095,11 +1118,15 @@
 			} else {
 				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
-					
+					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
+
+					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+
+					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
+					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
 				}
 
@@ -1110,13 +1137,18 @@
 				}
 
 				$src = P4A_UPLOADS_URL . $this->getNewValue(1);
+				$mime_type = $this->getNewValue(3);
 				$this->label->unsetProperty('for');
 
 				$sReturn  = '<table class="border_box">';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				if ($mime_type == 'application/x-shockwave-flash') {
+					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				} else {
+					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				}
 				$sReturn .= '</table>';
 			}
 
@@ -1133,7 +1165,7 @@
 		{
 			$this->setNewValue(null);
 		}
-		
+
 		/**
 		 * Action handler for file preview (only images).
 		 * @access public
@@ -1141,11 +1173,18 @@
 		function filePreviewOnClick()
 		{
 			$p4a =& p4a::singleton();
-			$p4a->openMask("P4A_Mask_Image_Preview");
-			$p4a->active_mask->image->setValue(P4A_UPLOADS_URL . $this->getNewValue(1));
+			$p4a->openMask("P4A_Mask_Preview");
 			$p4a->active_mask->setTitle($this->getNewValue(0));
+
+			$mime_type = $this->getNewValue(3);
+			if ($mime_type == 'application/x-shockwave-flash') {
+				$raw_html = P4A_SWF_Object(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(4), $this->getNewValue(5));
+			} else {
+				$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
+			}
+			$p4a->active_mask->setRawHTML($raw_html);
 		}
-		
+
 		/**
 		 * Action handler for file download.
 		 * @access public
@@ -1155,7 +1194,7 @@
 			$name = $this->getNewValue(0);
 			$src = P4A_UPLOADS_DIR . $this->getNewValue(1);
 			$size = $this->getNewValue(2);
-			
+
 			header("Cache-control: private");
 			header("Content-type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=\"$name\"");
@@ -1202,7 +1241,7 @@
 		{
 			$p4a =& P4A::singleton();
 			$id = $this->getID();
-			
+
 			if ($this->getNewValue() === null) {
 				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 
@@ -1212,7 +1251,7 @@
 
 				$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 			} else {
-				$mime_type = explode( '/', $this->getNewValue(3) );
+				$mime_type = explode('/', $this->getNewValue(3));
 				$mime_type = $mime_type[0];
 
 				if ($mime_type != 'image') {
@@ -1227,7 +1266,7 @@
 					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
 					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
-					
+
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
@@ -1376,7 +1415,7 @@
 			if (is_array($value)) {
 				$value = join($value, ",");
 			}
-			
+
 			switch ($this->type) {
 				case 'text':
 				case 'hidden':
@@ -1396,6 +1435,54 @@
 		function enableUpload($enable = true)
 		{
 			$this->upload = $enable;
+		}
+
+		/**
+		 * sets the rich textarea theme (simple|advanced)
+		 * @access public
+		 */
+		function setRichTextareaTheme($theme)
+		{
+			$this->rich_textarea_theme = $theme;
+		}
+
+		/**
+		 * @access public
+		 * @return string
+		 */
+		function getRichTextareaTheme()
+		{
+			return $this->rich_textarea_theme;
+		}
+
+		/**
+		 * sets buttons for every richtextarea toolbar
+		 * @access public
+		 * @param integer the toolbar index (1|2|3)
+		 * @param string buttons in a comma separated list
+		 */
+		function setRichTextareaToolbar($index, $buttons)
+		{
+			$this->rich_textarea_toolbars[$index] = $buttons;
+		}
+
+		/**
+		 * @access public
+		 * @return string
+		 */
+		function getRichTextareaToolbar($index)
+		{
+			return $this->rich_textarea_toolbars[$index];
+		}
+
+		/**
+		 * returns all toolbars buttons
+		 * @access public
+		 * @return array
+		 */
+		function getRichTextareaToolbars()
+		{
+			return $this->rich_textarea_toolbars;
 		}
 	}
 ?>

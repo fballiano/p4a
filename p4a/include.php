@@ -40,7 +40,7 @@
 	 *
 	 */
 	$dir = dirname(__FILE__);
-	
+
 	//Configuration container
 	require_once "$dir/config.php";
 
@@ -57,6 +57,7 @@
 	require_once "$dir/libraries/pear/PEAR/Common.php";
 	require_once "$dir/libraries/pear/MDB2.php";
 	require_once "$dir/libraries/pear/HTML/Template/Flexy.php";
+	require_once "$dir/libraries/pear/File/SWF.php";
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";
 
@@ -85,7 +86,7 @@
 
 	//Masks
 	require_once "$dir/objects/masks/error.php";
-	require_once "$dir/objects/masks/image_preview.php";
+	require_once "$dir/objects/masks/preview.php";
 
 	//Widget Extensions
 	require_once "$dir/objects/widgets/box.php";
@@ -127,7 +128,7 @@
 			} else {
 				$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';
 			}
-			P4A_Include_Objects($objects_dir);	
+			P4A_Include_Objects($objects_dir);
 		}
 		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		P4A_Include_Objects($objects_dir);

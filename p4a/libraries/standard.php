@@ -35,7 +35,7 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
- 
+
 if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	eval('function clone($object) {return $object;}');
 }
@@ -130,7 +130,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 		$sFile = '{' . join(',' , $aFileNew ) . '}';
 		return $sFile;
 	}
-	
+
 	/**
 	 * Converts a file path into a "file" format value
 	 * @access public
@@ -138,7 +138,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	 * @param string	The uploads dir
 	 * @return string	The "file"
 	 */
-	
+
 	function P4A_Filename2File($filename,$uploads_dir)
 	{
 		if (!is_file($filename)) {
@@ -219,14 +219,14 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 
 		return $filename;
 	}
-	
+
 	/**
 	 * Strips "strange" chars from filename.
 	 * @access public
 	 * @return string
 	 * @param string
 	 */
-	function P4A_Get_Valid_File_Name($filename) 
+	function P4A_Get_Valid_File_Name($filename)
 	{
 		$filename = str_replace(" ","_",$filename);
 		$filename = preg_replace("/[^A-Za-z0-9_\-\.]/","",$filename);
@@ -276,7 +276,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the extension of the passed file path/url.
 	 * @access public
@@ -287,7 +287,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	{
 		return substr(strrchr($url, '.'), 1);
 	}
-	
+
 	/**
 	 * Check if the extension is allowed to be uploaded
 	 * @access public
@@ -299,7 +299,7 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 		$allow = explode('|', P4A_DENIED_EXTENSIONS);
 		return !in_array(strtolower($extension), $allow);
 	}
-	
+
 	/**
 	 * Returns an i18n translated string (like gettext)
 	 * @access public
@@ -310,5 +310,24 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	{
 		$p4a =& p4a::singleton();
 		return $p4a->i18n->messages->get($string);
+	}
+
+	/**
+	 * Return HTML tag containig embedded swf object.
+	 * @param string	File path.
+	 * @param integer	Movie width.
+	 * @param integer	Movie height.
+	 * @access public
+	 */
+	function P4A_Swf_Object($src, $width, $height)
+	{
+		$html  = '<object type="application/x-shockwave-flash" data="' . $src . '" width="' . $width . '" height="' . $height . '" >';
+		$html .= '<param name="movie" value="' . $src . '" />';
+		$html .= '<param name="menu" value="false" />';
+		//$html .= '<param name="wmode" value="transparent" />';
+		$html .= '<param name="bgcolor" value="#ffffff" />';
+		$html .= '<param name="quality" value="high" />';
+		$html .= '</object>';
+		return $html;
 	}
 ?>

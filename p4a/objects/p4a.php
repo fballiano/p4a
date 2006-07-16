@@ -139,14 +139,14 @@
 		 * @access private
 		 */
 		var $internet_explorer = false;
-		
+
 		/**
 		 * Counter to avoid browser's back/forward
 		 * @var integer
 		 * @access private
 		 */
 		var $_action_history_id = 0;
-		
+
 		var $_to_redesign = array();
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
 
@@ -167,6 +167,7 @@
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
+				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
 			}
 
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
@@ -189,19 +190,17 @@
 
 			$this->init();
 		}
-		
+
 		function detectClient()
 		{
-			require_once dirname(dirname(__FILE__)) . '/libraries/phpsniff/phpSniff.class.php';
-			$client = new phpSniff();
-			
-			if ($client->browser_is('ie')) {
-				$this->internet_explorer = true;
-			}
-			
-			if (!$client->has_feature('css2') or P4A_FORCE_HANDHELD_RENDERING) {
+			require_once 'Net/UserAgent/Detect.php';
+			Net_UserAgent_Detect::detect();
+
+			$this->internet_explorer = Net_UserAgent_Detect::isIE();
+			$this->_ajax_enabled = Net_UserAgent_Detect::hasFeature('ajax');
+
+			if (!$this->_ajax_enabled or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
-				$this->_ajax_enabled = false;
 			}
 		}
 
@@ -218,7 +217,7 @@
 
 			return $this->handheld;
 		}
-		
+
 		function isAjaxEnabled()
 		{
 			return $this->_ajax_enabled;
@@ -356,17 +355,24 @@
 						$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
 						move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 						$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'];
-	
+
 						if ((substr($key, 0, 3) == 'fld') and ($value['error'] == 0)) {
 							$new_value = $value['name'] . ',' . $value['tmp_name'] . ',' . $value['size'] . ',' . $value['type'] . ',' ;
-	
+
 							if (substr($value['type'], 0, 5) == 'image') {
 								$image_data = getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 								$new_value .= $image_data[0] . ',' . $image_data[1];
+							} elseif ($value['type'] == 'application/x-shockwave-flash') {
+								$file = P4A_UPLOADS_TMP_DIR . '/' . $value['name'];
+								$swf = new File_SWF($file);
+								if ($swf->is_valid()) {
+									$swf_data = $swf->getMovieSize();
+									$new_value .= $swf_data['width'] . ',' . $swf_data['height'];
+								}
 							} else {
 								$new_value .= ',';
 							}
-	
+
 							$this->objects[$key]->setNewValue('{' . $new_value . '}');
 							if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
 						}
@@ -393,12 +399,12 @@
 			session_id(substr(session_id(), 0, -6));
 			flush();
 		}
-		
+
 		function raiseXMLReponse()
 		{
 			ob_start();
 			$script_detector = '<script.*?>(.*?)<\/script>';
-			
+
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
 			foreach ($this->_to_redesign as $id) {
@@ -412,21 +418,21 @@
 				foreach ($javascript_codes as $code) {
 					$javascript .= "$code\n\n";
 				}
-				
+
 				print "\n<widget id='$id'>\n";
 				print "<html><![CDATA[{$html}]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";
-								
+
 			}
 			print "</ajax-response>";
-			
+
 			if (P4A_AJAX_DEBUG) {
 				$fp = @fopen(ini_get("session.save_path") . '/p4a_ajax_debug.txt', 'w');
 				@fwrite($fp, ob_get_contents());
 				@fclose($fp);
 			}
-			
+
 			ob_end_flush();
 			$this->_to_redesign = array();
 		}
@@ -616,7 +622,7 @@
 				unset($this->_javascript[$uri]);
 			}
 		}
-		
+
 		/**
 		 * Action history ID is used to avoid browser's back/forward
 		 * @access public
@@ -626,7 +632,7 @@
 		{
 			return $this->_action_history_id;
 		}
-		
+
 		function redesign($id)
 		{
 			$this->_to_redesign[] = $id;

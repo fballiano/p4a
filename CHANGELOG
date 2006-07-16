@@ -1,3 +1,17 @@
+1.99.4
+- PEAR::Net_UserAgent_Detect 2.2.0 was added
+- phpSniff library was dropped
+- browser detection was updated to use PEAR::Net_UserAgent_Detect
+- PEAR::File 1.2.2 was added
+- PEAR::File_SWF 0.1 was added
+- P4A_Mask_Image_Preview was dropped
+- P4A_Mask_Preview was added
+- P4A_Field auto preview was changed to support the new P4A_Mask_Preview
+- P4A_Field support for SWF preview was added
+- fixed a bug with js calendar CSS
+- P4A_Field::setRichTextareaTheme() and P4A_Field::getRichTextareaTheme() were added to manage tinyMCE toolbars
+- P4A_Field::setRichTextareaToolbar(), P4A_Field::getRichTextareaToolbar() and P4A_Field::getRichTextareaToolbars() were added to manage tinyMCE toolbars buttons
+
 1.99.3
 - a TinyFCK/ajax bug was solved
 - P4A_Table_Col afterClick event bug was solved
