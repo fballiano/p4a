@@ -1,9 +1,0 @@
-0.3
-- ported to MDB2
-
-0.2
-- afterClick action is now triggered
-- beforeRenderElement action is now triggered
-
-0.1
-- Initial release

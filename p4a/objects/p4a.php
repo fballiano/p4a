@@ -167,6 +167,7 @@
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
+				$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/src/scriptaculous.js");
 				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
 			}
 

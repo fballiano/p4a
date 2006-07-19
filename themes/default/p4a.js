@@ -8,7 +8,7 @@ function executeEvent(object_name, action_name, param1, param2, param3, param4)
 			}
 		}
 	}
-	
+
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
@@ -16,7 +16,7 @@ function executeEvent(object_name, action_name, param1, param2, param3, param4)
 
 	document.forms['p4a']._object.value = object_name;
 	document.forms['p4a']._action.value = action_name;
-	document.forms['p4a']._ajax.value = 0;	
+	document.forms['p4a']._ajax.value = 0;
 	document.forms['p4a'].param1.value = param1;
 	document.forms['p4a'].param2.value = param2;
 	document.forms['p4a'].param3.value = param3;
@@ -88,7 +88,7 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 		parameters: query_string,
 		onComplete: function(response) {processAjaxResponse(response)}
 	}
-	
+
 	new Ajax.Request('index.php', ajax_params);
 }
 
@@ -102,13 +102,13 @@ function processAjaxResponse(response)
    		if (html) {
    			$(object_id).parentNode.innerHTML = html.firstChild.data;
    		}
-   		
+
    		var javascript = widgets[i].getElementsByTagName('javascript').item(0);
    		if (javascript) {
    			eval(javascript.firstChild.data);
    		}
 	}
-	
+
 	if (window.fixPng) fixPng();
 	hideLoading();
 }
@@ -117,7 +117,7 @@ function form2string(form)
 {
 	var sReturn = '';
 	var e;
-	
+
 	for (i=0; i<form.elements.length; i++) {
 		e = form.elements[i];
 		switch (e.type) {
@@ -130,12 +130,10 @@ function form2string(form)
 				break;
 			default:
 				value = new String(e.value);
-				if (value.length>0) {
-					sReturn += e.name + '=' + escape(value) + '&';
-				}
+				sReturn += e.name + '=' + escape(value) + '&';
 		}
 	}
-	
+
 	return sReturn.substr(0, sReturn.length - 1);
 }
 

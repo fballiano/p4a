@@ -49,34 +49,55 @@ class P4A_DB_Navigator extends P4A_Widget
 	 * @access private
 	 */
 	var $source = null;
-	
+
 	/**
 	 * The recursion field name
 	 * @var string
 	 * @access private
 	 */
 	var $recursor = "";
-	
+
 	/**
 	 * The description field name
 	 * @var string
 	 * @access private
 	 */
 	var $description = "";
-	
+
 	/**
 	 * Expand whole tree or collapse?
 	 * @var boolean
 	 * @access private
 	 */
 	var $expand_all = true;
-	
+
 	/**
 	 * Trim after this number of characters
 	 * @var integer
 	 * @access private
 	 */
 	var $trim = 0;
+
+	/**
+	 * When moving a record, this field is updated
+	 * @var string
+	 * @access private
+	 */
+	var $field_to_update_on_movement = null;
+
+	/**
+	 * Allows user to move also the root elements
+	 * @var boolean
+	 * @access private
+	 */
+	var $allow_roots_movement = false;
+
+	/**
+	 * Allows user to create new root element (with parent_id = null)
+	 * @var boolean
+	 * @access private
+	 */
+	var $allow_movement_to_root = false;
 
 	/**
 	 * The constructor
@@ -89,7 +110,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		$this->addAction("onClick");
 		$this->intercept($this, "onClick", "onClick");
 	}
-	
+
 	/**
 	 * Sets the source of the tree, it must be a P4A_DB_Source.
 	 * @param P4A_DB_Source	The DB source to navigate.
@@ -99,7 +120,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->source =& $source;
 	}
-	
+
 	/**
 	 * Sets the field name used to recursively navigate the P4A_DB_Source.
 	 * @param
@@ -109,7 +130,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->recursor = $field_name;
 	}
-	
+
 	/**
 	 * Sets the field name used to print out the description in the tree.
 	 * @param string		The field name
@@ -119,7 +140,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->description = $field_name;
 	}
-	
+
 	/**
 	 * Trims description after x chars (0 = disabled).
 	 * @param integer		Num of chars
@@ -129,7 +150,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->trim = $chars;
 	}
-	
+
 	/**
 	 * Sets if the tree is expanded or not.
 	 * @param boolean		The value
@@ -139,7 +160,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->expand_all = $value;
 	}
-	
+
 	/**
 	 * Sets if the tree is collapsed or not.
 	 * @param boolean		The value
@@ -149,51 +170,87 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$this->expand_all = !$value;
 	}
-	
+
+	function allowMovement(&$field)
+	{
+		$this->field_to_update_on_movement = $field->getId();
+		$this->intercept($field, 'onChange', 'onMovement');
+	}
+
+	function allowRootsMovement($allow = true)
+	{
+		$this->allow_roots_movement = $allow;
+	}
+
+	function allowMovementToRoot($allow = true)
+	{
+		$this->allow_movement_to_root = $allow;
+	}
+
 	function getAsString($id = null)
 	{
 		if (!$this->isVisible()) {
 			return "";
 		}
-		
+
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
-		
+
 		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_db_navigator.css");
 		$obj_id = $this->getId();
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
 		$order = $this->source->_composeOrderPart();
 		$current = $this->source->fields->{$pk}->getValue();
+		$recursor = $this->source->fields->{$this->recursor}->getValue();
 		$all = $this->source->getAll();
-		
-		return $this->_getAsString(null, $all, $obj_id, $table, $pk, $order, $current);
+		$return = $this->_getAsString(null, $all, $obj_id, $table, $pk, $order, $current);
+		$return = "<ul id='{$obj_id}' class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
+
+		// movements are allowed ONLY IF AJAX IS ACTIVE!!
+		// that's because we use too complex javascript for old handhelds
+		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
+			if ($this->allow_roots_movement or strlen($recursor)) {
+				$return .= "<script type='text/javascript'>";
+				$return .= "new Draggable('{$obj_id}_{$current}', {revert:true});";
+				foreach ($all as $record) {
+					$return .= "Droppables.add('{$obj_id}_{$record[$pk]}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});";
+				}
+				if ($this->allow_movement_to_root) {
+					$return .= "Droppables.add('{$obj_id}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});";
+				}
+				$return .= "</script>";
+			}
+		}
+		return $return;
 	}
-	
+
 	function _getAsString($id, &$all, $obj_id, $table, $pk, $order, $current, $recurse = true)
 	{
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
 		$return = "";
-		
+
 		if (empty($id)) {
 			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
+			$html_id = "id='$obj_id'";
 		} else {
 			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
+			$html_id = "";
 		}
-		
+
 		if (empty($roots)) {
 			return "";
 		}
-		
-		$return .= "<ul class=\"p4a_db_navigator\" style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
+
+		$return .= "<ul class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
 		foreach ($roots as $section) {
 			if ($this->actionHandler('beforeRenderElement', $section) == ABORT) {
 				continue;
 			}
-			
+
 			if ($section[$pk] == $current) {
-				$return .= "<li class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>";
+				$return .= "<li id='{$obj_id}_{$current}' class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>";
 				$return .= $this->_trim($section[$this->description]);
 			} else {
 				foreach ($all as $key=>$record) {
@@ -202,12 +259,12 @@ class P4A_DB_Navigator extends P4A_Widget
 						break;
 					}
 				}
-			
+
 				$actions = $this->composeStringActions($position);
 				$description = $this->_trim($section[$this->description]);
-				$return .= "<li><a href='#' $actions>{$description}</a>";
+				$return .= "<li id='{$obj_id}_{$record[$pk]}'><a href='#' $actions>{$description}</a>";
 			}
-			
+
 			if ($recurse) {
 				if ($this->expand_all) {
 					$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $order, $current);
@@ -226,21 +283,21 @@ class P4A_DB_Navigator extends P4A_Widget
 		$return .= "</ul>";
 		return $return;
 	}
-	
+
 	function getPath($id, $table, $pk)
 	{
 		$db =& p4a_db::singleton();
-		
-		$section = $db->queryRow("SELECT * FROM $table WHERE $pk = '$id'");
+
+		$section = $db->queryRow("SELECT * FROM $table WHERE $pk='$id'");
 		$return = array();
 		$return[] = $section;
-		
+
 		if (empty($section[$this->recursor])) {
 			return $return;
 		} else {
 			return array_merge($this->getPath($section[$this->recursor], $table, $pk), $return);
 		}
-		
+
 		return $return;
 	}
 
@@ -253,9 +310,9 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		$position = $params[0];
 		$row = $this->source->row($position);
-		return $this->actionHandler('afterClick', $row); 
+		return $this->actionHandler('afterClick', $row);
 	}
-	
+
 	/**
 	 * Trims a text after a fixed number of characters.
 	 * @param string		The text to be trimmed
@@ -271,6 +328,39 @@ class P4A_DB_Navigator extends P4A_Widget
 			}
 		}
 		return $text;
+	}
+
+	/**
+	 * Event interceptor when user moves an element to another subtree
+	 * @access private
+	 */
+	function onMovement()
+	{
+		$p4a =& p4a::singleton();
+		$db =& p4a_db::singleton();
+
+		$field =& $p4a->getObject($this->field_to_update_on_movement);
+
+		$table = $this->source->getTable();
+		$pk = $this->source->getPk();
+		$current = $this->source->fields->{$pk}->getValue();
+		$new_value = $field->getUnformattedNewValue();
+
+		$receiver_path = $this->getPath($new_value, $table, $pk);
+		foreach ($receiver_path as $record) {
+			if ($current == $record[$pk]) {
+				return;
+			}
+		}
+
+		if ($new_value != $current) {
+			if (strlen($new_value)) {
+				$db->query("UPDATE $table SET {$this->recursor}='$new_value' WHERE $pk='$current'");
+			} else {
+				$db->query("UPDATE $table SET {$this->recursor}=NULL WHERE $pk='$current'");
+			}
+			$this->redesign();
+		}
 	}
 }
 

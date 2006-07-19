@@ -821,11 +821,8 @@
 		 */
 		function getAsHidden()
 		{
-			$header 		= '<input type="hidden" ';
-			$close_header 	= '/>';
-
-			$sReturn = $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() .  $close_header;
-			return $sReturn;
+			$id = $this->getId();
+			return "<input type='hidden' id='{$id}input' " . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . " />";
 		}
 
 		/**

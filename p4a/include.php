@@ -92,6 +92,7 @@
 	require_once "$dir/objects/widgets/box.php";
 	require_once "$dir/objects/widgets/button.php";
 	require_once "$dir/objects/widgets/canvas.php";
+	require_once "$dir/objects/widgets/db_navigator.php";
 	require_once "$dir/objects/widgets/field.php";
 	require_once "$dir/objects/widgets/frame.php";
 	require_once "$dir/objects/widgets/href.php";

@@ -1,3 +1,9 @@
+1.99.5
+- a folder_home icon (16x16) was added
+- a bug with query2string function for ajax submit was solved
+- P4A_DB_Navigator was moved from contribs to core
+- a bug with P4A_Field::getAsHidden() was fixed
+
 1.99.4
 - PEAR::Net_UserAgent_Detect 2.2.0 was added
 - phpSniff library was dropped
