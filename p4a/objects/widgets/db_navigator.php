@@ -171,17 +171,32 @@ class P4A_DB_Navigator extends P4A_Widget
 		$this->expand_all = !$value;
 	}
 
+	/**
+	 * Enable/disable movement of setions (only if AJAX is enabled)
+	 * @access public
+	 * @param mixed (false|parent_id field on your mask)
+	 */
 	function allowMovement(&$field)
 	{
 		$this->field_to_update_on_movement = $field->getId();
 		$this->intercept($field, 'onChange', 'onMovement');
 	}
 
+	/**
+	 * Enable/disable movement of root sections (parent_id = null)
+	 * @access public
+	 * @param boolean
+	 */
 	function allowRootsMovement($allow = true)
 	{
 		$this->allow_roots_movement = $allow;
 	}
 
+	/**
+	 * Enable/disable movement of sections to root (parent_id = null)
+	 * @access public
+	 * @param boolean
+	 */
 	function allowMovementToRoot($allow = true)
 	{
 		$this->allow_movement_to_root = $allow;
