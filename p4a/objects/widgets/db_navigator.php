@@ -203,8 +203,18 @@ class P4A_DB_Navigator extends P4A_Widget
 		$order = $this->source->_composeOrderPart();
 		$current = $this->source->fields->{$pk}->getValue();
 		$recursor = $this->source->fields->{$this->recursor}->getValue();
-		$all = $this->source->getAll();
-		$return = $this->_getAsString(null, $all, $obj_id, $table, $pk, $order, $current);
+		$rows = $this->source->getAll();
+		$i = 0;
+		foreach ($rows as $row) {
+			$id = $row[$this->recursor];
+			if (empty($id)) {
+				$id = 0;
+			}
+			$row['__position'] = ++$i;
+			$all[$id][] = $row;
+		}
+		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $order, $current);
+
 		$return = "<ul id='{$obj_id}' class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
 
 		// movements are allowed ONLY IF AJAX IS ACTIVE!!
@@ -213,11 +223,11 @@ class P4A_DB_Navigator extends P4A_Widget
 			if ($this->allow_roots_movement or strlen($recursor)) {
 				$return .= "<script type='text/javascript'>";
 				$return .= "new Draggable('{$obj_id}_{$current}', {revert:true});";
-				foreach ($all as $record) {
-					$return .= "Droppables.add('{$obj_id}_{$record[$pk]}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});";
+				foreach ($rows as $record) {
+					$return .= "Droppables.add('{$obj_id}_{$record[$pk]}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 				}
 				if ($this->allow_movement_to_root) {
-					$return .= "Droppables.add('{$obj_id}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});";
+					$return .= "Droppables.add('{$obj_id}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 				}
 				$return .= "</script>";
 			}
@@ -231,38 +241,31 @@ class P4A_DB_Navigator extends P4A_Widget
 		$db =& p4a_db::singleton();
 		$return = "";
 
-		if (empty($id)) {
-			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} IS NULL $order");
+		if ($id == 0) {
 			$html_id = "id='$obj_id'";
 		} else {
-			$roots = $db->queryAll("SELECT * FROM $table WHERE {$this->recursor} = '$id' $order");
 			$html_id = "";
 		}
 
-		if (empty($roots)) {
+		if (!isset($all[$id])) {
 			return "";
 		}
 
 		$return .= "<ul class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder." . P4A_ICONS_EXTENSION . "')\">";
+		$roots = $all[$id];
 		foreach ($roots as $section) {
 			if ($this->actionHandler('beforeRenderElement', $section) == ABORT) {
 				continue;
 			}
 
 			if ($section[$pk] == $current) {
-				$return .= "<li id='{$obj_id}_{$current}' class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>";
+				$return .= "<li id='{$obj_id}_{$current}' class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>\n";
 				$return .= $this->_trim($section[$this->description]);
 			} else {
-				foreach ($all as $key=>$record) {
-					if ($record[$pk] == $section[$pk]) {
-						$position = $key+1;
-						break;
-					}
-				}
-
+				$position = $section['__position'];
 				$actions = $this->composeStringActions($position);
 				$description = $this->_trim($section[$this->description]);
-				$return .= "<li id='{$obj_id}_{$record[$pk]}'><a href='#' $actions>{$description}</a>";
+				$return .= "<li id='{$obj_id}_{$section[$pk]}'><a href='#' $actions>{$description}</a>\n";
 			}
 
 			if ($recurse) {

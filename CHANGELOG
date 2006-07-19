@@ -3,6 +3,11 @@
 - a bug with query2string function for ajax submit was solved
 - P4A_DB_Navigator was moved from contribs to core
 - a bug with P4A_Field::getAsHidden() was fixed
+- some bugfixes for P4A_DB_Navigator were applied
+- P4A_DB_Navigator now supports drag&drop (only active item and AJAX is active)
+- P4A_DB_Navigator::allowMovement() was added to enable/disable drag&drop
+- P4A_DB_Navigator::allowRootsMovement() was added to enable/disable drag&drop of root elements
+- P4A_DB_Navigator::allowMovementToRoot() was added to enable/disable drag/drop of elements to root
 
 1.99.4
 - PEAR::Net_UserAgent_Detect 2.2.0 was added
