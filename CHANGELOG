@@ -8,6 +8,8 @@
 - P4A_DB_Navigator::allowMovement() was added to enable/disable drag&drop
 - P4A_DB_Navigator::allowRootsMovement() was added to enable/disable drag&drop of root elements
 - P4A_DB_Navigator::allowMovementToRoot() was added to enable/disable drag/drop of elements to root
+- P4A::init() method was removed
+- javascript calendar widget now supports localized messages
 
 1.99.4
 - PEAR::Net_UserAgent_Detect 2.2.0 was added

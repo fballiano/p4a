@@ -158,13 +158,26 @@
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
+			$this->i18n =& new p4a_i18n(P4A_LOCALE);
+			$this->i18n->setSystemLocale();
+
+			$this->build("P4A_Collection", "masks");
+			$this->build("P4A_Collection", "listeners");
+
 			$this->detectClient();
 
 			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
-				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+
+				$calendar_language = $this->i18n->getLanguage();
+				if (@file_exists(P4A_THEME_DIR . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js")) {
+					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js");
+				} else {
+					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+				}
+
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/tiny_mce.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
 				$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/src/scriptaculous.js");
@@ -188,8 +201,6 @@
 			if ($this->isInternetExplorer() and !$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
 			}
-
-			$this->init();
 		}
 
 		function detectClient()
@@ -291,22 +302,6 @@
 				print $time['diff'] .':' . $time['description'] . "\n";
 			}
 		}
-
-		/**
-		 * Executes the initialization method of the object.
-		 * @access private
-		 */
-		function init()
-		{
-			$this->i18n =& new p4a_i18n(P4A_LOCALE);
-			$this->i18n->setSystemLocale();
-
-			$this->build("P4A_Collection", "masks");
-			$this->build("P4A_Collection", "listeners");
-
-			$this->actionHandler('init');
-		}
-
 
 		/**
 		 * Executes the main cicle.
