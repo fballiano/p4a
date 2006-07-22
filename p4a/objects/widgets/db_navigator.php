@@ -33,13 +33,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package P4A_DB_Navigator
+ * @package p4a
  */
 
 /**
  * This widget allows a tree navigation within a P4A_DB_Source.
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @package P4A_DB_Navigator
+ * @package p4a
  */
 class P4A_DB_Navigator extends P4A_Widget
 {
@@ -315,8 +315,6 @@ class P4A_DB_Navigator extends P4A_Widget
 		} else {
 			return array_merge($this->getPath($section[$this->recursor], $table, $pk), $return);
 		}
-
-		return $return;
 	}
 
 	/**
