@@ -877,7 +877,7 @@
 			}
 
 			$header			   .= $close_header;
-			$external_data		= $this->data->queryAll() ;
+			$external_data		= $this->data->getAll() ;
 			$value_field		= $this->getSourceValueField() ;
 			$description_field	= $this->getSourceDescriptionField() ;
 			$new_value			= $this->getNewValue() ;
