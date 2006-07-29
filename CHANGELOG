@@ -1,4 +1,5 @@
 1.99.6
+- beforeMovement and afterMovement event triggers were added to P4A_DB_Navigator
 
 1.99.5
 - a folder_home icon (16x16) was added

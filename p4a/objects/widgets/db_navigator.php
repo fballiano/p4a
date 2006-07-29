@@ -369,6 +369,10 @@ class P4A_DB_Navigator extends P4A_Widget
 			}
 		}
 
+		if ($this->actionHandler('beforeMovement') == ABORT) {
+			return;
+		}
+
 		if ($new_value != $current) {
 			if (strlen($new_value)) {
 				$db->query("UPDATE $table SET {$this->recursor}='$new_value' WHERE $pk='$current'");
@@ -377,6 +381,8 @@ class P4A_DB_Navigator extends P4A_Widget
 			}
 			$this->redesign();
 		}
+
+		return $this->actionHandler('afterMovement');
 	}
 }
 
