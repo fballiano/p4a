@@ -101,7 +101,7 @@
 		 * @access private
 		 */
 		var $_auto_navigation_bar = true;
-		
+
 		/**
 		 * Wich page is shown?
 		 * @var integer
@@ -263,7 +263,7 @@
 				}
 				$this->addTempVar('headers', $headers);
 			}
-			
+
 			$table_cols = array();
 			foreach ($visible_cols as $col_name) {
 				$col =& $this->cols->$col_name;
@@ -484,7 +484,7 @@
 				}
 			}
 		}
-		
+
 		/**
 		 * Returns the current page number
 		 * @access public
@@ -494,7 +494,7 @@
 		{
 			return $this->_current_page_number;
 		}
-		
+
 		/**
 		 * Sets the current page number
 		 * @access public
@@ -795,7 +795,7 @@
 		 * Gets the type of the column (text|image)
 		 * @access public
 		 * @return string
-		 */		
+		 */
 		function getType()
 		{
 			return $this->_type;
@@ -806,7 +806,7 @@
 			if ($this->isActionTriggered('beforeClick')) {
 				$this->actionHandler('beforeClick');
 			}
-			
+
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
@@ -841,7 +841,7 @@
 				$parent->data->setOrder($order_field, $order_mode);
 				$parent->data->updateRowPosition();
 			}
-			
+
 			if ($this->isActionTriggered('afterClick')) {
 				$this->actionHandler('afterClick');
 			}
@@ -906,13 +906,13 @@
 			foreach($rows as $row_number=>$row) {
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
-				
+
 				if ($i%2 == 0) {
 					$aReturn[$i]['row']['even'] = true;
 				} else {
 					$aReturn[$i]['row']['even'] = false;
 				}
-				
+
 				if (($num_page == $num_page_from_data_source) and ($row_number + $offset + 1 == $parent->data->getRowNumber())) {
 					$aReturn[$i]['row']['active'] = true;
 				} else {
@@ -991,7 +991,7 @@
 		 * @access public
 		 */
 		var $buttons = null;
-		
+
 		/**
 		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
@@ -1071,13 +1071,18 @@
 			$this->buttons->field_num_page->setLabel( $p4a->i18n->messages->get('go_to_page'));
 			$this->buttons->field_num_page->setNewValue($parent->getCurrentPageNumber());
 
+			$num_pages = $parent->data->getNumPages();
+			if ($num_pages == 0) {
+				$num_pages = 1;
+			}
+
 			$current_page  = $p4a->i18n->messages->get('current_page');
 			$current_page .= ' ';
 			$current_page .= $parent->getCurrentPageNumber();
 			$current_page .= ' ';
 			$current_page .= $p4a->i18n->messages->get('of_pages');
 			$current_page .= ' ';
-			$current_page .= $parent->data->getNumPages();
+			$current_page .= $num_pages;
 			$current_page .= ' ';
 			$this->buttons->current_page->setValue($current_page);
 			return parent::getAsString();
@@ -1091,14 +1096,14 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			
+
 			$num_page = $parent->getCurrentPageNumber() + 1;
 			$num_pages = $parent->data->getNumPages();
-			
+
 			if ($num_page > $num_pages) {
 				$num_page -= 1;
 			}
-			
+
 			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
@@ -1111,12 +1116,12 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			
+
 			$num_page = $parent->getCurrentPageNumber() - 1;
 			if ($num_page < 1) {
 				$num_page = 1;
 			}
-			
+
 			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
@@ -1153,16 +1158,16 @@
 		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
-			
+
 			$num_page = (int)$this->buttons->field_num_page->getNewValue();
 			$num_pages = $parent->data->getNumPages();
-			
+
 			if ($num_page < 1) {
 				$num_page = 1;
 			} elseif ($num_page > $num_pages) {
 				$num_page = $num_pages;
 			}
-			
+
 			$parent->setCurrentPageNumber($num_page);
 			$parent->redesign();
 		}
