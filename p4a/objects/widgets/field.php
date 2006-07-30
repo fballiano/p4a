@@ -1074,9 +1074,11 @@
 		 */
 		function getAsCheckbox()
 		{
+			$new_value = $this->getNewValue();
+
 			// PostgreSQL uses "t" and "f" to return boolen values
 			// For all the others we assume "1" or "0"
-			if ($this->getNewValue() == 't' or $this->getNewValue() == '1') {
+			if ((gettype($new_value) == 'integer' and $new_value == 1) or (gettype($new_value) == 'string' and strtolower($new_value) == 't')) {
 				$checked = "checked='checked'" ;
 			} else {
 				$checked = '' ;
