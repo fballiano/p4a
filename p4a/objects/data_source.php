@@ -104,7 +104,7 @@ class P4A_Data_Source extends P4A_Object
 	{
 		$num_rows = $this->getNumRows();
 
-		if ($num_rows > ($this->_pointer-1)) {
+		if ($num_rows >= ($this->_pointer-1)) {
 			$this->_pointer = 1;
 			return $this->row();
 		} elseif( $this->_pointer !== $num_rows) {
@@ -198,7 +198,7 @@ class P4A_Data_Source extends P4A_Object
 	{
 		$row_number = $this->_pointer;
 		$page_limit = $this->_page_limit;
-		
+
 		if ($page_limit)  {
 			return intval(($row_number - 1) / $page_limit) + 1;
 		} else {
@@ -227,7 +227,7 @@ class P4A_Data_Source extends P4A_Object
 
 		if ($move_pointer) {
 			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-			
+
 			if ($this->isActionTriggered('onMoveRow')) {
 				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
 			} else {
@@ -237,7 +237,7 @@ class P4A_Data_Source extends P4A_Object
 					$this->fields->$field->setValue($value);
 				}
 			}
-			
+
 			$this->actionHandler('afterMoveRow');
 		}
 		return $rows;
@@ -355,7 +355,7 @@ class P4A_Data_Source extends P4A_Object
 		header("Content-Type: text/comma-separated-value; charset=" . $p4a->i18n->getCharset());
 		header("Content-Disposition: attachment; filename={$filename}");
 		header("Content-Length: " . strlen($output));
-		
+
 		echo $output;
 		die();
 	}

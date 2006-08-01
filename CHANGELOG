@@ -1,6 +1,7 @@
 1.99.6
 - beforeMovement and afterMovement event triggers were added to P4A_DB_Navigator
 - P4A_Table_Navigation_Bar now says "page 1 of 1" instead of "page 1 of 0" if data source is empty
+- a bugfix on P4A_Data_Source::firstRow() was done
 
 1.99.5
 - a folder_home icon (16x16) was added
