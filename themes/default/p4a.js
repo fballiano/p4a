@@ -29,30 +29,17 @@ function executeEvent(object_name, action_name, param1, param2, param3, param4)
 	document.forms['p4a'].submit();
 }
 
-function isReturnPressed(e)
+function isReturnPressed(event)
 {
-	var characterCode;
-
-	if (e && e.which) {
-		e = e;
-		characterCode = e.which;
-	} else {
-		e = event;
-		characterCode = e.keyCode;
-	}
-
-	if (characterCode == 13) {
-		return true;
-	} else {
-		return false;
-	}
+	var characterCode = (window.event) ? event.keyCode : event.which;
+	return (characterCode == 13);
 }
 
 function setFocus(id)
 {
-	if ((id != null) && (id != '') && (document.forms['p4a'].elements[id] != null) && (document.forms['p4a'].elements[id].disabled == false)) {
+	try {
 		document.forms['p4a'].elements[id].focus();
-	}
+	} catch (e) {}
 }
 
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
