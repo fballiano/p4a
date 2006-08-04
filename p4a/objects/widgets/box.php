@@ -48,11 +48,11 @@
 		 * @param string			Mnemonic identifier for the object.
 		 * @access private
 		 */
-		function P4A_Button($name)
+		function P4A_Box($name)
 		{
 			parent::P4A_Widget($name);
 		}
-		
+
 		/**
 		 * Retuns the HTML rendered button.
 		 * @access public
