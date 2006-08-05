@@ -5,6 +5,7 @@
 - javascript code for setFocus() function was simplified
 - javascript code for onReturnPress() function was changed
 - a bug with P4A_Box constructor was fixed
+- PEAR::Validate 0.6.4 was added to pear repository
 
 1.99.5
 - a folder_home icon (16x16) was added
