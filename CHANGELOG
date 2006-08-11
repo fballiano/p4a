@@ -1,3 +1,6 @@
+1.99.7
+
+
 1.99.6
 - beforeMovement and afterMovement event triggers were added to P4A_DB_Navigator
 - P4A_Table_Navigation_Bar now says "page 1 of 1" instead of "page 1 of 0" if data source is empty
