@@ -106,7 +106,7 @@
 		 * @access private
 		 */
 		var $template_name = null;
-		
+
 		/**
 		 * CSS container.
 		 * @var array
@@ -121,7 +121,7 @@
 		 * @access private
 		 */
 		var $_temp_javascript = array();
-		
+
 		/**
 		 * Temporary CSS container.
 		 * These CSS are rendered and removed
@@ -129,7 +129,7 @@
 		 * @access private
 		 */
 		var $_temp_css = array();
-		
+
 		/**
 		 * Temporary variables container.
 		 * These vars are usally in the templates, removed after main
@@ -144,7 +144,7 @@
 		 * @access private
 		 */
 		var $_javascript = array();
-		
+
 		/**
 		 * variables used for templates
 		 * @var array
@@ -164,7 +164,7 @@
 			if ($name == null) {
 				$name = get_class($this);
 			}
-			
+
 			$name = strtolower($name);
 			parent::p4a_object($name, 'ma');
 
@@ -315,7 +315,7 @@
 			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
-			
+
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
@@ -323,11 +323,11 @@
 			$tpl_container->application_title = $p4a->getTitle();
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
-			
+
 			if (is_object($this->focus_object)) {
 				$tpl_container->focus_id = $this->focus_object->getId();
 			}
-			
+
 			foreach ($this->_tpl_vars as $k=>$v) {
 				if (is_object($v)) {
 					$tpl_container->$k = $v->getAsString();
@@ -335,17 +335,17 @@
 					$tpl_container->$k = $v;
 				}
 			}
-			
+
 			foreach ($this->_temp_vars as $k=>$v) {
 				$tpl_container->$k = $v;
 			}
-			
+
 			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
 			$template = $this->getTemplateName();
 			print P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
-			
+
 			$this->clearTempCSS();
 			$this->clearTempJavascript();
 			$this->clearTempVars();
@@ -395,7 +395,7 @@
 		function reloadRow()
 		{
 			if ($this->data->isNew()) {
-				$this->lastRow();
+				$this->firstRow();
 			} else {
 				$this->data->row();
 			}
@@ -548,7 +548,7 @@
 		function maskOpen()
 		{
 			$p4a =& p4a::singleton();
-			
+
 			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
 			$return .= "<div>\n";
 			$return .= "<div id='p4a_loading'><img src='" . P4A_ICONS_PATH . "/loading.gif' alt='' /> Loading... </div>\n";
@@ -581,7 +581,7 @@
 		function none()
 		{
 		}
-		
+
 		/**
 		 * Include CSS
 		 * @param string		The URI of CSS.
@@ -610,7 +610,7 @@
 				}
 			}
 		}
-		
+
 		/**
 		 * Include CSS
 		 * These CSS are removed after rendering
@@ -641,7 +641,7 @@
 				}
 			}
 		}
-		
+
 		/**
 		 * Clear temporary CSS list
 		 * @access public
@@ -672,7 +672,7 @@
 				unset($this->_javascript[$uri]);
 			}
 		}
-		
+
 		/**
 		 * Include a javascript file
 		 * These javascripts are removed after rendering
@@ -696,7 +696,7 @@
 				unset($this->_temp_javascript[$uri]);
 			}
 		}
-		
+
 		/**
 		 * Clear temporary javascript list
 		 * @access public
@@ -705,7 +705,7 @@
 		{
 			$this->_temp_javascript = array();
 		}
-		
+
 		/**
 		 * Add a temporary variable
 		 * @param string		The URI of file.
@@ -727,7 +727,7 @@
 				unset($this->_temp_vars[$name]);
 			}
 		}
-		
+
 		/**
 		 * Clear temporary vars list
 		 * @access public

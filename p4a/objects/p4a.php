@@ -209,9 +209,9 @@
 			Net_UserAgent_Detect::detect();
 
 			$this->internet_explorer = Net_UserAgent_Detect::isIE();
-			$this->_ajax_enabled = Net_UserAgent_Detect::hasFeature('ajax');
+			$this->_ajax_enabled = (Net_UserAgent_Detect::hasFeature('ajax') and P4A_AJAX_ENABLED);
 
-			if (!$this->_ajax_enabled or P4A_FORCE_HANDHELD_RENDERING) {
+			if (!Net_UserAgent_Detect::hasFeature('ajax') or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
 			}
 		}

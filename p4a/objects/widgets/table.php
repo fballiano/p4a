@@ -232,7 +232,7 @@
 				$order_field	= null;
 				$order_mode		= null;
 
-				if (strtolower($this->data->getObjectType()) == 'p4a_db_source') {
+				if ($this->data->isSortable()) {
 					$is_orderable = true;
 
 					if ($this->data->hasOrder()) {
@@ -246,7 +246,7 @@
 					$headers[$i]['value']		= $col->getLabel();
 					$headers[$i]['order']		= null;
 
-					if ($col->isOrderable()) {
+					if ($is_orderable and $col->isOrderable()) {
 						$headers[$i]['action'] = $col->composeStringActions();
 					} else {
 						$headers[$i]['action'] = "";
@@ -812,7 +812,7 @@
 			$parent =& $p4a->getObject($parent->getParentID());
 			$parent->redesign();
 
-			if (strtolower($parent->data->getObjectType()) == 'p4a_db_source') {
+			if ($parent->data->isSortable()) {
 				$data_field =& $parent->data->fields->{$this->getName()};
 				$field_name = $data_field->getName();
 				$complete_field_name = $data_field->getTable() . "." . $data_field->getName();

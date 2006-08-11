@@ -6,6 +6,15 @@
 - javascript code for onReturnPress() function was changed
 - a bug with P4A_Box constructor was fixed
 - PEAR::Validate 0.6.4 was added to pear repository
+- P4A_DB_Navigator now highlights the droppable item when a draggable is over it
+- P4A_DB_NAvigator does not show the "home" icon if "movements to root" are not allowed (saving space)
+- Chinese Traditional translation was added (thanks to 日崎)
+- isSortable(), addOrder(), setOrder(), getOrder(), hasOrder(), dropOrder() were moved from P4A_DB_Source to P4A_Data_Source
+- a bug with ajax autodetection and configuration was fixed
+- P4A_Data_Source::newRow() now triggers beforeMoveRow and afterMoveRow events
+- when a row in a P4A_Data_Source is deleted we move to first row instead of last row (caused troubles with db_navigator)
+- when reloadRow() in called inside a new row we move to first row instead of last row (caused troubles with db_navigator)
+- some other minor bugfixes were done
 
 1.99.5
 - a folder_home icon (16x16) was added

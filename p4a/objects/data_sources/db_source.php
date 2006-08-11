@@ -39,7 +39,7 @@
 class P4A_DB_Source extends P4A_Data_Source
 {
     var $_DSN = "";
-    
+
     var $_pk = NULL;
 
     var $_select = "";
@@ -47,7 +47,7 @@ class P4A_DB_Source extends P4A_Data_Source
     var $_join = array();
     var $_where = "";
     var $_group = array();
-    var $_order = array();
+    var $_is_sortable = true;
 
     var $_query = "";
 
@@ -62,12 +62,12 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         parent::P4A_Data_Source($name);
     }
-    
+
     function setDSN($DSN)
     {
     	$this->_DSN = $DSN;
     }
-    
+
     function getDSN()
     {
     	return $this->_DSN;
@@ -159,49 +159,6 @@ class P4A_DB_Source extends P4A_Data_Source
         return $this->_group;
     }
 
-    function addOrder($field, $direction = P4A_ORDER_ASCENDING)
-    {
-		$this->_order[$field] = strtoupper($direction);
-    }
-
-    function setOrder($field, $direction = P4A_ORDER_ASCENDING)
-    {
-        $this->_order = array();
-        $this->addOrder($field, $direction);
-    }
-
-    function getOrder()
-    {
-        $pk = $this->getPk();
-        $order = $this->_order;
-        if (is_string($pk)) {
-        	if (!array_key_exists($pk,$order)) {
-        		$order[$pk] = P4A_ORDER_ASCENDING;
-        	}
-        } elseif (is_array($pk)) {
-        	foreach ($pk as $p) {
-        		if (!array_key_exists($p,$order)) {
-        			$order[$p] = P4A_ORDER_ASCENDING;
-        		}        		
-        	}
-        }
-        return $order;
-    }
-
-    function hasOrder()
-    {
-        return (sizeof($this->_order) > 0);
-    }
-    
-    function dropOrder($field = null)
-    {
-        if ($field === null) {
-            $this->_order = array();
-        } else {
-            unset($this->_order[$field]);
-        }
-    }
-
     function setQuery($query)
     {
         $this->_query = $query;
@@ -250,7 +207,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				} else {
 					P4A_Error('FILTER CAN ONLY BE APPLIED TO P4A_Field OR P4A_Data_Field');
 				}
-				
+
                 if (is_string($value) and !empty($value)) {
                     $filters[] = str_replace('?', $value, $string);
                 }
@@ -367,20 +324,12 @@ class P4A_DB_Source extends P4A_Data_Source
         if ($value !== null) {
             $this->_is_read_only = $value;
         }
-		
+
         if ($this->_is_read_only or !$this->getPk()){
             return true;
         } else {
             return false;
         }
-    }
-
-    function isSortable($value=null)
-    {
-        if ($value !== null) {
-            $this->_is_sortable = $value;
-        }
-        return $this->_is_sortable;
     }
 
     function getPkRow($pk)
@@ -398,9 +347,9 @@ class P4A_DB_Source extends P4A_Data_Source
         if ($num_row === null) {
             $num_row = $this->_pointer;
         }
-        
+
         if ($num_row == 0) {
-        	$num_row = 1;	
+        	$num_row = 1;
         }
 
         $db->setLimit(1, $num_row - 1);
@@ -415,13 +364,13 @@ class P4A_DB_Source extends P4A_Data_Source
 
             if ($move_pointer) {
 				if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-				
+
 				if ($this->isActionTriggered('onMoveRow')) {
 					if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
 				} else {
 	                if (!empty($row)) {
 	                    $this->_pointer = $num_row;
-	
+
 	                    foreach($row as $field=>$value){
 	                        $this->fields->$field->setValue($value);
 	                    }
@@ -429,7 +378,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	                    $this->newRow();
 	                }
 				}
-				
+
 				$this->actionHandler('afterMoveRow');
             }
 
@@ -478,13 +427,13 @@ class P4A_DB_Source extends P4A_Data_Source
 					$p_order = "";
 					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
 						$p_order .= "$p_long_fld = '$p_value' AND ";
-					} 
+					}
 					/*
 					where order_field < "value" or (order_field="value" and pk1 <
 					"valuepk1") or ( order_field="value" and pk1 = "valuepk1" and
 					pk2<"valuepk2")
 					*/
-					
+
 					if ($direction == P4A_ORDER_ASCENDING) {
 						$operator = '<';
 						$null_case = " OR $long_fld IS NULL ";
@@ -546,7 +495,7 @@ class P4A_DB_Source extends P4A_Data_Source
                     }
                 }
             }
-            
+
             if ($this->isNew()) {
                 $rs = $db->extended->autoExecute($this->_table, $fields_values, MDB2_AUTOQUERY_INSERT);
             } else {
@@ -569,7 +518,7 @@ class P4A_DB_Source extends P4A_Data_Source
                 if (is_string($fk_values) and !empty($fk_values)) {
                     $fk_values = split(",",$fk_values);
                 }
-                
+
                 $fk_table = $aField["table"];
                 $fk_field = $aField["fk_field"];
                 $fk = $aField["fk"];
@@ -692,7 +641,7 @@ class P4A_DB_Source extends P4A_Data_Source
             $query .= $this->_composeGroupPart();
             //$query .= $this->_composeOrderPart();
         }
-		
+
 		return $query;
     }
 
@@ -832,7 +781,7 @@ class P4A_DB_Source extends P4A_Data_Source
         }
         if ($order) {
             $query .= "ORDER BY ";
-            
+
             foreach ($order as $field=>$direction) {
             	list($long_fld,$short_fld) = $this->getFieldName($field);
                 $query .= "$long_fld $direction,";

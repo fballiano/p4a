@@ -219,6 +219,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		$current = $this->source->fields->{$pk}->getValue();
 		$recursor = $this->source->fields->{$this->recursor}->getValue();
 		$rows = $this->source->getAll();
+		$js = "";
 		$i = 0;
 		foreach ($rows as $row) {
 			$id = $row[$this->recursor];
@@ -230,24 +231,29 @@ class P4A_DB_Navigator extends P4A_Widget
 		}
 		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $order, $current);
 
-		$return = "<ul id='{$obj_id}' class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
-
 		// movements are allowed ONLY IF AJAX IS ACTIVE!!
 		// that's because we use too complex javascript for old handhelds
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
 			if ($this->allow_roots_movement or strlen($recursor)) {
-				$return .= "<script type='text/javascript'>";
-				$return .= "new Draggable('{$obj_id}_{$current}', {revert:true});";
+				$js .= "<script type='text/javascript'>";
+				$js .= "new Draggable('{$obj_id}_{$current}', {revert:true});";
 				foreach ($rows as $record) {
-					$return .= "Droppables.add('{$obj_id}_{$record[$pk]}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
+					$js .= "Droppables.add('{$obj_id}_{$record[$pk]}', {hoverclass:'hoverclass', onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 				}
 				if ($this->allow_movement_to_root) {
-					$return .= "Droppables.add('{$obj_id}', {onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
+					$js .= "Droppables.add('{$obj_id}', {hoverclass:'hoverclass', onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 				}
-				$return .= "</script>";
+				$js .= "</script>";
 			}
 		}
-		return $return;
+
+		if (strlen($js) and $this->allow_movement_to_root) {
+			$return = "<ul id='{$obj_id}' class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
+		} else {
+			$return = "<div id='{$obj_id}'>{$return}</div>";
+		}
+
+		return $return . $js;
 	}
 
 	function _getAsString($id, &$all, $obj_id, $table, $pk, $order, $current, $recurse = true)

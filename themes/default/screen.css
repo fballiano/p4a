@@ -528,7 +528,7 @@ legend {
 	padding-left: 15px;
 }
 
-.p4a_db_navigator a {
+.p4a_db_navigator a, .p4a_db_navigator {
 	text-decoration: none;
 }
 
@@ -538,4 +538,14 @@ legend {
 
 .p4a_db_navigator .active_node {
 	font-weight: bold;
+}
+
+.p4a_db_navigator .hoverclass a {
+	color: red;
+	font-weight: bold;
+}
+
+.p4a_db_navigator .hoverclass li a {
+	color: #4B718A;
+	font-weight: normal;
 }
