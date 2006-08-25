@@ -690,6 +690,10 @@
 			$suffix = '';
 
 			if ($type == 'rich_textarea') {
+				if (!$this->isEnabled()) {
+					return $this->getAsLabel();
+				}
+
 				$type = 'textarea';
 				$suffix = $this->getAsRichTextarea();
 			}
@@ -838,7 +842,7 @@
             $value			= '';
 
             if ($this->data === null) {
-				$value = nl2br($this->composeStringValue());
+				$value = nl2br(htmlspecialchars_decode($this->composeStringValue()));
             } else {
 				$external_data		= $this->data->getAll() ;
 				$value_field		= $this->getSourceValueField() ;
