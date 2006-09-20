@@ -40,6 +40,13 @@ if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
 	eval('function clone($object) {return $object;}');
 }
 
+if (!function_exists('htmlspecialchars_decode')) {
+	function htmlspecialchars_decode($str, $quote_style = ENT_COMPAT)
+	{
+		return strtr($str, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
+	}
+}
+
 	/**
 	 * Prints out one or many HTML "new lines".
 	 * @param integer	The number of new lines to print.
