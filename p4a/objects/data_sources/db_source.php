@@ -210,7 +210,8 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 if (is_string($value) and !empty($value)) {
                     $filters[] = str_replace('?', $value, $string);
-                }
+                } elseif (is_array($value) and !empty($value)) {
+					$filters[] = str_replace('?', "'".implode("', '", $value)."'", $string);
             } else {
                 unset($this->_filters[$string]);
             }
