@@ -171,7 +171,7 @@
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
 
-				$calendar_language = $this->i18n->getLanguage();
+				$calendar_language = P4A_I18N_DATE_CALENDAR_LANGUAGE;
 				if (@file_exists(P4A_THEME_DIR . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js")) {
 					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js");
 				} else {

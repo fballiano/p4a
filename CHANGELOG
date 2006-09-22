@@ -1,8 +1,12 @@
-1.99.8
+1.99.8 - Thank you to zukunft.com for the first donation!
 - P4A_DB_Source::getFilters now works also with multivalue fields
 - function htmlspecialchars_decode was added if php<5.0
 - Serbian translation was added (thanks to Pedja)
+- Hindi translation was added (thank to Prashant Singh Pawar)
 - a bugfix on P4A_Field::getAsImage() was done
+- phpThumb was updated to 1.7.4
+- some errors with date_caledar languages were fixed (P4A_I18N_DATE_CALENDAR_LANGUAGE was introduced in format files)
+- CREDITS file was removed, all credits are in the CHANGELOG
 
 1.99.7
 - some bugs with multiple rich_textarea and ajax events were fixed

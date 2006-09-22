@@ -10,14 +10,20 @@
 
 class phpthumb_filters {
 
+	var $phpThumbObject = null;
+
+	function phpthumb_filters() {
+		return true;
+	}
+
 	function ApplyMask(&$gdimg_mask, &$gdimg_image) {
 		if (phpthumb_functions::gd_version() < 2) {
-			//$this->DebugMessage('Skipping ApplyMask() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
+			$this->DebugMessage('Skipping ApplyMask() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
 			return false;
 		}
 		if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
 
-			//$this->DebugMessage('Using alpha ApplyMask() technique', __FILE__, __LINE__);
+			$this->DebugMessage('Using alpha ApplyMask() technique', __FILE__, __LINE__);
 			if ($gdimg_mask_resized = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg_image), ImageSY($gdimg_image))) {
 
 				ImageCopyResampled($gdimg_mask_resized, $gdimg_mask, 0, 0, 0, 0, ImageSX($gdimg_image), ImageSY($gdimg_image), ImageSX($gdimg_mask), ImageSY($gdimg_mask));
@@ -26,9 +32,7 @@ class phpthumb_filters {
 					$color_background = ImageColorAllocate($gdimg_mask_blendtemp, 0, 0, 0);
 					ImageFilledRectangle($gdimg_mask_blendtemp, 0, 0, ImageSX($gdimg_mask_blendtemp), ImageSY($gdimg_mask_blendtemp), $color_background);
 					ImageAlphaBlending($gdimg_mask_blendtemp, false);
-					if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-						ImageSaveAlpha($gdimg_mask_blendtemp, true);
-					}
+					ImageSaveAlpha($gdimg_mask_blendtemp, true);
 					for ($x = 0; $x < ImageSX($gdimg_image); $x++) {
 						for ($y = 0; $y < ImageSY($gdimg_image); $y++) {
 							//$RealPixel = phpthumb_functions::GetPixelColor($gdimg_mask_blendtemp, $x, $y);
@@ -40,24 +44,22 @@ class phpthumb_filters {
 						}
 					}
 					ImageAlphaBlending($gdimg_image, false);
-					if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-						ImageSaveAlpha($gdimg_image, true);
-					}
+					ImageSaveAlpha($gdimg_image, true);
 					ImageCopy($gdimg_image, $gdimg_mask_blendtemp, 0, 0, 0, 0, ImageSX($gdimg_mask_blendtemp), ImageSY($gdimg_mask_blendtemp));
 					ImageDestroy($gdimg_mask_blendtemp);
 
 				} else {
-					//$this->DebugMessage('ImageCreateFunction() failed', __FILE__, __LINE__);
+					$this->DebugMessage('ImageCreateFunction() failed', __FILE__, __LINE__);
 				}
 				ImageDestroy($gdimg_mask_resized);
 
 			} else {
-				//$this->DebugMessage('ImageCreateFunction() failed', __FILE__, __LINE__);
+				$this->DebugMessage('ImageCreateFunction() failed', __FILE__, __LINE__);
 			}
 
 		} else {
 			// alpha merging requires PHP v4.3.2+
-			//$this->DebugMessage('Skipping ApplyMask() technique because PHP is v"'.phpversion().'"', __FILE__, __LINE__);
+			$this->DebugMessage('Skipping ApplyMask() technique because PHP is v"'.phpversion().'"', __FILE__, __LINE__);
 		}
 		return true;
 	}
@@ -83,7 +85,7 @@ class phpthumb_filters {
 	}
 
 
-	function Blur(&$gdimg, $radius) {
+	function Blur(&$gdimg, $radius=0.5) {
 		// Taken from Torstein Hønsi's phpUnsharpMask (see phpthumb.unsharp.php)
 
 		$radius = round(max(0, min($radius, 50)) * 2);
@@ -127,9 +129,8 @@ class phpthumb_filters {
 			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_GAUSSIAN_BLUR)', __FILE__, __LINE__);
 			// fall through and try it the hard way
 		}
-		// currently not implemented "the hard way"
-		$this->DebugMessage('FAILED: phpthumb_filters::BlurGaussian($gdimg) [function not implemented]', __FILE__, __LINE__);
-		return false;
+		$this->DebugMessage('FAILED: phpthumb_filters::BlurGaussian($gdimg) [using phpthumb_filters::Blur() instead]', __FILE__, __LINE__);
+		return phpthumb_filters::Blur($gdimg, 0.5);
 	}
 
 
@@ -256,6 +257,34 @@ class phpthumb_filters {
 	}
 
 
+	function Crop(&$gdimg, $left=0, $right=0, $top=0, $bottom=0) {
+		if (!$left && !$right && !$top && !$bottom) {
+			return true;
+		}
+		$oldW = ImageSX($gdimg);
+		$oldH = ImageSY($gdimg);
+		if (($left   > 0) && ($left   < 1)) { $left   = round($left   * $oldW); }
+		if (($right  > 0) && ($right  < 1)) { $right  = round($right  * $oldW); }
+		if (($top    > 0) && ($top    < 1)) { $top    = round($top    * $oldH); }
+		if (($bottom > 0) && ($bottom < 1)) { $bottom = round($bottom * $oldH); }
+		$right  = min($oldW - $left - 1, $right);
+		$bottom = min($oldH - $top  - 1, $bottom);
+		$newW = $oldW - $left - $right;
+		$newH = $oldH - $top  - $bottom;
+
+		if ($imgCropped = ImageCreateTrueColor($newW, $newH)) {
+			ImageCopy($imgCropped, $gdimg, 0, 0, $left, $top, $newW, $newH);
+			if ($gdimg = ImageCreateTrueColor($newW, $newH)) {
+				ImageCopy($gdimg, $imgCropped, 0, 0, 0, 0, $newW, $newH);
+				ImageDestroy($imgCropped);
+				return true;
+			}
+			ImageDestroy($imgCropped);
+		}
+		return false;
+	}
+
+
 	function Desaturate(&$gdimg, $amount, $color='') {
 		if ($amount == 0) {
 			return true;
@@ -291,9 +320,7 @@ class phpthumb_filters {
 		if ($gdimg_dropshadow_temp = phpthumb_functions::ImageCreateFunction($tempImageWidth, $tempImageHeight)) {
 
 			ImageAlphaBlending($gdimg_dropshadow_temp, false);
-			if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-				ImageSaveAlpha($gdimg_dropshadow_temp, true);
-			}
+			ImageSaveAlpha($gdimg_dropshadow_temp, true);
 			$transparent1 = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg_dropshadow_temp, 0, 0, 0, 127);
 			ImageFill($gdimg_dropshadow_temp, 0, 0, $transparent1);
 
@@ -326,9 +353,7 @@ class phpthumb_filters {
 				}
 			}
 
-			if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-				ImageSaveAlpha($gdimg, true);
-			}
+			ImageSaveAlpha($gdimg, true);
 			ImageAlphaBlending($gdimg, false);
 			//$this->is_alpha = true;
 			$transparent2 = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg, 0, 0, 0, 127);
@@ -372,11 +397,11 @@ class phpthumb_filters {
 				return true;
 
 			} else {
-				//$this->DebugMessage('$gdimg_elipsemask = phpthumb_functions::ImageCreateFunction() failed', __FILE__, __LINE__);
+				$this->DebugMessage('$gdimg_elipsemask = phpthumb_functions::ImageCreateFunction() failed', __FILE__, __LINE__);
 			}
 			ImageDestroy($gdimg_elipsemask_double);
 		} else {
-			//$this->DebugMessage('$gdimg_elipsemask_double = phpthumb_functions::ImageCreateFunction() failed', __FILE__, __LINE__);
+			$this->DebugMessage('$gdimg_elipsemask_double = phpthumb_functions::ImageCreateFunction() failed', __FILE__, __LINE__);
 		}
 		return false;
 	}
@@ -491,7 +516,7 @@ class phpthumb_filters {
 		if ($calculateGray) {
 			$keys[] = 'gray';
 		}
-		foreach ($keys as $key) {
+		foreach ($keys as $dummy => $key) {
 			ksort($Analysis[$key]);
 		}
 		return $Analysis;
@@ -628,11 +653,12 @@ class phpthumb_filters {
 		$offset_x = ($radius_x ? $output_width  - $new_width  - $radius_x : 0);
 		$offset_y = ($radius_y ? $output_height - $new_height - $radius_y : 0);
 
+//header('Content-Type: image/png');
+//ImagePNG($gdimg);
+//exit;
 		if ($gd_border_canvas = phpthumb_functions::ImageCreateFunction($output_width, $output_height)) {
 
-			if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-				ImageSaveAlpha($gd_border_canvas, true);
-			}
+			ImageSaveAlpha($gd_border_canvas, true);
 			ImageAlphaBlending($gd_border_canvas, false);
 			$color_background = phpthumb_functions::ImageColorAllocateAlphaSafe($gd_border_canvas, 255, 255, 255, 127);
 			ImageFilledRectangle($gd_border_canvas, 0, 0, $output_width, $output_height, $color_background);
@@ -670,13 +696,11 @@ class phpthumb_filters {
 				}
 
 			}
-			phpthumb_functions::ImageResizeFunction($gd_border_canvas, $gdimg, floor(($output_width - $new_width) / 2), round(($output_height - $new_height) / 2), 0, 0, $new_width, $new_height, $output_width, $output_height);
+			$this->phpThumbObject->ImageResizeFunction($gd_border_canvas, $gdimg, floor(($output_width - $new_width) / 2), round(($output_height - $new_height) / 2), 0, 0, $new_width, $new_height, $output_width, $output_height);
 
 			ImageDestroy($gdimg);
 			$gdimg = phpthumb_functions::ImageCreateFunction($output_width, $output_height);
-			if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-				ImageSaveAlpha($gdimg, true);
-			}
+			ImageSaveAlpha($gdimg, true);
 			ImageAlphaBlending($gdimg, false);
 			$gdimg_color_background = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg, 255, 255, 255, 127);
 			ImageFilledRectangle($gdimg, 0, 0, $output_width, $output_height, $gdimg_color_background);
@@ -906,12 +930,24 @@ class phpthumb_filters {
 	}
 
 
-	function WatermarkText(&$gdimg, $text, $size, $alignment, $hex_color='000000', $ttffont='', $opacity=100, $margin=5, $angle=0) {
+	function WatermarkText(&$gdimg, $text, $size, $alignment, $hex_color='000000', $ttffont='', $opacity=100, $margin=5, $angle=0, $bg_color=false, $bg_opacity=0, $fillextend='') {
 		// text watermark requested
 		if (!$text) {
 			return false;
 		}
 		ImageAlphaBlending($gdimg, true);
+
+		$metaTextArray = array(
+			'^Fb' =>       $this->phpThumbObject->getimagesizeinfo['filesize'],
+			'^Fk' => round($this->phpThumbObject->getimagesizeinfo['filesize'] / 1024),
+			'^Fm' => round($this->phpThumbObject->getimagesizeinfo['filesize'] / 1048576),
+			'^X'  => $this->phpThumbObject->getimagesizeinfo[0],
+			'^Y'  => $this->phpThumbObject->getimagesizeinfo[1],
+			'^x'  => ImageSX($gdimg),
+			'^y'  => ImageSY($gdimg),
+			'^^'  => '^',
+		);
+		$text = strtr($text, $metaTextArray);
 
 		$text = str_replace("\r\n", "\n", $text);
 		$text = str_replace("\r",   "\n", $text);
@@ -935,7 +971,7 @@ class phpthumb_filters {
 			//$text_height = round($max_y - $min_y + ($size * 0.5));
 			$text_height = round($max_y - $min_y);
 
-			$TTFboxChar = ImageTTFbBox($size, $angle, $ttffont, 'pH');
+			$TTFboxChar = ImageTTFbBox($size, $angle, $ttffont, 'jH');
 			$char_min_y = min($TTFboxChar[1], $TTFboxChar[3], $TTFboxChar[5], $TTFboxChar[7]);
 			$char_max_y = max($TTFboxChar[1], $TTFboxChar[3], $TTFboxChar[5], $TTFboxChar[7]);
 			$char_height = round($char_max_y - $char_min_y);
@@ -948,7 +984,7 @@ class phpthumb_filters {
 
 				case 'B':
 					$text_origin_x = round((ImageSX($gdimg) - $text_width) / 2);
-					$text_origin_y = ImageSY($gdimg) - $TTFbox[1] - $margin;
+					$text_origin_y = ImageSY($gdimg) + $TTFbox[1] - $margin;
 					break;
 
 				case 'L':
@@ -978,13 +1014,13 @@ class phpthumb_filters {
 
 				case 'BL':
 					$text_origin_x = $margin;
-					$text_origin_y = ImageSY($gdimg) - $TTFbox[1] - $margin;
+					$text_origin_y = ImageSY($gdimg) + $TTFbox[1] - $margin;
 					break;
 
 				case 'BR':
 				default:
 					$text_origin_x = ImageSX($gdimg) - $text_width  + $TTFbox[0] - $min_x + round($size * 0.25) - $margin;
-					$text_origin_y = ImageSY($gdimg) - $TTFbox[1] - $margin;
+					$text_origin_y = ImageSY($gdimg) + $TTFbox[1] - $margin;
 					break;
 			}
 			$letter_color_text = phpthumb_functions::ImageHexColorAllocate($gdimg, $hex_color, false, $opacity * 1.27);
@@ -1004,33 +1040,30 @@ class phpthumb_filters {
 			} else {
 
 				//ImageRectangle($gdimg, $text_origin_x + $min_x, $text_origin_y + $TTFbox[1], $text_origin_x + $min_x + $text_width, $text_origin_y + $TTFbox[1] - $text_height, $letter_color_text);
+				if (phpthumb_functions::IsHexColor($bg_color)) {
+					$text_background_alpha = round(127 * ((100 - min(max(0, $bg_opacity), 100)) / 100));
+					$text_color_background = phpthumb_functions::ImageHexColorAllocate($gdimg, $bg_color, false, $text_background_alpha);
+				} else {
+					$text_color_background = phpthumb_functions::ImageHexColorAllocate($gdimg, 'FFFFFF', false, 127);
+				}
+				$x1 = $text_origin_x + $min_x;
+				$y1 = $text_origin_y + $TTFbox[1];
+				$x2 = $text_origin_x + $min_x + $text_width;
+				$y2 = $text_origin_y + $TTFbox[1] - $text_height;
+				$x_TL = eregi('x', $fillextend) ?               0 : min($x1, $x2);
+				$y_TL = eregi('y', $fillextend) ?               0 : min($y1, $y2);
+				$x_BR = eregi('x', $fillextend) ? ImageSX($gdimg) : max($x1, $x2);
+				$y_BR = eregi('y', $fillextend) ? ImageSY($gdimg) : max($y1, $y2);
+				//while ($y_BR > ImageSY($gdimg)) {
+				//	$y_TL--;
+				//	$y_BR--;
+				//	$text_origin_y--;
+				//}
+				ImageFilledRectangle($gdimg, $x_TL, $y_TL, $x_BR, $y_BR, $text_color_background);
 				ImageTTFtext($gdimg, $size, $angle, $text_origin_x, $text_origin_y, $letter_color_text, $ttffont, $text);
 
 			}
-
 			return true;
-
-			//if ($img_watermark = phpthumb_functions::ImageCreateFunction($text_width, $text_height)) {
-			//	if ($img_watermark_mask = phpthumb_functions::ImageCreateFunction($text_width, $text_height)) {
-			//		$letter_color_background      = phpthumb_functions::ImageColorAllocateAlphaSafe($img_watermark,      127, 127, 127, 127);
-			//		$letter_color_background_mask = phpthumb_functions::ImageColorAllocateAlphaSafe($img_watermark_mask, 127, 127, 127, 127);
-			//		ImageFilledRectangle($img_watermark,      0, 0, ImageSX($img_watermark),      ImageSY($img_watermark),      $letter_color_background);
-			//		ImageFilledRectangle($img_watermark_mask, 0, 0, ImageSX($img_watermark_mask), ImageSY($img_watermark_mask), $letter_color_background_mask);
-            //
-			//		$letter_color_watermark = phpthumb_functions::ImageHexColorAllocate($img_watermark, $hex_color);
-			//		$letter_color_watermark_mask = ImageColorAllocate($img_watermark_mask, 255, 255, 255);
-            //
-			//		ImageTTFtext($img_watermark,      $size, $angle, $TTFbox[0] - $min_x + round($size * 0.25), $TTFbox[1] - $min_y,  $letter_color_watermark,      $ttffont, $text);
-			//		ImageTTFtext($img_watermark_mask, $size, $angle, $TTFbox[0] - $min_x + round($size * 0.25), $TTFbox[1] - $min_y, -$letter_color_watermark_mask, $ttffont, $text);
-            //
-			//		$this->ApplyMask($img_watermark_mask, $img_watermark);
-			//		$this->WatermarkOverlay($gdimg, $img_watermark, $alignment, $opacity, $margin);
-            //
-			//		ImageDestroy($img_watermark);
-			//		ImageDestroy($img_watermark_mask);
-			//		return true;
-			//	}
-			//}
 
 		} else {
 
@@ -1039,13 +1072,18 @@ class phpthumb_filters {
 
 			$text_width  = 0;
 			$text_height = 0;
-			foreach ($textlines as $line) {
+			foreach ($textlines as $dummy => $line) {
 				$text_width   = max($text_width, ImageFontWidth($size) * strlen($line));
 				$text_height += ImageFontHeight($size);
 			}
 			if ($img_watermark = phpthumb_functions::ImageCreateFunction($text_width, $text_height)) {
 				ImageAlphaBlending($img_watermark, false);
-				$text_color_background = phpthumb_functions::ImageColorAllocateAlphaSafe($img_watermark, 255, 255, 255, 127);
+				if (phpthumb_functions::IsHexColor($bg_color)) {
+					$text_background_alpha = round(127 * ((100 - min(max(0, $bg_opacity), 100)) / 100));
+					$text_color_background = phpthumb_functions::ImageHexColorAllocate($img_watermark, $bg_color, false, $text_background_alpha);
+				} else {
+					$text_color_background = phpthumb_functions::ImageHexColorAllocate($img_watermark, 'FFFFFF', false, 127);
+				}
 				ImageFilledRectangle($img_watermark, 0, 0, ImageSX($img_watermark), ImageSY($img_watermark), $text_color_background);
 
 				if ($angle && function_exists('ImageRotate')) {
@@ -1096,7 +1134,6 @@ class phpthumb_filters {
 			}
 
 		}
-
 		return false;
 	}
 
@@ -1122,9 +1159,7 @@ class phpthumb_filters {
 					if ($gdimg_tiledwatermark = phpthumb_functions::ImageCreateFunction($img_source_width, $img_source_height)) {
 
 						ImageAlphaBlending($gdimg_tiledwatermark, false);
-						if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-							ImageSaveAlpha($gdimg_tiledwatermark, true);
-						}
+						ImageSaveAlpha($gdimg_tiledwatermark, true);
 						$text_color_transparent = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg_tiledwatermark, 255, 0, 255, 127);
 						ImageFill($gdimg_tiledwatermark, 0, 0, $text_color_transparent);
 
@@ -1210,10 +1245,8 @@ class phpthumb_filters {
 					break;
 			}
 			ImageAlphaBlending($gdimg_dest, false);
-			if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')) {
-				ImageSaveAlpha($gdimg_dest, true);
-				ImageSaveAlpha($img_watermark, true);
-			}
+			ImageSaveAlpha($gdimg_dest, true);
+			ImageSaveAlpha($img_watermark, true);
 			phpthumb_functions::ImageCopyRespectAlpha($gdimg_dest, $img_watermark, $watermark_destination_x, $watermark_destination_y, 0, 0, $watermark_source_width, $watermark_source_height, $watermark_opacity_percent);
 
 			return true;
@@ -1222,6 +1255,12 @@ class phpthumb_filters {
 	}
 
 
+	function DebugMessage($message, $file='', $line='') {
+		if (is_object($this->phpThumbObject)) {
+			return $this->phpThumbObject->DebugMessage($message, $file, $line);
+		}
+		return false;
+	}
 }
 
 ?>

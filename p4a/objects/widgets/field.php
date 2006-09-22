@@ -734,7 +734,6 @@
 			}
 
 			$id = $this->getId();
-			$languale = $p4a->i18n->getLanguage();
 			$date_format = $p4a->i18n->datetime->getFormat('date_default');
 
 			$header 	   = "<input id='{$id}input' type='text' class='border_color1 font_normal' $enabled";

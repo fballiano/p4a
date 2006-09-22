@@ -36,6 +36,10 @@
  * @package p4a
  */
 
+if (!defined('P4A_I18N_DATE_CALENDAR_LANGUAGE')) {
+	define('P4A_I18N_DATE_CALENDAR_LANGUAGE', 'en');
+}
+
 $numbers_formats = array
 (
 	"integer" => array('0', P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),

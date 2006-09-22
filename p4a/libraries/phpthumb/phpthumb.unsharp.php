@@ -65,48 +65,63 @@ class phpUnsharpMask {
 		$h = ImageSY($img);
 		$imgCanvas  = ImageCreateTrueColor($w, $h);
 		$imgCanvas2 = ImageCreateTrueColor($w, $h);
-		$imgBlur    = ImageCreateTrueColor($w, $h);
-		$imgBlur2   = ImageCreateTrueColor($w, $h);
 		ImageCopy($imgCanvas,  $img, 0, 0, 0, 0, $w, $h);
 		ImageCopy($imgCanvas2, $img, 0, 0, 0, 0, $w, $h);
 
 
-		// Gaussian blur matrix:
-		//
-		//	1	2	1
-		//	2	4	2
-		//	1	2	1
-		//
-		//////////////////////////////////////////////////
+		$builtinFilterSucceeded = false;
+		if ($radius == 1) {
+			if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+				if (ImageFilter($imgCanvas, IMG_FILTER_GAUSSIAN_BLUR) && ImageFilter($imgCanvas2, IMG_FILTER_GAUSSIAN_BLUR)) {
+					$builtinFilterSucceeded = true;
+				}
+			}
+		}
 
-		// Move copies of the image around one pixel at the time and merge them with weight
-		// according to the matrix. The same matrix is simply repeated for higher radii.
-		for ($i = 0; $i < $radius; $i++)	{
-			ImageCopy     ($imgBlur, $imgCanvas, 0, 0, 1, 1, $w - 1, $h - 1);            // up left
-			ImageCopyMerge($imgBlur, $imgCanvas, 1, 1, 0, 0, $w,     $h,     50);        // down right
-			ImageCopyMerge($imgBlur, $imgCanvas, 0, 1, 1, 0, $w - 1, $h,     33.33333);  // down left
-			ImageCopyMerge($imgBlur, $imgCanvas, 1, 0, 0, 1, $w,     $h - 1, 25);        // up right
-			ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 1, 0, $w - 1, $h,     33.33333);  // left
-			ImageCopyMerge($imgBlur, $imgCanvas, 1, 0, 0, 0, $w,     $h,     25);        // right
-			ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 0, 1, $w,     $h - 1, 20 );       // up
-			ImageCopyMerge($imgBlur, $imgCanvas, 0, 1, 0, 0, $w,     $h,     16.666667); // down
-			ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 0, 0, $w,     $h,     50);        // center
-			ImageCopy     ($imgCanvas, $imgBlur, 0, 0, 0, 0, $w,     $h);
+		if (!$builtinFilterSucceeded) {
+			$imgBlur  = ImageCreateTrueColor($w, $h);
+			$imgBlur2 = ImageCreateTrueColor($w, $h);
 
-			// During the loop above the blurred copy darkens, possibly due to a roundoff
-			// error. Therefore the sharp picture has to go through the same loop to
-			// produce a similar image for comparison. This is not a good thing, as processing
-			// time increases heavily.
-			ImageCopy     ($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 50);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 33.33333);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 25);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 33.33333);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 25);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 20 );
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 16.666667);
-			ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 50);
-			ImageCopy     ($imgCanvas2, $imgBlur2, 0, 0, 0, 0, $w, $h);
+			///////////////////////////
+			//
+			// Gaussian blur matrix:
+			//	1  2  1
+			//	2  4  2
+			//	1  2  1
+			//
+			///////////////////////////
+
+			// Move copies of the image around one pixel at the time and merge them with weight
+			// according to the matrix. The same matrix is simply repeated for higher radii.
+			for ($i = 0; $i < $radius; $i++)	{
+				ImageCopy     ($imgBlur, $imgCanvas, 0, 0, 1, 1, $w - 1, $h - 1);            // up left
+				ImageCopyMerge($imgBlur, $imgCanvas, 1, 1, 0, 0, $w,     $h,     50);        // down right
+				ImageCopyMerge($imgBlur, $imgCanvas, 0, 1, 1, 0, $w - 1, $h,     33.33333);  // down left
+				ImageCopyMerge($imgBlur, $imgCanvas, 1, 0, 0, 1, $w,     $h - 1, 25);        // up right
+				ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 1, 0, $w - 1, $h,     33.33333);  // left
+				ImageCopyMerge($imgBlur, $imgCanvas, 1, 0, 0, 0, $w,     $h,     25);        // right
+				ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 0, 1, $w,     $h - 1, 20 );       // up
+				ImageCopyMerge($imgBlur, $imgCanvas, 0, 1, 0, 0, $w,     $h,     16.666667); // down
+				ImageCopyMerge($imgBlur, $imgCanvas, 0, 0, 0, 0, $w,     $h,     50);        // center
+				ImageCopy     ($imgCanvas, $imgBlur, 0, 0, 0, 0, $w,     $h);
+
+				// During the loop above the blurred copy darkens, possibly due to a roundoff
+				// error. Therefore the sharp picture has to go through the same loop to
+				// produce a similar image for comparison. This is not a good thing, as processing
+				// time increases heavily.
+				ImageCopy     ($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 50);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 33.33333);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 25);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 33.33333);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 25);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 20 );
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 16.666667);
+				ImageCopyMerge($imgBlur2, $imgCanvas2, 0, 0, 0, 0, $w, $h, 50);
+				ImageCopy     ($imgCanvas2, $imgBlur2, 0, 0, 0, 0, $w, $h);
+			}
+			ImageDestroy($imgBlur);
+			ImageDestroy($imgBlur2);
 		}
 
 		// Calculate the difference between the blurred pixels and the original
@@ -138,8 +153,6 @@ class phpUnsharpMask {
 		}
 		ImageDestroy($imgCanvas);
 		ImageDestroy($imgCanvas2);
-		ImageDestroy($imgBlur);
-		ImageDestroy($imgBlur2);
 
 		return true;
 	}

@@ -21,6 +21,7 @@
 class phpthumb_bmp {
 
 	function phpthumb_bmp() {
+		return true;
 	}
 
 	function phpthumb_bmp2gd(&$BMPdata, $truecolor=true) {
@@ -39,6 +40,47 @@ class phpthumb_bmp {
 			return $this->phpthumb_bmp2gd($BMPdata, $truecolor);
 		}
 		return false;
+	}
+
+	function GD2BMPstring(&$gd_image) {
+		$imageX = ImageSX($gd_image);
+		$imageY = ImageSY($gd_image);
+
+		$BMP = '';
+		for ($y = ($imageY - 1); $y >= 0; $y--) {
+			$thisline = '';
+			for ($x = 0; $x < $imageX; $x++) {
+				$argb = phpthumb_functions::GetPixelColor($gd_image, $x, $y);
+				$thisline .= chr($argb['blue']).chr($argb['green']).chr($argb['red']);
+			}
+			while (strlen($thisline) % 4) {
+				$thisline .= "\x00";
+			}
+			$BMP .= $thisline;
+		}
+
+		$bmpSize = strlen($BMP) + 14 + 40;
+		// BITMAPFILEHEADER [14 bytes] - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_62uq.asp
+		$BITMAPFILEHEADER  = 'BM';                                                           // WORD    bfType;
+		$BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String($bmpSize, 4); // DWORD   bfSize;
+		$BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(       0, 2); // WORD    bfReserved1;
+		$BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(       0, 2); // WORD    bfReserved2;
+		$BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(      54, 4); // DWORD   bfOffBits;
+
+		// BITMAPINFOHEADER - [40 bytes] http://msdn.microsoft.com/library/en-us/gdi/bitmaps_1rw2.asp
+		$BITMAPINFOHEADER  = phpthumb_functions::LittleEndian2String(      40, 4); // DWORD  biSize;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String( $imageX, 4); // LONG   biWidth;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String( $imageY, 4); // LONG   biHeight;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       1, 2); // WORD   biPlanes;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(      24, 2); // WORD   biBitCount;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biCompression;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biSizeImage;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(    2835, 4); // LONG   biXPelsPerMeter;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(    2835, 4); // LONG   biYPelsPerMeter;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biClrUsed;
+		$BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biClrImportant;
+
+		return $BITMAPFILEHEADER.$BITMAPINFOHEADER.$BMP;
 	}
 
 	function getid3_bmp(&$BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false) {
@@ -66,7 +108,7 @@ class phpthumb_bmp {
 		$offset += 2;
 
 		if ($thisfile_bmp_header_raw['identifier'] != 'BM') {
-			$ThisFileInfo['error'][] = 'Expecting "BM" at offset '.$ThisFileInfo['avdataoffset'].', found "'.$thisfile_bmp_header_raw['identifier'].'"';
+			$ThisFileInfo['error'][] = 'Expecting "BM" at offset '.intval(@$ThisFileInfo['avdataoffset']).', found "'.$thisfile_bmp_header_raw['identifier'].'"';
 			unset($ThisFileInfo['fileformat']);
 			unset($ThisFileInfo['bmp']);
 			return false;
@@ -560,7 +602,7 @@ class phpthumb_bmp {
 												$pixeldataoffset++;
 											}
 
-											foreach ($paletteindexes as $paletteindex) {
+											foreach ($paletteindexes as $dummy => $paletteindex) {
 												$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 												$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 												$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -671,7 +713,7 @@ class phpthumb_bmp {
 			$gd = @ImageCreate($imagewidth, $imageheight);
 			if (!empty($BMPdata['palette'])) {
 				// create GD palette from BMP palette
-				foreach ($BMPdata['palette'] as $color) {
+				foreach ($BMPdata['palette'] as $dummy => $color) {
 					list($r, $g, $b) = $this->IntColor2RGB($color);
 					ImageColorAllocate($gd, $r, $g, $b);
 				}
