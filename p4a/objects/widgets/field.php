@@ -1257,10 +1257,6 @@
 				$mime_type = explode('/', $this->getNewValue(3));
 				$mime_type = $mime_type[0];
 
-				if ($mime_type != 'image') {
-					return $this->getAsFile();
-				}
-
 				if (!isset($this->buttons->button_file_delete)) {
 					$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
@@ -1274,6 +1270,10 @@
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
 				}
+
+				if ($mime_type != 'image') {
+					return $this->getAsFile();
+				}				
 
 				if ($this->isEnabled()) {
 					$this->buttons->button_file_delete->enable();
