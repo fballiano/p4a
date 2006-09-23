@@ -38,6 +38,7 @@
 
 define('P4A_I18N_DECIMAL_SEPARATOR', ',');
 define('P4A_I18N_THOUSAND_SEPARATOR', ' ');
+define('P4A_I18N_DATE_CALENDAR_LANGUAGE', 'no');
 
 require dirname(dirname(__FILE__)) . '/defaults.php';
 
