@@ -10,8 +10,11 @@ class Sample_it extends P4A
 {
 	function Sample_It()
 	{
-		//Prima di tutto richiamo il costruttore di p4a
+		// Prima di tutto richiamo il costruttore di p4a
 		parent::p4a();
+
+		// Imposto il titolo generale dell'applicazione (il tag title)
+		$this->setTitle("Sample IT");
 
 		/*
 		Per istanziare un oggetto è necessario usare il metodo

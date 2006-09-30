@@ -471,7 +471,7 @@
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
-			
+
 			// If not specified, the event has the same name of the action
 			if (!$event) {
 				$event = $action;
@@ -485,7 +485,7 @@
 			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
 			$this->actions[$action]['ajax'] = $ajax;
 		}
-		
+
 		/**
 		 * Adds an ajax action to the implemented actions stack for the widget.
 		 * @access public
@@ -500,7 +500,7 @@
 			$p4a =& p4a::singleton();
 			$this->addAction($action, $event, $require_confirmation, $confirmation_text, $confirmation_text_handler, $p4a->isAjaxEnabled());
 		}
-		
+
 		/**
 		 * Requires confirmation for an action.
 		 * @access public
@@ -539,7 +539,7 @@
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
-		
+
 			// If not specified, the event has the same name of the action
 			if ($event === null) {
 				$event = $action;
@@ -630,12 +630,20 @@
 						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $action_data['confirmation_text'] ) .'\')){';
 					}
 				}
-				if ($action_data['ajax']) {
+
+				if (isset($action_data['ajax']) and $action_data['ajax'] == 1) {
 					$execute = 'executeAjaxEvent';
 				} else {
 					$execute = 'executeEvent';
 				}
-				$sActions .= $browser_action . '="' . $prefix . "{$execute}('" . $this->getId() . '\', \'' . $action_data['event'] . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" ';
+
+				if (isset($action_data['event'])) {
+					$action_data_event = $action_data['event'];
+				} else {
+					$action_data_event = '';
+				}
+
+				$sActions .= $browser_action . '="' . $prefix . "{$execute}('" . $this->getId() . '\', \'' . $action_data_event . '\''. $sParams .');' . $suffix . ' return ' . $return . ';" ';
 			}
 			return $sActions;
 		}
@@ -686,7 +694,7 @@
 			} else {
 				$this->use_template = true;
 				$this->template_name = $template_name;
-	
+
 				$p4a =& p4a::singleton();
 				$this->_tpl_vars["id"] = $this->getID();
 				$this->_tpl_vars["handheld"] = $p4a->isHandheld();
@@ -737,14 +745,14 @@
 				$tpl_container = (object)'';
 				$tpl_container->width = $this->getWidth();
 				$tpl_container->height = $this->getHeight();
-				
+
 				if (strpos($this->template_name, '/') !== false) {
 					list($template_dir, $template_file) = explode('/', $this->template_name);
 				} else {
 					$template_dir = $this->template_name;
 					$template_file = $this->template_name;
 				}
-				
+
 				foreach ($this->_tpl_vars as $k=>$v) {
 					if (is_object($v)) {
 						$tpl_container->$k = $v->getAsString();
@@ -752,7 +760,7 @@
 						$tpl_container->$k = $v;
 					}
 				}
-				
+
 				foreach ($this->_temp_vars as $k=>$v) {
 					$tpl_container->$k = $v;
 				}
@@ -825,7 +833,7 @@
 		{
 			return $this->actionHandler('onReturnPress', $params);
 		}
-		
+
 		/**
 		 * Add a temporary variable
 		 * @param string		The URI of file.
@@ -847,7 +855,7 @@
 				unset($this->_temp_vars[$name]);
 			}
 		}
-		
+
 		/**
 		 * Clear temporary vars list
 		 * @access public
@@ -856,7 +864,7 @@
 		{
 			$this->_temp_vars = array();
 		}
-		
+
 		function redesign()
 		{
 			$p4a =& p4a::singleton();

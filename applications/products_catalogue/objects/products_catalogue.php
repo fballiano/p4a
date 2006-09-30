@@ -41,6 +41,7 @@ class Products_Catalogue extends P4A
 	function Products_Catalogue()
 	{
 		parent::p4a();
+		$this->setTitle("Products Catalogue");
 
 		// Menu
 		$this->build("p4a_menu", "menu");

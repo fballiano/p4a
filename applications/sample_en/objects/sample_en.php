@@ -14,6 +14,9 @@ class Sample_En extends P4A
 		// First of all let's call p4a constructor
 		parent::p4a();
 
+		// Setting the title of the whole application (window's title tag)
+		$this->setTitle("Sample EN");
+
 		/*
 		To instance an object you've to use the "build" method.
 		Every object can build children objects using the build
