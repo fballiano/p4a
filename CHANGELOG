@@ -1,6 +1,8 @@
 1.99.9 - Thank you to mechano (http://www.mechanicamente.it) for the second donation!
 - window's title was added to sample applications
 - strict validation bugfixes on P4A_Widget were done
+- a typo in P4A_DB_Source::dropFilter() was fixed
+- a bug with clone() function (php<5) was fixed
 
 1.99.8 - Thank you to zukunft.com for the first donation!
 - P4A_DB_Source::getFilters now works also with multivalue fields

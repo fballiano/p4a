@@ -188,7 +188,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function dropFilter($filter)
     {
-        if (array_key_exists($filter,$this->_filter)) {
+        if (array_key_exists($filter,$this->_filters)) {
             $this->resetNumRows();
             unset($this->_filters[$filter]);
         }

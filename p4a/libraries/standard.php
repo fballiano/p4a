@@ -37,7 +37,7 @@
  */
 
 if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
-	eval('function clone($object) {return $object;}');
+	eval('function clone($object) {return unserialize(serialize($object));}');
 }
 
 if (!function_exists('htmlspecialchars_decode')) {
