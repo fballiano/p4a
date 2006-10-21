@@ -16,7 +16,7 @@ tinyMCE.init({
 	elements : "{id}input",
 	theme: "{theme}",
 	language: "en",
-	plugins: "table,advhr,advimage,advlink,emotions,preview,flash,searchreplace,print,paste,directionality,fullscreen,noneditable,contextmenu",
+	plugins: "table,advhr,advimage,advlink,emotions,preview,media,searchreplace,print,paste,directionality,fullscreen,noneditable,contextmenu",
 	theme_advanced_buttons1: "{toolbar1}",
 	theme_advanced_buttons2: "{toolbar2}",
 	theme_advanced_buttons3: "{toolbar3}",
@@ -24,6 +24,8 @@ tinyMCE.init({
 	theme_advanced_toolbar_align: "left",
 	theme_advanced_statusbar_location: "bottom",
 	{if:upload}file_browser_callback: "{id}fileBrowserCallBack",{end:}
+	inline_styles: true,
+	paste_strip_class_attributes: "all",
 	auto_cleanup_word: true,
 	relative_urls: false,
 	apply_source_formatting: true,

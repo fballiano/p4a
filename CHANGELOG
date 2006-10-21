@@ -1,5 +1,6 @@
 1.99.10
--TinyFCK was updated to 0.15
+- TinyFCK was updated to 0.15 (TinyMCE 2.0.7)
+- some TinyMCE options were changes to get better XHTML strict validation (align were removed)
 - Bulgarian translation was added (thanks to Angel Grancharov)
 
 1.99.9 - Thank you to mechano (http://www.mechanicamente.it) for the second donation!

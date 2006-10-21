@@ -200,9 +200,9 @@
 			}
 
 			//Rich textarea things
-			$this->setRichTextareaToolbar(0, 'cut,copy,paste,pastetext,pasteword,separator,undo,redo,separator,search,replace,separator,ltr,rtl,separator,charmap,separator,removeformat,cleanup,separator,code,preview,fullscreen,print,separator,help');
-			$this->setRichTextareaToolbar(1, 'bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,formatselect,separator,sub,sup,bullist,numlist,separator,outdent,indent');
-			$this->setRichTextareaToolbar(2, 'tablecontrols,separator,link,unlink,anchor,image,separator,visualaid,flash,advhr');
+			$this->setRichTextareaToolbar(0, 'cut,copy,paste,pastetext,pasteword,|,undo,redo,|,search,replace,|,ltr,rtl,|,charmap,|,removeformat,cleanup,|,code,preview,fullscreen,print,|,help');
+			$this->setRichTextareaToolbar(1, 'bold,italic,underline,strikethrough,|,bullist,numlist,|,sub,sup,|,outdent,indent,|,formatselect');
+			$this->setRichTextareaToolbar(2, 'tablecontrols,visualaid,|,link,unlink,anchor,image,media,advhr');
 
 			//Label
  			$this->build("P4A_Label", "label");
@@ -1272,7 +1272,7 @@
 
 				if ($mime_type != 'image') {
 					return $this->getAsFile();
-				}				
+				}
 
 				if ($this->isEnabled()) {
 					$this->buttons->button_file_delete->enable();
