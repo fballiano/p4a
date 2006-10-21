@@ -1,14 +1,12 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.12 $
- * $Date: 2006/02/23 16:16:34 $
+ * $Id: editor_plugin_src.js 105 2006-10-16 15:23:57Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('fullpage', 'en,tr,sv');
+tinyMCE.importPluginLanguagePack('fullpage');
 
 var TinyMCE_FullPagePlugin = {
 	getInfo : function() {
@@ -218,7 +216,7 @@ var TinyMCE_FullPagePlugin = {
 			body.text = tinyMCE.getAttrib(nl[0], 'text');
 
 			if ((tmp = tinyMCE.getAttrib(nl[0], 'background')) != '')
-				body.style.backgroundImage = tmp;
+				body.style.backgroundImage = "url('" + tmp + "')";
 
 			if ((tmp = tinyMCE.getAttrib(nl[0], 'bgcolor')) != '')
 				body.style.backgroundColor = tmp;

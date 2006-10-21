@@ -1,14 +1,12 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.16 $
- * $Date: 2006/02/10 21:34:28 $
+ * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('directionality', 'en,tr,sv,fr_ca,zh_cn,cs,da,he,nb,de,hu,ru,ru_KOI8-R,ru_UTF-8,nn,es,cy,is,pl,nl,fr,pt_br');
+tinyMCE.importPluginLanguagePack('directionality');
 
 var TinyMCE_DirectionalityPlugin = {
 	getInfo : function() {

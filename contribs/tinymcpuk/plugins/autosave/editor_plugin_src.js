@@ -1,14 +1,12 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.11 $
- * $Date: 2006/03/22 12:21:21 $
+ * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('autosave', 'en,tr,sv,cs,he,nb,hu,de,da,ru,ru_KOI8-R,ru_UTF-8,nn,fi,cy,es,is,pl,pt_br');
+tinyMCE.importPluginLanguagePack('autosave');
 
 var TinyMCE_AutoSavePlugin = {
 	getInfo : function() {

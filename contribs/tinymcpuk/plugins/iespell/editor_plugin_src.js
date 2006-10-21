@@ -1,14 +1,12 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.20 $
- * $Date: 2006/02/10 16:29:39 $
+ * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('iespell', 'en,tr,cs,el,fr_ca,it,ko,sv,zh_cn,fr,de,pl,pt_br,nl,da,he,nb,ru,ru_KOI8-R,ru_UTF-8,nn,fi,cy,es,is,zh_tw,zh_tw_utf8,sk');
+tinyMCE.importPluginLanguagePack('iespell');
 
 var TinyMCE_IESpellPlugin = {
 	getInfo : function() {

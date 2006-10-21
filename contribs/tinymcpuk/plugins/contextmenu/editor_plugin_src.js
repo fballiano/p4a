@@ -1,14 +1,11 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.31 $
- * $Date: 2006/05/03 10:46:41 $
+ * $Id: editor_plugin_src.js 105 2006-10-16 15:23:57Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-//tinyMCE.importPluginLanguagePack('contextmenu', 'en,tr,zh_cn,cs,fa,fr_ca,fr,de,nb');
 if (!tinyMCE.settings['contextmenu_skip_plugin_css']) {
 	tinyMCE.loadCSS(tinyMCE.baseURL + "/plugins/contextmenu/css/contextmenu.css");
 }
@@ -216,12 +213,12 @@ tinyMCE.addPlugin("contextmenu", TinyMCE_ContextMenuPlugin);
 // Context menu class
 
 function TinyMCE_ContextMenu(settings) {
+	var doc, self = this;
+
 	// Default value function
 	function defParam(key, def_val) {
 		settings[key] = typeof(settings[key]) != "undefined" ? settings[key] : def_val;
 	}
-
-	var self = this;
 
 	this.isMSIE = (navigator.appName == "Microsoft Internet Explorer");
 
@@ -302,7 +299,7 @@ TinyMCE_ContextMenu.prototype = {
 	},
 
 	show : function(x, y) {
-		var vp, width, height;
+		var vp, width, height, yo;
 
 		if (this.html == "")
 			return;
@@ -329,15 +326,17 @@ TinyMCE_ContextMenu.prototype = {
 			this.pop.show(x, y, width, height);
 		} else {
 			vp = this.getViewPort();
-
-			this.contextMenuDiv.style.left = (x > vp.width - width ? vp.width - width : x) + 'px';
-			this.contextMenuDiv.style.top = (y > vp.height - height ? vp.height - height : y) + 'px';
+			yo = tinyMCE.isMSIE5_0 ? document.body.scrollTop : self.pageYOffset;
+			this.contextMenuDiv.style.left = (x > vp.left + vp.width - width ? vp.left + vp.width - width : x) + 'px';
+			this.contextMenuDiv.style.top = (y > vp.top + vp.height - height ? vp.top + vp.height - height : y) + 'px';
 			this.contextMenuDiv.style.display = "block";
 		}
 	},
 
 	getViewPort : function() {
 		return {
+			left : self.pageXOffset || self.document.documentElement.scrollLeft || self.document.body.scrollLeft,
+			top: self.pageYOffset || self.document.documentElement.scrollTop || self.document.body.scrollTop,
 			width : document.documentElement.offsetWidth || document.body.offsetWidth,
 			height : self.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
 		};
