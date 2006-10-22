@@ -612,6 +612,9 @@ class P4A_DB_Source extends P4A_Data_Source
 
         if ($from == 0 and $count == 0) {
             $rows = $db->queryAll($query);
+            if (!is_array($rows)) {
+            	$rows = array();
+            }
         }else{
             $rows = array();
             $db->setLimit($count, $from);

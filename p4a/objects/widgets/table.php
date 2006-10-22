@@ -204,6 +204,15 @@
 			}
 			$this->addTempVar('table_width', $width);
 
+			// if for some reason this page is empty we go back to page one
+			$num_page = $this->getCurrentPageNumber();
+			$rows = $this->data->page($num_page, false);
+			if (empty($rows)) {
+				$num_page = 1;
+				$this->setCurrentPageNumber($num_page);
+				$rows = $this->data->page($num_page, false);
+			}
+
 			if ($this->toolbar !== null and
 				$this->toolbar->isVisible()) {
 				$this->addTempVar('toolbar', $this->toolbar->getAsString());
@@ -273,9 +282,9 @@
 			}
 			$this->addTempVar('table_cols', $table_cols);
 
-			if ($this->data->getNumRows() > 0){
+			if ($this->data->getNumRows() > 0) {
 				$this->addTempVar('table_rows_properties', $this->rows->composeStringProperties());
-				$this->addTempVar('table_rows', $this->rows->getRows());
+				$this->addTempVar('table_rows', $this->rows->getRows($num_page, $rows));
 			} else {
 				$this->addTempVar('table_rows_properties', null);
 				$this->addTempVar('table_rows', null);
@@ -885,15 +894,13 @@
 		 * @return array
 		 * @access private
 		 */
-		function getRows()
+		function getRows($num_page, $rows)
 		{
 			$p4a =& P4A::singleton();
 
 			$aReturn = array();
 			$parent =& $p4a->getObject($this->getParentID());
-			$num_page = $parent->getCurrentPageNumber();
 			$num_page_from_data_source = $parent->data->getNumPage();
-			$rows = $parent->data->page($num_page, false);
 			$aCols = $parent->getVisibleCols();
 			$limit = $parent->data->getPageLimit();
 			$offset = $parent->data->getOffset();
@@ -903,7 +910,7 @@
 			}
 
 			$i = 0;
-			foreach($rows as $row_number=>$row) {
+			foreach ($rows as $row_number=>$row) {
 				$j = 0;
 				$action = $this->composeStringActions($row_number);
 
