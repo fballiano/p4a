@@ -1015,7 +1015,7 @@
 			$this->addButton('button_go', 'apply', 'right');
 			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
 
-			$field_num_page =& $this->buttons->build('p4a_field', 'field_num_page');
+			$field_num_page =& $this->buttons->build(P4A_FIELD_CLASS, 'field_num_page');
 			$field_num_page->label->setStyleProperty("text-align", "right");
 			$field_num_page->label->setWidth(80);
 			$this->buttons->field_num_page->setWidth(30);

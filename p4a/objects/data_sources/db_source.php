@@ -200,7 +200,7 @@ class P4A_DB_Source extends P4A_Data_Source
         foreach ($this->_filters as $string=>$obj) {
             if (is_object($obj)) {
 				$class = strtolower(get_class($obj));
-				if ($class == 'p4a_field') {
+				if (method_exists($obj, 'getNewValue')) {
 					$value = $obj->data_field->getNewValue();
 				} elseif ($class == 'p4a_data_field') {
 					$value = $obj->getNewValue();

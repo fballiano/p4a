@@ -76,13 +76,13 @@
 				$cell->setProperty('align', 'center');
 				unset($cell);
 
-    			$this->build("p4a_field","external_object");
+    			$this->build(P4A_FIELD_CLASS,"external_object");
     			$this->external_object->setInvisible();
     			$this->external_object->setType('label');
     			$this->external_object->setProperty('class', 'background1');
     			$this->sheet->anchor($this->external_object);
 
-    			$this->build("p4a_field", "backtrace");
+    			$this->build(P4A_FIELD_CLASS, "backtrace");
     			$this->backtrace->setType('label');
     			$this->sheet->anchor($this->backtrace);
 

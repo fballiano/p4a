@@ -234,7 +234,7 @@
 	if (!defined('P4A_ICONS_EXTENSION')) {
 		define('P4A_ICONS_EXTENSION', 'png');
 	}
-	
+
 	//Template Compile Dir
 	if (!defined('P4A_COMPILE_DIR')) {
 		define("P4A_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)));
@@ -267,18 +267,22 @@
 	}
 
 	//P4A SYSTEM CONSTANTS
-	if (!defined('P4A_EXTENDED_ERRORS')){
+	if (!defined('P4A_FIELD_CLASS')) {
+		define('P4A_FIELD_CLASS', 'P4A_Field');
+	}
+
+	if (!defined('P4A_EXTENDED_ERRORS')) {
 		define('P4A_EXTENDED_ERRORS', false);
 	}
-	
+
 	if (!defined('P4A_DENIED_EXTENSIONS')) {
 		define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
 	}
-	
+
 	if (!defined('P4A_AJAX_ENABLED')) {
 		define('P4A_AJAX_ENABLED', true);
 	}
-	
+
 	if (!defined('P4A_AJAX_DEBUG')) {
 		define('P4A_AJAX_DEBUG', false);
 	}
@@ -291,12 +295,12 @@
 	define('P4A_DATE', '%Y-%m-%d');
 	define('P4A_TIME', '%H:%M:%S');
 	define('P4A_DATETIME', '%Y-%m-%d %H:%M:%S');
-	
-	if (!defined('P4A_GD') and function_exists('ImageJPEG') and 
+
+	if (!defined('P4A_GD') and function_exists('ImageJPEG') and
 		function_exists('ImagePNG') and function_exists('ImageGIF')) {
 		define('P4A_GD', true);
 	} else {
 		define('P4A_GD', false);
 	}
-	
+
 ?>

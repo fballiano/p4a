@@ -4,6 +4,7 @@
 - Bulgarian translation was added (thanks to Angel Grancharov)
 - P4A_DB_Source::getAll always returns an array (fixing a bug on PEAR::MDB2)
 - P4A_Table now goes to page one if current page is empty
+- constant P4A_FIELD_CLASS was added so now you can extend P4A_Field and tell the system what field class to use
 
 1.99.9 - Thank you to mechano (http://www.mechanicamente.it) for the second donation!
 - window's title was added to sample applications

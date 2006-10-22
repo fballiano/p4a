@@ -373,7 +373,7 @@
 
 			while($field =& $this->data->fields->nextItem()) {
 				$field_name = $field->getName();
-				$this->fields->build("P4A_Field",$field_name, false);
+				$this->fields->build(P4A_FIELD_CLASS, $field_name, false);
 				$this->fields->$field_name->setDataField($field);
 			}
 		}
