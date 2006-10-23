@@ -44,6 +44,34 @@
 	//Configuration container
 	require_once "$dir/config.php";
 
+	//Checking if license has been approved
+	//Removing this code is agains P4A license and give P4A authors
+	//the right to start a lawsuit against you for license violation
+	if (!isset($_COOKIE['p4a_license_accepted'])) {
+		if (isset($_GET['license']) and $_GET['license'] == 'accepted') {
+			setcookie('p4a_license_accepted', 1, time() + 315360000, '/p4a/applications/products_catalogue');
+		} else {
+			echo "<?xml version='1.0' encoding='utf-8'?><!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'><html xmlns='http://www.w3.org/1999/xhtml'>";
+			echo "<head><title>Software license</title>";
+			echo "<link href='" . P4A_THEME_PATH . "/screen.css' rel='stylesheet' type='text/css' media='all'></link>";
+			echo "<link href='" . P4A_THEME_PATH . "/screen.css' rel='stylesheet' type='text/css' media='print'></link>";
+			echo "<link href='" . P4A_THEME_PATH . "/print.css' rel='stylesheet' type='text/css' media='print'></link>";
+			echo "<link href='" . P4A_THEME_PATH . "/handheld.css' rel='stylesheet' type='text/css' media='handheld'></link>";
+			echo "</head><body style='text-align:center'><h1 style='padding:10px;'>This software is based on <a href='http://p4a.sourceforge.net/welcome'>P4A - PHP For Applications</a> and it's released under the <a href='http://www.gnu.org/copyleft/gpl.html'>GNU GPL License</a>.</h1>";
+			if (@file_exists(dirname(dirname(__FILE__)) . '/COPYING')) {
+				echo "<p style='margin:auto;width:500px;height:400px;overflow:auto;padding:10px' class='border_box'>";
+				echo nl2br(htmlspecialchars(file_get_contents(dirname(dirname(__FILE__)) . '/COPYING')));
+				echo "</p>";
+				echo "<p style='text-align:center'><a href='mailto:info@crealabs.it?subject=P4A license problem' class='link_button' style='width:350px;text-align:left;margin:auto'><img class='img_button' alt='' src='" . P4A_ICONS_PATH . "/32/error." . P4A_ICONS_EXTENSION . "' />I need more info or there are some problems</a>";
+				echo "<a href='.?license=accepted' class='link_button' style='width:350px;text-align:left;margin:auto'><img class='img_button' alt='' src='" . P4A_ICONS_PATH . "/32/apply." . P4A_ICONS_EXTENSION . "' />All is OK, let's procede to the application</a></p>";
+			} else {
+				echo "<p style='text-align:center'><span style='border:2px solid red;padding:5px;'>LICENSE FILE NOT FOUND, PLEASE <a href='mailto:info@crealabs.it?subject=P4A license violation'>WRITE US</a> REPORTING THIS ISSUE.</span></p>";
+			}
+			echo "</body></html>";
+			die();
+		}
+	}
+
 	// Changing inclusion path
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
