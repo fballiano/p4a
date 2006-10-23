@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 111 2006-10-16 21:02:26Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -9,7 +9,7 @@ var TinyMCE_NonEditablePlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Non editable elements',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_noneditable.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

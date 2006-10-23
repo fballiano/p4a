@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 45 2006-08-11 16:04:22Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -12,7 +12,7 @@ var TinyMCE_InsertDateTimePlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Insert date/time',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_insertdatetime.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

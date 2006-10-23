@@ -1,5 +1,5 @@
 1.99.10
-- TinyFCK was updated to 0.15 (TinyMCE 2.0.7)
+- TinyFCK was updated to 0.16 (TinyMCE 2.0.8)
 - some TinyMCE options were changes to get better XHTML strict validation (align was removed)
 - Bulgarian translation was added (thanks to Angel Grancharov)
 - P4A_DB_Source::getAll always returns an array (fixing a bug on PEAR::MDB2)

@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 80 2006-09-13 15:51:56Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -12,7 +12,7 @@ var TinyMCE_PastePlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Paste text/word',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_paste.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

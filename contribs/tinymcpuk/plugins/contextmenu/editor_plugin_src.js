@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 105 2006-10-16 15:23:57Z spocke $
+ * $Id: editor_plugin_src.js 129 2006-10-23 09:45:17Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -17,7 +17,7 @@ var TinyMCE_ContextMenuPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Context menus',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_contextmenu.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
@@ -113,8 +113,10 @@ var TinyMCE_ContextMenuPlugin = {
 						contextMenu.addSeparator();
 
 						// If flash
-						if (tinyMCE.getAttrib(elm, 'class').indexOf('mceItemFlash') != -1)
+						if (tinyMCE.hasPlugin('flash') && tinyMCE.getAttrib(elm, 'class').indexOf('mceItemFlash') != -1)
 							contextMenu.addItem(tinyMCE.baseURL + "/plugins/flash/images/flash.gif", "$lang_flash_props", "mceFlash");
+						else if (tinyMCE.hasPlugin('media') && /mceItem(Flash|ShockWave|WindowsMedia|QuickTime|RealMedia)/.test(tinyMCE.getAttrib(elm, 'class')))
+							contextMenu.addItem(tinyMCE.baseURL + "/plugins/flash/images/flash.gif", "$lang_media_title", "mceMedia");
 						else
 							contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/image.gif", "$lang_image_props_desc", inst.hasPlugin("advimage") ? "mceAdvImage" : "mceImage");
 						break;

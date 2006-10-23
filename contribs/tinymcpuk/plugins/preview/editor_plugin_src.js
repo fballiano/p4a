@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 101 2006-10-15 18:29:46Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -12,7 +12,7 @@ var TinyMCE_PreviewPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Preview',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

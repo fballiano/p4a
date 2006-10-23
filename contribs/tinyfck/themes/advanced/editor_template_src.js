@@ -1,5 +1,5 @@
 /**
- * $Id: editor_template_src.js 111 2006-10-16 21:02:26Z spocke $
+ * $Id: editor_template_src.js 129 2006-10-23 09:45:17Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -332,7 +332,7 @@ var TinyMCE_AdvancedTheme = {
 				return true;
 
 			case "forecolor":
-				var fcp = new TinyMCE_Layer(editor_id + '_fcPreview'), p, img, elm;
+				var fcp = new TinyMCE_Layer(editor_id + '_fcPreview', false), p, img, elm;
 
 				TinyMCE_AdvancedTheme._hideMenus(editor_id);
 
@@ -377,7 +377,7 @@ var TinyMCE_AdvancedTheme = {
 			return true;
 
 			case "HiliteColor":
-				var bcp = new TinyMCE_Layer(editor_id + '_bcPreview'), p, img;
+				var bcp = new TinyMCE_Layer(editor_id + '_bcPreview', false), p, img;
 
 				TinyMCE_AdvancedTheme._hideMenus(editor_id);
 
@@ -1124,7 +1124,7 @@ var TinyMCE_AdvancedTheme = {
 				break;
 
 				case "IMG":
-				if (getAttrib(node, 'name').indexOf('mce_') != 0) {
+				if (getAttrib(node, 'name').indexOf('mce_') != 0 && tinyMCE.getAttrib(node, 'class').indexOf('mceItem') == -1) {
 					tinyMCE.switchClass(editor_id + '_image', 'mceButtonSelected');
 				}
 				break;

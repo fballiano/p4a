@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 102 2006-10-15 18:37:23Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * Moxiecode DHTML Windows script.
  *
@@ -13,7 +13,7 @@ var TinyMCE_InlinePopupsPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Inline Popups',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_inlinepopups.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
