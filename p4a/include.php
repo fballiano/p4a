@@ -45,11 +45,11 @@
 	require_once "$dir/config.php";
 
 	//Checking if license has been approved
-	//Removing this code is agains P4A license and give P4A authors
-	//the right to start a lawsuit against you for license violation
+	//Removing this code or hide this message to the user is agains P4A license and
+	//give P4A authors the right to start a lawsuit against you for license violation
 	if (!isset($_COOKIE['p4a_license_accepted'])) {
 		if (isset($_GET['license']) and $_GET['license'] == 'accepted') {
-			setcookie('p4a_license_accepted', 1, time() + 315360000, '/p4a/applications/products_catalogue');
+			setcookie('p4a_license_accepted', 1, time() + 315360000, P4A_APPLICATION_PATH);
 		} else {
 			echo "<?xml version='1.0' encoding='utf-8'?><!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'><html xmlns='http://www.w3.org/1999/xhtml'>";
 			echo "<head><title>Software license</title>";
