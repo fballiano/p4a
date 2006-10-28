@@ -57,9 +57,10 @@
 			echo "<link href='" . P4A_THEME_PATH . "/screen.css' rel='stylesheet' type='text/css' media='print'></link>";
 			echo "<link href='" . P4A_THEME_PATH . "/print.css' rel='stylesheet' type='text/css' media='print'></link>";
 			echo "<link href='" . P4A_THEME_PATH . "/handheld.css' rel='stylesheet' type='text/css' media='handheld'></link>";
+			echo "<script type='text/javascript' src='" . P4A_THEME_PATH . "/iefixes.js'></script>";
 			echo "</head><body style='text-align:center'><h1 style='padding:10px;'>This software is based on <a href='http://p4a.sourceforge.net/welcome'>P4A - PHP For Applications</a> and it's released under the <a href='http://www.gnu.org/copyleft/gpl.html'>GNU GPL License</a>.</h1>";
 			if (@file_exists(dirname(dirname(__FILE__)) . '/COPYING')) {
-				echo "<p style='margin:auto;width:500px;height:400px;overflow:auto;padding:10px' class='border_box'>";
+				echo "<p style='margin:auto;width:500px;height:400px;overflow:auto;padding:10px;text-align:left' class='border_box'>";
 				echo nl2br(htmlspecialchars(file_get_contents(dirname(dirname(__FILE__)) . '/COPYING')));
 				echo "</p>";
 				echo "<p style='text-align:center'><a href='mailto:info@crealabs.it?subject=P4A license problem' class='link_button' style='width:350px;text-align:left;margin:auto'><img class='img_button' alt='' src='" . P4A_ICONS_PATH . "/32/error." . P4A_ICONS_EXTENSION . "' />I need more info or there are some problems</a>";

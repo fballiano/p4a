@@ -31,14 +31,16 @@ function activateMenu()
 {
 	var nav = 'menu';
 	var navroot = document.getElementById(nav);
-	var lis=navroot.getElementsByTagName("li");
-	for (i=0; i<lis.length; i++) {
-		if (lis[i].lastChild.tagName.toLowerCase() == "ul") {
-			lis[i].onmouseover = function() {
-				this.lastChild.style.display = "block";
-			}
-			lis[i].onmouseout = function() {
-				this.lastChild.style.display = "none";
+	if (navroot) {
+		var lis=navroot.getElementsByTagName("li");
+		for (i=0; i<lis.length; i++) {
+			if (lis[i].lastChild.tagName.toLowerCase() == "ul") {
+				lis[i].onmouseover = function() {
+					this.lastChild.style.display = "block";
+				}
+				lis[i].onmouseout = function() {
+					this.lastChild.style.display = "none";
+				}
 			}
 		}
 	}
