@@ -341,11 +341,6 @@ select {
 	z-index: 20;
 }
 
-.p4a_menu img {
-	float: left;
-	margin-right: 5px;
-}
-
 .p4a_menu .accesskey {
 	color: black;
 }
