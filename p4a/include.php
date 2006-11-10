@@ -47,6 +47,7 @@
 	//Checking if license has been approved
 	//Removing this code or hide this message to the user is agains P4A license and
 	//give P4A authors the right to start a lawsuit against you for license violation
+	/*
 	if (!isset($_COOKIE['p4a_license_accepted'])) {
 		if (isset($_GET['license']) and $_GET['license'] == 'accepted') {
 			setcookie('p4a_license_accepted', 1, time() + 315360000, P4A_APPLICATION_PATH);
@@ -72,6 +73,7 @@
 			die();
 		}
 	}
+	*/
 
 	// Changing inclusion path
 	$include_path = explode(_SSS_, ini_get('include_path'));
