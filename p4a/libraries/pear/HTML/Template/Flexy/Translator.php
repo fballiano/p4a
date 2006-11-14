@@ -16,7 +16,7 @@
 // | Authors:  nobody <nobody@localhost>                                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: Translator.php,v 1.8 2006/01/09 03:05:01 alan_k Exp $
+// $Id: Translator.php,v 1.9 2006/06/26 00:59:40 alan_k Exp $
 //
 //  Controller Type Class providing translation faciliites
 //
@@ -196,8 +196,6 @@ class HTML_Template_Flexy_Translator {
             $this->clearTemplateCache($displayLang);
         }
         //DB_DataObject::debugLevel(1);
-        $this->loadTranslations();
-        $this->loadTranslations($displayLang);
         if ($usingDO) {
             $this->loadTranslations();
             $this->loadTranslations($displayLang);

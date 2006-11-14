@@ -66,7 +66,7 @@
 			if ($icon !== null) {
 				$this->setIcon($icon);
 			}
-			
+
 			$this->setValue($name);
 		}
 
@@ -149,7 +149,7 @@
 					$width = $size;
 					$height = $size;
 				}
-				
+
 				if ($enabled) {
 					$header .= '<a class="link_button" href="#" ';
 				} else {
@@ -160,23 +160,23 @@
 				if ($enabled) {
 					$footer .= ' clickable';
 				}
-				
+
 				$img_src = P4A_ICONS_PATH . "/{$height}/{$this->_icon}";
 				if (!$enabled) {
 					$img_src .= "_disabled";
 				}
 				$img_src .= '.' . P4A_ICONS_EXTENSION;
-				
+
 				$msg = __($this->getValue());
 				if (empty($msg)) {
 					$msg = __($this->_icon);
 				}
-				
+
 				$accesskey = $this->getProperty("accesskey");
 				if (strlen($accesskey) > 0) {
 					$msg = "[$accesskey] $msg";
 				}
-				
+
 				$msg = htmlspecialchars($msg);
 				$footer .= "\" src=\"$img_src\" alt=\"$msg\" title=\"$msg\" width=\"$width\" height=\"$height\" ";
 				$footer .= ' />';
@@ -184,7 +184,7 @@
 				if ($this->getLabel()) {
 					$footer .= '<span style="margin:5px;">' . $this->getLabel() . '</span>';
 				}
-				
+
 				if ($enabled) {
 					$footer .= '</a>';
 				} else {
@@ -212,7 +212,7 @@
 			$sReturn = "<span id='$id'>{$sReturn}</span>";
 			return $sReturn;
 		}
-		
+
 		/**
 		 * Composes a string containing all the HTML properties of the widget.
 		 * Note: it will also contain the name and the value.
@@ -224,11 +224,11 @@
 			$sReturn = "";
 			$p4a =& p4a::singleton();
 			$properties = $this->properties;
-			
+
 			if (isset($properties['value'])) {
 				unset($properties['value']);
 			}
-			
+
 			foreach ($properties as $property_name=>$property_value) {
 				$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;
 			}
@@ -237,4 +237,3 @@
 			return $sReturn;
 		}
 	}
-?>

@@ -82,4 +82,3 @@ class P4A_Collection extends P4A_Object
         return $names;
     }
 }
-?>

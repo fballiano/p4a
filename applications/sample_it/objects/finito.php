@@ -61,5 +61,3 @@ class Finito extends P4A_Mask
 		$p4a->restart();
 	}
 }
-
-?>

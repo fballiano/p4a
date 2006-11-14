@@ -50,7 +50,7 @@ class P4A_Array_Source extends P4A_Data_Source
 		if (!is_object($this->fields)) {
 			$this->build("P4A_Collection", "fields");
 		}
-		
+
 		$this->_array = array();
 		$this->_array[-1] = array();
 
@@ -78,13 +78,13 @@ class P4A_Array_Source extends P4A_Data_Source
 
 		if ($move_pointer) {
 			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
-			
+
 			if ($this->isActionTriggered('onMoveRow')) {
 				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
 			} else {
 				if (!empty($row)) {
 					$this->_pointer = $num_row;
-	
+
 					foreach($row as $field=>$value){
 						$this->fields->$field->setValue($value);
 					}
@@ -92,7 +92,7 @@ class P4A_Array_Source extends P4A_Data_Source
 					$this->newRow();
 				}
 			}
-			
+
 			$this->actionHandler('afterMoveRow');
 		}
 
@@ -138,4 +138,3 @@ class P4A_Array_Source extends P4A_Data_Source
 		parent::deleteRow();
 	}
 }
-?>

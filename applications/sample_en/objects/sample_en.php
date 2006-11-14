@@ -66,5 +66,3 @@ class Sample_En extends P4A
 		$this->openMask("users");
 	}
 }
-
-?>

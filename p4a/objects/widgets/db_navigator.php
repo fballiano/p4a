@@ -391,5 +391,3 @@ class P4A_DB_Navigator extends P4A_Widget
 		return $this->actionHandler('afterMovement');
 	}
 }
-
-?>

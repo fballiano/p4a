@@ -93,10 +93,10 @@
 			} elseif (array_key_exists($first_level_id, $this->messages) and array_key_exists($second_level_id, $this->messages[$first_level_id])) {
 				return $this->messages[$first_level_id][$second_level_id];
 			}
-			
+
 			return $first_level_id;
 		}
-		
+
 		/**
 		 * Retrieves all messages
 		 * @return array
@@ -107,5 +107,3 @@
 			return $this->messages;
 		}
 	}
-
-?>

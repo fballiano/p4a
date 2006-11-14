@@ -16,7 +16,7 @@
 // | Authors:  Alan Knowles <alan@akkbhome.com>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Flexy.php,v 1.6 2005/01/22 06:32:20 alan_k Exp $
+// $Id: Flexy.php,v 1.8 2006/09/11 03:52:32 alan_k Exp $
 //
 //  Handler code for the <flexy: namespace
 //
@@ -31,7 +31,7 @@
 *
 *
 *
-* @version    $Id: Flexy.php,v 1.6 2005/01/22 06:32:20 alan_k Exp $
+* @version    $Id: Flexy.php,v 1.8 2006/09/11 03:52:32 alan_k Exp $
 */
 
 class HTML_Template_Flexy_Compiler_Flexy_Flexy  {
@@ -217,6 +217,90 @@ class HTML_Template_Flexy_Compiler_Flexy_Flexy  {
         
     }
 
+
+    
+    
+   /** 
+    /**
+    * - A partial is a subtemplate to which you can pass variables.
+    * - You can define variables for the partial as xml attributes
+    * - You can provide context for the variables by adhering to the 
+    *   convention 'subtemplateVarName="templateVarName"'
+    * - See example below:
+    *  
+    * <flexy:partial src="test.html" subtemplateVar1="var1" 
+    *   subtemplateVar2="object.var2" subtemplateVar3="#literal1#" />
+    */
+	function partialToString($element)
+    {
+        $src = $element->getAttribute('SRC');
+        
+        if (!$src)  {
+            return $this->compiler->appendHTML("<B>Flexy:Subtemplate without a src=filename</B>");
+        }
+        
+        /**
+        * Define parameters for partial (if set)
+        */
+        $aAttribute = $element->getAttributes(); 
+
+        
+        if (!is_array($aAttribute)) {
+            $aAttribute = array();
+        }
+        
+        $aOutput = array();
+            
+        foreach ($aAttribute as $name => $value) {
+            if ($name == 'src' || $name == '/') {
+                continue;
+            }
+                
+            $varName                = trim($name);
+            $varVal                 = trim($value);
+            $isLiteral              = preg_match('@\#(.*)\#@',$varVal);
+
+            /**
+            *   Provide supplied variables with subtemplate context
+            * - Deal with string literals (enclosed in # tags - flexy
+            * hack/convention).
+            * - Variable binding: Look in output object scope first, then
+            * template scope.
+            */
+            if (!$isLiteral) {
+                $varVal             = str_replace('.','->',trim($value));
+                $varVal             = '(isset($t->' . $varVal. ')) ? $t->' . $varVal .' : $'. $varVal;
+            } else  {
+                $varVal             = preg_replace('@\#(.*)\#@','"\1"',$varVal);
+            }
+                
+            $aOutput[$varName]      = $varVal;
+        }
+
+        $varsOutput = "\n\$oOutput = clone \$t;\n";
+
+        foreach ($aOutput as $key=>$val) {
+            $varsOutput .= "\$oOutput->{$key} = {$val};\n";
+        }
+        
+        
+        
+        /**
+        * Pass code to compiler
+        */
+        return $this->compiler->appendPHP ( 
+                "
+                \$x = new HTML_Template_Flexy(\$this->options);
+                \$x->compile('{$src}');
+                {$varsOutput}
+                \$x->outputObject(\$oOutput, \$this->elements);
+                "
+        );
+    } 
+    
+    
+    
+    
 }
 
  

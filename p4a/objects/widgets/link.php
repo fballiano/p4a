@@ -95,8 +95,7 @@
 			} else {
 				$sReturn = $this->getValue();
 			}
-			
+
 			return "<span id='$id'>$sReturn</span>";
 		}
 	}
-?>

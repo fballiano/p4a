@@ -436,4 +436,3 @@ class P4A_Data_Source extends P4A_Object
 		}
 	}
 }
-?>

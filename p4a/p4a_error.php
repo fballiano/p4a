@@ -107,5 +107,3 @@
 			return $this->external_object;
 		}
 	}
-
-?>

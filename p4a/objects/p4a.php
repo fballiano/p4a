@@ -634,4 +634,3 @@
 			$this->_to_redesign[] = $id;
 		}
 	}
-?>

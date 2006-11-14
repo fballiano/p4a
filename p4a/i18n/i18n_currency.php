@@ -201,5 +201,3 @@
 			return $this->unformat($value, $this->getFormat('international'));
 		}
 	}
-
-?>

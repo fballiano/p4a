@@ -39,5 +39,3 @@ Take a look at "sample_en" class for a better understanding.
 
 $sample_en =& p4a::singleton("Sample_En");
 $sample_en->main();
-
-?>

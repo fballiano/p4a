@@ -91,5 +91,3 @@
 			return $number;
 		}
 	}
-
-?>

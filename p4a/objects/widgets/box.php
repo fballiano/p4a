@@ -71,4 +71,3 @@
 			return "<div id='$id' $properties $actions>$value</div>";
 		}
 	}
-?>

@@ -45,7 +45,7 @@
 
 	//Main inclusion file
 	require_once(dirname(__FILE__) . '/include.php');
-	
+
 	//Setting PHP error reporting
 	if (P4A_EXTENDED_ERRORS) {
 		error_reporting(E_ALL);
@@ -61,4 +61,3 @@
 	//We're going to instance new application if it's not already instanced.
 	session_id(session_id() . 'p4a');
 	session_start();
-?>

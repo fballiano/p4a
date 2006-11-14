@@ -302,5 +302,3 @@
 	} else {
 		define('P4A_GD', false);
 	}
-
-?>

@@ -82,4 +82,3 @@ class Products_Catalogue extends P4A
 		$this->openMask($this->active_object->getName());
 	}
 }
-?>

@@ -79,7 +79,7 @@ class P4A_Icon extends P4A_Widget
 		if (!$this->isVisible()) {
 			return "<span id='$id' class='hidden'></span>";
 		}
-		
+
 		$alt = $this->getLabel();
 		$actions = $this->composeStringActions();
 		$properties = $this->composeStringProperties();
@@ -91,4 +91,3 @@ class P4A_Icon extends P4A_Widget
 		return "<span id='$id' style='display:block'><img $properties $actions src=\"$src\" alt=\"\" /></span>\n";
 	}
 }
-?>

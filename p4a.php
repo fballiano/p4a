@@ -40,5 +40,3 @@
 	 */
 
 	require_once dirname(__FILE__) . "/p4a/p4a.php";
-
-?>

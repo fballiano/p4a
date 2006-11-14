@@ -143,5 +143,3 @@ class P4A_Frame extends P4A_Widget
 		return $string;
 	}
 }
-
-?>

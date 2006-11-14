@@ -229,5 +229,3 @@ class Products extends P4A_Mask
 		}
 	}
 }
-
-?>

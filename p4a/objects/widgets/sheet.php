@@ -632,5 +632,3 @@
 			$this->occupied = false;
 		}
 	}
-
-?>

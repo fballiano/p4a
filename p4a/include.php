@@ -169,4 +169,3 @@
 		require_once($include_file);
 	}
 	session_write_close();
-?>

@@ -142,7 +142,7 @@
 			$this->language = strtolower(substr($locale, 0, 2));
 			$this->country = strtoupper(substr($locale, 3, 2));
 			$this->locale = "{$this->language}_{$this->country}";
-			
+
 			if (strlen($locale)>5) {
 				$this->charset = substr($locale, 6);
 			}
@@ -165,7 +165,7 @@
 			setlocale(LC_ALL, $this->locale);
 			setlocale(LC_NUMERIC, "C");
 			setlocale(LC_MONETARY, "C");
-			
+
 			if (extension_loaded('mbstring')) {
 				mb_internal_encoding($this->charset);
 			}
@@ -231,7 +231,7 @@
 			if ($this->charset != "UTF-8") {
 				$charset = ".{$this->charset}";
 			}
-			
+
 			include(dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$charset}.php");
 
 			$this->numbers_formats = $numbers_formats;
@@ -307,5 +307,3 @@
 			return $value;
 		}
 	}
-
-?>

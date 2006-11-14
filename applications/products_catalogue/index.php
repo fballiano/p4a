@@ -53,5 +53,3 @@ if (is_string($check)) {
 } else {
 	$p4a->main();
 }
-
-?>

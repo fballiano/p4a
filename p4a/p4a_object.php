@@ -297,4 +297,3 @@
 			return $this->actionHandler('void', $params);
 		}
 	}
-?>

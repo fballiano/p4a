@@ -119,5 +119,3 @@ class Categories extends P4A_Mask
 		}
 	}
 }
-
-?>

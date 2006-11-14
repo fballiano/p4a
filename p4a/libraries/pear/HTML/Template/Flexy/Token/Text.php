@@ -16,7 +16,7 @@
 // | Authors:  Alan Knowles <alan@akbkhome>                               |
 // +----------------------------------------------------------------------+
 //
-// $Id: Text.php,v 1.12 2004/12/22 02:22:03 alan_k Exp $
+// $Id: Text.php,v 1.13 2006/10/25 07:44:07 alan_k Exp $
 //
  
  
@@ -45,7 +45,7 @@ class HTML_Template_Flexy_Token_Text extends HTML_Template_Flexy_Token {
         if (preg_match('/^\&[a-z0-9]+;$/i',trim($this->value))) {
             return false;
         }
-        return  preg_match('/[a-z]/i',$this->value);
+        return  preg_match('/\w/i',$this->value);
     }
      
 }

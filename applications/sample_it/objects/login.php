@@ -124,5 +124,3 @@ class Login extends P4A_Mask
 		}
 	}
 }
-
-?>

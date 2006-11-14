@@ -42,5 +42,3 @@ classe stessa (guarda la classe sample_it per capire meglio)
 
 $sample_it =& p4a::singleton("Sample_It");
 $sample_it->main();
-
-?>

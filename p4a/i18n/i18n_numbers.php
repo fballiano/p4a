@@ -223,5 +223,3 @@
 			$this->formats[$format] = array($decimals, $this->decimal_separator, $this->thousand_separator);
 		}
 	}
-
-?>

@@ -84,7 +84,7 @@ class P4A_Fieldset extends P4A_Frame
 
 			foreach ($row as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
-				
+
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
 				} else {
@@ -119,4 +119,3 @@ class P4A_Fieldset extends P4A_Frame
 	}
 
 }
-?>

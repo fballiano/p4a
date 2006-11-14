@@ -186,5 +186,3 @@ function p4a_check_configuration($additionalDir = null)
 		return $error;
 	}
 }
-
-?>

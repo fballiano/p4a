@@ -871,4 +871,3 @@
 			$p4a->redesign($this->getId());
 		}
 	}
-?>

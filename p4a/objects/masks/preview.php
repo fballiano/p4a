@@ -68,5 +68,3 @@
 			$this->raw_html = $html;
 		}
 	}
-
-?>

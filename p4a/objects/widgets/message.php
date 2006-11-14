@@ -83,7 +83,7 @@
 			if ($this->auto_clear) {
 				$this->setValue('');
 			}
-			
+
 			if ($string) {
 				return "<span id='$id'>$string</span>";
 			} else {
@@ -117,4 +117,3 @@
 			$this->auto_clear = $enable;
 		}
 	}
-?>

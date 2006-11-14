@@ -100,7 +100,7 @@
 
 	    	$aDate = P4A_Date::parse($date);
 	        $output = "";
-			
+
 			if (preg_match("/%[pP]/", $format)) {
 				if ($aDate['hour'] < 12) {
 					$aDate['am_pm'] = 'AM';
@@ -402,7 +402,7 @@
 	                $regexp .= $char;
 	            }
 	        }
-			
+
 			$regexp = trim($regexp);
 	        if (preg_match("/$regexp/", $date, $res)) {
 	        	foreach ($map as $key=>$nucleus) {
@@ -415,13 +415,13 @@
 					$iso[$key] += $res[$nucleus];
 	        	}
 	        }
-			
+
 			if ($iso['month'] == 0) $iso['month'] = 1;
 	    	if ($iso['day'] == 0) $iso['day'] = 1;
-			
+
 			$iso['month'] = str_pad($iso['month'], 2, 0, STR_PAD_LEFT);
 			$iso['day'] = str_pad($iso['day'], 2, 0, STR_PAD_LEFT);
-			
+
 			if (strlen($iso['year'])<4) {
 				$iso['year'] = 2 . str_pad($iso['year'], 3, 0, STR_PAD_LEFT);
 			}
@@ -959,5 +959,3 @@
 	        return false;
 	    }
 	}
-
-?>

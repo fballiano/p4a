@@ -337,4 +337,3 @@ if (!function_exists('htmlspecialchars_decode')) {
 		$html .= '</object>';
 		return $html;
 	}
-?>

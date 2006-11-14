@@ -1487,4 +1487,3 @@
 			return $this->rich_textarea_toolbars;
 		}
 	}
-?>

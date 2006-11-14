@@ -159,12 +159,12 @@
 		{
 			return $this->is_read_only;
 		}
-		
+
 		function setDSN($DSN)
 		{
 			$this->_DSN = $DSN;
 		}
-		
+
 		function getDSN()
 		{
 			return $this->_DSN;
@@ -210,4 +210,3 @@
 			return $this->alias_of;
 		}
 	}
-?>

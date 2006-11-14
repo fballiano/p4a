@@ -737,4 +737,3 @@
 			$this->_temp_vars = array();
 		}
 	}
-?>

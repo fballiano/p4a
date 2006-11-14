@@ -858,5 +858,3 @@ class P4A_DB_Source extends P4A_Data_Source
         return array_keys(get_object_vars($this));
     }
 }
-
-?>

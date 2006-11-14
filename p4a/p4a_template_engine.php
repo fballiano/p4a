@@ -63,7 +63,7 @@ class P4A_Template_Engine
 		}
 		return $template_engine;
 	}
-	
+
 	/**
 	 * Renders a template and returns the HTML.
 	 * @param object		The object that contain all the variables that the template should display.
@@ -77,5 +77,3 @@ class P4A_Template_Engine
 		return $engine->bufferedOutputObject($object);
 	}
 }
-
-?>

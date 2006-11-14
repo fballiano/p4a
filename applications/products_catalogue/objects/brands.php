@@ -119,5 +119,3 @@ class Brands extends P4A_Mask
 		}
 	}
 }
-
-?>

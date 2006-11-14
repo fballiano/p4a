@@ -1,3 +1,7 @@
+1.99.11
+- PEAR::HTML_Template_Flexy was updated to 1.2.5
+- PHP closing tag was removed from all files
+
 1.99.10
 - TinyFCK was updated to 0.16 (TinyMCE 2.0.8)
 - some TinyMCE options were changes to get better XHTML strict validation (align was removed)

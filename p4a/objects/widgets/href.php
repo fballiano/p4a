@@ -88,4 +88,3 @@
 			return 'href="' . $this->composeStringActions() .'"';
 		}
 	}
-?>

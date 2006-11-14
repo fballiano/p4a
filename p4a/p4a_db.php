@@ -55,13 +55,13 @@ class P4A_DB
 		if (!strlen($DSN) and defined("P4A_DSN")){
 			$DSN = P4A_DSN;
 		}
-		
+
 		if (strlen($DSN)) {
 			$dbconn = base64_encode($DSN);
 			$dbconn = "db" . str_replace(array('=','+','/'),'',$dbconn);
-			global $$dbconn; //static $$ doesn't work 
+			global $$dbconn; //static $$ doesn't work
 		}
-		
+
 		if(!isset($$dbconn) or $$dbconn == null) {
 			if(strlen($DSN)) {
 				$$dbconn = MDB2::factory($DSN);
@@ -104,4 +104,3 @@ class P4A_DB
 		}
 	}
 }
-?>

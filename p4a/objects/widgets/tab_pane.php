@@ -55,7 +55,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	 * @var array
 	 * @access public
 	 */
-	var $pages = null;	
+	var $pages = null;
 
 	/**
 	 * The name of currently page open
@@ -63,11 +63,11 @@ class P4A_Tab_Pane extends P4A_Widget
 	 * @access private
 	 */
 	var $_active_page = null;
-	
+
 	/**
 	 * Tab Pane constructor.
 	 * @param string Object name (identifier).
-	 */	
+	 */
 	function P4A_Tab_Pane($name)
 	{
 		parent::P4A_Widget($name);
@@ -102,7 +102,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				break;
 		}
 	}
-	
+
 	/**
 	 * Returns the name of currently page open
 	 * @access public
@@ -111,7 +111,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	function &getActivePage()
 	{
 		$return = null;
-		
+
 		if ($this->pages->getNumItems() > 0) {
 			if (isset($this->_active_page)) {
 				if (is_object($this->pages->{$this->_active_page})) {
@@ -122,42 +122,42 @@ class P4A_Tab_Pane extends P4A_Widget
 				$return = $this->pages->nextItem();
 			}
 		}
-		
+
 		return $return;
 	}
-	
+
 	function tabClick($page, $params)
 	{
 		$this->setActivePage($params[0]);
 		$this->redesign();
-	}	
+	}
 
 	/**
 	 * Returns the HTML rendered
 	 * @access public
-	 */	
+	 */
 	function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}
-		
+
 		$p4a =& p4a::singleton();
 		$active_page =& $this->getActivePage();
 		$active_page_name = $active_page->getName();
-		
+
 		// saving height and emptying it
 		// because we've to write it in the inner div
 		$tmpHeight = $this->getHeight();
-		$this->setHeight(null);		
+		$this->setHeight(null);
 		$properties = $this->composeStringProperties();
 		$this->addTempVar('tab_pane_properties', $properties);
-		
+
 		// re-setting height
-		$this->setHeight($tmpHeight);		
+		$this->setHeight($tmpHeight);
 		$this->addTempVar('tab_pane_height', $this->getHeight());
-		
+
 		$tabs = array();
 		$i = 0;
 		$this->pages->reset();
@@ -165,36 +165,34 @@ class P4A_Tab_Pane extends P4A_Widget
 			if (!$page->isVisible()) {
 				continue;
 			}
-			
+
 			$active = false;
 			$page_name = $page->getName();
 			if ($page_name == $active_page_name	) {
 				$active = true;
 			}
-			
+
 			$actions = $this->composeStringActions($page_name);
 			if (!$page->getLabel()) {
 				$page->setDefaultLabel();
 			}
-			
+
 			$tabs[$i]['actions'] =  $actions;
 			$tabs[$i]['active']  =  $active;
 			$tabs[$i]['label']   =  $page->getLabel();
 			$i++;
 		}
 		$this->addTempVar('tabs', $tabs);
-		
+
 		if ($active_page->isVisible()) {
 			$this->addTempVar('active_page', $active_page->getAsString());
 		}
 		$this->addTempVar('id',$this->getId());
-		
+
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
 		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 		return $this->fetchTemplate();
 	}
-	
-}
 
-?>
+}

@@ -97,4 +97,3 @@ class P4A_Canvas extends P4A_Widget
 		return $string;
 	}
 }
-?>

@@ -282,5 +282,3 @@
 			$this->formats[$format] = $value;
 		}
 	}
-
-?>
