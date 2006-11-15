@@ -405,8 +405,17 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectCountQuery();
-
+        
         if ($this->_num_rows === null) {
+        	$result = $db->queryCol($query);
+        	if (is_array($result)) {
+        		$this->_num_rows = 0;
+        		foreach ($result as $n) {
+        			$this->_num_rows += (int)$n;
+        		}
+        	} else {
+        		$this->_num_rows = (int)$result;
+        	}
             $this->_num_rows = (int)$db->queryOne($query);
         }
 
