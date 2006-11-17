@@ -29,9 +29,10 @@
 
 <body onload="setFocus('{focus_id}');hideLoading();">
 
+<div id='body'>
 {mask_open:h}
 
-<div id="sidebar" class="border_color4 background_box" flexy:if="sidebar">
+<div id="sidebar" class="border_color4 background_box" style="position:absolute" flexy:if="sidebar">
 	{sidebar:h}
 </div>
 
@@ -60,5 +61,6 @@
 </div>
 
 {mask_close:h}
+</div>
 </body>
 </html>
