@@ -287,6 +287,16 @@
 		}
 
 		/**
+		 * Returns the "value" for the field to make safe SQL query
+		 * @return string
+		 * @access public
+		 */		
+		function getSQLValue()
+		{
+			return addslashes($this->data_field->getValue());
+		}		
+
+		/**
 		 * Return the field's value always as string.
 		 * If the value is an array, it will be encoded in {value1, value2}
 		 * @return string
@@ -363,6 +373,16 @@
             }
 
             return $new_value;
+		}
+		
+		/**
+		 * Returns the "new_value" for the field to make safe SQL query
+		 * @return string
+		 * @access public
+		 */		
+		function getSQLNewValue()
+		{
+			return addslashes($this->data_field->getNewValue());
 		}
 
 		/**
