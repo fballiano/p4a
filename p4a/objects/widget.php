@@ -822,6 +822,24 @@
 		{
 			return $this->actionHandler('onKeyPress', $params);
 		}
+		
+		/**
+		 * Wrapper used to add the handling of OnKeyUp action.
+		 * @see action_handler()
+		 */
+		function onKeyUp($params = NULL)
+		{
+			return $this->actionHandler('onKeyUp', $params);
+		}		
+		
+		/**
+		 * Wrapper used to add the handling of OnKeyDown action.
+		 * @see action_handler()
+		 */
+		function onKeyDown($params = NULL)
+		{
+			return $this->actionHandler('onKeyDown', $params);
+		}		
 
 		/**
 		 * Wrapper used to add the handling of onReturnPress action.
