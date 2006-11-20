@@ -293,7 +293,7 @@
 		 */		
 		function getSQLValue()
 		{
-			return addslashes($this->data_field->getValue());
+			return $this->data_field->getSQLValue();
 		}		
 
 		/**
@@ -382,7 +382,7 @@
 		 */		
 		function getSQLNewValue()
 		{
-			return addslashes($this->data_field->getNewValue());
+			return $this->data_field->getSQLNewValue();
 		}
 
 		/**
