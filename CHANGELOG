@@ -4,7 +4,12 @@
 - PHP closing tag was removed from all files
 - P4A_Widget::onKeyUp() was added
 - P4A_Widget::onKeyDown() was added
+- P4A_Data_Field::getSQLNewValue() was added for safe query
+- P4A_Data_Field::getSQLValue() was added for safe query
+- P4A_Field::getSQLNewValue() was added for safe query
+- P4A_Field::getSQLValue() was added for safe query
 - Keyboard keycode now is passed as param to P4A_Widget::onKeyUp(),onKeyDown(),onKeyPress() handlers
+- getKeyPressed() was added to p4a.js
 
 1.99.10
 - TinyFCK was updated to 0.16 (TinyMCE 2.0.8)
