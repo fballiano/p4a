@@ -594,15 +594,15 @@
   			$sActions = '';
 
   			if (is_string($params) or is_numeric($params)) {
-  				$sParams =  ", '{$params}'";
+  				$sParams .=  ", '{$params}'";
   			} elseif (is_array($params) and count($params)) {
-  				$sParams = ", ";
+  				$sParams = ', ';
   				foreach ($params as $param) {
   					$sParams .= "'{$param}', ";
   				}
   				$sParams = substr($sParams, 0, -2);
   			}
-
+  			
   			foreach ($this->actions as $action=>$action_data)
 			{
 				if (!$this->isEnabled()) {
@@ -619,6 +619,10 @@
 					$return = 'true';
 					$prefix .= 'if(isReturnPressed(event)){';
 					$suffix .= '}';
+				} elseif ($action == 'onkeypress' 
+					   or $action == 'onkeydown'
+					   or $action == 'onkeyup') {
+					$sParams .= ", getKeyPressed(event)"; 	   	
 				}
 
 				if ($action_data['require_confirmation']) {

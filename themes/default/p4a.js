@@ -35,6 +35,11 @@ function isReturnPressed(event)
 	return (characterCode == 13);
 }
 
+function getKeyPressed(event)
+{
+	return (window.event) ? event.keyCode : event.which;
+}
+
 function setFocus(id)
 {
 	try {
