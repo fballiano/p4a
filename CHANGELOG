@@ -4,7 +4,7 @@
 - PHP closing tag was removed from all files
 - P4A_Widget::onKeyUp() was added
 - P4A_Widget::onKeyDown() was added
-- Keyboard keycode now is passed as param for P4A_Widget::onKeyUp(),onKeyDown(),onKeyPress() events
+- Keyboard keycode now is passed as param to P4A_Widget::onKeyUp(),onKeyDown(),onKeyPress() handlers
 
 1.99.10
 - TinyFCK was updated to 0.16 (TinyMCE 2.0.8)
