@@ -405,14 +405,23 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectCountQuery();
-        
+
         if ($this->_num_rows === null) {
         	$group = $this->getGroup();
         	if (count($group)) {
         		$result = $db->queryCol($query);
+	        	if (PEAR::isError($result)) {
+	        		$name = $this->getName();
+	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
+	        	}
         		$this->_num_rows = count($result);
         	} else {
-        		$this->_num_rows = (int)$db->queryOne($query);
+        		$result = $db->queryOne($query);
+	        	if (PEAR::isError($result)) {
+	        		$name = $this->getName();
+	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
+	        	}
+	        	$this->_num_rows = (int)$result;
         	}
         }
 

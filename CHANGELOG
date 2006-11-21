@@ -12,6 +12,7 @@
 - getKeyPressed() was added to p4a.js
 - onsubmit="return false" was added to p4a_mask form
 - a bugfix on P4A_DB_Source::getNumRows() with group by was done
+- some error checks were added to P4A_DB_Source::getNumRows()
 
 1.99.10
 - TinyFCK was updated to 0.16 (TinyMCE 2.0.8)
