@@ -549,7 +549,7 @@
 		{
 			$p4a =& p4a::singleton();
 
-			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' action='index.php'>\n";
+			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
 			$return .= "<div>\n";
 			$return .= "<div id='p4a_loading'><img src='" . P4A_ICONS_PATH . "/loading.gif' alt='' /> Loading... </div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";

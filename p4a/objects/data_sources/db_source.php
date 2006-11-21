@@ -407,16 +407,13 @@ class P4A_DB_Source extends P4A_Data_Source
         $query = $this->_composeSelectCountQuery();
         
         if ($this->_num_rows === null) {
-        	$result = $db->queryCol($query);
-        	if (is_array($result)) {
-        		$this->_num_rows = 0;
-        		foreach ($result as $n) {
-        			$this->_num_rows += (int)$n;
-        		}
+        	$group = $this->getGroup();
+        	if (count($group)) {
+        		$result = $db->queryCol($query);
+        		$this->_num_rows = count($result);
         	} else {
-        		$this->_num_rows = (int)$result;
+        		$this->_num_rows = (int)$db->queryOne($query);
         	}
-            $this->_num_rows = (int)$db->queryOne($query);
         }
 
         return $this->_num_rows;

@@ -110,6 +110,16 @@
 		{
 			return $this->value;
 		}
+		
+		/**
+		 * Returns the value of the data field for safe SQL queries.
+		 * @access public
+		 * @return mixed
+		 */
+		function getSQLValue()
+		{
+			return addslashes($this->value);
+		}		
 
 		/**
 		 * Sets the new value of the data field.
@@ -129,6 +139,16 @@
 		{
 			return $this->new_value;
 		}
+		
+		/**
+		 * Returns the value of the data field for safe SQL queries.
+		 * @access public
+		 * @return mixed
+		 */
+		function getSQLNewValue()
+		{
+			return addslashes($this->new_value);
+		}		
 
 		/**
 		 * Sets the type of the data_field.
