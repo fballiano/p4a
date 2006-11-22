@@ -32,7 +32,7 @@
 <div id='body'>
 {mask_open:h}
 
-<div id="sidebar" class="border_color4 background_box" style="position:absolute" flexy:if="sidebar">
+<div id="sidebar" class="border_color4 background_box" flexy:if="sidebar">
 	{sidebar:h}
 </div>
 
@@ -42,7 +42,7 @@
 		{menu:h}
 		<div class="br"></div>
 	</div>
-	
+
 	<div id="top" flexy:if="top">
 		{top:h}
 	</div>

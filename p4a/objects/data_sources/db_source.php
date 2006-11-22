@@ -202,13 +202,13 @@ class P4A_DB_Source extends P4A_Data_Source
 				$class = strtolower(get_class($obj));
 				if (isset($obj->data_field) and is_object($obj->data_field) and method_exists($obj->data_field, 'getNewValue')) {
 					$value = $obj->data_field->getNewValue();
-				} elseif ($class == 'p4a_data_field') {
+				} elseif (method_exists($obj, 'getNewValue')) {
 					$value = $obj->getNewValue();
 				} else {
-					P4A_Error('FILTER CAN ONLY BE APPLIED TO P4A_Field OR P4A_Data_Field');
+					P4A_Error('FILTERS CAN ONLY BE APPLIED TO P4A_Field OR P4A_Data_Field');
 				}
 
-                if (is_string($value) and !empty($value)) {
+                if ((is_string($value) or is_numeric($value)) and strlen($value) > 0) {
                     $filters[] = str_replace('?', $value, $string);
                 } elseif (is_array($value) and !empty($value)) {
 					$filters[] = str_replace('?', "'".implode("', '", $value)."'", $string);
@@ -241,10 +241,10 @@ class P4A_DB_Source extends P4A_Data_Source
             $info = $db->reverse->tableInfo($rs);
             $main_table = $this->getTable();
             $array_fields = $this->getFields();
-            foreach($info as $col){
+            foreach ($info as $col) {
                 $field_name = $col["name"];
 				$col['type'] = strtolower($col['mdb2type']);
-                if(isset($this->fields->$field_name)){
+                if (isset($this->fields->$field_name)) {
                     continue;
                 }
                 $this->fields->build("p4a_data_field",$field_name);
@@ -253,7 +253,7 @@ class P4A_DB_Source extends P4A_Data_Source
                     $col['type'] = 'boolean';
                 }
 
-                switch($col['type']) {
+                switch ($col['type']) {
                     case 'boolean':
                         $this->fields->$field_name->setType('boolean');
                         break;
@@ -294,7 +294,6 @@ class P4A_DB_Source extends P4A_Data_Source
                 if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
                     $this->fields->$field_name->setAliasOf($alias_of);
                 }
-
             }
         }
     }
@@ -318,7 +317,7 @@ class P4A_DB_Source extends P4A_Data_Source
             }
             $long_fld = $table . $this->fields->$short_fld->getName();
         }
-		return array($long_fld,$short_fld);
+		return array($long_fld, $short_fld);
 	}
 
     function isReadOnly($value=null)
