@@ -335,9 +335,16 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getPkRow($pk)
     {
-        $db =& P4A_DB::singleton($this->getDSN());
-        $query = $this->_composeSelectPkQuery($pk);
-        return $db->queryRow($query);
+		$db =& P4A_DB::singleton($this->getDSN());
+		$query = $this->_composeSelectPkQuery($pk);
+		$row = $db->queryRow($query);
+        if (MDB2::isError($row)) {
+			$e = new P4A_ERROR('A query has returned an error', $this, $row);
+			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
+				die();
+			}
+		}
+		return $row;
     }
 
     function row($num_row = null, $move_pointer = true)
@@ -400,6 +407,13 @@ class P4A_DB_Source extends P4A_Data_Source
         }
     }
 
+    function rowByPk($pk)
+    {
+		$row = $this->getPkRow($pk);
+		$position = $this->getRowPosition($row);
+		$this->row($position);
+	}
+
     function getNumRows()
     {
         $db =& P4A_DB::singleton($this->getDSN());
@@ -427,7 +441,7 @@ class P4A_DB_Source extends P4A_Data_Source
         return $this->_num_rows;
     }
 
-    function getRowPosition()
+    function getRowPosition($row=null)
 	{
         if (!$this->getQuery()) {
             $query  = $this->_composeSelectCountPart();
@@ -457,7 +471,15 @@ class P4A_DB_Source extends P4A_Data_Source
 						$operator = '>';
 						$null_case = '';
 					}
-					$value = addslashes($this->fields->$short_fld->getValue());
+					if (is_array($row)) {
+						if (isset($row[$short_fld])) {
+							$value = addslashes($row[$short_fld]);
+						} else {
+							p4a_error("error in P4A_DB_Source::getRowPosition(): maybe you passed an incomplete row");
+						}
+					} else {
+						$value = addslashes($this->fields->$short_fld->getValue());
+					}
 					$where_order .= " ($p_order ($long_fld $operator '$value' $null_case)) OR ";
 
                     $new_order_array[$long_fld] = $direction;

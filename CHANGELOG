@@ -1,5 +1,5 @@
 1.99.11
-- P4A_Frame::clean() was added
+- P4A_Frame::clean() was added to reset anchored objects map
 - PEAR::HTML_Template_Flexy was updated to 1.2.5
 - PHP closing tag was removed from all files
 - P4A_Widget::onKeyUp() was added
@@ -14,6 +14,8 @@
 - a bugfix on P4A_DB_Source::getNumRows() with group by was done
 - some error checks were added to P4A_DB_Source::getNumRows()
 - a bug on P4A_DB_Source::getFilters() was fixed
+- P4A_DB_Source::rowByPk() was added to move a db source using the pk values
+- error check was added to P4A_DB_Source::getPkRow()
 - some code has been beautified
 
 1.99.10

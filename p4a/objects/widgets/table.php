@@ -513,6 +513,15 @@
 		{
 			$this->_current_page_number = $page;
 		}
+
+		/**
+		 * Sets the page number reading it from the data source
+		 * @access public
+		 */
+		function syncPageWithSource()
+		{
+			$this->setCurrentPageNumber($this->data->getNumPage());
+		}
 	}
 
 	/**
