@@ -1,3 +1,5 @@
+1.99.12
+
 1.99.11
 - P4A_Frame::clean() was added to reset anchored objects map
 - PEAR::HTML_Template_Flexy was updated to 1.2.5
