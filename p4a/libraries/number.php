@@ -82,12 +82,18 @@
 		 */
 		function unformat($number = 0, $format)
 		{
+			$negative = '';
+			$number = trim($number);
 			$decimal_separator = $format[1];
+
+			if (strpos($number, '-') === 0) {
+				$negative = '-';
+			}
 
 			$number = preg_replace("/[^0-9\\" . $decimal_separator . "]/", '', $number);
 			$number = str_replace($decimal_separator, '.', $number);
 
-			$number = P4A_Number::format($number, array( $format[0], '.', ''));
+			$number = P4A_Number::format($negative . $number, array( $format[0], '.', ''));
 			return $number;
 		}
 	}

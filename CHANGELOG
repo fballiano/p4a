@@ -16,6 +16,7 @@
 - a bug on P4A_DB_Source::getFilters() was fixed
 - P4A_DB_Source::rowByPk() was added to move a db source using the pk values
 - error check was added to P4A_DB_Source::getPkRow()
+- a bug in P4A_Number::unformat() with negative numbers was fixed (thanks to therealpecus)
 - some code has been beautified
 
 1.99.10
