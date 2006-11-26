@@ -1,4 +1,5 @@
 1.99.12
+- a bug on P4A_DB_Source with multivalue fields was fixed
 
 1.99.11
 - P4A_Frame::clean() was added to reset anchored objects map

@@ -565,8 +565,8 @@ class P4A_DB_Source extends P4A_Data_Source
                 if (MDB2::isError($sth)) {
                     P4A_Error($sth->getMessage());
                 }
-                $res =& $db->execute($sth, $pk_value);
 
+                $res = $sth->execute(array($pk_value));
                 if (MDB2::isError($res)) {
                     P4A_Error($res->getMessage());
                 }
@@ -576,8 +576,12 @@ class P4A_DB_Source extends P4A_Data_Source
                     if (MDB2::isError($sth)) {
                         P4A_Error($sth->getMessage());
                     }
-                    $res = $db->executeMultiple($sth, $fk_values);
 
+					foreach ($fk_values as $k=>$v) {
+						$fk_values[$k] = array($v);
+					}
+
+                    $res = $db->extended->executeMultiple($sth, $fk_values);
                     if (MDB2::isError($res)) {
                         P4A_Error($res->getMessage());
                     }
