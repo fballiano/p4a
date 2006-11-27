@@ -1,3 +1,6 @@
+1.99.13
+- Internet Explorer 7 is now correctly detected and p4a does not include png and pure css menu hack
+
 1.99.12
 - a bug on P4A_DB_Source with multivalue fields was fixed
 

@@ -139,6 +139,13 @@
 		 * @access private
 		 */
 		var $internet_explorer = false;
+		
+		/**
+		 * Find wich browser is the user using
+		 * @var array
+		 * @access public
+		 */
+		var $browser_identification = array();
 
 		/**
 		 * Counter to avoid browser's back/forward
@@ -164,7 +171,7 @@
 			$this->build("P4A_Collection", "masks");
 			$this->build("P4A_Collection", "listeners");
 
-			$this->detectClient();
+			$this->browser_identification = $this->detectClient();
 
 			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
@@ -198,7 +205,7 @@
 				$this->addCss(P4A_THEME_PATH . "/handheld.css");
 			}
 
-			if ($this->isInternetExplorer() and !$this->isHandheld()) {
+			if ($this->isInternetExplorer() and !$this->browser_identification['ie7up'] and !$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
 			}
 		}
@@ -214,6 +221,8 @@
 			if (!Net_UserAgent_Detect::hasFeature('ajax') or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
 			}
+			
+			return Net_UserAgent_Detect::_getStaticProperty('browser');
 		}
 
 		function isInternetExplorer()
