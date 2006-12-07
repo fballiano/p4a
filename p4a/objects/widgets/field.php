@@ -1130,8 +1130,8 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
-
+				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeAjaxEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
+				$this->intercept($this,'onChange','redesign');
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
 				}
@@ -1265,8 +1265,14 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
-
+				if ($p4a->isAjaxEnabled()) {
+					$action = 'executeAjaxEvent';
+				} else {
+					$action = 'executeEvent';
+				}
+				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
+				$this->intercept($this,'onChange','redesign');
+				
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
 				}

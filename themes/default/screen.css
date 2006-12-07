@@ -544,3 +544,30 @@ legend {
 	color: #4B718A;
 	font-weight: normal;
 }
+
+/****************/
+/* POPUP */
+/****************/
+#overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 90;
+	width: 100%;
+	background-color: #000;
+	filter:alpha(opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+}
+	
+#popup{
+	position: relative;
+	top: 0;
+	left: 0;
+	margin:auto;
+	padding:20px;
+	background:white;
+	z-index: 100;
+	text-align: center;
+	line-height: 0;
+}

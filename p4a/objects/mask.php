@@ -151,6 +151,8 @@
 		 * @access private
 		 */
 		var $_tpl_vars = array();
+		
+		var $is_popup = FALSE;
 
 		/**
 		 * Mask constructor.
@@ -185,6 +187,14 @@
 				$p4a->masks->build($name, $name);
 			}
  			return $p4a->masks->$name;
+		}
+		
+		function isPopup($is_popup=NULL)
+		{
+			if ($is_popup !== NULL) {
+				$this->is_popup = $is_popup;
+			}
+			return $this->is_popup;
 		}
 
 		/**
@@ -260,7 +270,11 @@
 		 */
 		function getTemplateName()
 		{
-			return $this->template_name;
+			if ($this->isPopup()) {
+				return 'popup';	
+			} else {
+				return $this->template_name;
+			}
 		}
 
 		/**
@@ -312,15 +326,24 @@
 		 */
 		function main()
 		{
-			$p4a =& P4A::singleton();
-			$charset = $p4a->i18n->getCharset();
 			header("Content-Type: text/html; charset={$charset}");
+			print $this->getAsString();
+		}
+		
+		/**
+		 * Return the output mask
+		 */
+		function getAsString($template = false)
+		{
+			$p4a =& P4A::singleton();			
+			$charset = $p4a->i18n->getCharset();
 
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
 			$tpl_container->theme_path = P4A_THEME_PATH;
 			$tpl_container->application_title = $p4a->getTitle();
+			
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
 
@@ -342,13 +365,23 @@
 
 			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
+			
+			/* Popup */
+			if ($p4a->_popup and !$this->isPopup()) {
+				$popup_mask = P4A_Mask::singleton($p4a->_popup);
+				$tpl_container->popup = $popup_mask->getAsString();
+			}
 
-			$template = $this->getTemplateName();
-			print P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
+			if (!$template) {
+				$template = $this->getTemplateName();		
+			}
+			$string =  P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
 
 			$this->clearTempCSS();
 			$this->clearTempJavascript();
-			$this->clearTempVars();
+			$this->clearTempVars();				
+			
+			return $string;
 		}
 
 		/**
@@ -551,7 +584,6 @@
 
 			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
 			$return .= "<div>\n";
-			$return .= "<div id='p4a_loading'><img src='" . P4A_ICONS_PATH . "/loading.gif' alt='' /> Loading... </div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
 			$return .= "<input type='hidden' name='_ajax' value='0' />\n";

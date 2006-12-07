@@ -155,7 +155,10 @@
 		var $_action_history_id = 0;
 
 		var $_to_redesign = array();
+		var $_redesign_popup = FALSE;
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
+		
+		var $_popup = NULL;
 
 		/**
 		 * Class constructor.
@@ -175,6 +178,7 @@
 
 			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
+			$this->addJavascript(P4A_THEME_PATH . "/popup.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
 
@@ -430,6 +434,20 @@
 				print "</widget>\n";
 
 			}
+			if ($this->_redesign_popup) {
+				if ($this->_popup) {
+					$popup =& p4a_mask::singleton($this->_popup);
+					$html = $popup->getAsString();
+					$javascript = 'showPopup();';
+				} else {
+					$html = '';
+					$javascript = 'hidePopup();';
+				}
+				print "<widget id='popup'>\n";
+				print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";
+				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+				print "</widget>";
+			}
 			print "</ajax-response>";
 
 			if (P4A_AJAX_DEBUG) {
@@ -440,6 +458,7 @@
 
 			ob_end_flush();
 			$this->_to_redesign = array();
+			$thsk->_redesign_popup = FALSE;
 		}
 
 		/**
@@ -490,6 +509,35 @@
 			$this->actionHandler('afterOpenMask');
 			return $this->active_mask;
 		}
+		
+		
+		function openPopup($name)
+		{
+			//Close opened popup
+			if ($this->_popup) {
+				$this->closePopup();
+			}
+			
+			$this->_popup = $name;	
+			$mask =& p4a_mask::singleton($this->_popup);
+			$mask->isPopup(TRUE);
+			
+			$this->_redesign_popup = TRUE;
+		}
+		
+		function closePopup($destroy = FALSE)
+		{
+			
+			if ($destroy) {
+				$mask =& p4a_mask::singleton($this->_popup);
+				$mask->destroy();
+			} else {
+				$mask =& p4a_mask::singleton($this->_popup);
+				$mask->isPopup(FALSE);
+			}
+			$this->_popup = NULL;
+			$this->_redesign_popup = TRUE;			
+		}		
 
 		 /**
 		 * Sets the previous mask the active mask
@@ -515,6 +563,7 @@
 				return $this->masks->$mask_name;
 	     	}
 	     }
+	     
 
 		/**
 		 * Checks if the desidered mask is in the masks collection.

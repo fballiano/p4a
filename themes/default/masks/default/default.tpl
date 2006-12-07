@@ -28,7 +28,7 @@
 </head>
 
 <body onload="setFocus('{focus_id}');hideLoading();">
-
+<div id='p4a_loading'><img src='{theme_path}/loading.gif' alt='' /> Loading... </div>
 <div id='body'>
 {mask_open:h}
 
@@ -60,7 +60,17 @@
 	<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a></div>
 </div>
 
+<!-- POPUP -->
+<div id="overlay" style="display:none"></div>
+<div><div id="popup" style="display:none">{popup:h}</div></div>
+
 {mask_close:h}
 </div>
+
+{if:popup}
+<script type="text/javascript">
+showPopup();
+</script>
+{end:}
 </body>
 </html>

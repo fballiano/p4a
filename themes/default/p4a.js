@@ -94,13 +94,12 @@ function processAjaxResponse(response)
    		if (html) {
    			$(object_id).parentNode.innerHTML = html.firstChild.data;
    		}
-
    		var javascript = widgets[i].getElementsByTagName('javascript').item(0);
    		if (javascript) {
    			eval(javascript.firstChild.data);
    		}
 	}
-
+	
 	if (window.fixPng) fixPng();
 	hideLoading();
 }
