@@ -627,7 +627,11 @@ class P4A_DB_Source extends P4A_Data_Source
                 if (MDB2::isError($sth)) {
                     P4A_Error($sth->getMessage());
                 }
-                $res =& $db->execute($sth, $pk_value);
+
+                $res = $sth->execute(array($pk_value));
+                if (MDB2::isError($res)) {
+                    P4A_Error($res->getMessage());
+                }
             }
 
             $rs = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
@@ -684,7 +688,6 @@ class P4A_DB_Source extends P4A_Data_Source
             $query .= $this->_composeFromPart();
             $query .= $this->_composeWherePart();
             $query .= $this->_composeGroupPart();
-            //$query .= $this->_composeOrderPart();
         }
 
 		return $query;
