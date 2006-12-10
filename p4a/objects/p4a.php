@@ -458,7 +458,7 @@
 
 			ob_end_flush();
 			$this->_to_redesign = array();
-			$thsk->_redesign_popup = FALSE;
+			$this->_redesign_popup = FALSE;
 		}
 
 		/**
