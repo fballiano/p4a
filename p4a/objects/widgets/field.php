@@ -1265,11 +1265,7 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				if ($p4a->isAjaxEnabled()) {
-					$action = 'executeAjaxEvent';
-				} else {
-					$action = 'executeEvent';
-				}
+				$action = 'executeEvent';
 				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 				$this->intercept($this,'onChange','redesign');
 
