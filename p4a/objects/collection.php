@@ -45,14 +45,18 @@ class P4A_Collection extends P4A_Object
         parent::p4a_object($name);
     }
 
-    //todo da modificare, sbagliata in caso di destroy di un figlio
+    //todo: in caso di destroy di un elemento fare l'unset della chiave e ridurre l'array
     function &nextItem()
     {
         $p4a =& P4A::singleton();
         if ($this->_pointer < $this->getNumItems()){
             $id = $this->_objects[$this->_pointer];
             $this->_pointer++;
-            return $p4a->objects[$id];
+            if (!isset($p4a->objects[$id]) or !is_object($p4a->objects[$id])) {
+            	return $this->nextItem();
+            } else {
+            	return $p4a->objects[$id];
+            }
         }else{
             $this->_pointer = 0;
             $ret = NULL; //php 4.4 fix

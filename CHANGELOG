@@ -8,6 +8,7 @@
 - popup.tpl was added
 - beforeSetActivePage handler was added to P4A_Tab_Pane 
 - afterSetActivePage handler was added to P4A_Tab_Pane 
+- a bug in P4A_Collection::nextItem was fixed
 
 1.99.13
 - Internet Explorer 7 is now correctly detected and p4a does not include png and pure css menu hack
