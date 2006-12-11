@@ -326,6 +326,9 @@
 		 */
 		function main()
 		{
+			$p4a =& P4A::singleton();			
+			$charset = $p4a->i18n->getCharset();
+						
 			header("Content-Type: text/html; charset={$charset}");
 			print $this->getAsString();
 		}

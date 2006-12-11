@@ -90,6 +90,8 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */
 	function setActivePage($page)
 	{
+		if ($this->actionHandler('beforeSetActivePage') == ABORT) return ABORT;
+		
 		switch (gettype($page)) {
 			case "string":
 				$this->_active_page = $page;
@@ -101,6 +103,8 @@ class P4A_Tab_Pane extends P4A_Widget
 				P4A_Error('Unsupported page type for P4A_Tab_Pane');
 				break;
 		}
+		
+		if ($this->actionHandler('afterSetActivePage') == ABORT) return ABORT;
 	}
 
 	/**

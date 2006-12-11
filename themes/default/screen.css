@@ -555,13 +555,13 @@ legend {
 	z-index: 90;
 	width: 100%;
 	background-color: #000;
-	filter:alpha(opacity=60);
-	-moz-opacity: 0.6;
-	opacity: 0.6;
+	filter:alpha(opacity=40);
+	-moz-opacity: 0.4;
+	opacity: 0.4;
 }
 	
 #popup{
-	position: relative;
+	position: absolute;
 	top: 0;
 	left: 0;
 	margin:auto;

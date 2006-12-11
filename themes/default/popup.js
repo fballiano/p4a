@@ -73,17 +73,21 @@ function showPopup()
 	
 	overlay = $('overlay');
 	overlay.style.height = 	arrayPageSize[1] + "px";
-	Element.show('overlay');
-	//new Effect.Appear('overlay', { duration: 0.2, from: 0.0, to: 0.8 });
 	
 	popup = $('popup');
-	popup.style.zIndex = 0;
+	popup.style.zIndex = -1;
 	Element.show('popup');
+	
 	width = $('sheetContainerPopup').childNodes[1].scrollWidth + "px";
 	top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.scrollHeight - 40) / 2 ) + "px";
+	left = ((arrayPageSize[2] - popup.scrollWidth ) / 2 ) + "px";
+	
 	popup.style.width = width;
 	popup.style.top = top;
-	popup.style.zIndex = 100;
+	popup.style.left = left;
+	
+	Element.show('overlay');
+	popup.style.zIndex = 100;	
 }
 
 function hidePopup() 

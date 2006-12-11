@@ -210,7 +210,8 @@
 				return $this->default_value;
 			} else {
 				$db =& P4A_DB::singleton($this->getDSN());
-				return $db->nextId($this->sequence);
+				$next_id = $db->nextId($this->sequence);
+				return $next_id;
 			}
 		}
 
