@@ -290,11 +290,11 @@
 		 * Returns the "value" for the field to make safe SQL query
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getSQLValue()
 		{
 			return $this->data_field->getSQLValue();
-		}		
+		}
 
 		/**
 		 * Return the field's value always as string.
@@ -374,12 +374,12 @@
 
             return $new_value;
 		}
-		
+
 		/**
 		 * Returns the "new_value" for the field to make safe SQL query
 		 * @return string
 		 * @access public
-		 */		
+		 */
 		function getSQLNewValue()
 		{
 			return $this->data_field->getSQLNewValue();
@@ -1130,7 +1130,7 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeAjaxEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
+				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 				$this->intercept($this, 'onChange', 'redesign');
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
