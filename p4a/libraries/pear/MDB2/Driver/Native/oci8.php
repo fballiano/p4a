@@ -45,6 +45,8 @@
 // $Id$
 //
 
+require_once 'MDB2/Driver/Native/Common.php';
+
 /**
  * MDB2 Oracle driver for the native module
  *
@@ -52,7 +54,7 @@
  * @category Database
  * @author  Lukas Smith <smith@dybnet.de>
  */
-class MDB2_Driver_Native_oci8 extends MDB2_Module_Common
+class MDB2_Driver_Native_oci8 extends MDB2_Driver_Native_Common
 {
 }
 ?>

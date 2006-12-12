@@ -55,17 +55,18 @@ require_once 'MDB2/Driver/Datatype/Common.php';
  */
 class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
 {
-    // {{{ convertResult()
+    // {{{ _baseConvertResult()
 
     /**
-     * convert a value to a RDBMS indepdenant MDB2 type
+     * general type conversion method
      *
-     * @param mixed $value value to be converted
-     * @param int $type constant that specifies which type to convert to
-     * @return mixed converted value
-     * @access public
+     * @param mixed $value refernce to a value to be converted
+     * @param string $type specifies which type to convert to
+     * @param string $rtrim if text should be rtrimmed
+     * @return object a MDB2 error on failure
+     * @access protected
      */
-    function convertResult($value, $type)
+    function _baseConvertResult($value, $type, $rtrim = true)
     {
         if (is_null($value)) {
             return null;
@@ -75,9 +76,8 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             return substr($value, 0, strlen('YYYY-MM-DD'));
         case 'time':
             return substr($value, strlen('YYYY-MM-DD '), strlen('HH:MI:SS'));
-        default:
-            return $this->_baseConvertResult($value, $type);
         }
+        return parent::_baseConvertResult($value, $type, $rtrim);
     }
 
     // }}}
@@ -137,7 +137,8 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
         case 'float':
             return 'NUMBER';
         case 'decimal':
-            return 'NUMBER(*,'.$db->options['decimal_places'].')';
+            $scale = !empty($field['scale']) ? $field['scale'] : $db->options['decimal_places'];
+            return 'NUMBER(*,'.$scale.')';
         }
     }
 
@@ -150,11 +151,12 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *        a DBMS specific format.
      * @access protected
      */
-    function _quoteCLOB($value, $quote)
+    function _quoteCLOB($value, $quote, $escape_wildcards)
     {
         return 'EMPTY_CLOB()';
     }
@@ -168,11 +170,12 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *        a DBMS specific format.
      * @access protected
      */
-    function _quoteBLOB($value, $quote)
+    function _quoteBLOB($value, $quote, $escape_wildcards)
     {
         return 'EMPTY_BLOB()';
     }
@@ -186,13 +189,14 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *        a DBMS specific format.
      * @access protected
      */
-    function _quoteDate($value, $quote)
+    function _quoteDate($value, $quote, $escape_wildcards)
     {
-       return $this->_quoteText("$value 00:00:00", $quote);
+       return $this->_quoteText("$value 00:00:00", $quote, $escape_wildcards);
     }
 
     // }}}
@@ -204,13 +208,14 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *        a DBMS specific format.
      * @access protected
      */
-    function _quoteTimestamp($value, $quote)
+    function _quoteTimestamp($value, $quote, $escape_wildcards)
     {
-       return $this->_quoteText($value, $quote);
+       return $this->_quoteText($value, $quote, $escape_wildcards);
     }
 
     // }}}
@@ -222,13 +227,14 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *        a DBMS specific format.
      * @access protected
      */
-    function _quoteTime($value, $quote)
+    function _quoteTime($value, $quote, $escape_wildcards)
     {
-       return $this->_quoteText("0001-01-01 $value", $quote);
+       return $this->_quoteText("0001-01-01 $value", $quote, $escape_wildcards);
     }
 
     // }}}
@@ -260,7 +266,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             }
 
             return $db->raiseError(null, null, null,
-                'writeLOBToFile: Unable to write LOB to file');
+                'Unable to write LOB to file', __FUNCTION__);
         }
         return MDB2_OK;
     }
@@ -284,7 +290,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             }
 
            return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-               'attemped to retrieve LOB from non existing or NULL column');
+               'attemped to retrieve LOB from non existing or NULL column', __FUNCTION__);
         }
 
         if (!$lob['loaded']
@@ -324,7 +330,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             }
 
            return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-               'attemped to retrieve LOB from non existing or NULL column');
+               'attemped to retrieve LOB from non existing or NULL column', __FUNCTION__);
         }
 
         $data = $lob['resource']->read($length);
@@ -335,9 +341,29 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             }
 
             return $db->raiseError(null, null, null,
-                    '_readLOB: Unable to read LOB');
+                    'Unable to read LOB', __FUNCTION__);
         }
         return $data;
+    }
+
+    // }}}
+    // {{{ patternEscapeString()
+
+    /**
+     * build string to define escape pattern string
+     *
+     * @access public
+     *
+     *
+     * @return string define escape pattern
+     */
+    function patternEscapeString()
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+        return " ESCAPE '". $db->string_quoting['escape_pattern'] ."'";
     }
 
     // }}}
@@ -365,7 +391,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             $type[] = 'integer';
             if ($length == '1') {
                 $type[] = 'boolean';
-                if (preg_match('/^[is|has]/', $field['name'])) {
+                if (preg_match('/^(is|has)/', $field['name'])) {
                     $type = array_reverse($type);
                 }
             }
@@ -379,7 +405,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             $type[] = 'text';
             if ($length == '1') {
                 $type[] = 'boolean';
-                if (preg_match('/^[is|has]/', $field['name'])) {
+                if (preg_match('/^(is|has)/', $field['name'])) {
                     $type = array_reverse($type);
                 }
             }
@@ -402,7 +428,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
                 $type[] = 'integer';
                 if ($length == '1') {
                     $type[] = 'boolean';
-                    if (preg_match('/^[is|has]/', $field['name'])) {
+                    if (preg_match('/^(is|has)/', $field['name'])) {
                         $type = array_reverse($type);
                     }
                 }
@@ -430,7 +456,7 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
             }
 
             return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'mapNativeDatatype: unknown database attribute type: '.$db_type);
+                'unknown database attribute type: '.$db_type, __FUNCTION__);
         }
 
         return array($type, $length, $unsigned, $fixed);

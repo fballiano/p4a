@@ -98,7 +98,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
 
         if (empty($column)) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableFieldDefinition: it was not specified an existing table column');
+                'it was not specified an existing table column', __FUNCTION__);
         }
 
         $column = array_change_key_case($column, CASE_LOWER);
@@ -120,25 +120,29 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
         if (preg_match("/nextval\('([^']+)'/", $column['default'], $nextvals)) {
             $autoincrement = true;
         }
-        $definition = array();
+        $definition[0] = array('notnull' => $notnull, 'nativetype' => $column['type']);
+        if ($length > 0) {
+            $definition[0]['length'] = $length;
+        }
+        if (!is_null($unsigned)) {
+            $definition[0]['unsigned'] = $unsigned;
+        }
+        if (!is_null($fixed)) {
+            $definition[0]['fixed'] = $fixed;
+        }
+        if ($default !== false) {
+            $definition[0]['default'] = $default;
+        }
+        if ($autoincrement !== false) {
+            $definition[0]['autoincrement'] = $autoincrement;
+        }
         foreach ($types as $key => $type) {
-            $definition[$key] = array(
-                'type' => $type,
-                'notnull' => $notnull,
-            );
-            if ($length > 0) {
-                $definition[$key]['length'] = $length;
+            $definition[$key] = $definition[0];
+            if ($type == 'clob' || $type == 'blob') {
+                unset($definition[$key]['default']);
             }
-            if (!is_null($unsigned)) {
-                $definition[$key]['unsigned'] = $unsigned;
-            }
-            if (!is_null($fixed)) {
-                $definition[$key]['fixed'] = $fixed;
-            }
-            $definition[$key]['default'] = $default;
-            if ($autoincrement !== false) {
-                $definition[$key]['autoincrement'] = $autoincrement;
-            }
+            $definition[$key]['type'] = $type;
+            $definition[$key]['mdb2type'] = $type;
         }
         return $definition;
     }
@@ -172,7 +176,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
 
         if (empty($row)) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableIndexDefinition: it was not specified an existing table index');
+                'it was not specified an existing table index', __FUNCTION__);
         }
 
         $row = array_change_key_case($row, CASE_LOWER);
@@ -219,7 +223,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
 
         if (empty($row)) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableConstraintDefinition: it was not specified an existing table constraint');
+                'it was not specified an existing table constraint', __FUNCTION__);
         }
 
         $row = array_change_key_case($row, CASE_LOWER);
@@ -265,41 +269,19 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
      */
     function tableInfo($result, $mode = null)
     {
+        if (is_string($result)) {
+           return parent::tableInfo($result, $mode);
+        }
+
         $db =& $this->getDBInstance();
         if (PEAR::isError($db)) {
             return $db;
         }
 
-        if (is_string($result)) {
-            /*
-             * Probably received a table name.
-             * Create a result resource identifier.
-             */
-            $query = "SELECT * FROM ".$db->quoteIdentifier($result)." LIMIT 0";
-            $id =& $db->_doQuery($query, false);
-            if (PEAR::isError($id)) {
-                return $id;
-            }
-            $got_string = true;
-        } elseif (MDB2::isResultCommon($result)) {
-            /*
-             * Probably received a result object.
-             * Extract the result resource identifier.
-             */
-            $id = $result->getResource();
-            $got_string = false;
-        } else {
-            /*
-             * Probably received a result resource identifier.
-             * Copy it.
-             * Deprecated.  Here for compatibility only.
-             */
-            $id = $result;
-            $got_string = false;
-        }
-
-        if (!is_resource($id)) {
-            return $db->raiseError(MDB2_ERROR_NEED_MORE_DATA);
+        $resource = MDB2::isResultCommon($result) ? $result->getResource() : $result;
+        if (!is_resource($resource)) {
+            return $db->raiseError(MDB2_ERROR_NEED_MORE_DATA, null, null,
+                'Could not generate result resource', __FUNCTION__);
         }
 
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
@@ -312,7 +294,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
             $case_func = 'strval';
         }
 
-        $count = @pg_num_fields($id);
+        $count = @pg_num_fields($resource);
         $res   = array();
 
         if ($mode) {
@@ -322,13 +304,11 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
         $db->loadModule('Datatype', null, true);
         for ($i = 0; $i < $count; $i++) {
             $res[$i] = array(
-                'table' => $got_string ? $case_func($result) : '',
-                'name'  => $case_func(@pg_field_name($id, $i)),
-                'type'  => @pg_field_type($id, $i),
-                'length'   => @pg_field_size($id, $i),
-                'flags' => $got_string
-                           ? $this->_pgFieldFlags($id, $i, $result)
-                           : '',
+                'table' => function_exists('pg_field_table') ? @pg_field_table($resource, $i) : '',
+                'name'  => $case_func(@pg_field_name($resource, $i)),
+                'type'  => @pg_field_type($resource, $i),
+                'length' => @pg_field_size($resource, $i),
+                'flags' => '',
             );
             $mdb2type_info = $db->datatype->mapNativeDatatype($res[$i]);
             if (PEAR::isError($mdb2type_info)) {
@@ -343,89 +323,7 @@ class MDB2_Driver_Reverse_pgsql extends MDB2_Driver_Reverse_Common
             }
         }
 
-        // free the result only if we were called on a table
-        if ($got_string) {
-            @pg_free_result($id);
-        }
         return $res;
-    }
-
-    // }}}
-    // {{{ _pgFieldFlags()
-
-    /**
-     * Get a column's flags
-     *
-     * Supports "not_null", "default_value", "primary_key", "unique_key"
-     * and "multiple_key".  The default value is passed through
-     * rawurlencode() in case there are spaces in it.
-     *
-     * @param int $resource   the PostgreSQL result identifier
-     * @param int $num_field  the field number
-     *
-     * @return string  the flags
-     *
-     * @access protected
-     */
-    function _pgFieldFlags($resource, $num_field, $table_name)
-    {
-        $db =& $this->getDBInstance();
-        if (PEAR::isError($db)) {
-            return $db;
-        }
-
-        $connection = $db->getConnection();
-        if (PEAR::isError($connection)) {
-            return $connection;
-        }
-
-        $field_name = @pg_field_name($resource, $num_field);
-
-        $result = @pg_query($connection, "SELECT f.attnotnull, f.atthasdef
-                                FROM pg_attribute f, pg_class tab, pg_type typ
-                                WHERE tab.relname = typ.typname
-                                AND typ.typrelid = f.attrelid
-                                AND f.attname = ".$db->quote($field_name, 'text')."
-                                AND tab.relname = ".$db->quote($table_name, 'text'));
-        if (@pg_num_rows($result) > 0) {
-            $row = @pg_fetch_row($result, 0);
-            $flags  = ($row[0] == 't') ? 'not_null ' : '';
-
-            if ($row[1] == 't') {
-                $result = @pg_query($connection, "SELECT a.adsrc
-                                    FROM pg_attribute f, pg_class tab, pg_type typ, pg_attrdef a
-                                    WHERE tab.relname = typ.typname AND typ.typrelid = f.attrelid
-                                    AND f.attrelid = a.adrelid AND f.attname = ".$db->quote($field_name)."
-                                    AND tab.relname = ".$db->quote($table_name)." AND f.attnum = a.adnum");
-                $row = @pg_fetch_row($result, 0);
-                $num = preg_replace("/'(.*)'::\w+/", "\\1", $row[0]);
-                $flags.= 'default_' . rawurlencode($num) . ' ';
-            }
-        } else {
-            $flags = '';
-        }
-        $result = @pg_query($connection, "SELECT i.indisunique, i.indisprimary, i.indkey
-                                FROM pg_attribute f, pg_class tab, pg_type typ, pg_index i
-                                WHERE tab.relname = typ.typname
-                                AND typ.typrelid = f.attrelid
-                                AND f.attrelid = i.indrelid
-                                AND f.attname = ".$db->quote($field_name, 'text')."
-                                AND tab.relname = ".$db->quote($table_name, 'text'));
-        $count = @pg_num_rows($result);
-
-        for ($i = 0; $i < $count ; $i++) {
-            $row = @pg_fetch_row($result, $i);
-            $keys = explode(' ', $row[2]);
-
-            if (in_array($num_field + 1, $keys)) {
-                $flags.= ($row[0] == 't' && $row[1] == 'f') ? 'unique_key ' : '';
-                $flags.= ($row[1] == 't') ? 'primary_key ' : '';
-                if (count($keys) > 1)
-                    $flags.= 'multiple_key ';
-            }
-        }
-
-        return trim($flags);
     }
 }
 ?>

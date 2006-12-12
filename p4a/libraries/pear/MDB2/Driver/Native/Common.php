@@ -45,16 +45,14 @@
 // $Id$
 //
 
-require_once 'MDB2/Driver/Native/Common.php';
-
 /**
- * MDB2 MySQLi driver for the native module
+ * Base class for the natuve modules that is extended by each MDB2 driver
  *
  * @package MDB2
  * @category Database
  * @author  Lukas Smith <smith@pooteeweet.org>
  */
-class MDB2_Driver_Native_mysqli extends MDB2_Driver_Native_Common
+class MDB2_Driver_Native_Common extends MDB2_Module_Common
 {
 }
 ?>

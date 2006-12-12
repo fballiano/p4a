@@ -117,7 +117,7 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
      *                                 indexes of the array. The value of each entry of the array
      *                                 should be set to another associative array with the properties
      *                                 of the fields to be added. The properties of the fields should
-     *                                 be the same as defined by the Metabase parser.
+     *                                 be the same as defined by the MDB2 parser.
      *
      *
      *                            remove
@@ -146,7 +146,7 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
      *                                 array with the properties of the fields to that are meant to be changed as
      *                                 array entries. These entries should be assigned to the new values of the
      *                                 respective properties. The properties of the fields should be the same
-     *                                 as defined by the Metabase parser.
+     *                                 as defined by the MDB2 parser.
      *
      *                            Example
      *                                array(
@@ -206,7 +206,7 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
                 break;
             default:
                 return $db->raiseError(MDB2_ERROR_CANNOT_ALTER, null, null,
-                    'alterTable: change type "'.$change_name.'\" not yet supported');
+                    'change type "'.$change_name.'\" not yet supported', __FUNCTION__);
             }
         }
 
@@ -245,7 +245,7 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
                     }
                     if (is_array($server_info) && $server_info['major'] < 8) {
                         return $db->raiseError(MDB2_ERROR_CANNOT_ALTER, null, null,
-                            'alterTable: changing column type for "'.$change_name.'\" requires PostgreSQL 8.0 or above');
+                            'changing column type for "'.$change_name.'\" requires PostgreSQL 8.0 or above', __FUNCTION__);
                     }
                     $db->loadModule('Datatype', null, true);
                     $query = "ALTER $field_name TYPE ".$db->datatype->getTypeDeclaration($field['definition']);
@@ -552,7 +552,10 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($indexes as $index) {
-            $result[$this->_fixIndexName($index)] = true;
+            $index = $this->_fixIndexName($index);
+            if (!empty($index)) {
+                $result[$index] = true;
+            }
         }
 
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
@@ -565,7 +568,7 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
     // {{{ listTableConstraints()
 
     /**
-     * list all sonstraints in a table
+     * list all constraints in a table
      *
      * @param string    $table      name of table that should be used in method
      * @return mixed data array on success, a MDB2 error on failure
@@ -589,7 +592,10 @@ class MDB2_Driver_Manager_pgsql extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($constraints as $constraint) {
-            $result[$this->_fixIndexName($constraint)] = true;
+            $constraint = $this->_fixIndexName($constraint);
+            if (!empty($constraint)) {
+                $result[$constraint] = true;
+            }
         }
 
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE

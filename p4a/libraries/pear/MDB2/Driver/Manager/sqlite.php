@@ -75,13 +75,13 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         $database_file = $db->_getDatabaseFile($name);
         if (file_exists($database_file)) {
             return $db->raiseError(MDB2_ERROR_ALREADY_EXISTS, null, null,
-                'createDatabase: database already exists');
+                'database already exists', __FUNCTION__);
         }
         $php_errormsg = '';
         $handle = @sqlite_open($database_file, $db->dsn['mode'], $php_errormsg);
         if (!$handle) {
             return $db->raiseError(MDB2_ERROR_CANNOT_CREATE, null, null,
-                'createDatabase: '.(isset($php_errormsg) ? $php_errormsg : 'could not create the database file'));
+                (isset($php_errormsg) ? $php_errormsg : 'could not create the database file'), __FUNCTION__);
         }
         @sqlite_close($handle);
         return MDB2_OK;
@@ -107,12 +107,12 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         $database_file = $db->_getDatabaseFile($name);
         if (!@file_exists($database_file)) {
             return $db->raiseError(MDB2_ERROR_CANNOT_DROP, null, null,
-                'dropDatabase: database does not exist');
+                'database does not exist', __FUNCTION__);
         }
         $result = @unlink($database_file);
         if (!$result) {
             return $db->raiseError(MDB2_ERROR_CANNOT_DROP, null, null,
-                'dropDatabase: '.(isset($php_errormsg) ? $php_errormsg : 'could not remove the database file'));
+                (isset($php_errormsg) ? $php_errormsg : 'could not remove the database file'), __FUNCTION__);
         }
         return MDB2_OK;
     }
@@ -138,7 +138,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
      *                                 indexes of the array. The value of each entry of the array
      *                                 should be set to another associative array with the properties
      *                                 of the fields to be added. The properties of the fields should
-     *                                 be the same as defined by the Metabase parser.
+     *                                 be the same as defined by the MDB2 parser.
      *
      *
      *                            remove
@@ -167,7 +167,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
      *                                 array with the properties of the fields to that are meant to be changed as
      *                                 array entries. These entries should be assigned to the new values of the
      *                                 respective properties. The properties of the fields should be the same
-     *                                 as defined by the Metabase parser.
+     *                                 as defined by the MDB2 parser.
      *
      *                            Example
      *                                array(
@@ -210,38 +210,24 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
      *
       * @return mixed MDB2_OK on success, a MDB2 error on failure
      */
-    function alterTable($name, $changes, $check)
+    function alterTable($name, $changes, $check, $options = array())
     {
         $db =& $this->getDBInstance();
         if (PEAR::isError($db)) {
             return $db;
         }
 
-        // actually sqlite 2.x supports no ALTER TABLE at all ..
-        // so the only solution is:
-        // - reverse engineer table schema
-        // - alter table schema in memory
-        // - read all data into memory (or file?)
-        // - drop table
-        // - create table
-        // - import data
-        $version = $db->getServerVersion();
         foreach ($changes as $change_name => $change) {
             switch ($change_name) {
             case 'add':
-                if ($version['major'] >= 3 && $version['minor'] >= 1) {
-                    break;
-                }
-            case 'name':
-                if ($version['major'] >= 3 && $version['minor'] >= 1) {
-                    break;
-                }
             case 'remove':
             case 'change':
+            case 'name':
             case 'rename':
+                break;
             default:
                 return $db->raiseError(MDB2_ERROR_CANNOT_ALTER, null, null,
-                    'alterTable: change type "'.$change_name.'" not yet supported');
+                    'change type "'.$change_name.'" not yet supported', __FUNCTION__);
             }
         }
 
@@ -249,29 +235,136 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
             return MDB2_OK;
         }
 
-        $query = '';
-        if (!empty($changes['name'])) {
-            $change_name = $db->quoteIdentifier($changes['name'], true);
-            $query .= 'RENAME TO ' . $change_name;
+        $db->loadModule('Reverse', null, true);
+
+        // actually sqlite 2.x supports no ALTER TABLE at all .. so we emulate it
+        $fields = $db->manager->listTableFields($name);
+        if (PEAR::isError($fields)) {
+            return $fields;
         }
 
-        if (!empty($changes['add']) && is_array($changes['add'])) {
-            foreach ($changes['add'] as $field_name => $field) {
-                if ($query) {
-                    $query.= ', ';
+        $fields = array_flip($fields);
+        foreach ($fields as $field => $value) {
+            $definition = $db->reverse->getTableFieldDefinition($name, $field);
+            if (PEAR::isError($definition)) {
+                return $definition;
+            }
+            $fields[$field] = $definition[0];
+        }
+
+        $indexes = $db->manager->listTableIndexes($name);
+        if (PEAR::isError($indexes)) {
+            return $indexes;
+        }
+
+        $indexes = array_flip($indexes);
+        foreach ($indexes as $index => $value) {
+            $definition = $db->reverse->getTableIndexDefinition($name, $index);
+            if (PEAR::isError($definition)) {
+                return $definition;
+            }
+            $indexes[$index] = $definition;
+        }
+
+        $constraints = $db->manager->listTableConstraints($name);
+        if (PEAR::isError($constraints)) {
+            return $constraints;
+        }
+
+        $constraints = array_flip($constraints);
+        foreach ($constraints as $constraint => $value) {
+            if (!empty($definition['primary'])) {
+                if (!array_key_exists('primary', $options)) {
+                    $options['primary'] = $definition['fields'];
                 }
-                $query.= 'ADD COLUMN ' . $db->getDeclaration($field['type'], $field_name, $field);
+            } else {
+                $definition = $db->reverse->getTableConstraintDefinition($name, $constraint);
+                if (PEAR::isError($definition)) {
+                    return $definition;
+                }
+                $constraints[$constraint] = $definition;
             }
         }
 
-        if (!$query) {
-            return MDB2_OK;
+        $name_new = $name;
+        $create_order = $select_fields = array_keys($fields);
+        foreach ($changes as $change_name => $change) {
+            switch ($change_name) {
+            case 'add':
+                foreach ($change as $field_name => $field) {
+                    $fields[$field_name] = $field;
+                    $create_order[] = $field_name;
+                }
+                break;
+            case 'remove':
+                foreach ($change as $field_name => $field) {
+                    unset($fields[$field_name]);
+                    $select_fields = array_diff($select_fields, array($field_name));
+                    $create_order = array_diff($create_order, array($field_name));
+                }
+                break;
+            case 'change':
+                foreach ($change as $field_name => $field) {
+                    $fields[$field_name] = $field['definition'];
+                }
+                break;
+            case 'name':
+                $name_new = $change;
+                break;
+            case 'rename':
+                foreach ($change as $field_name => $field) {
+                    unset($fields[$field_name]);
+                    $fields[$field['name']] = $field['definition'];
+                    $create_order[array_search($field_name, $create_order)] = $field['name'];
+                }
+                break;
+            default:
+                return $db->raiseError(MDB2_ERROR_CANNOT_ALTER, null, null,
+                    'change type "'.$change_name.'" not yet supported', __FUNCTION__);
+            }
         }
 
-        $name = $db->quoteIdentifier($name, true);
-        return $db->exec("ALTER TABLE $name $query");
-    }
+        $data = null;
+        if (!empty($select_fields)) {
+            $query = 'SELECT '.implode(', ', $select_fields).' FROM '.$db->quoteIdentifier($name, true);
+            $data = $db->queryAll($query, null, MDB2_FETCHMODE_ORDERED);
+        }
 
+        $result = $this->dropTable($name);
+        if (PEAR::isError($result)) {
+            return $result;
+        }
+
+        $result = $this->createTable($name_new, $fields, $options);
+        if (PEAR::isError($result)) {
+            return $result;
+        }
+
+        foreach ($indexes as $index => $definition) {
+            $this->createIndex($name_new, $index, $definition);
+        }
+
+        foreach ($constraints as $constraint => $definition) {
+            $this->createConstraint($name_new, $constraint, $definition);
+        }
+
+        if (!empty($select_fields) && !empty($data)) {
+            $query = 'INSERT INTO '.$db->quoteIdentifier($name_new, true);
+            $query.= '('.implode(', ', array_slice(array_keys($fields), 0, count($select_fields))).')';
+            $query.=' VALUES (?'.str_repeat(', ?', (count($select_fields) - 1)).')';
+            $stmt =& $db->prepare($query, null, MDB2_PREPARE_MANIP);
+            if (PEAR::isError($stmt)) {
+                return $stmt;
+            }
+            foreach ($data as $row) {
+                $result = $stmt->execute($row);
+                if (PEAR::isError($result)) {
+                    return $result;
+                }
+            }
+        }
+        return MDB2_OK;
+    }
 
     // }}}
     // {{{ listDatabases()
@@ -290,7 +383,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'listDatabases: list databases is not supported');
+            'list databases is not supported', __FUNCTION__);
     }
 
     // }}}
@@ -310,7 +403,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'listDatabases: list databases is not supported');
+            'list databases is not supported', __FUNCTION__);
     }
 
     // }}}
@@ -363,18 +456,35 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
             return $db;
         }
 
-        $table = $db->quoteIdentifier($table, true);
-        $db->setLimit(1);
-        $result2 = $db->query("SELECT * FROM $table");
-        if (PEAR::isError($result2)) {
-            return $result2;
-        }
-        $result = $result2->getColumnNames();
-        $result2->free();
+        $result = $db->loadModule('Reverse', null, true);
         if (PEAR::isError($result)) {
             return $result;
         }
-        return array_flip($result);
+        $query = "SELECT sql FROM sqlite_master WHERE type='table' AND ";
+        if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
+            $query.= 'LOWER(name)='.$db->quote(strtolower($table), 'text');
+        } else {
+            $query.= 'name='.$db->quote($table, 'text');
+        }
+        $sql = $db->queryOne($query);
+        if (PEAR::isError($sql)) {
+            return $sql;
+        }
+        $columns = $db->reverse->_getTableColumns($sql);
+        $fields = array();
+        foreach ($columns as $column) {
+            if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
+                if ($db->options['field_case'] == CASE_LOWER) {
+                    $column['name'] = strtolower($column['name']);
+                } else {
+                    $column['name'] = strtoupper($column['name']);
+                }
+            } else {
+                $column = array_change_key_case($column, $db->options['field_case']);
+            }
+            $fields[] = $column['name'];
+        }
+        return $fields;
     }
 
     // }}}
@@ -495,8 +605,11 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($indexes as $sql) {
-            if (preg_match("/^create index ([^ ]*) on /i", $sql, $tmp)) {
-                $result[$this->_fixIndexName($tmp[1])] = true;
+            if (preg_match("/^create index ([^ ]+) on /i", $sql, $tmp)) {
+                $index = $this->_fixIndexName($tmp[1]);
+                if (!empty($index)) {
+                    $result[$index] = true;
+                }
             }
         }
 
@@ -539,8 +652,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         }
 
         if (!empty($definition['primary'])) {
-            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'createConstraint: Creating Primary Constraints is not supported');
+            return $db->alterTable($table, array(), false, array('primary' => $definition['fields']));
         }
 
         $table = $db->quoteIdentifier($table, true);
@@ -585,8 +697,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         }
 
         if ($primary || $name == 'PRIMARY') {
-            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'dropConstraints: Dropping Primary Constraints is not supported');
+            return $db->alterTable($table, array(), false, array('primary' => null));
         }
 
         $name = $db->getIndexName($name);
@@ -597,7 +708,7 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
     // {{{ listTableConstraints()
 
     /**
-     * list all sonstraints in a table
+     * list all constraints in a table
      *
      * @param string    $table      name of table that should be used in method
      * @return mixed data array on success, a MDB2 error on failure
@@ -625,8 +736,11 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($indexes as $sql) {
-            if (preg_match("/^create unique index ([^ ]*) on /i", $sql, $tmp)) {
-                $result[$this->_fixIndexName($tmp[1])] = true;
+            if (preg_match("/^create unique index ([^ ]+) on /i", $sql, $tmp)) {
+                $index = $this->_fixIndexName($tmp[1]);
+                if (!empty($index)) {
+                    $result[$index] = true;
+                }
             }
         }
 
@@ -672,10 +786,10 @@ class MDB2_Driver_Manager_sqlite extends MDB2_Driver_Manager_Common
         $result = $db->exec("DROP TABLE $sequence_name");
         if (PEAR::isError($result)) {
             return $db->raiseError($result, null, null,
-                'createSequence: could not drop inconsistent sequence table');
+                'could not drop inconsistent sequence table', __FUNCTION__);
         }
         return $db->raiseError($res, null, null,
-            'createSequence: could not create sequence table');
+            'could not create sequence table', __FUNCTION__);
     }
 
     // }}}

@@ -88,7 +88,7 @@ class MDB2_Driver_Reverse_Common extends MDB2_Module_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'getTableFieldDefinition: method not implemented');
+            'method not implemented', __FUNCTION__);
     }
 
     // }}}
@@ -110,7 +110,7 @@ class MDB2_Driver_Reverse_Common extends MDB2_Module_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'getTableIndexDefinition: method not implemented');
+            'method not implemented', __FUNCTION__);
     }
 
     // }}}
@@ -132,7 +132,7 @@ class MDB2_Driver_Reverse_Common extends MDB2_Module_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'getTableConstraintDefinition: method not implemented');
+            'method not implemented', __FUNCTION__);
     }
 
     // }}}
@@ -187,7 +187,7 @@ class MDB2_Driver_Reverse_Common extends MDB2_Module_Common
         }
 
         return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'getTriggerDefinition: method not implemented');
+            'method not implemented', __FUNCTION__);
     }
 
     // }}}
@@ -320,8 +320,104 @@ class MDB2_Driver_Reverse_Common extends MDB2_Module_Common
             return $db;
         }
 
-        return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'tableInfo: method not implemented');
+        if (!is_string($result)) {
+            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'method not implemented', __FUNCTION__);
+        }
+
+        $db->loadModule('Manager', null, true);
+        $fields = $db->manager->listTableFields($result);
+        if (PEAR::isError($fields)) {
+            return $fields;
+        }
+
+        $flags = array();
+
+        $idxname_format = $db->getOption('idxname_format');
+        $db->setOption('idxname_format', '%s');
+
+        $indexes = $db->manager->listTableIndexes($result);
+        if (PEAR::isError($indexes)) {
+            $db->setOption('idxname_format', $idxname_format);
+            return $indexes;
+        }
+
+        foreach ($indexes as $index) {
+            $definition = $this->getTableIndexDefinition($result, $index);
+            if (PEAR::isError($definition)) {
+                $db->setOption('idxname_format', $idxname_format);
+                return $definition;
+            }
+            if (count($definition['fields']) > 1) {
+                foreach ($definition['fields'] as $field => $sort) {
+                    $flags[$field] = 'multiple_key';
+                }
+            }
+        }
+
+        $constraints = $db->manager->listTableConstraints($result);
+        if (PEAR::isError($constraints)) {
+            return $constraints;
+        }
+
+        foreach ($constraints as $constraint) {
+            $definition = $this->getTableConstraintDefinition($result, $constraint);
+            if (PEAR::isError($definition)) {
+                $db->setOption('idxname_format', $idxname_format);
+                return $definition;
+            }
+            $flag = !empty($definition['primary'])
+                ? 'primary_key' : (!empty($definition['unique'])
+                    ? 'unique_key' : false);
+            if ($flag) {
+                foreach ($definition['fields'] as $field => $sort) {
+                    if (empty($flags[$field]) || $flags[$field] != 'primary_key') {
+                        $flags[$field] = $flag;
+                    }
+                }
+            }
+        }
+
+        if ($mode) {
+            $res['num_fields'] = count($fields);
+        }
+
+        foreach ($fields as $i => $field) {
+            $definition = $this->getTableFieldDefinition($result, $field);
+            if (PEAR::isError($definition)) {
+                $db->setOption('idxname_format', $idxname_format);
+                return $definition;
+            }
+            $res[$i] = $definition[0];
+            $res[$i]['name'] = $field;
+            $res[$i]['table'] = $result;
+            $res[$i]['type'] = preg_replace('/^([a-z]+).*$/i', '\\1', trim($definition[0]['nativetype']));
+            // 'primary_key', 'unique_key', 'multiple_key'
+            $res[$i]['flags'] = empty($flags[$field]) ? '' : $flags[$field];
+            // not_null', 'unsigned', 'auto_increment', 'default_[rawencodedvalue]'
+            if (!empty($res[$i]['notnull'])) {
+                $res[$i]['flags'].= ' not_null';
+            }
+            if (!empty($res[$i]['unsigned'])) {
+                $res[$i]['flags'].= ' unsigned';
+            }
+            if (!empty($res[$i]['auto_increment'])) {
+                $res[$i]['flags'].= ' autoincrement';
+            }
+            if (!empty($res[$i]['default'])) {
+                $res[$i]['flags'].= ' default_'.rawurlencode($res[$i]['default']);
+            }
+
+            if ($mode & MDB2_TABLEINFO_ORDER) {
+                $res['order'][$res[$i]['name']] = $i;
+            }
+            if ($mode & MDB2_TABLEINFO_ORDERTABLE) {
+                $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
+            }
+        }
+
+        $db->setOption('idxname_format', $idxname_format);
+        return $res;
     }
 }
 ?>

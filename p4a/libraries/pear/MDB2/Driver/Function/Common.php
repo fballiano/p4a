@@ -82,7 +82,7 @@ class MDB2_Driver_Function_Common extends MDB2_Module_Common
         }
 
         $error =& $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'executeStoredProc: method not implemented');
+            'method not implemented', __FUNCTION__);
         return $error;
     }
 
@@ -173,6 +173,36 @@ class MDB2_Driver_Function_Common extends MDB2_Module_Common
     function random()
     {
         return 'RAND()';
+    }
+
+    // }}}
+    // {{{ lower()
+
+    /**
+     * return string to call a function to lower the case of an expression
+     *
+     * @param string $expression
+     * @return return string to lower case of an expression
+     * @access public
+     */
+    function lower($expression)
+    {
+        return "LOWER($expression)";
+    }
+
+    // }}}
+    // {{{ upper()
+
+    /**
+     * return string to call a function to upper the case of an expression
+     *
+     * @param string $expression
+     * @return return string to upper case of an expression
+     * @access public
+     */
+    function upper($expression)
+    {
+        return "UPPER($expression)";
     }
 
     // }}}

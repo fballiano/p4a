@@ -56,80 +56,6 @@ require_once 'MDB2/Driver/Manager/Common.php';
  */
 class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 {
-    // {{{ properties
-    var $verified_table_types = array();#
-    // }}}
-
-    // }}}
-    // {{{ _verifyTableType()
-
-    /**
-     * verify that chosen transactional table hanlder is available in the database
-     *
-     * @param string $table_type name of the table handler
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
-     * @access protected
-     */
-    function _verifyTableType($table_type)
-    {
-        $db =& $this->getDBInstance();
-        if (PEAR::isError($db)) {
-            return $db;
-        }
-
-        switch (strtoupper($table_type)) {
-        case 'BERKELEYDB':
-        case 'BDB':
-            $check = array('have_bdb');
-            break;
-        case 'INNODB':
-            $check = array('have_innobase', 'have_innodb');
-            break;
-        case 'GEMINI':
-            $check = array('have_gemini');
-            break;
-        case 'HEAP':
-        case 'ISAM':
-        case 'MERGE':
-        case 'MRG_MYISAM':
-        case 'MYISAM':
-        case '':
-            return MDB2_OK;
-        default:
-            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                $table_type.' is not a supported table type');
-        }
-        $connection = $db->getConnection();
-        if (PEAR::isError($connection)) {
-            return $connection;
-        }
-        if (isset($this->verified_table_types[$table_type])
-            && $this->verified_table_types[$table_type] == $connection
-        ) {
-            return MDB2_OK;
-        }
-        $not_supported = false;
-        for ($i = 0, $j = count($check); $i < $j; ++$i) {
-            $query = 'SHOW VARIABLES LIKE '.$db->quote($check[$i], 'text');
-            $has = $db->queryRow($query, null, MDB2_FETCHMODE_ORDERED);
-            if (PEAR::isError($has)) {
-                return $has;
-            }
-            if (is_array($has)) {
-                $not_supported = true;
-                if ($has[1] == 'YES') {
-                    $this->verified_table_types[$table_type] = $connection;
-                    return MDB2_OK;
-                }
-            }
-        }
-        if ($not_supported) {
-            return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                $table_type.' is not a supported table type by this MySQL database server');
-        }
-        return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-            'could not tell if '.$table_type.' is a supported table type');
-    }
 
     // }}}
     // {{{ createDatabase()
@@ -229,21 +155,10 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
             return $db;
         }
 
-        if (!$name) {
-            return $db->raiseError(MDB2_ERROR_CANNOT_CREATE, null, null,
-                'createTable: no valid table name specified');
+        $query = $this->_getCreateTableQuery($name, $fields, $options);
+        if (PEAR::isError($query)) {
+            return $query;
         }
-        if (empty($fields)) {
-            return $db->raiseError(MDB2_ERROR_CANNOT_CREATE, null, null,
-                'createTable: no fields specified for table "'.$name.'"');
-        }
-        $query_fields = $this->getFieldDeclarationList($fields);
-        if (PEAR::isError($query_fields)) {
-            return $db->raiseError(MDB2_ERROR_CANNOT_CREATE, null, null,
-                'createTable: '.$query_fields->getUserinfo());
-        }
-        $name = $db->quoteIdentifier($name, true);
-        $query = "CREATE TABLE $name ($query_fields)";
 
         $options_strings = array();
 
@@ -265,10 +180,6 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
             $type = $db->options['default_table_type'];
         }
         if ($type) {
-            $verify_type = $this->_verifyTableType($type);
-            if (PEAR::isError($verify_type)) {
-                return $verify_type;
-            }
             $options_strings[] = "ENGINE = $type";
         }
 
@@ -299,7 +210,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      *                                 indexes of the array. The value of each entry of the array
      *                                 should be set to another associative array with the properties
      *                                 of the fields to be added. The properties of the fields should
-     *                                 be the same as defined by the Metabase parser.
+     *                                 be the same as defined by the MDB2 parser.
      *
      *
      *                            remove
@@ -328,7 +239,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      *                                 array with the properties of the fields to that are meant to be changed as
      *                                 array entries. These entries should be assigned to the new values of the
      *                                 respective properties. The properties of the fields should be the same
-     *                                 as defined by the Metabase parser.
+     *                                 as defined by the MDB2 parser.
      *
      *                            Example
      *                                array(
@@ -388,7 +299,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
                 break;
             default:
                 return $db->raiseError(MDB2_ERROR_CANNOT_ALTER, null, null,
-                    'alterTable: change type "'.$change_name.'" not yet supported');
+                    'change type "'.$change_name.'" not yet supported', __FUNCTION__);
             }
         }
 
@@ -730,8 +641,8 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($indexes as $index_data) {
-            if ($index_data[$non_unique]) {
-                $result[$this->_fixIndexName($index_data[$key_name])] = true;
+            if ($index_data[$non_unique] && ($index = $this->_fixIndexName($index_data[$key_name]))) {
+                $result[$index] = true;
             }
         }
 
@@ -825,7 +736,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
     // {{{ listTableConstraints()
 
     /**
-     * list all sonstraints in a table
+     * list all constraints in a table
      *
      * @param string    $table      name of table that should be used in method
      * @return mixed data array on success, a MDB2 error on failure
@@ -865,7 +776,9 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
                 } else {
                     $index = 'PRIMARY';
                 }
-                $result[$index] = true;
+                if (!empty($index)) {
+                    $result[$index] = true;
+                }
             }
         }
 
@@ -895,10 +808,6 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 
         $sequence_name = $db->quoteIdentifier($db->getSequenceName($seq_name), true);
         $seqcol_name = $db->quoteIdentifier($db->options['seqcol_name'], true);
-        $result = $this->_verifyTableType($db->options['default_table_type']);
-        if (PEAR::isError($result)) {
-            return $result;
-        }
 
         $query = "CREATE TABLE $sequence_name ($seqcol_name INT NOT NULL AUTO_INCREMENT, PRIMARY KEY ($seqcol_name))";
         $query.= strlen($db->options['default_table_type']) ? ' TYPE='.$db->options['default_table_type'] : '';
@@ -922,11 +831,11 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
         $result = $db->exec("DROP TABLE $sequence_name");
         if (PEAR::isError($result)) {
             return $db->raiseError($result, null, null,
-                'createSequence: could not drop inconsistent sequence table');
+                'could not drop inconsistent sequence table', __FUNCTION__);
         }
 
         return $db->raiseError($res, null, null,
-            'createSequence: could not create sequence table');
+            'could not create sequence table', __FUNCTION__);
     }
 
     // }}}

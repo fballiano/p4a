@@ -55,17 +55,18 @@ require_once 'MDB2/Driver/Datatype/Common.php';
  */
 class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
 {
-    // {{{ convertResult()
+    // {{{ _baseConvertResult()
 
     /**
-     * convert a value to a RDBMS independent MDB2 type
+     * general type conversion method
      *
-     * @param mixed $value value to be converted
-     * @param int $type constant that specifies which type to convert to
-     * @return mixed converted value or a MDB2 error on failure
-     * @access public
+     * @param mixed $value refernce to a value to be converted
+     * @param string $type specifies which type to convert to
+     * @param string $rtrim if text should be rtrimmed
+     * @return object a MDB2 error on failure
+     * @access protected
      */
-    function convertResult($value, $type)
+    function _baseConvertResult($value, $type, $rtrim = true)
     {
         if (is_null($value)) {
             return null;
@@ -83,9 +84,9 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             return substr($value, 0, strlen('YYYY-MM-DD HH:MM:SS'));
         case 'blob':
             $value = pg_unescape_bytea($value);
-        default:
-            return $this->_baseConvertResult($value, $type);
+            return parent::_baseConvertResult($value, $type, $rtrim);
         }
+        return parent::_baseConvertResult($value, $type, $rtrim);
     }
 
     // }}}
@@ -165,7 +166,8 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             return 'FLOAT8';
         case 'decimal':
             $length = !empty($field['length']) ? $field['length'] : 18;
-            return 'NUMERIC('.$length.','.$db->options['decimal_places'].')';
+            $scale = !empty($field['scale']) ? $field['scale'] : $db->options['decimal_places'];
+            return 'NUMERIC('.$length.','.$scale.')';
         }
     }
 
@@ -212,12 +214,14 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
         $default = '';
         if (array_key_exists('default', $field)) {
             if ($field['default'] === '') {
-                $field['default'] = (!empty($field['notnull'])) ? 0 : null;
+                $field['default'] = empty($field['notnull']) ? null : 0;
             }
             $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
+        } elseif (empty($field['notnull'])) {
+            $default = ' DEFAULT NULL';
         }
 
-        $notnull = (!empty($field['notnull'])) ? ' NOT NULL' : '';
+        $notnull = empty($field['notnull']) ? '' : ' NOT NULL';
         $name = $db->quoteIdentifier($name, true);
         return $name.' '.$this->getTypeDeclaration($field).$default.$notnull;
     }
@@ -231,13 +235,14 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *      a DBMS specific format.
      * @access protected
      */
-    function _quoteCLOB($value, $quote)
+    function _quoteCLOB($value, $quote, $escape_wildcards)
     {
-        return $this->_quoteText($value, $quote);
+        return $this->_quoteText($value, $quote, $escape_wildcards);
     }
 
     // }}}
@@ -249,16 +254,29 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *      a DBMS specific format.
      * @access protected
      */
-    function _quoteBLOB($value, $quote)
+    function _quoteBLOB($value, $quote, $escape_wildcards)
     {
         if (!$quote) {
             return $value;
         }
-        $value = pg_escape_bytea($value);
+        if (version_compare(PHP_VERSION, '5.2.0RC6', '>=')) {
+            $db =& $this->getDBInstance();
+            if (PEAR::isError($db)) {
+                return $db;
+            }
+            $connection = $db->getConnection();
+            if (PEAR::isError($connection)) {
+                return $connection;
+            }
+            $value = @pg_escape_bytea($connection, $value);
+        } else {
+            $value = @pg_escape_bytea($value);
+        }
         return "'".$value."'";
     }
 
@@ -271,17 +289,96 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      *
      * @param string $value text string value that is intended to be converted.
      * @param bool $quote determines if the value should be quoted and escaped
+     * @param bool $escape_wildcards if to escape escape wildcards
      * @return string text string that represents the given argument value in
      *       a DBMS specific format.
      * @access protected
      */
-    function _quoteBoolean($value, $quote)
+    function _quoteBoolean($value, $quote, $escape_wildcards)
     {
         $value = $value ? 't' : 'f';
         if (!$quote) {
             return $value;
         }
         return "'".$value."'";
+    }
+
+    // }}}
+    // {{{ matchPattern()
+
+    /**
+     * build a pattern matching string
+     *
+     * EXPERIMENTAL
+     *
+     * WARNING: this function is experimental and may change signature at
+     * any time until labelled as non-experimental
+     *
+     * @access public
+     *
+     * @param array $pattern even keys are strings, odd are patterns (% and _)
+     * @param string $operator optional pattern operator (LIKE, ILIKE and maybe others in the future)
+     * @param string $field optional field name that is being matched against
+     *                  (might be required when emulating ILIKE)
+     *
+     * @return string SQL pattern
+     */
+    function matchPattern($pattern, $operator = null, $field = null)
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+
+        $match = '';
+        if (!is_null($operator)) {
+            $field = is_null($field) ? '' : $field.' ';
+            $operator = strtoupper($operator);
+            switch ($operator) {
+            // case insensitive
+            case 'ILIKE':
+                $match = $field.'ILIKE ';
+                break;
+            // case sensitive
+            case 'LIKE':
+                $match = $field.'LIKE ';
+                break;
+            default:
+                return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                    'not a supported operator type:'. $operator, __FUNCTION__);
+            }
+        }
+        $match.= "'";
+        foreach ($pattern as $key => $value) {
+            if ($key % 2) {
+                $match.= $value;
+            } else {
+                $match.= $db->escapePattern($db->escape($value));
+            }
+        }
+        $match.= "'";
+        $match.= $this->patternEscapeString();
+        return $match;
+    }
+
+    // }}}
+    // {{{ patternEscapeString()
+
+    /**
+     * build string to define escape pattern string
+     *
+     * @access public
+     *
+     *
+     * @return string define escape pattern
+     */
+    function patternEscapeString()
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+        return ' ESCAPE '.$this->quote($db->string_quoting['escape_pattern']);
     }
 
     // }}}
@@ -296,7 +393,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      */
     function mapNativeDatatype($field)
     {
-        $db_type = preg_replace('/\d/','', strtolower($field['type']) );
+        $db_type = strtolower($field['type']);
         $length = $field['length'];
         if ($length == '-1' && !empty($field['atttypmod'])) {
             $length = $field['atttypmod'] - 4;
@@ -314,7 +411,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             $length = 2;
             if ($length == '2') {
                 $type[] = 'boolean';
-                if (preg_match('/^[is|has]/', $field['name'])) {
+                if (preg_match('/^(is|has)/', $field['name'])) {
                     $type = array_reverse($type);
                 }
             }
@@ -350,7 +447,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             $type[] = 'text';
             if ($length == '1') {
                 $type[] = 'boolean';
-                if (preg_match('/^[is|has]/', $field['name'])) {
+                if (preg_match('/^(is|has)/', $field['name'])) {
                     $type = array_reverse($type);
                 }
             } elseif (strstr($db_type, 'text')) {
@@ -408,7 +505,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
             }
 
             return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'mapNativeDatatype: unknown database attribute type: '.$db_type);
+                'unknown database attribute type: '.$db_type, __FUNCTION__);
         }
 
         return array($type, $length, $unsigned, $fixed);

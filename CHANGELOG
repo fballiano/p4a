@@ -6,9 +6,18 @@
 - P4A::closePopup() was added
 - popup.js was added
 - popup.tpl was added
-- beforeSetActivePage handler was added to P4A_Tab_Pane 
-- afterSetActivePage handler was added to P4A_Tab_Pane 
+- beforeSetActivePage handler was added to P4A_Tab_Pane
+- afterSetActivePage handler was added to P4A_Tab_Pane
 - a bug in P4A_Collection::nextItem was fixed
+- PEAR::Console_Getopt was updated to 1.2.1
+- PEAR::Validate was updated to 0.7.0
+- PEAR::MDB2 was updated to 2.3.0
+- PEAR::MDB2_Driver_mysql was updated to 1.3.0
+- PEAR::MDB2_Driver_mysqli was updated to 1.3.0
+- PEAR::MDB2_Driver_oci8 was updated to 1.3.0
+- PEAR::MDB2_Driver_pgsql was updated to 1.3.0
+- PEAR::MDB2_Driver_sqlite was updated to 1.3.0
+
 
 1.99.13
 - Internet Explorer 7 is now correctly detected and p4a does not include png and pure css menu hack

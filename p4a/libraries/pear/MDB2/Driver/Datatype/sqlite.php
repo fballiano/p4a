@@ -102,7 +102,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYTEXT';
-                } elseif ($length <= 65535) {
+                } elseif ($length <= 65532) {
                     return 'TEXT';
                 } elseif ($length <= 16777215) {
                     return 'MEDIUMTEXT';
@@ -114,7 +114,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
                 $length = $field['length'];
                 if ($length <= 255) {
                     return 'TINYBLOB';
-                } elseif ($length <= 65535) {
+                } elseif ($length <= 65532) {
                     return 'BLOB';
                 } elseif ($length <= 16777215) {
                     return 'MEDIUMBLOB';
@@ -146,7 +146,8 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
                 ($db->options['fixed_float']+2).','.$db->options['fixed_float'].')' : '');
         case 'decimal':
             $length = !empty($field['length']) ? $field['length'] : 18;
-            return 'DECIMAL('.$length.','.$db->options['decimal_places'].')';
+            $scale = !empty($field['scale']) ? $field['scale'] : $db->options['decimal_places'];
+            return 'DECIMAL('.$length.','.$scale.')';
         }
         return '';
     }
@@ -187,22 +188,80 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             return $db;
         }
 
-        $default = $autoinc = $notnull = '';
+        $default = $autoinc = '';
         if (!empty($field['autoincrement'])) {
             $autoinc = ' PRIMARY KEY';
-        } else {
-            if (array_key_exists('default', $field)) {
-                if ($field['default'] === '') {
-                    $field['default'] = (!empty($field['notnull'])) ? 0 : null;
-                }
-                $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
+        } elseif (array_key_exists('default', $field)) {
+            if ($field['default'] === '') {
+                $field['default'] = empty($field['notnull']) ? null : 0;
             }
-            $notnull = (!empty($field['notnull'])) ? ' NOT NULL' : '';
+            $default = ' DEFAULT '.$this->quote($field['default'], 'integer');
+        } elseif (empty($field['notnull'])) {
+            $default = ' DEFAULT NULL';
         }
 
-        $unsigned = (!empty($field['unsigned'])) ? ' UNSIGNED' : '';
+        $notnull = empty($field['notnull']) ? '' : ' NOT NULL';
+        $unsigned = empty($field['unsigned']) ? '' : ' UNSIGNED';
         $name = $db->quoteIdentifier($name, true);
         return $name.' '.$this->getTypeDeclaration($field).$unsigned.$default.$notnull.$autoinc;
+    }
+
+    // }}}
+    // {{{ matchPattern()
+
+    /**
+     * build a pattern matching string
+     *
+     * EXPERIMENTAL
+     *
+     * WARNING: this function is experimental and may change signature at
+     * any time until labelled as non-experimental
+     *
+     * @access public
+     *
+     * @param array $pattern even keys are strings, odd are patterns (% and _)
+     * @param string $operator optional pattern operator (LIKE, ILIKE and maybe others in the future)
+     * @param string $field optional field name that is being matched against
+     *                  (might be required when emulating ILIKE)
+     *
+     * @return string SQL pattern
+     */
+    function matchPattern($pattern, $operator = null, $field = null)
+    {
+        $db =& $this->getDBInstance();
+        if (PEAR::isError($db)) {
+            return $db;
+        }
+
+        $match = '';
+        if (!is_null($operator)) {
+            $field = is_null($field) ? '' : $field.' ';
+            $operator = strtoupper($operator);
+            switch ($operator) {
+            // case insensitive
+            case 'ILIKE':
+                $match = $field.'LIKE ';
+                break;
+            // case sensitive
+            case 'LIKE':
+                $match = $field.'LIKE ';
+                break;
+            default:
+                return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                    'not a supported operator type:'. $operator, __FUNCTION__);
+            }
+        }
+        $match.= "'";
+        foreach ($pattern as $key => $value) {
+            if ($key % 2) {
+                $match.= $value;
+            } else {
+                $match.= $db->escapePattern($db->escape($value));
+            }
+        }
+        $match.= "'";
+        $match.= $this->patternEscapeString();
+        return $match;
     }
 
     // }}}
@@ -229,7 +288,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
         case 'tinyint':
             $type[] = 'integer';
             $type[] = 'boolean';
-            if (preg_match('/^[is|has]/', $field['name'])) {
+            if (preg_match('/^(is|has)/', $field['name'])) {
                 $type = array_reverse($type);
             }
             $unsigned = preg_match('/ unsigned/i', $field['type']);
@@ -270,7 +329,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             $type[] = 'text';
             if ($length == '1') {
                 $type[] = 'boolean';
-                if (preg_match('/^[is|has]/', $field['name'])) {
+                if (preg_match('/^(is|has)/', $field['name'])) {
                     $type = array_reverse($type);
                 }
             } elseif (strstr($db_type, 'text')) {
@@ -321,7 +380,7 @@ class MDB2_Driver_Datatype_sqlite extends MDB2_Driver_Datatype_Common
             }
 
             return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'mapNativeDatatype: unknown database attribute type: '.$db_type);
+                'unknown database attribute type: '.$db_type, __FUNCTION__);
         }
 
         return array($type, $length, $unsigned, $fixed);

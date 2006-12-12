@@ -72,13 +72,17 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         $count = count($column_sql);
         if ($count == 0) {
             return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'unexpected empty table column definition list');
+                'unexpected empty table column definition list', __FUNCTION__);
         }
-        $regexp = '/^([^ ]+) (CHAR|VARCHAR|VARCHAR2|TEXT|BOOLEAN|SMALLINT|INT|INTEGER|DECIMAL|BIGINT|DOUBLE|FLOAT|DATETIME|DATE|TIME|LONGTEXT|LONGBLOB)( ?\(([1-9][0-9]*)(:([1-9][0-9]*))?\))?( UNSIGNED)?( PRIMARY KEY)?( DEFAULT (\'[^\']*\'|[^ ]+))?( NOT NULL)?$/i';
+        $regexp = '/^([^ ]+) (CHAR|VARCHAR|VARCHAR2|TEXT|BOOLEAN|SMALLINT|INT|INTEGER|DECIMAL|BIGINT|DOUBLE|FLOAT|DATETIME|DATE|TIME|LONGTEXT|LONGBLOB)( ?\(([1-9][0-9]*)(:([1-9][0-9]*))?\))?( UNSIGNED)?( PRIMARY KEY)?( DEFAULT (\'[^\']*\'|[^ ]+))?( NULL| NOT NULL)?$/i';
+        $regexp2 = '/^([^ ]+) (PRIMARY|UNIQUE|CHECK)$/i';
         for ($i=0, $j=0; $i<$count; ++$i) {
             if (!preg_match($regexp, trim($column_sql[$i]), $matches)) {
+                if (!preg_match($regexp2, trim($column_sql[$i]))) {
+                    continue;
+                }
                 return $db->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                    'unexpected table column SQL definition: "'.$column_sql[$i].'"');
+                    'unexpected table column SQL definition: "'.$column_sql[$i].'"', __FUNCTION__);
             }
             $columns[$j]['name'] = $matches[1];
             $columns[$j]['type'] = strtolower($matches[2]);
@@ -105,7 +109,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
                 $columns[$j]['default'] = $default;
             }
             if (isset($matches[11]) && strlen($matches[11])) {
-                $columns[$j]['notnull'] = true;
+                $columns[$j]['notnull'] = ($matches[11] === ' NOT NULL');
             }
             ++$j;
         }
@@ -133,12 +137,11 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         if (PEAR::isError($result)) {
             return $result;
         }
-        $table = $db->quote($table, 'text');
         $query = "SELECT sql FROM sqlite_master WHERE type='table' AND ";
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            $query.= 'LOWER(name)='.strtolower($table);
+            $query.= 'LOWER(name)='.$db->quote(strtolower($table), 'text');
         } else {
-            $query.= "name=$table";
+            $query.= 'name='.$db->quote($table, 'text');
         }
         $sql = $db->queryOne($query);
         if (PEAR::isError($sql)) {
@@ -173,7 +176,10 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
                     $autoincrement = true;
                 }
 
-                $definition[0] = array('notnull' => $notnull);
+                $definition[0] = array(
+                    'notnull' => $notnull,
+                    'nativetype' => preg_replace('/^([a-z]+)[^a-z].*/i', '\\1', $column['type'])
+                );
                 if ($length > 0) {
                     $definition[0]['length'] = $length;
                 }
@@ -191,14 +197,18 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
                 }
                 foreach ($types as $key => $type) {
                     $definition[$key] = $definition[0];
+                    if ($type == 'clob' || $type == 'blob') {
+                        unset($definition[$key]['default']);
+                    }
                     $definition[$key]['type'] = $type;
+                    $definition[$key]['mdb2type'] = $type;
                 }
                 return $definition;
             }
         }
 
         return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-            'getTableFieldDefinition: it was not specified an existing table column');
+            'it was not specified an existing table column', __FUNCTION__);
     }
 
     // }}}
@@ -220,13 +230,11 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         }
 
         $index_name = $db->getIndexName($index_name);
-        $index_name = $db->quote($index_name, 'text');
-        $table = $db->quote($table, 'text');
         $query = "SELECT sql FROM sqlite_master WHERE type='index' AND ";
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            $query.= "LOWER(name)=".strtolower($index_name)." AND LOWER(tbl_name)=".strtolower($table);
+            $query.= "LOWER(name)=".$db->quote(strtolower($index_name), 'text')." AND LOWER(tbl_name)=".$db->quote(strtolower($table), 'text');
         } else {
-            $query.= "name=$index_name AND tbl_name=$table";
+            $query.= 'name='.$db->quote($index_name, 'text').' AND tbl_name='.$db->quote($table, 'text');
         }
         $query.= " AND sql NOT NULL ORDER BY name";
         $sql = $db->queryOne($query, 'text');
@@ -235,7 +243,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         }
         if (!$sql) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableIndexDefinition: it was not specified an existing table index');
+                'it was not specified an existing table index', __FUNCTION__);
         }
 
         $sql = strtolower($sql);
@@ -246,7 +254,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
 
         if (preg_match("/^create unique/", $sql)) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableIndexDefinition: it was not specified an existing table index');
+                'it was not specified an existing table index', __FUNCTION__);
         }
 
         $definition = array();
@@ -263,7 +271,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
 
         if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableIndexDefinition: it was not specified an existing table index');
+                'it was not specified an existing table index', __FUNCTION__);
         }
         return $definition;
     }
@@ -287,13 +295,11 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         }
 
         $index_name = $db->getIndexName($index_name);
-        $table = $db->quote($table, 'text');
-        $index_name = $db->quote($index_name, 'text');
         $query = "SELECT sql FROM sqlite_master WHERE type='index' AND ";
         if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            $query.= 'LOWER(name)='.strtolower($index_name).' AND LOWER(tbl_name)='.strtolower($table);
+            $query.= "LOWER(name)=".$db->quote(strtolower($index_name), 'text')." AND LOWER(tbl_name)=".$db->quote(strtolower($table), 'text');
         } else {
-            $query.= "name=$index_name AND tbl_name=$table";
+            $query.= 'name='.$db->quote($index_name, 'text').' AND tbl_name='.$db->quote($table, 'text');
         }
         $query.= " AND sql NOT NULL ORDER BY name";
         $sql = $db->queryOne($query, 'text');
@@ -302,7 +308,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
         }
         if (!$sql) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableConstraintDefinition: it was not specified an existing table index');
+                'it was not specified an existing table index', __FUNCTION__);
         }
 
         $sql = strtolower($sql);
@@ -313,7 +319,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
 
         if (!preg_match("/^create unique/", $sql)) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableConstraintDefinition: it was not specified an existing table constraint');
+                'it was not specified an existing table constraint', __FUNCTION__);
         }
 
         $definition = array();
@@ -331,7 +337,7 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
 
         if (empty($definition['fields'])) {
             return $db->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'getTableConstraintDefinition: it was not specified an existing table constraint');
+                'it was not specified an existing table constraint', __FUNCTION__);
         }
         return $definition;
     }
@@ -353,86 +359,17 @@ class MDB2_Driver_Reverse_sqlite extends MDB2_Driver_Reverse_Common
      */
     function tableInfo($result, $mode = null)
     {
+        if (is_string($result)) {
+           return parent::tableInfo($result, $mode);
+        }
+
         $db =& $this->getDBInstance();
         if (PEAR::isError($db)) {
             return $db;
         }
 
-        if (!is_string($result)) {
-            return $db->raiseError(MDB2_ERROR_NOT_CAPABLE, null, null,
-                'This DBMS can not obtain tableInfo from result sets');
-        }
-
-        /*
-         * Probably received a table name.
-         * Create a result resource identifier.
-         */
-        $id = $db->queryAll('PRAGMA table_info('.$db->quote($result, 'text').');', null, MDB2_FETCHMODE_ASSOC);
-        $got_string = true;
-
-        if ($db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
-            if ($db->options['field_case'] == CASE_LOWER) {
-                $case_func = 'strtolower';
-            } else {
-                $case_func = 'strtoupper';
-            }
-        } else {
-            $case_func = 'strval';
-        }
-
-        $count = count($id);
-        $res   = array();
-
-        if ($mode) {
-            $res['num_fields'] = $count;
-        }
-
-        $db->loadModule('Datatype', null, true);
-        for ($i = 0; $i < $count; $i++) {
-            $id[$i] = array_change_key_case($id[$i], CASE_LOWER);
-            if (strpos($id[$i]['type'], '(') !== false) {
-                $bits = explode('(', $id[$i]['type']);
-                $type = $bits[0];
-                $len  = rtrim($bits[1],')');
-            } else {
-                $type = $id[$i]['type'];
-                $len  = 0;
-            }
-
-            $flags = '';
-            if ($id[$i]['pk']) {
-                $flags.= 'primary_key ';
-            }
-            if ($id[$i]['notnull']) {
-                $flags.= 'not_null ';
-            }
-            if ($id[$i]['dflt_value'] !== null) {
-                $flags.= 'default_' . rawurlencode($id[$i]['dflt_value']);
-            }
-            $flags = trim($flags);
-
-            $res[$i] = array(
-                'table' => $case_func($result),
-                'name'  => $case_func($id[$i]['name']),
-                'type'  => $type,
-                'length'   => $len,
-                'flags' => $flags,
-            );
-            $mdb2type_info = $db->datatype->mapNativeDatatype($res[$i]);
-            if (PEAR::isError($mdb2type_info)) {
-               return $mdb2type_info;
-            }
-            $res[$i]['mdb2type'] = $mdb2type_info[0][0];
-
-            if ($mode & MDB2_TABLEINFO_ORDER) {
-                $res['order'][$res[$i]['name']] = $i;
-            }
-            if ($mode & MDB2_TABLEINFO_ORDERTABLE) {
-                $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
-            }
-        }
-
-        return $res;
+        return $db->raiseError(MDB2_ERROR_NOT_CAPABLE, null, null,
+           'This DBMS can not obtain tableInfo from result sets', __FUNCTION__);
     }
 }
 

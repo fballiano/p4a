@@ -56,9 +56,9 @@
 class MDB2_Driver_sqlite extends MDB2_Driver_Common
 {
     // {{{ properties
-    var $escape_quotes = "'";
+    var $string_quoting = array('start' => "'", 'end' => "'", 'escape' => "'", 'escape_pattern' => false);
 
-    var $escape_identifier = '"';
+    var $identifier_quoting = array('start' => '"', 'end' => '"', 'escape' => '"');
 
     var $_lasterror = '';
 
@@ -87,11 +87,15 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         $this->supported['LOBs'] = true;
         $this->supported['replace'] = true;
         $this->supported['transactions'] = true;
+        $this->supported['savepoints'] = false;
         $this->supported['sub_selects'] = true;
         $this->supported['auto_increment'] = true;
         $this->supported['primary_key'] = false; // requires alter table implementation
         $this->supported['result_introspection'] = false; // not implemented
         $this->supported['prepared_statements'] = 'emulated';
+        $this->supported['identifier_quoting'] = true;
+        $this->supported['pattern_escaping'] = false;
+        $this->supported['new_link'] = false;
 
         $this->options['base_transaction_name'] = '___php_MDB2_sqlite_auto_commit_off';
         $this->options['fixed_float'] = 0;
@@ -154,28 +158,37 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
      * Quotes a string so it can be safely used in a query. It will quote
      * the text so it can safely be used within a query.
      *
-     * @param string $text the input string to quote
-     * @return string quoted string
-     * @access public
+     * @param   string  the input string to quote
+     * @param   bool    escape wildcards
+     *
+     * @return  string  quoted string
+     *
+     * @access  public
      */
-    function escape($text)
+    function escape($text, $escape_wildcards = false)
     {
-        return @sqlite_escape_string($text);
+        $text = @sqlite_escape_string($text);
+        return $text;
     }
 
     // }}}
     // {{{ beginTransaction()
 
     /**
-     * Start a transaction.
+     * Start a transaction or set a savepoint.
      *
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
-     * @access public
+     * @param   string  name of a savepoint to set
+     * @return  mixed   MDB2_OK on success, a MDB2 error on failure
+     *
+     * @access  public
      */
-    function beginTransaction()
+    function beginTransaction($savepoint = null)
     {
-        $this->debug('starting transaction', 'beginTransaction', false);
-        if ($this->in_transaction) {
+        $this->debug('Starting transaction/savepoint', __FUNCTION__, array('is_manip' => true, 'savepoint' => $savepoint));
+        if (!is_null($savepoint)) {
+            return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'savepoints are not supported', __FUNCTION__);
+        } elseif ($this->in_transaction) {
             return MDB2_OK;  //nothing to do
         }
         if (!$this->destructor_registered && $this->opened_persistent) {
@@ -196,18 +209,27 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
 
     /**
      * Commit the database changes done during a transaction that is in
-     * progress.
+     * progress or release a savepoint. This function may only be called when
+     * auto-committing is disabled, otherwise it will fail. Therefore, a new
+     * transaction is implicitly started after committing the pending changes.
      *
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
-     * @access public
+     * @param   string  name of a savepoint to release
+     * @return  mixed   MDB2_OK on success, a MDB2 error on failure
+     *
+     * @access  public
      */
-    function commit()
+    function commit($savepoint = null)
     {
-        $this->debug('commit transaction', 'commit', false);
+        $this->debug('Committing transaction/savepoint', __FUNCTION__, array('is_manip' => true, 'savepoint' => $savepoint));
         if (!$this->in_transaction) {
             return $this->raiseError(MDB2_ERROR_INVALID, null, null,
-                'commit: transaction changes are being auto committed');
+                'commit/release savepoint cannot be done changes are auto committed', __FUNCTION__);
         }
+        if (!is_null($savepoint)) {
+            return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'savepoints are not supported', __FUNCTION__);
+        }
+
         $query = 'COMMIT TRANSACTION '.$this->options['base_transaction_name'];
         $result =& $this->_doQuery($query, true);
         if (PEAR::isError($result)) {
@@ -218,22 +240,31 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
     }
 
     // }}}
-    // {{{ rollback()
+    // {{{
 
     /**
-     * Cancel any database changes done during a transaction that is in
-     * progress.
+     * Cancel any database changes done during a transaction or since a specific
+     * savepoint that is in progress. This function may only be called when
+     * auto-committing is disabled, otherwise it will fail. Therefore, a new
+     * transaction is implicitly started after canceling the pending changes.
      *
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
-     * @access public
+     * @param   string  name of a savepoint to rollback to
+     * @return  mixed   MDB2_OK on success, a MDB2 error on failure
+     *
+     * @access  public
      */
-    function rollback()
+    function rollback($savepoint = null)
     {
-        $this->debug('rolling back transaction', 'rollback', false);
+        $this->debug('Rolling back transaction/savepoint', __FUNCTION__, array('is_manip' => true, 'savepoint' => $savepoint));
         if (!$this->in_transaction) {
             return $this->raiseError(MDB2_ERROR_INVALID, null, null,
-                'rollback: transactions can not be rolled back when changes are auto committed');
+                'rollback cannot be done changes are auto committed', __FUNCTION__);
         }
+        if (!is_null($savepoint)) {
+            return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'savepoints are not supported', __FUNCTION__);
+        }
+
         $query = 'ROLLBACK TRANSACTION '.$this->options['base_transaction_name'];
         $result =& $this->_doQuery($query, true);
         if (PEAR::isError($result)) {
@@ -241,6 +272,43 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         }
         $this->in_transaction = false;
         return MDB2_OK;
+    }
+
+    // }}}
+    // {{{ function setTransactionIsolation()
+
+    /**
+     * Set the transacton isolation level.
+     *
+     * @param   string  standard isolation level
+     *                  READ UNCOMMITTED (allows dirty reads)
+     *                  READ COMMITTED (prevents dirty reads)
+     *                  REPEATABLE READ (prevents nonrepeatable reads)
+     *                  SERIALIZABLE (prevents phantom reads)
+     * @return  mixed   MDB2_OK on success, a MDB2 error on failure
+     *
+     * @access  public
+     * @since   2.1.1
+     */
+    function setTransactionIsolation($isolation)
+    {
+        $this->debug('Setting transaction isolation level', __FUNCTION__, array('is_manip' => true));
+        switch ($isolation) {
+        case 'READ UNCOMMITTED':
+            $isolation = 0;
+            break;
+        case 'READ COMMITTED':
+        case 'REPEATABLE READ':
+        case 'SERIALIZABLE':
+            $isolation = 1;
+            break;
+        default:
+            return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
+                'isolation level is not supported: '.$isolation, __FUNCTION__);
+        }
+
+        $query = "PRAGMA read_uncommitted=$isolation";
+        return $this->_doQuery($query, true);
     }
 
     // }}}
@@ -283,14 +351,15 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
 
         if (!PEAR::loadExtension($this->phptype)) {
             return $this->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
-                'connect: extension '.$this->phptype.' is not compiled into PHP');
+                'extension '.$this->phptype.' is not compiled into PHP', __FUNCTION__);
         }
 
         if (!empty($this->database_name)) {
             if ($database_file !== ':memory:') {
                 if (!file_exists($database_file)) {
                     if (!touch($database_file)) {
-                        return $this->raiseError(MDB2_ERROR_NOT_FOUND);
+                        return $this->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
+                            'Could not create database file', __FUNCTION__);
                     }
                     if (!isset($this->dsn['mode'])
                         || !is_numeric($this->dsn['mode'])
@@ -300,28 +369,37 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
                         $mode = octdec($this->dsn['mode']);
                     }
                     if (!chmod($database_file, $mode)) {
-                        return $this->raiseError(MDB2_ERROR_NOT_FOUND);
+                        return $this->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
+                            'Could not be chmodded database file', __FUNCTION__);
                     }
                     if (!file_exists($database_file)) {
-                        return $this->raiseError(MDB2_ERROR_NOT_FOUND);
+                        return $this->raiseError(MDB2_ERROR_NOT_FOUND, null, null,
+                            'Could not be found database file', __FUNCTION__);
                     }
                 }
                 if (!is_file($database_file)) {
-                    return $this->raiseError(MDB2_ERROR_INVALID);
+                    return $this->raiseError(MDB2_ERROR_INVALID, null, null,
+                            'Database is a directory name', __FUNCTION__);
                 }
                 if (!is_readable($database_file)) {
-                    return $this->raiseError(MDB2_ERROR_ACCESS_VIOLATION);
+                    return $this->raiseError(MDB2_ERROR_ACCESS_VIOLATION, null, null,
+                            'Could not read database file', __FUNCTION__);
                 }
             }
 
             $connect_function = ($this->options['persistent'] ? 'sqlite_popen' : 'sqlite_open');
             $php_errormsg = '';
-            @ini_set('track_errors', true);
-            $connection = @$connect_function($database_file);
-            @ini_restore('track_errors');
+            if (version_compare('5.1.0', PHP_VERSION, '>')) {
+                @ini_set('track_errors', true);
+                $connection = @$connect_function($database_file);
+                @ini_restore('track_errors');
+            } else {
+                $connection = @$connect_function($database_file, 0666, $php_errormsg);
+            }
             $this->_lasterror = $php_errormsg;
             if (!$connection) {
-                return $this->raiseError(MDB2_ERROR_CONNECT_FAILED);
+                return $this->raiseError(MDB2_ERROR_CONNECT_FAILED, null, null,
+                'unable to establish a connection', __FUNCTION__);
             }
 
             if (!empty($this->dsn['charset'])) {
@@ -356,8 +434,18 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
     {
         if (is_resource($this->connection)) {
             if ($this->in_transaction) {
+                $dsn = $this->dsn;
+                $database_name = $this->database_name;
+                $persistent = $this->options['persistent'];
+                $this->dsn = $this->connected_dsn;
+                $this->database_name = $this->connected_database_name;
+                $this->options['persistent'] = $this->opened_persistent;
                 $this->rollback();
+                $this->dsn = $dsn;
+                $this->database_name = $database_name;
+                $this->options['persistent'] = $persistent;
             }
+
             if (!$this->opened_persistent || $force) {
                 @sqlite_close($this->connection);
             }
@@ -403,7 +491,7 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
     function &_doQuery($query, $is_manip = false, $connection = null, $database_name = null)
     {
         $this->last_query = $query;
-        $result = $this->debug($query, 'query', $is_manip);
+        $result = $this->debug($query, 'query', array('is_manip' => $is_manip, 'when' => 'pre'));
         if ($result) {
             if (PEAR::isError($result)) {
                 return $result;
@@ -411,10 +499,8 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
             $query = $result;
         }
         if ($this->options['disable_query']) {
-            if ($is__manip) {
-                return 0;
-            }
-            return null;
+            $result = $is_manip ? 0 : null;
+            return $result;
         }
 
         if (is_null($connection)) {
@@ -427,17 +513,22 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         $function = $this->options['result_buffering']
             ? 'sqlite_query' : 'sqlite_unbuffered_query';
         $php_errormsg = '';
-        @ini_set('track_errors', true);
-        $result = @$function($query.';', $connection);
-        @ini_restore('track_errors');
+        if (version_compare('5.1.0', PHP_VERSION, '>')) {
+            @ini_set('track_errors', true);
+            $result = @$function($query.';', $connection);
+            @ini_restore('track_errors');
+        } else {
+            $result = @$function($query.';', $connection, SQLITE_BOTH, $php_errormsg);
+        }
         $this->_lasterror = $php_errormsg;
 
         if (!$result) {
             $err =& $this->raiseError(null, null, null,
-                '_doQuery: Could not execute statement');
+                'Could not execute statement', __FUNCTION__);
             return $err;
         }
 
+        $this->debug($query, 'query', array('is_manip' => $is_manip, 'when' => 'post', 'result' => $result));
         return $result;
     }
 
@@ -522,7 +613,7 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         }
         if (!$server_info) {
             return $this->raiseError(MDB2_ERROR_UNSUPPORTED, null, null,
-                'getServerVersion: Requires either the "server_version" option or the sqlite_libversion() function');
+                'Requires either the "server_version" option or the sqlite_libversion() function', __FUNCTION__);
         }
         // cache server_info
         $this->connected_server_info = $server_info;
@@ -628,14 +719,14 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
             if (isset($fields[$name]['key']) && $fields[$name]['key']) {
                 if ($value === 'NULL') {
                     return $this->raiseError(MDB2_ERROR_CANNOT_REPLACE, null, null,
-                        'replace: key value '.$name.' may not be NULL');
+                        'key value '.$name.' may not be NULL', __FUNCTION__);
                 }
                 $keys++;
             }
         }
         if ($keys == 0) {
             return $this->raiseError(MDB2_ERROR_CANNOT_REPLACE, null, null,
-                'replace: not specified which fields are keys');
+                'not specified which fields are keys', __FUNCTION__);
         }
 
         $connection = $this->getConnection();
@@ -644,8 +735,6 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         }
 
         $query = "REPLACE INTO $table ($query) VALUES ($values)";
-        $this->last_query = $query;
-        $this->debug($query, 'query', true);
         $result =& $this->_doQuery($query, true, $connection);
         if (PEAR::isError($result)) {
             return $result;
@@ -678,16 +767,12 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         if (PEAR::isError($result)) {
             if ($ondemand && $result->getCode() == MDB2_ERROR_NOSUCHTABLE) {
                 $this->loadModule('Manager', null, true);
-                // Since we are creating the sequence on demand
-                // we know the first id = 1 so initialize the
-                // sequence at 2
-                $result = $this->manager->createSequence($seq_name, 2);
+                $result = $this->manager->createSequence($seq_name);
                 if (PEAR::isError($result)) {
                     return $this->raiseError($result, null, null,
-                        'nextID: on demand sequence '.$seq_name.' could not be created');
+                        'on demand sequence '.$seq_name.' could not be created', __FUNCTION__);
                 } else {
-                    // First ID of a newly created sequence is 1
-                    return 1;
+                    return $this->nextID($seq_name, false);
                 }
             }
             return $result;
@@ -724,7 +809,7 @@ class MDB2_Driver_sqlite extends MDB2_Driver_Common
         $value = @sqlite_last_insert_rowid($connection);
         if (!$value) {
             return $this->raiseError(null, null, null,
-                'lastInsertID: Could not get last insert ID');
+                'Could not get last insert ID', __FUNCTION__);
         }
         return $value;
     }
@@ -792,20 +877,29 @@ class MDB2_Result_sqlite extends MDB2_Result_Common
         if (!$row) {
             if ($this->result === false) {
                 $err =& $this->db->raiseError(MDB2_ERROR_NEED_MORE_DATA, null, null,
-                    'fetchRow: resultset has already been freed');
+                    'resultset has already been freed', __FUNCTION__);
                 return $err;
             }
             $null = null;
             return $null;
         }
-        if ($this->db->options['portability'] & MDB2_PORTABILITY_EMPTY_TO_NULL) {
-            $this->db->_fixResultArrayValues($row, MDB2_PORTABILITY_EMPTY_TO_NULL);
+        $mode = $this->db->options['portability'] & MDB2_PORTABILITY_EMPTY_TO_NULL;
+        $rtrim = false;
+        if ($this->db->options['portability'] & MDB2_PORTABILITY_RTRIM) {
+            if (empty($this->types)) {
+                $mode += MDB2_PORTABILITY_RTRIM;
+            } else {
+                $rtrim = true;
+            }
+        }
+        if ($mode) {
+            $this->db->_fixResultArrayValues($row, $mode);
+        }
+        if (!empty($this->types)) {
+            $row = $this->db->datatype->convertResultRow($this->types, $row, $rtrim);
         }
         if (!empty($this->values)) {
             $this->_assignBindColumns($row);
-        }
-        if (!empty($this->types)) {
-            $row = $this->db->datatype->convertResultRow($this->types, $row);
         }
         if ($fetchmode === MDB2_FETCHMODE_OBJECT) {
             $object_class = $this->db->options['fetch_class'];
@@ -864,12 +958,12 @@ class MDB2_Result_sqlite extends MDB2_Result_Common
         if (is_null($cols)) {
             if ($this->result === false) {
                 return $this->db->raiseError(MDB2_ERROR_NEED_MORE_DATA, null, null,
-                    'numCols: resultset has already been freed');
+                    'resultset has already been freed', __FUNCTION__);
             } elseif (is_null($this->result)) {
                 return count($this->types);
             }
             return $this->db->raiseError(null, null, null,
-                'numCols: Could not get column count');
+                'Could not get column count', __FUNCTION__);
         }
         return $cols;
     }
@@ -898,12 +992,12 @@ class MDB2_BufferedResult_sqlite extends MDB2_Result_sqlite
         if (!@sqlite_seek($this->result, $rownum)) {
             if ($this->result === false) {
                 return $this->db->raiseError(MDB2_ERROR_NEED_MORE_DATA, null, null,
-                    'seek: resultset has already been freed');
+                    'resultset has already been freed', __FUNCTION__);
             } elseif (is_null($this->result)) {
                 return MDB2_OK;
             }
             return $this->db->raiseError(MDB2_ERROR_INVALID, null, null,
-                'seek: tried to seek to an invalid row number ('.$rownum.')');
+                'tried to seek to an invalid row number ('.$rownum.')', __FUNCTION__);
         }
         $this->rownum = $rownum - 1;
         return MDB2_OK;
@@ -942,12 +1036,12 @@ class MDB2_BufferedResult_sqlite extends MDB2_Result_sqlite
         if (is_null($rows)) {
             if ($this->result === false) {
                 return $this->db->raiseError(MDB2_ERROR_NEED_MORE_DATA, null, null,
-                    'numRows: resultset has already been freed');
+                    'resultset has already been freed', __FUNCTION__);
             } elseif (is_null($this->result)) {
                 return 0;
             }
             return $this->db->raiseError(null, null, null,
-                'numRows: Could not get row count');
+                'Could not get row count', __FUNCTION__);
         }
         return $rows;
     }
