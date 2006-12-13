@@ -139,7 +139,7 @@
 		 * @access private
 		 */
 		var $internet_explorer = false;
-		
+
 		/**
 		 * Find wich browser is the user using
 		 * @var array
@@ -157,7 +157,7 @@
 		var $_to_redesign = array();
 		var $_redesign_popup = FALSE;
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
-		
+
 		var $_popup = NULL;
 
 		/**
@@ -225,7 +225,7 @@
 			if (!Net_UserAgent_Detect::hasFeature('ajax') or P4A_FORCE_HANDHELD_RENDERING) {
 				$this->handheld = true;
 			}
-			
+
 			return Net_UserAgent_Detect::_getStaticProperty('browser');
 		}
 
@@ -509,25 +509,25 @@
 			$this->actionHandler('afterOpenMask');
 			return $this->active_mask;
 		}
-		
-		
+
+
 		function openPopup($name)
 		{
 			//Close opened popup
 			if ($this->_popup) {
 				$this->closePopup();
 			}
-			
-			$this->_popup = $name;	
+
+			$this->_popup = $name;
 			$mask =& p4a_mask::singleton($this->_popup);
 			$mask->isPopup(TRUE);
-			
+
 			$this->_redesign_popup = TRUE;
 		}
-		
+
 		function closePopup($destroy = FALSE)
 		{
-			
+
 			if ($destroy) {
 				$mask =& p4a_mask::singleton($this->_popup);
 				$mask->destroy();
@@ -536,8 +536,8 @@
 				$mask->isPopup(FALSE);
 			}
 			$this->_popup = NULL;
-			$this->_redesign_popup = TRUE;			
-		}		
+			$this->_redesign_popup = TRUE;
+		}
 
 		 /**
 		 * Sets the previous mask the active mask
@@ -545,6 +545,12 @@
 		 */
 	     function showPrevMask()
 	     {
+			//Close opened popup
+			if ($this->_popup) {
+				$this->closePopup();
+				return;
+			}
+
 	     	if (sizeof($this->masks_history) > 0){
 				$mask_name = array_pop($this->masks_history);
 				$this->setActiveMask($mask_name);
@@ -563,7 +569,7 @@
 				return $this->masks->$mask_name;
 	     	}
 	     }
-	     
+
 
 		/**
 		 * Checks if the desidered mask is in the masks collection.

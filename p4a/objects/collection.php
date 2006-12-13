@@ -53,6 +53,9 @@ class P4A_Collection extends P4A_Object
             $id = $this->_objects[$this->_pointer];
             $this->_pointer++;
             if (!isset($p4a->objects[$id]) or !is_object($p4a->objects[$id])) {
+            	$this->_pointer--;
+            	unset($this->_objects[$this->_pointer]);
+            	$this->_objects = array_values($this->_objects);
             	return $this->nextItem();
             } else {
             	return $p4a->objects[$id];

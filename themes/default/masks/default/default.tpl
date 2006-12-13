@@ -28,7 +28,7 @@
 </head>
 
 <body onload="setFocus('{focus_id}');hideLoading();">
-<div id='p4a_loading'><img src='{theme_path}/loading.gif' alt='' /> Loading... </div>
+<div id='p4a_loading'><img src='{icons_path}/loading.gif' alt='' /> Loading... </div>
 <div id='body'>
 {mask_open:h}
 

@@ -602,7 +602,7 @@
   				}
   				$sParams = substr($sParams, 0, -2);
   			}
-  			
+
   			foreach ($this->actions as $action=>$action_data)
 			{
 				if (!$this->isEnabled()) {
@@ -619,10 +619,10 @@
 					$return = 'true';
 					$prefix .= 'if(isReturnPressed(event)){';
 					$suffix .= '}';
-				} elseif ($action == 'onkeypress' 
+				} elseif ($action == 'onkeypress'
 					   or $action == 'onkeydown'
 					   or $action == 'onkeyup') {
-					$sParams .= ", getKeyPressed(event)"; 	   	
+					$sParams .= ", getKeyPressed(event)";
 				}
 
 				if ($action_data['require_confirmation']) {
@@ -705,6 +705,7 @@
 				$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
 				$this->_tpl_vars["close_javascript"] = '</script>';
 				$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
+				$this->_tpl_vars["icons_path"] = P4A_ICONS_PATH;
 			}
 		}
 
@@ -826,7 +827,7 @@
 		{
 			return $this->actionHandler('onKeyPress', $params);
 		}
-		
+
 		/**
 		 * Wrapper used to add the handling of OnKeyUp action.
 		 * @see action_handler()
@@ -834,8 +835,8 @@
 		function onKeyUp($params = NULL)
 		{
 			return $this->actionHandler('onKeyUp', $params);
-		}		
-		
+		}
+
 		/**
 		 * Wrapper used to add the handling of OnKeyDown action.
 		 * @see action_handler()
@@ -843,7 +844,7 @@
 		function onKeyDown($params = NULL)
 		{
 			return $this->actionHandler('onKeyDown', $params);
-		}		
+		}
 
 		/**
 		 * Wrapper used to add the handling of onReturnPress action.

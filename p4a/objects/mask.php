@@ -151,7 +151,7 @@
 		 * @access private
 		 */
 		var $_tpl_vars = array();
-		
+
 		var $is_popup = FALSE;
 
 		/**
@@ -188,7 +188,7 @@
 			}
  			return $p4a->masks->$name;
 		}
-		
+
 		function isPopup($is_popup=NULL)
 		{
 			if ($is_popup !== NULL) {
@@ -271,7 +271,7 @@
 		function getTemplateName()
 		{
 			if ($this->isPopup()) {
-				return 'popup';	
+				return 'popup';
 			} else {
 				return $this->template_name;
 			}
@@ -326,27 +326,28 @@
 		 */
 		function main()
 		{
-			$p4a =& P4A::singleton();			
+			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
-						
+
 			header("Content-Type: text/html; charset={$charset}");
 			print $this->getAsString();
 		}
-		
+
 		/**
 		 * Return the output mask
 		 */
 		function getAsString($template = false)
 		{
-			$p4a =& P4A::singleton();			
+			$p4a =& P4A::singleton();
 			$charset = $p4a->i18n->getCharset();
 
 			$tpl_container = (object)'';
 			$tpl_container->charset = $charset;
 			$tpl_container->title = $this->getTitle();
 			$tpl_container->theme_path = P4A_THEME_PATH;
+			$tpl_container->icons_path = P4A_ICONS_PATH;
 			$tpl_container->application_title = $p4a->getTitle();
-			
+
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
 
@@ -368,7 +369,7 @@
 
 			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
-			
+
 			/* Popup */
 			if ($p4a->_popup and !$this->isPopup()) {
 				$popup_mask = P4A_Mask::singleton($p4a->_popup);
@@ -376,14 +377,14 @@
 			}
 
 			if (!$template) {
-				$template = $this->getTemplateName();		
+				$template = $this->getTemplateName();
 			}
 			$string =  P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
 
 			$this->clearTempCSS();
 			$this->clearTempJavascript();
-			$this->clearTempVars();				
-			
+			$this->clearTempVars();
+
 			return $string;
 		}
 
