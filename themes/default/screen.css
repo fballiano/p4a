@@ -545,10 +545,11 @@ legend {
 	font-weight: normal;
 }
 
-/****************/
+/*********/
 /* POPUP */
-/****************/
-#overlay{
+/*********/
+
+#overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -559,8 +560,8 @@ legend {
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
-	
-#popup{
+
+#popup {
 	position: absolute;
 	top: 0;
 	left: 0;
