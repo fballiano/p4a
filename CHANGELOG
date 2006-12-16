@@ -22,6 +22,7 @@
 - "prototype" javascript library was updated to 1.5.0_rc2 to avoid multicheckbox ajax submit bug
 - length property and setLength()/getLength() methods were added to P4A_Data_Field
 - P4A_AUTO_MAXLENGTH constant was added (default = true)
+- P4A_Field::getAutoMaxlength() was added
 - automatic maxlength html attribute compilation was added (reading from the attributes of the data field coming from a db), available only for text/password fields
 - P4A_Widget::setProperty(), P4A_Widget::getProperty(), P4A_Widget::unsetProperty() now turn property name to lower case
 
