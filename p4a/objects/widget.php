@@ -274,7 +274,7 @@
 		 */
 		function setProperty($property, $value)
 		{
-			$this->properties[$property] = $value;
+			$this->properties[strtolower($property)] = $value;
 		}
 
 		/**
@@ -284,7 +284,7 @@
 		 */
 		function unsetProperty($property)
 		{
-			unset($this->properties[$property]);
+			unset($this->properties[strtolower($property)]);
 		}
 
 		/**
@@ -295,6 +295,7 @@
 		 */
 		function getProperty($property)
 		{
+			$property = strtolower($property);
 			if (array_key_exists($property, $this->properties)) {
 				return $this->properties[$property];
 			} else {

@@ -79,6 +79,7 @@
 		var $sequence = NULL;
 		var $table = NULL;
 		var $alias_of = NULL;
+		var $length = NULL;
 
 		/**
 		 * Class constructor.
@@ -110,7 +111,7 @@
 		{
 			return $this->value;
 		}
-		
+
 		/**
 		 * Returns the value of the data field for safe SQL queries.
 		 * @access public
@@ -119,7 +120,7 @@
 		function getSQLValue()
 		{
 			return addslashes($this->value);
-		}		
+		}
 
 		/**
 		 * Sets the new value of the data field.
@@ -139,7 +140,7 @@
 		{
 			return $this->new_value;
 		}
-		
+
 		/**
 		 * Returns the value of the data field for safe SQL queries.
 		 * @access public
@@ -148,7 +149,7 @@
 		function getSQLNewValue()
 		{
 			return addslashes($this->new_value);
-		}		
+		}
 
 		/**
 		 * Sets the type of the data_field.
@@ -215,19 +216,33 @@
 			}
 		}
 
-		function setTable($table){
+		function setTable($table)
+		{
 			$this->table = $table;
 		}
 
-		function getTable(){
+		function getTable()
+		{
 			return $this->table;
 		}
 
-		function setAliasOf($alias_of){
+		function setAliasOf($alias_of)
+		{
 			$this->alias_of = $alias_of;
 		}
 
-		function getAliasOf(){
+		function getAliasOf()
+		{
 			return $this->alias_of;
+		}
+
+		function setLength($length)
+		{
+			$this->length = $length;
+		}
+
+		function getLength()
+		{
+			return $this->length;
 		}
 	}

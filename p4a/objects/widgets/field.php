@@ -694,6 +694,16 @@
 			$this->setNewValue(NULL);
         }
 
+        function getAutoMaxlength()
+        {
+			$length = $this->data_field->getLength();
+			if (P4A_AUTO_MAXLENGTH and $length and !isset($this->properties['maxlength'])) {
+				return " maxlength=\"$length\" ";
+			}
+
+			return '';
+        }
+
 		/**
 		 * Returns the HTML rendered field.
 		 * @return string
@@ -739,7 +749,7 @@
 				$header .= 'disabled="disabled" ';
 			}
 
-			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			$sReturn = $this->composeLabel() . $header . $this->getAutoMaxlength() . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
 
@@ -788,7 +798,7 @@
 				$header .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 			}
 
-			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+			$sReturn = $this->composeLabel() . $header . $this->getAutoMaxlength() . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 			return $sReturn;
 		}
 

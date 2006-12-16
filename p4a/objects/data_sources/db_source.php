@@ -249,6 +249,7 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
                 $this->fields->build("p4a_data_field",$field_name);
 				$this->fields->$field_name->setDSN($this->getDSN());
+				$this->fields->$field_name->setLength($col['length']);
                 if ($col['type'] == 'integer' and $col['length'] == 1) {
                     $col['type'] = 'boolean';
                 }
