@@ -90,9 +90,11 @@ function processAjaxResponse(response)
 	var widgets = response.responseXML.getElementsByTagName('widget');
 	for (i=0; i<widgets.length; i++) {
    		var object_id = widgets[i].attributes[0].value;
+   		var display = widgets[i].attributes[1].value;
    		var html = widgets[i].getElementsByTagName('html').item(0);
    		if (html) {
-   			$(object_id).parentNode.innerHTML = html.firstChild.data;
+   			$(object_id).parentNode.style.display = display;   		
+   			$(object_id).parentNode.innerHTML = html.firstChild.data; 
    		}
    		var javascript = widgets[i].getElementsByTagName('javascript').item(0);
    		if (javascript) {

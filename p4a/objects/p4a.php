@@ -418,6 +418,7 @@
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
 			foreach ($this->_to_redesign as $id) {
 				$object =& $this->getObject($id);
+				$display = $object->isVisible() ? 'block' : 'none';
 				$as_string = $object->getAsString();
 				$javascript_codes = array();
 				$javascript = '';
@@ -428,7 +429,7 @@
 					$javascript .= "$code\n\n";
 				}
 
-				print "\n<widget id='$id'>\n";
+				print "\n<widget id='$id' display='$display'>\n";
 				print "<html><![CDATA[{$html}]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";

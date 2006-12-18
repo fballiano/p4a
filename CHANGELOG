@@ -25,7 +25,7 @@
 - P4A_Field::getAutoMaxlength() was added
 - automatic maxlength html attribute compilation was added (reading from the attributes of the data field coming from a db), available only for text/password fields
 - P4A_Widget::setProperty(), P4A_Widget::getProperty(), P4A_Widget::unsetProperty() now turn property name to lower case
-
+- Bug 1616552 solved
 
 1.99.13
 - Internet Explorer 7 is now correctly detected and p4a does not include png and pure css menu hack

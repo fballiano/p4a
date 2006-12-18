@@ -112,6 +112,8 @@ class P4A_Frame extends P4A_Widget
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
+				$display = $object->isVisible() ? 'block' : 'none';
+
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
 				} else {
@@ -132,7 +134,7 @@ class P4A_Frame extends P4A_Widget
 					if ($handheld) {
 						$row .= $as_string;
 					} else {
-						$row .= "\n\t<div style='padding:2px 0px;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
+						$row .= "\n\t<div style='padding:2px 0px;display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
 					}
 				}
 			}
