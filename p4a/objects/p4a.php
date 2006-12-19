@@ -452,7 +452,7 @@
 			print "</ajax-response>";
 
 			if (P4A_AJAX_DEBUG) {
-				$fp = @fopen(ini_get("session.save_path") . '/p4a_ajax_debug.txt', 'w');
+				$fp = @fopen(P4A_COMPILE_DIR . '/p4a_ajax_debug.txt', 'w');
 				@fwrite($fp, ob_get_contents());
 				@fclose($fp);
 			}

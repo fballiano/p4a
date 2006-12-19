@@ -63,7 +63,7 @@ class P4A_Frame extends P4A_Widget
 		}
 	}
 
-	function anchor(&$object, $margin = "0px", $float="left")
+	function anchor(&$object, $margin = "10px", $float="left")
 	{
 		$this->newRow();
 		$this->_anchor($object, $margin, $float);
@@ -73,7 +73,7 @@ class P4A_Frame extends P4A_Widget
 	{
 		$this->_anchor($object, $margin, "right");
 	}
-	
+
 	function anchorLeft(&$object, $margin = "10px")
 	{
 		$this->_anchor($object, $margin, "left");
@@ -88,7 +88,7 @@ class P4A_Frame extends P4A_Widget
 	{
 		$this->_map = array();
 	}
-	
+
 	function newRow()
 	{
 		$this->_row++;
