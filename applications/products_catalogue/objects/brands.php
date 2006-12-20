@@ -83,7 +83,7 @@ class Brands extends P4A_Mask
 		}
 
 		$this->display("menu", $p4a->menu);
-		//$this->display("top", $this->toolbar);
+		$this->display("top", $this->toolbar);
 		$this->display("main", $this->sheet);
 
 		$this->setFocus($this->fields->description);
