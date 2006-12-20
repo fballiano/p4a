@@ -62,7 +62,7 @@
 
 <!-- POPUP -->
 <div id="overlay" style="display:none"></div>
-<div><div id="popup" style="display:none">{popup:h}</div></div>
+<div style="display:block"><div id="popup" style="display:none">{popup:h}</div></div>
 
 {mask_close:h}
 </div>

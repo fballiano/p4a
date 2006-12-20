@@ -70,18 +70,18 @@ function showPopup()
 {
 	var arrayPageSize = getPageSize();
 	var arrayPageScroll = getPageScroll();
-	
-	overlay = $('overlay');
+
+	var overlay = $('overlay');
 	overlay.style.height = 	arrayPageSize[1] + "px";
-	
-	popup = $('popup');
+
+	var popup = $('popup');
 	popup.style.zIndex = -1;
 	Element.show('popup');
 	
-	width = $('sheetContainerPopup').childNodes[1].scrollWidth + "px";
-	top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.scrollHeight - 40) / 2 ) + "px";
-	left = ((arrayPageSize[2] - popup.scrollWidth ) / 2 ) + "px";
-	
+	var width = $('sheetContainerPopup').childNodes[0].scrollWidth + "px";
+	var top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.scrollHeight - 40) / 2 ) + "px";
+	var left = ((arrayPageSize[2] - popup.scrollWidth ) / 2 ) + "px";
+
 	popup.style.width = width;
 	popup.style.top = top;
 	popup.style.left = left;

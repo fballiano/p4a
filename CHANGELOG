@@ -28,6 +28,8 @@
 - Bug 1616552 was solved, now anchoring invisible widgets on P4A_Frame or P4A_Fieldset does not use space on the page
 - ajax debug file is now created under P4A_COMPILE_DIR instead of session.save_path directory
 - switched 10px margin from frame/fieldset to widgets
+- Bug on processAjaxResponse was solved
+- Various IExplorer6 bugs was solved
 
 1.99.13
 - Internet Explorer 7 is now correctly detected and p4a does not include png and pure css menu hack

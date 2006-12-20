@@ -56,7 +56,7 @@ class Products_Catalogue extends P4A
 
 		$this->menu->items->support_tables->addItem("brands");
 		$this->intercept($this->menu->items->support_tables->items->brands,
-						"onClick", "menuClick");
+						"onClick", "openBrands");
 
 		// Data sources
 		$this->build("p4a_db_source", "brands");
@@ -80,5 +80,10 @@ class Products_Catalogue extends P4A
 	function menuClick()
 	{
 		$this->openMask($this->active_object->getName());
+	}
+	
+	function openBrands()
+	{
+		$this->openPopup('brands');
 	}
 }

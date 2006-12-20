@@ -444,7 +444,7 @@
 					$html = '';
 					$javascript = 'hidePopup();';
 				}
-				print "<widget id='popup'>\n";
+				print "<widget id='popup' display='inherit'>\n";
 				print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>";

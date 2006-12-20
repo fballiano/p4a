@@ -50,6 +50,7 @@ function setFocus(id)
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	showLoading();
+
 	for (var i in tinyMCE.instances) {
 		var instance = tinyMCE.instances[i];
 		if (tinyMCE.isInstance(instance) && instance.getDoc() != null) {
@@ -80,22 +81,25 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 		parameters: query_string,
 		onComplete: function(response) {processAjaxResponse(response)}
 	}
-
 	new Ajax.Request('index.php', ajax_params);
 }
 
 function processAjaxResponse(response)
 {
 	document.forms['p4a']._action_id.value = response.responseXML.getElementsByTagName('ajax-response')[0].attributes[0].value;
+
 	var widgets = response.responseXML.getElementsByTagName('widget');
 	for (i=0; i<widgets.length; i++) {
+
    		var object_id = widgets[i].attributes[0].value;
 		if ($(object_id) != undefined) {
+   			
    			var display = widgets[i].attributes[1].value;
    			var html = widgets[i].getElementsByTagName('html').item(0);
+
    			if (html) {
-   				$(object_id).parentNode.style.display = display;   		
-   				$(object_id).parentNode.innerHTML = html.firstChild.data; 
+   				$(object_id).parentNode.style.display = 'block';   		
+   				$(object_id).parentNode.innerHTML = html.firstChild.data;
    			}
    			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
    			if (javascript) {
