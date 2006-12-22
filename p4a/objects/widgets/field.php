@@ -247,6 +247,9 @@
 			$source_description_field = $this->getSourceDescriptionField();
 
 			if (!is_null( $source_description_field ) and is_object($this->data)) {
+				if (!isset($this->data->fields->$source_description_field)) {
+					P4A_Error("P4A_Field is missing: {$source_description_field}");
+				}
 				$visualization_data_type = $this->data->fields->$source_description_field->getType();
 			} elseif (!is_null($this->data_field)) {
 				$visualization_data_type = $this->data_field->getType();

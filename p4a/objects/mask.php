@@ -154,6 +154,9 @@
 
 		var $is_popup = FALSE;
 
+		var $_icon = NULL;
+		var $_icon_size = 48;
+
 		/**
 		 * Mask constructor.
 		 * Generates unique ID for the object, istance a new
@@ -347,6 +350,13 @@
 			$tpl_container->theme_path = P4A_THEME_PATH;
 			$tpl_container->icons_path = P4A_ICONS_PATH;
 			$tpl_container->application_title = $p4a->getTitle();
+
+			if ($this->getTitle() and $this->getIcon()) {
+				$icon = $this->getIcon();
+				$icon_size = $this->getIconSize();
+				$icon_ext = P4A_ICONS_EXTENSION;
+				$tpl_container->title = "<img class=\"img_button\" src=\"{$tpl_container->icons_path}/{$icon_size}/{$icon}.{$icon_ext}\" alt=\"\" />{$tpl_container->title}";
+			}
 
 			$tpl_container->mask_open = $this->maskOpen();
 			$tpl_container->mask_close = $this->maskClose();
@@ -771,5 +781,25 @@
 		function clearTempVars()
 		{
 			$this->_temp_vars = array();
+		}
+
+		function setIcon($icon)
+		{
+			$this->_icon = $icon;
+		}
+
+		function getIcon()
+		{
+			return $this->_icon;
+		}
+
+		function setIconSize($size)
+		{
+			$this->_icon_size = strtolower($size);
+		}
+
+		function getIconSize()
+		{
+			return $this->_icon_size;
 		}
 	}

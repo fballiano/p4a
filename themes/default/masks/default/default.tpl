@@ -50,7 +50,7 @@
 
 <!-- MAIN  -->
 <div id="mainContainer">
-	<div flexy:if="title"><h2>{title}</h2></div>
+	<h2 flexy:if="title">{title:h}</h2>
 
 	<div id="sheetContainer" flexy:if="main">
 		{main:h}
