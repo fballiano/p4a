@@ -1,6 +1,8 @@
 1.99.15
 - some more error messages were put in the code
 - P4A_Mask::setIcon(), getIcon(), setIconSize and getIconSize() were added
+- P4A_VERSION constant was added
+- P4A::getVersion() method was added to retrieve P4A version used
 
 1.99.14
 - First Ajax Popup implementation

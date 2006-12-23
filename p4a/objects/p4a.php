@@ -698,4 +698,14 @@
 		{
 			$this->_to_redesign[] = $id;
 		}
+
+		/**
+		 * Gets P4A version
+		 * @return string p4a version
+		 * @access public
+		 */
+		function getVersion()
+		{
+			return P4A_VERSION;
+		}
 	}
