@@ -1,3 +1,6 @@
+1.99.16
+
+
 1.99.15
 - some more error messages were put in the code
 - P4A_Mask::setIcon(), getIcon(), setIconSize and getIconSize() were added
