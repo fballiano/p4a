@@ -10,15 +10,8 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>org.trustudio.php.core.PHPscriptbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.trustudio.oss.core.scriptnature</nature>
-		<nature>org.trustudio.php.core.phpnature</nature>
 		<nature>net.sourceforge.phpeclipse.phpnature</nature>
 	</natures>
 </projectDescription>
