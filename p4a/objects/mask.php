@@ -351,7 +351,7 @@
 			$tpl_container->icons_path = P4A_ICONS_PATH;
 			$tpl_container->application_title = $p4a->getTitle();
 
-			if ($this->getTitle() and $this->getIcon()) {
+			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
 				$icon = $this->getIcon();
 				$icon_size = $this->getIconSize();
 				$icon_ext = P4A_ICONS_EXTENSION;

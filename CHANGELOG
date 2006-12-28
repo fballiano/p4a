@@ -1,5 +1,5 @@
 1.99.16
-
+- masks icons are rendered only if not on handheld
 
 1.99.15
 - some more error messages were put in the code
