@@ -39,11 +39,8 @@
 /**
  * The tab pane widget
  * A tab pane is a collection of widgets.
- * The widgets are "builds" into it.
  * Only one page is visible at time.
- * The pages are switchable from a tabs menu.
- * It generates tableless HTML.
- * @author Francesco Dominidiato <me@illogico.com>
+ * The pages are switchable from a tabbed menu.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -91,7 +88,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	function setActivePage($page)
 	{
 		if ($this->actionHandler('beforeSetActivePage') == ABORT) return ABORT;
-		
+
 		switch (gettype($page)) {
 			case "string":
 				$this->_active_page = $page;
@@ -103,7 +100,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				P4A_Error('Unsupported page type for P4A_Tab_Pane');
 				break;
 		}
-		
+
 		if ($this->actionHandler('afterSetActivePage') == ABORT) return ABORT;
 	}
 
@@ -159,8 +156,10 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->addTempVar('tab_pane_properties', $properties);
 
 		// re-setting height
-		$this->setHeight($tmpHeight);
-		$this->addTempVar('tab_pane_height', $this->getHeight());
+		if ($tmpHeight) {
+			$this->setHeight($tmpHeight);
+			$this->addTempVar('tab_pane_height', "height:{$tmpHeight}");
+		}
 
 		$tabs = array();
 		$i = 0;

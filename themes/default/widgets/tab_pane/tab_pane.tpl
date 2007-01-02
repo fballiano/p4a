@@ -7,7 +7,7 @@
 </li>
 {end:}
 </ul>
-<div class="tab_pane_page" style="height:{tab_pane_height}">
+<div class="tab_pane_page" style="{tab_pane_height}">
 {active_page:h}
 </div>
 </div>
