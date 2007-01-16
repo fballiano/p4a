@@ -1,13 +1,6 @@
 function executeEvent(object_name, action_name, param1, param2, param3, param4)
 {
-	if (typeof tinyMCE != "undefined") {
-		for (var i in tinyMCE.instances) {
-			var instance = tinyMCE.instances[i];
-			if (tinyMCE.isInstance(instance) && instance.getDoc() != null) {
-				instance.triggerSave();
-			}
-		}
-	}
+	updateAllRichTextEditors(document.forms['p4a']);
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
@@ -50,13 +43,7 @@ function setFocus(id)
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	showLoading();
-
-	for (var i in tinyMCE.instances) {
-		var instance = tinyMCE.instances[i];
-		if (tinyMCE.isInstance(instance) && instance.getDoc() != null) {
-			instance.triggerSave();
-		}
-	}
+	updateAllRichTextEditors(document.forms['p4a']);
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
@@ -90,15 +77,12 @@ function processAjaxResponse(response)
 
 	var widgets = response.responseXML.getElementsByTagName('widget');
 	for (i=0; i<widgets.length; i++) {
-
    		var object_id = widgets[i].attributes[0].value;
 		if ($(object_id) != undefined) {
-   			
    			var display = widgets[i].attributes[1].value;
    			var html = widgets[i].getElementsByTagName('html').item(0);
-
    			if (html) {
-   				$(object_id).parentNode.style.display = 'block';   		
+   				$(object_id).parentNode.style.display = 'block';
    				$(object_id).parentNode.innerHTML = html.firstChild.data;
    			}
    			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
@@ -107,7 +91,7 @@ function processAjaxResponse(response)
    			}
    		}
 	}
-	
+
 	if (window.fixPng) fixPng();
 	hideLoading();
 }
@@ -128,12 +112,26 @@ function form2string(form)
 				}
 				break;
 			default:
-				value = new String(e.value);
-				sReturn += e.name + '=' + escape(value) + '&';
+				if (e.name) {
+					value = new String(e.value);
+					sReturn += e.name + '=' + escape(value) + '&';
+				}
 		}
 	}
 
 	return sReturn.substr(0, sReturn.length - 1);
+}
+
+function updateAllRichTextEditors(form)
+{
+	for (i=0; i<form.elements.length; i++) {
+		var e = form.elements[i];
+		if (e.type == 'textarea') {
+			try {
+				FCKeditorAPI.GetInstance(e.id).UpdateLinkedField();
+			} catch (e) {}
+		}
+	}
 }
 
 function showLoading()

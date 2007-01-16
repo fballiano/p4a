@@ -170,7 +170,7 @@
 		 * @var string
 		 * @access private
 		 */
-		var $rich_textarea_theme = 'advanced';
+		var $rich_textarea_theme = 'Default';
 
 		/**
 		 * buttons for rich textarea toolbars
