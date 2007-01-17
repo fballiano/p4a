@@ -1,0 +1,41 @@
+open "editor/filemanager/browser/default/browser.html"
+around line 139
+replace
+--------------
+		<frameset rows="50,*" framespacing="0">
+			<frame src="frmresourcetype.html" scrolling="no" frameborder="0">
+			<frame name="frmFolders" src="frmfolders.html" scrolling="auto" frameborder="1">
+		</frameset>
+--------------
+with
+--------------
+		<frame name="frmFolders" src="frmfolders.html" scrolling="auto" frameborder="1">
+--------------
+
+
+
+
+open "editor/filemanager/browser/default/connectors/php/config.php"
+around line 27
+replace
+--------------
+$Config['UserFilesPath'] = '/userfiles' ;
+--------------
+with
+--------------
+$Config['UserFilesPath'] = $_GET['p4a_upload_path'] ;
+--------------
+
+
+
+
+open "editor/filemanager/browser/default/connectors/php/io.php"
+around line 37
+replace
+--------------
+	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . strtolower( $resourceType ) . '/' ;
+--------------
+with
+--------------
+	$sResourceTypePath = $GLOBALS["UserFilesDirectory"];
+--------------
