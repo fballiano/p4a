@@ -15,7 +15,7 @@ cd p4apackages
 PKGDIR=`pwd`
 cp -r $SRCDIR .
 
-rm -r `find -type d -name 'CVS'`
+rm -r `find -type d -name '.svn'`
 rm `find -name '.cvsignore'`
 
 cd $NAME

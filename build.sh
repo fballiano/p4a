@@ -34,7 +34,7 @@ rm p4a/p4a.kdevelop
 rm p4a/p4a.kdevses
 rm p4a/build.sh
 rm -r p4a/contribs
-rm -r `find -type d -name 'CVS'`
+rm -r `find -type d -name '.svn'`
 rm `find -name '.cvsignore'`
 
 ##############################################
