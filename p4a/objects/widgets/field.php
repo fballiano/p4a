@@ -200,9 +200,9 @@
 			}
 
 			//Rich textarea things
-			$this->setRichTextareaToolbar(0, 'cut,copy,paste,pastetext,pasteword,|,undo,redo,|,search,replace,|,ltr,rtl,|,charmap,|,removeformat,cleanup,|,code,preview,fullscreen,print,|,help');
-			$this->setRichTextareaToolbar(1, 'bold,italic,underline,strikethrough,|,bullist,numlist,|,sub,sup,|,outdent,indent,|,formatselect');
-			$this->setRichTextareaToolbar(2, 'tablecontrols,visualaid,|,link,unlink,anchor,image,media,advhr');
+			$this->setRichTextareaToolbar(0, 'Cut,Copy,Paste,PasteText,PasteWord,-,Undo,Redo,-,Find,Replace,-,SelectAll,RemoveFormat,-,SourceSimple,FitWindow,Preview,Print');
+			$this->setRichTextareaToolbar(1, 'Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,OrderedList,UnorderedList,-,Outdent,Indent,-,FontFormat');
+			$this->setRichTextareaToolbar(2, 'Link,Unlink,Anchor,-,Image,Flash,-,Table,TableInsertRow,TableDeleteRows,TableInsertColumn,TableDeleteColumns,TableInsertCell,TableDeleteCells,TableMergeCells,TableSplitCell,-,Rule,SpecialChar');
 
 			//Label
  			$this->build("P4A_Label", "label");
