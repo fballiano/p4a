@@ -400,6 +400,15 @@
 			$this->_action_history_id++;
 			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
 				$this->raiseXMLReponse();
+			} elseif (isset($_REQUEST['_upload_path'])) {
+				$path = P4A_UPLOADS_PATH;
+				if (isset($_REQUEST['_object_id'])) {
+					$object =& $this->objects[$_REQUEST['_object_id']];
+					if (is_object($object) and is_subclass_of($object,'p4a_field')) {
+						$path .= '/' . $object->getUploadSubpath();
+					}
+				}
+				print $path;
 			} elseif (P4A_ENABLE_RENDERING AND is_object($this->active_mask)) {
 				$this->active_mask->main();
 			}
