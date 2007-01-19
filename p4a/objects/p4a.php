@@ -400,7 +400,7 @@
 			$this->_action_history_id++;
 			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
 				$this->raiseXMLReponse();
-			} elseif (is_object($this->active_mask)) {
+			} elseif (P4A_ENABLE_RENDERING AND is_object($this->active_mask)) {
 				$this->active_mask->main();
 			}
 
