@@ -77,13 +77,6 @@
 	}
 
 
-	// Automatic Application Name Detection
-	if (!defined('P4A_APPLICATION_NAME')) {
-		$aCwd = explode( _DS_, getcwd() ) ;
-		define('P4A_APPLICATION_NAME', $aCwd[ ( sizeof( $aCwd ) - 1 ) ]) ;
-	}
-
-
 	//Server Constants
 	if (!defined('P4A_SERVER_NAME')) {
 		define('P4A_SERVER_NAME', $_SERVER['SERVER_NAME']) ;
@@ -149,6 +142,10 @@
 
 	if (!defined('P4A_APPLICATION_URL')) {
 		define('P4A_APPLICATION_URL', P4A_SERVER_URL . P4A_APPLICATION_PATH);
+	}
+
+	if (!defined('P4A_APPLICATION_NAME')) {
+		define('P4A_APPLICATION_NAME', str_replace(_DS_,'_',P4A_APPLICATION_PATH)) ;
 	}
 
 	//Applications Libraries Constants

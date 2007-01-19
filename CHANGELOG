@@ -3,6 +3,7 @@
 - a bug with P4A_Tab_Pane height was solved
 - tinyMCE was dropped due to the bugs with ajax environment
 - FCKeditor 2.3.3 SVN was introduced (no support for toolbar customization at the moment)
+- P4A_APPLICATION_NAME rules were changes making easy to include P4A from outside
 
 1.99.15
 - some more error messages were put in the code
