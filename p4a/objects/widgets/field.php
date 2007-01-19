@@ -840,7 +840,7 @@
 			$this->useTemplate('rich_textarea');
 
 			$this->addTempVar("language", $p4a->i18n->getLanguage());
-			$this->addTempVar("upload_path", P4A_UPLOADS_PATH . "/" . $this->getUploadSubpath());
+			$this->addTempVar("application_path", P4A_APPLICATION_PATH);
 			$this->addTempVar("upload", $this->upload);
 			$this->addTempVar("theme", $this->getRichTextareaTheme());
 			$this->addTempVar("toolbar1", $this->getRichTextareaToolbar(0));

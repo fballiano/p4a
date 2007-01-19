@@ -264,6 +264,10 @@
 	}
 
 	//P4A SYSTEM CONSTANTS
+	if (!defined('P4A_ENABLE_RENDERING')) {
+		define('P4A_ENABLE_RENDERING', true);
+	}
+
 	if (!defined('P4A_FIELD_CLASS')) {
 		define('P4A_FIELD_CLASS', 'P4A_Field');
 	}
