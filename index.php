@@ -28,7 +28,7 @@ PRE,TT { font-family: arial, courier,sans-serif }
 	$dhprojects = opendir($projects_dir);
 
 	while (false !== ($filename = readdir($dhprojects))) {
-		if ( $filename != '.' and $filename != '..' and $filename != 'CVS' and is_dir($projects_dir . $filename)) {
+		if ( $filename != '.' and $filename != '..' and $filename != '.svn' and is_dir($projects_dir . $filename)) {
 			print "<li><a href='applications/$filename/'>{$filename}</a></li>\n";
 		}
 	}
