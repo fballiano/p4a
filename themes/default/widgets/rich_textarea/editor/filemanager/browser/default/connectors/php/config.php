@@ -24,13 +24,7 @@ global $Config ;
 $Config['Enabled'] = true ;
 
 // Path to user files relative to the document root.
-//error_reporting(E_NONE);
-define('P4A_ENABLE_RENDERING', false);
-define('P4A_APPLICATION_PATH', $_GET['p4a_application_path']);
-require P4A_APPLICATION_PATH . '/index.php';
-$p4a =& p4a::singleton();
-$obj =& $p4a->getObject($_GET['p4a_object_id']);
-$Config['UserFilesPath'] = P4A_UPLOAD_PATH . '/' . $obj->getUploadSubpath();
+$Config['UserFilesPath'] = trim(file_get_contents("http://{$_SERVER['HTTP_HOST']}{$_GET['p4a_application_path']}?_upload_path=1&_object_id={$_GET['p4a_object_id']}"));
 
 // Fill the following value it you prefer to specify the absolute path for the
 // user files directory. Usefull if you are using a virtual directory, symbolic
