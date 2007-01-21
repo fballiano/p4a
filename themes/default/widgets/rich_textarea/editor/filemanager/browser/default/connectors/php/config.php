@@ -24,7 +24,7 @@ global $Config ;
 $Config['Enabled'] = true ;
 
 // Path to user files relative to the document root.
-$Config['UserFilesPath'] = trim(file_get_contents("http://{$_SERVER['HTTP_HOST']}{$_GET['p4a_application_path']}?_upload_path=1&_object_id={$_GET['p4a_object_id']}"));
+$Config['UserFilesPath'] = P4A_UPLOADS_PATH . '/' . $this->objects[$_REQUEST['_object_id']]->getUploadSubpath();
 
 // Fill the following value it you prefer to specify the absolute path for the
 // user files directory. Usefull if you are using a virtual directory, symbolic
