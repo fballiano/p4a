@@ -397,8 +397,8 @@
 				$action_return = $this->objects[$object]->$action($aParams);
 			}
 
-			$this->_action_history_id++;
 			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
+				$this->_action_history_id++;
 				$this->raiseXMLReponse();
 			} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
 				require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/browser/default/connectors/php/connector.php';
@@ -412,6 +412,7 @@
 				}
 				print preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
 			} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
+				$this->_action_history_id++;
 				$this->active_mask->main();
 			}
 
