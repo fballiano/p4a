@@ -37,6 +37,7 @@
  */
 
 //define("P4A_EXTENDED_ERRORS", 'TRUE');
+define("P4A_AJAX_DEBUG", true);
 define("P4A_LOCALE", 'en_US');
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
 
