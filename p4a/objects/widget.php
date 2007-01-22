@@ -799,6 +799,15 @@
 		}
 
 		/**
+		 * Wrapper used to add the handling of OnBlur action.
+		 * @see action_handler()
+		 */
+		function onBlur($params = NULL)
+		{
+			return $this->actionHandler('onBlur', $params);
+		}
+
+		/**
 		 * Wrapper used to add the handling of OnClick action.
 		 * @see action_handler()
 		 */
@@ -816,10 +825,60 @@
 			return $this->actionHandler('onChange', $params);
 		}
 
+		/**
+		 * Wrapper used to add the handling of onDblClick action.
+		 * @see action_handler()
+		 */
+		function onDblClick($params = NULL)
+		{
+			return $this->actionHandler('onDblClick', $params);
+		}
+
+		/**
+		 * Wrapper used to add the handling of onFocus action.
+		 * @see action_handler()
+		 */
+		function onFocus($params = NULL)
+		{
+			return $this->actionHandler('onFocus', $params);
+		}
+
+		/**
+		 * Wrapper used to add the handling of onMouseDown action.
+		 * @see action_handler()
+		 */
+		function onMouseDown($params = NULL)
+		{
+			return $this->actionHandler('onMouseDown', $params);
+		}
+
+		/**
+		 * Wrapper used to add the handling of onMouseMove action.
+		 * @see action_handler()
+		 */
+		function onMouseMove($params = NULL)
+		{
+			return $this->actionHandler('onMouseMove', $params);
+		}
+
+		/**
+		 * Wrapper used to add the handling of onMouseOver action.
+		 * @see action_handler()
+		 */
 		function onMouseOver($params = NULL)
 		{
 			return $this->actionHandler('onMouseOver', $params);
 		}
+
+		/**
+		 * Wrapper used to add the handling of onMouseUp action.
+		 * @see action_handler()
+		 */
+		function onMouseUp($params = NULL)
+		{
+			return $this->actionHandler('onMouseUp', $params);
+		}
+
 		/**
 		 * Wrapper used to add the handling of OnKeyPress action.
 		 * @see action_handler()
@@ -856,6 +915,15 @@
 		function onReturnPress($params = NULL)
 		{
 			return $this->actionHandler('onReturnPress', $params);
+		}
+
+		/**
+		 * Wrapper used to add the handling of onSelect action.
+		 * @see action_handler()
+		 */
+		function onSelect($params = NULL)
+		{
+			return $this->actionHandler('onSelect', $params);
 		}
 
 		/**
