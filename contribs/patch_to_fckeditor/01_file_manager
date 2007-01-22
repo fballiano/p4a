@@ -23,7 +23,7 @@ $Config['UserFilesPath'] = '/userfiles' ;
 --------------
 with
 --------------
-$Config['UserFilesPath'] = $_GET['p4a_upload_path'] ;
+$Config['UserFilesPath'] = P4A_UPLOADS_PATH . '/' . $this->objects[$_REQUEST['_object_id']]->getUploadSubpath();
 --------------
 
 
