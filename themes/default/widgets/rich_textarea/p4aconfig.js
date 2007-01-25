@@ -4,7 +4,7 @@ FCKConfig.ToolbarCanCollapse = false;
 FCKConfig.LinkUpload = false;
 FCKConfig.ImageUpload = false;
 FCKConfig.FlashUpload = false;
-FCKConfig.CleanWordKeepStructure = true;
+FCKConfig.CleanWordKeepsStructure = true;
 FCKConfig.FontFormats = 'p;pre;address;h1;h2;h3;h4;h5;h6';
 
 FCKConfig.Plugins.Add('simplecommands');
