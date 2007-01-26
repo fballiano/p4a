@@ -9,6 +9,7 @@
 - Scriptaculous was updated to 1.7.0
 - Prototype was updated to 1.5.0
 - onBlur(), onDblClick(), onFocus(), onMouseDown(), onMouseMove(), onMouseUp(), onSelect() methods were added to P4A_Widget
+- a bug on date fields with onchange action was solved
 
 1.99.15
 - some more error messages were put in the code
