@@ -1,5 +1,6 @@
 function selected(cal, date) {
   cal.sel.value = date; // just update the date in the input field.
+  if (typeof(cal.sel.onchange)== 'function') cal.sel.onchange();
   if (cal.dateClicked && (cal.sel.id == "sel1" || cal.sel.id == "sel3"))
     // if we add this call we close the calendar on single-click.
     // just to exemplify both cases, we are using this only for the 1st
