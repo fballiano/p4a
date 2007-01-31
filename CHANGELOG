@@ -2,7 +2,7 @@
 - masks icons are rendered only if not on handheld
 - a bug with P4A_Tab_Pane height was solved
 - tinyMCE was dropped due to the bugs with ajax environment
-- FCKeditor 2.3.3 SVN was introduced (no support for toolbar customization at the moment)
+- FCKeditor 2.4.0 was introduced (no support for toolbar customization at the moment)
 - P4A_APPLICATION_NAME rules were changes making easier to include P4A from outside
 - _upload_path action wa added to the main action dispatcher thus now it's possible to retrieve upload path of p4a_fields from outsite
 - the way of calling the FCKeditor file manager connector was changed, now the upload path is not passed anymore

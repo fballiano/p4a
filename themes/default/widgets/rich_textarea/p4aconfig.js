@@ -1,4 +1,3 @@
-FCKConfig.DisableEnterKeyHandler = false;
 FCKConfig.AutoDetectLanguage = false;
 FCKConfig.ToolbarCanCollapse = false;
 FCKConfig.LinkUpload = false;

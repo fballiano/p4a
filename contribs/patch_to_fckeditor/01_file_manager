@@ -1,3 +1,11 @@
+delete directory editor/fckeditor.original.html
+delete directory editor/_source
+delete directory editor/filemanager/upload
+delete all directories under editor/filemanager/browser/connectors except php
+delete all directories under editor/skins except default
+
+
+
 open "editor/filemanager/browser/default/browser.html"
 around line 139
 replace
@@ -30,7 +38,7 @@ $Config['UserFilesPath'] = P4A_UPLOADS_PATH . '/' . $this->objects[$_REQUEST['_o
 
 
 open "editor/filemanager/browser/default/connectors/php/io.php"
-around line 37
+around line 45
 replace
 --------------
 	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . strtolower( $resourceType ) . '/' ;
