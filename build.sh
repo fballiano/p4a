@@ -30,12 +30,10 @@ phpdoc -q on -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - 
 cd $PKGDIR
 rm p4a/.project
 rm p4a/.buildpath
-rm p4a/p4a.kdevelop
-rm p4a/p4a.kdevses
 rm p4a/build.sh
-rm -r p4a/contribs
-rm -r `find -type d -name '.svn'`
-rm `find -name '.cvsignore'`
+rm -rf p4a/contribs
+rm -rf `find -type d -name '.svn'`
+rm -f `find -name '.cvsignore'`
 
 ##############################################
 # COPYING DEFAULT DOCUMENTATION INTO PACKAGE #
