@@ -1,22 +1,30 @@
-/*
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2006 Frederico Caldeira Knabben
- *
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- *
- * For further information visit:
- * 		http://www.fckeditor.net/
- *
- * "Support Open Source software. What about a donation today?"
- *
+﻿/*
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * 
+ * == BEGIN LICENSE ==
+ * 
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ * 
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ * 
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ * 
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * == END LICENSE ==
+ * 
  * File Name: fckeditor.js
  * 	This is the integration file for JavaScript.
- *
+ * 
  * 	It defines the FCKeditor class that can be used to create editor
  * 	instances in a HTML page in the client side. For server side
  * 	operations, use the specific integration system.
- *
+ * 
  * File Authors:
  * 		Frederico Caldeira Knabben (www.fckeditor.net)
  */
@@ -31,7 +39,7 @@ var FCKeditor = function( instanceName, width, height, toolbarSet, value )
 	this.ToolbarSet		= toolbarSet	|| 'Default' ;
 	this.Value			= value			|| '' ;
 	this.BasePath		= '/fckeditor/' ;
-	this.CheckBrowser	= false ;
+	this.CheckBrowser	= true ;
 	this.DisplayErrors	= true ;
 	this.EnableSafari	= false ;		// This is a temporary property, while Safari support is under development.
 	this.EnableOpera	= false ;		// This is a temporary property, while Opera support is under development.
@@ -42,8 +50,8 @@ var FCKeditor = function( instanceName, width, height, toolbarSet, value )
 	this.OnError		= null ;	// function( source, errorNumber, errorDescription )
 }
 
-FCKeditor.prototype.Version			= '2.3.3 (SVN)' ;
-FCKeditor.prototype.VersionBuild	= '1115' ;
+FCKeditor.prototype.Version			= '2.4' ;
+FCKeditor.prototype.VersionBuild	= '1148' ;
 
 FCKeditor.prototype.Create = function()
 {
@@ -75,7 +83,7 @@ FCKeditor.prototype.CreateHtml = function()
 	}
 
 	sHtml += '</div>' ;
-
+	
 	return sHtml ;
 }
 
@@ -93,7 +101,7 @@ FCKeditor.prototype.ReplaceTextarea = function()
 				break ;
 			oTextarea = colElementsByName[i++] ;
 		}
-
+		
 		if ( !oTextarea )
 		{
 			alert( 'Error: The TEXTAREA with id or name set to "' + this.InstanceName + '" was not found' ) ;
@@ -134,7 +142,7 @@ FCKeditor.prototype._GetConfigHtml = function()
 FCKeditor.prototype._GetIFrameHtml = function()
 {
 	var sFile = 'fckeditor.html' ;
-
+	
 	try
 	{
 		if ( (/fcksource=true/i).test( window.top.location.search ) )
