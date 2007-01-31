@@ -913,6 +913,8 @@
 			$aCols = $parent->getVisibleCols();
 			$limit = $parent->data->getPageLimit();
 			$offset = $parent->data->getOffset();
+			$enabled = $this->isEnabled();
+			$action = null;
 
 			if ($this->isActionTriggered('beforeDisplay')) {
 				$rows = $this->actionHandler('beforeDisplay', $rows);
@@ -921,7 +923,9 @@
 			$i = 0;
 			foreach ($rows as $row_number=>$row) {
 				$j = 0;
-				$action = $this->composeStringActions($row_number);
+				if ($enabled) {
+					$action = $this->composeStringActions($row_number);
+				}
 
 				if ($i%2 == 0) {
 					$aReturn[$i]['row']['even'] = true;
@@ -940,6 +944,7 @@
 					$aReturn[$i]['cells'][$j]['action'] = $action;
 					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
+					$aReturn[$i]['cells'][$j]['clickable'] = $enabled ? 'clickable' : '';
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);

@@ -1,10 +1,10 @@
 <div class="border_box table_container" id="{id}" flexy:raw="{table_properties:h}">
 	<table class="table" style="width: {table_width}" >
 		<caption flexy:if="title">{title}</caption>
-		
+
 		<col class="select" />
 		<col flexy:foreach="table_cols,col" flexy:raw="{col[properties]:h}" />
-		
+
 		<thead flexy:if="headers">
 			<tr>
 				<th>&nbsp;</th>
@@ -22,7 +22,7 @@
 				{end:}
 			</tr>
 		</thead>
-		
+
 		<tbody flexy:raw="{table_rows_properties:h}" class="overflow" flexy:if="table_rows">
 			<tr flexy:foreach="table_rows,row">
 			    <td>
@@ -31,8 +31,8 @@
 			    </td>
 
 				{foreach:row[cells],cell}
-				<td flexy:if="cell[row_even]" class="background1 clickable table_cell {cell[type]}" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
-				<td flexy:if="!cell[row_even]" class="background2 clickable table_cell {cell[type]}" flexy:raw="{cell[action]:h}"><a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a></td>
+				<td flexy:if="cell[row_even]" class="background1 table_cell{cell[clickable]} {cell[type]}" flexy:raw="{cell[action]:h}">{if:cell[clickable]}<a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a>{else:}{cell[value]:h}{end:}</td>
+				<td flexy:if="!cell[row_even]" class="background2 table_cell{cell[clickable]} {cell[type]}" flexy:raw="{cell[action]:h}">{if:cell[clickable]}<a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a>{else:}{cell[value]:h}{end:}</td>
 				{end:}
 			</tr>
 		</tbody>

@@ -203,12 +203,12 @@ a.link_button:hover {
 	width: 100px;
 }
 
-.table_cell {
+.table_cell, .table_cellclickable {
 	white-space: normal;
 	text-align: left;
 }
 
-.table_cell:hover {
+.table_cellclickable:hover {
 	text-decoration: underline;
 }
 
