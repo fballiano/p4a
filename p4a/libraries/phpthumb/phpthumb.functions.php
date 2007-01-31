@@ -147,7 +147,7 @@ class phpthumb_functions {
 				'Supported filetypes'    => ''
 			);
 			$phpinfo_array = phpthumb_functions::phpinfo_array();
-			foreach ($phpinfo_array as $dummy => $line) {
+			foreach ($phpinfo_array as $line) {
 				$line = trim(strip_tags($line));
 				foreach ($exif_info as $key => $value) {
 					if (strpos($line, $key) === 0) {
@@ -442,7 +442,7 @@ class phpthumb_functions {
 			$keys = array('status', 'the_request', 'status_line', 'method', 'content_type', 'handler', 'uri', 'filename', 'path_info', 'args', 'boundary', 'no_cache', 'no_local_copy', 'allowed', 'send_bodyct', 'bytes_sent', 'byterange', 'clength', 'unparsed_uri', 'mtime', 'request_time');
 			if ($apacheLookupURIobject = @apache_lookup_uri($filename)) {
 				$apacheLookupURIarray = array();
-				foreach ($keys as $dummy => $key) {
+				foreach ($keys as $key) {
 					$apacheLookupURIarray[$key] = @$apacheLookupURIobject->$key;
 				}
 				return $apacheLookupURIarray;
@@ -541,7 +541,7 @@ class phpthumb_functions {
 	function nonempty_min() {
 		$arg_list = func_get_args();
 		$acceptable = array();
-		foreach ($arg_list as $dummy => $arg) {
+		foreach ($arg_list as $arg) {
 			if ($arg) {
 				$acceptable[] = $arg;
 			}
@@ -613,12 +613,16 @@ class phpthumb_functions {
 				if ($isHeader && ($line == "\r\n")) {
 					$isHeader = false;
 					if ($successonly) {
-						if ($errno == 200) {
-							// great, continue
-						} else {
-							$errstr = $errno.' '.$errstr.($header_newlocation ? '; Location: '.$header_newlocation : '');
-							fclose($fp);
-							return false;
+						switch ($errno) {
+							case 200:
+								// great, continue
+								break;
+
+							default:
+								$errstr = $errno.' '.$errstr.($header_newlocation ? '; Location: '.$header_newlocation : '');
+								fclose($fp);
+								return false;
+								break;
 						}
 					}
 				}
@@ -629,12 +633,62 @@ class phpthumb_functions {
 		return null;
 	}
 
-	function SafeURLread($url, &$error, $timeout=10) {
+	function CleanUpURLencoding($url, $queryseperator='&') {
+		if (!eregi('^http', $url)) {
+			return $url;
+		}
+		$parse_url = @parse_url($url);
+		$pathelements = explode('/', $parse_url['path']);
+		$CleanPathElements = array();
+		$TranslationMatrix = array(' '=>'%20');
+		foreach ($pathelements as $key => $pathelement) {
+			$CleanPathElements[] = strtr($pathelement, $TranslationMatrix);
+		}
+		foreach ($CleanPathElements as $key => $value) {
+			if (!$value) {
+				unset($CleanPathElements[$key]);
+			}
+		}
+
+		$queries = explode($queryseperator, @$parse_url['query']);
+		$CleanQueries = array();
+		foreach ($queries as $key => $query) {
+			@list($param, $value) = explode('=', $query);
+			$CleanQueries[] = strtr($param, $TranslationMatrix).($value ? '='.strtr($value, $TranslationMatrix) : '');
+		}
+		foreach ($CleanQueries as $key => $value) {
+			if (!$value) {
+				unset($CleanQueries[$key]);
+			}
+		}
+
+		$cleaned_url  = $parse_url['scheme'].'://';
+		$cleaned_url .= (@$parse_url['username'] ? $parse_url['host'].(@$parse_url['password'] ? ':'.$parse_url['password'] : '').'@' : '');
+		$cleaned_url .= $parse_url['host'];
+		$cleaned_url .= '/'.implode('/', $CleanPathElements);
+		$cleaned_url .= (@$CleanQueries ? '?'.implode($queryseperator, $CleanQueries) : '');
+		return $cleaned_url;
+	}
+
+	function SafeURLread($url, &$error, $timeout=10, $followredirects=true) {
 		$error = '';
 
 		$parsed_url = @parse_url($url);
-		$rawData = phpthumb_functions::URLreadFsock(@$parsed_url['host'], @$parsed_url['path'].'?'.@$parsed_url['query'], $errstr, true, (@$parsed_url['port'] ? @$parsed_url['port'] : 80), $timeout);
-		$error .= 'Error: '.$errstr."\n".$url;
+		$alreadyLookedAtURLs[trim($url)] = true;
+		do {
+			$rawData = phpthumb_functions::URLreadFsock(@$parsed_url['host'], @$parsed_url['path'].'?'.@$parsed_url['query'], $errstr, true, (@$parsed_url['port'] ? @$parsed_url['port'] : 80), $timeout);
+			if (eregi('302 Found; Location\\: (http.*)', $errstr, $matches)) {
+				$matches[1] = trim(@$matches[1]);
+				if ($alreadyLookedAtURLs[$matches[1]]) {
+					break;
+				}
+				$alreadyLookedAtURLs[$matches[1]] = true;
+				$parsed_url = @parse_url($matches[1]);
+			} else {
+				break;
+			}
+		} while (true);
+		$error .= 'Error opening "'.$url.'":'."\n\n".$errstr;
 		if ($rawData === false) {
 			return false;
 		} elseif ($rawData === null) {
@@ -687,7 +741,78 @@ class phpthumb_functions {
 		return false;
 	}
 
+	function EnsureDirectoryExists($dirname) {
+		$directory_elements = explode(DIRECTORY_SEPARATOR, $dirname);
+		$startoffset = (!$directory_elements[0] ? 2 : 1);  // unix with leading "/" then start with 2nd element; Windows with leading "c:\" then start with 1st element
+		$open_basedirs = explode(':', ini_get('open_basedir'));
+		foreach ($open_basedirs as $key => $open_basedir) {
+			if (ereg('^'.preg_quote($open_basedir), $dirname) && (strlen($dirname) > strlen($open_basedir))) {
+				$startoffset = count(explode(DIRECTORY_SEPARATOR, $open_basedir));
+				break;
+			}
+		}
+		$i = $startoffset;
+		$endoffset = count($directory_elements);
+		for ($i = $startoffset; $i <= $endoffset; $i++) {
+			$test_directory = implode(DIRECTORY_SEPARATOR, array_slice($directory_elements, 0, $i));
+			if (!$test_directory) {
+				continue;
+			}
+			if (!@is_dir($test_directory)) {
+				if (@file_exists($test_directory)) {
+					// directory name already exists as a file
+					return false;
+				}
+				@mkdir($test_directory, 0755);
+				@chmod($test_directory, 0755);
+				if (!@is_dir($test_directory) || !@is_writeable($test_directory)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+
+	function GetAllFilesInSubfolders($dirname) {
+		$AllFiles = array();
+		$dirname = rtrim(realpath($dirname), '/\\');
+		if ($dirhandle = @opendir($dirname)) {
+			while ($file = readdir($dirhandle)) {
+				$fullfilename = $dirname.DIRECTORY_SEPARATOR.$file;
+				if (is_file($fullfilename)) {
+					$AllFiles[] = $fullfilename;
+				} elseif (is_dir($fullfilename)) {
+					if (($file == '.') || ($file == '..')) {
+						continue;
+					}
+					$subfiles = phpthumb_functions::GetAllFilesInSubfolders($fullfilename);
+					foreach ($subfiles as $filename) {
+						$AllFiles[] = $filename;
+					}
+				} else {
+					// ignore?
+				}
+			}
+			closedir($dirhandle);
+		}
+		sort($AllFiles);
+		return array_unique($AllFiles);
+	}
+
+
+	function SanitizeFilename($filename) {
+		$filename = ereg_replace('[^'.preg_quote(' !#$%^()+,-.;<>=@[]_{}').'a-zA-Z0-9]', '_', $filename);
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '4.1.0', '>=')) {
+			$filename = trim($filename, '.');
+		}
+		return $filename;
+	}
+
 }
+
+
+////////////// END: class phpthumb_functions //////////////
 
 
 if (!function_exists('gd_info')) {
@@ -710,7 +835,7 @@ if (!function_exists('gd_info')) {
 				'XBM Support'        => false
 			);
 			$phpinfo_array = phpthumb_functions::phpinfo_array();
-			foreach ($phpinfo_array as $dummy => $line) {
+			foreach ($phpinfo_array as $line) {
 				$line = trim(strip_tags($line));
 				foreach ($gd_info as $key => $value) {
 					//if (strpos($line, $key) !== false) {
@@ -789,7 +914,7 @@ if (!function_exists('file_get_contents')) {
 	// included in PHP v4.3.0+
 	function file_get_contents($filename) {
 		if (eregi('^(f|ht)tp\://', $filename)) {
-			return SafeURLread($filename);
+			return SafeURLread($filename, $error);
 		}
 		if ($fp = @fopen($filename, 'rb')) {
 			$rawData = '';

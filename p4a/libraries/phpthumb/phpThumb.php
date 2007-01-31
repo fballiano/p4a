@@ -35,6 +35,7 @@ if (!include_once(dirname(__FILE__).'/phpthumb.class.php')) {
 ob_end_clean();
 $phpThumb = new phpThumb();
 $phpThumb->DebugTimingMessage('phpThumb.php start', __FILE__, __LINE__, $starttime);
+$phpThumb->SetParameter('config_error_die_on_error', true);
 
 // phpThumbDebug[0] used to be here, but may reveal too much
 // info when high_security_mode should be enabled (not set yet)
@@ -105,7 +106,7 @@ if (@$_GET['phpThumbDebug'] == '0') {
 // returned the fixed string if the evil "magic_quotes_gpc" setting is on
 if (get_magic_quotes_gpc()) {
 	$RequestVarsToStripSlashes = array('src', 'wmf', 'file', 'err', 'goto', 'down');
-	foreach ($RequestVarsToStripSlashes as $dummy => $key) {
+	foreach ($RequestVarsToStripSlashes as $key) {
 		if (isset($_GET[$key])) {
 			$_GET[$key] = stripslashes($_GET[$key]);
 		}
@@ -118,7 +119,7 @@ if (!@$_SERVER['PATH_INFO'] && !@$_SERVER['QUERY_STRING']) {
 
 if (@$_GET['src'] && isset($_GET['md5s']) && empty($_GET['md5s'])) {
 	if (eregi('^(f|ht)tps?://', $_GET['src'])) {
-		if ($rawImageData = phpthumb_functions::SafeURLread($_GET['src'], $error)) {
+		if ($rawImageData = phpthumb_functions::SafeURLread($_GET['src'], $error, $phpThumb->config_http_fopen_timeout, $phpThumb->config_http_follow_redirect)) {
 			$md5s = md5($rawImageData);
 		}
 	} else {
@@ -210,7 +211,8 @@ if (@$_GET['phpThumbDebug'] == '2') {
 if (@$PHPTHUMB_CONFIG['cache_default_only_suffix'] && (strpos($PHPTHUMB_CONFIG['cache_default_only_suffix'], '*') !== false)) {
 	$PHPTHUMB_DEFAULTS_DISABLEGETPARAMS = true;
 }
-$allowedGETparameters = array('src', 'new', 'w', 'h', 'wp', 'hp', 'wl', 'hl', 'ws', 'hs', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'bgt', 'fltr', 'file', 'goto', 'err', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb', 'down', 'phpThumbDebug', 'hash', 'md5s', 'sfn', 'dpi');
+// deprecated: 'err', 'file', 'goto',
+$allowedGETparameters = array('src', 'new', 'w', 'h', 'wp', 'hp', 'wl', 'hl', 'ws', 'hs', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'bgt', 'fltr', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb', 'down', 'phpThumbDebug', 'hash', 'md5s', 'sfn', 'dpi', 'sia');
 if (!empty($PHPTHUMB_DEFAULTS) && is_array($PHPTHUMB_DEFAULTS)) {
 	$phpThumb->DebugMessage('setting $PHPTHUMB_DEFAULTS['.implode(';', array_keys($PHPTHUMB_DEFAULTS)).']', __FILE__, __LINE__);
 	foreach ($PHPTHUMB_DEFAULTS as $key => $value) {
@@ -309,19 +311,11 @@ function SendSaveAsFileHeaderIfNeeded() {
 		return false;
 	}
 	global $phpThumb;
-	if (@$_GET['down']) {
-		$downloadfilename = ereg_replace('[/\\:\*\?"<>|]', '_', $_GET['down']);
-		if (phpthumb_functions::version_compare_replacement(phpversion(), '4.1.0', '>=')) {
-			$downloadfilename = trim($downloadfilename, '.');
-		}
-		if (@$downloadfilename) {
-			$phpThumb->DebugMessage('SendSaveAsFileHeaderIfNeeded() sending header: Content-Disposition: attachment; filename="'.$downloadfilename.'"', __FILE__, __LINE__);
-			header('Content-Disposition: attachment; filename="'.$downloadfilename.'"');
-			return true;
-		}
+	$downloadfilename = phpthumb_functions::SanitizeFilename(@$_GET['sia'] ? $_GET['sia'] : (@$_GET['down'] ? $_GET['down'] : 'phpThumb_generated_thumbnail'.(@$_GET['f'] ? $_GET['f'] : 'jpg')));
+	if (@$downloadfilename) {
+		$phpThumb->DebugMessage('SendSaveAsFileHeaderIfNeeded() sending header: Content-Disposition: '.(@$_GET['down'] ? 'attachment' : 'inline').'; filename="'.$downloadfilename.'"', __FILE__, __LINE__);
+		header('Content-Disposition: '.(@$_GET['down'] ? 'attachment' : 'inline').'; filename="'.$downloadfilename.'"');
 	}
-	$phpThumb->DebugMessage('SendSaveAsFileHeaderIfNeeded() sending header: Content-Disposition: inline', __FILE__, __LINE__);
-	header('Content-Disposition: inline');
 	return true;
 }
 
@@ -514,10 +508,8 @@ if ($phpThumb->rawImageData) {
 	if ($phpThumb->config_http_user_agent) {
 		ini_set('user_agent', $phpThumb->config_http_user_agent);
 	}
-	$basename = preg_quote(basename($phpThumb->src));
-	$encoded  = rawurlencode(basename($phpThumb->src));
-	$HTTPurl = ereg_replace('(.*)'.$basename.'$', '\\1'.$encoded, $phpThumb->src);
-	if ($rawImageData = phpthumb_functions::SafeURLread($HTTPurl, $error)) {
+
+	if ($rawImageData = phpthumb_functions::SafeURLread(phpthumb_functions::CleanUpURLencoding($phpThumb->src), $error, $phpThumb->config_http_fopen_timeout, $phpThumb->config_http_follow_redirect)) {
 		$phpThumb->setSourceData($rawImageData, urlencode($phpThumb->src));
 	} else {
 		$phpThumb->ErrorImage($error);
@@ -557,6 +549,7 @@ if ($phpThumb->config_allow_parameter_file && $phpThumb->file) {
 
 } else {
 
+	phpthumb_functions::EnsureDirectoryExists(dirname($phpThumb->cache_filename));
 	if ((file_exists($phpThumb->cache_filename) && is_writable($phpThumb->cache_filename)) || is_writable(dirname($phpThumb->cache_filename))) {
 
 		$phpThumb->CleanUpCacheDirectory();

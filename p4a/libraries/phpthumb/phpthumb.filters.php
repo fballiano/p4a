@@ -523,11 +523,13 @@ class phpthumb_filters {
 	}
 
 
-	function HistogramStretch(&$gdimg, $band='*', $min=-1, $max=-1) {
+	function HistogramStretch(&$gdimg, $band='*', $method=0, $threshold=0.1) {
 		// equivalent of "Auto Contrast" in Adobe Photoshop
-
+		// method 0 stretches according to RGB colors. Gives a more conservative stretch.
+		// method 1 band stretches according to grayscale which is color-biased (59% green, 30% red, 11% blue). May give a punchier / more aggressive stretch, possibly appearing over-saturated
 		$Analysis = phpthumb_filters::HistogramAnalysis($gdimg, true);
-		$keys = array('r'=>'red', 'g'=>'green', 'b'=>'blue', 'a'=>'alpha', '*'=>'gray');
+		$keys = array('r'=>'red', 'g'=>'green', 'b'=>'blue', 'a'=>'alpha', '*'=>(($method == 0) ? 'all' : 'gray'));
+		$band = substr($band, 0, 1);
 		if (!isset($keys[$band])) {
 			return false;
 		}
@@ -535,35 +537,44 @@ class phpthumb_filters {
 
 		// If the absolute brightest and darkest pixels are used then one random
 		// pixel in the image could throw off the whole system. Instead, count up/down
-		// from the limit and allow 0.1% of brightest/darkest pixels to be clipped to min/max
-		$clip_threshold = ImageSX($gdimg) * ImageSX($gdimg) * 0.001;
-		if ($min >= 0) {
-			$range_min = min($min, 255);
-		} else {
+		// from the limit and allow <threshold> (default = 0.1%) of brightest/darkest
+		// pixels to be clipped to min/max
+		$threshold = floatval($threshold) / 100;
+		$clip_threshold = ImageSX($gdimg) * ImageSX($gdimg) * $threshold;
+		//if ($min >= 0) {
+		//	$range_min = min($min, 255);
+		//} else {
 			$countsum = 0;
 			for ($i = 0; $i <= 255; $i++) {
-				$countsum += @$Analysis[$key][$i];
+				if ($method == 0) {
+					$countsum = max(@$Analysis['red'][$i], @$Analysis['green'][$i], @$Analysis['blue'][$i]);
+				} else {
+					$countsum += @$Analysis[$key][$i];
+				}
 				if ($countsum >= $clip_threshold) {
 					$range_min = $i - 1;
 					break;
 				}
 			}
 			$range_min = max($range_min, 0);
-		}
-		if ($max >= 0) {
-			$range_max = max($max, 255);
-		} else {
+		//}
+		//if ($max > 0) {
+		//	$range_max = max($max, 255);
+		//} else {
 			$countsum = 0;
-			$threshold = ImageSX($gdimg) * ImageSX($gdimg) * 0.001; // 0.1% of brightest and darkest pixels can be clipped
 			for ($i = 255; $i >= 0; $i--) {
-				$countsum += @$Analysis[$key][$i];
+				if ($method == 0) {
+					$countsum = max(@$Analysis['red'][$i], @$Analysis['green'][$i], @$Analysis['blue'][$i]);
+				} else {
+					$countsum += @$Analysis[$key][$i];
+				}
 				if ($countsum >= $clip_threshold) {
 					$range_max = $i + 1;
 					break;
 				}
 			}
 			$range_max = min($range_max, 255);
-		}
+		//}
 		$range_scale = (($range_max == $range_min) ? 1 : (255 / ($range_max - $range_min)));
 		if (($range_min == 0) && ($range_max == 255)) {
 			// no adjustment neccesary - don't waste CPU time!
@@ -593,9 +604,10 @@ class phpthumb_filters {
 	}
 
 
-	function HistogramOverlay(&$gdimg, $bands='*', $colors='', $width=0.25, $height=0.25, $alignment='BR', $opacity=50, $margin=5) {
-		$Analysis = phpthumb_filters::HistogramAnalysis($gdimg, true);
+	function HistogramOverlay(&$gdimg, $bands='*', $colors='', $width=0.25, $height=0.25, $alignment='BR', $opacity=50, $margin_x=5, $margin_y=null) {
+		$margin_y = (is_null($margin_y) ? $margin_x : $margin_y);
 
+		$Analysis = phpthumb_filters::HistogramAnalysis($gdimg, true);
 		$histW = round(($width > 1) ? min($width, ImageSX($gdimg)) : ImageSX($gdimg) * $width);
 		$histH = round(($width > 1) ? min($width, ImageSX($gdimg)) : ImageSX($gdimg) * $width);
 		if ($gdHist = ImageCreateTrueColor($histW, $histH)) {
@@ -604,7 +616,9 @@ class phpthumb_filters {
 			ImageAlphaBlending($gdHist, false);
 			ImageSaveAlpha($gdHist, true);
 
-			if ($gdHistTemp = ImageCreateTrueColor(256, 100)) {
+			$HistogramTempWidth  = 256;
+			$HistogramTempHeight = 100;
+			if ($gdHistTemp = ImageCreateTrueColor($HistogramTempWidth, $HistogramTempHeight)) {
 				$color_back_temp = phpthumb_functions::ImageColorAllocateAlphaSafe($gdHistTemp, 255, 0, 255, 127);
 				ImageAlphaBlending($gdHistTemp, false);
 				ImageSaveAlpha($gdHistTemp, true);
@@ -620,12 +634,11 @@ class phpthumb_filters {
 					}
 					$PeakValue = max($Analysis[$keys[$band]]);
 					$thisColor = phpthumb_functions::ImageHexColorAllocate($gdHistTemp, phpthumb_functions::IsHexColor(@$Colors[$key]) ? $Colors[$key] : $DefaultColors[$band]);
-					$tempHeight = ImageSY($gdHistTemp);
-					for ($x = 0; $x <= 255; $x++) {
-						ImageLine($gdHistTemp, $x, $tempHeight - 1, $x, $tempHeight - 1 - round(@$Analysis[$keys[$band]][$x] / $PeakValue * $tempHeight), $thisColor);
+					for ($x = 0; $x < $HistogramTempWidth; $x++) {
+						ImageLine($gdHistTemp, $x, $HistogramTempHeight - 1, $x, $HistogramTempHeight - 1 - round(@$Analysis[$keys[$band]][$x] / $PeakValue * $HistogramTempHeight), $thisColor);
 					}
-					ImageLine($gdHistTemp, 0, $tempHeight - 1, 255, $tempHeight - 1, $thisColor);
-					ImageLine($gdHistTemp, 0, $tempHeight - 2, 255, $tempHeight - 2, $thisColor);
+					ImageLine($gdHistTemp, 0, $HistogramTempHeight - 1, $HistogramTempWidth - 1, $HistogramTempHeight - 1, $thisColor);
+					ImageLine($gdHistTemp, 0, $HistogramTempHeight - 2, $HistogramTempWidth - 1, $HistogramTempHeight - 2, $thisColor);
 				}
 				ImageCopyResampled($gdHist, $gdHistTemp, 0, 0, 0, 0, ImageSX($gdHist), ImageSY($gdHist), ImageSX($gdHistTemp), ImageSY($gdHistTemp));
 				ImageDestroy($gdHistTemp);
@@ -633,7 +646,7 @@ class phpthumb_filters {
 				return false;
 			}
 
-			phpthumb_filters::WatermarkOverlay($gdimg, $gdHist, $alignment, $opacity, $margin);
+			phpthumb_filters::WatermarkOverlay($gdimg, $gdHist, $alignment, $opacity, $margin_x, $margin_y);
 			ImageDestroy($gdHist);
 			return true;
 		}
@@ -715,6 +728,101 @@ class phpthumb_filters {
 			$this->DebugMessage('FAILED: $gd_border_canvas = phpthumb_functions::ImageCreateFunction('.$output_width.', '.$output_height.')', __FILE__, __LINE__);
 		}
 		return false;
+	}
+
+
+	function ImprovedImageRotate(&$gdimg_source, $rotate_angle=0, $config_background_hexcolor='FFFFFF', $bg=null) {
+		while ($rotate_angle < 0) {
+			$rotate_angle += 360;
+		}
+		$rotate_angle = $rotate_angle % 360;
+		if ($rotate_angle != 0) {
+
+			$background_color = phpthumb_functions::ImageHexColorAllocate($gdimg_source, $config_background_hexcolor);
+
+			if ((phpthumb_functions::gd_version() >= 2) && !$bg && ($rotate_angle % 90)) {
+
+				//$this->DebugMessage('Using alpha rotate', __FILE__, __LINE__);
+				if ($gdimg_rotate_mask = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg_source), ImageSY($gdimg_source))) {
+
+					for ($i = 0; $i <= 255; $i++) {
+						$color_mask[$i] = ImageColorAllocate($gdimg_rotate_mask, $i, $i, $i);
+					}
+					ImageFilledRectangle($gdimg_rotate_mask, 0, 0, ImageSX($gdimg_rotate_mask), ImageSY($gdimg_rotate_mask), $color_mask[255]);
+					$imageX = ImageSX($gdimg_source);
+					$imageY = ImageSY($gdimg_source);
+					for ($x = 0; $x < $imageX; $x++) {
+						for ($y = 0; $y < $imageY; $y++) {
+							$pixelcolor = phpthumb_functions::GetPixelColor($gdimg_source, $x, $y);
+							ImageSetPixel($gdimg_rotate_mask, $x, $y, $color_mask[255 - round($pixelcolor['alpha'] * 255 / 127)]);
+						}
+					}
+					$gdimg_rotate_mask  = ImageRotate($gdimg_rotate_mask,  $rotate_angle, $color_mask[0]);
+					$gdimg_source = ImageRotate($gdimg_source, $rotate_angle, $background_color);
+
+					ImageAlphaBlending($gdimg_source, false);
+					ImageSaveAlpha($gdimg_source, true);
+					//$this->is_alpha = true;
+					$phpThumbFilters = new phpthumb_filters();
+					$phpThumbFilters->phpThumbObject = $this;
+					$phpThumbFilters->ApplyMask($gdimg_rotate_mask, $gdimg_source);
+
+					ImageDestroy($gdimg_rotate_mask);
+
+				} else {
+					//$this->DebugMessage('ImageCreateFunction() failed', __FILE__, __LINE__);
+				}
+
+			} else {
+
+				if (phpthumb_functions::gd_version() < 2) {
+					//$this->DebugMessage('Using non-alpha rotate because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
+				} elseif ($bg) {
+					//$this->DebugMessage('Using non-alpha rotate because $this->bg is "'.$bg.'"', __FILE__, __LINE__);
+				} elseif ($rotate_angle % 90) {
+					//$this->DebugMessage('Using non-alpha rotate because ($rotate_angle % 90) = "'.($rotate_angle % 90).'"', __FILE__, __LINE__);
+				} else {
+					//$this->DebugMessage('Using non-alpha rotate because $this->thumbnailFormat is "'.$this->thumbnailFormat.'"', __FILE__, __LINE__);
+				}
+
+				if (ImageColorTransparent($gdimg_source) >= 0) {
+					// ImageRotate() forgets all about an image's transparency and sets the transparent color to black
+					// To compensate, flood-fill the transparent color of the source image with the specified background color first
+					// then rotate and the colors should match
+
+					if (!function_exists('ImageIsTrueColor') || !ImageIsTrueColor($gdimg_source)) {
+						// convert paletted image to true-color before rotating to prevent nasty aliasing artifacts
+
+						//$this->source_width  = ImageSX($gdimg_source);
+						//$this->source_height = ImageSY($gdimg_source);
+						$gdimg_newsrc = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg_source), ImageSY($gdimg_source));
+						$background_color = phpthumb_functions::ImageHexColorAllocate($gdimg_newsrc, $config_background_hexcolor);
+						ImageFilledRectangle($gdimg_newsrc, 0, 0, ImageSX($gdimg_source), ImageSY($gdimg_source), phpthumb_functions::ImageHexColorAllocate($gdimg_newsrc, $config_background_hexcolor));
+						ImageCopy($gdimg_newsrc, $gdimg_source, 0, 0, 0, 0, ImageSX($gdimg_source), ImageSY($gdimg_source));
+						ImageDestroy($gdimg_source);
+						unset($gdimg_source);
+						$gdimg_source = $gdimg_newsrc;
+						unset($gdimg_newsrc);
+
+					} else {
+
+						ImageColorSet(
+							$gdimg_source,
+							ImageColorTransparent($gdimg_source),
+							hexdec(substr($config_background_hexcolor, 0, 2)),
+							hexdec(substr($config_background_hexcolor, 2, 2)),
+							hexdec(substr($config_background_hexcolor, 4, 2)));
+
+						ImageColorTransparent($gdimg_source, -1);
+
+					}
+				}
+
+				$gdimg_source = ImageRotate($gdimg_source, $rotate_angle, $background_color);
+
+			}
+		}
+		return true;
 	}
 
 
@@ -1138,7 +1246,7 @@ class phpthumb_filters {
 	}
 
 
-	function WatermarkOverlay(&$gdimg_dest, &$img_watermark, $alignment='*', $opacity=50, $margin=5) {
+	function WatermarkOverlay(&$gdimg_dest, &$img_watermark, $alignment='*', $opacity=50, $margin_x=5, $margin_y=null) {
 		if (is_resource($gdimg_dest) && is_resource($img_watermark)) {
 			$watermark_source_x        = 0;
 			$watermark_source_y        = 0;
@@ -1147,13 +1255,9 @@ class phpthumb_filters {
 			$watermark_source_width    = ImageSX($img_watermark);
 			$watermark_source_height   = ImageSY($img_watermark);
 			$watermark_opacity_percent = max(0, min(100, $opacity));
-			if ($margin < 1) {
-				$watermark_margin_percent = 1 - $margin;
-			} else {
-				$watermark_margin_percent = (100 - max(0, min(100, $margin))) / 100;
-			}
-			$watermark_margin_x = round((1 - $watermark_margin_percent) * $img_source_width);
-			$watermark_margin_y = round((1 - $watermark_margin_percent) * $img_source_height);
+			$margin_y = (is_null($margin_y) ? $margin_x : $margin_y);
+			$watermark_margin_x = ((($margin_x > 0) && ($margin_x < 1)) ? round((1 - $margin_x) * $img_source_width)  : $margin_x);
+			$watermark_margin_y = ((($margin_y > 0) && ($margin_y < 1)) ? round((1 - $margin_y) * $img_source_height) : $margin_y);
 			switch ($alignment) {
 				case '*':
 					if ($gdimg_tiledwatermark = phpthumb_functions::ImageCreateFunction($img_source_width, $img_source_height)) {
@@ -1173,8 +1277,8 @@ class phpthumb_filters {
 
 //						ImageFill($gdimg_tiledwatermark, 0, 0, ImageColorTransparent($gdimg_tiledwatermark));
 						// tile the image as many times as can fit
-						for ($x = $watermark_margin_x; $x < ($img_source_width + $watermark_source_width); $x += round($watermark_source_width + ((1 - $watermark_margin_percent) * $img_source_width))) {
-							for ($y = $watermark_margin_y; $y < ($img_source_height + $watermark_source_height); $y += round($watermark_source_height + ((1 - $watermark_margin_percent) * $img_source_height))) {
+						for ($x = $watermark_margin_x; $x < ($img_source_width + $watermark_source_width); $x += ($watermark_source_width + $watermark_margin_x)) {
+							for ($y = $watermark_margin_y; $y < ($img_source_height + $watermark_source_height); $y += ($watermark_source_height + $watermark_margin_y)) {
 								ImageCopy(
 									$gdimg_tiledwatermark,
 									$img_watermark,
@@ -1182,8 +1286,8 @@ class phpthumb_filters {
 									$y,
 									0,
 									0,
-									min($watermark_source_width,  $img_source_width  - $x - ((1 - $watermark_margin_percent) * $img_source_width)),
-									min($watermark_source_height, $img_source_height - $y - ((1 - $watermark_margin_percent) * $img_source_height))
+									min($watermark_source_width,  $img_source_width  - $x - $watermark_margin_x),
+									min($watermark_source_height, $img_source_height - $y - $watermark_margin_y)
 								);
 							}
 						}
@@ -1205,7 +1309,7 @@ class phpthumb_filters {
 
 				case 'B':
 					$watermark_destination_x = round((($img_source_width  / 2) - ($watermark_source_width / 2)) + $watermark_margin_x);
-					$watermark_destination_y = round(($img_source_height - $watermark_source_height) * $watermark_margin_percent);
+					$watermark_destination_y = $img_source_height - $watermark_source_height - $watermark_margin_y;
 					break;
 
 				case 'L':
@@ -1214,7 +1318,7 @@ class phpthumb_filters {
 					break;
 
 				case 'R':
-					$watermark_destination_x = round(($img_source_width - $watermark_source_width)  * $watermark_margin_percent);
+					$watermark_destination_x = $img_source_width - $watermark_source_width - $watermark_margin_x;
 					$watermark_destination_y = round((($img_source_height / 2) - ($watermark_source_height / 2)) + $watermark_margin_y);
 					break;
 
@@ -1229,19 +1333,26 @@ class phpthumb_filters {
 					break;
 
 				case 'TR':
-					$watermark_destination_x = round(($img_source_width - $watermark_source_width)  * $watermark_margin_percent);
+					$watermark_destination_x = $img_source_width - $watermark_source_width - $watermark_margin_x;
 					$watermark_destination_y = $watermark_margin_y;
 					break;
 
 				case 'BL':
+//echo '<pre>';
+////var_dump($watermark_destination_x);
+////var_dump($watermark_destination_y);
+//var_dump($watermark_margin_x);
+//var_dump($img_source_height);
+//var_dump($watermark_source_height);
+//var_dump($watermark_margin_y);
 					$watermark_destination_x = $watermark_margin_x;
-					$watermark_destination_y = round(($img_source_height - $watermark_source_height) * $watermark_margin_percent);
+					$watermark_destination_y = $img_source_height - $watermark_source_height - $watermark_margin_y;
 					break;
 
 				case 'BR':
 				default:
-					$watermark_destination_x = round(($img_source_width  - $watermark_source_width)  * $watermark_margin_percent);
-					$watermark_destination_y = round(($img_source_height - $watermark_source_height) * $watermark_margin_percent);
+					$watermark_destination_x = $img_source_width  - $watermark_source_width  - $watermark_margin_x;
+					$watermark_destination_y = $img_source_height - $watermark_source_height - $watermark_margin_y;
 					break;
 			}
 			ImageAlphaBlending($gdimg_dest, false);
