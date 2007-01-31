@@ -15,7 +15,7 @@
  * @author     Tomas V.V.Cox <cox@idecnet.com>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: System.php,v 1.53 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: System.php,v 1.55 2006/06/16 13:56:02 pajoye Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -35,7 +35,9 @@ $GLOBALS['_System_temp_files'] = array();
 * Unix and Windows. The names and usage has been taken from its respectively
 * GNU commands. The functions will return (bool) false on error and will
 * trigger the error with the PHP trigger_error() function (you can silence
-* the error by prefixing a '@' sign after the function call).
+* the error by prefixing a '@' sign after the function call, but this
+* is not recommended practice.  Instead use an error handler with
+* {@link set_error_handler()}).
 *
 * Documentation on this class you can find in:
 * http://pear.php.net/manual/
@@ -55,7 +57,7 @@ $GLOBALS['_System_temp_files'] = array();
 * @author     Tomas V.V. Cox <cox@idecnet.com>
 * @copyright  1997-2006 The PHP Group
 * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
-* @version    Release: 1.4.9
+* @version    Release: 1.5.0
 * @link       http://pear.php.net/package/PEAR
 * @since      Class available since Release 0.1
 */
@@ -248,7 +250,8 @@ class System
         if (isset($create_parents)) {
             foreach($opts[1] as $dir) {
                 $dirstack = array();
-                while (!@is_dir($dir) && $dir != DIRECTORY_SEPARATOR) {
+                while ((!file_exists($dir) || !is_dir($dir)) &&
+                        $dir != DIRECTORY_SEPARATOR) {
                     array_unshift($dirstack, $dir);
                     $dir = dirname($dir);
                 }
@@ -264,7 +267,7 @@ class System
             }
         } else {
             foreach($opts[1] as $dir) {
-                if (!@is_dir($dir) && !mkdir($dir, $mode)) {
+                if ((@file_exists($dir) || !is_dir($dir)) && !mkdir($dir, $mode)) {
                     $ret = false;
                 }
             }
@@ -306,6 +309,7 @@ class System
                 $files[] = $args[$i];
             }
         }
+        $outputfd = false;
         if (isset($mode)) {
             if (!$outputfd = fopen($outputfile, $mode)) {
                 $err = System::raiseError("Could not open $outputfile");
@@ -319,7 +323,7 @@ class System
                 continue;
             }
             while ($cont = fread($fd, 2048)) {
-                if (isset($outputfd)) {
+                if (is_resource($outputfd)) {
                     fwrite($outputfd, $cont);
                 } else {
                     $ret .= $cont;
@@ -327,7 +331,7 @@ class System
             }
             fclose($fd);
         }
-        if (@is_resource($outputfd)) {
+        if (is_resource($outputfd)) {
             fclose($outputfd);
         }
         return $ret;
@@ -491,7 +495,7 @@ class System
         foreach ($exe_suffixes as $suff) {
             foreach ($path_elements as $dir) {
                 $file = $dir . DIRECTORY_SEPARATOR . $program . $suff;
-                if ($pear_is_executable($file)) {
+                if (@$pear_is_executable($file)) {
                     return $file;
                 }
             }
