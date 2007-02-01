@@ -60,17 +60,9 @@
 		 */
 		function P4A_I18N_Messages($language, $country)
 		{
-			$msg_file = "{$language}/{$country}.php";
-			include dirname(__FILE__) . "/messages/{$msg_file}";
-
-			$application_localization = P4A_APPLICATION_LOCALES_DIR . "/{$msg_file}";
-
-			if (file_exists($application_localization)) {
-				include $application_localization;
-			}
-
+			include dirname(__FILE__) . "/messages/{$language}/{$country}.php";
+			@include P4A_APPLICATION_LOCALES_DIR . "/{$language}/{$country}.php";
 			$this->messages = $messages;
-			unset($messages);
 		}
 
 		/**
