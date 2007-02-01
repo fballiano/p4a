@@ -428,7 +428,7 @@
 
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
-			foreach ($this->_to_redesign as $id) {
+			while (list( ,$id) = each($this->_to_redesign)) {	
 				$object =& $this->getObject($id);
 				$display = $object->isVisible() ? 'block' : 'none';
 				$as_string = $object->getAsString();
