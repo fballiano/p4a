@@ -416,6 +416,9 @@
 				$this->active_mask->main();
 			}
 
+			$this->_to_redesign = array();
+			$this->_redesign_popup = false;
+
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));
 			flush();
@@ -428,7 +431,7 @@
 
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
-			while (list( ,$id) = each($this->_to_redesign)) {	
+			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
 				$display = $object->isVisible() ? 'block' : 'none';
 				$as_string = $object->getAsString();
@@ -470,8 +473,6 @@
 			}
 
 			ob_end_flush();
-			$this->_to_redesign = array();
-			$this->_redesign_popup = FALSE;
 		}
 
 		/**

@@ -4,6 +4,7 @@
 - P4A_Table_Rows::disable() is now correctly handled
 - P4A_Widget::setDefaultLabel now automatically looks within translations
 - a new sample (sample_i18n) was added to show how to localize your applications
+- a bug with ajax widgets redesign was solved
 
 1.99.16
 - masks icons are rendered only if not on handheld
