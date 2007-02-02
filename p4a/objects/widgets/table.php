@@ -923,10 +923,6 @@
 			$i = 0;
 			foreach ($rows as $row_number=>$row) {
 				$j = 0;
-				if ($enabled) {
-					$action = $this->composeStringActions($row_number);
-				}
-
 				if ($i%2 == 0) {
 					$aReturn[$i]['row']['even'] = true;
 				} else {
@@ -941,7 +937,7 @@
 
 				foreach($aCols as $col_name) {
 					$aReturn[$i]['cells'][$j]['value'] = '';
-					$aReturn[$i]['cells'][$j]['action'] = $action;
+					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $this->composeStringActions(array($row_number, $col_name)) : '';
 					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					$aReturn[$i]['cells'][$j]['clickable'] = $enabled ? 'clickable' : '';

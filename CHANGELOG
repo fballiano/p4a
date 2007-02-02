@@ -5,6 +5,7 @@
 - P4A_Widget::setDefaultLabel now automatically looks within translations
 - a new sample (sample_i18n) was added to show how to localize your applications
 - a bug with ajax widgets redesign was solved
+- P4A_Table now passes the clicked column name to the interceptor
 
 1.99.16
 - masks icons are rendered only if not on handheld
