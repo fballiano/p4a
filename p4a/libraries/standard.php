@@ -264,7 +264,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 
 			$dh  = opendir($dir);
 			while (false !== ($filename = readdir($dh))) {
-				if ($filename != '.' and $filename != '..' and $filename != 'CVS'){
+				if ($filename != '.' and $filename != '..' and $filename != 'CVS' and $filename != '.svn') {
 					$files[] = $filename;
 				}
 			}
