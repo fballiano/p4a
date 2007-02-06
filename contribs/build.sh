@@ -15,8 +15,8 @@ cd p4apackages
 PKGDIR=`pwd`
 cp -r $SRCDIR .
 
-rm -r `find -type d -name '.svn'`
-rm `find -name '.cvsignore'`
+rm -rf `find -type d -name '.svn'`
+rm -rf `find -name '.cvsignore'`
 
 cd $NAME
 tar zcf ../$NAME-$VERSION.tar.gz *
