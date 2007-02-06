@@ -49,35 +49,35 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	 * @access private
 	 */
 	var $root_source = null;
-	
+
 	/**
 	 * The description field name for the root P4A_DB_Source
 	 * @var string
 	 * @access private
 	 */
 	var $root_description = "";
-	
+
 	/**
 	 * The nested P4A_DB_Source
 	 * @var P4A_DB_Source
 	 * @access private
 	 */
 	var $nested_source = null;
-	
+
 	/**
 	 * The description field name for the nested P4A_DB_Source
 	 * @var string
 	 * @access private
 	 */
 	var $nested_description = "";
-	
+
 	/**
 	 * Expand whole tree or collapse?
 	 * @var boolean
 	 * @access private
 	 */
 	var $expand_all = true;
-	
+
 	/**
 	 * Trim after this number of characters
 	 * @var integer
@@ -96,7 +96,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 		$this->addAction("onClick");
 		$this->intercept($this, "onClick", "onClick");
 	}
-	
+
 	/**
 	 * Sets the root source of the tree, it must be a P4A_DB_Source.
 	 * @param P4A_DB_Source	The DB source to navigate.
@@ -106,7 +106,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->root_source =& $source;
 	}
-	
+
 	/**
 	 * Sets the field name used to print out the description in the tree (for the root P4A_DB_Source).
 	 * @param string		The field name
@@ -116,7 +116,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->root_description = $field_name;
 	}
-	
+
 	/**
 	 * Sets the nested source of the tree, it must be a P4A_DB_Source.
 	 * @param P4A_DB_Source	The DB source to navigate.
@@ -126,7 +126,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->nested_source =& $source;
 	}
-	
+
 	/**
 	 * Sets the field name used to print out the description in the tree (for the nested P4A_DB_Source).
 	 * @param string		The field name
@@ -136,7 +136,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->nested_description = $field_name;
 	}
-	
+
 	/**
 	 * Trims description after x chars (0 = disabled).
 	 * @param integer		Num of chars
@@ -146,7 +146,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->trim = $chars;
 	}
-	
+
 	/**
 	 * Sets if the tree is expanded or not.
 	 * @param boolean		The value
@@ -156,7 +156,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->expand_all = $value;
 	}
-	
+
 	/**
 	 * Sets if the tree is collapsed or not.
 	 * @param boolean		The value
@@ -166,7 +166,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$this->expand_all = !$value;
 	}
-	
+
 	/**
 	 * Renders the widget
 	 * @access public
@@ -177,22 +177,22 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 		if (!$this->isVisible()) {
 			return "";
 		}
-		
+
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
-		
+
 		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_2_levels_db_navigator.css");
 		$obj_id = $this->getId();
-		
+
 		// copying data sources because we need to move them without changing the original ones
-		
-		$root_source = clone($this->root_source);
+
+		$root_source = unserialize(serialize($this->root_source));
 		$root_row = $root_source->row();
 		$root_pk = $root_source->getPk();
-		$nested_source = clone($this->nested_source);
+		$nested_source = unserialize(serialize($this->nested_source));
 		$nested_row = $nested_source->row();
 		$nested_pk = $nested_source->getPk();
-		
+
 		$return = "";
 		$root_source->firstRow();
 		$num_rows = $root_source->getNumRows();
@@ -207,7 +207,7 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 				$root_description = $this->_trim($root_source->fields->{$this->root_description}->getValue());
 				$actions = $this->composeStringActions($i);
 				$return .= "<li $active><a href='#' $actions>$root_description</a>";
-				
+
 				if ($this->expand_all or !empty($active)) {
 					$children = $nested_source->getAll();
 					if (sizeof($children)) {
@@ -226,13 +226,13 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 						$return .= "</ul>";
 					}
 				}
-				
+
 				$return .= "</li>\n";
 				$root_source->nextRow();
 			}
 			$return .= "</ul>";
 		}
-		
+
 		return $return;
 	}
 
@@ -245,16 +245,16 @@ class P4A_2_Levels_DB_Navigator extends P4A_Widget
 	{
 		$parts = explode('_', $params[0]);
 		$this->root_source->row($parts[0]+1);
-		
+
 		if (isset($parts[1])) {
 			$row = $this->nested_source->row($parts[1]+1);
 		} else {
 			$row = $this->nested_source->firstRow();
 		}
-		
+
 		return $this->actionHandler('afterClick', $row);
 	}
-	
+
 	/**
 	 * Trims a text after a fixed number of characters.
 	 * @param string		The text to be trimmed
