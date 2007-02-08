@@ -1,5 +1,9 @@
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system
+- a bug with p4a.js form2string was fixed (regarding escaped characters) (thanks to Nenad Trupka)
+- Croatian traslation was added (thanks to Nenad Trupka)
+- some fixes were applied to Croatian formats (thanks to Nenad Trupka)
+- PHP closing tag was removed from all translation and format files
 
 1.99.17
 - PEAR was updated to 1.5.0

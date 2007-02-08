@@ -108,13 +108,13 @@ function form2string(form)
 			case 'radio':
 				value = new String(e.value);
 				if (e.checked && value.length>0) {
-					sReturn += e.name + '=' + escape(value) + '&';
+					sReturn += e.name + '=' + encodeURIComponent(value) + '&';
 				}
 				break;
 			default:
 				if (e.name) {
 					value = new String(e.value);
-					sReturn += e.name + '=' + escape(value) + '&';
+					sReturn += e.name + '=' + encodeURIComponent(value) + '&';
 				}
 		}
 	}
