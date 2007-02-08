@@ -48,5 +48,3 @@ $currency_formats = array
 	"local"         => array('שח %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('ILS  %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

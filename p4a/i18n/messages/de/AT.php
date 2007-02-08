@@ -37,5 +37,3 @@
  */
 
 require dirname(__FILE__) . '/DE.php';
-
-?>

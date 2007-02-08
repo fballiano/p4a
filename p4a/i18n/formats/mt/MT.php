@@ -57,5 +57,3 @@ $currency_formats = array
 	"local"         => array('Lm%', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('MTL %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

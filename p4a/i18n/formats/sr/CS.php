@@ -48,5 +48,3 @@ $currency_formats = array
 	"local"         => array('% дин', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('% CSD', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

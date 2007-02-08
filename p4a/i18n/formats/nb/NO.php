@@ -57,5 +57,3 @@ $currency_formats = array
 	"local"         => array('kr%', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('NOK %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>
