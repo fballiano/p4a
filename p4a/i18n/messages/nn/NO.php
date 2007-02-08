@@ -37,5 +37,3 @@
  */
 
 require dirname(dirname(__FILE__)) . '/no/NO.php';
-
-?>

@@ -88,5 +88,3 @@ $messages = array
 	"yes"				=> "是",
 	"no"				=> "不"
 );
-
-?>

@@ -87,5 +87,3 @@ $messages = array
 	"yes"				=> "Ya",
 	"no"				=> "Tidak"
 );
-
-?>
