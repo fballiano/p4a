@@ -57,5 +57,3 @@ $currency_formats = array
 	"local"         => array('د.م. %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('MAD  %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

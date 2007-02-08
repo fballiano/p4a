@@ -57,5 +57,3 @@ $currency_formats = array
 	"local"         => array('% ریال', 0, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('% IRR', 0, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

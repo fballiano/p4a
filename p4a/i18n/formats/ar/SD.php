@@ -57,5 +57,3 @@ $currency_formats = array
 	"local"         => array('ج.س. %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
 	"international" => array('SDD  %', 3, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>

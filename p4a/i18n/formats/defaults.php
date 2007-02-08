@@ -57,5 +57,3 @@ $datetime_formats = array
 	"time_default"	=>	'%H:%M',
 	"time_long"		=>	'%H:%M:%S'
 );
-
-?>
