@@ -1,3 +1,6 @@
+1.99.19
+
+
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system
 - a bug with p4a.js form2string was fixed (regarding escaped characters) (thanks to Nenad Trupka)
