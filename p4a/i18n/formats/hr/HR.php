@@ -38,15 +38,16 @@
 
 define('P4A_I18N_DECIMAL_SEPARATOR', ',');
 define('P4A_I18N_THOUSAND_SEPARATOR', ' ');
+define('P4A_I18N_DATE_CALENDAR_LANGUAGE','hr');
 
 require dirname(dirname(__FILE__)) . '/defaults.php';
 
 $datetime_formats = array
 (
-	"date_default"	=>	'%Y.%m.%d',
-	"date_medium"	=>	'%Y.%m.%d',
-	"date_long"		=>	'%Y. %B %d',
-	"date_full"		=>	'%Y. %B %d',
+	"date_default"	=>	'%d.%m.%Y',
+	"date_medium"	=>	'%d.%m.%Y',
+	"date_long"		=>	'%d. %B %Y.',
+	"date_full"		=>	'%d %B %Y.',
 
 	"time_default"	=>	'%H:%M',
 	"time_long"		=>	'%H:%M:%S'
@@ -54,8 +55,6 @@ $datetime_formats = array
 
 $currency_formats = array
 (
-	"local"         => array('Kn %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
-	"international" => array('HRK  %', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
+	"local"         => array('% kn', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR),
+	"international" => array('% HRK', 2, P4A_I18N_DECIMAL_SEPARATOR, P4A_I18N_THOUSAND_SEPARATOR)
 );
-
-?>
