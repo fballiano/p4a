@@ -285,9 +285,11 @@
     			}
     			return $return;
 			} else {
-				$p4a->close();
+				ob_start();
 				$p4a->openMask('p4a_mask_error');
 				$p4a->active_mask->main($param);
+				$p4a->close();
+				ob_end_flush();
 				return ABORT;
 			}
 		}

@@ -232,7 +232,7 @@
 				$charset = ".{$this->charset}";
 			}
 
-			include(dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$charset}.php");
+			require dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$charset}.php";
 
 			$this->numbers_formats = $numbers_formats;
 			$this->datetime_formats = $datetime_formats;
