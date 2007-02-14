@@ -281,7 +281,9 @@ class P4A_DB_Source extends P4A_Data_Source
                         break;
                     case 'R':
                     	// Counter or Autoincrement field. Must be numeric
-                    	$this->fields->$field_name->setSequence("{$col->table}_{$field_name}_seq");
+                    	if (P4A_AUTO_DB_SEQUENCES) {
+                    		$this->fields->$field_name->setSequence("{$col->table}_{$field_name}_seq");
+                    	}
                     case 'I':
                     	// Integer field
                         $this->fields->$field_name->setType('integer');
