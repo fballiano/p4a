@@ -654,6 +654,10 @@
 		 */
 		function format( $value )
 		{
+			if (!is_string($value)) {
+				return '';
+			}
+
 			$p4a =& P4A::singleton();
 			if (strlen($value) > 0) {
 				if (($this->formatter_name !== NULL) and ($this->format_name !== NULL)) {

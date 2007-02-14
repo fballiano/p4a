@@ -415,9 +415,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $pk = $this->getPk();
                 $pk_value = $this->fields->$pk->getNewValue();
-                $fk_values = $db->queryCol("SELECT $fk_field
-                                            FROM $table
-                                            WHERE $fk='$pk_value'");
+                $fk_values = $db->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
                 $this->fields->$fieldname->setValue($fk_values);
                 $row[$fieldname] = $fk_values;
             }
@@ -578,29 +576,19 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk_field = $aField["fk_field"];
                 $fk = $aField["fk"];
 
-                $sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
+                $res = $db->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
                 if ($db->metaError()) {
-                    P4A_Error($sth->getMessage());
-                }
-
-                $res = $sth->execute(array($pk_value));
-                if ($db->metaError) {
-                    P4A_Error($res->getMessage());
+                    P4A_Error($db->metaErrorMsg($db->metaError()));
                 }
 
                 if ($fk_values) {
-                    $sth = $db->prepare("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)");
-                    if ($db->metaError()) {
-                        P4A_Error($sth->getMessage());
-                    }
-
 					foreach ($fk_values as $k=>$v) {
 						$fk_values[$k] = array($v);
 					}
 
-                    $res = $db->extended->executeMultiple($sth, $fk_values);
+                    $res = $db->execute("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)", $fk_values);
                     if ($db->metaError()) {
-                        P4A_Error($res->getMessage());
+                        P4A_Error($db->metaErrorMsg($db->metaError()));
                     }
                 }
             }
@@ -642,7 +630,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $res = $db->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
                 if ($db->metaError()) {
-                    P4A_Error($res->getMessage());
+                    P4A_Error($db->metaErrorMsg($db->metaError()));
                 }
             }
 
@@ -891,10 +879,10 @@ class P4A_DB_Source extends P4A_Data_Source
         $this->_multivalue_fields[$fieldname]['fk'] = $fk;
 
         if (!$fk_field) {
-            $info = $db->tableInfo($table);
+            $info = $db->metaColumns($table);
             foreach($info as $field) {
-                if ($field["name"] != $fk ) {
-                    $fk_field = $field["name"];
+                if ($field->name != $fk ) {
+                    $fk_field = $field->name;
                     break;
                 }
             }
