@@ -1,35 +1,47 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-//
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2005 Baba Buehler, Pierre-Alain Joye              |
-// +----------------------------------------------------------------------+
-// | This source file is subject to the New BSD license, That is bundled  |
-// | with this package in the file LICENSE, and is available through      |
-// | the world-wide-web at                                                |
-// | http://www.opensource.org/licenses/bsd-license.php                   |
-// | If you did not receive a copy of the new BSDlicense and are unable   |
-// | to obtain it through the world-wide-web, please send a note to       |
-// | pear-dev@lists.php.net so we can mail you a copy immediately.        |
-// +----------------------------------------------------------------------+
-// | Author: Baba Buehler <baba@babaz.com>                                |
-// |         Pierre-Alain Joye <pajoye@php.net>                           |
-// +----------------------------------------------------------------------+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// {{{ Header
 
 /**
  * TimeZone representation class, along with time zone information data
  *
  * PHP versions 4 and 5
  *
+ * LICENSE:
+ *
+ * Copyright (c) 1997-2006 Baba Buehler, Pierre-Alain Joye
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted under the terms of the BSD License.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  * @category   Date and Time
  * @package    Date
  * @author     Baba Buehler <baba@babaz.com>
  * @author     Pierre-Alain Joye <pajoye@php.net>
- * @copyright  1997-2005 Baba Buehler, Pierre-Alain Joye
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    CVS: $Id$
+ * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    CVS: $Id: TimeZone.php,v 1.14 2006/11/22 01:03:12 firman Exp $
  * @link       http://pear.php.net/package/Date
  */
+
+// }}}
+// {{{ Class: Date_TimeZone
 
 /**
  * TimeZone representation class, along with time zone information data
@@ -49,43 +61,52 @@
  * global array, $_DATE_TIMEZONE_DATA.
  *
  * @author     Baba Buehler <baba@babaz.com>
- * @copyright  1997-2005 The PHP Group
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    Release: 1.4.6
+ * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/Date
  */
 class Date_TimeZone
 {
+    // {{{ Properties
+
     /**
      * Time Zone ID of this time zone
      * @var string
      */
     var $id;
+
     /**
      * Long Name of this time zone (ie Central Standard Time)
      * @var string
      */
     var $longname;
+
     /**
      * Short Name of this time zone (ie CST)
      * @var string
      */
     var $shortname;
+
     /**
      * true if this time zone observes daylight savings time
      * @var boolean
      */
     var $hasdst;
+
     /**
      * DST Long Name of this time zone
      * @var string
      */
     var $dstlongname;
+
     /**
      * DST Short Name of this timezone
      * @var string
      */
     var $dstshortname;
+
     /**
      * offset, in milliseconds, of this timezone
      * @var int
@@ -98,6 +119,8 @@ class Date_TimeZone
      */
     var $default;
 
+    // }}}
+    // {{{ Constructor
 
     /**
      * Constructor
@@ -112,7 +135,7 @@ class Date_TimeZone
      */
     function Date_TimeZone($id)
     {
-        global $_DATE_TIMEZONE_DATA;
+        $_DATE_TIMEZONE_DATA =& $GLOBALS['_DATE_TIMEZONE_DATA'];
         if(Date_TimeZone::isValidID($id)) {
             $this->id = $id;
             $this->longname = $_DATE_TIMEZONE_DATA[$id]['longname'];
@@ -136,6 +159,9 @@ class Date_TimeZone
         }
     }
 
+    // }}}
+    // {{{ getDefault()
+
     /**
      * Return a TimeZone object representing the system default time zone
      *
@@ -147,9 +173,11 @@ class Date_TimeZone
      */
     function getDefault()
     {
-        global $_DATE_TIMEZONE_DEFAULT;
-        return new Date_TimeZone($_DATE_TIMEZONE_DEFAULT);
+        return new Date_TimeZone($GLOBALS['_DATE_TIMEZONE_DEFAULT']);
     }
+
+    // }}}
+    // {{{ setDefault()
 
     /**
      * Sets the system default time zone to the time zone in $id
@@ -161,11 +189,13 @@ class Date_TimeZone
      */
     function setDefault($id)
     {
-        global $_DATE_TIMEZONE_DEFAULT;
         if(Date_TimeZone::isValidID($id)) {
-            $_DATE_TIMEZONE_DEFAULT = $id;
+            $GLOBALS['_DATE_TIMEZONE_DEFAULT'] = $id;
         }
     }
+
+    // }}}
+    // {{{ isValidID()
 
     /**
      * Tests if given id is represented in the $_DATE_TIMEZONE_DATA time zone data
@@ -178,13 +208,15 @@ class Date_TimeZone
      */
     function isValidID($id)
     {
-        global $_DATE_TIMEZONE_DATA;
-        if(isset($_DATE_TIMEZONE_DATA[$id])) {
+        if(isset($GLOBALS['_DATE_TIMEZONE_DATA'][$id])) {
             return true;
         } else {
             return false;
         }
     }
+
+    // }}}
+    // {{{ isEqual()
 
     /**
      * Is this time zone equal to another
@@ -204,6 +236,9 @@ class Date_TimeZone
             return false;
         }
     }
+
+    // }}}
+    // {{{ isEquivalent()
 
     /**
      * Is this time zone equivalent to another
@@ -229,6 +264,9 @@ class Date_TimeZone
         }
     }
 
+    // }}}
+    // {{{ hasDaylightTime()
+
     /**
      * Returns true if this zone observes daylight savings time
      *
@@ -241,6 +279,9 @@ class Date_TimeZone
     {
         return $this->hasdst;
     }
+
+    // }}}
+    // {{{ inDaylightTime()
 
     /**
      * Is the given date/time in DST for this time zone
@@ -259,15 +300,21 @@ class Date_TimeZone
      */
     function inDaylightTime($date)
     {
-        $env_tz = "";
-        if(getenv("TZ")) {
-            $env_tz = getenv("TZ");
+        $env_tz = '';
+        if(isset($_ENV['TZ']) && getenv('TZ')) {
+            $env_tz = getenv('TZ');
         }
-        putenv("TZ=".$this->id);
+
+        putenv('TZ=' . $this->id);
         $ltime = localtime($date->getTime(), true);
-        putenv("TZ=".$env_tz);
+        if ($env_tz != '') {
+            putenv('TZ=' . $env_tz);
+        }
         return $ltime['tm_isdst'];
     }
+
+    // }}}
+    // {{{ getDSTSavings()
 
     /**
      * Get the DST offset for this time zone
@@ -287,6 +334,9 @@ class Date_TimeZone
             return 0;
         }
     }
+
+    // }}}
+    // {{{ getOffset()
 
     /**
      * Get the DST-corrected offset to UTC for the given date
@@ -309,6 +359,9 @@ class Date_TimeZone
         }
     }
 
+    // }}}
+    // {{{ getAvailableIDs()
+
     /**
      * Returns the list of valid time zone id strings
      *
@@ -319,9 +372,11 @@ class Date_TimeZone
      */
     function getAvailableIDs()
     {
-        global $_DATE_TIMEZONE_DATA;
-        return array_keys($_DATE_TIMEZONE_DATA);
+        return array_keys($GLOBALS['_DATE_TIMEZONE_DATA']);
     }
+
+    // }}}
+    // {{{ getID()
 
     /**
      * Returns the id for this time zone
@@ -335,6 +390,9 @@ class Date_TimeZone
     {
         return $this->id;
     }
+
+    // }}}
+    // {{{ getLongName()
 
     /**
      * Returns the long name for this time zone
@@ -350,6 +408,9 @@ class Date_TimeZone
         return $this->longname;
     }
 
+    // }}}
+    // {{{ getShortName()
+
     /**
      * Returns the short name for this time zone
      *
@@ -362,6 +423,9 @@ class Date_TimeZone
     {
         return $this->shortname;
     }
+
+    // }}}
+    // {{{ getDSTLongName()
 
     /**
      * Returns the DST long name for this time zone
@@ -376,6 +440,9 @@ class Date_TimeZone
         return $this->dstlongname;
     }
 
+    // }}}
+    // {{{ getDSTShortName()
+
     /**
      * Returns the DST short name for this time zone
      *
@@ -389,6 +456,9 @@ class Date_TimeZone
         return $this->dstshortname;
     }
 
+    // }}}
+    // {{{ getRawOffset()
+
     /**
      * Returns the raw (non-DST-corrected) offset from UTC/GMT for this time zone
      *
@@ -401,13 +471,17 @@ class Date_TimeZone
     {
         return $this->offset;
     }
+
+    // }}}
 }
 
+// }}}
 
-//
-// Time Zone Data
-//  offset is in miliseconds
-//
+/**
+ * Time Zone Data offset is in miliseconds
+ *
+ * @global array $GLOBALS['_DATE_TIMEZONE_DATA']
+ */
 $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
     'Etc/GMT+12' => array(
         'offset' => -43200000,
@@ -4626,15 +4700,16 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
         'hasdst' => false ),
 );
 
-//
-// Initialize default timezone
-//  First try _DATE_TIMEZONE_DEFAULT global,
-//  then PHP_TZ environment var, then TZ environment var
-//
-if(isset($_DATE_TIMEZONE_DEFAULT)
-    && Date_TimeZone::isValidID($_DATE_TIMEZONE_DEFAULT)
-) {
-    Date_TimeZone::setDefault($_DATE_TIMEZONE_DEFAULT);
+/**
+ * Initialize default timezone
+ *
+ * First try _DATE_TIMEZONE_DEFAULT global, then PHP_TZ environment var,
+ * then TZ environment var
+ */
+if(isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
+   && Date_TimeZone::isValidID($GLOBALS['_DATE_TIMEZONE_DEFAULT']))
+{
+    Date_TimeZone::setDefault($GLOBALS['_DATE_TIMEZONE_DEFAULT']);
 } elseif (getenv('PHP_TZ') && Date_TimeZone::isValidID(getenv('PHP_TZ'))) {
     Date_TimeZone::setDefault(getenv('PHP_TZ'));
 } elseif (getenv('TZ') && Date_TimeZone::isValidID(getenv('TZ'))) {
@@ -4644,3 +4719,13 @@ if(isset($_DATE_TIMEZONE_DEFAULT)
 } else {
     Date_TimeZone::setDefault('UTC');
 }
+
+/*
+ * Local variables:
+ * mode: php
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+?>

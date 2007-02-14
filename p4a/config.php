@@ -284,6 +284,10 @@
 		define('P4A_AUTO_MAXLENGTH', true);
 	}
 
+	if (!defined('P4A_AUTO_DB_SEQUENCES')) {
+		define('P4A_AUTO_DB_SEQUENCES', true);
+	}
+
 	if (!defined('P4A_AJAX_ENABLED')) {
 		define('P4A_AJAX_ENABLED', true);
 	}

@@ -1,19 +1,7 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-//
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2005 Allan Kent                                   |
-// +----------------------------------------------------------------------+
-// | This source file is subject to the New BSD license, That is bundled  |
-// | with this package in the file LICENSE, and is available through      |
-// | the world-wide-web at                                                |
-// | http://www.opensource.org/licenses/bsd-license.php                   |
-// | If you did not receive a copy of the new BSDlicense and are unable   |
-// | to obtain it through the world-wide-web, please send a note to       |
-// | pear-dev@lists.php.net so we can mail you a copy immediately.        |
-// +----------------------------------------------------------------------+
-// | Author: Allan Kent <allan@lodestone.co.za>                           |
-// +----------------------------------------------------------------------+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// {{{ Header
 
 /**
  * Class to convert date strings between Gregorian and Human calendar formats
@@ -28,15 +16,40 @@
  *
  * PHP versions 4 and 5
  *
+ * LICENSE:
+ *
+ * Copyright (c) 1997-2006 Allan Kent
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted under the terms of the BSD License.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  * @category   Date and Time
  * @package    Date
  * @author     Allan Kent <allan@lodestone.co.za>
- * @copyright  1997-2005 Allan Kent
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    CVS: $Id$
+ * @copyright  1997-2006 Allan Kent
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    CVS: $Id: Human.php,v 1.6 2006/11/21 17:38:15 firman Exp $
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.3
  */
+
+// }}}
+// {{{ Class: Date_Human
 
 /**
  * Class to convert date strings between Gregorian and Human calendar formats
@@ -51,13 +64,16 @@
  *
  * @author     Allan Kent <allan@lodestone.co.za>
  * @copyright  1997-2005 Allan Kent
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    Release: 1.4.6
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/Date
  * @since      Class available since Release 1.3
  */
 class Date_Human
 {
+    // {{{ gregorianToHuman()
+
     /**
      * Returns an associative array containing the converted date information
      * in 'Human Calendar' format.
@@ -166,6 +182,9 @@ class Date_Human
                      "hmoy" => $humanMonthOfYear );
     }
 
+    // }}}
+    // {{{ humanToGregorian()
+
     /**
      * Returns unix timestamp for a given Human Calendar date
      *
@@ -177,7 +196,7 @@ class Date_Human
      *
      * @return int unix timestamp of date
      */
-    function HumanToGregorian($day, $month, $year=0)
+    function humanToGregorian($day, $month, $year=0)
     {
         /*
          * Check to see if the year has been passed through.
@@ -206,4 +225,18 @@ class Date_Human
         $GregorianTimeStamp = mktime(0, 0, 0, 1, $DayOfYear, $year);
         return $GregorianTimeStamp;
     }
+
+    // }}}
 }
+
+// }}}
+
+/*
+ * Local variables:
+ * mode: php
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
+?>

@@ -1,20 +1,7 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-//
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2005 Baba Buehler, Pierre-Alain Joye              |
-// +----------------------------------------------------------------------+
-// | This source file is subject to the New BSD license, That is bundled  |
-// | with this package in the file LICENSE, and is available through      |
-// | the world-wide-web at                                                |
-// | http://www.opensource.org/licenses/bsd-license.php                   |
-// | If you did not receive a copy of the new BSDlicense and are unable   |
-// | to obtain it through the world-wide-web, please send a note to       |
-// | pear-dev@lists.php.net so we can mail you a copy immediately.        |
-// +----------------------------------------------------------------------+
-// | Author: Baba Buehler <baba@babaz.com>                                |
-// |         Pierre-Alain Joye <pajoye@php.net>                           |
-// +----------------------------------------------------------------------+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// {{{ Header
 
 /**
  * Calculates, manipulates and retrieves dates
@@ -24,17 +11,41 @@
  *
  * PHP versions 4 and 5
  *
+ * LICENSE:
+ *
+ * Copyright (c) 1999-2006 Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted under the terms of the BSD License.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  * @category   Date and Time
  * @package    Date
  * @author     Monte Ohrt <monte@ispi.net>
  * @author     Pierre-Alain Joye <pajoye@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2005  Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    CVS: $Id$
+ * @copyright  1999-2006 Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    CVS: $Id: Calc.php,v 1.35 2006/11/21 23:01:13 firman Exp $
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.2
  */
+
+// }}}
 
 if (!defined('DATE_CALC_BEGIN_WEEKDAY')) {
     /**
@@ -53,10 +64,12 @@ if (!defined('DATE_CALC_FORMAT')) {
      * The default is '%Y%m%d'.  To override this default, define
      * this constant before including Calc.php.
      *
-     * @since Constant available since Release 1.5.0
+     * @since Constant available since Release 1.4.4
      */
     define('DATE_CALC_FORMAT', '%Y%m%d');
 }
+
+// {{{ Class: Date_Calc
 
 /**
  * Calculates, manipulates and retrieves dates
@@ -66,14 +79,17 @@ if (!defined('DATE_CALC_FORMAT')) {
  *
  * @author     Monte Ohrt <monte@ispi.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999, 2002, 2003 ispi
- * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
- * @version    Release: 1.4.6
+ * @copyright  1999-2006 Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ *             BSD License
+ * @version    Release: 1.4.7
  * @link       http://pear.php.net/package/Date
  * @since      Class available since Release 1.2
  */
 class Date_Calc
 {
+    // {{{ dateFormat()
+
     /**
      * Formats the date in the given format, much like strfmt()
      *
@@ -190,6 +206,9 @@ class Date_Calc
         return $output;
     }
 
+    // }}}
+    // {{{ defaultCentury()
+
     /**
      * Turns a two digit year into a four digit year
      *
@@ -213,6 +232,9 @@ class Date_Calc
             return '20' . $year;
         }
     }
+
+    // }}}
+    // {{{ dateToDays()
 
     /**
      * Converts a date to number of days since a distant unspecified epoch
@@ -249,6 +271,9 @@ class Date_Calc
                 floor((153 * $month + 2) / 5 ) +
                 $day + 1721119);
     }
+
+    // }}}
+    // {{{ daysToDate()
 
     /**
      * Converts number of days to a distant unspecified epoch
@@ -291,6 +316,9 @@ class Date_Calc
         return Date_Calc::dateFormat($day, $month, $century . $year, $format);
     }
 
+    // }}}
+    // {{{ gregorianToISO()
+
     /**
      * Converts from Gregorian Year-Month-Day to ISO Year-WeekNumber-WeekDay
      *
@@ -309,7 +337,8 @@ class Date_Calc
      * @access public
      * @static
      */
-    function gregorianToISO($day, $month, $year) {
+    function gregorianToISO($day, $month, $year)
+    {
         $mnth = array (0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
         $y_isleap = Date_Calc::isLeapYear($year);
         $y_1_isleap = Date_Calc::isLeapYear($year - 1);
@@ -363,6 +392,9 @@ class Date_Calc
         return $yearnumber . '-' . $weeknumber . '-' . $weekday;
     }
 
+    // }}}
+    // {{{ dateSeason()
+
     /**
      * Determines julian date of the given season
      *
@@ -381,7 +413,8 @@ class Date_Calc
      * @access public
      * @static
      */
-    function dateSeason($season, $year = 0) {
+    function dateSeason($season, $year = 0)
+    {
         if ($year == '') {
             $year = Date_Calc::dateNow('%Y');
         }
@@ -421,6 +454,9 @@ class Date_Calc
         return $juliandate;
     }
 
+    // }}}
+    // {{{ dateNow()
+
     /**
      * Returns the current local date
      *
@@ -439,6 +475,9 @@ class Date_Calc
         return strftime($format, time());
     }
 
+    // }}}
+    // {{{ getYear()
+
     /**
      * Returns the current local year in format CCYY
      *
@@ -451,6 +490,9 @@ class Date_Calc
     {
         return Date_Calc::dateNow('%Y');
     }
+
+    // }}}
+    // {{{ getMonth()
 
     /**
      * Returns the current local month in format MM
@@ -465,6 +507,9 @@ class Date_Calc
         return Date_Calc::dateNow('%m');
     }
 
+    // }}}
+    // {{{ getDay()
+
     /**
      * Returns the current local day in format DD
      *
@@ -477,6 +522,9 @@ class Date_Calc
     {
         return Date_Calc::dateNow('%d');
     }
+
+    // }}}
+    // {{{ julianDate()
 
     /**
      * Returns number of days since 31 December of year before given date
@@ -509,6 +557,9 @@ class Date_Calc
         return $julian;
     }
 
+    // }}}
+    // {{{ getWeekdayFullname()
+
     /**
      * Returns the full weekday name for the given date
      *
@@ -536,6 +587,9 @@ class Date_Calc
         $weekday = Date_Calc::dayOfWeek($day, $month, $year);
         return $weekday_names[$weekday];
     }
+
+    // }}}
+    // {{{ getWeekdayAbbrname()
 
     /**
      * Returns the abbreviated weekday name for the given date
@@ -566,6 +620,9 @@ class Date_Calc
                       0, $length);
     }
 
+    // }}}
+    // {{{ getMonthFullname()
+
     /**
      * Returns the full month name for the given month
      *
@@ -585,6 +642,9 @@ class Date_Calc
         $month_names = Date_Calc::getMonthNames();
         return $month_names[$month];
     }
+
+    // }}}
+    // {{{ getMonthAbbrname()
 
     /**
      * Returns the abbreviated month name for the given month
@@ -606,6 +666,9 @@ class Date_Calc
         }
         return substr(Date_Calc::getMonthFullname($month), 0, $length);
     }
+
+    // }}}
+    // {{{ getMonthFromFullname()
 
     /**
      * Returns the numeric month from the month name or an abreviation
@@ -632,6 +695,9 @@ class Date_Calc
         return 0;
     }
 
+    // }}}
+    // {{{ getMonthNames()
+
     /**
      * Returns an array of month names
      *
@@ -648,11 +714,15 @@ class Date_Calc
      */
     function getMonthNames()
     {
+        $months = array();
         for ($i = 1; $i < 13; $i++) {
             $months[$i] = strftime('%B', mktime(0, 0, 0, $i, 1, 2001));
         }
         return $months;
     }
+
+    // }}}
+    // {{{ getWeekDays()
 
     /**
      * Returns an array of week days
@@ -670,11 +740,15 @@ class Date_Calc
      */
     function getWeekDays()
     {
+        $weekdays = array();
         for ($i = 0; $i < 7; $i++) {
             $weekdays[$i] = strftime('%A', mktime(0, 0, 0, 1, $i, 2001));
         }
         return $weekdays;
     }
+
+    // }}}
+    // {{{ dayOfWeek()
 
     /**
      * Returns day of week for given date (0 = Sunday)
@@ -716,6 +790,9 @@ class Date_Calc
         return $weekday_number;
     }
 
+    // }}}
+    // {{{ weekOfYear()
+
     /**
      * Returns week of the year, first Sunday is first day of first week
      *
@@ -745,6 +822,9 @@ class Date_Calc
         return $week_number;
     }
 
+    // }}}
+    // {{{ quarterOfYear()
+
     /**
      * Returns quarter of the year for given date
      *
@@ -771,6 +851,9 @@ class Date_Calc
         $year_quarter = intval(($month - 1) / 3 + 1);
         return $year_quarter;
     }
+
+    // }}}
+    // {{{ daysInMonth()
 
     /**
      * Find the number of days in the given month
@@ -808,6 +891,9 @@ class Date_Calc
             return 31;
         }
     }
+
+    // }}}
+    // {{{ weeksInMonth()
 
     /**
      * Returns the number of rows on a calendar month
@@ -847,6 +933,9 @@ class Date_Calc
                      - $first_week_days) / 7) + $weeks;
     }
 
+    // }}}
+    // {{{ getCalendarWeek()
+
     /**
      * Return an array with days in week
      *
@@ -885,6 +974,9 @@ class Date_Calc
         }
         return $week_array;
     }
+
+    // }}}
+    // {{{ getCalendarMonth()
 
     /**
      * Return a set of arrays to construct a calendar month for the given date
@@ -938,6 +1030,9 @@ class Date_Calc
         return $month_array;
     }
 
+    // }}}
+    // {{{ getCalendarYear()
+
     /**
      * Return a set of arrays to construct a calendar year for the given date
      *
@@ -965,6 +1060,9 @@ class Date_Calc
 
         return $year_array;
     }
+
+    // }}}
+    // {{{ prevDay()
 
     /**
      * Returns date of day before given date
@@ -995,6 +1093,9 @@ class Date_Calc
         return Date_Calc::daysToDate($days - 1, $format);
     }
 
+    // }}}
+    // {{{ nextDay()
+
     /**
      * Returns date of day after given date
      *
@@ -1023,6 +1124,9 @@ class Date_Calc
         $days = Date_Calc::dateToDays($day, $month, $year);
         return Date_Calc::daysToDate($days + 1, $format);
     }
+
+    // }}}
+    // {{{ prevWeekday()
 
     /**
      * Returns date of the previous weekday, skipping from Monday to Friday
@@ -1060,6 +1164,9 @@ class Date_Calc
         return Date_Calc::daysToDate($days, $format);
     }
 
+    // }}}
+    // {{{ nextWeekday()
+
     /**
      * Returns date of the next weekday of given date, skipping from
      * Friday to Monday
@@ -1096,6 +1203,9 @@ class Date_Calc
         }
         return Date_Calc::daysToDate($days, $format);
     }
+
+    // }}}
+    // {{{ prevDayOfWeek()
 
     /**
      * Returns date of the previous specific day of the week
@@ -1138,6 +1248,9 @@ class Date_Calc
         }
         return Date_Calc::daysToDate($days, $format);
     }
+
+    // }}}
+    // {{{ nextDayOfWeek()
 
     /**
      * Returns date of the next specific day of the week
@@ -1184,6 +1297,9 @@ class Date_Calc
         return Date_Calc::daysToDate($days, $format);
     }
 
+    // }}}
+    // {{{ prevDayOfWeekOnOrBefore()
+
     /**
      * Returns date of the previous specific day of the week
      * on or before the given date
@@ -1206,6 +1322,9 @@ class Date_Calc
                                         true);
     }
 
+    // }}}
+    // {{{ nextDayOfWeekOnOrAfter()
+
     /**
      * Returns date of the next specific day of the week
      * on or after the given date
@@ -1227,6 +1346,9 @@ class Date_Calc
         return Date_Calc::nextDayOfWeek($dow, $day, $month, $year, $format,
                                         true);
     }
+
+    // }}}
+    // {{{ beginOfWeek()
 
     /**
      * Find the month day of the beginning of week for given date,
@@ -1262,6 +1384,9 @@ class Date_Calc
                                      - $interval, $format);
     }
 
+    // }}}
+    // {{{ endOfWeek()
+
     /**
      * Find the month day of the end of week for given date,
      * using DATE_CALC_BEGIN_WEEKDAY
@@ -1295,6 +1420,9 @@ class Date_Calc
         return Date_Calc::daysToDate(Date_Calc::dateToDays($day, $month, $year)
                                      + $interval, $format);
     }
+
+    // }}}
+    // {{{ beginOfPrevWeek()
 
     /**
      * Find the month day of the beginning of week before given date,
@@ -1338,6 +1466,9 @@ class Date_Calc
                                       $prev_week_year, $format);
     }
 
+    // }}}
+    // {{{ beginOfNextWeek()
+
     /**
      * Find the month day of the beginning of week after given date,
      * using DATE_CALC_BEGIN_WEEKDAY
@@ -1380,6 +1511,9 @@ class Date_Calc
                                       $next_week_year, $format);
     }
 
+    // }}}
+    // {{{ beginOfMonth()
+
     /**
      * Return date of first day of month of given date
      *
@@ -1392,7 +1526,7 @@ class Date_Calc
      * @access public
      * @static
      * @see Date_Calc::beginOfMonthBySpan()
-     * @deprecated Method deprecated in Release 1.5.0
+     * @deprecated Method deprecated in Release 1.4.4
      */
     function beginOfMonth($month = 0, $year = 0, $format = DATE_CALC_FORMAT)
     {
@@ -1404,6 +1538,9 @@ class Date_Calc
         }
         return Date_Calc::dateFormat('01', $month, $year, $format);
     }
+
+    // }}}
+    // {{{ beginOfPrevMonth()
 
     /**
      * Returns date of the first day of previous month of given date
@@ -1418,7 +1555,7 @@ class Date_Calc
      * @access public
      * @static
      * @see Date_Calc::beginOfMonthBySpan()
-     * @deprecated Method deprecated in Release 1.5.0
+     * @deprecated Method deprecated in Release 1.4.4
      */
     function beginOfPrevMonth($day = 0, $month = 0, $year = 0,
                               $format = DATE_CALC_FORMAT)
@@ -1443,6 +1580,9 @@ class Date_Calc
         return Date_Calc::dateFormat($day, $month, $year, $format);
     }
 
+    // }}}
+    // {{{ endOfPrevMonth()
+
     /**
      * Returns date of the last day of previous month for given date
      *
@@ -1456,7 +1596,7 @@ class Date_Calc
      * @access public
      * @static
      * @see Date_Calc::endOfMonthBySpan()
-     * @deprecated Method deprecated in Release 1.5.0
+     * @deprecated Method deprecated in Release 1.4.4
      */
     function endOfPrevMonth($day = 0, $month = 0, $year = 0,
                             $format = DATE_CALC_FORMAT)
@@ -1480,6 +1620,9 @@ class Date_Calc
         return Date_Calc::dateFormat($day, $month, $year, $format);
     }
 
+    // }}}
+    // {{{ beginOfNextMonth()
+
     /**
      * Returns date of begin of next month of given date
      *
@@ -1493,7 +1636,7 @@ class Date_Calc
      * @access public
      * @static
      * @see Date_Calc::beginOfMonthBySpan()
-     * @deprecated Method deprecated in Release 1.5.0
+     * @deprecated Method deprecated in Release 1.4.4
      */
     function beginOfNextMonth($day = 0, $month = 0, $year = 0,
                               $format = DATE_CALC_FORMAT)
@@ -1518,6 +1661,9 @@ class Date_Calc
         return Date_Calc::dateFormat($day, $month, $year, $format);
     }
 
+    // }}}
+    // {{{ endOfNextMonth()
+
     /**
      * Returns date of the last day of next month of given date
      *
@@ -1531,7 +1677,7 @@ class Date_Calc
      * @access public
      * @static
      * @see Date_Calc::endOfMonthBySpan()
-     * @deprecated Method deprecated in Release 1.5.0
+     * @deprecated Method deprecated in Release 1.4.4
      */
     function endOfNextMonth($day = 0, $month = 0, $year = 0,
                             $format = DATE_CALC_FORMAT)
@@ -1555,6 +1701,9 @@ class Date_Calc
         return Date_Calc::dateFormat($day, $month, $year, $format);
     }
 
+    // }}}
+    // {{{ beginOfMonthBySpan()
+
     /**
      * Returns date of the first day of the month in the number of months
      * from the given date
@@ -1572,7 +1721,7 @@ class Date_Calc
      *
      * @access public
      * @static
-     * @since  Method available since Release 1.5.0
+     * @since  Method available since Release 1.4.4
      */
     function beginOfMonthBySpan($months = 0, $month = 0, $year = 0,
                                 $format = DATE_CALC_FORMAT)
@@ -1612,6 +1761,9 @@ class Date_Calc
         return Date_Calc::dateFormat(1, $month, $year, $format);
     }
 
+    // }}}
+    // {{{ endOfMonthBySpan()
+
     /**
      * Returns date of the last day of the month in the number of months
      * from the given date
@@ -1629,7 +1781,7 @@ class Date_Calc
      *
      * @access public
      * @static
-     * @since  Method available since Release 1.5.0
+     * @since  Method available since Release 1.4.4
      */
     function endOfMonthBySpan($months = 0, $month = 0, $year = 0,
                               $format = DATE_CALC_FORMAT)
@@ -1670,6 +1822,9 @@ class Date_Calc
                                      $month, $year, $format);
     }
 
+    // }}}
+    // {{{ firstOfMonthWeekday()
+
     /**
      * Find the day of the week for the first of the month of given date
      *
@@ -1691,6 +1846,9 @@ class Date_Calc
         }
         return Date_Calc::dayOfWeek('01', $month, $year);
     }
+
+    // }}}
+    // {{{ NWeekdayOfMonth()
 
     /**
      * Calculates the date of the Nth weekday of the month,
@@ -1738,6 +1896,9 @@ class Date_Calc
         }
     }
 
+    // }}}
+    // {{{ isValidDate()
+
     /**
      * Returns true for valid date, false for invalid date
      *
@@ -1762,6 +1923,9 @@ class Date_Calc
         }
         return true;
     }
+
+    // }}}
+    // {{{ isLeapYear()
 
     /**
      * Returns true for a leap year, else false
@@ -1794,6 +1958,9 @@ class Date_Calc
             return (($year % 4 == 0) && ($year % 100 != 0)) || ($year % 400 == 0);
         }
     }
+
+    // }}}
+    // {{{ isFutureDate()
 
     /**
      * Determines if given date is a future date from now
@@ -1829,6 +1996,9 @@ class Date_Calc
         return false;
     }
 
+    // }}}
+    // {{{ isPastDate()
+
     /**
      * Determines if given date is a past date from now
      *
@@ -1863,6 +2033,9 @@ class Date_Calc
         return false;
     }
 
+    // }}}
+    // {{{ dateDiff()
+
     /**
      * Returns number of days between two given dates
      *
@@ -1895,6 +2068,9 @@ class Date_Calc
                    - Date_Calc::dateToDays($day2, $month2, $year2));
     }
 
+    // }}}
+    // {{{ compareDates()
+
     /**
      * Compares two dates
      *
@@ -1924,6 +2100,18 @@ class Date_Calc
         }
         return ($ndays1 > $ndays2) ? 1 : -1;
     }
+
+    // }}}
 }
 
+// }}}
+
+/*
+ * Local variables:
+ * mode: php
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 ?>

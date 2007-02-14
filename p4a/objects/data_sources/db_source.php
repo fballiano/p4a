@@ -229,67 +229,83 @@ class P4A_DB_Source extends P4A_Data_Source
         $db =& P4A_DB::singleton($this->getDSN());
 
         $query = $this->_composeSelectStructureQuery();
-		$db->setLimit(1, 0);
-		$rs = $db->query($query);
+		$rs = $db->selectLimit($query, 1, 0);
 
-        if (MDB2::isError($rs)) {
-            $e = new P4A_ERROR('A query has returned an error', $this, $rs);
+        if ($db->metaError()) {
+            $e = new P4A_Error('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
         } else {
-            $info = $db->reverse->tableInfo($rs);
             $main_table = $this->getTable();
             $array_fields = $this->getFields();
-            foreach ($info as $col) {
-                $field_name = $col["name"];
-				$col['type'] = strtolower($col['mdb2type']);
+
+            for ($i=0; $i<$rs->fieldCount(); $i++) {
+            	$col = $rs->fetchField($i);
+                $field_name = $col->name;
+				$col->meta_type = $rs->metaType($col);
                 if (isset($this->fields->$field_name)) {
                     continue;
                 }
                 $this->fields->build("p4a_data_field",$field_name);
 				$this->fields->$field_name->setDSN($this->getDSN());
-				$this->fields->$field_name->setLength($col['length']);
-                if ($col['type'] == 'integer' and $col['length'] == 1) {
-                    $col['type'] = 'boolean';
+				$this->fields->$field_name->setLength($col->max_length);
+                if ($col->meta_type == 'I' and $col->max_length == 1) {
+                    $col->meta_type = 'L';
                 }
 
-                switch ($col['type']) {
-                    case 'boolean':
-                        $this->fields->$field_name->setType('boolean');
-                        break;
-                    case 'float':
-                        $this->fields->$field_name->setType('float');
-                        break;
-                    case 'decimal':
-                        $this->fields->$field_name->setType('decimal');
-                        break;
-                    case 'integer':
-                        $this->fields->$field_name->setType('integer');
-                        break;
-                    case 'date':
+                switch ($col->meta_type) {
+                    case 'C';
+                    	// Character fields that should be shown in a <input type="text"> tag
+                    	$this->fields->$field_name->setType('text');
+                    	break;
+                    case 'X';
+                    	// Clob (character large objects), or large text fields that should be shown in a <textarea>
+                    	$this->fields->$field_name->setType('text');
+                    	break;
+                    case 'D':
+                    	// Date field
                         $this->fields->$field_name->setType('date');
                         break;
-                    case 'time':
-                        $this->fields->$field_name->setType('time');
-                        break;
-                    default:
+                    case 'T':
+                    	// Timestamp field
                         $this->fields->$field_name->setType('text');
                         break;
+                    case 'L':
+                    	// Logical field (boolean or bit-field)
+                        $this->fields->$field_name->setType('boolean');
+                        break;
+                    case 'N':
+                    	// Numeric field. Includes decimal, numeric, floating point, and real
+                        $this->fields->$field_name->setType('decimal');
+                        break;
+                    case 'R':
+                    	// Counter or Autoincrement field. Must be numeric
+                    	$this->fields->$field_name->setSequence("{$col->table}_{$field_name}_seq");
+                    case 'I':
+                    	// Integer field
+                        $this->fields->$field_name->setType('integer');
+                        break;
+                    case 'B':
+                    	// Blob, or binary large objects
+                        $this->fields->$field_name->setType('text');
+                        break;
+                    default:
+                        p4a_error("unknown type {$col->meta_type} for field {$field_name}");
                 }
 
 				// if field is not on main table is not updatable
-            	if (!strlen($col['table'])) {
+            	if (!isset($col->table) or !strlen($col->table)) {
             		if (count($this->getJoin())) {
             			$this->fields->$field_name->setReadOnly();
             		} else {
 						$this->fields->$field_name->setTable($main_table);
             		}
-            	} elseif ($col['table'] != $main_table){
+            	} elseif ($col->table != $main_table){
                     $this->fields->$field_name->setReadOnly();
-                	$this->fields->$field_name->setTable($col['table']);
+                	$this->fields->$field_name->setTable($col->table);
                 } else {
-                	$this->fields->$field_name->setTable($col['table']);
+                	$this->fields->$field_name->setTable($col->table);
             	}
 
                 if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
@@ -338,9 +354,9 @@ class P4A_DB_Source extends P4A_Data_Source
     {
 		$db =& P4A_DB::singleton($this->getDSN());
 		$query = $this->_composeSelectPkQuery($pk);
-		$row = $db->queryRow($query);
-        if (MDB2::isError($row)) {
-			$e = new P4A_ERROR('A query has returned an error', $this, $row);
+		$row = $db->getRow($query);
+        if ($db->metaError()) {
+			$e = new P4A_Error('A query has returned an error', $this, $row);
 			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
 				die();
 			}
@@ -361,10 +377,9 @@ class P4A_DB_Source extends P4A_Data_Source
         	$num_row = 1;
         }
 
-        $db->setLimit(1, $num_row - 1);
-		$rs = $db->query($query);
-        if (MDB2::isError($rs)) {
-            $e = new P4A_ERROR('A query has returned an error', $this, $rs);
+		$rs = $db->selectLimit($query, 1, $num_row-1);
+        if ($db->metaError()) {
+            $e = new P4A_Error('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
@@ -424,14 +439,14 @@ class P4A_DB_Source extends P4A_Data_Source
         	$group = $this->getGroup();
         	if (count($group)) {
         		$result = $db->queryCol($query);
-	        	if (PEAR::isError($result)) {
+	        	if ($db->metaError()) {
 	        		$name = $this->getName();
 	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
 	        	}
         		$this->_num_rows = count($result);
         	} else {
-        		$result = $db->queryOne($query);
-	        	if (PEAR::isError($result)) {
+        		$result = $db->getOne($query);
+	        	if ($db->metaError()) {
 	        		$name = $this->getName();
 	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
 	        	}
@@ -502,7 +517,7 @@ class P4A_DB_Source extends P4A_Data_Source
             //$query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
 
-            return $db->queryOne($query) + 1;
+            return $db->getOne($query) + 1;
         }
     }
 
@@ -517,7 +532,6 @@ class P4A_DB_Source extends P4A_Data_Source
             $db =& P4A_DB::singleton($this->getDSN());
             if (empty($fields_values)) {
                 while($field =& $this->fields->nextItem()) {
-
                     if ($field->getAliasOf()) {
                         $name = $field->getAliasOf();
                     } else {
@@ -536,13 +550,13 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             if ($this->isNew()) {
-                $rs = $db->extended->autoExecute($this->_table, $fields_values, MDB2_AUTOQUERY_INSERT);
+                $res = $db->autoExecute($this->_table, $fields_values, "INSERT");
             } else {
-                $rs = $db->extended->autoExecute($this->_table, $fields_values, MDB2_AUTOQUERY_UPDATE, $this->_composePkString());
+                $res = $db->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString());
             }
 
-            if (MDB2::isError($rs)) {
-                $e = new P4A_ERROR('A query has returned an error', $this, $rs);
+            if (!$res) {
+                $e = new P4A_ERROR('A query has returned an error', $this);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
@@ -563,18 +577,18 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk = $aField["fk"];
 
                 $sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
-                if (MDB2::isError($sth)) {
+                if ($db->metaError()) {
                     P4A_Error($sth->getMessage());
                 }
 
                 $res = $sth->execute(array($pk_value));
-                if (MDB2::isError($res)) {
+                if ($db->metaError) {
                     P4A_Error($res->getMessage());
                 }
 
                 if ($fk_values) {
                     $sth = $db->prepare("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)");
-                    if (MDB2::isError($sth)) {
+                    if ($db->metaError()) {
                         P4A_Error($sth->getMessage());
                     }
 
@@ -583,7 +597,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 
                     $res = $db->extended->executeMultiple($sth, $fk_values);
-                    if (MDB2::isError($res)) {
+                    if ($db->metaError()) {
                         P4A_Error($res->getMessage());
                     }
                 }
@@ -624,21 +638,15 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk_table = $aField["table"];
                 $fk = $aField["fk"];
 
-                $sth = $db->prepare("DELETE FROM $fk_table WHERE $fk=?");
-                if (MDB2::isError($sth)) {
-                    P4A_Error($sth->getMessage());
-                }
-
-                $res = $sth->execute(array($pk_value));
-                if (MDB2::isError($res)) {
+                $res = $db->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
+                if ($db->metaError()) {
                     P4A_Error($res->getMessage());
                 }
             }
 
-            $rs = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
-
-            if (MDB2::isError($rs)) {
-                $e = new P4A_ERROR('A query has returned an error', $this, $rs);
+            $res = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
+            if ($db->metaError()) {
+                $e = new P4A_Error('A query has returned an error', $this);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
@@ -656,17 +664,16 @@ class P4A_DB_Source extends P4A_Data_Source
         $query = $this->_composeSelectQuery();
 
         if ($from == 0 and $count == 0) {
-            $rows = $db->queryAll($query);
+            $rows = $db->getAll($query);
             if (!is_array($rows)) {
             	$rows = array();
             }
         }else{
             $rows = array();
-            $db->setLimit($count, $from);
-			$rs = $db->query($query);
+			$rs = $db->selectLimit($query, $count, $from);
 
-            if (MDB2::isError($rs)) {
-                $e = new P4A_ERROR('A query has returned an error', $this, $rs);
+            if ($db->metaError()) {
+                $e = new P4A_Error('A query has returned an error', $this, $rs);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }

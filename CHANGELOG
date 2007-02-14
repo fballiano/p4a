@@ -1,5 +1,12 @@
 1.99.19
 - a bug with P4A_Object::errorHandler() was fixed
+- PEAR::MDB2 was dropped
+- ADODB 494 was introduces as the new database abstraction library
+- automatic sequence detection/creation on numeric/primary key was added
+- P4A_AUTO_DB_SEQUENCES constant was added to enable/disable automatic sequence detection/creation
+- PEAR packages stripdown, all basic pear packages were removed cause they're always present on PHP servers
+- PEAR::File and PEAR::File_SWF were removed cause they were unused
+- PEAR::Date was updated to 1.4.7
 
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system

@@ -39,6 +39,7 @@
 define("P4A_EXTENDED_ERRORS", true);
 define("P4A_AJAX_DEBUG", true);
 define("P4A_LOCALE", 'en_US');
+//define("P4A_DSN", 'pdo_pgsql://postgres:postgres@localhost:5432/p4a_products_catalogue');
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
 
 require_once dirname(__FILE__) . '/../../p4a.php';
@@ -46,7 +47,8 @@ require_once dirname(__FILE__) . '/../../p4a.php';
 // Check Installation and configuration.
 // This lines should be removed after the first run.
 $p4a =& p4a::singleton("products_catalogue");
-$check = p4a_check_configuration();
+//$check = p4a_check_configuration();
+$check=true;
 
 // Here we go
 if (is_string($check)) {
