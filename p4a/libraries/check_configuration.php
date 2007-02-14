@@ -164,8 +164,8 @@ function p4a_check_configuration($additionalDir = null)
     // DATABASE CONNECTION
     $error .= "<div class='box'>Checking DATABASE CONNECTION: ";
     if (defined('P4A_DSN')) {
-    	$db = MDB2::factory(P4A_DSN);
-    	if (MDB2::isError($db)) {
+    	$db =& NewADOConnection(P4A_DSN);
+    	if (!is_object($db)) {
     		$error .= "<span class='red'>FAILED</span><br/>Check P4A_DSN definition.";
     		$correct = false ;
     	} else {
