@@ -339,63 +339,57 @@
 		/**
 		 * Return the output mask
 		 */
-		function getAsString($template = false)
+		function getAsString($_template = false)
 		{
 			$p4a =& P4A::singleton();
-			$charset = $p4a->i18n->getCharset();
 
-			$tpl_container = (object)'';
-			$tpl_container->charset = $charset;
-			$tpl_container->title = $this->getTitle();
-			$tpl_container->theme_path = P4A_THEME_PATH;
-			$tpl_container->icons_path = P4A_ICONS_PATH;
-			$tpl_container->application_title = $p4a->getTitle();
-
-			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
-				$icon = $this->getIcon();
-				$icon_size = $this->getIconSize();
-				$icon_ext = P4A_ICONS_EXTENSION;
-				$tpl_container->title = "<img class=\"img_button\" src=\"{$tpl_container->icons_path}/{$icon_size}/{$icon}.{$icon_ext}\" alt=\"\" />{$tpl_container->title}";
+			if (!$_template) {
+				$_template = $this->getTemplateName();
 			}
 
-			$tpl_container->mask_open = $this->maskOpen();
-			$tpl_container->mask_close = $this->maskClose();
+			$_charset = $p4a->i18n->getCharset();
+			$_xml_header = '<?xml version="1.0" encoding="' . $_charset . '"?>';
+			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
+			$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
+			$_focus_id = '';
 			if (is_object($this->focus_object)) {
-				$tpl_container->focus_id = $this->focus_object->getId();
+				$_focus_id = $this->focus_object->getId();
+			}
+
+			$_title = $this->getTitle();
+			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
+				$_icon = $this->getIcon();
+				$_icon_size = $this->getIconSize();
+				$_title = "<img class=\"img_button\" src=\"" . P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION . "\" alt=\"\" />{$_title}";
 			}
 
 			foreach ($this->_tpl_vars as $k=>$v) {
 				if (is_object($v)) {
-					$tpl_container->$k = $v->getAsString();
+					$$k = $v->getAsString();
 				} else {
-					$tpl_container->$k = $v;
+					$$k = $v;
 				}
 			}
 
-			foreach ($this->_temp_vars as $k=>$v) {
-				$tpl_container->$k = $v;
-			}
+			extract($this->_temp_vars);
 
-			$tpl_container->javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
-			$tpl_container->css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
-
-			/* Popup */
+			$_popup = '';
 			if ($p4a->_popup and !$this->isPopup()) {
-				$popup_mask = P4A_Mask::singleton($p4a->_popup);
-				$tpl_container->popup = $popup_mask->getAsString();
+				$_popup_mask = P4A_Mask::singleton($p4a->_popup);
+				$_popup = $_popup_mask->getAsString();
 			}
 
-			if (!$template) {
-				$template = $this->getTemplateName();
-			}
-			$string =  P4A_Template_Engine::getAsString($tpl_container, "masks/{$template}/{$template}.tpl");
+			ob_start();
+			require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.tpl";
+			$output = ob_get_contents();
+			ob_end_clean();
 
 			$this->clearTempCSS();
 			$this->clearTempJavascript();
 			$this->clearTempVars();
 
-			return $string;
+			return $output;
 		}
 
 		/**
