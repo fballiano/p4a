@@ -8,6 +8,8 @@
 - PEAR::File and PEAR::File_SWF were removed cause they were unused
 - PEAR::Date was updated to 1.4.7
 - a bug with P4A_Table and long numbers formatting was fixed
+- PEAR::HTML_Template_Flexy and P4A_Template_Engine were dropped
+- all templates were converted to PHP templates, gaining performance
 
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system

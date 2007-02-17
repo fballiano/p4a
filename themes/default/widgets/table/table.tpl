@@ -1,41 +1,62 @@
-<div class="border_box table_container" id="{id}" flexy:raw="{table_properties:h}">
-	<table class="table" style="width: {table_width}" >
-		<caption flexy:if="title">{title}</caption>
+<div class="border_box table_container" id="<?=$this->getId()?>" <?=$this->composeStringProperties()?>>
+	<table class="table" style="width: <?=$table_width?>" >
+		<?php if ($this->getTitle()): ?>
+		<caption><?=$this->getTitle()?></caption>
+		<?php endif; ?>
 
 		<col class="select" />
-		<col flexy:foreach="table_cols,col" flexy:raw="{col[properties]:h}" />
+		<?php foreach ($table_cols as $col): ?>
+		<col <?=$col['properties']?> />
+		<?php endforeach; ?>
 
 		<thead flexy:if="headers">
 			<tr>
 				<th>&nbsp;</th>
-				{foreach:headers,header}
-				<th flexy:if="header[action]" class="font3 align_center clickable">
-					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
-					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
-					<a href="#" flexy:raw="{header[action]:h}">{header[value]}</a>
-				</th>
-				<th flexy:if="!header[action]" class="font3 align_center">
-					<img flexy:if="header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/{header[order]}.gif" alt="<?php print $t->i18n[$header['order'].'ending']; ?>" />
-					<img flexy:if="!header[order]" style="float:right;padding:2px;" src="{theme_path}/widgets/table/images/spacer.gif" alt="" />
-					{header[value]}
-				</th>
-				{end:}
+				<?php foreach ($headers as $header): ?>
+				<?php if ($header['action']): ?>
+					<th class="font3 align_center clickable">
+						<?php if ($header['order']): ?>
+							<img style="float:right;padding:2px;" src="<?=P4A_THEME_PATH?>/widgets/table/images/<?=$header['order']?>.gif" alt="<?=$p4a->i18n->messages->get($header['order'].'ending')?>" />
+						<?php else: ?>
+							<img style="float:right;padding:2px;" src="<?=P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
+						<?php endif; ?>
+						<a href="#" <?=$header['action']?>><?=$header['value']?></a>
+					</th>
+				<?php else: ?>
+					<th class="font3 align_center">
+						<?php if ($header['order']): ?>
+							<img style="float:right;padding:2px;" src="<?=P4A_THEME_PATH?>/widgets/table/images/<?=$header['order']?>.gif" alt="<?=$p4a->i18n->messages->get($header['order'].'ending')?>" />
+						<?php else: ?>
+							<img style="float:right;padding:2px;" src="<?=P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
+						<?php endif; ?>
+						<?=$header['value']?>
+					</th>
+				<?php endif; ?>
+				<?php endforeach; ?>
 			</tr>
 		</thead>
 
-		<tbody flexy:raw="{table_rows_properties:h}" class="overflow" flexy:if="table_rows">
-			<tr flexy:foreach="table_rows,row">
-			    <td>
-					<img flexy:if="row[row][active]" src="{theme_path}/widgets/table/images/select.gif" width="18" height="15" alt="{i18n[selected]}" />
-					<img flexy:if="!row[row][active]" src="{theme_path}/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
-			    </td>
+		<?php if (!empty($table_rows)): ?>
+		<tbody <?=$this->rows->composeStringProperties()?> class="overflow">
+			<?php $i = 0; ?>
+			<?php foreach ($table_rows as $row): ?>
+				<?php $i++; ?>
+				<tr>
+				    <td>
+				    	<?php if ($row['row']['active']): ?>
+							<img src="<?=P4A_THEME_PATH?>/widgets/table/images/select.gif" width="18" height="15" alt="<?=$p4a->i18n->messages->get('selected')?>" />
+						<?php else: ?>
+							<img src="<?=P4A_THEME_PATH?>/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
+						<?php endif; ?>
+				    </td>
 
-				{foreach:row[cells],cell}
-				<td flexy:if="cell[row_even]" class="background1 table_cell{cell[clickable]} {cell[type]}" flexy:raw="{cell[action]:h}">{if:cell[clickable]}<a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a>{else:}{cell[value]:h}{end:}</td>
-				<td flexy:if="!cell[row_even]" class="background2 table_cell{cell[clickable]} {cell[type]}" flexy:raw="{cell[action]:h}">{if:cell[clickable]}<a href="#" flexy:raw="{cell[action]:h}">{cell[value]:h}</a>{else:}{cell[value]:h}{end:}</td>
-				{end:}
-			</tr>
+					<?php foreach ($row['cells'] as $cell): ?>
+						<td class="background<?=($i%2)+1?> table_cell<?=$cell['clickable']?> <?=$cell['type']?>" <?=$cell['action']?>><?php if ($cell['clickable']): ?><a href="#" <?=$cell['action']?>><?=$cell['value']?></a><?php else: ?><?=$cell['value']?><?php endif; ?></td>
+					<?php endforeach; ?>
+				</tr>
+			<?php endforeach; ?>
 		</tbody>
+		<?php endif; ?>
 	</table>
- 	{navigation_bar:h}
+ 	<?php if (isset($navigation_bar)) echo $navigation_bar ?>
 </div>

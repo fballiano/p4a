@@ -139,12 +139,15 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */
 	function getAsString()
 	{
-		$id = $this->getId();
+		$p4a =& p4a::singleton();
+		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
+		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
+		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
+
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$p4a =& p4a::singleton();
 		$active_page =& $this->getActivePage();
 		$active_page_name = $active_page->getName();
 
@@ -152,8 +155,6 @@ class P4A_Tab_Pane extends P4A_Widget
 		// because we've to write it in the inner div
 		$tmpHeight = $this->getHeight();
 		$this->setHeight(null);
-		$properties = $this->composeStringProperties();
-		$this->addTempVar('tab_pane_properties', $properties);
 
 		// re-setting height
 		if ($tmpHeight) {
@@ -190,11 +191,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		if ($active_page->isVisible()) {
 			$this->addTempVar('active_page', $active_page->getAsString());
 		}
-		$this->addTempVar('id',$this->getId());
 
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 		return $this->fetchTemplate();
 	}
 

@@ -347,6 +347,14 @@
 				$_template = $this->getTemplateName();
 			}
 
+			foreach ($this->_tpl_vars as $k=>$v) {
+				if (is_object($v)) {
+					$$k = $v->getAsString();
+				} else {
+					$$k = $v;
+				}
+			}
+
 			$_charset = $p4a->i18n->getCharset();
 			$_xml_header = '<?xml version="1.0" encoding="' . $_charset . '"?>';
 			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
@@ -362,14 +370,6 @@
 				$_icon = $this->getIcon();
 				$_icon_size = $this->getIconSize();
 				$_title = "<img class=\"img_button\" src=\"" . P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION . "\" alt=\"\" />{$_title}";
-			}
-
-			foreach ($this->_tpl_vars as $k=>$v) {
-				if (is_object($v)) {
-					$$k = $v->getAsString();
-				} else {
-					$$k = $v;
-				}
 			}
 
 			extract($this->_temp_vars);

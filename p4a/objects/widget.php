@@ -121,6 +121,13 @@
 		var $template_name = NULL;
 
 		/**
+		 * variables used for templates
+		 * @var array
+		 * @access private
+		 */
+		var $_tpl_vars = array();
+
+		/**
 		 * Temporary variables (destroyed after rendering)
 		 * @access private
 		 * @var array
@@ -706,14 +713,6 @@
 			} else {
 				$this->use_template = true;
 				$this->template_name = $template_name;
-
-				$p4a =& p4a::singleton();
-				$this->_tpl_vars["id"] = $this->getID();
-				$this->_tpl_vars["handheld"] = $p4a->isHandheld();
-				$this->_tpl_vars["open_javascript"] = '<script type="text/javascript">';
-				$this->_tpl_vars["close_javascript"] = '</script>';
-				$this->_tpl_vars["theme_path"] = P4A_THEME_PATH;
-				$this->_tpl_vars["icons_path"] = P4A_ICONS_PATH;
 			}
 		}
 
@@ -755,32 +754,37 @@
 		function fetchTemplate()
 		{
 			if ($this->use_template) {
-				$tpl_container = (object)'';
-				$tpl_container->width = $this->getWidth();
-				$tpl_container->height = $this->getHeight();
+				$p4a =& p4a::singleton();
 
 				if (strpos($this->template_name, '/') !== false) {
-					list($template_dir, $template_file) = explode('/', $this->template_name);
+					list($_template_dir, $_template_file) = explode('/', $this->template_name);
 				} else {
-					$template_dir = $this->template_name;
-					$template_file = $this->template_name;
+					$_template_dir = $this->template_name;
+					$_template_file = $this->template_name;
 				}
 
 				foreach ($this->_tpl_vars as $k=>$v) {
 					if (is_object($v)) {
-						$tpl_container->$k = $v->getAsString();
+						$$k = $v->getAsString();
 					} else {
-						$tpl_container->$k = $v;
+						$$k = $v;
 					}
 				}
 
 				foreach ($this->_temp_vars as $k=>$v) {
-					$tpl_container->$k = $v;
+					$$k = $v;
 				}
 
-				return P4A_Template_Engine::getAsString($tpl_container, "widgets/{$template_dir}/{$template_file}.tpl");
+				ob_start();
+				require P4A_THEME_DIR . "/widgets/{$_template_dir}/{$_template_file}.tpl";
+				$output = ob_get_contents();
+				ob_end_clean();
+
+				$this->clearTempVars();
+
+				return $output;
 			} else {
-				p4a_error("ERROR: Unable to fetch template, first Call \"use_template\".");
+				p4a_error("ERROR: Unable to fetch template, first call \"use_template\".");
 			}
 		}
 

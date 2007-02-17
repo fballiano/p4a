@@ -86,7 +86,6 @@
 	require_once "$dir/libraries/standard.php";
 	require_once "$dir/libraries/check_configuration.php";
 	require_once "System.php";
-	require_once "$dir/libraries/pear/HTML/Template/Flexy.php";
 	require_once "$dir/libraries/adodb/adodb.inc.php";
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";
@@ -96,7 +95,6 @@
 	require_once "$dir/p4a_error.php";
 	require_once "$dir/p4a_i18n.php";
 	require_once "$dir/p4a_db.php";
-	require_once "$dir/p4a_template_engine.php";
 
 	//I18N
 	require_once "$dir/i18n/i18n_currency.php";

@@ -1,13 +1,13 @@
-<div class="tab_pane" id="{id}" flexy:raw="{tab_pane_properties:h}">
+<div class="tab_pane" id="<?=$this->getId()?>" <?=$this->composeStringProperties()?>>
+
 <ul class="tabs">
-{foreach:tabs,tab}
-<li>
-<a href="#" flexy:if="tab[active]" flexy:raw="{tab[actions]:h}" class="active">{tab[label]}</a>
-<a href="#" flexy:if="!tab[active]" flexy:raw="{tab[actions]:h}">{tab[label]}</a>
-</li>
-{end:}
+	<?php foreach ($tabs as $tab): ?>
+	<li><a href="#" <?=$tab['actions']?> <?php if ($tab['active']): ?>class="active"<?php endif; ?>><?=$tab['label']?></a></li>
+	<?php endforeach; ?>
 </ul>
-<div class="tab_pane_page" style="{tab_pane_height}">
-{active_page:h}
+
+<div class="tab_pane_page" style="<?=$tab_pane_height?>">
+	<?=$active_page?>
 </div>
+
 </div>

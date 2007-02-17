@@ -192,8 +192,6 @@
 			if (!$this->isVisible()) {
 				return '<div id="' . $this->getId() . '">';
 			}
-			$this->addTempVar('id', $this->getId());
-			$this->addTempVar('table_properties', $this->composeStringProperties());
 			$width = $this->getStyleProperty("width");
 			if (substr($width,-2) == "px") {
 				$width = substr($width,0,-2);
@@ -230,7 +228,6 @@
 				}
 			}
 
-			$this->addTempVar("title", $this->getTitle());
 			$visible_cols = $this->getVisibleCols();
 
 			if($this->_show_headers) {
@@ -283,13 +280,10 @@
 			$this->addTempVar('table_cols', $table_cols);
 
 			if ($this->data->getNumRows() > 0) {
-				$this->addTempVar('table_rows_properties', $this->rows->composeStringProperties());
 				$this->addTempVar('table_rows', $this->rows->getRows($num_page, $rows));
 			} else {
-				$this->addTempVar('table_rows_properties', null);
 				$this->addTempVar('table_rows', null);
 			}
-			$this->addTempVar('i18n', $p4a->i18n->messages->get());
 			$return = $this->fetchTemplate();
 			$this->clearTempVars();
 			return $return;
@@ -938,7 +932,6 @@
 				foreach($aCols as $col_name) {
 					$aReturn[$i]['cells'][$j]['value'] = '';
 					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $this->composeStringActions(array($row_number, $col_name)) : '';
-					$aReturn[$i]['cells'][$j]['row_even'] = $aReturn[$i]['row']['even'];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					$aReturn[$i]['cells'][$j]['clickable'] = $enabled ? 'clickable' : '';
 
