@@ -10,6 +10,8 @@
 - a bug with P4A_Table and long numbers formatting was fixed
 - PEAR::HTML_Template_Flexy and P4A_Template_Engine were dropped
 - all templates were converted to PHP templates, gaining performance
+- P4A_AJAX_DEBUG should not be set to "true" anymore but should be set to the path of the debugging file
+- P4A_COMPILE_DIR was removed cause unused
 
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system

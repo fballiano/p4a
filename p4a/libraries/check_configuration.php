@@ -113,29 +113,6 @@ function p4a_check_configuration($additionalDir = null)
     }
     $error .= "</div>";
 
-    // COMPILE DIRECTORIES
-    $error .= "<div class='box'>Checking COMPILE DIRECTORIES: ";
-
-	if (is_dir(P4A_COMPILE_DIR) and is_writable(P4A_COMPILE_DIR)) {
-		$ok = true;
-	} elseif (!is_dir(P4A_COMPILE_DIR)) {
-		if (@System::mkDir("-p " . P4A_COMPILE_DIR)) {
-			$ok = true;
-		} else {
-			$ok = false;
-		}
-	} else {
-		$ok = false;
-	}
-
-    if ($ok) {
-    	$error .= "<span class='green'>OK</span>";
-    } else {
-    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_COMPILE_DIR . "\" and set it writable.";
-    	$correct = false ;
-    }
-    $error .= "</div>";
-
     // ADDITIONAL DIRECTORY
 	if ($additionalDir) {
 		$error .= "<div class='box'>Checking ADDITIONAL DIRECTORY: ";

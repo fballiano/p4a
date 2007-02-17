@@ -232,15 +232,6 @@
 		define('P4A_ICONS_EXTENSION', 'png');
 	}
 
-	//Template Compile Dir
-	if (!defined('P4A_COMPILE_DIR')) {
-		define("P4A_COMPILE_DIR", ini_get('session.save_path') . _DS_ . 'p4a_' . str_replace(_DS_, "_", str_replace(':', '', P4A_APPLICATION_DIR)));
-	}
-
-	if (!(is_dir(P4A_COMPILE_DIR) and is_readable(P4A_COMPILE_DIR) and is_writable(P4A_COMPILE_DIR))) {
-		@mkdir(P4A_COMPILE_DIR) or die("ERROR: Unable to create directory \"" . P4A_COMPILE_DIR . "\" or directory is not readable/writable. Tip: check session.save_path in your php.ini file.");
-	}
-
 	//I18N
 	if (!defined('P4A_LOCALE')) {
 		define('P4A_LOCALE', 'en_US');
