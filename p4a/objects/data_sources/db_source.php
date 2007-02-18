@@ -229,9 +229,9 @@ class P4A_DB_Source extends P4A_Data_Source
         $db =& P4A_DB::singleton($this->getDSN());
 
         $query = $this->_composeSelectStructureQuery();
-		$rs = $db->selectLimit($query, 1, 0);
+		$rs = $db->adapter->selectLimit($query, 1, 0);
 
-        if ($db->metaError()) {
+        if ($db->adapter->metaError()) {
             $e = new P4A_Error('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
@@ -356,8 +356,8 @@ class P4A_DB_Source extends P4A_Data_Source
     {
 		$db =& P4A_DB::singleton($this->getDSN());
 		$query = $this->_composeSelectPkQuery($pk);
-		$row = $db->getRow($query);
-        if ($db->metaError()) {
+		$row = $db->adapter->getRow($query);
+        if ($db->adapter->metaError()) {
 			$e = new P4A_Error('A query has returned an error', $this, $row);
 			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
 				die();
@@ -379,8 +379,8 @@ class P4A_DB_Source extends P4A_Data_Source
         	$num_row = 1;
         }
 
-		$rs = $db->selectLimit($query, 1, $num_row-1);
-        if ($db->metaError()) {
+		$rs = $db->adapter->selectLimit($query, 1, $num_row-1);
+        if ($db->adapter->metaError()) {
             $e = new P4A_Error('A query has returned an error', $this, $rs);
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
@@ -415,7 +415,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $pk = $this->getPk();
                 $pk_value = $this->fields->$pk->getNewValue();
-                $fk_values = $db->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
+                $fk_values = $db->adapter->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
                 $this->fields->$fieldname->setValue($fk_values);
                 $row[$fieldname] = $fk_values;
             }
@@ -438,15 +438,15 @@ class P4A_DB_Source extends P4A_Data_Source
         if ($this->_num_rows === null) {
         	$group = $this->getGroup();
         	if (count($group)) {
-        		$result = $db->queryCol($query);
-	        	if ($db->metaError()) {
+        		$result = $db->adapter->queryCol($query);
+	        	if ($db->adapter->metaError()) {
 	        		$name = $this->getName();
 	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
 	        	}
         		$this->_num_rows = count($result);
         	} else {
-        		$result = $db->getOne($query);
-	        	if ($db->metaError()) {
+        		$result = $db->adapter->getOne($query);
+	        	if ($db->adapter->metaError()) {
 	        		$name = $this->getName();
 	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
 	        	}
@@ -517,7 +517,7 @@ class P4A_DB_Source extends P4A_Data_Source
             //$query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
 
-            return $db->getOne($query) + 1;
+            return $db->adapter->getOne($query) + 1;
         }
     }
 
@@ -550,9 +550,9 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             if ($this->isNew()) {
-                $res = $db->autoExecute($this->_table, $fields_values, "INSERT");
+                $res = $db->adapter->autoExecute($this->_table, $fields_values, "INSERT");
             } else {
-                $res = $db->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString());
+                $res = $db->adapter->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString());
             }
 
             if (!$res) {
@@ -576,9 +576,9 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk_field = $aField["fk_field"];
                 $fk = $aField["fk"];
 
-                $res = $db->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
-                if ($db->metaError()) {
-                    P4A_Error($db->metaErrorMsg($db->metaError()));
+                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
+                if ($db->adapter->metaError()) {
+                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
                 }
 
                 if ($fk_values) {
@@ -586,9 +586,9 @@ class P4A_DB_Source extends P4A_Data_Source
 						$fk_values[$k] = array($v);
 					}
 
-                    $res = $db->execute("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)", $fk_values);
-                    if ($db->metaError()) {
-                        P4A_Error($db->metaErrorMsg($db->metaError()));
+                    $res = $db->adapter->execute("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)", $fk_values);
+                    if ($db->adapter->metaError()) {
+                        P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
                     }
                 }
             }
@@ -628,14 +628,14 @@ class P4A_DB_Source extends P4A_Data_Source
                 $fk_table = $aField["table"];
                 $fk = $aField["fk"];
 
-                $res = $db->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
-                if ($db->metaError()) {
-                    P4A_Error($db->metaErrorMsg($db->metaError()));
+                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
+                if ($db->adapter->metaError()) {
+                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
                 }
             }
 
-            $res = $db->query("DELETE FROM $table WHERE " . $this->_composePkString());
-            if ($db->metaError()) {
+            $res = $db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
+            if ($db->adapter->metaError()) {
                 $e = new P4A_Error('A query has returned an error', $this);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
@@ -654,15 +654,15 @@ class P4A_DB_Source extends P4A_Data_Source
         $query = $this->_composeSelectQuery();
 
         if ($from == 0 and $count == 0) {
-            $rows = $db->getAll($query);
+            $rows = $db->adapter->getAll($query);
             if (!is_array($rows)) {
             	$rows = array();
             }
         }else{
             $rows = array();
-			$rs = $db->selectLimit($query, $count, $from);
+			$rs = $db->adapter->selectLimit($query, $count, $from);
 
-            if ($db->metaError()) {
+            if ($db->adapter->metaError()) {
                 $e = new P4A_Error('A query has returned an error', $this, $rs);
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
@@ -879,7 +879,7 @@ class P4A_DB_Source extends P4A_Data_Source
         $this->_multivalue_fields[$fieldname]['fk'] = $fk;
 
         if (!$fk_field) {
-            $info = $db->metaColumns($table);
+            $info = $db->adapter->metaColumns($table);
             foreach($info as $field) {
                 if ($field->name != $fk ) {
                     $fk_field = $field->name;

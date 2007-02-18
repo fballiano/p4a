@@ -374,7 +374,6 @@
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];
             }
-
             return $new_value;
 		}
 
@@ -654,9 +653,9 @@
 		 */
 		function format( $value )
 		{
-			if (!is_string($value)) {
+			/*if (!is_string($value)) {
 				return '';
-			}
+			}*/
 
 			$p4a =& P4A::singleton();
 			if (strlen($value) > 0) {

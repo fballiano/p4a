@@ -64,14 +64,14 @@ class P4A_DB
 
 		if(!isset($$dbconn) or $$dbconn == null) {
 			if(strlen($DSN)) {
-				$$dbconn =& NewADOConnection($DSN);
+				$$dbconn->adapter =& NewADOConnection($DSN);
     			if (!is_object($$dbconn)) {
 					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
-    			$$dbconn->setFetchMode(ADODB_FETCH_ASSOC);
+    			$$dbconn->adapter->setFetchMode(ADODB_FETCH_ASSOC);
 			} else {
 				$$dbconn = null;
 			}
@@ -87,6 +87,56 @@ class P4A_DB
 	function &connect($DSN = "")
 	{
 		return P4A_DB::singleton($DSN);
+	}
+
+	function beginTransaction()
+	{
+		$this->adapter->beginTransaction();
+	}
+
+	function getAll($query)
+	{
+		return $this->adapter->getAll($query);
+	}
+
+	function queryAll($query)
+	{
+		return $this->getAll($query);
+	}
+
+	function getCol($query)
+	{
+		return $this->adapter->getCol($query);
+	}
+
+	function queryCol($query)
+	{
+		return $this->getCol($query);
+	}
+
+	function getOne($query)
+	{
+		return $this->adapter->getOne($query);
+	}
+
+	function queryOne($query)
+	{
+		return $this->getOne($query);
+	}
+
+	function limitQuery($query,$offset=-1,$limit=-1,$params=false)
+	{
+		return $this->adapter->selectLimit($query,$limit,$offset,$params);
+	}
+
+	function selectLimit($sql,$numrows=-1,$offset=-1,$inputarr=false)
+	{
+		return $this->adapter->selectLimit($sql,$numrows,$offset,$inputarr);
+	}
+
+	function query($query,$inputarr=false)
+	{
+		return $this->adapter->execute($query,$inputarr);
 	}
 
 	/**
