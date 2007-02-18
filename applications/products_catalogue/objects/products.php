@@ -60,7 +60,7 @@ class Products extends P4A_Mask
 		$this->source->fields->product_id->setSequence('product_id');
 
 		$this->setSource($this->source);
-		$this->source->newRow();
+		$this->source->firstRow();
 
 		$this->source->fields->purchasing_price->setType("decimal");
 		$this->source->fields->selling_price->setType("decimal");
