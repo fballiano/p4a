@@ -12,6 +12,7 @@
 - all templates were converted to PHP templates, gaining performance
 - P4A_AJAX_DEBUG should not be set to "true" anymore but should be set to the path of the debugging file
 - P4A_COMPILE_DIR was removed cause unused
+- P4A_DB::singleton() now returns a P4A object instead of the DB adapter, thus it will be easy in the future to port on other DB adapters
 
 1.99.18
 - .svn directories are now excluded from the automatic inclusion system

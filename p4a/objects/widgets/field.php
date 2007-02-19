@@ -653,9 +653,9 @@
 		 */
 		function format( $value )
 		{
-			/*if (!is_string($value)) {
+			if (is_array($value) or is_object($value)) {
 				return '';
-			}*/
+			}
 
 			$p4a =& P4A::singleton();
 			if (strlen($value) > 0) {
