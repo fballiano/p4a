@@ -92,7 +92,12 @@ class P4A_DB
 
 	function beginTransaction()
 	{
-		$this->adapter->beginTransaction();
+		$this->adapter->startTrans();
+	}
+
+	function commit()
+	{
+		$this->adapter->completeTrans();
 	}
 
 	function getAll($query)
@@ -148,6 +153,15 @@ class P4A_DB
 	function query($query,$inputarr=false)
 	{
 		return $this->adapter->execute($query,$inputarr);
+	}
+
+	function getError()
+	{
+		if ($this->adapter->metaError()) {
+			return $this->adapter->metaErrorMsg($this->adapter->metaError());
+		}
+
+		return false;
 	}
 
 	/**
