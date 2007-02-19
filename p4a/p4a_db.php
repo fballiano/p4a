@@ -105,6 +105,16 @@ class P4A_DB
 		return $this->getAll($query);
 	}
 
+	function getRow($query)
+	{
+		return $this->adapter->getRow($query);
+	}
+
+	function queryRow($query)
+	{
+		return $this->getRow($query);
+	}
+
 	function getCol($query)
 	{
 		return $this->adapter->getCol($query);
