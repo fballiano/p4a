@@ -1,13 +1,13 @@
-<div class="tab_pane" id="<?=$this->getId()?>" <?=$this->composeStringProperties()?>>
+<div class="tab_pane" id="<?php echo $this->getId()?>" <?php echo $this->composeStringProperties()?>>
 
 <ul class="tabs">
 	<?php foreach ($tabs as $tab): ?>
-	<li><a href="#" <?=$tab['actions']?> <?php if ($tab['active']): ?>class="active"<?php endif; ?>><?=$tab['label']?></a></li>
+	<li><a href="#" <?php echo $tab['actions']?> <?php if ($tab['active']): ?>class="active"<?php endif; ?>><?php echo $tab['label']?></a></li>
 	<?php endforeach; ?>
 </ul>
 
-<div class="tab_pane_page" style="<?=$tab_pane_height?>">
-	<?=$active_page?>
+<div class="tab_pane_page" style="<?php echo $tab_pane_height?>">
+	<?php echo $active_page?>
 </div>
 
 </div>

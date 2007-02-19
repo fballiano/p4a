@@ -10,7 +10,7 @@
 	<th class="p4a_calendar_week_header2">{hour[time]}</th>
 	<td flexy:foreach="days,day">
 		<?php foreach ($day['hours'][$k]['events'] as $event) { ?>
-			<span class="p4a_calendar_appointment"><?=$event[0]?></span><br /><?=$event[1]?><br /><br />
+			<span class="p4a_calendar_appointment"><?php echo $event[0]?></span><br /><?php echo $event[1]?><br /><br />
 		<?php } ?>
 	</td>
 </tr>
