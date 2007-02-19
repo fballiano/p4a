@@ -19,14 +19,18 @@ Open your web browser and go to:
 you will now see the list of sample applications
 distribuited with p4a.
 
-There are three samples included:
+There are four samples included:
 	- sample_en
 	- sample_it
+	- sample_i18n
 	- products_catalogue
 
 sample_en and sample_it are the same application in english
 and italian, these applications are very simple and do not
 make use of databases.
+
+sample_i18n was created to make users understand P4A i18n
+subsystem and how to create multilanguage applications.
 
 products_catalogue is a very simple example of virtual catalogue
 for shops. To have this application runnning take a look at
