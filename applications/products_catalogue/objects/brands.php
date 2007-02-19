@@ -46,8 +46,8 @@ class Brands extends P4A_Mask
 		$this->build("p4a_message", "message");
 		$this->message->setWidth("300");
 
-		$p4a->brands->firstRow();
 		$this->setSource($p4a->brands);
+		$this->firstRow();
 
 		$this->fields->brand_id->disable();
 
