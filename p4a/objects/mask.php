@@ -408,7 +408,7 @@
 		 * @param data_source
 		 * @access public
 		 */
-		function setSource(&$data_source)
+		function &setSource(&$data_source)
 		{
 			$this->data =& $data_source;
 
@@ -417,6 +417,8 @@
 				$this->fields->build(P4A_FIELD_CLASS, $field_name, false);
 				$this->fields->$field_name->setDataField($field);
 			}
+
+			return $this->fields;
 		}
 
 		/**

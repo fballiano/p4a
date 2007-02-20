@@ -51,7 +51,7 @@
 				    </td>
 
 					<?php foreach ($row['cells'] as $cell): ?>
-						<td class="background<?php echo ($i%2)+1?> table_cell<?php echo $cell['clickable']?> <?php echo $cell['type']?>" <?php echo $cell['action']?>><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
+						<td class="background<?php echo ($i%2)+1?> table_cell<?php echo $cell['clickable']?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
 					<?php endforeach; ?>
 				</tr>
 			<?php endforeach; ?>

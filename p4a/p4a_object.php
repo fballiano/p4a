@@ -213,6 +213,11 @@
 			$object->_map_actions[$action]['method'] = $method;
 		}
 
+		function dropIntercept($action)
+		{
+			$object->_map_actions[$action] = array();
+		}
+
 		/**
 		 * Wrapper for setting an intercepted event on an object.
 		 *

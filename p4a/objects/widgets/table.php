@@ -181,6 +181,14 @@
 			$this->cols->build("p4a_table_col",$column_name);
 		}
 
+		function addActionCol($column_name)
+		{
+			$this->cols->build("p4a_table_col",$column_name);
+			$this->cols->$column_name->setType('action');
+			$this->cols->$column_name->addAction('onClick');
+			$this->cols->$column_name->setValue($this->cols->$column_name->getLabel());
+		}
+
 		/**
 		 * Returns the HTML rendered object.
 		 * @access public
@@ -249,22 +257,27 @@
 
 				foreach($visible_cols as $col_name) {
 					$col =& $this->cols->$col_name;
-					$headers[$i]['value']		= $col->getLabel();
-					$headers[$i]['order']		= null;
-
-					if ($is_orderable and $col->isOrderable()) {
-						$headers[$i]['action'] = $col->composeStringActions();
+					if ($col->getType() == 'action') {
+						$headers[$i]['value']  = '&nbsp;';
+						$headers[$i]['order']  = '';
+						$headers[$i]['action'] = '';
 					} else {
-						$headers[$i]['action'] = "";
-					}
+						$headers[$i]['value']		= $col->getLabel();
+						$headers[$i]['order']		= null;
 
-					$data_field =& $this->data->fields->{$col->getName()};
-					$field_name = $data_field->getName();
-					$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
-					if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
-						 $headers[$i]['order'] = strtolower($order_mode);
-					}
+						if ($is_orderable and $col->isOrderable()) {
+							$headers[$i]['action'] = $col->composeStringActions();
+						} else {
+							$headers[$i]['action'] = "";
+						}
 
+						$data_field =& $this->data->fields->{$col->getName()};
+						$field_name = $data_field->getName();
+						$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
+						if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
+							 $headers[$i]['order'] = strtolower($order_mode);
+						}
+					}
 					$i++;
 				}
 				$this->addTempVar('headers', $headers);
@@ -813,12 +826,28 @@
 			return $this->_type;
 		}
 
-		function onClick()
+		function onClick($aParams)
 		{
 			if ($this->isActionTriggered('beforeClick')) {
-				$this->actionHandler('beforeClick');
+				if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
 			}
 
+			if ($this->getType() == 'action') {
+				$p4a =& P4A::singleton();
+				$cols =& $p4a->getObject($this->getParentID());
+				$table =& $p4a->getObject($cols->getParentID());
+				if ($table->data->row($aParams[0] + (($table->getCurrentPageNumber() - 1) * $table->data->getPageLimit()) + 1) == ABORT) return ABORT;
+			} else {
+				$this->order();
+			}
+
+			if ($this->isActionTriggered('afterClick')) {
+				if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
+			}
+		}
+
+		function order()
+		{
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 			$parent =& $p4a->getObject($parent->getParentID());
@@ -852,10 +881,6 @@
 				}
 				$parent->data->setOrder($order_field, $order_mode);
 				$parent->data->updateRowPosition();
-			}
-
-			if ($this->isActionTriggered('afterClick')) {
-				$this->actionHandler('afterClick');
 			}
 		}
 	}
@@ -930,13 +955,12 @@
 				}
 
 				foreach($aCols as $col_name) {
-					$aReturn[$i]['cells'][$j]['value'] = '';
 					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $this->composeStringActions(array($row_number, $col_name)) : '';
-					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					$aReturn[$i]['cells'][$j]['clickable'] = $enabled ? 'clickable' : '';
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
+						$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					} elseif ($parent->cols->$col_name->getType() == "image") {
 						$value = $row[$col_name];
 						if (!empty($value)) {
@@ -950,14 +974,21 @@
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='40' alt='' />";
 							}
 						}
+						$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
+					} elseif ($parent->cols->$col_name->getType() == "action") {
+						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getValue();
+						$aReturn[$i]['cells'][$j]['type'] = 'action';
+						$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
 					} elseif ($parent->cols->$col_name->isFormatted()) {
 						if (($parent->cols->$col_name->formatter_name === null) and ($parent->cols->$col_name->format_name === null)) {
 							$aReturn[$i]['cells'][$j]['value'] = str_replace(' ', '&nbsp;', $p4a->i18n->autoFormat($row[$col_name], $parent->data->fields->$col_name->getType()));
 						} else {
 							$aReturn[$i]['cells'][$j]['value'] = str_replace(' ', '&nbsp;', $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat($parent->cols->$col_name->format_name)));
 						}
+						$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					} else {
 						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
+						$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 					}
 
 					$j++;

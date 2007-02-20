@@ -491,6 +491,13 @@ legend {
 	border: 2px solid white;
 }
 
+.table td.action {
+	background:#fafafa;
+}
+.table td a {
+	display:block;
+	width:100%;
+}
 .table td.integer, .table td.decimal, .table td.float, .table td.date, .table td.time{
 	text-align: right;
 }
