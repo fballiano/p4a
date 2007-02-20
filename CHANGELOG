@@ -1,8 +1,8 @@
 1.99.21
 - PEAR::Console_Getopt 1.2.2 was re-introduced to avoid installation problems
-- P4A_Object::dropIntercept wad added
-- P4A_Table::addActionCol was added
-- P4A_Table_Col::setValue was added
+- P4A_Object::dropIntercept() method wad added
+- P4A_Table::addActionCol() method was added
+- P4A_Table_Col::setValue() method was added
 
 1.99.20
 - PEAR 1.5.0 base package was re-introduced to avoid installation problems
