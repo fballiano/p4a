@@ -180,6 +180,13 @@
 		var $rich_textarea_toolbars = array();
 
 		/**
+		 * The error message
+		 * @var string
+		 * @access private
+		 */
+		var $_error = '';
+
+		/**
 		 * Class constructor.
 		 * Istances the widget, sets name and initializes its value.
 		 * @param string				Mnemonic identifier for the object.
@@ -277,6 +284,25 @@
 		function setValue($value)
 		{
 			$this->data_field->setValue($value);
+		}
+
+		/**
+		 * Sets the error message.
+		 * @param string				Error.
+		 * @access public
+		 */
+		function setError($error)
+		{
+			$this->_error = $error;
+		}
+
+		/**
+		 * Returns the error message.
+		 * @access public
+		 */
+		function getError()
+		{
+			return $this->_error;
 		}
 
 		/**
@@ -737,7 +763,17 @@
 			$new_method = 'getAs' . $type;
 			$string = $this->$new_method();
 			$sReturn =  $string . $suffix ;
-			return "<div id='{$id}'>{$sReturn}</div>";
+
+			if ($this->_error) {
+				$container_class = 'class="field_error"';
+				$error = "<div class='field_error_msg'>{$this->_error}</div>";
+				$this->_error = '';
+			} else {
+				$container_class = '';
+				$error = '';
+			}
+
+			return "<div id='{$id}' $container_class>{$sReturn}{$error}</div>";
 		}
 
 		/**
