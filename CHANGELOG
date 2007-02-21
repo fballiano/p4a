@@ -4,6 +4,7 @@
 - P4A_Field::setError() was added
 - P4A_Validate class was added to check emails/uris/dates/numbers etc... (now it simply uses PEAR::Validate)
 - some changes were done on products_catalogue sample application
+- New rich_textarea skin was added
 
 1.99.21
 - PEAR::Console_Getopt 1.2.2 was re-introduced to avoid installation problems
