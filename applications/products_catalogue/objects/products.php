@@ -142,15 +142,6 @@ class Products extends P4A_Mask
 		$this->display("top", $this->toolbar);
 	}
 
-	function main()
-	{
-		parent::main();
-
-		foreach($this->mf as $mf){
-			$this->fields->$mf->unsetStyleProperty("border");
-		}
-	}
-
 	function setFieldsProperties()
 	{
 		$p4a =& p4a::singleton();
@@ -202,7 +193,7 @@ class Products extends P4A_Mask
 		foreach($this->mf as $mf){
 			$value = $this->fields->$mf->getNewValue();
 			if(trim($value) === ""){
-				$this->fields->$mf->setStyleProperty("border", "1px solid red");
+				$this->fields->$mf->setError();
 				$valid = false;
 			}
 		}
