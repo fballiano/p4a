@@ -44,6 +44,11 @@
  */
 class P4A_Validate
 {
+	/**
+	 * @access private
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @return string
+	 */
 	function _getData($data)
 	{
 		if (is_object($data)) {
@@ -55,41 +60,123 @@ class P4A_Validate
 				P4A_Error("P4A_Validate: only p4a_field or p4a_data_field are allowed");
 			}
 		}
+		return $data;
 	}
 
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @return boolean
+	 */
 	function notEmpty($data)
 	{
 		$data = P4A_Validate::_getData($data);
 		return strlen($data) > 0;
 	}
 
-	function date($data)
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @param array		format: array(day, month, year) eg: array(30, 10, 2006)
+	 * @param array		format: array(day, month, year) eg: array(30, 10, 2006)
+	 * @param string	strftime compatibile format string
+	 * @return boolean
+	 */
+	function date($data, $min=null, $max=null, $format='%Y-%m-%d')
 	{
 		$data = P4A_Validate::_getData($data);
-		return Validate::date($data);
+
+		$options = array();
+		if ($min !== null) $options['min'] = $min;
+		if ($max !== null) $options['max'] = $max;
+		$options['format'] = $format;
+
+		return Validate::date($data, $options);
 	}
 
-	function email($data)
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @param boolean	check if the domain exists
+	 * @param boolean
+	 * @return boolean
+	 */
+	function email($data, $check_domain=false, $use_rfc822=false)
 	{
 		$data = P4A_Validate::_getData($data);
-		return Validate::email($data);
+
+		$options = array();
+		$options['check_domain'] = $check_domain;
+		$options['use_rfc822'] = $use_rfc822;
+
+		return Validate::email($data, $options);
 	}
 
-	function number($data)
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @param integer
+	 * @param integer
+	 * @param integer	0 means no decimals
+	 * @param string
+	 * @return boolean
+	 */
+	function number($data, $min=null, $max=null, $decimal_precision=null, $decimal_separator='.')
 	{
 		$data = P4A_Validate::_getData($data);
-		return Validate::number($data);
+
+		$options = array();
+		if ($min !== null) $options['min'] = $min;
+		if ($max !== null) $options['max'] = $max;
+		if ($decimal_precision !== null) {
+			if ($decimal_precision>0) {
+				$options['decimal'] = $decimal_separator;
+				$options['dec_prec'] = $decimal_precision;
+			} else {
+				$options['decimal'] = false;
+			}
+		}
+
+		return Validate::number($data, $options);
 	}
 
-	function string($data)
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @param integer
+	 * @param integer
+	 * @param string	Perl regular expression pattern
+	 * @return boolean
+	 */
+	function string($data, $min_length=null, $max_length=null, $format=null)
 	{
 		$data = P4A_Validate::_getData($data);
-		return Validate::string($data);
+
+		$options = array();
+		if ($min_length !== null) $options['min_length'] = $min_length;
+		if ($max_length !== null) $options['max_length'] = $max_length;
+		if ($format !== null) $options['format'] = $format;
+
+		return Validate::string($data, $options);
 	}
 
-	function uri($data)
+	/**
+	 * @access public
+	 * @param mixed		(P4A_Field|P4A_Data_Field|string)
+	 * @param array		eg: array('http', 'ftp')
+	 * @param boolean	check if the domain exists
+	 * @param string
+	 * @return boolean
+	 */
+	function uri($data, $allowed_schemes=null, $check_domain=false, $forbidden_chars=';/?:@$,')
 	{
 		$data = P4A_Validate::_getData($data);
-		return Validate::uri($data);
+
+		$options = array();
+		if ($allowed_schemes !== null) $options['allowed_schemes'] = $allowed_schemes;
+		$options['domain_check'] = $check_domain;
+		$options['strict'] = $forbidden_chars;
+
+		return Validate::uri($data, $options);
 	}
 }
