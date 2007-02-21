@@ -2,6 +2,8 @@
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed
 - DB adapter (adodb) inclusion was moved to p4a_db.php thus it's easier to use p4a_db outsite a p4a application
 - P4A_Field::setError() was added
+- P4A_Validate class was added to check emails/uris/dates/numbers etc... (now it simply uses PEAR::Validate)
+- some changes were done on products_catalogue sample application
 
 1.99.21
 - PEAR::Console_Getopt 1.2.2 was re-introduced to avoid installation problems

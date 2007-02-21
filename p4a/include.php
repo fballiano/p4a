@@ -89,6 +89,7 @@
 	require_once "$dir/libraries/pear/Validate.php";
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";
+	require_once "$dir/libraries/validate.php";
 
 	//Core
 	require_once "$dir/p4a_object.php";

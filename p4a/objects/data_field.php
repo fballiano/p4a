@@ -202,7 +202,7 @@
 
 		function setSequence($name = NULL)
 		{
-			$this->sequence = $name;
+			$this->sequence = "{$name}_seq";
 		}
 
 		function getDefaultValue()
