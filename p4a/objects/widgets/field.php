@@ -767,7 +767,7 @@
 			if ($this->_error !== NULL) {
 				$container_class = 'class="field_error"';
 				$error = "<div class='field_error_msg' >{$this->_error}</div>";
-				$this->_error = '';
+				$this->_error = NULL;
 			} else {
 				$container_class = '';
 				$error = '';
