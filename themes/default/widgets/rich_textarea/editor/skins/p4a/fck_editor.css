@@ -389,7 +389,6 @@ body
     opacity: 0.75; /* Safari, Opera and Mozilla */
     filter: alpha(opacity=70); /* IE */ /* -moz-opacity: 0.75; Mozilla (Old) */
     height: 23px;
-    background-color: #efefde;
 }
 
 .SC_FieldLabel
