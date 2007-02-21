@@ -483,8 +483,12 @@ legend {
 	font-size: 12px;
 }
 
+/*********/
+/* TABLE */
+/*********/
+
 .table {
-	margin: 5px 20px 10px 2px;
+	margin: 5px 20px 0px 2px;
 	border-collapse: collapse;
 	width: inherit;
 }
@@ -519,8 +523,16 @@ legend {
 	display:block;
 	width:100%;
 }
-.table td.integer, .table td.decimal, .table td.float, .table td.date, .table td.time{
+.table td.integer,
+.table td.decimal,
+.table td.float,
+.table td.date,
+.table td.time{
 	text-align: right;
+}
+
+.table_container {
+	font-size:8px; /* with &nbsp to solve bug on ie on margin-bottom of table */
 }
 
 .table_container .frame{
