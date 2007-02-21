@@ -57,6 +57,7 @@ class Products extends P4A_Mask
 		$this->source->addOrder("product_id");
 		$this->source->setPageLimit(10);
 		$this->source->load();
+		$this->source->fields->product_id->setSequence('product_id');
 
 		$this->setSource($this->source);
 		$this->firstRow();
