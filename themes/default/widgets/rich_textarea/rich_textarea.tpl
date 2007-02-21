@@ -5,6 +5,7 @@ rte.BasePath = '<?php echo P4A_THEME_PATH?>/widgets/rich_textarea/';
 
 rte.Config['CustomConfigurationsPath'] = '<?php echo P4A_THEME_PATH?>/widgets/rich_textarea/p4aconfig.js';
 rte.Config['DefaultLanguage'] = '<?php echo $p4a->i18n->getLanguage()?>';
+rte.Config['SkinPath'] = rte.BasePath + 'editor/skins/p4a/';
 
 <?php if ($this->isUploadEnabled()): ?>
 rte.Config['LinkBrowserURL'] = rte.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=<?php echo $connector?>';

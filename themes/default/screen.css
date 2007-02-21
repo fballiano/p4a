@@ -233,6 +233,22 @@ a.link_button:hover {
 	display: none;
 }
 
+.field_error label {
+	color:red;
+}
+
+.field_error input,
+.field_error textarea,
+.field_error select,
+.field_error iframe {
+	border:1px dashed red;
+}
+
+.field_error .field_error_msg {
+	text-align:right;
+	color:#777;
+}
+
 /*************/
 /* HTML TAGS */
 /*************/
