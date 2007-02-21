@@ -9,7 +9,8 @@
 		<col <?php echo $col['properties']?> />
 		<?php endforeach; ?>
 
-		<thead flexy:if="headers">
+		<?php if ($headers): ?>
+		<thead>
 			<tr>
 				<th>&nbsp;</th>
 				<?php foreach ($headers as $header): ?>
@@ -35,6 +36,7 @@
 				<?php endforeach; ?>
 			</tr>
 		</thead>
+		<?php endif; ?>
 
 		<?php if (!empty($table_rows)): ?>
 		<tbody <?php echo $this->rows->composeStringProperties()?> class="overflow">
@@ -57,6 +59,6 @@
 			<?php endforeach; ?>
 		</tbody>
 		<?php endif; ?>
-	</table>
+	</table>&nbsp;
  	<?php if (isset($navigation_bar)) echo $navigation_bar ?>
 </div>
