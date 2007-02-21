@@ -74,7 +74,7 @@ class Products extends P4A_Mask
 		$txt_search =& $this->build("p4a_field", "txt_search");
 		$txt_search->addAction("onReturnPress");
 		$this->intercept($txt_search, "onReturnPress","search");
-		$txt_search->setLabel("Cod. Product");
+		$txt_search->setLabel("Model");
 		$cmd_search =& $this->build("p4a_button","cmd_search");
 		$cmd_search->setValue("Go");
 		$this->intercept($cmd_search, "onClick","search");
