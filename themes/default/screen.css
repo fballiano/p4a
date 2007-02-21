@@ -456,6 +456,10 @@ select {
  	z-index: 2;
 }
 
+.frame {
+	text-align:left;
+}
+
 div.frame {
 	padding: 0px;
 }
