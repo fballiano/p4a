@@ -36,6 +36,8 @@
  * @package p4a
  */
 
+require_once dirname(__FILE__) . "/libraries/adodb/adodb.inc.php";
+
 /**
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>

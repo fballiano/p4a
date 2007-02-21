@@ -86,7 +86,7 @@
 	require_once "$dir/libraries/standard.php";
 	require_once "$dir/libraries/check_configuration.php";
 	require_once "$dir/libraries/pear/System.php";
-	require_once "$dir/libraries/adodb/adodb.inc.php";
+	require_once "$dir/libraries/pear/Validate.php";
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";
 

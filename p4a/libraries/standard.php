@@ -48,30 +48,6 @@ if (!function_exists('htmlspecialchars_decode')) {
 }
 
 	/**
-	 * Prints out one or many HTML "new lines".
-	 * @param integer	The number of new lines to print.
-	 * @access public
-	 */
-	function P4A_New_Line($number=1)
-	{
-		for($i=0;$i<$number;$i++) {
-			print '<br>' . "\n";
-		}
-	}
-
-	/**
-	 * Prints out one or many HTML "spaces".
-	 * @param integer	The number of spaces to print.
-	 * @access public
-	 */
-	function P4A_Space($number=1)
-	{
-		for($i=0;$i<$number;$i++) {
-			print "&nbsp;\n";
-		}
-	}
-
-	/**
 	 * Stops program execution with an error.
 	 * @param string	Error identifier.
 	 * @param string	Error description or other message.
@@ -83,16 +59,6 @@ if (!function_exists('htmlspecialchars_decode')) {
 			$error .= ": $message";
 		}
 		die($error);
-	}
-
-	/**
-	 * Checks if an object is an error object.
-	 * @param object object		The object.
-	 * @access public
-	 */
-	function P4A_Is_Error($object)
-	{
-		return PEAR::isError($object);
 	}
 
 	/**
@@ -325,6 +291,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 	 * @param integer	Movie width.
 	 * @param integer	Movie height.
 	 * @access public
+	 * @return string
 	 */
 	function P4A_Swf_Object($src, $width, $height)
 	{
