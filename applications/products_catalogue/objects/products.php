@@ -207,7 +207,7 @@ class Products extends P4A_Mask
 
 	function search()
 	{
-		$value = $this->txt_search->getNewValue();
+		$value = $this->txt_search->getSQLNewValue();
 		$this->data->setWhere("model LIKE '%{$value}%'");
 		$this->data->firstRow();
 		$num_rows = $this->data->getNumRows();
