@@ -32,6 +32,7 @@ rm p4a/.project
 rm p4a/.buildpath
 rm p4a/build.sh
 rm -rf p4a/contribs
+rm -rf p4a/themes/default/widgets/calendar
 rm -rf `find -type d -name '.svn'`
 rm -f `find -name '.cvsignore'`
 
