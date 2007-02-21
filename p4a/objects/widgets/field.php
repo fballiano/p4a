@@ -184,7 +184,7 @@
 		 * @var string
 		 * @access private
 		 */
-		var $_error = '';
+		var $_error = NULL;
 
 		/**
 		 * Class constructor.
@@ -291,7 +291,7 @@
 		 * @param string				Error.
 		 * @access public
 		 */
-		function setError($error)
+		function setError($error = '')
 		{
 			$this->_error = $error;
 		}
@@ -764,9 +764,9 @@
 			$string = $this->$new_method();
 			$sReturn =  $string . $suffix ;
 
-			if ($this->_error) {
+			if ($this->_error !== NULL) {
 				$container_class = 'class="field_error"';
-				$error = "<div class='field_error_msg'>{$this->_error}</div>";
+				$error = "<div class='field_error_msg' >{$this->_error}</div>";
 				$this->_error = '';
 			} else {
 				$container_class = '';

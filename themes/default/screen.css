@@ -245,6 +245,7 @@ a.link_button:hover {
 }
 
 .field_error .field_error_msg {
+	clear:both;
 	text-align:right;
 	color:#777;
 }
