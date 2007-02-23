@@ -139,11 +139,6 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */
 	function getAsString()
 	{
-		$p4a =& p4a::singleton();
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
-		$p4a->active_mask->addTempCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
-
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}

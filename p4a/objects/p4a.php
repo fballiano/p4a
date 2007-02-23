@@ -193,6 +193,9 @@
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
 				$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/src/scriptaculous.js");
 				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 			}
 
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
