@@ -89,6 +89,13 @@
 		var $cols = array();
 
 		/**
+		 * Displaying order of columns.
+		 * @var array
+		 * @access private
+		 */
+		var $_cols_order = array();
+
+		/**
 		 * A title (caption) for the table.
 		 * @var string
 		 * @access private
@@ -431,9 +438,17 @@
 		{
 			$return = array();
 
-			while ($col =& $this->cols->nextItem()) {
-				if ($col->isVisible()) {
-					$return[] = $col->getName();
+			if (!empty($this->_cols_order)) {
+				foreach ($this->_cols_order as $col) {
+					if ($this->cols->$col->isVisible()) {
+						$return[] = $col;
+					}
+				}
+			} else {
+				while ($col =& $this->cols->nextItem()) {
+					if ($col->isVisible()) {
+						$return[] = $col->getName();
+					}
 				}
 			}
 
@@ -478,6 +493,8 @@
 					P4A_Error("Unknow column $col");
 				}
 			}
+
+			$this->_cols_order = $cols;
 		}
 
 		/**

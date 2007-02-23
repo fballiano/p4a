@@ -2,6 +2,7 @@
 - if you use P4A_DB_Source::setQuery now every field become readonly
 - a bug with P4A_DB_Source::_composeSelectCountQuery() and UNION queries was solved (thanks to alexiadeath)
 - P4A_Tab_Pane CSS is now loaded by default
+- P4A_Table::setVisible cols now also manages column order
 
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed
