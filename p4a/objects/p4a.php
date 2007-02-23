@@ -456,8 +456,16 @@
 			if ($this->_redesign_popup) {
 				if ($this->_popup) {
 					$popup =& p4a_mask::singleton($this->_popup);
-					$html = $popup->getAsString();
-					$javascript = 'showPopup();';
+					$as_string = $popup->getAsString();
+
+					$javascript_codes = array();
+					$javascript = "showPopup();\n\n";
+					$html = preg_replace("/{$script_detector}/si", '', $as_string);
+					preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
+					$javascript_codes = $javascript_codes[1];
+					foreach ($javascript_codes as $code) {
+						$javascript .= "$code\n\n";
+					}
 				} else {
 					$html = '';
 					$javascript = 'hidePopup();';
@@ -528,21 +536,29 @@
 			return $this->active_mask;
 		}
 
-
-		function openPopup($name)
+		 /**
+		 * Opens a mask in popup.
+		 * @access public
+		 */
+		function openPopup($mask_name)
 		{
 			//Close opened popup
 			if ($this->_popup) {
 				$this->closePopup();
 			}
 
-			$this->_popup = $name;
-			$mask =& p4a_mask::singleton($this->_popup);
+			$this->_popup = $mask_name;
+			$mask =& p4a_mask::singleton($mask_name);
 			$mask->isPopup(TRUE);
 
 			$this->_redesign_popup = TRUE;
+			return $mask;
 		}
 
+		 /**
+		 * Closes the popup mask.
+		 * @access public
+		 */
 		function closePopup($destroy = FALSE)
 		{
 

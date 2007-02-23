@@ -1,9 +1,8 @@
 function getPageSize()
 {
-	
-	var xScroll, yScroll;
-	
-	if (window.innerHeight && window.scrollMaxY) {	
+	var xScroll, yScroll, windowWidth, windowHeight;
+
+	if (window.innerHeight && window.scrollMaxY) {
 		xScroll = document.body.scrollWidth;
 		yScroll = window.innerHeight + window.scrollMaxY;
 	} else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
@@ -13,8 +12,7 @@ function getPageSize()
 		xScroll = document.body.offsetWidth;
 		yScroll = document.body.offsetHeight;
 	}
-	
-	var windowWidth, windowHeight;
+
 	if (self.innerHeight) {	// all except Explorer
 		windowWidth = self.innerWidth;
 		windowHeight = self.innerHeight;
@@ -24,24 +22,23 @@ function getPageSize()
 	} else if (document.body) { // other Explorers
 		windowWidth = document.body.clientWidth;
 		windowHeight = document.body.clientHeight;
-	}	
-	
+	}
+
 	// for small pages with total height less then height of the viewport
 	if(yScroll < windowHeight){
 		pageHeight = windowHeight;
-	} else { 
+	} else {
 		pageHeight = yScroll;
 	}
 
 	// for small pages with total width less then width of the viewport
-	if(xScroll < windowWidth){	
+	if(xScroll < windowWidth){
 		pageWidth = windowWidth;
 	} else {
 		pageWidth = xScroll;
 	}
 
-
-	arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight) 
+	arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight)
 	return arrayPageSize;
 }
 
@@ -50,8 +47,8 @@ function getPageSize()
 // Returns array with x,y page scroll values.
 // Core code from - quirksmode.org
 //
-function getPageScroll(){
-
+function getPageScroll()
+{
 	var yScroll;
 
 	if (self.pageYOffset) {
@@ -62,7 +59,7 @@ function getPageScroll(){
 		yScroll = document.body.scrollTop;
 	}
 
-	arrayPageScroll = new Array('',yScroll) 
+	arrayPageScroll = new Array('',yScroll)
 	return arrayPageScroll;
 }
 
@@ -77,7 +74,7 @@ function showPopup()
 	var popup = $('popup');
 	popup.style.zIndex = -1;
 	Element.show('popup');
-	
+
 	var width = $('sheetContainerPopup').childNodes[0].scrollWidth + "px";
 	var top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.scrollHeight - 40) / 2 ) + "px";
 	var left = ((arrayPageSize[2] - popup.scrollWidth ) / 2 ) + "px";
@@ -85,12 +82,12 @@ function showPopup()
 	popup.style.width = width;
 	popup.style.top = top;
 	popup.style.left = left;
-	
+
 	Element.show('overlay');
-	popup.style.zIndex = 100;	
+	popup.style.zIndex = 100;
 }
 
-function hidePopup() 
+function hidePopup()
 {
 	Element.hide('overlay');
 	Element.hide('popup');
