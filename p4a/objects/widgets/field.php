@@ -525,8 +525,10 @@
 
 					$this->setSourceDescriptionField($description_field);
 				}
-			} else {
+			} elseif (is_array($pk)) {
 				P4A_Error("ONLY ONE PK IN THIS CASE");
+			} elseif (is_null($pk)) {
+				P4A_Error("PLEASE DEFINE A PRIMARY KEY");
 			}
 
 			$this->setDefaultVisualizationProperties();

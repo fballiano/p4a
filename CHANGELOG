@@ -1,3 +1,7 @@
+2.0.0-beta1
+- if you use P4A_DB_Source::setQuery now every field become readonly
+- a bug with P4A_DB_Source::_composeSelectCountQuery() and UNION queries was solved (thanks to alexiadeath)
+
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed
 - DB adapter (adodb) inclusion was moved to p4a_db.php thus it's easier to use p4a_db outsite a p4a application

@@ -223,7 +223,7 @@ class P4A_DB_Source extends P4A_Data_Source
     function load()
     {
         if (!$this->getQuery() and !$this->getTable()){
-            p4a_error("ERRORE");
+            p4a_error("PLEASE DEFINE A QUERY OR A TABLE");
         }
 
         $db =& P4A_DB::singleton($this->getDSN());
@@ -255,11 +255,11 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
 
                 switch ($col->meta_type) {
-                    case 'C';
+                    case 'C':
                     	// Character fields that should be shown in a <input type="text"> tag
                     	$this->fields->$field_name->setType('text');
                     	break;
-                    case 'X';
+                    case 'X':
                     	// Clob (character large objects), or large text fields that should be shown in a <textarea>
                     	$this->fields->$field_name->setType('text');
                     	break;
@@ -297,22 +297,26 @@ class P4A_DB_Source extends P4A_Data_Source
                 }
 
 				// if field is not on main table is not updatable
-            	if (!isset($col->table) or !strlen($col->table)) {
-            		if (count($this->getJoin())) {
-            			$this->fields->$field_name->setReadOnly();
-            		} else {
-						$this->fields->$field_name->setTable($main_table);
-            		}
-            	} elseif ($col->table != $main_table){
-                    $this->fields->$field_name->setReadOnly();
-                	$this->fields->$field_name->setTable($col->table);
-                } else {
-                	$this->fields->$field_name->setTable($col->table);
-            	}
+				if ($this->getQuery()) {
+					$this->fields->$field_name->setReadOnly();
+				} else {
+	            	if (!isset($col->table) or !strlen($col->table)) {
+	            		if (count($this->getJoin())) {
+	            			$this->fields->$field_name->setReadOnly();
+	            		} else {
+							$this->fields->$field_name->setTable($main_table);
+	            		}
+	            	} elseif ($col->table != $main_table){
+	                    $this->fields->$field_name->setReadOnly();
+	                	$this->fields->$field_name->setTable($col->table);
+	                } else {
+	                	$this->fields->$field_name->setTable($col->table);
+	            	}
 
-                if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
-                    $this->fields->$field_name->setAliasOf($alias_of);
-                }
+	                if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
+	                    $this->fields->$field_name->setAliasOf($alias_of);
+	                }
+				}
             }
         }
     }
@@ -680,7 +684,8 @@ class P4A_DB_Source extends P4A_Data_Source
     function _composeSelectCountQuery()
     {
         if ($this->getQuery()) {
-			$query = preg_replace("/SELECT.*?FROM/isu", $this->_composeSelectCountPart() . " FROM", $this->getQuery());
+        	$query = $this->getQuery();
+        	$query = $this->_composeSelectCountPart() . " FROM ($query) AS p4a_count";
         } else {
             $query  = $this->_composeSelectCountPart();
             $query .= $this->_composeFromPart();
