@@ -155,10 +155,13 @@
 		var $_action_history_id = 0;
 
 		var $_to_redesign = array();
-		var $_redesign_popup = FALSE;
+		var $_redesign_popup = false;
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
+		var $_in_ajax_call = false;
 
-		var $_popup = NULL;
+		var $_popup = null;
+
+		var $_do_refresh = false;
 
 		/**
 		 * Class constructor.
@@ -249,6 +252,26 @@
 		function isAjaxEnabled()
 		{
 			return $this->_ajax_enabled;
+		}
+
+		/**
+		 * Tells you if there's a popup opened
+		 * @access public
+		 * @return boolean
+		 */
+		function isPopupOpened()
+		{
+			return ($this->_popup !== null);
+		}
+
+		/**
+		 * was the current action called thru ajax?
+		 * @access public
+		 * @return boolean
+		 */
+		function inAjaxCall()
+		{
+			return $this->_in_ajax_call;
 		}
 
 		function &singleton($class_name = "p4a")
@@ -400,9 +423,11 @@
 				$action_return = $this->objects[$object]->$action($aParams);
 			}
 
+			$this->_in_ajax_call = false;
 			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
+				$this->_in_ajax_call = true;
 				$this->_action_history_id++;
-				$this->raiseXMLReponse();
+				$this->raiseXMLResponse();
 			} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
 				require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/browser/default/connectors/php/connector.php';
 			} elseif (isset($_REQUEST['_upload_path'])) {
@@ -427,53 +452,62 @@
 			flush();
 		}
 
-		function raiseXMLReponse()
+		function raiseXMLResponse()
 		{
 			ob_start();
 			$script_detector = '<script.*?>(.*?)<\/script>';
 
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
-			while (list( ,$id) = each($this->_to_redesign)) {
-				$object =& $this->getObject($id);
-				$display = $object->isVisible() ? 'block' : 'none';
-				$as_string = $object->getAsString();
-				$javascript_codes = array();
-				$javascript = '';
-				$html = preg_replace("/{$script_detector}/si", '', $as_string);
-				preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
-				$javascript_codes = $javascript_codes[1];
-				foreach ($javascript_codes as $code) {
-					$javascript .= "$code\n\n";
-				}
-
-				print "\n<widget id='$id' display='$display'>\n";
-				print "<html><![CDATA[{$html}]]></html>\n";
+			if ($this->_do_refresh) {
+				$this->_do_refresh = false;
+				$javascript = 'document.location="' . P4A_APPLICATION_PATH . '";';
+				print "<widget id='popup' display='inherit'>\n";
+				print "<html><![CDATA[]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
-				print "</widget>\n";
-
-			}
-			if ($this->_redesign_popup) {
-				if ($this->_popup) {
-					$popup =& p4a_mask::singleton($this->_popup);
-					$as_string = $popup->getAsString();
-
+				print "</widget>";
+			} else {
+				while (list( ,$id) = each($this->_to_redesign)) {
+					$object =& $this->getObject($id);
+					$display = $object->isVisible() ? 'block' : 'none';
+					$as_string = $object->getAsString();
 					$javascript_codes = array();
-					$javascript = "showPopup();\n\n";
+					$javascript = '';
 					$html = preg_replace("/{$script_detector}/si", '', $as_string);
 					preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
 					$javascript_codes = $javascript_codes[1];
 					foreach ($javascript_codes as $code) {
 						$javascript .= "$code\n\n";
 					}
-				} else {
-					$html = '';
-					$javascript = 'hidePopup();';
+
+					print "\n<widget id='$id' display='$display'>\n";
+					print "<html><![CDATA[{$html}]]></html>\n";
+					print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+					print "</widget>\n";
+
 				}
-				print "<widget id='popup' display='inherit'>\n";
-				print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";
-				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
-				print "</widget>";
+				if ($this->_redesign_popup) {
+					if ($this->_popup) {
+						$popup =& p4a_mask::singleton($this->_popup);
+						$as_string = $popup->getAsString();
+
+						$javascript_codes = array();
+						$javascript = "showPopup();\n\n";
+						$html = preg_replace("/{$script_detector}/si", '', $as_string);
+						preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
+						$javascript_codes = $javascript_codes[1];
+						foreach ($javascript_codes as $code) {
+							$javascript .= "$code\n\n";
+						}
+					} else {
+						$html = '';
+						$javascript = 'hidePopup();';
+					}
+					print "<widget id='popup' display='inherit'>\n";
+					print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";
+					print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+					print "</widget>";
+				}
 			}
 			print "</ajax-response>";
 
@@ -521,6 +555,14 @@
 			if ($this->isActionTriggered('onOpenMask')) {
 				if ($this->actionHandler('onOpenMask') == ABORT) return ABORT;
 			} else {
+				if ($this->isPopupOpened()) {
+					$this->closePopup();
+				}
+
+				if ($this->inAjaxCall()) {
+					$this->_do_refresh = true;
+				}
+
 				P4A_Mask::singleton($mask_name);
 
 				//Update masks history

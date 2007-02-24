@@ -4,6 +4,8 @@
 - P4A_Tab_Pane CSS is now loaded by default
 - P4A_Table::setVisible cols now also manages column order
 - a bug on P4A::openPopup() passing javascripts thru an ajax call was solved
+- P4A::isPopupOpened() was added
+- P4A::openMask() can now be called thru an ajax action
 
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed
