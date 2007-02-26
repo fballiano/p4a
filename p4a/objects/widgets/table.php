@@ -971,9 +971,15 @@
 					$aReturn[$i]['row']['active'] = false;
 				}
 
+				if (isset($row['_p4a_enabled'])) {
+					$row_enabled = $row['_p4a_enabled'];
+				} else {
+					$row_enabled = true;
+				}
+
 				foreach($aCols as $col_name) {
-					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $this->composeStringActions(array($row_number, $col_name)) : '';
-					$aReturn[$i]['cells'][$j]['clickable'] = $enabled ? 'clickable' : '';
+					$aReturn[$i]['cells'][$j]['action'] = ($enabled and $row_enabled) ? $this->composeStringActions(array($row_number, $col_name)) : '';
+					$aReturn[$i]['cells'][$j]['clickable'] = ($enabled and $row_enabled) ? 'clickable' : '';
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
