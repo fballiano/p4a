@@ -170,6 +170,10 @@
 		function setSize($size)
 		{
 			$this->_size = $size;
+
+			while ($button =& $this->buttons->nextItem()) {
+				$button->setSize($size);
+			}
 		}
 
 		function getSize()
