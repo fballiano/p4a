@@ -9,7 +9,7 @@
 		<col <?php echo $col['properties']?> />
 		<?php endforeach; ?>
 
-		<?php if ($headers): ?>
+		<?php if (@$headers): ?>
 		<thead>
 			<tr>
 				<th>&nbsp;</th>
