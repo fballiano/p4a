@@ -12,7 +12,8 @@
 - auto translate booleans inside P4A_Table was implemented
 - a bug with P4A_Toolbar::setSize() was solved
 - P4A_Array_Source now can load simple array (field 0 is created)
-- P4A_Tab_Pane::addPage was implemented
+- P4A_Tab_Pane::addPage() was implemented
+- P4A_DB_Navigator::enableSelectedElement() was added to allow user to click also on the selected element
 
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed

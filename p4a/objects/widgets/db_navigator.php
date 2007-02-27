@@ -100,6 +100,13 @@ class P4A_DB_Navigator extends P4A_Widget
 	var $allow_movement_to_root = false;
 
 	/**
+	 * Is selected element clickable?
+	 * @var boolean
+	 * @access private
+	 */
+	var $enable_selected_element = false;
+
+	/**
 	 * The constructor
 	 * @param string		The name of the widget
 	 * @access public
@@ -202,6 +209,16 @@ class P4A_DB_Navigator extends P4A_Widget
 		$this->allow_movement_to_root = $allow;
 	}
 
+	/**
+	 * Is selected element clickable?
+	 * @access public
+	 * @param boolean
+	 */
+	function enableSelectedElement($enable = true)
+	{
+		$this->enable_selected_element = $enable;
+	}
+
 	function getAsString($id = null)
 	{
 		if (!$this->isVisible()) {
@@ -211,7 +228,6 @@ class P4A_DB_Navigator extends P4A_Widget
 		$p4a =& p4a::singleton();
 		$db =& p4a_db::singleton();
 
-		$p4a->active_mask->addTempCSS(P4A_APPLICATION_PATH . "/p4a_db_navigator.css");
 		$obj_id = $this->getId();
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
@@ -279,15 +295,26 @@ class P4A_DB_Navigator extends P4A_Widget
 				continue;
 			}
 
+			$position = $section['__position'];
+			$actions = $this->composeStringActions($position);
+			$description = $this->_trim($section[$this->description]);
+
 			if ($section[$pk] == $current) {
-				$return .= "<li id='{$obj_id}_{$current}' class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'>\n";
-				$return .= $this->_trim($section[$this->description]);
+				$selected = "class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open." . P4A_ICONS_EXTENSION . ")'";
+				if ($this->enable_selected_element) {
+					$link_prefix = "<a href='#' {$actions}>";
+					$link_suffix = "</a>";
+				} else {
+					$link_prefix = "";
+					$link_suffix = "";
+				}
 			} else {
-				$position = $section['__position'];
-				$actions = $this->composeStringActions($position);
-				$description = $this->_trim($section[$this->description]);
-				$return .= "<li id='{$obj_id}_{$section[$pk]}'><a href='#' $actions>{$description}</a>\n";
+				$selected = "";
+				$link_prefix = "<a href='#' {$actions}>";
+				$link_suffix = "</a>";
 			}
+
+			$return .= "<li id='{$obj_id}_{$section[$pk]}' {$selected}>{$link_prefix}{$description}{$link_suffix}\n";
 
 			if ($recurse) {
 				if ($this->expand_all) {
