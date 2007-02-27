@@ -11,6 +11,8 @@
 - P4A_I18N::autoFormat() and P4A_I18N::autoUnformat() now support booleans
 - auto translate booleans inside P4A_Table was implemented
 - a bug with P4A_Toolbar::setSize() was solved
+- P4A_Array_Source now can load simple array (field 0 is created)
+- P4A_Tab_Pane::addPage was implemented
 
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed

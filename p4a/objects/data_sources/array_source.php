@@ -54,11 +54,21 @@ class P4A_Array_Source extends P4A_Data_Source
 		$this->_array = array();
 		$this->_array[-1] = array();
 
-		foreach($array as $value) {
-			$this->_array[] = $value;
+		$first_row = $array[0];
+
+		if (!is_array($first_row)) {
+			foreach($array as $value) {
+				$this->_array[] = array('0'=>$value);
+			}
+			$this->setPK('0');
+			$first_row = array('0'=>$first_row);
+		} else {
+			foreach($array as $value) {
+				$this->_array[] = $value;
+			}
 		}
 
-		$first_row = $array[0];
+
 		foreach ($first_row as $field_name=>$value) {
 			if (!isset($this->fields->$field_name)) {
 				$this->fields->build("p4a_data_field", $field_name);

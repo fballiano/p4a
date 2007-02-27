@@ -336,7 +336,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 
 		if (is_object($v)) {
 			if (is_a($v, 'p4a_object')) {
-				$v = '<a href=".?_p4a_session_browser=' . $v->getId() . '">' . get_class($v) . '</a>';
+				$v = '<a href=".?_p4a_session_browser=' . $v->getId() . '">' . get_class($v) . ':' . $v->getName() . '</a>';
 			} else {
 				$v = '<pre>' . print_r($v, true) . '</pre>';
 			}

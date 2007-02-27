@@ -74,10 +74,11 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->intercept($this, "onClick", "tabClick");
 	}
 
-	// todo: we'd like to have a function to add some
-	// existing object without building it
-	function addPage(&$page) {
-		p4a_error("NON YET IMPLEMENTED");
+	function addPage($page,$label=NULL) {
+		$this->pages->build('p4a_frame',$page);
+		if ($label!==NULL) {
+			$this->pages->$page->setLabel($label);
+		}		
 	}
 
 	/**
