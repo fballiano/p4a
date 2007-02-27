@@ -250,6 +250,10 @@
 		function autoFormat($value, $type)
 		{
 			switch($type) {
+				case 'boolean':
+					$value = ($value == 1) ? 'yes' : 'no';
+					$value = $this->messages->get($value);
+					break;
 				case 'date':
 					$value = $this->datetime->formatDateDefault($value);
 					break;
@@ -284,6 +288,9 @@
 		function autoUnformat($value, $type)
 		{
 			switch($type) {
+				case 'boolean':
+					$value = ($value == $this->messages->get('yes')) ? 1 : 0;
+					break;
 				case 'date':
 					$value = $this->datetime->unformatDateDefault($value);
 					break;

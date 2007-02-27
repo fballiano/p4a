@@ -8,6 +8,8 @@
 - P4A::openMask() can now be called thru an ajax action
 - now a single P4A_Table row can be disabled, you need to intercept the beforeDisplay on P4A_Table_Rows object and add a "_p4a_enabled" index to the row setting it to true/false
 - P4A session browser was added (clone your browser window with CTRL-N and add in the address bar ?_p4a_session_browser)
+- P4A_I18N::autoFormat() and P4A_I18N::autoUnformat() now support booleans
+- auto translate booleans inside P4A_Table was implemented
 
 1.99.22
 - P4A_Is_Error(), P4A_New_Line() and P4A_Space() were removed
