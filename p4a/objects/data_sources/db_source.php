@@ -560,11 +560,7 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             if (!$res) {
-				if (P4A_EXTENDED_ERRORS) {
-                	$e = new P4A_ERROR('A query has returned an error:' . $db->getError(), $this);
-                } else {
-					$e = new P4A_ERROR('A query has returned an error', $this);
-				}
+				$e = new P4A_ERROR('A query has returned an error', $this);
 				if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
