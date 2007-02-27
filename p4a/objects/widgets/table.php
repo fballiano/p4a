@@ -185,12 +185,21 @@
 		 */
 		function addCol($column_name)
 		{
-			$this->cols->build("p4a_table_col",$column_name);
+			$this->cols->build("p4a_table_col", $column_name);
+
+			if (!empty($this->_cols_order)) {
+				$this->_cols_order[] = $column_name;
+			}
 		}
 
+		/**
+		 * Adds a special clickable column.
+		 * @param string		Column name.
+		 * @access public
+		 */
 		function addActionCol($column_name)
 		{
-			$this->cols->build("p4a_table_col",$column_name);
+			$this->addCol($column_name);
 			$this->cols->$column_name->setType('action');
 			$this->cols->$column_name->addAction('onClick');
 			$this->cols->$column_name->setValue($this->cols->$column_name->getLabel());
@@ -629,6 +638,25 @@
 			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
 			$this->addAjaxAction('onClick');
+		}
+
+		/**
+		 * Sets the column visible (and add it as the last in the coloumn display order).
+		 * @param boolean		Visibility flag
+		 * @access public
+		 */
+		function setVisible($visible=true)
+		{
+			parent::setVisible($visible);
+
+			$p4a =& p4a::singleton();
+			$parent = $this->getParentID();
+			$parent = $p4a->objects[$parent]->getParentID();
+			$parent = $p4a->objects[$parent];
+
+			if ($visible and !empty($parent->_cols_order) and !in_array($this->getName(), $parent->_cols_order)) {
+				$parent->_cols_order[] = $this->getName();
+			}
 		}
 
 		/**
