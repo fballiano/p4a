@@ -428,6 +428,27 @@
 				$this->_in_ajax_call = true;
 				$this->_action_history_id++;
 				$this->raiseXMLResponse();
+			} elseif (isset($_REQUEST['_p4a_session_browser'])) {
+				if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
+					$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];
+				} else {
+					$obj =& $this;
+				}
+
+				$vars = get_object_vars($obj);
+				ksort($vars);
+				$name = $obj->getName();
+				if (empty($name)) $name = "P4A main object";
+				$name .= ' (' . get_class($obj) .  ')';
+
+				echo "<h1>$name</h1>";
+				echo "<table border='1'>";
+				echo "<tr><th>key</th><th>value</th></tr>";
+				foreach ($vars as $k=>$v) {
+					$v = _P4A_Debug_Print_Variable($v);
+					echo "<tr><td valign='top'>$k</td><td>$v</td></tr>";
+				}
+				echo "</table>";
 			} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
 				require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/browser/default/connectors/php/connector.php';
 			} elseif (isset($_REQUEST['_upload_path'])) {

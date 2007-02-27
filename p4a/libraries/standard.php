@@ -304,3 +304,43 @@ if (!function_exists('htmlspecialchars_decode')) {
 		$html .= '</object>';
 		return $html;
 	}
+
+	/**
+	 * Used for internal debugging (within session browser).
+	 * @param mixed		Variable to print
+	 * @access private
+	 * @return mixed
+	 */
+	function _P4A_Debug_Print_Variable($v)
+	{
+		if ($v === null) $v = '<span style="color:green">NULL</span>';
+		if ($v === false) $v = '<span style="color:green">FALSE</span>';
+		if ($v === true) $v = '<span style="color:green">TRUE</span>';
+		if ($v === '') $v = '<span style="color:green">Empty String</span>';
+
+		if (is_array($v)) {
+			if (empty($v)) {
+				$v = '<span style="color:green">Empty Array</span>';
+			} else {
+				$todebug = $v;
+				$v = '<table border="1">';
+				$v .= "<tr><th colspan='2'>Array</th></tr>";
+				$v .= "<tr><th>key</th><th>value</th></tr>";
+				foreach ($todebug as $k2=>$v2) {
+					$v2 = _P4A_Debug_Print_Variable($v2);
+					$v .= "<tr><td>$k2</td><td>$v2</td></tr>";
+				}
+				$v .= '</table>';
+			}
+		}
+
+		if (is_object($v)) {
+			if (is_a($v, 'p4a_object')) {
+				$v = '<a href=".?_p4a_session_browser=' . $v->getId() . '">' . get_class($v) . '</a>';
+			} else {
+				$v = '<pre>' . print_r($v, true) . '</pre>';
+			}
+		}
+
+		return $v;
+	}
