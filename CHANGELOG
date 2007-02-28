@@ -1,6 +1,7 @@
 2.0.0-beta2
 - P4A_AUTO_MAXLENGTH is now disabled by default
 - Afrikaans translation was added (thanks to Ewald Horn)
+- now we handle when db driver returns "table.field" as field name
 
 2.0.0-beta1
 - if you use P4A_DB_Source::setQuery now every field become readonly

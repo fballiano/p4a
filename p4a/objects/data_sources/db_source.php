@@ -243,6 +243,11 @@ class P4A_DB_Source extends P4A_Data_Source
             for ($i=0; $i<$rs->fieldCount(); $i++) {
             	$col = $rs->fetchField($i);
                 $field_name = $col->name;
+                $dot_pos = strpos($field_name, '.');
+                if ($dot_pos !== false) {
+                	list($table_name, $field_name) = explode('.', $field_name);
+                	$col->table = $table_name;
+                }
 				$col->meta_type = $rs->metaType($col);
                 if (isset($this->fields->$field_name)) {
                     continue;
