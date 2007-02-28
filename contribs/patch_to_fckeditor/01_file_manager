@@ -2,7 +2,7 @@ delete directory editor/fckeditor.original.html
 delete directory editor/_source
 delete directory editor/filemanager/upload
 delete all directories under editor/filemanager/browser/connectors except php
-delete all directories under editor/skins except default
+delete all directories under editor/skins except default and p4a
 
 
 
@@ -46,4 +46,18 @@ replace
 with
 --------------
 	$sResourceTypePath = $GLOBALS["UserFilesDirectory"];
+--------------
+
+
+
+
+open "editor/filemanager/browser/default/connectors/php/basexml.php"
+around line 60
+replace
+--------------
+	echo '<CurrentFolder path="' . ConvertToXmlAttribute( $currentFolder ) . '" url="' . ConvertToXmlAttribute( GetUrlFromPath( $resourceType, $currentFolder ) ) . '" />' ;
+--------------
+with
+--------------
+	echo '<CurrentFolder path="' . ConvertToXmlAttribute( $currentFolder ) . '" url="' . ConvertToXmlAttribute( GetUrlFromPath( '', $currentFolder ) ) . '" />' ;
 --------------
