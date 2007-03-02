@@ -287,7 +287,7 @@
 		define('P4A_AJAX_DEBUG', false);
 	}
 
-	define('P4A_VERSION', '2.0.0-beta2');
+	define('P4A_VERSION', '2.0.0-beta3');
 	define('P4A_ORDER_ASCENDING', 'ASC');
 	define('P4A_ORDER_DESCENDING', 'DESC');
 	define('P4A_NULL', 'P4A_NULL');

@@ -61,3 +61,25 @@ with
 --------------
 	echo '<CurrentFolder path="' . ConvertToXmlAttribute( $currentFolder ) . '" url="' . ConvertToXmlAttribute( GetUrlFromPath( '', $currentFolder ) ) . '" />' ;
 --------------
+
+
+
+
+open "editor/filemanager/browser/default/connectors/php/connector.php"
+around line 31
+replace
+--------------
+include('config.php');
+include('util.php');
+include('io.php');
+include('basexml.php');
+include('commands.php');
+--------------
+with
+--------------
+include dirname(__FILE__) . '/config.php' ;
+include dirname(__FILE__) . '/util.php' ;
+include dirname(__FILE__) . '/io.php' ;
+include dirname(__FILE__) . '/basexml.php' ;
+include dirname(__FILE__) . '/commands.php' ;
+--------------
