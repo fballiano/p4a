@@ -111,17 +111,19 @@
     			foreach($e->getBacktrace() as $value) {
     				$backtrace .= '<table width="100%">';
     				foreach($value as $key=>$description) {
-    					$backtrace .= "<tr><td class='background2' width='1'><b>" .  ucfirst($key) . "</b></td><td class='background1' width='100%'>";
+    					if (is_object($description) or is_resource($description)) {
+							continue;
+						}
 
-    					if (is_array($description)) {
+    					$backtrace .= "<tr><td class='background2' width='1'><b>" .  ucfirst($key) . "</b></td><td class='background1' width='100%'>";
+						if (is_array($description)) {
 							ob_start();
 							print_r($description);
     						$backtrace .= nl2br(preg_replace("/ /", '&nbsp;', ob_get_contents()));
     						ob_end_clean();
-    					} else {
+    					} elseif (is_string($description)) {
     						$backtrace .= $description;
     					}
-
     					$backtrace .= "</td></tr>";
     				}
     				$backtrace .= '</table><br>';
