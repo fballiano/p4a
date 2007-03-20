@@ -34,9 +34,9 @@ body {
 }
 
 #mainContainer {
-	width:100%;
-	position:absolute;
-	text-align:center;
+	width: 100%;
+	position: absolute;
+	text-align: center;
 }
 
 #footerContainer {
@@ -457,10 +457,6 @@ select {
  	z-index: 2;
 }
 
-.frame {
-	text-align:left;
-}
-
 div.frame {
 	padding: 0px;
 }
@@ -469,7 +465,7 @@ div.frame {
 	clear: both;
 }
 
-.br{
+.br {
 	clear: both;
 }
 
@@ -530,6 +526,7 @@ legend {
 .table td.date,
 .table td.time{
 	text-align: right;
+	white-space: nowrap;
 }
 
 .table_container {
