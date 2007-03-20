@@ -4,6 +4,7 @@
 - P4A_Mask::saveUploads() method was added just to split the P4A_Mask::saveRow() and allow better customization
 - a bug with P4A_Table dimensions was solved
 - a bug with centering objects was solved
+- some work on sidebar_left and sidebar_right was done
 
 2.0.0-beta2
 - P4A_AUTO_MAXLENGTH is now disabled by default

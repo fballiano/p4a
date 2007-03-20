@@ -35,9 +35,15 @@
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <?php echo $this->maskOpen()?>
 
-<?php if (isset($sidebar)): ?>
-<div id="sidebar" class="border_color4 background_box">
-	<?php echo $sidebar?>
+<?php if (isset($sidebar_left)): ?>
+<div id="sidebar_left" class="border_color4 background_box" style="padding-top: <?php echo $_top_margin+10?>px">
+	<?php echo $sidebar_left?>
+</div>
+<?php endif; ?>
+
+<?php if (isset($sidebar_right)): ?>
+<div id="sidebar_right" class="border_color4 background_box" style="padding-top: <?php echo $_top_margin+10?>px">
+	<?php echo $sidebar_right?>
 </div>
 <?php endif; ?>
 
