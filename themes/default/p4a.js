@@ -111,6 +111,8 @@ function form2string(form)
 					sReturn += e.name + '=' + encodeURIComponent(value) + '&';
 				}
 				break;
+			case 'file':
+				break;
 			default:
 				if (e.name) {
 					value = new String(e.value);
