@@ -79,7 +79,7 @@ class P4A_Fieldset extends P4A_Frame
 			$string  .= "<legend>" . $this->getTitle() . "</legend>";
 		}
 		foreach($this->_map as $i=>$row){
-			$row_html = "\n<div class='row' style='border:1px solid white'>";
+			$row_html = "\n<div class='row'>";
 			$one_visible = false;
 
 			foreach ($row as $obj) {
