@@ -235,6 +235,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		$current = $this->source->fields->{$pk}->getValue();
 		$recursor = $this->source->fields->{$this->recursor}->getValue();
 		$rows = $this->source->getAll();
+		if ($current === null) {
+			$current = $recursor;
+		}
+
 		$js = "";
 		$i = 0;
 		foreach ($rows as $row) {

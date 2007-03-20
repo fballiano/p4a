@@ -7,6 +7,7 @@
 - some work on sidebar_left and sidebar_right was done
 - a bug on P4A_Mask_Error was fixed
 - a css border was removed from P4A_Fieldset
+- a bug with P4A_DB_Navigator was solved
 
 2.0.0-beta2
 - P4A_AUTO_MAXLENGTH is now disabled by default
