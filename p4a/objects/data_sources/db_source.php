@@ -447,7 +447,7 @@ class P4A_DB_Source extends P4A_Data_Source
         if ($this->_num_rows === null) {
         	$group = $this->getGroup();
         	if (count($group)) {
-        		$result = $db->adapter->queryCol($query);
+        		$result = $db->adapter->getCol($query);
 	        	if ($db->adapter->metaError()) {
 	        		$name = $this->getName();
 	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
