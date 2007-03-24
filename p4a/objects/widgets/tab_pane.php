@@ -74,11 +74,17 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->intercept($this, "onClick", "tabClick");
 	}
 
-	function addPage($page,$label=NULL) {
-		$this->pages->build('p4a_frame',$page);
-		if ($label!==NULL) {
-			$this->pages->$page->setLabel($label);
-		}		
+	/**
+	 * Builds a new page inside the pane
+	 * The new built page is a P4A_Frame
+	 * @access public
+	 */
+	function addPage($page_name, $label=NULL)
+	{
+		$this->pages->build('p4a_frame', $page_name);
+		if ($label !== NULL) {
+			$this->pages->$page_name->setLabel($label);
+		}
 	}
 
 	/**
