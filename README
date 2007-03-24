@@ -94,22 +94,22 @@ tested browsers:
 -----------------------------------------
 
 Tested browsers:
-- Mozilla Firefox 1.x
-- Internet Explorer 5.5, 6.0
+- Mozilla Firefox 1.x, 2.x
+- Internet Explorer 5.5, 6.x, 7.0
 - Safari 1.x
-- Opera 7.x, 8.x
+- Opera 7.x, 8.x, 9.x
 - Konqueror 3.x
 
 These browsers should work as well:
-- all gecko browsers (Netscape 7.x/8.x, Epiphany, Galeon)
-- all Javascript 1.2/CSS browser
+- all gecko browsers (Netscape 7.x/8.x/9.x, Epiphany, Galeon)
+- all Javascript 1.2/CSS2 browser
 
 ------------------------------------
 -- P4A compatibility: Mobile Side --
 ------------------------------------
 
 - Pocket Internet Explorer for Microsoft Windows Mobile 2003
-- Opera 6.x/7.x
+- Opera 6.x/7.x/Mini
 
 -------------------
 -- General Notes --
