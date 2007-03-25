@@ -1,14 +1,14 @@
-.tab_pane .tabs {
+.tab_pane ul.tabs {
 	border-bottom: 1px solid black;
 }
 
-.tab_pane .tabs a  {
+.tab_pane ul.tabs a  {
 	color: black;
 	visibility: hidden;
 	background: red;
 }
 
-.tab_pane .tabs a.active, .tab_pane .tabs a.active:link {
+.tab_pane ul.tabs a.active, .tab_pane ul.tabs a.active:link {
 	visibility: visible;
 	border: 1px solid black;
 	border-bottom: 1px solid white;

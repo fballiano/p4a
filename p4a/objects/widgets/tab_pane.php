@@ -38,7 +38,7 @@
 
 /**
  * The tab pane widget
- * A tab pane is a collection of widgets.
+ * A tab pane is a set of pages.
  * Only one page is visible at time.
  * The pages are switchable from a tabbed menu.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
@@ -48,27 +48,25 @@
 class P4A_Tab_Pane extends P4A_Widget
 {
    	/**
-	 * The pages collection
-	 * @var array
+	 * @var P4A_Collection
 	 * @access public
 	 */
 	var $pages = null;
 
 	/**
-	 * The name of currently page open
+	 * The name of current page
 	 * @var string
 	 * @access private
 	 */
 	var $_active_page = null;
 
 	/**
-	 * Tab Pane constructor.
-	 * @param string Object name (identifier).
+	 * Tab Pane constructor
+	 * @param string Object name (identifier)
 	 */
 	function P4A_Tab_Pane($name)
 	{
 		parent::P4A_Widget($name);
-		$this->useTemplate('tab_pane');
 		$this->build("P4A_Collection", "pages");
 		$this->addAjaxAction("onClick");
 		$this->intercept($this, "onClick", "tabClick");
@@ -76,13 +74,13 @@ class P4A_Tab_Pane extends P4A_Widget
 
 	/**
 	 * Builds a new page inside the pane
-	 * The new built page is a P4A_Frame
+	 * The new page is a P4A_Frame
 	 * @access public
 	 */
-	function addPage($page_name, $label=NULL)
+	function addPage($page_name, $label=null)
 	{
 		$this->pages->build('p4a_frame', $page_name);
-		if ($label !== NULL) {
+		if ($label !== null) {
 			$this->pages->$page_name->setLabel($label);
 		}
 	}
@@ -104,7 +102,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				$this->_active_page = $page->getName();
 				break;
 			default:
-				P4A_Error('Unsupported page type for P4A_Tab_Pane');
+				P4A_Error('P4A_Tab_pane "' . $this->getName() . '": unable to set "' . gettype($page) . '" as active page, reason: unsopported type');
 				break;
 		}
 
@@ -118,83 +116,69 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */
 	function &getActivePage()
 	{
-		$return = null;
-
-		if ($this->pages->getNumItems() > 0) {
-			if (isset($this->_active_page)) {
-				if (is_object($this->pages->{$this->_active_page})) {
-					$return = $this->pages->{$this->_active_page};
-				}
-			} else {
-				$this->pages->reset();
-				$return = $this->pages->nextItem();
-			}
+		if ($this->pages->getNumItems() == 0) {
+			$return = null;
+			return $return;
 		}
 
-		return $return;
+		if (strlen($this->_active_page) and
+			isset($this->pages->{$this->_active_page}) and
+			is_object($this->pages->{$this->_active_page})) {
+			return $this->pages->{$this->_active_page};
+		}
+
+		$this->pages->reset();
+		return $this->pages->nextItem();
 	}
 
-	function tabClick($page, $params)
+	/**
+	 * onClick event interceptor
+	 * @access private
+	 */
+	function tabClick($triggering_object, $params)
 	{
 		$this->setActivePage($params[0]);
 		$this->redesign();
 	}
 
 	/**
-	 * Returns the HTML rendered
+	 * Returns the rendered HTML
 	 * @access public
 	 */
 	function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}
 
 		$active_page =& $this->getActivePage();
 		$active_page_name = $active_page->getName();
-
-		// saving height and emptying it
-		// because we've to write it in the inner div
-		$tmpHeight = $this->getHeight();
+		$height = $this->getHeight();
 		$this->setHeight(null);
 
-		// re-setting height
-		if ($tmpHeight) {
-			$this->setHeight($tmpHeight);
-			$this->addTempVar('tab_pane_height', "height:{$tmpHeight}");
-		}
+		$return  = "<div class='tab_pane' id='$id' " . $this->composeStringProperties() . ">";
+		$return .= "<ul class='tabs'>";
 
-		$tabs = array();
-		$i = 0;
 		$this->pages->reset();
 		while ($page =& $this->pages->nextItem()) {
-			if (!$page->isVisible()) {
-				continue;
+			if (!$page->isVisible()) continue;
+			$actions = $this->composeStringActions($page->getName());
+			$active = '';
+			if ($page->getName() == $active_page_name) {
+				$active = "class='active'";
 			}
-
-			$active = false;
-			$page_name = $page->getName();
-			if ($page_name == $active_page_name	) {
-				$active = true;
-			}
-
-			$actions = $this->composeStringActions($page_name);
-			if (!$page->getLabel()) {
+			if (!strlen($page->getLabel())) {
 				$page->setDefaultLabel();
 			}
-
-			$tabs[$i]['actions'] =  $actions;
-			$tabs[$i]['active']  =  $active;
-			$tabs[$i]['label']   =  $page->getLabel();
-			$i++;
+			$label = $page->getLabel();
+			$return .= "<li><a href='#' {$actions} {$active}>{$label}</a></li>";
 		}
-		$this->addTempVar('tabs', $tabs);
+		$return .= "</ul>";
+		$return .= "<div class='tab_pane_page' style='height:$height'>" . $active_page->getAsString() . "</div>";
+		$return .= "</div>";
 
-		if ($active_page->isVisible()) {
-			$this->addTempVar('active_page', $active_page->getAsString());
-		}
-
-		return $this->fetchTemplate();
+		$this->setHeight($height);
+		return $return;
 	}
-
 }
