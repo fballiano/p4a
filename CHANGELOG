@@ -2,6 +2,7 @@
 - a bug on P4A_DB_Source was solved (due to the porting to ADODB)
 - P4A_Tab_Pane was nearly rewritten from scratch
 - triggered events page on website (http://p4a.sf.net/triggered-events) was updated
+- P4A_Frame::anchorCenter() now automatically adds a new row to the frame
 
 2.0.0-beta3
 - a small patch to fck file manager connector was added to avoid possible path configuration problems

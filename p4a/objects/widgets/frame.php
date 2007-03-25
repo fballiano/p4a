@@ -81,6 +81,7 @@ class P4A_Frame extends P4A_Widget
 
 	function anchorCenter(&$object, $margin = "auto")
 	{
+		$this->newRow();
 		$this->_anchor($object, $margin, "none");
 	}
 
