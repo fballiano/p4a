@@ -1,3 +1,6 @@
+2.0.0-beta5
+- P4A_DB_Navigator now automatically call a redesign action
+
 2.0.0-beta4
 - a bug on P4A_DB_Source was solved (due to the porting to ADODB)
 - P4A_Tab_Pane was nearly rewritten from scratch

@@ -361,6 +361,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	function onClick($params)
 	{
+		$this->redesign();
 		$position = $params[0];
 		$row = $this->source->row($position);
 		return $this->actionHandler('afterClick', $row);
