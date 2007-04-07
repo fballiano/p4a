@@ -369,7 +369,7 @@
 			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
 				$_icon = $this->getIcon();
 				$_icon_size = $this->getIconSize();
-				$_title = "<img class=\"img_button\" src=\"" . P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION . "\" alt=\"\" />{$_title}";
+				$_icon = "<img class=\"img_button\" src=\"" . P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION . "\" alt=\"\" />";
 			}
 
 			extract($this->_temp_vars);
