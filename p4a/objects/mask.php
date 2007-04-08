@@ -365,6 +365,7 @@
 				$_focus_id = $this->focus_object->getId();
 			}
 
+			$_icon = '';
 			$_title = $this->getTitle();
 			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
 				$_icon = $this->getIcon();
