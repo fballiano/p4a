@@ -109,7 +109,7 @@ class P4A_DB
 
 	function queryAll($query)
 	{
-		return $this->getAll($query);
+		return $this->adapter->getAll($query);
 	}
 
 	function getRow($query)
@@ -119,7 +119,7 @@ class P4A_DB
 
 	function queryRow($query)
 	{
-		return $this->getRow($query);
+		return $this->adapter->getRow($query);
 	}
 
 	function getCol($query)
@@ -129,7 +129,7 @@ class P4A_DB
 
 	function queryCol($query)
 	{
-		return $this->getCol($query);
+		return $this->adapter->getCol($query);
 	}
 
 	function getOne($query)
@@ -139,22 +139,22 @@ class P4A_DB
 
 	function queryOne($query)
 	{
-		return $this->getOne($query);
+		return $this->adapter->getOne($query);
 	}
 
 	function limitQuery($query,$offset=-1,$limit=-1,$params=false)
 	{
-		return $this->adapter->selectLimit($query,$limit,$offset,$params);
+		return $this->adapter->selectLimit($query, $limit, $offset, $params);
 	}
 
 	function selectLimit($sql,$numrows=-1,$offset=-1,$inputarr=false)
 	{
-		return $this->adapter->selectLimit($sql,$numrows,$offset,$inputarr);
+		return $this->adapter->selectLimit($sql, $numrows, $offset, $inputarr);
 	}
 
 	function query($query,$inputarr=false)
 	{
-		return $this->adapter->execute($query,$inputarr);
+		return $this->adapter->execute($query, $inputarr);
 	}
 
 	function getError()

@@ -1,3 +1,7 @@
+2.0.4
+- some small optimizations were done on p4a_db adapter
+- a small change was done on products_catologue sample
+
 2.0.3
 - a bug with mask's icon was fixed
 
