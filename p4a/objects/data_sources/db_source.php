@@ -575,27 +575,34 @@ class P4A_DB_Source extends P4A_Data_Source
 
             foreach ($this->_multivalue_fields as $fieldname=>$aField) {
                 $pk_value = $this->fields->$pks->getNewValue();
+                $old_fk_values = $this->fields->$fieldname->getValue();
                 $fk_values = $this->fields->$fieldname->getNewValue();
 
-                if (is_string($fk_values) and !empty($fk_values)) {
-                    $fk_values = split(",",$fk_values);
-                }
+                if (!is_array($old_fk_values)) $old_fk_values = array();
+                if (!is_array($fk_values)) $fk_values = array();
+
+                $toadd = array_diff($fk_values, $old_fk_values);
+                $toremove = array_diff($old_fk_values, $fk_values);
 
                 $fk_table = $aField["table"];
                 $fk_field = $aField["fk_field"];
                 $fk = $aField["fk"];
 
-                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
-                if ($db->adapter->metaError()) {
-                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
-                }
-
-                if ($fk_values) {
-					foreach ($fk_values as $k=>$v) {
-						$fk_values[$k] = array($v);
+				if (!empty($toremove)) {
+					foreach ($toremove as $k=>$v) {
+						$toremove[$k] = array($pk_value, $v);
 					}
+	                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", $toremove);
+	                if ($db->adapter->metaError()) {
+	                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
+	                }
+				}
 
-                    $res = $db->adapter->execute("INSERT INTO $fk_table($fk,$fk_field) VALUES('$pk_value', ?)", $fk_values);
+                if (!empty($toadd)) {
+					foreach ($toadd as $k=>$v) {
+						$toadd[$k] = array($pk_value, $v);
+					}
+                    $res = $db->adapter->execute("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", $toadd);
                     if ($db->adapter->metaError()) {
                         P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
                     }

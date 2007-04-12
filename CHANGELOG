@@ -1,3 +1,6 @@
+2.0.5
+- a new optimized algorithm for saving multivalue fields on db was implemented
+
 2.0.4
 - some small optimizations were done on p4a_db adapter
 - a small change was done on products_catologue sample
