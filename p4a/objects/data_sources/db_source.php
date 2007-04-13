@@ -526,6 +526,11 @@ class P4A_DB_Source extends P4A_Data_Source
             //$query .= $this->_composeOrderPart($new_order_array);
             $db =& P4A_DB::singleton($this->getDSN());
 
+			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
+			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
+            if (count($this->_join)) {
+            	$db->adapter->getOne($query);
+            }
             return $db->adapter->getOne($query) + 1;
         }
     }
