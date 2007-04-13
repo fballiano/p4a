@@ -453,7 +453,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	        	}
         		$this->_num_rows = count($result);
         	} else {
-        		if ($this->getQuery() and $this->_limit === null and $this->_offset === null) {
+        		if (!$this->getQuery() or ($this->_limit === null and $this->_offset === null)) {
         			$query = $this->_composeSelectCountQuery();
 	        		$result = $db->adapter->getOne($query);
 		        	if ($db->adapter->metaError()) {
