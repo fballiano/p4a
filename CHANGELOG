@@ -1,6 +1,7 @@
 2.0.5
 - a new optimized algorithm for saving multivalue fields on db was implemented
 - P4A_Dir_Source was added
+- a hack to solve a mystic mysql bug was added (http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566)
 
 2.0.4
 - some small optimizations were done on p4a_db adapter
