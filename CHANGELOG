@@ -1,5 +1,6 @@
 2.0.5
 - a new optimized algorithm for saving multivalue fields on db was implemented
+- P4A_Dir_Source was added
 
 2.0.4
 - some small optimizations were done on p4a_db adapter
