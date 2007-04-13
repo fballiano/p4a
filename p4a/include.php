@@ -111,6 +111,7 @@
 	require_once "$dir/objects/data_source.php";
 	require_once "$dir/objects/data_sources/db_source.php";
 	require_once "$dir/objects/data_sources/array_source.php";
+	require_once "$dir/objects/data_sources/dir_source.php";
 	require_once "$dir/objects/widget.php";
 
 	//Masks
