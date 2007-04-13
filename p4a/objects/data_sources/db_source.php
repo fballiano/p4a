@@ -441,12 +441,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
     function getNumRows()
     {
-        $db =& P4A_DB::singleton($this->getDSN());
-        $query = $this->_composeSelectCountQuery();
-
         if ($this->_num_rows === null) {
+	        $db =& P4A_DB::singleton($this->getDSN());
         	$group = $this->getGroup();
         	if (count($group)) {
+        		$query = $this->_composeSelectCountQuery();
         		$result = $db->adapter->getCol($query);
 	        	if ($db->adapter->metaError()) {
 	        		$name = $this->getName();
@@ -454,12 +453,18 @@ class P4A_DB_Source extends P4A_Data_Source
 	        	}
         		$this->_num_rows = count($result);
         	} else {
-        		$result = $db->adapter->getOne($query);
-	        	if ($db->adapter->metaError()) {
-	        		$name = $this->getName();
-	        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
-	        	}
-	        	$this->_num_rows = (int)$result;
+        		if ($this->getQuery() and $this->_limit === null and $this->_offset === null) {
+        			$query = $this->_composeSelectCountQuery();
+	        		$result = $db->adapter->getOne($query);
+		        	if ($db->adapter->metaError()) {
+		        		$name = $this->getName();
+		        		p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
+		        	}
+		        	$this->_num_rows = (int)$result;
+        		} else {
+        			$this->_num_rows = sizeof($this->getall());
+
+        		}
         	}
         }
 
@@ -527,7 +532,7 @@ class P4A_DB_Source extends P4A_Data_Source
             $db =& P4A_DB::singleton($this->getDSN());
 
 			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
-			/* http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566 */
+			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
             if (count($this->_join)) {
             	$db->adapter->getOne($query);
             }
@@ -673,6 +678,11 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         $db =& P4A_DB::singleton($this->getDSN());
         $query = $this->_composeSelectQuery();
+
+        if ($this->getQuery() and $this->_limit !== null and $this->_offset !== null) {
+        	$count = $this->_limit;
+        	$from = $this->_offset;
+        }
 
         if ($from == 0 and $count == 0) {
             $rows = $db->adapter->getAll($query);
