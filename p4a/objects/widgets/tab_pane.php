@@ -128,7 +128,16 @@ class P4A_Tab_Pane extends P4A_Widget
 		}
 
 		$this->pages->reset();
-		return $this->pages->nextItem();
+		$page =& $this->pages->nextItem();
+		$this->setActivePage($page);
+		return $page;
+	}
+
+	function getActivePageName()
+	{
+		$page =& $this->getActivePage();
+		if ($page === null) return null;
+		return $page->getName();
 	}
 
 	function &nextPage()

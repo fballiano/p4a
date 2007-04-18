@@ -582,10 +582,13 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             $pks = $this->getPk();
+            $pk_value = $this->fields->$pks->getNewValue();
 
             foreach ($this->_multivalue_fields as $fieldname=>$aField) {
-                $pk_value = $this->fields->$pks->getNewValue();
-                $old_fk_values = $this->fields->$fieldname->getValue();
+                $fk_table = $aField["table"];
+                $fk_field = $aField["fk_field"];
+                $fk = $aField["fk"];
+                $old_fk_values = $db->adapter->getCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
                 $fk_values = $this->fields->$fieldname->getNewValue();
 
                 if (!is_array($old_fk_values)) $old_fk_values = array();
@@ -593,10 +596,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
                 $toadd = array_diff($fk_values, $old_fk_values);
                 $toremove = array_diff($old_fk_values, $fk_values);
-
-                $fk_table = $aField["table"];
-                $fk_field = $aField["fk_field"];
-                $fk = $aField["fk"];
 
 				if (!empty($toremove)) {
 					foreach ($toremove as $k=>$v) {
