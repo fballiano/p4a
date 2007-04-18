@@ -1,3 +1,7 @@
+2.0.6
+- P4A_Tab_Pane::nextPage() method was added
+- P4A_Object::intercept() 3rd param (method) is now optional, if empty the method name will be equal to the action name
+
 2.0.5
 - a new optimized algorithm for saving multivalue fields on db was implemented
 - P4A_Dir_Source was added

@@ -131,6 +131,30 @@ class P4A_Tab_Pane extends P4A_Widget
 		return $this->pages->nextItem();
 	}
 
+	function &nextPage()
+	{
+		if ($this->pages->getNumItems() == 0) {
+			$return = null;
+			return $return;
+		}
+
+		$this->redesign();
+		$active_page =& $this->getActivePage();
+		$active_page_name = $active_page->getName();
+
+		$this->pages->reset();
+		while ($page =& $this->pages->nextItem()) {
+			if ($page->getName() == $active_page_name) {
+				$page =& $this->pages->nextItem();
+				if ($page === null) {
+					return $active_page;
+				} else {
+					$this->setActivePage($page);
+				}
+			}
+		}
+	}
+
 	/**
 	 * onClick event interceptor
 	 * @access private
