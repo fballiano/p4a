@@ -3,6 +3,7 @@
 - P4A_Object::intercept() 3rd param (method) is now optional, if empty the method name will be equal to the action name
 - some small changes to P4A_Tab_Pane were done
 - a bug on the new P4A_DB_Source multivalue algorithm was solved (thanks to therealpecus)
+- P4A_DB_Source::addMultivalueField() 2rd argument (table) is now optional, if empty it will be equal to the field name
 
 2.0.5
 - a new optimized algorithm for saving multivalue fields on db was implemented

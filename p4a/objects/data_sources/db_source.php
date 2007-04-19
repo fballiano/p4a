@@ -891,10 +891,10 @@ class P4A_DB_Source extends P4A_Data_Source
         $this->_num_rows = NULL;
     }
 
-    function addMultivalueField($fieldname, $table, $fk = NULL, $fk_field = NULL)
+    function addMultivalueField($fieldname, $table = NULL, $fk = NULL, $fk_field = NULL)
     {
         $db =& P4A_DB::singleton($this->getDSN());
-
+		if ($table === null) $table = $fieldname;
         $this->_multivalue_fields[$fieldname]['table'] = $table;
 
         if (!$fk) {
