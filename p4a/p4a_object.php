@@ -304,4 +304,25 @@
 		{
 			return $this->actionHandler('void', $params);
 		}
+
+		function __call($name, $args)
+		{
+        	$class_name = strtolower(get_class($this));
+        	$parent_class_name = strtolower(get_parent_class($this));
+
+			if (file_exists(P4A_HELPER_DIR . "/{$class_name}_{$name}.php")) {
+				require_once P4A_HELPER_DIR . "/{$class_name}_{$name}.php";
+				$func = "{$class_name}_{$name}";
+			} elseif (file_exists(P4A_HELPER_DIR . "/{$parent_class_name}_{$name}.php")) {
+				require_once P4A_HELPER_DIR . "/{$parent_class_name}_{$name}.php";
+				$func = "{$parent_class_name}_{$name}";
+			} else {
+				die("Method $name not found");
+			}
+
+         	// call the helper method
+         	$a = array($this);
+         	array_push($a,$args);
+        	return call_user_func_array($func,$a);
+    	}
 	}
