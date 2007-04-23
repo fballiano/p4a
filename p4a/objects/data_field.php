@@ -200,9 +200,13 @@
 			}
 		}
 
-		function setSequence($name = NULL)
+		function setSequence($name = null)
 		{
-			$this->sequence = "{$name}_seq";
+			if ($name === null) {
+				$this->sequence = null;
+			} else {
+				$this->sequence = "{$name}_seq";
+			}
 		}
 
 		function getDefaultValue()
