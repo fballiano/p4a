@@ -73,6 +73,9 @@
 		//todo
 		var $_objects = array();
 
+		//Helper Cache
+		var $_helper = array();
+
 
 		/**
 		 * Class constructor.
@@ -305,20 +308,45 @@
 			return $this->actionHandler('void', $params);
 		}
 
-		function __call($name, $args)
+
+		function _loadHelper($name)
 		{
-        	$class_name = strtolower(get_class($this));
+			$a_dirs[] = P4A_APPLICATION_LIBRARIES_DIR;
+			$a_dirs[] = P4A_LIBRARIES_DIR;
+			$a_dirs[] = P4A_ROOT_DIR . '/p4a/libraries/helpers';
+
+			$class_name = strtolower(get_class($this));
         	$parent_class_name = strtolower(get_parent_class($this));
 
-			if (file_exists(P4A_HELPER_DIR . "/{$class_name}_{$name}.php")) {
-				require_once P4A_HELPER_DIR . "/{$class_name}_{$name}.php";
-				$func = "{$class_name}_{$name}";
-			} elseif (file_exists(P4A_HELPER_DIR . "/{$parent_class_name}_{$name}.php")) {
-				require_once P4A_HELPER_DIR . "/{$parent_class_name}_{$name}.php";
-				$func = "{$parent_class_name}_{$name}";
-			} else {
-				die("Method $name not found");
+			foreach ($a_dirs as $dir) {
+				if (file_exists("{$dir}/{$class_name}_{$name}.php")) {
+					$file = "{$dir}/{$class_name}_{$name}.php";
+					$func = "{$class_name}_{$name}";
+					break;
+				} elseif (file_exists("{$dir}/{$parent_class_name}_{$name}.php")) {
+					$file = "{$dir}/{$parent_class_name}_{$name}.php";
+					$func = "{$parent_class_name}_{$name}";
+					break;
+				}
 			}
+
+			if (!$func) {
+				die("Method $name not found");
+			} else {
+				$this->_helper[$name] = array($file,$func);
+			}
+
+		}
+
+		function __call($name, $args)
+		{
+        	$name = strtolower($name);
+			if (!array_key_exists($name,$this->_helper)) {
+				$this->_loadHelper($name);
+			}
+
+			list($file,$func) = $this->_helper[$name];
+			require_once $file;
 
          	// call the helper method
          	$a = array($this);
