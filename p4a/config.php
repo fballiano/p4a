@@ -109,11 +109,6 @@
 		define('P4A_ROOT_URL', P4A_SERVER_URL . P4A_ROOT_PATH);
 	}
 
-	//P4A Helper Constant
-	if (!defined('P4A_HELPER_DIR')) {
-		define('P4A_HELPER_DIR',P4A_ROOT_DIR . '/p4a/helper');
-	}
-
 	//P4A Plugins Constants
 	if (!defined('P4A_LIBRARIES_PATH')){
 		define('P4A_LIBRARIES_PATH', P4A_ROOT_PATH . '/libraries') ;
@@ -292,7 +287,7 @@
 		define('P4A_AJAX_DEBUG', false);
 	}
 
-	define('P4A_VERSION', '2.0.6');
+	define('P4A_VERSION', '2.0.7');
 	define('P4A_ORDER_ASCENDING', 'ASC');
 	define('P4A_ORDER_DESCENDING', 'DESC');
 	define('P4A_NULL', 'P4A_NULL');

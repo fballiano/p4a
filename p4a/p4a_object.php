@@ -74,7 +74,7 @@
 		var $_objects = array();
 
 		//Helper Cache
-		var $_helper = array();
+		var $_helpers = array();
 
 
 		/**
@@ -313,7 +313,7 @@
 		{
 			$a_dirs[] = P4A_APPLICATION_LIBRARIES_DIR;
 			$a_dirs[] = P4A_LIBRARIES_DIR;
-			$a_dirs[] = P4A_ROOT_DIR . '/p4a/libraries/helpers';
+			$a_dirs[] = P4A_ROOT_DIR . '/p4a/helpers';
 
 			$class_name = strtolower(get_class($this));
         	$parent_class_name = strtolower(get_parent_class($this));
@@ -333,7 +333,7 @@
 			if (!$func) {
 				die("Method $name not found");
 			} else {
-				$this->_helper[$name] = array($file,$func);
+				$this->_helpers[$name] = array($file,$func);
 			}
 
 		}
@@ -341,11 +341,11 @@
 		function __call($name, $args)
 		{
         	$name = strtolower($name);
-			if (!array_key_exists($name,$this->_helper)) {
+			if (!array_key_exists($name,$this->_helpers)) {
 				$this->_loadHelper($name);
 			}
 
-			list($file,$func) = $this->_helper[$name];
+			list($file,$func) = $this->_helpers[$name];
 			require_once $file;
 
          	// call the helper method

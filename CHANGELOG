@@ -1,3 +1,6 @@
+2.0.7
+- P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
+
 2.0.6
 - P4A_Tab_Pane::nextPage() method was added
 - P4A_Object::intercept() 3rd param (method) is now optional, if empty the method name will be equal to the action name
