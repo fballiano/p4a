@@ -316,17 +316,18 @@
 			$a_dirs[] = P4A_ROOT_DIR . '/p4a/helpers';
 
 			$class_name = strtolower(get_class($this));
-        	$parent_class_name = strtolower(get_parent_class($this));
-
+			$classes[] = $class_name;
+			while ($class_name = strtolower(get_parent_class($class_name))) {
+				$classes[] = $class_name;
+			}
+			$classes = array_reverse($classes);
 			foreach ($a_dirs as $dir) {
-				if (file_exists("{$dir}/{$class_name}_{$name}.php")) {
-					$file = "{$dir}/{$class_name}_{$name}.php";
-					$func = "{$class_name}_{$name}";
-					break;
-				} elseif (file_exists("{$dir}/{$parent_class_name}_{$name}.php")) {
-					$file = "{$dir}/{$parent_class_name}_{$name}.php";
-					$func = "{$parent_class_name}_{$name}";
-					break;
+				foreach ($classes as $class_name) {
+					if (file_exists("{$dir}/{$class_name}_{$name}.php")) {
+						$file = "{$dir}/{$class_name}_{$name}.php";
+						$func = "{$class_name}_{$name}";
+						break 2;
+					}
 				}
 			}
 
