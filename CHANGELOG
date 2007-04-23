@@ -1,5 +1,6 @@
 2.0.7
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
+- the P4A helpers system was introduced
 
 2.0.6
 - P4A_Tab_Pane::nextPage() method was added
