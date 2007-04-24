@@ -624,7 +624,6 @@
 		 */
 		function closePopup($destroy = FALSE)
 		{
-
 			if ($destroy) {
 				$mask =& p4a_mask::singleton($this->_popup);
 				$mask->destroy();
