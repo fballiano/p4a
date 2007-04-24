@@ -35,7 +35,7 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package P4A_Base_Mask
  */
- 
+
 /**
  * A mask object with some basic elements
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
@@ -46,29 +46,29 @@ class P4A_Base_Mask extends P4A_Mask
 	var $mandatory_fields = array();
 	var $frame = null;
 	var $warning = null;
-	
+
 	function P4A_Base_Mask()
 	{
 		parent::P4A_Mask();
 		$this->build("p4a_frame", "frame");
 		$this->frame->setWidth(730);
-		
+
 		$this->build("p4a_message", "warning");
 		$this->frame->anchorCenter($this->warning);
-		
+
 		$this->build("p4a_message", "info");
 		$this->info->setIcon("info");
 		$this->frame->anchorCenter($this->info);
-		
+
 		$this->display("main", $this->frame);
 	}
-	
+
 	function addMandatoryField($field_name)
 	{
 		$this->mandatory_fields[] = $field_name;
 		$this->fields->$field_name->label->setStyleProperty("font-weight", "bold");
 	}
-	
+
 	function checkMandatoryFields()
 	{
 		foreach ($this->mandatory_fields as $field) {
@@ -77,9 +77,7 @@ class P4A_Base_Mask extends P4A_Mask
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 }
-
-?>
