@@ -350,7 +350,7 @@
 		 */
 		function setNewValue($new_value)
 		{
-			$set = true ;
+			$set = true;
 
 			if ($new_value === null) {
 				$new_value = null;
