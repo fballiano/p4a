@@ -156,7 +156,6 @@
 
 		var $_to_redesign = array();
 		var $_redesign_popup = false;
-		var $_redesign_focus_object_id = null;
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
 		var $_in_ajax_call = false;
 
@@ -468,7 +467,6 @@
 
 			$this->_to_redesign = array();
 			$this->_redesign_popup = false;
-			$this->_redesign_focus_object_id = null;
 
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));
@@ -482,7 +480,7 @@
 
 			header('Content-Type: text/xml');
 			print '<?xml version="1.0" encoding="utf-8" ?>';
-			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->_redesign_focus_object_id . '">';
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 			if ($this->_do_refresh) {
 				$this->_do_refresh = false;
 				$javascript = 'document.location="' . P4A_APPLICATION_PATH . '";';
@@ -805,5 +803,15 @@
 		function getVersion()
 		{
 			return P4A_VERSION;
+		}
+
+		function getFocusedObjectId()
+		{
+			if ($this->_popup) {
+				$mask =& p4a_mask::singleton($this->_popup);
+				return $mask->focus_object_id;
+			}
+
+			return $this->active_mask->focus_object_id;
 		}
 	}

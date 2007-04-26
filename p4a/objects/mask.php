@@ -205,10 +205,13 @@
 		 * @access public
 		 * @param object
 		 */
-		function setFocus(&$object)
+		function setFocus($object = null)
 		{
-			$p4a =& p4a::singleton();
-			$this->focus_object_id = $p4a->_redesign_focus_object_id = $object->getId();
+			if (is_object($object)) {
+				$this->focus_object_id = $object->getId();
+			} else {
+				$this->focus_object_id = null;
+			}
 		}
 
 		/**
@@ -217,7 +220,7 @@
 		 */
 		function unsetFocus()
 		{
-			$this->focus_object = null;
+			$this->focus_object_id = null;
 		}
 
 		/**
@@ -360,7 +363,7 @@
 			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
-			$_focus_id = $this->focus_object_id;
+			$_focus_id = $p4a->getFocusedObjectId();
 
 			$_icon = '';
 			$_title = $this->getTitle();
