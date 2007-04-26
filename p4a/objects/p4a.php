@@ -156,6 +156,7 @@
 
 		var $_to_redesign = array();
 		var $_redesign_popup = false;
+		var $_redesign_focus_object_id = null;
 		var $_ajax_enabled = P4A_AJAX_ENABLED;
 		var $_in_ajax_call = false;
 
@@ -467,6 +468,7 @@
 
 			$this->_to_redesign = array();
 			$this->_redesign_popup = false;
+			$this->_redesign_focus_object_id = null;
 
 			session_write_close();
 			session_id(substr(session_id(), 0, -6));
@@ -479,7 +481,8 @@
 			$script_detector = '<script.*?>(.*?)<\/script>';
 
 			header('Content-Type: text/xml');
-			print '<?xml version="1.0" encoding="utf-8" ?><ajax-response action_id="' . $this->getActionHistoryId() . '">';
+			print '<?xml version="1.0" encoding="utf-8" ?>';
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->_redesign_focus_object_id . '">';
 			if ($this->_do_refresh) {
 				$this->_do_refresh = false;
 				$javascript = 'document.location="' . P4A_APPLICATION_PATH . '";';

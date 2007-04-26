@@ -94,11 +94,11 @@
 		var $sOpen = null;
 
 		/**
-		 * The object with active focus
-		 * @var object
+		 * The id of the object with active focus
+		 * @var string
 		 * @access private
 		 */
-		var $focus_object = null;
+		var $focus_object_id = null;
 
 		/**
 		 * Currently used template name.
@@ -207,7 +207,8 @@
 		 */
 		function setFocus(&$object)
 		{
-			$this->focus_object =& $object;
+			$p4a =& p4a::singleton();
+			$this->focus_object_id = $p4a->_redesign_focus_object_id = $object->getId();
 		}
 
 		/**
@@ -216,8 +217,7 @@
 		 */
 		function unsetFocus()
 		{
-			unset( $this->focus_object );
-			$this->focus_object = NULL;
+			$this->focus_object = null;
 		}
 
 		/**
@@ -360,10 +360,7 @@
 			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
-			$_focus_id = '';
-			if (is_object($this->focus_object)) {
-				$_focus_id = $this->focus_object->getId();
-			}
+			$_focus_id = $this->focus_object_id;
 
 			$_icon = '';
 			$_title = $this->getTitle();

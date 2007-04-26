@@ -93,6 +93,7 @@ function processAjaxResponse(response)
 	}
 
 	if (window.fixPng) fixPng();
+	setFocus(response.responseXML.getElementsByTagName('ajax-response')[0].attributes[1].value);
 	hideLoading();
 }
 
