@@ -153,15 +153,20 @@ class Products extends P4A_Mask
 		$fields->product_id->setWidth(200);
 		$fields->product_id->enable(false);
 
+		/* To simplify this code with PHP5 you can instead use the helper loadSelectByTable
+		 * $fields->category_id->loadSelectByTable('categories','category_id','description');
+		 * */
 		$categories =& $this->build("P4A_DB_Source","categories");
 		$categories->setTable("categories");
 		$categories->setPK("category_id");
+		$categories->addOrder("description");
 		$categories->load();
-		$fields->category_id->setLabel("Category");
-		$fields->category_id->setWidth(200);
 		$fields->category_id->setType("select");
 		$fields->category_id->setSource($categories);
 		$fields->category_id->setSourceDescriptionField("description");
+
+		$fields->category_id->setLabel("Category");
+		$fields->category_id->setWidth(200);
 
 		$fields->brand_id->setLabel("Brand");
 		$fields->brand_id->setWidth(200);
