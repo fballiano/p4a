@@ -1,6 +1,6 @@
-2.2.0
+2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
-- the P4A helpers system was introduced (with P4A_Mask::useToolbar(),  P4A_Field::loadSelectByTable() and P4A_Mask::setTableAsSource())
+- the P4A helpers system was introduced (with P4A_Mask::useToolbar(),  P4A_Field::loadSelectByTable(), P4A_Mask::setTableAsSource() and P4A_Frame::anchorTabPane())
 - P4A_Mark::setFocus() method now stores only the id of the focused object instead the object itself
 - now P4A_Mark::setFocus() also works with AJAX requests
 

@@ -19,7 +19,7 @@
 * @param  string		The name of nth page
 * @return object
 */
-function p4a_frame_anchortabpane(&$obj,$params)
+function p4a_frame_anchorTabPane(&$obj,$params)
 {
 	$tab_pane_name = $params[0];
 	$tab_pane =& $obj->build('p4a_tab_pane',$tab_pane_name);
