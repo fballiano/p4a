@@ -36,6 +36,8 @@
  * @package p4a
  */
 
+require_once dirname(__FILE__) . "/pear/Validate.php";
+
 /**
  * Data validation class
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
