@@ -179,7 +179,8 @@
 
 			$this->browser_identification = $this->detectClient();
 
-			$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/lib/prototype.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.form.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			$this->addJavascript(P4A_THEME_PATH . "/popup.js");
 			if (!$this->isHandheld()) {
@@ -194,7 +195,6 @@
 
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
-				$this->addJavascript(P4A_THEME_PATH . "/scriptaculous/src/scriptaculous.js");
 				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
@@ -810,8 +810,7 @@
 			if ($this->_popup) {
 				$mask =& p4a_mask::singleton($this->_popup);
 				return $mask->focus_object_id;
-			}
-
+	}
 			return $this->active_mask->focus_object_id;
 		}
 	}

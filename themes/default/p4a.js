@@ -1,4 +1,4 @@
-function executeEvent(object_name, action_name, param1, param2, param3, param4)
+function prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	updateAllRichTextEditors(document.forms['p4a']);
 
@@ -7,19 +7,23 @@ function executeEvent(object_name, action_name, param1, param2, param3, param4)
 	if (!param3) param3 = "";
 	if (!param4) param4 = "";
 
-	document.forms['p4a']._object.value = object_name;
-	document.forms['p4a']._action.value = action_name;
-	document.forms['p4a']._ajax.value = 0;
-	document.forms['p4a'].param1.value = param1;
-	document.forms['p4a'].param2.value = param2;
-	document.forms['p4a'].param3.value = param3;
-	document.forms['p4a'].param4.value = param4;
+	var f = document.getElementById('p4a');
 
-	if (typeof document.forms['p4a'].onsubmit == "function") {
-		document.forms['p4a'].onsubmit();
-	}
+	f._object.value = object_name;
+	f._action.value = action_name;
+	f.param1.value = param1;
+	f.param2.value = param2;
+	f.param3.value = param3;
+	f.param4.value = param4;
 
-	document.forms['p4a'].submit();
+	if (typeof f.onsubmit == "function") f.onsubmit();
+}
+
+function executeEvent(object_name, action_name, param1, param2, param3, param4)
+{
+	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
+	document.getElementById('p4a')._ajax.value = 0;
+	document.getElementById('p4a').submit();
 }
 
 function isReturnPressed(event)
@@ -43,47 +47,35 @@ function setFocus(id)
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
 	showLoading();
-	updateAllRichTextEditors(document.forms['p4a']);
+	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
+	document.getElementById('p4a')._ajax.value = 1;
 
-	if (!param1) param1 = "";
-	if (!param2) param2 = "";
-	if (!param3) param3 = "";
-	if (!param4) param4 = "";
-
-	document.forms['p4a']._object.value = object_name;
-	document.forms['p4a']._action.value = action_name;
-	document.forms['p4a']._ajax.value = 1;
-	document.forms['p4a'].param1.value = param1;
-	document.forms['p4a'].param2.value = param2;
-	document.forms['p4a'].param3.value = param3;
-	document.forms['p4a'].param4.value = param4;
-
-	if (typeof document.forms['p4a'].onsubmit == "function") {
-		document.forms['p4a'].onsubmit();
-	}
-
-	var query_string = form2string(document.forms['p4a']);
-	var ajax_params = {
-		method: 'post',
-		parameters: query_string,
-		onComplete: function(response) {processAjaxResponse(response)}
-	}
-	new Ajax.Request('index.php', ajax_params);
+	$.ajax({
+		type: 'POST',
+		url: 'index.php',
+		dataType: 'xml',
+		data: $('#p4a').formSerialize(),
+		error: function (object, error, exception) {alert('Communication error: ' + exception)},
+		success: function (response) {processAjaxResponse(response)},
+		complete: function () {hideLoading()}
+	});
 }
+
 
 function processAjaxResponse(response)
 {
-	document.forms['p4a']._action_id.value = response.responseXML.getElementsByTagName('ajax-response')[0].attributes[0].value;
+	document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
 
-	var widgets = response.responseXML.getElementsByTagName('widget');
+	var widgets = response.getElementsByTagName('widget');
 	for (i=0; i<widgets.length; i++) {
    		var object_id = widgets[i].attributes[0].value;
 		if ($(object_id) != undefined) {
    			var display = widgets[i].attributes[1].value;
    			var html = widgets[i].getElementsByTagName('html').item(0);
    			if (html) {
-   				$(object_id).parentNode.style.display = 'block';
-   				$(object_id).parentNode.innerHTML = html.firstChild.data;
+   				var element = document.getElementById(object_id);
+   				element.parentNode.style.display = 'block';
+   				element.parentNode.innerHTML = html.firstChild.data;
    			}
    			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
    			if (javascript) {
@@ -93,36 +85,6 @@ function processAjaxResponse(response)
 	}
 
 	if (window.fixPng) fixPng();
-	setFocus(response.responseXML.getElementsByTagName('ajax-response')[0].attributes[1].value);
-	hideLoading();
-}
-
-function form2string(form)
-{
-	var sReturn = '';
-	var e;
-
-	for (i=0; i<form.elements.length; i++) {
-		e = form.elements[i];
-		switch (e.type) {
-			case 'checkbox':
-			case 'radio':
-				value = new String(e.value);
-				if (e.checked && value.length>0) {
-					sReturn += e.name + '=' + encodeURIComponent(value) + '&';
-				}
-				break;
-			case 'file':
-				break;
-			default:
-				if (e.name) {
-					value = new String(e.value);
-					sReturn += e.name + '=' + encodeURIComponent(value) + '&';
-				}
-		}
-	}
-
-	return sReturn.substr(0, sReturn.length - 1);
 }
 
 function updateAllRichTextEditors(form)
@@ -139,10 +101,10 @@ function updateAllRichTextEditors(form)
 
 function showLoading()
 {
-	Element.show('p4a_loading');
+	$('#p4a_loading').show();
 }
 
 function hideLoading()
 {
-	Element.hide('p4a_loading');
+	$('#p4a_loading').hide();
 }

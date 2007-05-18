@@ -1,6 +1,8 @@
 2.1.1
 - PEAR::Validate inclusion was moved to P4A_Validate file
 - ADODB was updated to 495
+- scriptaculous was dropped
+- jquery was added
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field

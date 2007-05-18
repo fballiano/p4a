@@ -68,27 +68,28 @@ function showPopup()
 	var arrayPageSize = getPageSize();
 	var arrayPageScroll = getPageScroll();
 
-	var overlay = $('overlay');
-	overlay.style.height = 	arrayPageSize[1] + "px";
+	var overlay = $('#overlay');
+	overlay.css('height', arrayPageSize[1] + "px")
+	//overlay.style.height = 	arrayPageSize[1] + "px";
 
-	var popup = $('popup');
+	var popup = document.getElementById('popup');
 	popup.style.zIndex = -1;
-	Element.show('popup');
+	$('#popup').show();
 
-	var width = $('sheetContainerPopup').childNodes[0].scrollWidth + "px";
+	var width = document.getElementById('sheetContainerPopup').childNodes[0].scrollWidth + "px";
 	var top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.scrollHeight - 40) / 2 ) + "px";
 	var left = ((arrayPageSize[2] - popup.scrollWidth ) / 2 ) + "px";
 
 	popup.style.width = width;
 	popup.style.top = top;
 	popup.style.left = left;
-
-	Element.show('overlay');
 	popup.style.zIndex = 100;
+
+	$('#overlay').show();
 }
 
 function hidePopup()
 {
-	Element.hide('overlay');
-	Element.hide('popup');
+	$('#overlay').hide();
+	$('#popup').hide();
 }
