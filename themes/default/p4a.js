@@ -101,10 +101,10 @@ function updateAllRichTextEditors(form)
 
 function showLoading()
 {
-	$('#p4a_loading').show();
+	$('#p4a_loading').fadeIn('slow');
 }
 
 function hideLoading()
 {
-	$('#p4a_loading').hide();
+	$('#p4a_loading').fadeOut('slow');
 }
