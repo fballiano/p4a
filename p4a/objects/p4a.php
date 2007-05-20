@@ -182,8 +182,8 @@
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.form.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jqModal.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-			$this->addJavascript(P4A_THEME_PATH . "/popup.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
 
