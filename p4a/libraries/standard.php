@@ -306,6 +306,24 @@ if (!function_exists('htmlspecialchars_decode')) {
 	}
 
 	/**
+	 * Return HTML tag containig embedded mp3 player.
+	 * @param string	File path.
+	 * @param string	Mime type.
+	 * @access public
+	 * @return string
+	 */
+	function P4A_MP3_Player($src, $mime_type)
+	{
+		$html ='<object type="' . $mime_type . '" data="' . $src . '" width="300" height="200">';
+		$html .='<param name="src" value="' . $src . '"></param>';
+		$html .='<param name="autostart" value="true"></param>';
+		$html .='<param name="repeat" value="false"></param>';
+		$html .='<param name="loop" value="false"></param>';
+		$html .='</object>';
+		return $html;
+	}
+
+	/**
 	 * Used for internal debugging (within session browser).
 	 * @param mixed		Variable to print
 	 * @access private

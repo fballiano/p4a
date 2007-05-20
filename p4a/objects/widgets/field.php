@@ -1214,7 +1214,12 @@
 				if ($mime_type == 'application/x-shockwave-flash') {
 					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				} else {
-					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+					$mime_type = explode('/', $mime_type);
+					if ($mime_type[0] == 'audio') {
+						$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+					} else {
+						$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+					}
 				}
 				$sReturn .= '</table>';
 			}
@@ -1247,7 +1252,12 @@
 			if ($mime_type == 'application/x-shockwave-flash') {
 				$raw_html = P4A_SWF_Object(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(4), $this->getNewValue(5));
 			} else {
-				$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
+				$mime_type = explode('/', $mime_type);
+				if ($mime_type[0] == 'audio') {
+					$raw_html = P4A_MP3_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3));
+				} else {
+					$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
+				}
 			}
 			$p4a->active_mask->setRawHTML($raw_html);
 		}

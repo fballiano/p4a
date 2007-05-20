@@ -4,6 +4,7 @@
 - scriptaculous was dropped
 - jquery was added
 - some XHTML validation bugs were fixed
+- P4A_File::getasFile now supports previewing of audio files
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
