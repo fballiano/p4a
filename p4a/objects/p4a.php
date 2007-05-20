@@ -402,7 +402,9 @@
 								require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3.php";
 								$getid3 = new getID3();
 								$data = $getid3->analyze($file);
-								$new_value .= $data['video']['resolution_x'] . ',' . $data['video']['resolution_y'];
+								if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
+									$new_value .= $data['video']['resolution_x'] . ',' . $data['video']['resolution_y'];
+								}
 							} elseif ($value['type'] == 'application/x-shockwave-flash') {
 								$file = P4A_UPLOADS_TMP_DIR . '/' . $value['name'];
 								require_once "File/File_SWF.php";
