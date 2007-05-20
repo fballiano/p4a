@@ -65,30 +65,20 @@ function getPageScroll()
 
 function showPopup()
 {
+	p4a_popup = $('#popup');
+	p4a_popup.jqm({modal:true}).jqmShow()
 
 	var arrayPageSize = getPageSize();
 	var arrayPageScroll = getPageScroll();
 
-	var popup = $('#popup');
-	popup.show();
+	var top = arrayPageScroll[1] + ((arrayPageSize[3] - p4a_popup.height() - 100) / 2) + "px";
+	var left = ((arrayPageSize[2] - p4a_popup.width()) / 2) + "px";
 
-	var width = document.getElementById('sheetContainerPopup').childNodes[0].scrollWidth + "px";
-	var top = arrayPageScroll[1] + ((arrayPageSize[3] - popup.height() - 40) / 2 ) + "px";
-	var left = ((arrayPageSize[2] - popup.width() ) / 2 ) + "px";
-
-	popup.width(width);
-	popup.css('top', top);
-	popup.css('left', left);
-	popup.css('zIndex', 100);
-
-	$('#overlay').css('height', arrayPageSize[1] + "px");
-	$('#overlay').show();
-	$('#mainContainer').block();
+	p4a_popup.css('top', top);
+	p4a_popup.css('left', left);
 }
 
 function hidePopup()
 {
-	$('#overlay').hide();
-	$('#popup').hide();
-	$('#mainContainer').unblock();
+	p4a_popup.jqmHide();
 }

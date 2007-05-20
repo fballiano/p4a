@@ -75,7 +75,6 @@
 </div>
 
 <!-- POPUP -->
-<div id="overlay" style="display:none"></div>
 <div style="display:block"><div id="popup" style="display:none"><?php echo $_popup?></div></div>
 
 <?php echo $this->maskClose()?>

@@ -8,7 +8,7 @@
 - PEAR::File_SWF was re-added to P4A PEAR repository
 - getID3 1.7.7 library was added
 - P4A_File::getasFile now supports previewing of audio and video files
-- jquery blockUI plugin allow us to block the back interface when a popup is shown
+- jquery jqModal plugin was added to manage the popup and block the background controls
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
