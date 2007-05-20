@@ -65,6 +65,7 @@ function getPageScroll()
 
 function showPopup()
 {
+
 	var arrayPageSize = getPageSize();
 	var arrayPageScroll = getPageScroll();
 
@@ -82,10 +83,12 @@ function showPopup()
 
 	$('#overlay').css('height', arrayPageSize[1] + "px");
 	$('#overlay').show();
+	$('#mainContainer').block();
 }
 
 function hidePopup()
 {
 	$('#overlay').hide();
 	$('#popup').hide();
+	$('#mainContainer').unblock();
 }
