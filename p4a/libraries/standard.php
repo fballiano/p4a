@@ -324,6 +324,26 @@ if (!function_exists('htmlspecialchars_decode')) {
 	}
 
 	/**
+	 * Return HTML tag containig embedded video player.
+	 * @param string	File path.
+	 * @param string	Mime type.
+	 * @param string	Width.
+	 * @param string	Height.
+	 * @access public
+	 * @return string
+	 */
+	function P4A_Video_Player($src, $mime_type, $width, $height)
+	{
+		$html ='<object type="' . $mime_type . '" data="' . $src . '" width="' . $width . '" height="' . $height . '">';
+		$html .='<param name="src" value="' . $src . '"></param>';
+		$html .='<param name="autostart" value="true"></param>';
+		$html .='<param name="repeat" value="false"></param>';
+		$html .='<param name="loop" value="false"></param>';
+		$html .='</object>';
+		return $html;
+	}
+
+	/**
 	 * Used for internal debugging (within session browser).
 	 * @param mixed		Variable to print
 	 * @access private
