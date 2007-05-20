@@ -52,7 +52,7 @@
 	<?php endif; ?>
 
 	<?php if (isset($top)): ?>
-	<div id="top" flexy:if="top">
+	<div id="top">
 		<?php echo $top?>
 	</div>
 	<?php endif; ?>
