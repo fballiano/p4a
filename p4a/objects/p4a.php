@@ -399,7 +399,7 @@
 								$new_value .= $image_data[0] . ',' . $image_data[1];
 							} elseif (substr($value['type'], 0, 5) == 'video') {
 								$file = P4A_UPLOADS_TMP_DIR . '/' . $value['name'];
-								require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3.php";
+								require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3/getid3.php";
 								$getid3 = new getID3();
 								$data = $getid3->analyze($file);
 								if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
