@@ -125,3 +125,12 @@ function hidePopup()
 {
 	p4a_popup.jqmHide();
 }
+
+function showTooltip(handler, text_id)
+{
+	handler = $(handler);
+	var tooltip = $('#' + text_id);
+	tooltip.css('left', handler.offset().left + handler.width() + 20);
+	tooltip.jqm({overlay:0}).jqmShow();
+	handler.mouseout(function() {tooltip.jqmHide()});
+}

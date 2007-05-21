@@ -305,6 +305,16 @@
 			return $this->_error;
 		}
 
+		function setTooltip($text)
+		{
+			$this->label->setTooltip($text);
+		}
+
+		function getTooltip()
+		{
+			return $this->label->getTooltip();
+		}
+
 		/**
 		 * Returns the value for the field.
 		 * @return mixed

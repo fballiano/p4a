@@ -65,6 +65,8 @@
 		 */
 		var $format_name = NULL;
 
+		var $_tooltip = '';
+
 		/**
 		 * The class constructor
 		 * @param string	Object identifier.
@@ -117,9 +119,17 @@
 			$close_header = ">";
 			$footer	= "</label>\n";
 
+			$tooltip_text = $this->_tooltip;
+			$tooltip_handler = '';
+			if ($tooltip_text) {
+				$tooltip_text = "<div id='{$id}_tt' class='p4a_tooltip_text'>{$tooltip_text}</div>";
+				$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/info.png' alt='' /> ";
+				$header .= " onmouseover='showTooltip(this, \"{$id}_tt\")' ";
+			}
+
 			$string = $header . $this->composeStringProperties() .
 						$this->composeStringActions() .
-						$close_header . $this->getLabel() . $footer;
+						$close_header . $tooltip_handler . $this->getLabel() . $footer . $tooltip_text;
 
 			return $string;
 		}
@@ -141,5 +151,15 @@
 		function getType()
 		{
 			return $this->type;
+		}
+
+		function setTooltip($text)
+		{
+			$this->_tooltip = $text;
+		}
+
+		function getTooltip()
+		{
+			return $this->_tooltip;
 		}
 	}

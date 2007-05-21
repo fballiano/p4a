@@ -597,6 +597,22 @@ legend {
 	font-weight: normal;
 }
 
+/***********/
+/* TOOLTIP */
+/***********/
+
+.p4a_tooltip_text {
+	display: none;
+	position: absolute;
+	background: white;
+	border: 2px solid red;
+	padding: 5px;
+}
+
+.p4a_tooltip_handler {
+	float: right;
+}
+
 /*********/
 /* POPUP */
 /*********/
@@ -612,15 +628,7 @@ legend {
 	text-align: center;
 }
 
-/* jqModal base Styling courtesy of;
-	Brice Burgess <bhb@iceburg.net> */
-
-/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
-	the Window's z-index value will be set to 3000 by default (in jqModal.js). You
-	can change this value by either;
-	  a) supplying one via CSS
-	  b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
-
+/* jqModal base Styling courtesy of Brice Burgess <bhb@iceburg.net> */
 .jqmWindow {
     display: none;
 
