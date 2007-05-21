@@ -117,8 +117,11 @@ function showPopup()
 	var top = $(window).scrollTop() + (($(window).height() - p4a_popup.height() - 100) / 2) + "px";
 	var left = (($(window).width() - p4a_popup.width()) / 2) + "px";
 
+	p4a_popup.css('width', p4a_popup.width());
 	p4a_popup.css('top', top);
 	p4a_popup.css('left', left);
+
+	$('#popupCloseHandler').css('float', 'right');
 }
 
 function hidePopup()

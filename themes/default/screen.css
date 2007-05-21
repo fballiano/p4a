@@ -278,6 +278,7 @@ hr {
 
 img {
 	display: block;
+	border: none;
 }
 
 input {
@@ -622,7 +623,7 @@ legend {
 	top: 0;
 	left: 0;
 	margin:auto;
-	padding:20px;
+	padding-bottom:20px;
 	background:white;
 	z-index: 100;
 	text-align: center;

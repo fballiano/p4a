@@ -1,17 +1,11 @@
-<div id='bodyPopup'>
+<a href="#" onClick="hidePopup()" id="popupCloseHandler"><img src="<?php echo P4A_ICONS_PATH ?>/32/exit.png" /></a>
 
-	<div id="mainContainerPopup">
+<?php if (strlen($_title)): ?>
+<h2><?php echo $_title?></h2>
+<?php endif; ?>
 
-		<?php if (strlen($_title)): ?>
-		<div><h2><?php echo $_title?></h2></div>
-		<?php endif; ?>
-
-		<?php if (isset($main)): ?>
-		<div id="sheetContainerPopup">
-			<?php echo $main?>
-		</div>
-		<?php endif; ?>
-
-	</div>
-
+<?php if (isset($main)): ?>
+<div id="sheetContainerPopup">
+	<?php echo $main?>
 </div>
+<?php endif; ?>

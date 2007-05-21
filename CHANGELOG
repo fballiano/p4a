@@ -12,6 +12,7 @@
 - P4A_Field::setTooltip(), P4A_Field::getTooltip(), P4A_Label::setTooltip(), P4A_Label::getTooltip() methods were added
 - tooltip were implemented using the jqModal jQuery plugin
 - an info icon (16x16) was added, used for tooltips
+- popup template is now simpler and has a close icon
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
