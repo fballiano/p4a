@@ -8,7 +8,10 @@
 - PEAR::File_SWF was re-added to P4A PEAR repository
 - getID3 1.7.7 library was added
 - P4A_File::getasFile now supports previewing of audio and video files
-- jquery jqModal/dimensions plugin was added to manage the popup and block the background controls
+- jQuery jqModal/dimensions plugin were added to manage the popup and block the background controls
+- P4A_Field::setTooltip(), P4A_Field::getTooltip(), P4A_Label::setTooltip(), P4A_Label::getTooltip() methods were added
+- tooltip were implemented using the jqModal jQuery plugin
+- an info icon (16x16) was added, used for tooltips
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
