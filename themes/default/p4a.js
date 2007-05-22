@@ -136,4 +136,5 @@ function showTooltip(handler, text_id)
 	tooltip.css('left', handler.offset().left + handler.width() + 20);
 	tooltip.jqm({overlay:0}).jqmShow();
 	handler.mouseout(function() {tooltip.jqmHide()});
+	handler.click(function() {tooltip.jqmHide()});
 }
