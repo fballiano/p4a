@@ -68,7 +68,7 @@ class P4A_DB
 			if(strlen($DSN)) {
 				$$dbconn =& new p4a_db();
 				$$dbconn->adapter =& NewADOConnection($DSN);
-    			if (!is_object($$dbconn)) {
+    			if (!is_object($$dbconn->adapter)) {
 					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
