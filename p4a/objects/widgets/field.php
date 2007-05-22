@@ -1543,7 +1543,7 @@
 		}
 
 		/**
-		 * sets the rich textarea theme (simple|advanced)
+		 * sets the rich textarea theme (Basic|Default)
 		 * @access public
 		 */
 		function setRichTextareaTheme($theme)
@@ -1552,6 +1552,7 @@
 		}
 
 		/**
+		 * DOESN'T WORK WITH FCK
 		 * @access public
 		 * @return string
 		 */
