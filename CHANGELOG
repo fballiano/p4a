@@ -13,6 +13,7 @@
 - tooltip were implemented using the jqModal jQuery plugin
 - an info icon (16x16) was added, used for tooltips
 - popup template is now simpler and has a close icon
+- P4A_DB::singleton bug was fixed (thanks to Raffaele Candeliere)
 
 2.1.0
 - P4A_Data_Field::setSequence() method can handle null values to disable sequence on field
