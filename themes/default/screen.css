@@ -623,10 +623,19 @@ legend {
 	top: 0;
 	left: 0;
 	margin:auto;
+	padding: 0;
 	padding-bottom:20px;
 	background:white;
 	z-index: 100;
 	text-align: center;
+	border: 2px solid #4B718A;
+}
+
+#popup h2 {
+	background: #F4F7FA;
+	margin: 0;
+	line-height: 32px;
+	margin-bottom: 20px;
 }
 
 /* jqModal base Styling courtesy of Brice Burgess <bhb@iceburg.net> */
