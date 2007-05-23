@@ -1185,7 +1185,12 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='executeEvent(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
+				if ($p4a->isAjaxEnabled()) {
+					$action = 'executeAjaxEvent';
+				} else {
+					$action = 'executeEvent';
+				}
+				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 				$this->intercept($this, 'onChange', 'redesign');
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
@@ -1202,6 +1207,7 @@
 					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
+					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
@@ -1242,6 +1248,7 @@
 		 */
 		function fileDeleteOnClick()
 		{
+			$this->redesign();
 			$this->setNewValue(null);
 		}
 
@@ -1321,7 +1328,11 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				$action = 'executeEvent';
+				if ($p4a->isAjaxEnabled()) {
+					$action = 'executeAjaxEvent';
+				} else {
+					$action = 'executeEvent';
+				}
 				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 				$this->intercept($this,'onChange','redesign');
 
@@ -1343,6 +1354,7 @@
 					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
+					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
