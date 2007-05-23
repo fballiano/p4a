@@ -605,9 +605,9 @@ legend {
 .p4a_tooltip_text {
 	display: none;
 	position: absolute;
-	background: white;
-	border: 2px solid red;
-	padding: 5px;
+	background: #F4F7FA;
+	border: 2px solid #4B718A;
+	padding: 10px;
 }
 
 .p4a_tooltip_handler {
