@@ -285,46 +285,19 @@ if (!function_exists('htmlspecialchars_decode')) {
 		return $p4a->i18n->messages->get($string);
 	}
 
-	/**
-	 * Return HTML tag containig embedded swf object.
-	 * @param string	File path.
-	 * @param integer	Movie width.
-	 * @param integer	Movie height.
-	 * @access public
-	 * @return string
-	 */
-	function P4A_Swf_Object($src, $width, $height)
+	function P4A_Is_Mime_Type_Embeddable($mime_type)
 	{
-		$html  = '<object type="application/x-shockwave-flash" data="' . $src . '" width="' . $width . '" height="' . $height . '" >';
-		$html .= '<param name="movie" value="' . $src . '" />';
-		$html .= '<param name="menu" value="false" />';
-		//$html .= '<param name="wmode" value="transparent" />';
-		$html .= '<param name="bgcolor" value="#ffffff" />';
-		$html .= '<param name="quality" value="high" />';
-		$html .= '</object>';
-		return $html;
+		list($type, $application) = explode('/', $mime_type);
+		if ($type == 'audio' or $type == 'video') return true;
+
+		$embeddables = array();
+		$embeddables[] = 'application/x-shockwave-flash';
+		$embeddables[] = 'application/vnd.rn-realmedia';
+		return in_array($mime_type, $embeddables);
 	}
 
 	/**
-	 * Return HTML tag containig embedded mp3 player.
-	 * @param string	File path.
-	 * @param string	Mime type.
-	 * @access public
-	 * @return string
-	 */
-	function P4A_MP3_Player($src, $mime_type)
-	{
-		$html ='<object type="' . $mime_type . '" data="' . $src . '" width="300" height="200">';
-		$html .='<param name="src" value="' . $src . '"></param>';
-		$html .='<param name="autostart" value="true"></param>';
-		$html .='<param name="repeat" value="false"></param>';
-		$html .='<param name="loop" value="false"></param>';
-		$html .='</object>';
-		return $html;
-	}
-
-	/**
-	 * Return HTML tag containig embedded video player.
+	 * Return HTML tag containig embedded audio/video player.
 	 * @param string	File path.
 	 * @param string	Mime type.
 	 * @param string	Width.
@@ -332,15 +305,31 @@ if (!function_exists('htmlspecialchars_decode')) {
 	 * @access public
 	 * @return string
 	 */
-	function P4A_Video_Player($src, $mime_type, $width, $height)
+	function P4A_Embedded_Player($src, $mime_type, $width=300, $height=200)
 	{
-		$html ='<object type="' . $mime_type . '" data="' . $src . '" width="' . $width . '" height="' . $height . '">';
-		$html .='<param name="src" value="' . $src . '"></param>';
-		$html .='<param name="autostart" value="true"></param>';
-		$html .='<param name="repeat" value="false"></param>';
-		$html .='<param name="loop" value="false"></param>';
-		$html .='</object>';
-		return $html;
+		$src = P4A_Strip_Double_Slashes($src);
+		if (!$width) $width=300;
+		if (!$height) $height=200;
+
+		switch ($mime_type) {
+			case 'audio/vnd.rn-realaudio';
+			case 'audio/x-pn-realaudio':
+			case 'audio/x-pn-realaudio-plugin':
+			case 'video/vnd.rn-realvideo':
+			case 'application/vnd.rn-realmedia':
+				$player_type = 'real';
+				break;
+			case 'video/quicktime':
+				$player_type = 'quicktime';
+				break;
+			case 'application/x-shockwave-flash':
+				$player_type = 'flash';
+				break;
+			default:
+				$player_type = 'wmedia';
+		}
+
+		return '<a id="p4a_media_player" href="' . $src . '">' . $src . '</a><script type="text/javascript">$("#p4a_media_player").jmedia({},{type:"' . $player_type . '", width:' . $width . ', height:' . $height . '});</script>';
 	}
 
 	/**
@@ -381,4 +370,18 @@ if (!function_exists('htmlspecialchars_decode')) {
 		}
 
 		return $v;
+	}
+
+	/*
+	 * @param string
+	 * @return string
+	 * @access public
+	 */
+	function P4A_Strip_Double_Slashes($string)
+	{
+		$string = str_replace('//', '/', $string);
+		if (strpos($string, '//') !== false) {
+			$string = P4A_Strip_Double_Slashes($string);
+		}
+		return $string;
 	}

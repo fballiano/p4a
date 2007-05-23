@@ -1222,19 +1222,7 @@
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 
-				$enable_preview = false;
-				if ($mime_type == 'application/x-shockwave-flash') {
-					$enable_preview = true;
-				} else {
-					$mime_type = explode('/', $mime_type);
-					if ($mime_type[0] == 'audio') {
-						$enable_preview = true;
-					} elseif ($mime_type[0] == 'video' and $this->getNewValue(4) and $this->getNewValue(5)) {
-						$enable_preview = true;
-					}
-				}
-
-				if ($enable_preview) {
+				if (P4A_Is_Mime_Type_Embeddable($mime_type)) {
 					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				} else {
 					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
@@ -1267,18 +1255,10 @@
 			$p4a->openMask("P4A_Mask_Preview");
 			$p4a->active_mask->setTitle($this->getNewValue(0));
 
-			$mime_type = $this->getNewValue(3);
-			if ($mime_type == 'application/x-shockwave-flash') {
-				$raw_html = P4A_SWF_Object(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(4), $this->getNewValue(5));
+			if (P4A_Is_Mime_Type_Embeddable($this->getNewValue(3))) {
+				$raw_html = P4A_Embedded_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3), $this->getNewValue(4), $this->getNewValue(5));
 			} else {
-				$mime_type = explode('/', $mime_type);
-				if ($mime_type[0] == 'audio') {
-					$raw_html = P4A_MP3_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3));
-				} elseif ($mime_type[0] == 'video') {
-					$raw_html = P4A_Video_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3), $this->getNewValue(4), $this->getNewValue(5));
-				} else {
-					$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
-				}
+				$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
 			}
 			$p4a->active_mask->setRawHTML($raw_html);
 		}
