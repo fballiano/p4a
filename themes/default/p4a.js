@@ -46,15 +46,12 @@ function setFocus(id)
 
 function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
-	showLoading();
 	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
-		error: function (object, error, exception) {alert('Communication error: ' + exception)},
 		success: function (response) {processAjaxResponse(response)},
-		complete: function () {hideLoading()}
 	});
 }
 
@@ -97,7 +94,7 @@ function updateAllRichTextEditors(form)
 
 function showLoading()
 {
-	$('#p4a_loading').fadeIn('slow');
+	$('#p4a_loading').jqm({modal:true, overlay:0}).fadeIn('slow');
 }
 
 function hideLoading()
@@ -134,3 +131,7 @@ function showTooltip(handler, text_id)
 	handler.mouseout(function() {tooltip.jqmHide()});
 	handler.click(function() {tooltip.jqmHide()});
 }
+
+$(document).ajaxStart(function(request, settings){showLoading();});
+$(document).ajaxStop(function(request, settings){hideLoading();});
+$(document).ajaxError(function(request, settings){alert("Communication error");});

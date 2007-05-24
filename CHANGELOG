@@ -2,6 +2,8 @@
 - P4A_Field with file upload now supports ajax calls to upload/delete the file
 - a nicer style for tooltips was added
 - a nicer style for popups was added
+- ajax calls now block the UI to avoid concurrency troubles
+- minor internal changes were done
 
 2.1.1
 - PEAR::Validate inclusion was moved to P4A_Validate file

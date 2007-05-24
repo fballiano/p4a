@@ -350,6 +350,7 @@
 		 */
 		function main()
 		{
+			$this->_in_ajax_call = (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']);
 			$this->i18n->setSystemLocale();
 			$this->actionHandler('main');
 
@@ -434,9 +435,7 @@
 				$action_return = $this->objects[$object]->$action($aParams);
 			}
 
-			$this->_in_ajax_call = false;
-			if (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']) {
-				$this->_in_ajax_call = true;
+			if ($this->_in_ajax_call) {
 				$this->_action_history_id++;
 				$this->raiseXMLResponse();
 			} elseif (isset($_REQUEST['_p4a_session_browser'])) {
