@@ -57,27 +57,37 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 
 function processAjaxResponse(response)
 {
-	document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
+	try {
+		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
 
-	var widgets = response.getElementsByTagName('widget');
-	for (i=0; i<widgets.length; i++) {
-   		var object_id = widgets[i].attributes[0].value;
-		if ($(object_id) != undefined) {
-   			var display = widgets[i].attributes[1].value;
-   			var html = widgets[i].getElementsByTagName('html').item(0);
-   			if (html) {
-   				var element = document.getElementById(object_id);
-   				element.parentNode.style.display = 'block';
-   				element.parentNode.innerHTML = html.firstChild.data;
-   			}
-   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
-   			if (javascript) {
-   				eval(javascript.firstChild.data);
-   			}
-   		}
+		var widgets = response.getElementsByTagName('widget');
+		for (i=0; i<widgets.length; i++) {
+	   		var object_id = widgets[i].attributes[0].value;
+			if ($(object_id) != undefined) {
+	   			var display = widgets[i].attributes[1].value;
+	   			var html = widgets[i].getElementsByTagName('html').item(0);
+	   			if (html) {
+	   				var element = document.getElementById(object_id);
+	   				element.parentNode.style.display = 'block';
+	   				element.parentNode.innerHTML = html.firstChild.data;
+	   			}
+	   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
+	   			if (javascript) {
+	   				eval(javascript.firstChild.data);
+	   			}
+	   		}
+		}
+
+		if (window.fixPng) fixPng();
+	} catch (e) {
+		alert("Communication error");
+		document.location = 'index.php';
 	}
+}
 
-	if (window.fixPng) fixPng();
+function ajaxError()
+{
+	alert("Communication error");
 }
 
 function updateAllRichTextEditors(form)
@@ -132,6 +142,6 @@ function showTooltip(handler, text_id)
 	handler.click(function() {tooltip.jqmHide()});
 }
 
-$(document).ajaxStart(function(request, settings){showLoading();});
-$(document).ajaxStop(function(request, settings){hideLoading();});
-$(document).ajaxError(function(request, settings){alert("Communication error");});
+$(document).ajaxStart(function(request, settings){showLoading()});
+$(document).ajaxStop(function(request, settings){hideLoading()});
+$(document).ajaxError(function(request, settings){ajaxError()});
