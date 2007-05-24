@@ -157,6 +157,8 @@
 		var $_icon = NULL;
 		var $_icon_size = 48;
 
+		var $close_popup_button = null;
+
 		/**
 		 * Mask constructor.
 		 * Generates unique ID for the object, istance a new
@@ -166,6 +168,7 @@
 		 */
 		function p4a_mask($name = null)
 		{
+			$p4a =& p4a::singleton();
 			if ($name == null) {
 				$name = get_class($this);
 			}
@@ -173,8 +176,11 @@
 			$name = strtolower($name);
 			parent::p4a_object($name, 'ma');
 
-			//todo
 			$this->build("p4a_collection", "fields");
+			$this->build("p4a_button", "close_popup_button");
+			$this->close_popup_button->addAjaxAction("onClick");
+			$this->close_popup_button->setIcon("exit");
+			$p4a->intercept($this->close_popup_button, "onClick", "closePopup");
 
 			$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');
@@ -588,7 +594,6 @@
 		{
 			$this->data->firstRow();
 		}
-
 
 		/**
 		 * Returns the opening code for the mask.

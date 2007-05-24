@@ -6,6 +6,7 @@
 - various error checks were added and ajax error are trapped the right way
 - PEAR::File was dropper
 - PEAR::File_SWF was dropped, operations on flash files are handled by getid3
+- the popups close button now it's a P4A_Button (P4A_Mask::popup_close_button) thus you can intercept on it
 - popup flickering was removed
 - minor internal changes were done
 
