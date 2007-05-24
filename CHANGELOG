@@ -3,7 +3,7 @@
 - a nicer style for tooltips was added
 - a nicer style for popups was added
 - ajax calls now block the UI to avoid concurrency troubles
-- various error checks were added
+- various error checks were added and ajax error are trapped the right way
 - minor internal changes were done
 
 2.1.1

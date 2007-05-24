@@ -80,14 +80,14 @@ function processAjaxResponse(response)
 
 		if (window.fixPng) fixPng();
 	} catch (e) {
-		alert("Communication error");
-		document.location = 'index.php';
+		ajaxError();
 	}
 }
 
 function ajaxError()
 {
 	alert("Communication error");
+	document.location = 'index.php';
 }
 
 function updateAllRichTextEditors(form)
