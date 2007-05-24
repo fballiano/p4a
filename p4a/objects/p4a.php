@@ -395,33 +395,22 @@
 						$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'];
 
 						if ((substr($key, 0, 3) == 'fld') and ($value['error'] == 0)) {
-							$new_value = $value['name'] . ',' . $value['tmp_name'] . ',' . $value['size'] . ',' . $value['type'] . ',' ;
-
-							if (substr($value['type'], 0, 5) == 'image') {
-								$image_data = getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
-								$new_value .= $image_data[0] . ',' . $image_data[1];
-							} elseif (substr($value['type'], 0, 5) == 'video') {
-								$file = P4A_UPLOADS_TMP_DIR . '/' . $value['name'];
-								require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3/getid3.php";
-								$getid3 = new getID3();
-								$data = $getid3->analyze($file);
-								if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
-									$new_value .= $data['video']['resolution_x'] . ',' . $data['video']['resolution_y'];
-								}
-							} elseif ($value['type'] == 'application/x-shockwave-flash') {
-								$file = P4A_UPLOADS_TMP_DIR . '/' . $value['name'];
-								require_once "File/File_SWF.php";
-								$swf = new File_SWF($file);
-								if ($swf->is_valid()) {
-									$swf_data = $swf->getMovieSize();
-									$new_value .= $swf_data['width'] . ',' . $swf_data['height'];
-								}
-							} else {
-								$new_value .= ',';
+							$width = $height = null;
+							require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3/getid3.php";
+							$getid3 = new getID3();
+							$data = $getid3->analyze(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+							if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
+								$width = $data['video']['resolution_x'];
+								$height = $data['video']['resolution_y'];
 							}
-
+							$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 							$this->objects[$key]->setNewValue('{' . $new_value . '}');
 							if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
+						} else {
+							$e = new P4A_Error("Error uploading files", $this);
+							if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
+								die();
+							}
 						}
 					} else {
 						$e = new P4A_Error("Uploading $extension files is denied", $this);
