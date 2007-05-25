@@ -104,12 +104,12 @@ function updateAllRichTextEditors(form)
 
 function showLoading()
 {
-	$('#p4a_loading').jqm({modal:true, overlay:0}).fadeIn('slow');
+	$('#p4a_loading').jqm({modal:true, overlay:0}).show();
 }
 
 function hideLoading()
 {
-	$('#p4a_loading').fadeOut('slow');
+	$('#p4a_loading').hide();
 }
 
 function showPopup()

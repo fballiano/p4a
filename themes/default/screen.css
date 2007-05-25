@@ -624,7 +624,6 @@ legend {
 	left: 0;
 	margin:auto;
 	padding: 0;
-	padding-bottom:20px;
 	background:white;
 	z-index: 100;
 	text-align: center;
@@ -635,7 +634,10 @@ legend {
 	background: #F4F7FA;
 	margin: 0;
 	line-height: 32px;
-	margin-bottom: 20px;
+}
+
+#popup #sheetContainerPopup {
+	margin: 20px;
 }
 
 /* jqModal base Styling courtesy of Brice Burgess <bhb@iceburg.net> */

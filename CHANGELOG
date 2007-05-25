@@ -2,6 +2,8 @@
 - a javascript error in p4a.js was fixed
 - better error messages were introduced on query errors
 - ADODB was updated to 495a
+- loading won't fade in/out anymore
+- popups now have a 20px default padding
 
 2.1.2
 - P4A_Field with file upload now supports ajax calls to upload/delete the file
