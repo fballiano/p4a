@@ -232,7 +232,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$rs = $db->adapter->selectLimit($query, 1, 0);
 
         if ($db->adapter->metaError()) {
-            $e = new P4A_Error('A query has returned an error', $this, $rs);
+            $e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
@@ -367,7 +367,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$query = $this->_composeSelectPkQuery($pk);
 		$row = $db->adapter->getRow($query);
         if ($db->adapter->metaError()) {
-			$e = new P4A_Error('A query has returned an error', $this, $row);
+			$e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
 			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
 				die();
 			}
@@ -390,7 +390,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$rs = $db->adapter->selectLimit($query, 1, $num_row-1);
         if ($db->adapter->metaError()) {
-            $e = new P4A_Error('A query has returned an error', $this, $rs);
+            $e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
             if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                 die();
             }
@@ -575,7 +575,7 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             if (!$res) {
-				$e = new P4A_ERROR('A query has returned an error', $this);
+				$e = new P4A_ERROR('A query has returned an error', $this, $db->getNativeError());
 				if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
@@ -661,7 +661,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
             $res = $db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
             if ($db->adapter->metaError()) {
-                $e = new P4A_Error('A query has returned an error', $this);
+                $e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
@@ -693,7 +693,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$rs = $db->adapter->selectLimit($query, $count, $from);
 
             if ($db->adapter->metaError()) {
-                $e = new P4A_Error('A query has returned an error', $this, $rs);
+                $e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
                 if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
                     die();
                 }
