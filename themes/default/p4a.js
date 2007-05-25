@@ -51,7 +51,7 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
-		success: function (response) {processAjaxResponse(response)},
+		success: function (response) {processAjaxResponse(response)}
 	});
 }
 
