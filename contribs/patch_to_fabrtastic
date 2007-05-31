@@ -1,0 +1,15 @@
+line 11, replace:
+  return container.farbtastic || (container.farbtastic = new jQuery._farbtastic(container, callback));
+with:
+  container.farbtastic = new jQuery._farbtastic(container, callback);
+  return container.farbtastic;
+
+
+
+
+
+line 232, replace the "Change linked value" block with:
+      // Change linked value
+      $(fb.callback).each(function() {
+        this.value = fb.color;
+      });

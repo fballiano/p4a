@@ -48,6 +48,7 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 {
 	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
+	$('#colorpicker').hide();
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',

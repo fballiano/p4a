@@ -8,7 +8,8 @@ jQuery.fn.farbtastic = function (callback) {
 
 jQuery.farbtastic = function (container, callback) {
   var container = $(container).get(0);
-  return container.farbtastic || (container.farbtastic = new jQuery._farbtastic(container, callback));
+  container.farbtastic = new jQuery._farbtastic(container, callback);
+  return container.farbtastic;
 }
 
 jQuery._farbtastic = function (container, callback) {
@@ -222,6 +223,11 @@ jQuery._farbtastic = function (container, callback) {
 
     // Linked elements or callback
     if (typeof fb.callback == 'object') {
+      // Set background/foreground color
+      $(fb.callback).css({
+        backgroundColor: fb.color,
+        color: fb.hsl[2] > 0.5 ? '#000' : '#fff'
+      });
 
       // Change linked value
       $(fb.callback).each(function() {
