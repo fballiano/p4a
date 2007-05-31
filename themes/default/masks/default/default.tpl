@@ -76,6 +76,7 @@
 
 <!-- POPUP -->
 <div style="display:block"><div id="popup" style="display:none"><?php echo $_popup?></div></div>
+<div id="colorpicker"></div>
 
 <?php echo $this->maskClose()?>
 </div>

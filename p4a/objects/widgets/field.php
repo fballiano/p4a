@@ -477,6 +477,10 @@
 				$this->setWidth(500);
 				$this->setHeight(300);
 				break;
+			case 'color':
+				$this->setWidth(60);
+				$this->setProperty('maxlength', 7);
+				break;
 			}
 		}
 
@@ -1434,6 +1438,25 @@
 			return $this->max_thumbnail_size;
 		}
 
+		function getAsColor()
+		{
+			$p4a =& p4a::singleton();
+			$id = $this->getId();
+
+			if ($this->isEnabled()) {
+				$enabled = "";
+			} else {
+				$enabled = " disabled='disabled' ";
+			}
+
+			$return  = $this->getAsText();
+			if (!$p4a->isHandheld()) {
+				$return .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick='toggleColorPicker(\"$id\")' />";
+			}
+
+			return $return;
+		}
+
 		/**
 		 * Sets the label for the field.
 		 * In rendering phase it will be added with ':  '.
@@ -1503,12 +1526,12 @@
 		function composeStringValue()
 		{
 			$value = $this->getNewValue();
-
 			if (is_array($value)) {
 				$value = join($value, ",");
 			}
 
 			switch ($this->type) {
+				case 'color':
 				case 'text':
 				case 'hidden':
 				case 'date':

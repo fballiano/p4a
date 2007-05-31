@@ -144,6 +144,13 @@ function showTooltip(handler, text_id)
 	handler.click(function() {tooltip.jqmHide()});
 }
 
+function toggleColorPicker(id)
+{
+	var left = $('#' + id + 'button').offset().left + $('#' + id + 'button').width() + 10;
+	var top = $('#' + id + 'button').offset().top;
+	$('#colorpicker').css('left', left).css('top', top).farbtastic('#' + id + 'input').toggle()
+}
+
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
