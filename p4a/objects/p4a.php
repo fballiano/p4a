@@ -181,13 +181,14 @@
 
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.form.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/jqModal.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqModal.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
 
 				$calendar_language = P4A_I18N_DATE_CALENDAR_LANGUAGE;
 				if (@file_exists(P4A_THEME_DIR . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js")) {
@@ -407,7 +408,7 @@
 							$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 							$this->objects[$key]->setNewValue('{' . $new_value . '}');
 							if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
-						} else {
+						} elseif ($value['error'] != 4) {
 							$e = new P4A_Error("Error uploading files", $this);
 							if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
 								die();
