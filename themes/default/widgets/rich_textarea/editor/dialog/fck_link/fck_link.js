@@ -151,6 +151,9 @@ window.onload = function()
 	if ( FCKConfig.LinkUpload )
 		GetE('frmUpload').action = FCKConfig.LinkUploadURL ;
 
+	// Set the default target (from configuration).
+	SetDefaultTarget() ;
+
 	// Activate the "OK" button.
 	window.parent.SetOkButton( true ) ;
 }
@@ -499,16 +502,13 @@ function Ok()
 			break ;
 	}
 
-	// No link selected, so try to create one.
-	if ( !oLink )
-		oLink = oEditor.FCK.CreateLink( sUri ) ;
+	// If no link is selected, create a new one (it may result in more than one link creation - #220).
+	var aLinks = oLink ? [ oLink ] : oEditor.FCK.CreateLink( sUri ) ;
 
-	if ( oLink )
-		sInnerHtml = oLink.innerHTML ;		// Save the innerHTML (IE changes it if it is like an URL).
-	else
+	// If no selection, no links are created, so use the uri as the link text (by dom, 2006-05-26)
+	var aHasSelection = ( aLinks.length > 0 ) ;
+	if ( !aHasSelection )
 	{
-		// If no selection, use the uri as the link text (by dom, 2006-05-26)
-
 		sInnerHtml = sUri;
 
 		// Built a better text for empty links.
@@ -534,65 +534,76 @@ function Ok()
 		}
 
 		// Create a new (empty) anchor.
-		oLink = oEditor.FCK.CreateElement( 'a' ) ;
+		aLinks = [ oEditor.FCK.CreateElement( 'a' ) ] ;
 	}
 
 	oEditor.FCKUndo.SaveUndoStep() ;
 
-	oLink.href = sUri ;
-	SetAttribute( oLink, '_fcksavedurl', sUri ) ;
-
-	// Accesible popups
-	if( GetE('cmbTarget').value == 'popup' )
+	for ( var i = 0 ; i < aLinks.length ; i++ )
 	{
-		SetAttribute( oLink, 'onclick_fckprotectedatt', " onclick=\"" + BuildOnClickPopup() + "\"") ;
+		oLink = aLinks[i] ;
+
+		if ( aHasSelection )
+			sInnerHtml = oLink.innerHTML ;		// Save the innerHTML (IE changes it if it is like an URL).
+
+		oLink.href = sUri ;
+		SetAttribute( oLink, '_fcksavedurl', sUri ) ;
+
+		// Accesible popups
+		if( GetE('cmbTarget').value == 'popup' )
+		{
+			SetAttribute( oLink, 'onclick_fckprotectedatt', " onclick=\"" + BuildOnClickPopup() + "\"") ;
+		}
+		else
+		{
+			// Check if the previous onclick was for a popup:
+			// In that case remove the onclick handler.
+			var onclick = oLink.getAttribute( 'onclick_fckprotectedatt' ) ;
+			if( oRegex.OnClickPopup.test( onclick ) )
+				SetAttribute( oLink, 'onclick_fckprotectedatt', '' ) ;
+		}
+
+		oLink.innerHTML = sInnerHtml ;		// Set (or restore) the innerHTML
+
+		// Target
+		if( GetE('cmbTarget').value != 'popup' )
+			SetAttribute( oLink, 'target', GetE('txtTargetFrame').value ) ;
+		else
+			SetAttribute( oLink, 'target', null ) ;
+
+		// Let's set the "id" only for the first link to avoid duplication.
+		if ( i == 0 )
+			SetAttribute( oLink, 'id', GetE('txtAttId').value ) ;
+
+		// Advances Attributes
+		SetAttribute( oLink, 'name'		, GetE('txtAttName').value ) ;
+		SetAttribute( oLink, 'dir'		, GetE('cmbAttLangDir').value ) ;
+		SetAttribute( oLink, 'lang'		, GetE('txtAttLangCode').value ) ;
+		SetAttribute( oLink, 'accesskey', GetE('txtAttAccessKey').value ) ;
+		SetAttribute( oLink, 'tabindex'	, ( GetE('txtAttTabIndex').value > 0 ? GetE('txtAttTabIndex').value : null ) ) ;
+		SetAttribute( oLink, 'title'	, GetE('txtAttTitle').value ) ;
+		SetAttribute( oLink, 'type'		, GetE('txtAttContentType').value ) ;
+		SetAttribute( oLink, 'charset'	, GetE('txtAttCharSet').value ) ;
+
+		if ( oEditor.FCKBrowserInfo.IsIE )
+		{
+			var sClass = GetE('txtAttClasses').value ;
+			// If it's also an anchor add an internal class
+			if ( GetE('txtAttName').value.length != 0 )
+				sClass += ' FCK__AnchorC' ;
+			SetAttribute( oLink, 'className', sClass ) ;
+
+			oLink.style.cssText = GetE('txtAttStyle').value ;
+		}
+		else
+		{
+			SetAttribute( oLink, 'class', GetE('txtAttClasses').value ) ;
+			SetAttribute( oLink, 'style', GetE('txtAttStyle').value ) ;
+		}
 	}
-	else
-	{
-		// Check if the previous onclick was for a popup:
-		// In that case remove the onclick handler.
-		var onclick = oLink.getAttribute( 'onclick_fckprotectedatt' ) ;
-		if( oRegex.OnClickPopup.test( onclick ) )
-			SetAttribute( oLink, 'onclick_fckprotectedatt', '' ) ;
-	}
 
-	oLink.innerHTML = sInnerHtml ;		// Set (or restore) the innerHTML
-
-	// Target
-	if( GetE('cmbTarget').value != 'popup' )
-		SetAttribute( oLink, 'target', GetE('txtTargetFrame').value ) ;
-	else
-		SetAttribute( oLink, 'target', null ) ;
-
-	// Advances Attributes
-	SetAttribute( oLink, 'id'		, GetE('txtAttId').value ) ;
-	SetAttribute( oLink, 'name'		, GetE('txtAttName').value ) ;
-	SetAttribute( oLink, 'dir'		, GetE('cmbAttLangDir').value ) ;
-	SetAttribute( oLink, 'lang'		, GetE('txtAttLangCode').value ) ;
-	SetAttribute( oLink, 'accesskey', GetE('txtAttAccessKey').value ) ;
-	SetAttribute( oLink, 'tabindex'	, ( GetE('txtAttTabIndex').value > 0 ? GetE('txtAttTabIndex').value : null ) ) ;
-	SetAttribute( oLink, 'title'	, GetE('txtAttTitle').value ) ;
-	SetAttribute( oLink, 'type'		, GetE('txtAttContentType').value ) ;
-	SetAttribute( oLink, 'charset'	, GetE('txtAttCharSet').value ) ;
-
-	if ( oEditor.FCKBrowserInfo.IsIE )
-	{
-		var sClass = GetE('txtAttClasses').value ;
-		// If it's also an anchor add an internal class
-		if ( GetE('txtAttName').value.length != 0 )
-			sClass += ' FCK__AnchorC' ;
-		SetAttribute( oLink, 'className', sClass ) ;
-
-		oLink.style.cssText = GetE('txtAttStyle').value ;
-	}
-	else
-	{
-		SetAttribute( oLink, 'class', GetE('txtAttClasses').value ) ;
-		SetAttribute( oLink, 'style', GetE('txtAttStyle').value ) ;
-	}
-
-	// Select the link.
-	oEditor.FCKSelection.SelectNode(oLink);
+	// Select the (first) link.
+	oEditor.FCKSelection.SelectNode( aLinks[0] );
 
 	return true ;
 }
@@ -661,4 +672,27 @@ function CheckUpload()
 	}
 
 	return true ;
+}
+
+function SetDefaultTarget()
+{
+	var target = FCKConfig.DefaultLinkTarget + '' ;
+	
+	if ( oLink || target.length == 0 )
+		return ;
+
+	switch ( target )
+	{
+		case '_blank' :
+		case '_self' :
+		case '_parent' :
+		case '_top' :
+			GetE('cmbTarget').value = target ;
+			break ;
+		default :
+			GetE('cmbTarget').value = 'frame' ;
+			break ;
+	}
+	
+	GetE('txtTargetFrame').value = target ;
 }

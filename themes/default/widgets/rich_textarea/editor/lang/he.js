@@ -229,7 +229,7 @@ DlgLnkURL			: "כתובת (URL)",
 DlgLnkAnchorSel		: "בחירת עוגן",
 DlgLnkAnchorByName	: "עפ''י שם העוגן",
 DlgLnkAnchorById	: "עפ''י זיהוי (Id) הרכיב",
-DlgLnkNoAnchors		: "<אין עוגנים זמינים בדף>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(אין עוגנים זמינים בדף)",		//REVIEW : Change < and > with ( and )
 DlgLnkEMail			: "כתובת הדוא''ל",
 DlgLnkEMailSubject	: "נושא ההודעה",
 DlgLnkEMailBody		: "גוף ההודעה",
@@ -344,7 +344,7 @@ PasteAsText		: "הדבקה כטקסט פשוט",
 PasteFromWord	: "הדבקה מ-וורד",
 
 DlgPasteMsg2	: "אנא הדבק בתוך הקופסה באמצעות  (<STRONG>Ctrl+V</STRONG>) ולחץ על  <STRONG>אישור</STRONG>.",
-DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
+DlgPasteSec		: "עקב הגדרות אבטחה בדפדפן, לא ניתן לגשת אל לוח הגזירים (clipboard) בצורה ישירה.אנא בצע הדבק שוב בחלון זה.",
 DlgPasteIgnoreFont		: "התעלם מהגדרות סוג פונט",
 DlgPasteRemoveStyles	: "הסר הגדרות סגנון",
 DlgPasteCleanBox		: "ניקוי קופסה",

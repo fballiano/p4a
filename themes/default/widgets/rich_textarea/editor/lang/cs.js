@@ -262,7 +262,7 @@ DlgLnkPopTop		: "Horní okraj",
 DlnLnkMsgNoUrl		: "Zadejte prosím URL odkazu",
 DlnLnkMsgNoEMail	: "Zadejte prosím e-mailovou adresu",
 DlnLnkMsgNoAnchor	: "Vyberte prosím kotvu",
-DlnLnkMsgInvPopName	: "The popup name must begin with an alphabetic character and must not contain spaces",	//MISSING
+DlnLnkMsgInvPopName	: "Název vyskakovacího okna musí začínat písmenem a nesmí obsahovat mezery",
 
 // Color Dialog
 DlgColorTitle		: "Výběr barvy",
@@ -381,9 +381,9 @@ IeSpellDownload			: "Kontrola pravopisu není nainstalována. Chcete ji nyní st
 // Button Dialog
 DlgButtonText		: "Popisek",
 DlgButtonType		: "Typ",
-DlgButtonTypeBtn	: "Button",	//MISSING
-DlgButtonTypeSbm	: "Submit",	//MISSING
-DlgButtonTypeRst	: "Reset",	//MISSING
+DlgButtonTypeBtn	: "Tlačítko",
+DlgButtonTypeSbm	: "Odeslat",
+DlgButtonTypeRst	: "Obnovit",
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "Název",
@@ -455,15 +455,15 @@ DlgDocLangDirLTR	: "Zleva do prava ",
 DlgDocLangDirRTL	: "Zprava doleva",
 DlgDocLangCode		: "Kód jazyku",
 DlgDocCharSet		: "Znaková sada",
-DlgDocCharSetCE		: "Central European",	//MISSING
-DlgDocCharSetCT		: "Chinese Traditional (Big5)",	//MISSING
-DlgDocCharSetCR		: "Cyrillic",	//MISSING
-DlgDocCharSetGR		: "Greek",	//MISSING
-DlgDocCharSetJP		: "Japanese",	//MISSING
-DlgDocCharSetKR		: "Korean",	//MISSING
-DlgDocCharSetTR		: "Turkish",	//MISSING
-DlgDocCharSetUN		: "Unicode (UTF-8)",	//MISSING
-DlgDocCharSetWE		: "Western European",	//MISSING
+DlgDocCharSetCE		: "Středoevropské jazyky",
+DlgDocCharSetCT		: "Tradiční čínština (Big5)",
+DlgDocCharSetCR		: "Cyrilice",
+DlgDocCharSetGR		: "Řečtina",
+DlgDocCharSetJP		: "Japonština",
+DlgDocCharSetKR		: "Korejština",
+DlgDocCharSetTR		: "Turečtina",
+DlgDocCharSetUN		: "Unicode (UTF-8)",
+DlgDocCharSetWE		: "Západoevropské jazyky",
 DlgDocCharSetOther	: "Další znaková sada",
 
 DlgDocDocType		: "Typ dokumentu",
@@ -493,7 +493,7 @@ DlgTemplatesTitle	: "Šablony obsahu",
 DlgTemplatesSelMsg	: "Prosím zvolte šablonu pro otevření v editoru<br>(aktuální obsah editoru bude ztracen):",
 DlgTemplatesLoading	: "Nahrávám přeheld šablon. Prosím čekejte...",
 DlgTemplatesNoTpl	: "(Není definována žádná šablona)",
-DlgTemplatesReplace	: "Replace actual contents",	//MISSING
+DlgTemplatesReplace	: "Nahradit aktuální obsah",
 
 // About Dialog
 DlgAboutAboutTab	: "O aplikaci",

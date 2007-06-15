@@ -1,4 +1,4 @@
-﻿#!/usr/bin/perl
+#!/usr/bin/perl
 
 use CGI qw/ :standard /;
 use File::Temp qw/ tempfile tempdir /;
@@ -12,7 +12,7 @@ my @textinputs = param( 'textinputs[]' ); # array
 my $aspell_cmd = '"C:\Program Files\Aspell\bin\aspell.exe"';	# by FredCK (for Windows)
 my $lang = 'en_US';
 # my $aspell_opts = "-a --lang=$lang --encoding=utf-8";			# by FredCK
-my $aspell_opts = "-a --lang=$lang --encoding=utf-8 -H";		# by FredCK
+my $aspell_opts = "-a --lang=$lang --encoding=utf-8 -H --rem-sgml-check=alt";		# by FredCK
 my $input_separator = "A";
 
 # set the 'wordtext' JavaScript variable to the submitted text.

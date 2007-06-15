@@ -26,7 +26,9 @@
 	<title>FCKeditor</title>
 	<meta name="robots" content="noindex, nofollow" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!-- @Packager.RemoveLine
 	<meta http-equiv="Cache-Control" content="public" />
+	@Packager.RemoveLine -->
 	<script type="text/javascript">
 
 // Instead of loading scripts and CSSs using inline tags, all scripts are
@@ -47,7 +49,97 @@ function LoadCss( url )
 // Main editor scripts.
 var sSuffix = /msie/.test( navigator.userAgent.toLowerCase() ) ? 'ie' : 'gecko' ;
 
+/* @Packager.RemoveLine
 LoadScript( 'js/fckeditorcode_' + sSuffix + '.js' ) ;
+@Packager.RemoveLine */
+// @Packager.Remove.Start
+
+LoadScript( '_source/fckconstants.js' ) ;
+LoadScript( '_source/fckjscoreextensions.js' ) ;
+
+if ( sSuffix == 'ie' )
+	LoadScript( '_source/classes/fckiecleanup.js' ) ;
+
+LoadScript( '_source/internals/fckbrowserinfo.js' ) ;
+LoadScript( '_source/internals/fckurlparams.js' ) ;
+LoadScript( '_source/classes/fckevents.js' ) ;
+LoadScript( '_source/internals/fck.js' ) ;
+LoadScript( '_source/internals/fck_' + sSuffix + '.js' ) ;
+LoadScript( '_source/internals/fckconfig.js' ) ;
+
+LoadScript( '_source/internals/fckdebug.js' ) ;
+LoadScript( '_source/internals/fckdomtools.js' ) ;
+LoadScript( '_source/internals/fcktools.js' ) ;
+LoadScript( '_source/internals/fcktools_' + sSuffix + '.js' ) ;
+LoadScript( '_source/fckeditorapi.js' ) ;
+LoadScript( '_source/classes/fckimagepreloader.js' ) ;
+LoadScript( '_source/internals/fckregexlib.js' ) ;
+LoadScript( '_source/internals/fcklistslib.js' ) ;
+LoadScript( '_source/internals/fcklanguagemanager.js' ) ;
+LoadScript( '_source/internals/fckxhtmlentities.js' ) ;
+LoadScript( '_source/internals/fckxhtml.js' ) ;
+LoadScript( '_source/internals/fckxhtml_' + sSuffix + '.js' ) ;
+LoadScript( '_source/internals/fckcodeformatter.js' ) ;
+LoadScript( '_source/internals/fckundo_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckeditingarea.js' ) ;
+LoadScript( '_source/classes/fckkeystrokehandler.js' ) ;
+
+LoadScript( '_source/internals/fcklisthandler.js' ) ;
+LoadScript( '_source/classes/fckelementpath.js' ) ;
+LoadScript( '_source/classes/fckdomrange.js' ) ;
+LoadScript( '_source/classes/fckdocumentfragment_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckw3crange.js' ) ;
+LoadScript( '_source/classes/fckdomrange_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckenterkey.js' ) ;
+
+LoadScript( '_source/internals/fckdocumentprocessor.js' ) ;
+LoadScript( '_source/internals/fckselection.js' ) ;
+LoadScript( '_source/internals/fckselection_' + sSuffix + '.js' ) ;
+
+LoadScript( '_source/internals/fcktablehandler.js' ) ;
+LoadScript( '_source/internals/fcktablehandler_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckxml_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckstyledef.js' ) ;
+LoadScript( '_source/classes/fckstyledef_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckstylesloader.js' ) ;
+
+LoadScript( '_source/commandclasses/fcknamedcommand.js' ) ;
+LoadScript( '_source/commandclasses/fck_othercommands.js' ) ;
+LoadScript( '_source/commandclasses/fckspellcheckcommand_' + sSuffix + '.js' ) ;
+LoadScript( '_source/commandclasses/fcktextcolorcommand.js' ) ;
+LoadScript( '_source/commandclasses/fckpasteplaintextcommand.js' ) ;
+LoadScript( '_source/commandclasses/fckpastewordcommand.js' ) ;
+LoadScript( '_source/commandclasses/fcktablecommand.js' ) ;
+LoadScript( '_source/commandclasses/fckstylecommand.js' ) ;
+LoadScript( '_source/commandclasses/fckfitwindow.js' ) ;
+LoadScript( '_source/internals/fckcommands.js' ) ;
+
+LoadScript( '_source/classes/fckpanel.js' ) ;
+LoadScript( '_source/classes/fckicon.js' ) ;
+LoadScript( '_source/classes/fcktoolbarbuttonui.js' ) ;
+LoadScript( '_source/classes/fcktoolbarbutton.js' ) ;
+LoadScript( '_source/classes/fckspecialcombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarspecialcombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarfontscombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarfontsizecombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarfontformatcombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarstylecombo.js' ) ;
+LoadScript( '_source/classes/fcktoolbarpanelbutton.js' ) ;
+LoadScript( '_source/internals/fcktoolbaritems.js' ) ;
+LoadScript( '_source/classes/fcktoolbar.js' ) ;
+LoadScript( '_source/classes/fcktoolbarbreak_' + sSuffix + '.js' ) ;
+LoadScript( '_source/internals/fcktoolbarset.js' ) ;
+LoadScript( '_source/internals/fckdialog.js' ) ;
+LoadScript( '_source/internals/fckdialog_' + sSuffix + '.js' ) ;
+LoadScript( '_source/classes/fckmenuitem.js' ) ;
+LoadScript( '_source/classes/fckmenublock.js' ) ;
+LoadScript( '_source/classes/fckmenublockpanel.js' ) ;
+LoadScript( '_source/classes/fckcontextmenu.js' ) ;
+LoadScript( '_source/internals/fck_contextmenu.js' ) ;
+LoadScript( '_source/classes/fckplugin.js' ) ;
+LoadScript( '_source/internals/fckplugins.js' ) ;
+
+// @Packager.Remove.End
 
 // Base configuration file.
 LoadScript( '../fckconfig.js' ) ;

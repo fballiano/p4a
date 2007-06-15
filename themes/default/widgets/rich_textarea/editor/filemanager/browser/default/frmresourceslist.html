@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -80,7 +80,7 @@ function OpenFolder( folderPath )
 
 function OpenFile( fileUrl )
 {
-	window.top.opener.SetUrl( fileUrl ) ;
+	window.top.opener.SetUrl( encodeURI( fileUrl ) ) ;
 	window.top.close() ;
 	window.top.opener.focus() ;
 }
@@ -107,7 +107,7 @@ function GetFoldersAndFilesCallBack( fckXml )
 	var oFolderNode = fckXml.SelectSingleNode( 'Connector/CurrentFolder' ) ;
 	if ( oFolderNode == null )
 	{
-		alert( 'The server didn\'t reply with a proper XML file\r\nCheck your configuration.' ) ;
+		alert( 'The server didn\'t reply with a proper XML data. Please check your configuration.' ) ;
 		return ;
 	}
 	var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value ;

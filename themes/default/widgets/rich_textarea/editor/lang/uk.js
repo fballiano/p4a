@@ -134,7 +134,7 @@ SelectionFieldProp	: "Властивості списку",
 TextareaProp		: "Властивості текстової області",
 FormProp			: "Властивості форми",
 
-FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальний (DIV)",		//REVIEW : Check _getfontformat.html
 
 // Alerts and Messages
 ProcessingXHTML		: "Обробка XHTML. Зачекайте, будь ласка...",
@@ -344,7 +344,7 @@ PasteAsText		: "Вставити тільки текст",
 PasteFromWord	: "Вставити з Word",
 
 DlgPasteMsg2	: "Будь-ласка, вставте з буфера обміну в цю область, користуючись комбінацією клавіш (<STRONG>Ctrl+V</STRONG>) та натисніть <STRONG>OK</STRONG>.",
-DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
+DlgPasteSec		: "Редактор не може отримати прямий доступ до буферу обміну у зв'язку з налаштуваннями вашого браузера. Вам потрібно вставити інформацію повторно в це вікно.",
 DlgPasteIgnoreFont		: "Ігнорувати налаштування шрифтів",
 DlgPasteRemoveStyles	: "Видалити налаштування стилів",
 DlgPasteCleanBox		: "Очистити область",

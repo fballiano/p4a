@@ -1,4 +1,4 @@
-﻿<cfsilent>
+<cfsilent>
 <!---
 This code uses a CF User Defined Function and should work in CF version 5.0
 and up without alteration.
@@ -12,13 +12,13 @@ others files in certain cases.
 <!---
 The following variables values must reflect your installation needs.
 --->
-<cfset apsell_dir	= "c:\aspell\bin">
+<cfset apsell_dir	= "C:\Program Files\Aspell\bin">
 
 <cfset lang			= "en_US">
-<cfset aspell_opts	= "-a --lang=#lang# --encoding=utf-8 -H">
+<cfset aspell_opts	= "-a --lang=#lang# --encoding=utf-8 -H --rem-sgml-check=alt">
 
 <!--- Be sure the temporary folder exists --->
-<cfset tempFolder	= "c:\aspell\temp">
+<cfset tempFolder	= "C:\Windows\Temp">
 <cfset tempfile		= "spell_#randrange(1,10000)#">
 
 <cfset spellercss	= "../spellerStyle.css">
@@ -70,7 +70,7 @@ If your using the new version of mx 6.1 you can  use the following cfexecute tag
 
 
 <cfsavecontent variable="food">
-<cfexecute name="C:\WINDOWS\SYSTEM32\cmd.exe" arguments="/c type #tempFolder#\#tempfile#.txt | #apsell_dir#\aspell #aspell_opts#" timeout="100"></cfexecute>
+<cfexecute name="C:\WINDOWS\SYSTEM32\cmd.exe" arguments='/c type #tempFolder#\#tempfile#.txt | "#apsell_dir#\aspell" #aspell_opts#' timeout="100"></cfexecute>
 </cfsavecontent>
 
 
@@ -124,7 +124,7 @@ If your using the new version of mx 6.1 you can  use the following cfexecute tag
 </cfloop>
 
 <cfif texts.words IS "">
-  <cfset texts.abort = "alert('Spell check complete.\n\nNo misspellings found.');#chrlf#top.window.close();">
+  <cfset texts.abort = "alert('Spell check complete.\n\nNo misspellings found.');#crlf#top.window.close();">
 </cfif>
 
 </cfsilent><cfoutput><cfcontent type="text/html"><html>

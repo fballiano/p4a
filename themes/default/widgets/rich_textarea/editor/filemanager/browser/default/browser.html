@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -137,7 +137,10 @@ oIcons.GetIcon = function( fileName )
 		</script>
 	</head>
 	<frameset cols="150,*" class="Frame" framespacing="3" bordercolor="#f1f1e3" frameborder="1">
-		<frame name="frmFolders" src="frmfolders.html" scrolling="auto" frameborder="1">
+		<frameset rows="50,*" framespacing="0">
+			<frame src="frmresourcetype.html" scrolling="no" frameborder="0">
+			<frame name="frmFolders" src="frmfolders.html" scrolling="auto" frameborder="1">
+		</frameset>
 		<frameset rows="50,*,50" framespacing="0">
 			<frame name="frmActualFolder" src="frmactualfolder.html" scrolling="no" frameborder="0">
 			<frame name="frmResourcesList" src="frmresourceslist.html" scrolling="auto" frameborder="1">

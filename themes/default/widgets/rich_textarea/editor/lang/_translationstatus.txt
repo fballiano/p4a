@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
  *
@@ -26,8 +26,8 @@ ar.js      Found: 401   Missing: 1
 bg.js      Found: 378   Missing: 24
 bn.js      Found: 386   Missing: 16
 bs.js      Found: 230   Missing: 172
-ca.js      Found: 401   Missing: 1
-cs.js      Found: 386   Missing: 16
+ca.js      Found: 402   Missing: 0
+cs.js      Found: 400   Missing: 2
 da.js      Found: 386   Missing: 16
 de.js      Found: 401   Missing: 1
 el.js      Found: 401   Missing: 1
@@ -36,14 +36,14 @@ en-ca.js   Found: 402   Missing: 0
 en-uk.js   Found: 402   Missing: 0
 eo.js      Found: 350   Missing: 52
 es.js      Found: 386   Missing: 16
-et.js      Found: 386   Missing: 16
+et.js      Found: 402   Missing: 0
 eu.js      Found: 386   Missing: 16
-fa.js      Found: 401   Missing: 1
-fi.js      Found: 386   Missing: 16
+fa.js      Found: 402   Missing: 0
+fi.js      Found: 402   Missing: 0
 fo.js      Found: 401   Missing: 1
 fr.js      Found: 401   Missing: 1
 gl.js      Found: 386   Missing: 16
-he.js      Found: 401   Missing: 1
+he.js      Found: 402   Missing: 0
 hi.js      Found: 401   Missing: 1
 hr.js      Found: 401   Missing: 1
 hu.js      Found: 401   Missing: 1
@@ -67,10 +67,10 @@ sk.js      Found: 401   Missing: 1
 sl.js      Found: 378   Missing: 24
 sr-latn.js Found: 373   Missing: 29
 sr.js      Found: 373   Missing: 29
-sv.js      Found: 381   Missing: 21
+sv.js      Found: 401   Missing: 1
 th.js      Found: 398   Missing: 4
 tr.js      Found: 401   Missing: 1
-uk.js      Found: 401   Missing: 1
+uk.js      Found: 402   Missing: 0
 vi.js      Found: 401   Missing: 1
 zh-cn.js   Found: 401   Missing: 1
 zh.js      Found: 401   Missing: 1

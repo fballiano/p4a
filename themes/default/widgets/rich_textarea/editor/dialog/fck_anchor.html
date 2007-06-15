@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -110,39 +110,48 @@ function Ok()
 	}
 
 	// Create a new anchor preserving the current selection
-	oAnchor = oEditor.FCK.CreateLink( '#' ) ;
-	if ( !oAnchor )
+	var aNewAnchors = oEditor.FCK.CreateLink( '#' ) ;
+
+	if ( aNewAnchors.length == 0 )
 	{
 		// Nothing was selected, so now just create a normal A
-		oAnchor = oEditor.FCK.CreateElement( 'a' ) ;
+		aNewAnchors.push( oEditor.FCK.CreateElement( 'a' ) ) ;
 	}
 	else
 	{
 		// Remove the fake href
-		oAnchor.removeAttribute( 'href' ) ;
+		for ( var i = 0 ; i < aNewAnchors.length ; i++ )
+			aNewAnchors[i].removeAttribute( 'href' ) ;
 	}
-	// Set the name
-	oAnchor.name = sNewName ;
 
-	// IE does require special processing to show the Anchor's image
-	// Opera doesn't allow to select empty anchors
-	if ( FCKBrowserInfo.IsIE || FCKBrowserInfo.IsOpera )
+	// More than one anchors may have been created, so interact through all of them (see #220).
+	for ( var i = 0 ; i < aNewAnchors.length ; i++ )
 	{
-		if ( oAnchor.innerHTML != '' )
-		{
-			if ( FCKBrowserInfo.IsIE )
-				oAnchor.className += ' FCK__AnchorC' ;
-		}
-		else
-		{
-			// Create a fake image for both IE and Opera
-			var oImg = oEditor.FCKDocumentProcessor_CreateFakeImage( 'FCK__Anchor', oAnchor.cloneNode(true) ) ;
-			oImg.setAttribute( '_fckanchor', 'true', 0 ) ;
+		oAnchor = aNewAnchors[i] ;
 
-			oAnchor.parentNode.insertBefore( oImg, oAnchor ) ;
-			oAnchor.parentNode.removeChild( oAnchor ) ;
-		}
+		// Set the name
+		oAnchor.name = sNewName ;
 
+		// IE does require special processing to show the Anchor's image
+		// Opera doesn't allow to select empty anchors
+		if ( FCKBrowserInfo.IsIE || FCKBrowserInfo.IsOpera )
+		{
+			if ( oAnchor.innerHTML != '' )
+			{
+				if ( FCKBrowserInfo.IsIE )
+					oAnchor.className += ' FCK__AnchorC' ;
+			}
+			else
+			{
+				// Create a fake image for both IE and Opera
+				var oImg = oEditor.FCKDocumentProcessor_CreateFakeImage( 'FCK__Anchor', oAnchor.cloneNode(true) ) ;
+				oImg.setAttribute( '_fckanchor', 'true', 0 ) ;
+
+				oAnchor.parentNode.insertBefore( oImg, oAnchor ) ;
+				oAnchor.parentNode.removeChild( oAnchor ) ;
+			}
+
+		}
 	}
 
 	return true ;

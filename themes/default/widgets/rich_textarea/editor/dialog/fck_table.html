@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -130,7 +130,12 @@ function Ok()
 		eCaption.innerHTML = document.getElementById('txtCaption').value ;
 	}
 	else if ( bExists && eCaption )
-		eCaption.parentNode.removeChild( eCaption ) ;
+	{
+		if ( oEditor.FCKBrowserInfo.IsIE )
+			eCaption.innerHTML = '' ;	// TODO: It causes an IE internal error if using removeChild or table.deleteCaption().
+		else
+			eCaption.parentNode.removeChild( eCaption ) ;
+	}
 
 	if (! bExists)
 	{
