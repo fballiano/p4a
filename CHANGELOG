@@ -4,6 +4,7 @@
 - FCKEditor was updated to 2.4.3
 - jQuery was updated to 1.1.3.1
 - jqModal was updated to 2007.07.30 +r10
+- P4A_DB_Navigator drag&drop functionalities were implemented thru jQuery
 
 2.1.3
 - a javascript error in p4a.js was fixed
