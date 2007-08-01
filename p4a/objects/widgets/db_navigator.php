@@ -254,17 +254,14 @@ class P4A_DB_Navigator extends P4A_Widget
 		// movements are allowed ONLY IF AJAX IS ACTIVE!!
 		// that's because we use too complex javascript for old handhelds
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
-			if ($this->allow_roots_movement or strlen($recursor)) {
-				$js .= "<script type='text/javascript'>";
-				$js .= "new Draggable('{$obj_id}_{$current}', {revert:true});";
-				foreach ($rows as $record) {
-					$js .= "Droppables.add('{$obj_id}_{$record[$pk]}', {hoverclass:'hoverclass', onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value='{$record[$pk]}'; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
-				}
-				if ($this->allow_movement_to_root) {
-					$js .= "Droppables.add('{$obj_id}', {hoverclass:'hoverclass', onDrop:function(element) {\$('{$this->field_to_update_on_movement}input').value=''; executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
-				}
-				$js .= "</script>";
+
+			$js .= "<script type='text/javascript'>\n";
+			$js .= "\$('#{$obj_id}_{$current}').Draggable({revert:true,fx:200,ghosting:true});\n";
+			$js .= "\$('#{$obj_id} li a').Droppable({accept:'active_node',hoverclass:'hoverclass',ondrop:function(){\$('#{$this->field_to_update_on_movement}input').val(\$(this).parent().attr('id').split('_')[1]); executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
+			if ($this->allow_movement_to_root) {
+				$js .= "\$('#{$obj_id}').Droppable({accept:'active_node',hoverclass:'hoverclass',ondrop:function(){\$('#{$this->field_to_update_on_movement}input').val(''); executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 			}
+			$js .= "</script>\n";
 		}
 
 		if (strlen($js) and $this->allow_movement_to_root) {
@@ -318,7 +315,7 @@ class P4A_DB_Navigator extends P4A_Widget
 				$link_suffix = "</a>";
 			}
 
-			$return .= "<li id='{$obj_id}_{$section[$pk]}' {$selected}>{$link_prefix}{$description}{$link_suffix}\n";
+			$return .= "<li {$selected} id='{$obj_id}_{$section[$pk]}'>{$link_prefix}{$description}{$link_suffix}\n";
 
 			if ($recurse) {
 				if ($this->expand_all) {
