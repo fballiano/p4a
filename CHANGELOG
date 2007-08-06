@@ -1,3 +1,6 @@
+2.1.5
+- Hungarian translation was added (thanks to Sándor Csaba)
+
 2.1.4
 - P4A_Field::setType('color') was added with nice color picker plugin (fabrtastic) from jQuery
 - a bug with file upload error trapping was solved
