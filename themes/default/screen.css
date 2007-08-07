@@ -602,12 +602,13 @@ legend {
 /* TOOLTIP */
 /***********/
 
-.p4a_tooltip_text {
+#p4a_tooltip {
 	display: none;
 	position: absolute;
 	background: #F4F7FA;
 	border: 2px solid #4B718A;
 	padding: 10px;
+	width: 250px;
 }
 
 .p4a_tooltip_handler {

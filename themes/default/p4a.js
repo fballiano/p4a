@@ -138,11 +138,15 @@ function hidePopup()
 function showTooltip(handler, text_id)
 {
 	handler = $(handler);
-	var tooltip = $('#' + text_id);
-	tooltip.css('left', handler.offset().left + handler.width() + 20);
+	var tooltip = $('#p4a_tooltip');
+	if (tooltip.length == 0) {
+		tooltip = $("<div id='p4a_tooltip'></div>").appendTo("body");
+	}
+	tooltip.html($('#' + text_id).html());
+	tooltip.css('top', handler.offset().top);
+	tooltip.css('left', handler.offset().left + handler.width() + 100);
 	tooltip.jqm({overlay:0}).jqmShow();
 	handler.mouseout(function() {tooltip.jqmHide()});
-	handler.click(function() {tooltip.jqmHide()});
 }
 
 function toggleColorPicker(id)
