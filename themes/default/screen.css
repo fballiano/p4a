@@ -606,9 +606,12 @@ legend {
 	display: none;
 	position: absolute;
 	background: #F4F7FA;
+	width: 250px;
+}
+
+#p4a_tooltip_inner_container {
 	border: 2px solid #4B718A;
 	padding: 10px;
-	width: 250px;
 }
 
 .p4a_tooltip_handler {

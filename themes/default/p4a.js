@@ -142,7 +142,7 @@ function showTooltip(handler, text_id)
 	if (tooltip.length == 0) {
 		tooltip = $("<div id='p4a_tooltip'></div>").appendTo("body");
 	}
-	tooltip.html($('#' + text_id).html());
+	tooltip.html('<div id="p4a_tooltip_inner_container">' + $('#' + text_id).html() + '</div>');
 	tooltip.css('top', handler.offset().top);
 	tooltip.css('left', handler.offset().left + handler.width() + 100);
 	tooltip.jqm({overlay:0}).jqmShow();

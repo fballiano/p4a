@@ -2,6 +2,7 @@
 - Hungarian translation was added (thanks to Sándor Csaba)
 - jQuery::dimension plugin was updated to 1.0.1
 - tooltips frontend implementation (the jQuery part) was rewritten
+- tooltips css was improved for Internet Explorer
 
 2.1.4
 - P4A_Field::setType('color') was added with nice color picker plugin (fabrtastic) from jQuery
