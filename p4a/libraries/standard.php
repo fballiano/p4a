@@ -240,7 +240,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 				if(is_dir($dir .'/' . $files[$i])) {
 					$dirs[]	= $dir .'/' . $files[$i];
 				} elseif (is_file($dir .'/' . $files[$i]) and (substr($files[$i], -4) == '.php')) {
-					$_SESSION['P4A_INCLUDES'][] = $dir .'/' .$files[$i];
+					require_once $dir .'/' .$files[$i];
 				}
 			}
 

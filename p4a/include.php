@@ -145,25 +145,14 @@
 	require_once "$dir/objects/widgets/toolbars/standard.php";
 	require_once "$dir/objects/widgets/toolbars/quit.php";
 
-	//We can have more applications on same site and same browser instance
-	session_name('sn_' . preg_replace('~\W~', '_', P4A_APPLICATION_NAME) . '_includes');
-
 	//Applications Objects Includes
-	session_start();
-	if (!array_key_exists('P4A_INCLUDES', $_SESSION)) {
-		$_SESSION['P4A_INCLUDES'] = array();
-		if (defined("P4A_REQUIRE_APPLICATION")) {
-			if (strpos(P4A_REQUIRE_APPLICATION, "/") !== false) {
-				$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
-			} else {
-				$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';
-			}
-			P4A_Include_Objects($objects_dir);
+	if (defined("P4A_REQUIRE_APPLICATION")) {
+		if (strpos(P4A_REQUIRE_APPLICATION, "/") !== false) {
+			$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
+		} else {
+			$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';
 		}
-		$objects_dir = P4A_APPLICATION_DIR . '/objects';
 		P4A_Include_Objects($objects_dir);
 	}
-	foreach($_SESSION['P4A_INCLUDES'] as $include_file) {
-		require_once($include_file);
-	}
-	session_write_close();
+	$objects_dir = P4A_APPLICATION_DIR . '/objects';
+	P4A_Include_Objects($objects_dir);
