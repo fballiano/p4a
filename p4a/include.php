@@ -145,7 +145,7 @@
 	require_once "$dir/objects/widgets/toolbars/standard.php";
 	require_once "$dir/objects/widgets/toolbars/quit.php";
 
-	//Applications Objects Includes
+	//External application inclusion
 	if (defined("P4A_REQUIRE_APPLICATION")) {
 		if (strpos(P4A_REQUIRE_APPLICATION, "/") !== false) {
 			$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
@@ -154,5 +154,8 @@
 		}
 		P4A_Include_Objects($objects_dir);
 	}
-	$objects_dir = P4A_APPLICATION_DIR . '/objects';
-	P4A_Include_Objects($objects_dir);
+
+	//Application inclusion
+	if (P4A_ENABLE_AUTO_INCLUSION) {
+		P4A_Include_Objects(P4A_APPLICATION_DIR . '/objects');
+	}

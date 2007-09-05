@@ -48,8 +48,3 @@ if (P4A_EXTENDED_ERRORS) {
 } else {
 	error_reporting(E_ALL ^ E_NOTICE);
 }
-
-//We can have more applications on same site and same browser instance
-session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
-session_start();
-$action_return = null;

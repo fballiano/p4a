@@ -280,6 +280,11 @@
 
 		function &singleton($class_name = "p4a")
 		{
+			if (!isset($_SESSION)) {
+				session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
+				session_start();
+			}
+
 			if (!isset($_SESSION["p4a"])) {
 				$a =& new $class_name();
 				return $a;

@@ -255,6 +255,10 @@
 	}
 
 	//P4A SYSTEM CONSTANTS
+	if (!defined('P4A_ENABLE_AUTO_INCLUSION')) {
+		define('P4A_ENABLE_AUTO_INCLUSION', true);
+	}
+
 	if (!defined('P4A_ENABLE_RENDERING')) {
 		define('P4A_ENABLE_RENDERING', true);
 	}
