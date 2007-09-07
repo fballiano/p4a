@@ -771,9 +771,13 @@
 				return $value;
 			} else {
 				$row = $this->data->getPkRow($value);
-				if (is_array($row)){
-					return $row[$this->data_description_field];
-				}else{
+				if (is_array($row)) {
+					if (isset($row[$this->data_description_field])) {
+						return $row[$this->data_description_field];
+					} else {
+						return null;
+					}
+				} else {
 					return $value;
 				}
 			}
