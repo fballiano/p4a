@@ -4,6 +4,7 @@
 - session start was moved into the p4a::singleton() method
 - P4A_ENABLE_AUTO_INCLUSION constant was added (default true), if false disabled automatic application files inclusion thus you'll have to manually include every php file
 - jqModal was updated to 2007.07.30 +r11
+- when an AJAX request fails now we reload the page instead of printing an error
 
 2.1.5
 - Hungarian translation was added (thanks to Sándor Csaba)

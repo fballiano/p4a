@@ -87,7 +87,6 @@ function processAjaxResponse(response)
 
 function ajaxError()
 {
-	alert("Communication error");
 	document.location = 'index.php';
 }
 
