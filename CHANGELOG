@@ -7,6 +7,7 @@
 - when an AJAX request fails now we reload the page instead of printing an error
 - a bug with P4A_Table was fixed (empty descriptions on columns with external sources)
 - Malay translation was added (thanks to Eugene Teo)
+- P4A_Field_loadSelectByArray helper was added
 
 2.1.5
 - Hungarian translation was added (thanks to Sándor Csaba)
