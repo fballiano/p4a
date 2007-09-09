@@ -194,7 +194,7 @@
 		function setDefaultValue($value = NULL)
 		{
 			if ($value === NULL) {
-				$this->setValue($this->getDefaultValue());
+				$this->setNewValue($this->getDefaultValue());
 			} else {
 				$this->default_value = $value;
 			}
