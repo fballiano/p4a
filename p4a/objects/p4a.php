@@ -183,6 +183,7 @@
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.form.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.autocomplete.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
@@ -466,6 +467,26 @@
 					}
 				}
 				print preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
+			} elseif (isset($_REQUEST['_p4a_autocomplete'])) {
+				if (isset($_REQUEST['_object']) and
+					isset($_REQUEST['q']) and
+					isset($this->objects[$_REQUEST['_object']])) {
+					$object =& $this->objects[$_REQUEST['_object']];
+					$data =& $object->data;
+					$description_field = $object->getSourceDescriptionField();
+					$q = addslashes($_REQUEST['q']);
+					$where = "{$description_field} LIKE '%{$q}%'";
+					$old_where = $data->getWhere();
+					if ($old_where) {
+						$where = "({$old_where}) AND ($where)";
+					}
+					$data->setWhere($where);
+					$all = $data->getAll();
+					$data->setWhere($old_where);
+					foreach ($all as $row) {
+						print $row[$description_field] . "\n";
+					}
+				}
 			} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 				$this->_action_history_id++;
 				$this->active_mask->main();

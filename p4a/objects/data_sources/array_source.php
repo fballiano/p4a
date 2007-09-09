@@ -138,7 +138,7 @@ class P4A_Array_Source extends P4A_Data_Source
 				return $row;
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 	function deleteRow()

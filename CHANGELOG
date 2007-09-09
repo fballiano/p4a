@@ -8,6 +8,8 @@
 - a bug with P4A_Table was fixed (empty descriptions on columns with external sources)
 - Malay translation was added (thanks to Eugene Teo)
 - P4A_Field_loadSelectByArray helper was added
+- jQuery::autocomplete was added
+- P4A_Field::getAsText() now supports autocomplete feature if a P4A_DB_Source is provided with the $fiels->setSource($db_source) method
 
 2.1.5
 - Hungarian translation was added (thanks to Sándor Csaba)
