@@ -10,6 +10,7 @@
 - P4A_Field_loadSelectByArray helper was added
 - jQuery::autocomplete was added
 - P4A_Field::getAsText() now supports autocomplete feature if a P4A_DB_Source is provided with the $fiels->setSource($db_source) method
+- various bugfixes
 
 2.1.5
 - Hungarian translation was added (thanks to Sándor Csaba)

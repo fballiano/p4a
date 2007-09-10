@@ -76,7 +76,7 @@ class P4A_Data_Source extends P4A_Object
 
 		$this->_pointer = 0;
 		while ($field =& $this->fields->nextItem()) {
-			$field->setValue(NULL);
+			$field->setValue(null);
 			$field->setDefaultValue();
 		}
 
