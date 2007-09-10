@@ -152,7 +152,14 @@ function toggleColorPicker(id)
 {
 	var left = $('#' + id + 'button').offset().left + $('#' + id + 'button').width() + 10;
 	var top = $('#' + id + 'button').offset().top;
-	$('#colorpicker').css('left', left).css('top', top).farbtastic('#' + id + 'input').toggle()
+	var colorpicker = $('#colorpicker');
+	if (colorpicker.length == 0) {
+		colorpicker = $('<div id="colorpicker"></div>').appendTo("body");
+	}
+	colorpicker.css('left', left);
+	colorpicker.css('top', top);
+	colorpicker.farbtastic('#' + id + 'input');
+	colorpicker.toggle();
 }
 
 $(document).ajaxStart(function(request, settings){showLoading()});
