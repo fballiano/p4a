@@ -166,6 +166,11 @@ class P4A_DB
 		return false;
 	}
 
+	
+	function getNativeError()
+	{
+		return $this->adapter->errorMsg();
+	}
 	/**
 	 * Close the connection to the database.
 	 * @access private
