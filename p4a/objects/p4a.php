@@ -180,15 +180,15 @@
 			$this->browser_identification = $this->detectClient();
 
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.form.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.autocomplete.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			if (!$this->isHandheld()) {
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
-				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqModal.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqmodal.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
 
 				$calendar_language = P4A_I18N_DATE_CALENDAR_LANGUAGE;
