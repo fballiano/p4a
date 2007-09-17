@@ -73,7 +73,7 @@ class P4A_Base_Mask extends P4A_Mask
 	{
 		foreach ($this->mandatory_fields as $field) {
 			$value = $this->fields->$field->getNewValue();
-			if (empty($value)) {
+			if (strlen($value) == 0) {
 				return false;
 			}
 		}
