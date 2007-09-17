@@ -49,7 +49,7 @@ class P4A_Collection extends P4A_Object
     function &nextItem()
     {
         $p4a =& P4A::singleton();
-        if ($this->_pointer < $this->getNumItems()){
+        if ($this->_pointer < $this->getNumItems()) {
             $id = $this->_objects[$this->_pointer];
             $this->_pointer++;
             if (!isset($p4a->objects[$id]) or !is_object($p4a->objects[$id])) {
@@ -60,9 +60,9 @@ class P4A_Collection extends P4A_Object
             } else {
             	return $p4a->objects[$id];
             }
-        }else{
+        } else {
             $this->_pointer = 0;
-            $ret = NULL; //php 4.4 fix
+            $ret = null; //php 4.4 fix
             return $ret;
         }
     }
