@@ -244,6 +244,9 @@ class P4A_DB_Navigator extends P4A_Widget
 		$js = "";
 		$i = 0;
 		foreach ($rows as $row) {
+			if (!isset($row[$this->recursor])) {
+				$row[$this->recursor] = null;
+			}
 			$id = $row[$this->recursor];
 			if (empty($id)) {
 				$id = 0;
