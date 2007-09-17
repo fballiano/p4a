@@ -1,6 +1,6 @@
 2.1.7
 - colorpicker javascript and html was rewritten
-- jQuery was updated to 1.2
+- jQuery was updated to 1.2.1
 - jQuery::dimension was updated to 1.1.2
 - P4A_DB::getNativeError() method was added
 
