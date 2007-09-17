@@ -3,17 +3,17 @@
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <title>P4A - PHP For Applications</title>
 <head>
-  <STYLE>
-BODY { background-color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size:13px}
-A { text-decoration: none; color #6666FF; }
-A:visited { text-decoration: none; color: #6666AA; }
-A:link { text-decoration: none; color: #6666AA; }
-A:active { text-decoration: none; color: #6666AA; }
-A:hover { text-decoration: none; color: #FF6666 }
-OL,UL,P,BODY,TD,TR,TH,FORM,SPAN,DIV { font-family: arial,helvetica,sans-serif;color: #333333 }
-H1,H2,H3,H4,H5,H6 { font-family: arial,helvetica,sans-serif }
-PRE,TT { font-family: arial, courier,sans-serif }
-  </STYLE>
+  <style type="text/css">
+	BODY { background-color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size:13px}
+	A { text-decoration: none; color #6666FF; }
+	A:visited { text-decoration: none; color: #6666AA; }
+	A:link { text-decoration: none; color: #6666AA; }
+	A:active { text-decoration: none; color: #6666AA; }
+	A:hover { text-decoration: none; color: #FF6666 }
+	OL,UL,P,BODY,TD,TR,TH,FORM,SPAN,DIV { font-family: arial,helvetica,sans-serif;color: #333333 }
+	H1,H2,H3,H4,H5,H6 { font-family: arial,helvetica,sans-serif }
+	PRE,TT { font-family: arial, courier,sans-serif }
+  </style>
 </head>
 <body>
 <h1>P4A - PHP For Applications</h1>

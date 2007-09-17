@@ -3,6 +3,7 @@
 - jQuery was updated to 1.2.1
 - jQuery::dimension was updated to 1.1.2
 - P4A_DB::getNativeError() method was added
+- P4A_DB_Navigator's recursor is now optional, thus you can use it also for flat tables
 
 2.1.6
 - jQuery was updated to 1.1.4

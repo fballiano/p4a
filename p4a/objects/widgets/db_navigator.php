@@ -55,7 +55,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 * @var string
 	 * @access private
 	 */
-	var $recursor = "";
+	var $recursor = "__recursor";
 
 	/**
 	 * The description field name
@@ -233,8 +233,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		$pk = $this->source->getPk();
 		$order = $this->source->_composeOrderPart();
 		$current = $this->source->fields->{$pk}->getValue();
-		$recursor = $this->source->fields->{$this->recursor}->getValue();
 		$rows = $this->source->getAll();
+		if (isset($this->source->fields->{$this->recursor})) {
+			$recursor = $this->source->fields->{$this->recursor}->getValue();
+		}
 		if ($current === null) {
 			$current = $recursor;
 		}
@@ -254,7 +256,6 @@ class P4A_DB_Navigator extends P4A_Widget
 		// movements are allowed ONLY IF AJAX IS ACTIVE!!
 		// that's because we use too complex javascript for old handhelds
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
-
 			$js .= "<script type='text/javascript'>\n";
 			$js .= "\$('#{$obj_id}_{$current}').Draggable({revert:true,fx:200,ghosting:true});\n";
 			$js .= "\$('#{$obj_id} li a').Droppable({accept:'active_node',hoverclass:'hoverclass',ondrop:function(){\$('#{$this->field_to_update_on_movement}input').val(\$(this).parent().attr('id').split('_')[1]); executeAjaxEvent('{$this->field_to_update_on_movement}', 'onChange');}});\n";
