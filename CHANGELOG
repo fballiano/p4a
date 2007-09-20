@@ -1,3 +1,6 @@
+2.1.8
+- P4A_Field::fileDownloadOnClick() now throw an onFileSystemError if file does not exist (Thanks to Matteo for the bug report)
+
 2.1.7
 - colorpicker javascript and html was rewritten
 - jQuery was updated to 1.2.1

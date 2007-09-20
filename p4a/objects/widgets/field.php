@@ -1286,14 +1286,21 @@
 			$name = $this->getNewValue(0);
 			$src = P4A_UPLOADS_DIR . $this->getNewValue(1);
 			$size = $this->getNewValue(2);
-
-			header("Cache-control: private");
-			header("Content-type: application/octet-stream");
-			header("Content-Disposition: attachment; filename=\"$name\"");
-			header("Content-Length: $size");
-
-			echo readfile($src, "r");
-			die();
+			
+			if (file_exists($src)) {
+				header("Cache-control: private");
+				header("Content-type: application/octet-stream");
+				header("Content-Disposition: attachment; filename=\"$name\"");
+				header("Content-Length: $size");
+	
+				echo readfile($src, "r");
+				die();
+			} else {
+				$e = new P4A_Error("File \"$name\" does not exist", $this);
+				if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
+					die();
+				}
+			}
 		}
 
 		/**
