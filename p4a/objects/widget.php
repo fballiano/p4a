@@ -601,7 +601,7 @@
 		 * @return string
 		 * @access public
 		 */
-		function composeStringActions($params = NULL)
+		function composeStringActions($params = null, $check_enabled_state = true)
 		{
   			$p4a =& P4A::singleton();
 
@@ -618,9 +618,8 @@
   				$sParams = substr($sParams, 0, -2);
   			}
 
-  			foreach ($this->actions as $action=>$action_data)
-			{
-				if (!$this->isEnabled()) {
+  			foreach ($this->actions as $action=>$action_data) {
+				if ($check_enabled_state and !$this->isEnabled()) {
 					return '';
 				}
 

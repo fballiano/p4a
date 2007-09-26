@@ -278,11 +278,11 @@
 						$headers[$i]['order']  = '';
 						$headers[$i]['action'] = '';
 					} else {
-						$headers[$i]['value']		= $col->getLabel();
-						$headers[$i]['order']		= null;
+						$headers[$i]['value'] = $col->getLabel();
+						$headers[$i]['order'] = null;
 
 						if ($is_orderable and $col->isOrderable()) {
-							$headers[$i]['action'] = $col->composeStringActions();
+							$headers[$i]['action'] = $col->composeStringActions(null, false);
 						} else {
 							$headers[$i]['action'] = "";
 						}
@@ -1010,8 +1010,9 @@
 				}
 
 				foreach($aCols as $col_name) {
-					$aReturn[$i]['cells'][$j]['action'] = ($enabled and $row_enabled) ? $this->composeStringActions(array($row_number, $col_name)) : '';
-					$aReturn[$i]['cells'][$j]['clickable'] = ($enabled and $row_enabled) ? 'clickable' : '';
+					$col_enabled = $parent->cols->$col_name->isEnabled();
+					$aReturn[$i]['cells'][$j]['action'] = ($enabled and $row_enabled and $col_enabled) ? $this->composeStringActions(array($row_number, $col_name)) : '';
+					$aReturn[$i]['cells'][$j]['clickable'] = ($enabled and $row_enabled and $col_enabled) ? 'clickable' : '';
 
 					if ($parent->cols->$col_name->data) {
 						$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getDescription($row[$col_name]);
