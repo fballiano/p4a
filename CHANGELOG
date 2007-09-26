@@ -1,5 +1,6 @@
 2.1.8
 - P4A_Field::fileDownloadOnClick() now throw an onFileSystemError if file does not exist (Thanks to Matteo for the bug report)
+- A bug on P4A_Frame and P4A_fieldset managing objects that were destroyed in the software flow was fixed, now those objects are deanchored too
 
 2.1.7
 - colorpicker javascript and html was rewritten

@@ -82,14 +82,14 @@ class P4A_Fieldset extends P4A_Frame
 			$row_html = "\n<div class='row'>";
 			$one_visible = false;
 
-			foreach ($row as $obj) {
+			foreach ($row as $j=>$obj) {
 				$object =& $p4a->getObject($obj["id"]);
-				$display = $object->isVisible() ? 'block' : 'none';
-
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
 				} else {
 					unset($p4a->objects[$obj["id"]]);
+					unset($this->_map[$i][$j]);
+					if (empty($this->_map[$i])) unset($this->_map[$i]);
 					$as_string = '';
 				}
 
@@ -102,6 +102,7 @@ class P4A_Fieldset extends P4A_Frame
 						$margin = "margin";
 					}
 					$margin_value = $obj["margin"];
+					$display = $object->isVisible() ? 'block' : 'none';
 					$row_html .= "\n\t<div style='padding:2px 0px;display:$display;float:$float;$margin:$margin_value'>";
 					$row_html .= "\n\t\t$as_string";
 					$row_html .= "\n\t</div>";
