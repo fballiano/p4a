@@ -3,6 +3,7 @@
 - A bug on P4A_Frame and P4A_fieldset managing objects that were destroyed in the software flow was fixed, now those objects are deanchored too
 - P4A_Table_Col now can be disabled so user won't be able to click on the cells of the column (Thanks to Alberto)
 - P4A_Widget::composeStringAction() now supports a second parameter "check_enabled_state", default to true
+- ADODB was update to 496
 
 2.1.7
 - colorpicker javascript and html was rewritten
