@@ -77,12 +77,13 @@ class P4A_Tab_Pane extends P4A_Widget
 	 * The new page is a P4A_Frame
 	 * @access public
 	 */
-	function addPage($page_name, $label=null)
+	function &addPage($page_name, $label=null)
 	{
 		$this->pages->build('p4a_frame', $page_name);
 		if ($label !== null) {
 			$this->pages->$page_name->setLabel($label);
 		}
+		return $this->pages->$page_name;
 	}
 
 	/**
