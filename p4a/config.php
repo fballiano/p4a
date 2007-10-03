@@ -206,6 +206,11 @@
 			define('P4A_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_THEME_PATH);
 		}
 	}
+	
+	//Image configuration
+	if (!defined('P4A_TABLE_THUMB_HEIGHT')) {
+		define('P4A_TABLE_THUMB_HEIGHT',40);
+	}
 
 	//Icons configuration
 	if (!defined('P4A_ICONS_NAME')){
