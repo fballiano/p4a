@@ -1,17 +1,19 @@
-<div flexy:raw="{style:h}">
-{toolbar:h}
+<div <?php echo $style?>>
+<?php echo $toolbar?>
 
 <table class="border_box p4a_calendar p4a_calendar_day">
 <tr>
-	<th colspan="2" class="p4a_calendar_header">{dayname}</th>
+	<th colspan="2" class="p4a_calendar_header"><?php echo $dayname?></th>
 </tr>
-<tr flexy:foreach="hours,hour">
-	<th class="p4a_calendar_week_header2">{hour[time]}</th>
+<?php foreach ($hours as $hour): ?>
+<tr>
+	<th class="p4a_calendar_week_header2"><?php echo $hour['time']?></th>
 	<td>
-		{foreach:hour[events],event}
-		<span class="p4a_calendar_appointment">{event[0]}</span> {event[1]}<br />
-		{end:}
+		<?php foreach ($hour['events'] as $event): ?>
+		<span class="p4a_calendar_appointment"><?php echo $event[0]?></span> <?php echo $event[1]?><br />
+		<?php endforeach; ?>
 	</td>
 </tr>
+<?php endforeach; ?>
 </table>
 </div>

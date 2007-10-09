@@ -1,28 +1,35 @@
-<div flexy:raw="{style:h}">
-{toolbar:h}
+<div <?php echo $style?>>
+<?php echo $toolbar?>
 
 <table class="border_box p4a_calendar">
 <tr>
 	<th>&nbsp;</th>
-	<th class="p4a_calendar_header" flexy:foreach="weekdays,dayname">{dayname}</th>
+	<?php foreach ($weekdays as $dayname): ?>
+	<th class="p4a_calendar_header"><?php echo $dayname ?></th>
+	<?php endforeach; ?>
 </tr>
-<tr flexy:foreach="weeks,week">
-	<th class="p4a_calendar_weeknumber" flexy:raw="{week[week_actions]:h}">{week[week_number]}</th>
-	{foreach:week[days],day}
-	<td class="border_box" flexy:if="day[day_number]">
+<?php foreach ($weeks as $week): ?>
+<tr>
+	<th class="p4a_calendar_weeknumber" <?php echo $week['week_actions']?>><?php echo $week['week_number']?></th>
+	<?php foreach ($week['days'] as $day): ?>
+	<?php if ($day['day_number']): ?>
+	<td class="border_box">
 		<table>
-			<tr><th flexy:raw="{day[day_actions]:h}">{day[day_number]}</th></tr>
+			<tr><th <?php echo $day['day_actions']?>><?php echo $day['day_number']?></th></tr>
 			<tr>
 				<td>
-					{foreach:day[events],event}
-					<span class="p4a_calendar_appointment">{event[0]}</span> {event[1]}<br />
-					{end:}
+					<?php foreach ($day['events'] as $event): ?>
+					<span class="p4a_calendar_appointment"><?php echo $event[0]?></span> <?php echo $event[1]?><br />
+					<?php endforeach; ?>
 				</td>
 			</tr>
 		</table>
 	</td>
-	<td flexy:if="!day[day_number]">&nbsp;</td>
-	{end:}
+	<?php else: ?>
+	<td>&nbsp;</td>
+	<?php endif; ?>
+	<?php endforeach; ?>
 </tr>
+<?php endforeach; ?>
 </table>
 </div>
