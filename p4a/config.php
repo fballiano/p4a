@@ -209,7 +209,7 @@
 	
 	//Image configuration
 	if (!defined('P4A_TABLE_THUMB_HEIGHT')) {
-		define('P4A_TABLE_THUMB_HEIGHT',40);
+		define('P4A_TABLE_THUMB_HEIGHT', 40);
 	}
 
 	//Icons configuration
