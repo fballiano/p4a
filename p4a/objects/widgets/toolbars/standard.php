@@ -118,7 +118,7 @@
 		{
 			$mask =& p4a_mask::singleton($this->_mask_name);
 
-			if ($mask->data->isNew()) {
+			if ($mask->data->isNew() and $mask->data->getNumRows() > 0) {
 				$this->buttons->first->enable(FALSE);
 				$this->buttons->prev->enable(FALSE);
 				$this->buttons->next->enable(FALSE);
