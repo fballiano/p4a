@@ -985,7 +985,11 @@
 				}
 
 				$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
-				$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType()));
+				if ($this->isFormatted()) {
+					$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType()));
+				} else {
+					$sContent .= htmlspecialchars($current[$description_field]);
+				}
 				$sContent .= "</option>";
 
 				$header .= $sContent;
@@ -1028,7 +1032,11 @@
 				}
 
 				$sReturn .= "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
-				$sReturn .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
+				if ($this->isFormatted()) {
+					$sReturn .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
+				} else {
+					$sReturn .= htmlspecialchars($current[$description_field]);
+				}
 				$sReturn .= "</option>";
 
 			}
@@ -1141,7 +1149,11 @@
 
 				$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 				$sContent .= "<label for='{$id}_{$key}input'>";
-				$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType());
+				if ($this->isFormatted()) {
+					$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType());
+				} else {
+					$sContent .= $current[$description_field];
+				}
 				$sContent .= "</label>";
 				$sContent .= '</div>';
 			}
