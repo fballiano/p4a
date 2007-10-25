@@ -30,9 +30,9 @@ phpdoc -q on -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - 
 cd $PKGDIR
 rm p4a/.project
 rm p4a/.buildpath
-rm p4a/.cache
-rm p4a/.settings
 rm p4a/build.sh
+rm -rf p4a/.cache
+rm -rf p4a/.settings
 rm -rf p4a/contribs
 rm -rf p4a/themes/default/widgets/calendar
 rm -rf `find -type d -name '.svn'`
