@@ -300,10 +300,6 @@
 		 */
 		function close()
 		{
-			$id = session_id();
-			session_destroy();
-			session_id(substr($id, 0, -3));
-			session_start();
 			session_destroy();
 		}
 
