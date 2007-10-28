@@ -1,3 +1,6 @@
+2.1.9
+- changed browser detection libray inclusion
+
 2.1.8
 - P4A_Field::fileDownloadOnClick() now throw an onFileSystemError if file does not exist (Thanks to Matteo for the bug report)
 - A bug on P4A_Frame and P4A_fieldset managing objects that were destroyed in the software flow was fixed, now those objects are deanchored too

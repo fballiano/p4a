@@ -227,7 +227,7 @@
 
 		function detectClient()
 		{
-			require_once 'Net/UserAgent/Detect.php';
+			require_once dirname(dirname(__FILE__)) . '/libraries/pear/Net/UserAgent/Detect.php';
 			Net_UserAgent_Detect::detect();
 
 			$this->internet_explorer = Net_UserAgent_Detect::isIE();
