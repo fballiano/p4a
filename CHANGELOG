@@ -1,5 +1,6 @@
 2.1.9
 - changed browser detection libray inclusion
+- a bug with P4A::close() method was fixed
 
 2.1.8
 - P4A_Field::fileDownloadOnClick() now throw an onFileSystemError if file does not exist (Thanks to Matteo for the bug report)
