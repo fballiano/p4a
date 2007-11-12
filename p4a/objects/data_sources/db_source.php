@@ -582,51 +582,53 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             $pks = $this->getPk();
-            $pk_value = $this->fields->$pks->getNewValue();
-
-            foreach ($this->_multivalue_fields as $fieldname=>$aField) {
-                $fk_table = $aField["table"];
-                $fk_field = $aField["fk_field"];
-                $fk = $aField["fk"];
-                $old_fk_values = $db->adapter->getCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
-                $fk_values = $this->fields->$fieldname->getNewValue();
-
-                if (!is_array($old_fk_values)) $old_fk_values = array();
-                if (!is_array($fk_values)) $fk_values = array();
-
-                $toadd = array_diff($fk_values, $old_fk_values);
-                $toremove = array_diff($old_fk_values, $fk_values);
-
-				if (!empty($toremove)) {
-					foreach ($toremove as $k=>$v) {
-						$toremove[$k] = array($pk_value, $v);
-					}
-	                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", $toremove);
-	                if ($db->adapter->metaError()) {
-	                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
-	                }
+			$pk_values = array();  
+			if (is_string($pks)) {
+				$pk_values[] = $pks;
+			} else {
+				foreach ($pks as $pk) {
+					$pk_values[] = $pk;
 				}
+			}
 
-                if (!empty($toadd)) {
-					foreach ($toadd as $k=>$v) {
-						$toadd[$k] = array($pk_value, $v);
+			foreach ($pk_values as $pk) {
+				$pk_value = $this->fields->$pk->getNewValue();  
+	            foreach ($this->_multivalue_fields as $fieldname=>$aField) {
+	                $fk_table = $aField["table"];
+	                $fk_field = $aField["fk_field"];
+	                $fk = $aField["fk"];
+	                $old_fk_values = $db->adapter->getCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
+	                $fk_values = $this->fields->$fieldname->getNewValue();
+	
+	                if (!is_array($old_fk_values)) $old_fk_values = array();
+	                if (!is_array($fk_values)) $fk_values = array();
+	
+	                $toadd = array_diff($fk_values, $old_fk_values);
+	                $toremove = array_diff($old_fk_values, $fk_values);
+	
+					if (!empty($toremove)) {
+						foreach ($toremove as $k=>$v) {
+							$toremove[$k] = array($pk_value, $v);
+						}
+		                $res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", $toremove);
+		                if ($db->adapter->metaError()) {
+		                    P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
+		                }
 					}
-                    $res = $db->adapter->execute("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", $toadd);
-                    if ($db->adapter->metaError()) {
-                        P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
-                    }
-                }
-            }
+	
+	                if (!empty($toadd)) {
+						foreach ($toadd as $k=>$v) {
+							$toadd[$k] = array($pk_value, $v);
+						}
+	                    $res = $db->adapter->execute("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", $toadd);
+	                    if ($db->adapter->metaError()) {
+	                        P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
+	                    }
+	                }
+	            }
+			}
 
-            if (is_string($pks)) {
-                $row = $this->getPkRow($this->fields->$pks->getNewValue());
-            } else {
-                $pk_values = array();
-                foreach($pks as $pk){
-                    $pk_values[] = $this->fields->$pk->getNewValue();
-                }
-                $row = $this->getPkRow($pk_values);
-            }
+			$row = $this->getPkRow($pk_values);
             $this->resetNumRows();
             if ($row) {
                 foreach($row as $field=>$value){
@@ -636,7 +638,6 @@ class P4A_DB_Source extends P4A_Data_Source
             } else {
                 $this->firstRow();
             }
-
         }
     }
 

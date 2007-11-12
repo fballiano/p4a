@@ -1,3 +1,6 @@
+2.2.0
+- a bug P4A_DB_Source::saveRow() when multiple primary keys were used was solved (thanks to Edr)
+
 2.1.9
 - changed browser detection libray inclusion
 - a bug with P4A::close() method was fixed
