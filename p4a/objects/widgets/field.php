@@ -1627,4 +1627,50 @@
 		{
 			return $this->rich_textarea_toolbars;
 		}
+		
+		
+		/**
+		 * 
+		 */
+		function renameFile($new_name,$maintain_extension = TRUE)
+		{
+			if ($this->getType()=='file' or $this->getType()=='image') {
+				$value = $this->getNewValue();
+				$value = P4A_File2Array($value);
+				$filename = $value['name'];
+				$aParts = explode('.',$filename);
+				if ($maintain_extension) {
+					if (sizeof($aParts) > 1) {
+						$ext = '.' . array_pop( $aParts );
+						$new_filename = $new_name . $ext;
+					} else {
+						$new_filename = $new_name;
+					}
+				} else {
+					$new_filename = $new_name;
+				}
+				
+				$value['name'] = $new_filename;
+
+				$old_path = $value['path'];
+				$path = explode('/',$value['path']);
+				array_pop($path);
+				$path[] = $new_filename;
+				$path = implode('/',$path);
+				$value['path'] = $path;
+
+				$url = explode('/',$value['url']);
+				array_pop($url);
+				$url[] = $new_filename;
+				$url = implode('/',$url);
+				$value['url'] = $url;
+
+				$old_position = P4A_UPLOADS_DIR . $old_path;
+				$new_position = P4A_UPLOADS_DIR . $value['path'];
+				rename($old_position,$new_position);
+
+				$value = P4A_Array2File($value);
+				$this->setNewValue($value);
+			}
+		}
 	}
