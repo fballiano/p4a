@@ -604,8 +604,7 @@
 		{
 			$p4a =& p4a::singleton();
 
-			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
-			$return .= "<div>\n";
+			$return  = "<form method='post' enctype='multipart/form-data' id='p4a-main-form' onsubmit='return false' action='.' class='x-form'>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
 			$return .= "<input type='hidden' name='_ajax' value='0' />\n";
@@ -625,7 +624,7 @@
 		 */
 		function maskClose()
 		{
-			return "</div>\n</form>";
+			return "</form>";
 		}
 
 		/**

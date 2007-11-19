@@ -1,14 +1,35 @@
+Ext.P4AViewport = Ext.extend(Ext.Container, {
+    initComponent : function(a) {
+        Ext.P4AViewport.superclass.initComponent.call(this);
+        document.getElementsByTagName('html')[0].className += ' x-viewport';
+        this.el = Ext.get('p4a-main-form');
+        this.el.setHeight = Ext.emptyFn;
+        this.el.setWidth = Ext.emptyFn;
+        this.el.setSize = Ext.emptyFn;
+        this.el.dom.scroll = 'no';
+        this.allowDomMove = false;
+        this.autoWidth = true;
+        this.autoHeight = true;
+        Ext.EventManager.onWindowResize(this.fireResize, this);
+        this.renderTo = this.el;
+    },
+
+    fireResize : function(w, h){
+        this.fireEvent('resize', this, w, h, w, h);
+    }
+});
+Ext.reg('p4aviewport', Ext.P4AViewport);
+
 function prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4)
 {
-	updateAllRichTextEditors(document.forms['p4a']);
+	var f = document.getElementById("p4a-main-form");
+	//updateAllRichTextEditors(f);
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
 	if (!param4) param4 = "";
-
-	var f = document.getElementById('p4a');
-
+	
 	f._object.value = object_name;
 	f._action.value = action_name;
 	f.param1.value = param1;
@@ -19,11 +40,16 @@ function prepareExecuteEvent(object_name, action_name, param1, param2, param3, p
 	if (typeof f.onsubmit == "function") f.onsubmit();
 }
 
-function executeEvent(object_name, action_name, param1, param2, param3, param4)
-{
+executeEvent = function(object_name, action_name, param1, param2, param3, param4) {
+	object_name = this.getId();
+	for (var event in this.events) {
+		action_name = "on" + event;
+	}
+	alert(action_name);
 	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
-	document.getElementById('p4a')._ajax.value = 0;
-	document.getElementById('p4a').submit();
+	var f = document.getElementById("p4a-main-form");
+	f._ajax.value = 0;
+	f.submit();
 }
 
 function isReturnPressed(event)
@@ -162,6 +188,8 @@ function toggleColorPicker(id)
 	colorpicker.toggle();
 }
 
+/*
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
+*/

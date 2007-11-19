@@ -759,6 +759,11 @@
 		 */
 		function getAsString()
 		{
+			$type = $this->type;
+			$new_method = 'getAs' . $type;
+			return $this->$new_method();
+			
+			
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<span id='{$id}' class='hidden'></span>";
@@ -800,6 +805,19 @@
 		function getAsText()
 		{
 			$id = $this->getId();
+			$label = $this->getLabel();
+			$new_value = $this->getValue();
+			
+			$disabled = "";
+			if (!$this->isEnabled()) {
+				$disabled = "disabled: true,";
+			}
+			
+			return "new Ext.form.TextField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			
+			
+			/*
+			$id = $this->getId();
 			$header 		= "<input id='{$id}input' type='text' class='border_color1 font_normal' ";
 			$close_header 	= '/>';
 
@@ -812,10 +830,23 @@
 				$sReturn .= "<script type='text/javascript'>\$(function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true});});</script>";
 			}
 			return $sReturn;
+*/
 		}
 
 		function getAsDate()
 		{
+			$id = $this->getId();
+			$label = $this->getLabel();
+			$new_value = $this->getNewValue();
+			
+			$disabled = "";
+			if (!$this->isEnabled()) {
+				$disabled = "disabled: true,";
+			}
+			
+			return "new Ext.form.DateField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			
+			/*
 			$p4a =& P4A::singleton();
 
 			if ($this->isEnabled()) {
@@ -837,6 +868,7 @@
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 
 			return $sReturn;
+*/
 		}
 
 		/**
@@ -949,6 +981,34 @@
 		 */
 		function getAsSelect()
 		{
+			$id = $this->getId();
+			$label = $this->getLabel();
+			$external_data = $this->data->getAll() ;
+			$value_field = $this->getSourceValueField() ;
+			$description_field = $this->getSourceDescriptionField() ;
+			$new_value = $this->getNewValue() ;
+			
+			$data = array();
+			foreach ($external_data as $key=>$current) {
+				$value = addslashes($current[$value_field]);
+				$description = addslashes($current[$description_field]);
+				$data[] = "['$value','$description']";
+			}
+			$data = join(',', $data);
+			
+			$disabled = "";
+			if (!$this->isEnabled()) {
+				$disabled = "disabled: true,";
+			}
+			
+			$allow_blank = "";
+			if (!$this->isNullAllowed()) {
+				$allow_blank = "allowBlank: false,";
+			}
+			
+			return "new Ext.form.ComboBox({id:'$id', fieldLabel:'$label', value:'$new_value', $disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})})";
+			
+			/*
 			$p4a =& P4A::singleton();
 			$id = $this->getId();
 
@@ -996,6 +1056,7 @@
 			}
 
 			return $this->composeLabel() . $header . $footer ;
+*/
 		}
 
 		function getAsMultiselect()
@@ -1626,51 +1687,5 @@
 		function getRichTextareaToolbars()
 		{
 			return $this->rich_textarea_toolbars;
-		}
-		
-		
-		/**
-		 * 
-		 */
-		function renameFile($new_name,$maintain_extension = TRUE)
-		{
-			if ($this->getType()=='file' or $this->getType()=='image') {
-				$value = $this->getNewValue();
-				$value = P4A_File2Array($value);
-				$filename = $value['name'];
-				$aParts = explode('.',$filename);
-				if ($maintain_extension) {
-					if (sizeof($aParts) > 1) {
-						$ext = '.' . array_pop( $aParts );
-						$new_filename = $new_name . $ext;
-					} else {
-						$new_filename = $new_name;
-					}
-				} else {
-					$new_filename = $new_name;
-				}
-				
-				$value['name'] = $new_filename;
-
-				$old_path = $value['path'];
-				$path = explode('/',$value['path']);
-				array_pop($path);
-				$path[] = $new_filename;
-				$path = implode('/',$path);
-				$value['path'] = $path;
-
-				$url = explode('/',$value['url']);
-				array_pop($url);
-				$url[] = $new_filename;
-				$url = implode('/',$url);
-				$value['url'] = $url;
-
-				$old_position = P4A_UPLOADS_DIR . $old_path;
-				$new_position = P4A_UPLOADS_DIR . $value['path'];
-				rename($old_position,$new_position);
-
-				$value = P4A_Array2File($value);
-				$this->setNewValue($value);
-			}
 		}
 	}

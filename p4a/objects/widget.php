@@ -133,6 +133,8 @@
 		 * @var array
 		 */
 		var $_temp_vars = array();
+		
+		var $tooltip = "";
 
 		/**
 		 * Class constructor.
@@ -369,10 +371,10 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setWidth($value = null, $unit = 'px')
+		function setWidth($value = null)
 		{
 			if (is_numeric($value)) {
-				$value = $value . $unit;
+				$value = $value;
 			}
 			if ($value === null) {
 				$this->unsetStyleProperty('width');
@@ -971,5 +973,15 @@
 		{
 			$p4a =& p4a::singleton();
 			$p4a->redesign($this->getId());
+		}
+		
+		function setTooltip($text)
+		{
+			$this->tooltip = $text;
+		}
+		
+		function getTooltip()
+		{
+			return $this->tooltip;
 		}
 	}

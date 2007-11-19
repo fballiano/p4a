@@ -65,6 +65,25 @@ class P4A_Fieldset extends P4A_Frame
 
 	function getAsString()
 	{
+		$p4a =& P4A::singleton();
+		$id = $this->getId();
+		$objects = array();
+		foreach($this->_map as $objs) {
+			foreach ($objs as $obj) {
+				$object =& $p4a->getObject($obj["id"]);
+				$objects[] = $object->getAsString();
+			}
+		}
+		
+		$return = "new Ext.form.FieldSet({
+			id: '$id',
+			title: '" . $this->getTitle() . "',
+			autoHeight: true,
+			items: [" . join(',', $objects) . "]
+		})";
+		return $return;
+		
+		/*
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
@@ -118,6 +137,7 @@ class P4A_Fieldset extends P4A_Frame
 		$string .= "<div class='br'></div>";
 		$string .= "</fieldset>\n\n";
 		return $string;
+*/
 	}
 
 }

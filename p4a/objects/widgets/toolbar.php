@@ -70,8 +70,6 @@
 		{
 			parent::P4A_Widget($name);
 			$this->build("p4a_collection", "buttons");
-
-			$this->setOrientation('horizontal');
 		}
 
 		/**
@@ -182,22 +180,22 @@
 		}
 
 		/**
-		 * Sets the rendering orientation for the toolbar.
-		 * @param string		Orientation (horizontal|vertical).
-		 * @access public
-		 */
-		function setOrientation($orientation)
-		{
-			$this->orientation = $orientation;
-		}
-
-		/**
 		 * Returns the HTML rendered widget.
 		 * @return string
 		 * @access public
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
+			$buttons = array();
+			while($button = $this->buttons->nextItem()) {
+  				$buttons[] = $button->getAsString();
+			}
+			$buttons = join(',', $buttons);
+			
+			return "new Ext.Toolbar({id:'$id',items:[$buttons]})";
+			
+			/*
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<div id='$id' class='hidden'></div>";
@@ -211,6 +209,7 @@
  			$string .= "<div class='br'></div>\n";
 			$string .= "</div>\n\n";
 			return $string;
+			*/
 		}
 
 	}

@@ -1,16 +1,4 @@
-<?php
-	if (isset($menu) and isset($top)) {
-		$_top_margin = 70;
-	} elseif (isset($menu)) {
-		$_top_margin = 25;
-	} elseif (isset($top)) {
-		$_top_margin = 45;
-	} else {
-		$_top_margin = 0;
-	}
-
-	echo $_xml_header;
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=<?php echo $_charset?>" />
@@ -23,68 +11,65 @@
 <?php foreach ($_css as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media))?>"></link>
 <?php endforeach; ?>
-</head>
 
-<body onload="setFocus('<?php echo $_focus_id?>');hideLoading();">
-<div id='body'>
-<div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
-<?php echo $this->maskOpen()?>
+<style type="text/css">
 
-<?php if (isset($sidebar_left)): $_sidebar_left_width='280';?>
-<div id="sidebar_left" class="border_color4 background_box" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_left_width?>px;">
-	<?php echo $sidebar_left?>
-</div>
-<?php endif; ?>
+body {
+ font-family: sans-serif;
+}
 
-<?php if (isset($sidebar_right)):  $_sidebar_right_width='280';?>
-<div id="sidebar_right" class="border_color4 background_box" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width?>px;">
-	<?php echo $sidebar_right?>
-</div>
-<?php endif; ?>
+#p4a-footer {
+ text-align: center;
+ font-size: 80%;
+ padding: 5px;
+}
 
-<!-- TOP -->
-<div id="topContainer">
-	<?php if (isset($menu)): ?>
-	<div id="menu">
-		<?php echo $menu?>
-		<div class="br"></div>
-	</div>
-	<?php endif; ?>
+#p4a-header {
+ padding: 5px;
+ text-align: center;
+}
 
-	<?php if (isset($top)): ?>
-	<div id="top">
-		<?php echo $top?>
-	</div>
-	<?php endif; ?>
-</div>
+#p4a-main-region {
 
-<!-- MAIN  -->
-<div id="mainContainer" style="margin-top:<?php echo $_top_margin?>px; <?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width}px;"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width}px;"?>">
-	<?php if (strlen($_title)): ?>
-	<h2><?php echo $_icon . $_title?></h2>
-	<?php endif; ?>
+}
 
-	<?php if (isset($main)): ?>
-	<div id="sheetContainer">
-		<?php echo $main?>
-	</div>
-	<?php endif; ?>
+#p4a-main-form {
+ height:100%;
+}
 
-	<!-- The following line is a copyright note, you've to keep it as is, we think it's a small price for P4A. -->
-	<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?></div>
-</div>
+.p4a_frame {
+ margin: auto;
+}
 
-<!-- POPUP -->
-<div style="display:block"><div id="popup" style="display:none"><?php echo $_popup?></div></div>
+</style>
 
-<?php echo $this->maskClose()?>
-</div>
-
-<?php if (strlen($_popup)): ?>
 <script type="text/javascript">
-showPopup();
-</script>
-<?php endif; ?>
 
+Ext.BLANK_IMAGE_URL = '<?php echo P4A_THEME_PATH ?>/extjs/resources/images/default/s.gif';
+
+Ext.onReady(function() {
+	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+	Ext.QuickTips.init();
+	
+	viewport = new Ext.P4AViewport({
+		layout:'border',
+		items: [
+			{
+				region: 'center',
+				id: 'p4a-main-region',
+				autoScroll: true,
+				items: [<?php echo $main; ?>]
+			},
+			{region: 'north', tbar:<?php echo $menu; ?>},
+			{region: 'west', html:'ciao', split:true},
+			{region: 'south', html: '<div id="p4a-footer">Powered by P4A - PHP For Applications <?php echo P4A_VERSION ?></div>'}
+		]
+	});
+});
+</script>
+</head>
+<body>
+	<?php echo $this->maskOpen() ?>
+	<?php echo $this->maskClose() ?>
 </body>
 </html>

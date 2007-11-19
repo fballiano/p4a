@@ -52,7 +52,7 @@
 		 * @var P4A_Collection
 		 * @access public
 		 */
-		var $items = NULL;
+		var $items = null;
 
 		/**
 		 * The element/subelement currently active.
@@ -143,6 +143,17 @@
 		function getAsString()
 		{
 			$id = $this->getId();
+			
+			$items = array();
+			while ($item =& $this->items->nextItem()) {
+				$items[] = $item->getAsString();
+			}
+			$items = join(',', $items);
+			
+			return "new Ext.menu.Menu({id:'$id',items:[$items]})";
+			
+			/*
+			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<div id='$id' class='hidden'></div>";
 			}
@@ -156,6 +167,7 @@
 				$sReturn .= "</ul>";
 			}
 			return $sReturn;
+			*/
 		}
 	}
 
@@ -334,6 +346,25 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
+			$text = $this->getLabel();
+
+			$tooltip = $this->getTooltip();
+			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";
+			
+			if ($this->hasItems()) {
+				$items = array();
+				while ($item =& $this->items->nextItem()) {
+					$items[] = $item->getAsString();
+				}
+				$items = join(',', $items);
+				$items = ",menu:[$items]";
+			}
+			
+			
+			return "new Ext.menu.Item({id:'$id',text:'$text',handler:executeEvent{$items}{$tooltip}})";
+			
+			/*
 			if (!$this->isVisible()) {
 				return "";
 			}
@@ -370,5 +401,6 @@
 			}
 			$sReturn .= "</li>";
 			return $sReturn;
+*/
 		}
 	}

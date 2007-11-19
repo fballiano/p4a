@@ -50,8 +50,10 @@
 		* @access private
 		* @var string
 		*/
-		var $_icon = NULL;
+		var $_icon = null;
 		var $_size = 32;
+		
+		var $menu = null;
 
 		/**
 		 * Class constructor.
@@ -59,7 +61,7 @@
 		 * @param string			The icon taken from icon set (file name without extension).
 		 * @access private
 		 */
-		function P4A_Button($name, $icon = NULL)
+		function P4A_Button($name, $icon = null)
 		{
 			parent::P4A_Widget($name);
 			$this->addAction('onClick');
@@ -68,6 +70,12 @@
 			}
 
 			$this->setValue($name);
+		}
+		
+		function addMenu()
+		{
+			$this->build("p4a_menu", "menu");
+			return $this->menu;
 		}
 
 		/**
@@ -131,6 +139,23 @@
 		 */
 		function getAsString()
 		{
+			$id = $this->getId();
+			$text = $this->getValue();
+			
+			$tooltip = $this->getTooltip();
+			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";
+			
+			$handler = "";
+			if (isset($this->actions['onclick'])) $handler = ",handler:executeEvent";
+			
+			$menu = "";
+			if (is_object($this->menu)) {
+				$menu = ",menu:" . $this->menu->getAsString();
+			}
+			
+			return "new Ext.Button({id:'$id',text:'$text'{$menu}{$tooltip}{$handler}})";
+			
+			/*
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<span id='$id' class='hidden'></span>";
@@ -211,6 +236,7 @@
 			$sReturn .= "$footer\n";
 			$sReturn = "<span id='$id'>{$sReturn}</span>";
 			return $sReturn;
+*/
 		}
 
 		/**

@@ -97,6 +97,32 @@ class P4A_Frame extends P4A_Widget
 
 	function getAsString()
 	{
+		$p4a =& P4A::singleton();
+		$id = $this->getId();
+		$objects = array();
+		foreach($this->_map as $objs) {
+			foreach ($objs as $obj) {
+				$object =& $p4a->getObject($obj["id"]);
+				$objects[] = $object->getAsString();
+			}
+		}
+		
+		$width = $this->getWidth();
+		$width = strlen($width) ? "width: $width," : "";
+		
+		$return = "new Ext.Panel({
+			id: '$id',
+			layout: 'form',
+			autoHeight: true,
+			$width
+			border: false,
+			cls: 'p4a_frame',
+			items: [" . join(',', $objects) . "]
+		})";
+		return $return;
+		
+		
+		/*
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
@@ -150,5 +176,6 @@ class P4A_Frame extends P4A_Widget
 		$string .= "<div class='br'></div>";
 		$string .= "</div>\n\n";
 		return $string;
+*/
 	}
 }
