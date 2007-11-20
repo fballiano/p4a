@@ -60,7 +60,7 @@ Ext.onReady(function() {
 				autoScroll: true,
 				items: [<?php echo $main; ?>]
 			},
-			{region: 'north', tbar:<?php echo $menu; ?>},
+			{region: 'north', tbar:<?php echo $menu; ?>, margins:'0 0 5 0', border: false},
 			{region: 'west', html:'west region', split:true, margins:'0 0 0 5'},
 			{region: 'east', html:'east region', split:true, margins:'0 5 0 0'},
 			new Ext.BoxComponent({region: 'south', el: 'p4a-footer'})
