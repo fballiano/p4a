@@ -64,8 +64,6 @@
 			} else {
 				parent::P4A_Widget($name, $prefix, $id);
 			}
-
-			$this->addAction("onClick");
 		}
 
 		function setLabel($label)

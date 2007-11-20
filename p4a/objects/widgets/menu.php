@@ -78,7 +78,7 @@
 		 * @param string		Item's label.
 		 * @access public
 		 */
-		function &addItem($name, $label = NULL)
+		function addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 			if ($label !== NULL) {
@@ -217,7 +217,6 @@
 			parent::P4A_Widget($name);
 
 			$this->setDefaultLabel();
-			$this->addAction('onClick');
 			$this->build("P4A_Collection", "items");
 		}
 
