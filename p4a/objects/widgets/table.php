@@ -637,7 +637,7 @@
 		{
 			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
-			$this->addAjaxAction('onClick');
+			$this->useAjaxAction('onclick');
 		}
 
 		/**
@@ -1110,8 +1110,8 @@
 			$field_num_page->label->setStyleProperty("text-align", "right");
 			$field_num_page->label->setWidth(80);
 			$this->buttons->field_num_page->setWidth(30);
-			$this->buttons->field_num_page->addAjaxAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
+			$this->buttons->field_num_page->useAjaxAction('onreturnpress');
 			$this->anchorRight($field_num_page);
 
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
@@ -1149,7 +1149,7 @@
 		function addButton($button_name, $icon = null, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);
-			$button->addAjaxAction('onClick');
+			$button->useAjaxAction('onclick');
 
 			if (strlen($icon)>0) {
 				$button->setIcon($icon);

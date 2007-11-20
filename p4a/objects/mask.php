@@ -178,9 +178,9 @@
 
 			$this->build("p4a_collection", "fields");
 			$this->build("p4a_button", "close_popup_button");
-			$this->close_popup_button->addAjaxAction("onClick");
 			$this->close_popup_button->setIcon("exit");
 			$p4a->intercept($this->close_popup_button, "onClick", "closePopup");
+			$this->close_popup_button->useAjaxAction("onclick");
 
 			$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');

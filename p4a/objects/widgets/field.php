@@ -1287,10 +1287,11 @@
 					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
-					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
+					
+					$button_file_delete->useAjaxAction("onclick");
 				}
 
 				if ($this->isEnabled()) {
@@ -1441,10 +1442,11 @@
 					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
 					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
-					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
+					
+					$button_file_delete->useAjaxAction("onclick");
 				}
 
 				if ($mime_type != 'image') {

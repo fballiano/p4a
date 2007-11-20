@@ -476,46 +476,36 @@
 
 		/**
 		 * Adds an action to the implemented actions stack for the widget.
-		 * @access public
+		 * @access protected
 		 * @param string	The action's name.
-		 * @param string	The JavaScript event that triggers.
-		 * @param boolean	Action Requires confirmation?.
-		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
+		 * @param string	Text for javascript confirmation.
 		 * @param boolean	is an ajax action?
 		 */
-		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = false)
+		function addAction($action, $confirmation_text = null, $ajax = false)
 		{
 			$action = strtolower($action);
-			$event = strtolower($event);
 
-			// If not specified, the event has the same name of the action
-			if (!$event) {
-				$event = $action;
-			}
-
-			$tmp_action = array();
-			$tmp_action['event'] = $event;
-			$this->actions[$action] = $tmp_action;
-			$this->actions[$action]['require_confirmation'] = $require_confirmation;
+			$this->actions[$action] = array();
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
 			$this->actions[$action]['ajax'] = $ajax;
 		}
 
 		/**
-		 * Adds an ajax action to the implemented actions stack for the widget.
+		 * Switches an action to ajax (is AJAX is enabled).
+		 * If the action does not exists it will be created
 		 * @access public
 		 * @param string	The action's name.
-		 * @param string	The JavaScript event that triggers.
-		 * @param boolean	Action Requires confirmation?.
-		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
 		 */
-		function addAjaxAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		function useAjaxAction($action)
 		{
 			$p4a =& p4a::singleton();
-			$this->addAction($action, $event, $require_confirmation, $confirmation_text, $confirmation_text_handler, $p4a->isAjaxEnabled());
+			$action = strtolower($action);
+			
+			if (isset($this->actions[$action])) {
+				$this->actions[$action]['ajax'] = $p4a->isAjaxEnabled();
+			} else {
+				$this->addAction($action, null, $p4a->isAjaxEnabled());
+			}
 		}
 
 		/**
@@ -523,14 +513,16 @@
 		 * @access public
 		 * @param string	The action.
 		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
 		 */
-		function requireConfirmation($action, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		function requireConfirmation($action, $confirmation_text)
 		{
 			$action = strtolower($action);
-			$this->actions[$action]['require_confirmation'] = true;
-			$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
+			
+			if (isset($this->actions[$action])) {
+				$this->actions[$action]['confirmation_text'] = $confirmation_text;
+			} else {
+				$this->addAction($action, $confirmation_text);
+			}
 		}
 
 		/**
@@ -540,31 +532,7 @@
 		 */
 		function unrequireConfirmation($action)
 		{
-			$action = strtolower($action);
-			$this->actions[$action]['require_confirmation'] = false;
-		}
-
-		/**
-		 * Changes the event associated to an action.
-		 * If no event is given, here we set event=action.
-		 *
-		 * @param string	The action's name.
-		 * @param string	The JavaScript event that triggers.
-		 * @access public
-		 */
-		function changeEvent($action, $event = NULL)
-		{
-			$action = strtolower($action);
-			$event = strtolower($event);
-
-			// If not specified, the event has the same name of the action
-			if ($event === null) {
-				$event = $action;
-			}
-
-			if (array_key_exists($action, $this->actions)) {
-				$this->actions[$action]['event'] = $event;
-			}
+			$this->requireConfirmation($action, null);
 		}
 
 		/**
@@ -576,7 +544,10 @@
 		function dropAction($action)
 		{
 			$action = strtolower($action);
-			unset($this->actions[$action]);
+			
+			if (isset($this->actions[$action])) {
+				unset($this->actions[$action]);
+			}
 		}
 
 		/**
