@@ -66,10 +66,11 @@ class Products extends P4A_Mask
 		$this->source->fields->selling_price->setType("decimal");
 
 		// Customizing fields properties
-		//$this->setFieldsProperties();
+		$this->setFieldsProperties();
 		$fields = $this->fields;
 
 		// Search Fieldset
+		/*
 		$fs_search = $this->build("p4a_fieldset","fs_search");
 		$fs_search->setTitle("Search");
 		$txt_search = $this->build("p4a_field", "txt_search");
@@ -81,10 +82,11 @@ class Products extends P4A_Mask
 		$this->intercept($cmd_search, "onClick","search");
 		$fs_search->anchor($txt_search);
 		$fs_search->anchorLeft($cmd_search);
+*/
 
 		// Toolbar
-		$this->build("p4a_standard_toolbar", "toolbar");
-		$this->toolbar->setMask($this);
+		//$this->build("p4a_standard_toolbar", "toolbar");
+		//$this->toolbar->setMask($this);
 
 		// Table
 		$table = $this->build("p4a_table", "table");
@@ -108,7 +110,6 @@ class Products extends P4A_Mask
 		$fset= $this->build("p4a_fieldset", "frame");
 		$fset->setTitle("Product details");
 
-		/*
  		$fset->anchor($this->fields->product_id);
 		$fset->anchor($this->fields->category_id);
 		$fset->anchorLeft($this->fields->brand_id);
@@ -118,49 +119,33 @@ class Products extends P4A_Mask
 		$fset->anchorLeft($this->fields->discount);
  		$fset->anchor($this->fields->little_photo);
  		$fset->anchorLeft($this->fields->big_photo);
-		$fset->anchor($this->fields->is_new);
-		$fset->anchorLeft($this->fields->visible);
+		//$fset->anchor($this->fields->is_new);
+		//$fset->anchorLeft($this->fields->visible);
 		$fset->anchor($this->fields->description);
-*/
 
 		// Frame
 		$frm= $this->build("p4a_frame", "frm");
-		$frm->setWidth(730);
 		
-		$fields->brand_id->setLabel("Brand");
-		$fields->brand_id->setWidth(200);
-		$fields->brand_id->setType("date");
-		$fields->brand_id->setSource($p4a->brands);
-		$fields->brand_id->setSourceDescriptionField("description");
-		
-		/*
 		$frm->setWidth(730);
 		$frm->anchor($fs_search);
 		$frm->newRow();
-		$frm->anchorCenter($message);
-		$frm->anchor($table);
+		//$frm->anchorCenter($message);
+		//$frm->anchor($table);
   		$frm->anchor($fset);
-*/
-		
-		$fset->anchor($this->fields->product_id);
-		$fset->anchor($this->fields->category_id);
-		$frm->anchor($this->fields->brand_id);
-		$frm->anchor($fset);
-		$frm->anchor($this->fields->model);
-		$frm->anchor($this->fields->purchasing_price);
-		$frm->anchor($this->fields->selling_price);
 
 		// Mandatory Fields
+		/*
 	    $this->mf = array("product_id", "category_id", "brand_id", "model", "purchasing_price",
  					"selling_price", "description", "discount");
 		foreach($this->mf as $mf){
 			$fields->$mf->label->setFontWeight("bold");
 		}
+		*/
 
 		// Display
 		$this->display("main", $frm);
 		$this->display("menu", $p4a->menu);
-		$this->display("top", $this->toolbar);
+		//$this->display("top", $this->toolbar);
 	}
 
 	function setFieldsProperties()
@@ -205,8 +190,8 @@ class Products extends P4A_Mask
 		$fields->selling_price->setLabel("Price $");
 		$fields->selling_price->setWidth("40");
 
-		$fields->little_photo->setType("image");
-		$fields->big_photo->setType("image");
+		//$fields->little_photo->setType("image");
+		//$fields->big_photo->setType("image");
 
 		$fields->description->setType("textarea");
 		$fields->description->enableUpload();

@@ -903,6 +903,18 @@
 		function getAsTextarea()
 		{
 			$id = $this->getId();
+			$label = $this->getLabel();
+			$new_value = $this->getValue();
+			
+			$disabled = "";
+			if (!$this->isEnabled()) {
+				$disabled = "disabled: true,";
+			}
+			
+			return "new Ext.form.TextArea({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			
+			/*
+			$id = $this->getId();
 			$cols = floor($this->getWidth() / 6) - 4;
 			$rows = floor($this->getHeight() / 13);
 			$header = "<textarea id='{$id}input' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
@@ -917,6 +929,7 @@
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;
 			return $sReturn;
+*/
 		}
 
 		/**
