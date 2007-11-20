@@ -36,11 +36,12 @@ function prepareExecuteEvent(object_name, action_name, param1, param2, param3, p
 	f.param2.value = param2;
 	f.param3.value = param3;
 	f.param4.value = param4;
-
-	if (typeof f.onsubmit == "function") f.onsubmit();
 }
 
 executeEvent = function(object_name, action_name, param1, param2, param3, param4) {
+	var invalid_fields = Ext.DomQuery.select("input.x-form-invalid");
+	if (invalid_fields.length > 0) return false;
+
 	object_name = this.getId();
 	for (var event in this.events) {
 		action_name = "on" + event;
