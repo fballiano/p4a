@@ -357,11 +357,7 @@
 			}
 
 			foreach ($this->_tpl_vars as $k=>$v) {
-				if (is_object($v)) {
-					$$k = $v->getAsString();
-				} else {
-					$$k = $v;
-				}
+				$$k = $v;
 			}
 
 			$_charset = $p4a->i18n->getCharset();

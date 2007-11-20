@@ -20,16 +20,18 @@ Ext.onReady(function() {
 	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 	Ext.QuickTips.init();
 	
-	viewport = new Ext.P4AViewport({
+	<?php echo $main->getAsString() ?>
+	
+	new Ext.P4AViewport({
 		layout:'border',
 		items: [
 			{
 				region: 'center',
 				id: 'p4a-main-region',
 				autoScroll: true,
-				items: [<?php echo $main; ?>]
+				items: [<?php echo $main->getId() ?>]
 			},
-			{region: 'north', tbar:<?php echo $menu; ?>, margins:'0 0 5 0', border: false},
+			{region: 'north', tbar:<?php echo $menu->getAsString() ?>, margins:'0 0 5 0', border: false},
 			{region: 'west', html:'west region', split:true, margins:'0 0 0 5'},
 			//{region: 'east', html:'east region', split:true, margins:'0 5 0 0'},
 			new Ext.BoxComponent({region: 'south', el: 'p4a-footer'})

@@ -813,7 +813,7 @@
 				$disabled = "disabled: true,";
 			}
 			
-			return "new Ext.form.TextField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			return "$id = new Ext.form.TextField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'});\n";
 			
 			
 			/*
@@ -844,7 +844,7 @@
 				$disabled = "disabled: true,";
 			}
 			
-			return "new Ext.form.DateField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			return "$id = new Ext.form.DateField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'});\n";
 			
 			/*
 			$p4a =& P4A::singleton();
@@ -925,7 +925,7 @@
 				$height = "";
 			}
 			
-			return "new Ext.form.TextArea({id:'$id',fieldLabel:'$label',value:'$new_value'{$disabled}{$width}{$height}})";
+			return "$id = new Ext.form.TextArea({id:'$id',fieldLabel:'$label',value:'$new_value'{$disabled}{$width}{$height}});\n";
 			
 			/*
 			$id = $this->getId();
@@ -1033,7 +1033,7 @@
 				$allow_blank = "allowBlank: false,";
 			}
 			
-			return "new Ext.form.ComboBox({id:'$id', fieldLabel:'$label', value:'$new_value', $disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})})";
+			return "$id = new Ext.form.ComboBox({id:'$id', fieldLabel:'$label', value:'$new_value', $disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})});\n";
 			
 			/*
 			$p4a =& P4A::singleton();

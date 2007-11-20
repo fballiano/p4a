@@ -100,17 +100,20 @@ class P4A_Frame extends P4A_Widget
 		$p4a =& P4A::singleton();
 		$id = $this->getId();
 		$objects = array();
+		$return = "";
+		
 		foreach($this->_map as $objs) {
 			foreach ($objs as $obj) {
 				$object =& $p4a->getObject($obj["id"]);
-				$objects[] = $object->getAsString();
+				$objects[] = $object->getId();
+				$return .= $object->getAsString();
 			}
 		}
 		
 		$width = $this->getWidth();
 		$width = strlen($width) ? "width: $width," : "";
 		
-		$return = "new Ext.Panel({
+		$return .= "$id = new Ext.Panel({
 			id: '$id',
 			layout: 'form',
 			autoHeight: true,
@@ -118,7 +121,7 @@ class P4A_Frame extends P4A_Widget
 			border: false,
 			cls: 'p4a_frame',
 			items: [" . join(',', $objects) . "]
-		})";
+		});\n";
 		return $return;
 		
 		
