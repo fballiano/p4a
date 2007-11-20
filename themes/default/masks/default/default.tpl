@@ -61,8 +61,9 @@ Ext.onReady(function() {
 				items: [<?php echo $main; ?>]
 			},
 			{region: 'north', tbar:<?php echo $menu; ?>},
-			{region: 'west', html:'ciao', split:true},
-			{region: 'south', html: '<div id="p4a-footer">Powered by P4A - PHP For Applications <?php echo P4A_VERSION ?></div>'}
+			{region: 'west', html:'west region', split:true, margins:'0 0 0 5'},
+			{region: 'east', html:'east region', split:true, margins:'0 5 0 0'},
+			new Ext.BoxComponent({region: 'south', el: 'p4a-footer'})
 		]
 	});
 });
@@ -71,5 +72,9 @@ Ext.onReady(function() {
 <body>
 	<?php echo $this->maskOpen() ?>
 	<?php echo $this->maskClose() ?>
+	<div id="p4a-footer">
+		Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a>
+		<?php echo P4A_VERSION ?>
+	</div>
 </body>
 </html>
