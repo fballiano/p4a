@@ -385,3 +385,18 @@ if (!function_exists('htmlspecialchars_decode')) {
 		}
 		return $string;
 	}
+	
+	/**
+	 * Can the event be manager by browser?
+	 * eg: P4A_Is_Browser_Event('onclick') will return true
+	 *
+	 * @param string $event
+	 * @return boolean
+	 */
+	function P4A_Is_Browser_Event($event)
+	{
+		$events = array('onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onkeydown', 
+						'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 
+						'onmouseover', 'onmouseup', 'onscroll');
+		return in_array(strtolower($action), $events);
+	}

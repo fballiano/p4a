@@ -45,7 +45,6 @@ executeEvent = function(object_name, action_name, param1, param2, param3, param4
 	for (var event in this.events) {
 		action_name = "on" + event;
 	}
-	alert(action_name);
 	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
 	var f = document.getElementById("p4a-main-form");
 	f._ajax.value = 0;

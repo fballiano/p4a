@@ -64,7 +64,6 @@
 		function P4A_Button($name, $icon = null)
 		{
 			parent::P4A_Widget($name);
-			$this->addAction('onClick');
 			if ($icon !== null) {
 				$this->setIcon($icon);
 			}

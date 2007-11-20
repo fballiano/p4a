@@ -489,6 +489,21 @@
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['ajax'] = $ajax;
 		}
+		
+		/**
+		 * Removes an action from the implemented actions stack for the widget.
+		 *
+		 * @param string	The action's name.
+		 * @access public
+		 */
+		function dropAction($action)
+		{
+			$action = strtolower($action);
+			
+			if (isset($this->actions[$action])) {
+				unset($this->actions[$action]);
+			}
+		}
 
 		/**
 		 * Switches an action to ajax (is AJAX is enabled).
@@ -534,20 +549,21 @@
 		{
 			$this->requireConfirmation($action, null);
 		}
-
+		
 		/**
-		 * Removes an action from the implemented actions stack for the widget.
-		 *
-		 * @param string	The action's name.
+		 * Tells an object to execute a method when an action is called.
+		 * @param object object		The object that has the method.
+		 * @param string			The action triggered by an event.
+		 * @param string			The method that will be executed.
 		 * @access public
 		 */
-		function dropAction($action)
+		function intercept($object, $action, $method=null)
 		{
 			$action = strtolower($action);
-			
-			if (isset($this->actions[$action])) {
-				unset($this->actions[$action]);
+			if (P4A_Is_Browser_Event($action)) {
+				$this->addAction($action);
 			}
+			parent::intercept($object, $action, $method);
 		}
 
 		/**
