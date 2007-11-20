@@ -1283,9 +1283,9 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setLabel($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setLabel($p4a->i18n->messages->get('filepreview'));
+					$button_file_download->setLabel($p4a->i18n->messages->get('filedownload'));
 
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
@@ -1438,9 +1438,9 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setLabel($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setLabel($p4a->i18n->messages->get('filepreview'));
+					$button_file_download->setLabel($p4a->i18n->messages->get('filedownload'));
 
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');

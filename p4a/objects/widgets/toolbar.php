@@ -79,7 +79,7 @@
 		 * @access public
 		 * @see P4A_Button
 		 */
-		function &addButton($button_name, $icon = NULL, $position = "left")
+		function addButton($button_name, $icon = null, $position = "left")
 		{
 			$this->buttons->build("p4a_button", $button_name);
 			$this->buttons->$button_name->setIcon($icon);

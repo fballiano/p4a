@@ -68,7 +68,7 @@
 				$this->setIcon($icon);
 			}
 
-			$this->setValue($name);
+			$this->setDefaultLabel();
 		}
 		
 		function addMenu()
@@ -78,27 +78,11 @@
 		}
 
 		/**
-		 * Sets the label for the button.
-		 * It'a a wrapper for set_value().
-		 * @param string	The value
-		 * @access public
+		 * @param string $label
 		 */
-		function setLabel($value)
+		function setLabel($label)
 		{
-			parent::setLabel($value);
-			$this->setValue($value);
-		}
-
-		/**
-		 * Sets the value for the button.
-		 * Also sets the right HTML property for correct display.
-		 * @param string	The value
-		 * @access public
-		 */
-		function setValue($value)
-		{
-			parent::setValue($value);
-			$this->setProperty('value', $value);
+			parent::setLabel($label);
 		}
 
 		/**
@@ -139,7 +123,7 @@
 		function getAsString()
 		{
 			$id = $this->getId();
-			$text = $this->getValue();
+			$text = $this->getLabel();
 			
 			$tooltip = $this->getTooltip();
 			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";

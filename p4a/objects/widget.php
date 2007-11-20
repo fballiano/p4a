@@ -48,13 +48,6 @@
 	class P4A_Widget extends P4A_Object
 	{
 		/**
-		 * Object's value. Used for widget with data binding.
-		 * @access private
-		 * @var string
-		 */
-		var $value = NULL;
-
-		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
 		 * @var boolean
@@ -150,28 +143,6 @@
 		}
 
 		/**
-		 * Sets the value of the widget.
-		 * @param string	The value to be setted.
-		 * @access public
-		 * @see $value
-		 */
-		function setValue($value)
-		{
-			$this->value = $value;
-		}
-
-		/**
-		 * Retuns the value of the widget.
-		 * @return string
-		 * @access public
-		 * @see $value
-		 */
-		function getValue()
-		{
-			return $this->value;
-		}
-
-		/**
 		 * Sets the widget enabled.
 		 * @param boolean		Visibility flag
 		 * @access public
@@ -264,9 +235,9 @@
 		{
 			$name = $this->getName();
 			$label = __($name);
-
+			
 			if ($label == $name) {
-				$this->setLabel(ucwords(str_replace('_', ' ', $this->getName())));
+				$this->setLabel(ucwords(str_replace('_', ' ', $name)));
 			} else {
 				$this->setLabel($label);
 			}

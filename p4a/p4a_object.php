@@ -332,7 +332,9 @@
 			}
 
 			if (!$func) {
-				die("Method $name not found");
+				print '<pre>';
+				print_r(debug_backtrace());
+				die("$class_name::$name() method not found");
 			} else {
 				$this->_helpers[$name] = array($file,$func);
 			}
