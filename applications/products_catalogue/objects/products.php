@@ -41,7 +41,7 @@ class Products extends P4A_Mask
 	function Products()
 	{
 		$this->p4a_mask();
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
 		// DB Source
 		$this->build("p4a_db_source", "source");
@@ -67,16 +67,16 @@ class Products extends P4A_Mask
 
 		// Customizing fields properties
 		//$this->setFieldsProperties();
-		$fields =& $this->fields;
+		$fields = $this->fields;
 
 		// Search Fieldset
-		$fs_search =& $this->build("p4a_fieldset","fs_search");
+		$fs_search = $this->build("p4a_fieldset","fs_search");
 		$fs_search->setTitle("Search");
-		$txt_search =& $this->build("p4a_field", "txt_search");
+		$txt_search = $this->build("p4a_field", "txt_search");
 		$txt_search->addAction("onReturnPress");
 		$this->intercept($txt_search, "onReturnPress","search");
 		$txt_search->setLabel("Model");
-		$cmd_search =& $this->build("p4a_button","cmd_search");
+		$cmd_search = $this->build("p4a_button","cmd_search");
 		$cmd_search->setLabel("Go");
 		$this->intercept($cmd_search, "onClick","search");
 		$fs_search->anchor($txt_search);
@@ -87,25 +87,25 @@ class Products extends P4A_Mask
 		$this->toolbar->setMask($this);
 
 		// Table
-		$table =& $this->build("p4a_table", "table");
+		$table = $this->build("p4a_table", "table");
  		$table->setWidth(700);
 		$table->setSource($this->source);
 		$table->setVisibleCols(array("product_id","model","category",
 									 "brand"));
 		$table->cols->product_id->setLabel("Cod. Product");
 
-		while ($col =& $table->cols->nextItem()) {
+		while ($col = $table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
 		$table->showNavigationBar();
 
 		// Message
-		$message =& $this->build("p4a_message", "message");
+		$message = $this->build("p4a_message", "message");
 		$message->setWidth("300");
 
 
 		//Fieldset con l'elenco dei campi
-		$fset=& $this->build("p4a_fieldset", "frame");
+		$fset= $this->build("p4a_fieldset", "frame");
 		$fset->setTitle("Product details");
 
 		/*
@@ -124,7 +124,7 @@ class Products extends P4A_Mask
 */
 
 		// Frame
-		$frm=& $this->build("p4a_frame", "frm");
+		$frm= $this->build("p4a_frame", "frm");
 		$frm->setWidth(730);
 		
 		$fields->brand_id->setLabel("Brand");
@@ -165,9 +165,9 @@ class Products extends P4A_Mask
 
 	function setFieldsProperties()
 	{
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
-		$fields =& $this->fields;
+		$fields = $this->fields;
 
 		$fields->product_id->setLabel("Product ID");
 		$fields->product_id->setWidth(200);
@@ -176,7 +176,7 @@ class Products extends P4A_Mask
 		/* To simplify this code with PHP5 you can instead use the helper loadSelectByTable
 		 * $fields->category_id->loadSelectByTable('categories','category_id','description');
 		 * */
-		$categories =& $this->build("P4A_DB_Source","categories");
+		$categories = $this->build("P4A_DB_Source","categories");
 		$categories->setTable("categories");
 		$categories->setPK("category_id");
 		$categories->addOrder("description");

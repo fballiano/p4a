@@ -53,7 +53,7 @@ class Finished extends P4A_Mask
 
 	function restart()
 	{
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
 		/*
 		This method destroies the session and allows the restart of the

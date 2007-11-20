@@ -41,7 +41,7 @@ class Brands extends P4A_Mask
 	function Brands()
 	{
 		$this->p4a_mask();
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
 		$this->build("p4a_message", "message");
 		$this->message->setWidth("300");

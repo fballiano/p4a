@@ -27,11 +27,11 @@ class Sample_it extends P4A
 		nell'esempio potrei quindi accedere al menu all'interno
 		della classe corrente digitando $this->menu_master o dovunque
 		nel progetto così:
-		$p4a =& sample_it::singleton();
+		$p4a = sample_it::singleton();
 		$p4a->menu_master....
 		Il metodo build restituisce anche l'oggetto appena creato.
 		*/
-		$menu =& $this->build("p4a_menu", "menu_master");
+		$menu = $this->build("p4a_menu", "menu_master");
 
 		/*
 		Il metodo additem del menu permette di aggiungere

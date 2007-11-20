@@ -99,7 +99,7 @@ class Login extends P4A_Mask
 
 	function check()
 	{
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
 		/*
 		Let's read the values with the getNewValue method.

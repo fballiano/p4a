@@ -32,13 +32,7 @@ e richiamo il metodo main dell'applicazione che viene
 eseguito ogni volta (click o reload).
 L'applicazione deve essere una classe presente dentro la
 dir objects dell'applicazione corrente e deve estendere p4a
-Attenzione agli oggetti: dentro p4a tutti gli oggetti devono
-essere assegnati usando "=&" e non "=" altrimenti vengono perse
-le rerefenze; per questo stesso motivo quando creo una classe
-tutti i metodi della classe che restituiscono un oggetto
-devono essere preceduti dall'& quindi anche il costruttore della
-classe stessa (guarda la classe sample_it per capire meglio)
 */
 
-$sample_it =& p4a::singleton("Sample_It");
+$sample_it = p4a::singleton("Sample_It");
 $sample_it->main();

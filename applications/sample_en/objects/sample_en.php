@@ -27,7 +27,7 @@ class Sample_En extends P4A
 		(eg: $this->menu_master)-
 		The build method also return the created object.
 		*/
-		$menu =& $this->build("p4a_menu", "menu_master");
+		$menu = $this->build("p4a_menu", "menu_master");
 
 		/*
 		Now we call the addItem method of the menu, we'll find
