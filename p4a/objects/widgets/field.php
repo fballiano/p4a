@@ -908,10 +908,24 @@
 			
 			$disabled = "";
 			if (!$this->isEnabled()) {
-				$disabled = "disabled: true,";
+				$disabled = ",disabled: true";
 			}
 			
-			return "new Ext.form.TextArea({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'})";
+			$width = $this->getWidth();
+			if ($width)  {
+				$width = ",width:$width";
+			} else {
+				$width = "";
+			}
+			
+			$height = $this->getHeight();
+			if ($height)  {
+				$height = ",height:$height";
+			} else {
+				$height = "";
+			}
+			
+			return "new Ext.form.TextArea({id:'$id',fieldLabel:'$label',value:'$new_value'{$disabled}{$width}{$height}})";
 			
 			/*
 			$id = $this->getId();

@@ -374,10 +374,10 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setHeight($value = null, $unit = 'px')
+		function setHeight($value = null)
 		{
 			if (is_numeric($value)) {
-				$value = $value . $unit;
+				$value = $value;
 			}
 			if ($value === null) {
 				$this->unsetStyleProperty('height');
