@@ -12,37 +12,6 @@
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media))?>"></link>
 <?php endforeach; ?>
 
-<style type="text/css">
-
-body {
- font-family: sans-serif;
-}
-
-#p4a-footer {
- text-align: center;
- font-size: 80%;
- padding: 5px;
-}
-
-#p4a-header {
- padding: 5px;
- text-align: center;
-}
-
-#p4a-main-region {
-
-}
-
-#p4a-main-form {
- height:100%;
-}
-
-.p4a_frame {
- margin: auto;
-}
-
-</style>
-
 <script type="text/javascript">
 
 Ext.BLANK_IMAGE_URL = '<?php echo P4A_THEME_PATH ?>/extjs/resources/images/default/s.gif';
