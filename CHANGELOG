@@ -1,3 +1,7 @@
+2.99.0
+- Multicheckbox field and multiselect field now support saving in single table field
+- P4A_Field::setMultivalueSeparator method was added 
+
 2.2.0
 - a bug P4A_DB_Source::saveRow() when multiple primary keys were used was solved (thanks to Edr)
 
