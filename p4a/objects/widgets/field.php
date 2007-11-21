@@ -185,6 +185,13 @@
 		 * @access private
 		 */
 		var $_error = NULL;
+		
+		/**
+		 * The multivalue separator
+		 * @var string
+		 * @access public
+		 */		
+		var $multivalue_separator = '';		
 
 		/**
 		 * Class constructor.
@@ -364,8 +371,11 @@
 
 			if ($new_value === null) {
 				$new_value = null;
+			} elseif (($this->type == 'multicheckbox' or $this->type == 'multiselect') and $this->multivalue_separator and is_array($new_value)) {
+				$new_value = implode($this->multivalue_separator,$new_value);				
 			} elseif ($this->isFormattable() and $this->isFormatted()) {
 				$new_value = $this->unformat($new_value);
+				
 			} elseif (($this->type == 'password') and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
@@ -399,6 +409,8 @@
 
 			if ($new_value === null) {
 				// $new_value = null;
+			} elseif (($this->type == 'multicheckbox' or $this->type == 'multiselect') and $this->multivalue_separator and is_string($new_value)) {
+				$new_value = explode($this->multivalue_separator,$new_value);
 			} elseif ($index === null) {
 				if ($this->isFormattable() and $this->isFormatted()) {
 					$new_value = $this->format($new_value);
@@ -451,6 +463,7 @@
 		/**
 		 * Sets the field's type.
 		 * @param strings		The type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|multiselect|multicheckbox).
+ 		 * @param strings		The multivalue separator		 
 		 * @access public
 		 */
 		function setType($type)
@@ -481,6 +494,12 @@
 				$this->setWidth(60);
 				$this->setProperty('maxlength', 7);
 				break;
+			case 'multicheckbox':
+			case 'multiselect':
+				if ($multivalue_separator) {
+					$this->setMultivalueSeparator($multivalue_separator);
+				}
+				break;				
 			}
 		}
 
@@ -1166,6 +1185,11 @@
 			$sReturn .= "</div>";
 			return $this->composeLabel() . $sReturn;
 		}
+		
+		function setMultivalueSeparator($string)
+		{
+			$this->multivalue_separator = $string;
+		}		
 
 		/**
 		 * Used ony for select, sets the select to allow a "none selected" record.
