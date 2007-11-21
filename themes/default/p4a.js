@@ -39,7 +39,7 @@ function prepareExecuteEvent(object_name, action_name, param1, param2, param3, p
 }
 
 executeEvent = function(object_name, action_name, param1, param2, param3, param4) {
-	var invalid_fields = Ext.DomQuery.select("input.x-form-invalid");
+	var invalid_fields = Ext.query("input.x-form-invalid");
 	if (invalid_fields.length > 0) return false;
 
 	object_name = this.getId();

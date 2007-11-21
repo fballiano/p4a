@@ -37,6 +37,8 @@ Ext.onReady(function() {
 			new Ext.BoxComponent({region: 'south', el: 'p4a-footer'})
 		]
 	});
+
+	Ext.get('<?php echo $main->getId() ?>').applyStyles('margin-top:10px');
 });
 </script>
 </head>
