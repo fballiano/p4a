@@ -1022,13 +1022,19 @@
 						if (!empty($value)) {
 							$value = substr($value, 1, -1);
 							$value = explode(',', $value);
-							$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
-							$thumb_height = P4A_TABLE_THUMB_HEIGHT;
-							if (P4A_GD) {
-								$image_src = P4A_ROOT_PATH . "/p4a/libraries/phpthumb/phpThumb.php?src=$image_src&amp;h=$thumb_height";
-								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
+							list($type) = explode('/',$value[3]);
+							if ($type == 'image') 
+							{  
+								$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
+								$thumb_height = P4A_TABLE_THUMB_HEIGHT;
+								if (P4A_GD) {
+									$image_src = P4A_ROOT_PATH . "/p4a/libraries/phpthumb/phpThumb.php?src=$image_src&amp;h=$thumb_height";
+									$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
+								} else {
+									$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
+								}
 							} else {
-								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
+								$aReturn[$i]['cells'][$j]['value'] = $value[0];
 							}
 						}
 						$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
