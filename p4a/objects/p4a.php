@@ -348,6 +348,7 @@
 					if (substr($key, 0, 3) == 'fld') {
 						if (in_array($this->objects[$key]->getType(), array('file','image')) && strlen($value) == 0) {
 							$this->objects[$key]->setNewValue(null);
+							continue;
 						}
 						
 						if (gettype($value) == 'string') {
