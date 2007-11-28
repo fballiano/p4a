@@ -27,9 +27,9 @@ FCKConfig.ToolbarSets["Full"] = [
 	['OrderedList','UnorderedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
 	['Link','Unlink','Anchor'],
+	['FontSize','TextColor','BGColor','-'],
+	['FitWindow'],	
 	['Image','Flash','Table','Rule','Smiley','SpecialChar','PageBreak'],
 	'/',
-	['Style','FontFormat','FontName','FontSize'],
-	['TextColor','BGColor'],
-	['FitWindow','-','About']
+	['Style','FontFormat','FontName','-','About'],
 ] ;
