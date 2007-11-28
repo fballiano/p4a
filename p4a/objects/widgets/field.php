@@ -1694,7 +1694,7 @@
 		}
 
 		/**
-		 * sets the rich textarea theme (Basic|Default)
+		 * sets the rich textarea theme (Full|Basic|Default)
 		 * @access public
 		 */
 		function setRichTextareaTheme($theme)
