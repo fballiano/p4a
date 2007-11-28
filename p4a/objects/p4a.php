@@ -346,6 +346,10 @@
 
 				foreach ($_REQUEST as $key=>$value) {
 					if (substr($key, 0, 3) == 'fld') {
+						if (in_array($this->objects[$key]->getType(), array('file','image')) && strlen($value) == 0) {
+							$this->objects[$key]->setNewValue(null);
+						}
+						
 						if (gettype($value) == 'string') {
 							$this->objects[$key]->setNewValue(stripslashes($value));
 						} else {
