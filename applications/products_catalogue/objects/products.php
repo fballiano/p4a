@@ -218,6 +218,7 @@ class Products extends P4A_Mask
 
 	function search()
 	{
+		/*
 		$value = $this->txt_search->getSQLNewValue();
 		$this->data->setWhere("model LIKE '%{$value}%'");
 		$this->data->firstRow();
@@ -228,5 +229,6 @@ class Products extends P4A_Mask
 			$this->data->setWhere(null);
 			$this->data->firstRow();
 		}
+		*/
 	}
 }
