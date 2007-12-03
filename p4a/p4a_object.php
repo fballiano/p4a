@@ -209,7 +209,7 @@
 		 * @param string			The method that will be executed.
 		 * @access public
 		 */
-		function intercept(&$object, $action, $method=null)
+		function intercept($object, $action, $method=null)
 		{
 			if ($method === null) $method = $action;
 			$object->_map_actions[$action] = array();

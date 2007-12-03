@@ -805,4 +805,20 @@
 		{
 			return $this->_icon_size;
 		}
+		
+		/**
+		 * Tells an object to execute a method when an action is called.
+		 * @param object object		The object that has the method.
+		 * @param string			The action triggered by an event.
+		 * @param string			The method that will be executed.
+		 * @access public
+		 */
+		function intercept($object, $action, $method=null)
+		{
+			$action = strtolower($action);
+			if (P4A_Is_Browser_Event($action)) {;
+				$object->addAction($action);
+			}
+			parent::intercept($object, $action, $method);
+		}
 	}

@@ -455,7 +455,6 @@
 		function addAction($action, $confirmation_text = null, $ajax = false)
 		{
 			$action = strtolower($action);
-
 			$this->actions[$action] = array();
 			$this->actions[$action]['confirmation_text'] = $confirmation_text;
 			$this->actions[$action]['ajax'] = $ajax;
@@ -532,7 +531,7 @@
 		{
 			$action = strtolower($action);
 			if (P4A_Is_Browser_Event($action)) {
-				$this->addAction($action);
+				$object->addAction($action);
 			}
 			parent::intercept($object, $action, $method);
 		}

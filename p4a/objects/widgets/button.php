@@ -128,15 +128,14 @@
 			$tooltip = $this->getTooltip();
 			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";
 			
-			$handler = "";
-			if (isset($this->actions['onclick'])) $handler = ",handler:executeEvent";
-			
 			$menu = "";
 			if (is_object($this->menu)) {
 				$menu = ",menu:" . $this->menu->getAsString();
 			}
 			
-			return "new Ext.Button({id:'$id',text:'$text'{$menu}{$tooltip}{$handler}})";
+			$return .= "$id = new Ext.Button({id:'$id',text:'$text'{$menu}{$tooltip}});\n";
+			if (isset($this->actions['onclick'])) $return .= "$id.on('click', executeEvent);\n";
+			return $return;
 			
 			/*
 			$id = $this->getId();

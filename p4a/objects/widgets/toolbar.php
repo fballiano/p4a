@@ -188,12 +188,16 @@
 		{
 			$id = $this->getId();
 			$buttons = array();
+			$return = "";
+			
 			while($button = $this->buttons->nextItem()) {
-  				$buttons[] = $button->getAsString();
+  				$return .= $button->getAsString();
+  				$buttons[] = $button->getId();
 			}
 			$buttons = join(',', $buttons);
 			
-			return "new Ext.Toolbar({id:'$id',items:[$buttons]})";
+			$return .= "$id = new Ext.Toolbar({id:'$id',items:[$buttons]});\n";
+			return $return;
 			
 			/*
 			$id = $this->getId();

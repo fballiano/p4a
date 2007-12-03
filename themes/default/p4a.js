@@ -70,8 +70,21 @@ function setFocus(id)
 	} catch (e) {}
 }
 
-function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
+executeAjaxEvent = function(object_name, action_name, param1, param2, param3, param4)
 {
+	var invalid_fields = Ext.query("input.x-form-invalid");
+	if (invalid_fields.length > 0) return false;
+	
+	object_name = this.getId();
+	for (var event in this.events) {
+		action_name = "on" + event;
+	}
+	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
+	var f = document.getElementById("p4a-main-form");
+	f._ajax.value = 1;
+	f.submit();
+	
+	/*
 	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
 	$('#colorpicker').hide();
@@ -80,6 +93,7 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 		dataType: 'xml',
 		success: function (response) {processAjaxResponse(response)}
 	});
+	*/
 }
 
 function processAjaxResponse(response)

@@ -398,5 +398,5 @@ if (!function_exists('htmlspecialchars_decode')) {
 		$events = array('onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onkeydown', 
 						'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 
 						'onmouseover', 'onmouseup', 'onscroll');
-		return in_array(strtolower($action), $events);
+		return in_array(strtolower($event), $events);
 	}
