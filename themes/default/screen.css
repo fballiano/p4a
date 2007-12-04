@@ -16,3 +16,12 @@ body {
 .p4a_frame {
 	margin: auto;
 }
+
+.ext-ie .x-form-element, .ext-ie .x-form-item label, .ext-ie .x-form-check-wrap input,
+.ext-ie .x-form-field-wrap, .ext-ie .x-form-trigger {
+	position: static;
+}
+
+.ext-ie .x-form-field-wrap, .ext-ie .x-form-trigger {
+	vertical-align: middle;
+}
