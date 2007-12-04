@@ -186,8 +186,8 @@
 			$this->addCss(P4A_THEME_PATH . "/screen.css");
 			$this->addJavascript(P4A_THEME_PATH . "/extjs/ext-base.js");
 			$this->addJavascript(P4A_THEME_PATH . "/extjs/ext-all-debug.js");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/build/locale/ext-lang-$language-min.js");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/build/locale/ext-lang-$locale-min.js");
+			$this->addJavascript(P4A_THEME_PATH . "/extjs/locale/ext-lang-$language-min.js");
+			$this->addJavascript(P4A_THEME_PATH . "/extjs/locale/ext-lang-$locale-min.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 		}
 
