@@ -1,5 +1,5 @@
 /*
- * Ext JS Library 2.0 RC 1
+ * Ext JS Library 2.0
  * Copyright(c) 2006-2007, Ext JS, LLC.
  * licensing@extjs.com
  * 
@@ -46,6 +46,10 @@
 }
 .ext-ie .ext-shim {
     filter: alpha(opacity=0);
+}
+.ext-ie6 .ext-shim {
+    margin-left: 5px;
+    margin-top: 3px;
 }
 
 .x-mask-loading div {

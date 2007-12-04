@@ -1,12 +1,12 @@
 /*
- * Ext JS Library 2.0 RC 1
+ * Ext JS Library 2.0
  * Copyright(c) 2006-2007, Ext JS, LLC.
  * licensing@extjs.com
  * 
  * http://extjs.com/license
  */
 
-/* Grid2 styles */
+/* Grid3 styles */
 .x-grid3 {
 	position:relative;
 	overflow:hidden;
@@ -206,6 +206,11 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 	display: inline;
 }
 
+/* Header position fixes for IE strict mode */
+.ext-strict .ext-ie .x-grid3-header-inner{position:relative;}
+.ext-strict .ext-ie6 .x-grid3-hd{position:relative;}
+.ext-strict .ext-ie6 .x-grid3-hd-inner{position:static;}
+
 /* Body Styles */
 .x-grid3-body {
 	zoom:1;
@@ -270,7 +275,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 
 /* Selection Styles */
 .x-grid3-row-selected {
-	background: #DFE8F6;
+	background: #DFE8F6 !important;
 	border:1px dotted #a3bae9;
 }
 

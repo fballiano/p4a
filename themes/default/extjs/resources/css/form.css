@@ -1,5 +1,5 @@
 /*
- * Ext JS Library 2.0 RC 1
+ * Ext JS Library 2.0
  * Copyright(c) 2006-2007, Ext JS, LLC.
  * licensing@extjs.com
  * 
@@ -34,6 +34,7 @@
 }
 .ext-safari .x-form-text {
     height:20px; /* safari always same size */
+    padding:0 3px; /* remove extra top/bottom padding */
 }
 .ext-gecko .x-form-text {
     padding-top:2px; /* FF won't center the text vertically */
@@ -84,7 +85,7 @@
     top:0;
 }
 .ext-safari .x-form-field-wrap .x-form-trigger{
-    height:19px; /* safari doesn't allow height adjustments to the fields, so adjust trigger */
+    height:21px; /* safari doesn't allow height adjustments to the fields, so adjust trigger */
 }
 
 .x-form-field-wrap .x-form-date-trigger{
@@ -253,23 +254,6 @@
     padding-bottom:4px;
 }
 
-
-.x-form fieldset {
-    border:1px solid #B5B8C8;
-    padding:10px;
-    margin-bottom:10px;
-}
-.x-form fieldset legend {
-    font:bold 11px tahoma, arial, helvetica, sans-serif;
-    color:#15428b;
-}
-.ext-ie .x-form fieldset legend {
-    margin-bottom:10px;
-}
-.ext-ie .x-form fieldset {
-    padding-top: 0;
-    padding-bottom:5px;
-}
 .x-form-empty-field {
     color:gray;
 }
@@ -407,6 +391,22 @@
 }
 
 /* fieldsets */
+.x-fieldset {
+    border:1px solid #B5B8C8;
+    padding:10px;
+    margin-bottom:10px;
+}
+.x-fieldset legend {
+    font:bold 11px tahoma, arial, helvetica, sans-serif;
+    color:#15428b;
+}
+.ext-ie .x-fieldset legend {
+    margin-bottom:10px;
+}
+.ext-ie .x-fieldset {
+    padding-top: 0;
+    padding-bottom:5px;
+}
 .x-fieldset legend .x-tool-toggle {
     margin-right:3px;
     margin-left:0;

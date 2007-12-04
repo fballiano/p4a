@@ -1,5 +1,5 @@
 /*
- * Ext JS Library 2.0 RC 1
+ * Ext JS Library 2.0
  * Copyright(c) 2006-2007, Ext JS, LLC.
  * licensing@extjs.com
  * 
@@ -145,4 +145,15 @@
     display:block;
     background:transparent url(../images/default/toolbar/btn-arrow.gif) no-repeat right 3px;
 	padding-right:10px;
+}
+
+/* Toggle button styles */
+.x-btn-pressed .x-btn-left{
+	background: url(../images/default/button/btn-sprite.gif) no-repeat 0 -63px;
+}
+.x-btn-pressed .x-btn-right{
+	background: url(../images/default/button/btn-sprite.gif) no-repeat 0 -84px;
+}
+.x-btn-pressed .x-btn-center{
+	background: url(../images/default/button/btn-sprite.gif) repeat-x 0 -126px;
 }
