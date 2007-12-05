@@ -1052,7 +1052,7 @@
 				$allow_blank = "allowBlank: false,";
 			}
 			
-			return "$id = new Ext.form.ComboBox({id:'$id',name:'_$id',hiddenName:'$id',hiddenId:'__$id',fieldLabel:'$label',value:'$new_value',$disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})});\n";
+			return "$id = new Ext.form.ComboBox({id:'$id',name:'ns_$id',hiddenName:'v_$id',fieldLabel:'$label',value:'$new_value',$disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})});\n";
 			
 			/*
 			$p4a =& P4A::singleton();
