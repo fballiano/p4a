@@ -69,22 +69,15 @@ class Products extends P4A_Mask
 		$this->setFieldsProperties();
 		$fields = $this->fields;
 
-		// Search Fieldset
-		$fs_search = $this->build("p4a_fieldset","fs_search");
-		$fs_search->setTitle("Search");
-		$txt_search = $this->build("p4a_field", "txt_search");
-		//$txt_search->addAction("onReturnPress");
-		//$this->intercept($txt_search, "onReturnPress","search");
-		$txt_search->setLabel("Model");
-		$cmd_search = $this->build("p4a_button","cmd_search");
-		$cmd_search->setLabel("Go");
-		$this->intercept($cmd_search, "onClick","search");
-		$fs_search->anchor($txt_search);
-		$fs_search->anchor($cmd_search);
-
 		// Toolbar
 		//$this->build("p4a_standard_toolbar", "toolbar");
 		//$this->toolbar->setMask($this);
+		
+		$this->build("p4a_toolbar", "toolbar");
+		$this->toolbar->addButton("Search model: ");
+		$this->toolbar->addField("txt_search");
+		$this->toolbar->addButton("go");
+		$this->intercept($this->toolbar->items->go, "onClick", "search");
 
 		// Table
 		/*
@@ -145,7 +138,7 @@ class Products extends P4A_Mask
 		// Display
 		$this->display("main", $frm);
 		$this->display("menu", $p4a->menu);
-		//$this->display("top", $this->toolbar);
+		$this->display("toolbar", $this->toolbar);
 	}
 
 	function setFieldsProperties()

@@ -22,6 +22,7 @@ Ext.onReady(function() {
 	
 	<?php echo $menu->getAsString() ?>
 	<?php echo $main->getAsString() ?>
+	<?php echo $toolbar->getAsString() ?>
 	
 	new Ext.P4AViewport({
 		layout:'border',
@@ -30,10 +31,11 @@ Ext.onReady(function() {
 				region: 'center',
 				id: 'p4a-main-region',
 				autoScroll: true,
+				tbar: <?php echo $toolbar->getId() ?>,
 				items: [<?php echo $main->getId() ?>]
 			},
 			{region: 'north', tbar:<?php echo $menu->getId() ?>, margins:'0 0 5 0', border: false, height: 1},
-			{region: 'west', html:'west region', split:true, margins:'0 0 0 5', width: 200},
+			{region: 'west', html:'west region', split:true, margins:'0 0 0 5', width: 200,collapsible:true,collapseMode:'mini'},
 			//{region: 'east', html:'east region', split:true, margins:'0 5 0 0', width: 200},
 			new Ext.BoxComponent({region: 'south', el: 'p4a-footer'})
 		]

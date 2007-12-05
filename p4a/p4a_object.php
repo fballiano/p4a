@@ -98,11 +98,11 @@
 		}
 
 		//todo
-		function &build($class, $name)
+		function build($class, $name)
 		{
 			$p4a =& P4A::singleton();
 			$args = func_get_args();
-			$str_args = '$this->$name =& new $class(';
+			$str_args = '$this->$name = new $class(';
 
 			for ($i=1; $i<sizeof($args); $i++) {
 				$str_args .= '$args[' . $i . '], ';

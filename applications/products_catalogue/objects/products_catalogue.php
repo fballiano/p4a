@@ -46,13 +46,13 @@ class Products_Catalogue extends P4A
 		// Menu
 		$this->build("p4a_toolbar", 'menu');
 		$this->menu->addButton("products");
-		$this->intercept($this->menu->buttons->products, "onClick", "menuClick");
+		$this->intercept($this->menu->items->products, "onClick", "menuClick");
 		$this->menu->addButton("support_tables");
-		$this->menu->buttons->support_tables->addMenu();
-		$this->menu->buttons->support_tables->menu->addItem("categories");
-		$this->intercept($this->menu->buttons->support_tables->menu->items->categories, "onClick", "menuClick");
-		$this->menu->buttons->support_tables->menu->addItem("brands");
-		$this->intercept($this->menu->buttons->support_tables->menu->items->brands, "onClick", "menuClick");
+		$this->menu->items->support_tables->addMenu();
+		$this->menu->items->support_tables->menu->addItem("categories");
+		$this->intercept($this->menu->items->support_tables->menu->items->categories, "onClick", "menuClick");
+		$this->menu->items->support_tables->menu->addItem("brands");
+		$this->intercept($this->menu->items->support_tables->menu->items->brands, "onClick", "menuClick");
 		
 
 		// Data sources
