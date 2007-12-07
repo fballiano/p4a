@@ -52,7 +52,7 @@ class Finito extends P4A_Mask
 
 	function restart()
 	{
-		$p4a = p4a::singleton();
+		$p4a =& p4a::singleton();
 
 		/*
 		Questo metodo distrugge le sessioni memorizzate sul server e permette

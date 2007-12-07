@@ -30,7 +30,12 @@ method, than we call the "main" method. main is executed
 every page call (click and reload included).
 The application must be a class under the "objects" directory
 and have to extend "p4a" class.
+Attention, in p4a all object have to be assigned using the "=&"
+operator or you will loose all references. You also have to
+use the "&" operator in the method definition, when the method
+returns objects (also for the class constructor).
+Take a look at "sample_en" class for a better understanding.
 */
 
-$sample_en = p4a::singleton("Sample_En");
+$sample_en =& p4a::singleton("Sample_En");
 $sample_en->main();

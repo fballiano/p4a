@@ -51,6 +51,6 @@ $check = p4a_check_configuration();
 if (is_string($check)) {
 	print $check;
 } else {
-	$p4a = p4a::singleton("products_catalogue");
+	$p4a =& p4a::singleton("products_catalogue");
 	$p4a->main();
 }
