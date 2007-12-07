@@ -1,9 +1,0 @@
-0.3
-- clone was replaced with serialize/unserialize
-
-0.2
-- a bug with php5 object cloning was fixed
-- now P4A >= 0.99.7 is needed
-
-0.1
-- Initial release
