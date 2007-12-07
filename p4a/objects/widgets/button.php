@@ -50,10 +50,8 @@
 		* @access private
 		* @var string
 		*/
-		var $_icon = null;
+		var $_icon = NULL;
 		var $_size = 32;
-		
-		var $menu = null;
 
 		/**
 		 * Class constructor.
@@ -61,28 +59,39 @@
 		 * @param string			The icon taken from icon set (file name without extension).
 		 * @access private
 		 */
-		function P4A_Button($name, $icon = null)
+		function P4A_Button($name, $icon = NULL)
 		{
 			parent::P4A_Widget($name);
+			$this->addAction('onClick');
 			if ($icon !== null) {
 				$this->setIcon($icon);
 			}
 
-			$this->setDefaultLabel();
-		}
-		
-		function addMenu()
-		{
-			$this->build("p4a_menu", "menu");
-			return $this->menu;
+			$this->setValue($name);
 		}
 
 		/**
-		 * @param string $label
+		 * Sets the label for the button.
+		 * It'a a wrapper for set_value().
+		 * @param string	The value
+		 * @access public
 		 */
-		function setLabel($label)
+		function setLabel($value)
 		{
-			parent::setLabel($label);
+			parent::setLabel($value);
+			$this->setValue($value);
+		}
+
+		/**
+		 * Sets the value for the button.
+		 * Also sets the right HTML property for correct display.
+		 * @param string	The value
+		 * @access public
+		 */
+		function setValue($value)
+		{
+			parent::setValue($value);
+			$this->setProperty('value', $value);
 		}
 
 		/**
@@ -122,22 +131,6 @@
 		 */
 		function getAsString()
 		{
-			$id = $this->getId();
-			$text = $this->getLabel();
-			
-			$tooltip = $this->getTooltip();
-			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";
-			
-			$menu = "";
-			if (is_object($this->menu)) {
-				$menu = ",menu:" . $this->menu->getAsString();
-			}
-			
-			$return .= "$id = new Ext.Button({id:'$id',text:'$text'{$menu}{$tooltip}});\n";
-			if (isset($this->actions['onclick'])) $return .= "$id.on('click', executeEvent);\n";
-			return $return;
-			
-			/*
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<span id='$id' class='hidden'></span>";
@@ -218,7 +211,6 @@
 			$sReturn .= "$footer\n";
 			$sReturn = "<span id='$id'>{$sReturn}</span>";
 			return $sReturn;
-*/
 		}
 
 		/**

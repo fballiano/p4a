@@ -52,7 +52,7 @@
 		 * @var P4A_Collection
 		 * @access public
 		 */
-		var $items = null;
+		var $items = NULL;
 
 		/**
 		 * The element/subelement currently active.
@@ -78,7 +78,7 @@
 		 * @param string		Item's label.
 		 * @access public
 		 */
-		function addItem($name, $label = NULL)
+		function &addItem($name, $label = NULL)
 		{
 			$item =& $this->items->build("P4A_Menu_Item", $name);
 			if ($label !== NULL) {
@@ -143,17 +143,6 @@
 		function getAsString()
 		{
 			$id = $this->getId();
-			
-			$items = array();
-			while ($item =& $this->items->nextItem()) {
-				$items[] = $item->getAsString();
-			}
-			$items = join(',', $items);
-			
-			return "new Ext.menu.Menu({id:'$id',items:[$items]})";
-			
-			/*
-			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<div id='$id' class='hidden'></div>";
 			}
@@ -167,7 +156,6 @@
 				$sReturn .= "</ul>";
 			}
 			return $sReturn;
-			*/
 		}
 	}
 
@@ -217,6 +205,7 @@
 			parent::P4A_Widget($name);
 
 			$this->setDefaultLabel();
+			$this->addAction('onClick');
 			$this->build("P4A_Collection", "items");
 		}
 
@@ -345,25 +334,6 @@
 		 */
 		function getAsString()
 		{
-			$id = $this->getId();
-			$text = $this->getLabel();
-
-			$tooltip = $this->getTooltip();
-			if ($tooltip) $tooltip = ",tooltip:'$tooltip'";
-			
-			if ($this->hasItems()) {
-				$items = array();
-				while ($item =& $this->items->nextItem()) {
-					$items[] = $item->getAsString();
-				}
-				$items = join(',', $items);
-				$items = ",menu:[$items]";
-			}
-			
-			
-			return "new Ext.menu.Item({id:'$id',text:'$text',handler:executeEvent{$items}{$tooltip}})";
-			
-			/*
 			if (!$this->isVisible()) {
 				return "";
 			}
@@ -400,6 +370,5 @@
 			}
 			$sReturn .= "</li>";
 			return $sReturn;
-*/
 		}
 	}

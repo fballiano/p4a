@@ -173,22 +173,56 @@
 			$_SESSION["p4a"] =& $this;
 			$this->i18n =& new p4a_i18n(P4A_LOCALE);
 			$this->i18n->setSystemLocale();
-			
-			$locale = $this->i18n->getLocale();
-			$language = $this->i18n->getLanguage();
 
 			$this->build("P4A_Collection", "masks");
 			$this->build("P4A_Collection", "listeners");
 
 			$this->browser_identification = $this->detectClient();
-			
-			$this->addCss(P4A_THEME_PATH . "/extjs/resources/css/ext-all.css");
-			$this->addCss(P4A_THEME_PATH . "/screen.css");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/ext-base.js");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/ext-all-debug.js");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/locale/ext-lang-$language-min.js");
-			$this->addJavascript(P4A_THEME_PATH . "/extjs/locale/ext-lang-$locale-min.js");
+
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
 			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
+			if (!$this->isHandheld()) {
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqmodal.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
+
+				$calendar_language = P4A_I18N_DATE_CALENDAR_LANGUAGE;
+				if (@file_exists(P4A_THEME_DIR . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js")) {
+					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js");
+				} else {
+					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
+				}
+
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
+				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
+				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
+				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
+			}
+
+			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
+			$this->addCss(P4A_THEME_PATH . "/screen.css", "print");
+			$this->addCss(P4A_THEME_PATH . "/print.css", "print");
+			$this->addCss(P4A_THEME_PATH . "/handheld.css", "handheld");
+
+			if ($this->isInternetExplorer()) {
+				$this->addCss(P4A_THEME_PATH . "/iehacks.css");
+			}
+
+			if ($this->isHandheld()) {
+				$this->css = array();
+				$this->addCss(P4A_THEME_PATH . "/handheld.css");
+			}
+
+			if ($this->isInternetExplorer() and !$this->browser_identification['ie7up'] and !$this->isHandheld()) {
+				$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
+			}
 		}
 
 		function detectClient()
@@ -345,7 +379,6 @@
 				}
 
 				foreach ($_REQUEST as $key=>$value) {
-					if (substr($key, 0, 5) == 'v_fld') $key = substr($key, 2);
 					if (substr($key, 0, 3) == 'fld') {
 						if (in_array($this->objects[$key]->getType(), array('file','image')) && strlen($value) == 0) {
 							$this->objects[$key]->setNewValue(null);

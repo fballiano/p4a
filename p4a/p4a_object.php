@@ -98,11 +98,11 @@
 		}
 
 		//todo
-		function build($class, $name)
+		function &build($class, $name)
 		{
 			$p4a =& P4A::singleton();
 			$args = func_get_args();
-			$str_args = '$this->$name = new $class(';
+			$str_args = '$this->$name =& new $class(';
 
 			for ($i=1; $i<sizeof($args); $i++) {
 				$str_args .= '$args[' . $i . '], ';
@@ -209,7 +209,7 @@
 		 * @param string			The method that will be executed.
 		 * @access public
 		 */
-		function intercept($object, $action, $method=null)
+		function intercept(&$object, $action, $method=null)
 		{
 			if ($method === null) $method = $action;
 			$object->_map_actions[$action] = array();
@@ -332,9 +332,7 @@
 			}
 
 			if (!$func) {
-				print '<pre>';
-				print_r(debug_backtrace());
-				die("$class_name::$name() method not found");
+				die("Method $name not found");
 			} else {
 				$this->_helpers[$name] = array($file,$func);
 			}

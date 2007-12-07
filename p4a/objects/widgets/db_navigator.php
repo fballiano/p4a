@@ -114,7 +114,8 @@ class P4A_DB_Navigator extends P4A_Widget
 	function P4A_DB_Navigator($name)
 	{
 		parent::P4A_Widget($name);
-		$this->intercept($this, "onclick", "onclick");
+		$this->addAction("onClick");
+		$this->intercept($this, "onClick", "onClick");
 	}
 
 	/**

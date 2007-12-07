@@ -637,7 +637,7 @@
 		{
 			parent::P4A_Widget($name);
 			$this->setDefaultLabel();
-			$this->useAjaxAction('onclick');
+			$this->addAjaxAction('onClick');
 		}
 
 		/**
@@ -1116,8 +1116,8 @@
 			$field_num_page->label->setStyleProperty("text-align", "right");
 			$field_num_page->label->setWidth(80);
 			$this->buttons->field_num_page->setWidth(30);
+			$this->buttons->field_num_page->addAjaxAction('onReturnPress');
 			$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
-			$this->buttons->field_num_page->useAjaxAction('onreturnpress');
 			$this->anchorRight($field_num_page);
 
 			$current_page =& $this->buttons->build('p4a_label', 'current_page');
@@ -1137,13 +1137,13 @@
 				$this->buttons->field_num_page->setVisible(false);
 			} else {
 				$this->addButton('button_last', 'last', 'right');
-				$this->buttons->button_last->setLabel("last_page");
+				$this->buttons->button_last->setValue("last_page");
 				$this->addButton('button_next', 'next', 'right');
-				$this->buttons->button_next->setLabel("next_page");
+				$this->buttons->button_next->setValue("next_page");
 				$this->addButton('button_prev', 'prev', 'right');
-				$this->buttons->button_prev->setLabel("prev_page");
+				$this->buttons->button_prev->setValue("prev_page");
 				$this->addButton('button_first', 'first', 'right');
-				$this->buttons->button_first->setLabel("first_page");
+				$this->buttons->button_first->setValue("first_page");
 			}
 
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
@@ -1155,7 +1155,7 @@
 		function addButton($button_name, $icon = null, $float = "left")
 		{
 			$button =& $this->buttons->build("p4a_button", $button_name);
-			$button->useAjaxAction('onclick');
+			$button->addAjaxAction('onClick');
 
 			if (strlen($icon)>0) {
 				$button->setIcon($icon);

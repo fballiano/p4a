@@ -191,7 +191,7 @@
 		 * @var string
 		 * @access public
 		 */		
-		var $multivalue_separator = '';		
+		var $multivalue_separator = '';
 
 		/**
 		 * Class constructor.
@@ -372,10 +372,9 @@
 			if ($new_value === null) {
 				$new_value = null;
 			} elseif (($this->type == 'multicheckbox' or $this->type == 'multiselect') and $this->multivalue_separator and is_array($new_value)) {
-				$new_value = implode($this->multivalue_separator,$new_value);				
+				$new_value = implode($this->multivalue_separator,$new_value);
 			} elseif ($this->isFormattable() and $this->isFormatted()) {
 				$new_value = $this->unformat($new_value);
-				
 			} elseif (($this->type == 'password') and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
@@ -421,7 +420,7 @@
                 $tmp_value = substr($new_value, 1, -1);
                 $tmp_value = explode("," , $tmp_value);
                 $new_value = $tmp_value[$index];
-            }
+            } 
             return $new_value;
 		}
 
@@ -466,7 +465,7 @@
  		 * @param strings		The multivalue separator		 
 		 * @access public
 		 */
-		function setType($type)
+		function setType($type,$multivalue_separator=NULL)
 		{
 			$p4a =& p4a::singleton();
 			if ($p4a->isHandheld() and $type == 'rich_textarea') {
@@ -499,7 +498,7 @@
 				if ($multivalue_separator) {
 					$this->setMultivalueSeparator($multivalue_separator);
 				}
-				break;				
+				break;
 			}
 		}
 
@@ -778,11 +777,6 @@
 		 */
 		function getAsString()
 		{
-			$type = $this->type;
-			$new_method = 'getAs' . $type;
-			return $this->$new_method();
-			
-			
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<span id='{$id}' class='hidden'></span>";
@@ -824,19 +818,6 @@
 		function getAsText()
 		{
 			$id = $this->getId();
-			$label = $this->getLabel();
-			$new_value = $this->getNewValue();
-			
-			$disabled = "";
-			if (!$this->isEnabled()) {
-				$disabled = "disabled: true,";
-			}
-			
-			return "$id = new Ext.form.TextField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'});\n";
-			
-			
-			/*
-			$id = $this->getId();
 			$header 		= "<input id='{$id}input' type='text' class='border_color1 font_normal' ";
 			$close_header 	= '/>';
 
@@ -849,23 +830,10 @@
 				$sReturn .= "<script type='text/javascript'>\$(function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true});});</script>";
 			}
 			return $sReturn;
-*/
 		}
 
 		function getAsDate()
 		{
-			$id = $this->getId();
-			$label = $this->getLabel();
-			$new_value = $this->getNewValue();
-			
-			$disabled = "";
-			if (!$this->isEnabled()) {
-				$disabled = "disabled: true,";
-			}
-			
-			return "$id = new Ext.form.DateField({id:'$id', $disabled fieldLabel:'$label', value:'$new_value'});\n";
-			
-			/*
 			$p4a =& P4A::singleton();
 
 			if ($this->isEnabled()) {
@@ -887,7 +855,6 @@
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 
 			return $sReturn;
-*/
 		}
 
 		/**
@@ -922,32 +889,6 @@
 		function getAsTextarea()
 		{
 			$id = $this->getId();
-			$label = $this->getLabel();
-			$new_value = $this->getValue();
-			
-			$disabled = "";
-			if (!$this->isEnabled()) {
-				$disabled = ",disabled: true";
-			}
-			
-			$width = $this->getWidth();
-			if ($width)  {
-				$width = ",width:$width";
-			} else {
-				$width = "";
-			}
-			
-			$height = $this->getHeight();
-			if ($height)  {
-				$height = ",height:$height";
-			} else {
-				$height = "";
-			}
-			
-			return "$id = new Ext.form.TextArea({id:'$id',fieldLabel:'$label',value:'$new_value'{$disabled}{$width}{$height}});\n";
-			
-			/*
-			$id = $this->getId();
 			$cols = floor($this->getWidth() / 6) - 4;
 			$rows = floor($this->getHeight() / 13);
 			$header = "<textarea id='{$id}input' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
@@ -962,7 +903,6 @@
 			$sReturn .= $this->composeStringValue();
 			$sReturn .= $footer;
 			return $sReturn;
-*/
 		}
 
 		/**
@@ -1027,34 +967,6 @@
 		 */
 		function getAsSelect()
 		{
-			$id = $this->getId();
-			$label = $this->getLabel();
-			$external_data = $this->data->getAll() ;
-			$value_field = $this->getSourceValueField() ;
-			$description_field = $this->getSourceDescriptionField() ;
-			$new_value = $this->getNewValue() ;
-			
-			$data = array();
-			foreach ($external_data as $key=>$current) {
-				$value = addslashes($current[$value_field]);
-				$description = addslashes($current[$description_field]);
-				$data[] = "['$value','$description']";
-			}
-			$data = join(',', $data);
-			
-			$disabled = "";
-			if (!$this->isEnabled()) {
-				$disabled = "disabled: true,";
-			}
-			
-			$allow_blank = "";
-			if (!$this->isNullAllowed()) {
-				$allow_blank = "allowBlank: false,";
-			}
-			
-			return "$id = new Ext.form.ComboBox({id:'$id',name:'ns_$id',hiddenName:'v_$id',fieldLabel:'$label',value:'$new_value',$disabled $allow_blank valueField: 'id', displayField: 'desc', mode: 'local', typeAhead: true, triggerAction: 'all', forceSelection: true, store: new Ext.data.SimpleStore({fields: ['id','desc'], data: [$data]})});\n";
-			
-			/*
 			$p4a =& P4A::singleton();
 			$id = $this->getId();
 
@@ -1102,7 +1014,6 @@
 			}
 
 			return $this->composeLabel() . $header . $footer ;
-*/
 		}
 
 		function getAsMultiselect()
@@ -1189,7 +1100,7 @@
 		function setMultivalueSeparator($string)
 		{
 			$this->multivalue_separator = $string;
-		}		
+		}
 
 		/**
 		 * Used ony for select, sets the select to allow a "none selected" record.
@@ -1334,15 +1245,14 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setLabel($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setLabel($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setLabel($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
+					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
+					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
-					
-					$button_file_delete->useAjaxAction("onclick");
 				}
 
 				if ($this->isEnabled()) {
@@ -1489,15 +1399,14 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setLabel($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setLabel($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setLabel($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
+					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
+					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
 
+					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
 					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
 					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
-					
-					$button_file_delete->useAjaxAction("onclick");
 				}
 
 				if ($mime_type != 'image') {

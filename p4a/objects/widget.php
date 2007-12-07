@@ -48,6 +48,13 @@
 	class P4A_Widget extends P4A_Object
 	{
 		/**
+		 * Object's value. Used for widget with data binding.
+		 * @access private
+		 * @var string
+		 */
+		var $value = NULL;
+
+		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
 		 * @var boolean
@@ -126,8 +133,6 @@
 		 * @var array
 		 */
 		var $_temp_vars = array();
-		
-		var $tooltip = "";
 
 		/**
 		 * Class constructor.
@@ -140,6 +145,28 @@
 		function p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
 		{
 			parent::p4a_object($name, $prefix, $id);
+		}
+
+		/**
+		 * Sets the value of the widget.
+		 * @param string	The value to be setted.
+		 * @access public
+		 * @see $value
+		 */
+		function setValue($value)
+		{
+			$this->value = $value;
+		}
+
+		/**
+		 * Retuns the value of the widget.
+		 * @return string
+		 * @access public
+		 * @see $value
+		 */
+		function getValue()
+		{
+			return $this->value;
 		}
 
 		/**
@@ -235,9 +262,9 @@
 		{
 			$name = $this->getName();
 			$label = __($name);
-			
+
 			if ($label == $name) {
-				$this->setLabel(ucwords(str_replace('_', ' ', $name)));
+				$this->setLabel(ucwords(str_replace('_', ' ', $this->getName())));
 			} else {
 				$this->setLabel($label);
 			}
@@ -342,10 +369,10 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setWidth($value = null)
+		function setWidth($value = null, $unit = 'px')
 		{
 			if (is_numeric($value)) {
-				$value = $value;
+				$value = $value . $unit;
 			}
 			if ($value === null) {
 				$this->unsetStyleProperty('width');
@@ -374,10 +401,10 @@
 		 * @access public
 		 * @see set_style_property()
 		 */
-		function setHeight($value = null)
+		function setHeight($value = null, $unit = 'px')
 		{
 			if (is_numeric($value)) {
-				$value = $value;
+				$value = $value . $unit;
 			}
 			if ($value === null) {
 				$this->unsetStyleProperty('height');
@@ -447,50 +474,46 @@
 
 		/**
 		 * Adds an action to the implemented actions stack for the widget.
-		 * @access protected
+		 * @access public
 		 * @param string	The action's name.
-		 * @param string	Text for javascript confirmation.
+		 * @param string	The JavaScript event that triggers.
+		 * @param boolean	Action Requires confirmation?.
+		 * @param string	Text for confirmation.
+		 * @param string	i18n message id for confirmation.
 		 * @param boolean	is an ajax action?
 		 */
-		function addAction($action, $confirmation_text = null, $ajax = false)
+		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = false)
 		{
 			$action = strtolower($action);
-			$this->actions[$action] = array();
-			$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			$this->actions[$action]['ajax'] = $ajax;
-		}
-		
-		/**
-		 * Removes an action from the implemented actions stack for the widget.
-		 *
-		 * @param string	The action's name.
-		 * @access public
-		 */
-		function dropAction($action)
-		{
-			$action = strtolower($action);
-			
-			if (isset($this->actions[$action])) {
-				unset($this->actions[$action]);
+			$event = strtolower($event);
+
+			// If not specified, the event has the same name of the action
+			if (!$event) {
+				$event = $action;
 			}
+
+			$tmp_action = array();
+			$tmp_action['event'] = $event;
+			$this->actions[$action] = $tmp_action;
+			$this->actions[$action]['require_confirmation'] = $require_confirmation;
+			$this->actions[$action]['confirmation_text'] = $confirmation_text;
+			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
+			$this->actions[$action]['ajax'] = $ajax;
 		}
 
 		/**
-		 * Switches an action to ajax (is AJAX is enabled).
-		 * If the action does not exists it will be created
+		 * Adds an ajax action to the implemented actions stack for the widget.
 		 * @access public
 		 * @param string	The action's name.
+		 * @param string	The JavaScript event that triggers.
+		 * @param boolean	Action Requires confirmation?.
+		 * @param string	Text for confirmation.
+		 * @param string	i18n message id for confirmation.
 		 */
-		function useAjaxAction($action)
+		function addAjaxAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
 		{
 			$p4a =& p4a::singleton();
-			$action = strtolower($action);
-			
-			if (isset($this->actions[$action])) {
-				$this->actions[$action]['ajax'] = $p4a->isAjaxEnabled();
-			} else {
-				$this->addAction($action, null, $p4a->isAjaxEnabled());
-			}
+			$this->addAction($action, $event, $require_confirmation, $confirmation_text, $confirmation_text_handler, $p4a->isAjaxEnabled());
 		}
 
 		/**
@@ -498,16 +521,14 @@
 		 * @access public
 		 * @param string	The action.
 		 * @param string	Text for confirmation.
+		 * @param string	i18n message id for confirmation.
 		 */
-		function requireConfirmation($action, $confirmation_text)
+		function requireConfirmation($action, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
 		{
 			$action = strtolower($action);
-			
-			if (isset($this->actions[$action])) {
-				$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			} else {
-				$this->addAction($action, $confirmation_text);
-			}
+			$this->actions[$action]['require_confirmation'] = true;
+			$this->actions[$action]['confirmation_text'] = $confirmation_text;
+			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
 		}
 
 		/**
@@ -517,23 +538,43 @@
 		 */
 		function unrequireConfirmation($action)
 		{
-			$this->requireConfirmation($action, null);
+			$action = strtolower($action);
+			$this->actions[$action]['require_confirmation'] = false;
 		}
-		
+
 		/**
-		 * Tells an object to execute a method when an action is called.
-		 * @param object object		The object that has the method.
-		 * @param string			The action triggered by an event.
-		 * @param string			The method that will be executed.
+		 * Changes the event associated to an action.
+		 * If no event is given, here we set event=action.
+		 *
+		 * @param string	The action's name.
+		 * @param string	The JavaScript event that triggers.
 		 * @access public
 		 */
-		function intercept($object, $action, $method=null)
+		function changeEvent($action, $event = NULL)
 		{
 			$action = strtolower($action);
-			if (P4A_Is_Browser_Event($action)) {
-				$object->addAction($action);
+			$event = strtolower($event);
+
+			// If not specified, the event has the same name of the action
+			if ($event === null) {
+				$event = $action;
 			}
-			parent::intercept($object, $action, $method);
+
+			if (array_key_exists($action, $this->actions)) {
+				$this->actions[$action]['event'] = $event;
+			}
+		}
+
+		/**
+		 * Removes an action from the implemented actions stack for the widget.
+		 *
+		 * @param string	The action's name.
+		 * @access public
+		 */
+		function dropAction($action)
+		{
+			$action = strtolower($action);
+			unset($this->actions[$action]);
 		}
 
 		/**
@@ -930,15 +971,5 @@
 		{
 			$p4a =& p4a::singleton();
 			$p4a->redesign($this->getId());
-		}
-		
-		function setTooltip($text)
-		{
-			$this->tooltip = $text;
-		}
-		
-		function getTooltip()
-		{
-			return $this->tooltip;
 		}
 	}

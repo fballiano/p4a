@@ -178,9 +178,9 @@
 
 			$this->build("p4a_collection", "fields");
 			$this->build("p4a_button", "close_popup_button");
+			$this->close_popup_button->addAjaxAction("onClick");
 			$this->close_popup_button->setIcon("exit");
 			$p4a->intercept($this->close_popup_button, "onClick", "closePopup");
-			$this->close_popup_button->useAjaxAction("onclick");
 
 			$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 			$this->useTemplate('default');
@@ -357,7 +357,11 @@
 			}
 
 			foreach ($this->_tpl_vars as $k=>$v) {
-				$$k = $v;
+				if (is_object($v)) {
+					$$k = $v->getAsString();
+				} else {
+					$$k = $v;
+				}
 			}
 
 			$_charset = $p4a->i18n->getCharset();
@@ -600,7 +604,8 @@
 		{
 			$p4a =& p4a::singleton();
 
-			$return  = "<form method='post' enctype='multipart/form-data' id='p4a-main-form' onsubmit='return false' action='.' class='x-form'>\n";
+			$return  = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
+			$return .= "<div>\n";
 			$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 			$return .= "<input type='hidden' name='_action' value='none' />\n";
 			$return .= "<input type='hidden' name='_ajax' value='0' />\n";
@@ -620,7 +625,7 @@
 		 */
 		function maskClose()
 		{
-			return "</form>";
+			return "</div>\n</form>";
 		}
 
 		/**
@@ -804,21 +809,5 @@
 		function getIconSize()
 		{
 			return $this->_icon_size;
-		}
-		
-		/**
-		 * Tells an object to execute a method when an action is called.
-		 * @param object object		The object that has the method.
-		 * @param string			The action triggered by an event.
-		 * @param string			The method that will be executed.
-		 * @access public
-		 */
-		function intercept($object, $action, $method=null)
-		{
-			$action = strtolower($action);
-			if (P4A_Is_Browser_Event($action)) {;
-				$object->addAction($action);
-			}
-			parent::intercept($object, $action, $method);
 		}
 	}

@@ -549,6 +549,7 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         if(!$this->isReadOnly()) {
             $db =& P4A_DB::singleton($this->getDSN());
+            
             if (empty($fields_values)) {
                 while($field =& $this->fields->nextItem()) {
                     if ($field->getAliasOf()) {
@@ -571,7 +572,7 @@ class P4A_DB_Source extends P4A_Data_Source
             if ($this->isNew()) {
                 $res = $db->adapter->autoExecute($this->_table, $fields_values, "INSERT");
             } else {
-                $res = $db->adapter->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString());
+                $res = $db->adapter->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString($pk_values));
             }
 
             if (!$res) {
@@ -582,17 +583,9 @@ class P4A_DB_Source extends P4A_Data_Source
             }
 
             $pks = $this->getPk();
-			$pk_values = array();  
+            
 			if (is_string($pks)) {
-				$pk_values[] = $pks;
-			} else {
-				foreach ($pks as $pk) {
-					$pk_values[] = $pk;
-				}
-			}
-
-			foreach ($pk_values as $pk) {
-				$pk_value = $this->fields->$pk->getNewValue();  
+				$pk_value = $this->fields->$pks->getNewValue();  
 	            foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 	                $fk_table = $aField["table"];
 	                $fk_field = $aField["fk_field"];
@@ -627,9 +620,19 @@ class P4A_DB_Source extends P4A_Data_Source
 	                }
 	            }
 			}
-
+			
+            if (empty($pk_values)) {
+            	if (is_string($pks)) {
+            		$pk_values[] = $this->fields->$pks->getNewValue();
+            	} else {
+            		foreach($pks as $pk){
+            			$pk_values[] = $this->fields->$pk->getNewValue();
+					}
+            	}
+            }
 			$row = $this->getPkRow($pk_values);
-            $this->resetNumRows();
+            
+			$this->resetNumRows();
             if ($row) {
                 foreach($row as $field=>$value){
                     $this->fields->$field->setValue($value);
@@ -768,6 +771,9 @@ class P4A_DB_Source extends P4A_Data_Source
             }
             $pk_string = substr($pk_string,0,-4);
         } else {
+        	if (is_array($pk_value)) {
+        		$pk_value = $pk_value[0];
+        	}
             $pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
         }
 
@@ -869,10 +875,12 @@ class P4A_DB_Source extends P4A_Data_Source
         return $query;
     }
 
-    function _composePkString()
+    function _composePkString($pk_values = array())
     {
         $pks = $this->getPk();
-        $pk_values = $this->getPkValues();
+        if (!$pk_values) {
+        	$pk_values = $this->getPkValues();
+        }
 
         if (is_string($pks)) {
             return "$pks = '".addslashes($pk_values)."' ";

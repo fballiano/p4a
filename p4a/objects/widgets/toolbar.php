@@ -52,11 +52,11 @@
 		var $separators_counter = 0;
 
 		/**
-		 * Items collection.
+		 * Buttons collection.
 		 * @var array
 		 * @access public
 		 */
-		var $items = NULL;
+		var $buttons = NULL;
 
 		var $_size = NULL;
 
@@ -69,7 +69,9 @@
 		function P4A_Toolbar($name)
 		{
 			parent::P4A_Widget($name);
-			$this->build("p4a_collection", "items");
+			$this->build("p4a_collection", "buttons");
+
+			$this->setOrientation('horizontal');
 		}
 
 		/**
@@ -79,11 +81,15 @@
 		 * @access public
 		 * @see P4A_Button
 		 */
-		function addButton($button_name, $icon = null)
+		function &addButton($button_name, $icon = NULL, $position = "left")
 		{
-			$this->items->build("p4a_button", $button_name);
-			$this->items->$button_name->setIcon($icon);
-			return $this->items->$button_name;
+			$this->buttons->build("p4a_button", $button_name);
+			$this->buttons->$button_name->setIcon($icon);
+			$this->buttons->$button_name->setStyleProperty("float", $position);
+			if ($this->_size) {
+				$this->buttons->$button_name->setSize($this->_size);
+			}
+			return $this->buttons->$button_name;
 		}
 
 		/**
@@ -109,12 +115,6 @@
 			$this->buttons->$name->setValue($text);
 			$this->buttons->$name->setStyleProperty("float", $position);
 		}
-		
-		function addField($name, $label = null)
-		{
-			$this->items->build('p4a_field', $name);
-			$this->items->$name->setLabel($label);
-		}
 
 		/**
 		 * Adds a spacer image of the desidered width.
@@ -132,30 +132,72 @@
 		}
 
 		/**
+		 * Turns off the action handler for the desidered button.
+		 * @param string		Button identifier.
+		 * @access public
+		 */
+		function disable($button_name = NULL)
+		{
+			if ($button_name === NULL) {
+				while ($button =& $this->buttons->nextItem()) {
+					$button->disable();
+				}
+			} else {
+				if (is_object($this->buttons->$button_name)) {
+					$this->buttons->$button_name->disable();
+				}
+			}
+		}
+
+		/**
+		 * Turns on the action handler for the desidered button.
+		 * @param string		Button identifier.
+		 * @access public
+		 */
+		function enable($button_name = NULL)
+		{
+			if ($button_name === NULL) {
+				while ($button =& $this->buttons->nextItem()) {
+					$button->enable();
+				}
+			} else {
+				if (is_object($this->buttons->$button_name)) {
+					$this->buttons->$button_name->enable();
+				}
+			}
+		}
+
+		function setSize($size)
+		{
+			$this->_size = $size;
+
+			while ($button =& $this->buttons->nextItem()) {
+				$button->setSize($size);
+			}
+		}
+
+		function getSize()
+		{
+			return $this->_size;
+		}
+
+		/**
+		 * Sets the rendering orientation for the toolbar.
+		 * @param string		Orientation (horizontal|vertical).
+		 * @access public
+		 */
+		function setOrientation($orientation)
+		{
+			$this->orientation = $orientation;
+		}
+
+		/**
 		 * Returns the HTML rendered widget.
 		 * @return string
 		 * @access public
 		 */
 		function getAsString()
 		{
-			$id = $this->getId();
-			$items = array();
-			$return = "";
-			
-			while($item = $this->items->nextItem()) {
-				if (is_string($item)) {
-					$items[] = $item;
-				} else {
-  					$return .= $item->getAsString();
-  					$items[] = $item->getId();
-				}
-			}
-			$items = join(',', $items);
-			
-			$return .= "$id = new Ext.Toolbar({id:'$id',items:[$items]});\n";
-			return $return;
-			
-			/*
 			$id = $this->getId();
 			if (!$this->isVisible()) {
 				return "<div id='$id' class='hidden'></div>";
@@ -169,7 +211,6 @@
  			$string .= "<div class='br'></div>\n";
 			$string .= "</div>\n\n";
 			return $string;
-			*/
 		}
 
 	}
