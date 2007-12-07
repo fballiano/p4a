@@ -1,5 +1,9 @@
-2.99.0
+2.2.3
 - 
+
+2.2.2
+- Major bugfix on P4A_DB_Source::saveRow(), the patch from Edr (introduced in 2.2.0) was removed and a few checks were added to prevent inconsistency
+- some little bugs on P4A_DB_Source were fixed
 
 2.2.1
 - multicheckbox field and multiselect field now support saving in single table field

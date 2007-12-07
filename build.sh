@@ -12,7 +12,7 @@ rm -r p4apackages
 mkdir p4apackages
 cd p4apackages
 PKGDIR=`pwd`
-cp -r $SRCDIR .
+cp -r $SRCDIR p4a
 
 ###########################
 # BUILDING CODE REFERENCE #

@@ -1,55 +1,29 @@
-Ext.P4AViewport = Ext.extend(Ext.Container, {
-    initComponent : function(a) {
-        Ext.P4AViewport.superclass.initComponent.call(this);
-        document.getElementsByTagName('html')[0].className += ' x-viewport';
-        this.el = Ext.get('p4a-main-form');
-        this.el.setHeight = Ext.emptyFn;
-        this.el.setWidth = Ext.emptyFn;
-        this.el.setSize = Ext.emptyFn;
-        this.el.dom.scroll = 'no';
-        this.allowDomMove = false;
-        this.autoWidth = true;
-        this.autoHeight = true;
-        Ext.EventManager.onWindowResize(this.fireResize, this);
-        this.renderTo = this.el;
-    },
-
-    fireResize : function(w, h){
-        this.fireEvent('resize', this, w, h, w, h);
-    }
-});
-Ext.reg('p4aviewport', Ext.P4AViewport);
-
 function prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4)
 {
-	var f = document.getElementById("p4a-main-form");
-	//updateAllRichTextEditors(f);
+	updateAllRichTextEditors(document.forms['p4a']);
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
 	if (!param4) param4 = "";
-	
+
+	var f = document.getElementById('p4a');
+
 	f._object.value = object_name;
 	f._action.value = action_name;
 	f.param1.value = param1;
 	f.param2.value = param2;
 	f.param3.value = param3;
 	f.param4.value = param4;
+
+	if (typeof f.onsubmit == "function") f.onsubmit();
 }
 
-executeEvent = function(object_name, action_name, param1, param2, param3, param4) {
-	var invalid_fields = Ext.query("input.x-form-invalid");
-	if (invalid_fields.length > 0) return false;
-
-	object_name = this.getId();
-	for (var event in this.events) {
-		action_name = "on" + event;
-	}
+function executeEvent(object_name, action_name, param1, param2, param3, param4)
+{
 	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
-	var f = document.getElementById("p4a-main-form");
-	f._ajax.value = 0;
-	f.submit();
+	document.getElementById('p4a')._ajax.value = 0;
+	document.getElementById('p4a').submit();
 }
 
 function isReturnPressed(event)
@@ -70,21 +44,8 @@ function setFocus(id)
 	} catch (e) {}
 }
 
-executeAjaxEvent = function(object_name, action_name, param1, param2, param3, param4)
+function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
 {
-	var invalid_fields = Ext.query("input.x-form-invalid");
-	if (invalid_fields.length > 0) return false;
-	
-	object_name = this.getId();
-	for (var event in this.events) {
-		action_name = "on" + event;
-	}
-	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
-	var f = document.getElementById("p4a-main-form");
-	f._ajax.value = 1;
-	f.submit();
-	
-	/*
 	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
 	$('#colorpicker').hide();
@@ -93,7 +54,6 @@ executeAjaxEvent = function(object_name, action_name, param1, param2, param3, pa
 		dataType: 'xml',
 		success: function (response) {processAjaxResponse(response)}
 	});
-	*/
 }
 
 function processAjaxResponse(response)
@@ -202,8 +162,6 @@ function toggleColorPicker(id)
 	colorpicker.toggle();
 }
 
-/*
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
-*/
