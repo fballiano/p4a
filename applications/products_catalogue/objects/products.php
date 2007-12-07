@@ -41,7 +41,7 @@ class Products extends P4A_Mask
 	function Products()
 	{
 		$this->p4a_mask();
-		$p4a = p4a::singleton();
+		$p4a =& p4a::singleton();
 
 		// DB Source
 		$this->build("p4a_db_source", "source");
@@ -67,40 +67,45 @@ class Products extends P4A_Mask
 
 		// Customizing fields properties
 		$this->setFieldsProperties();
-		$fields = $this->fields;
+		$fields =& $this->fields;
+
+		// Search Fieldset
+		$fs_search =& $this->build("p4a_fieldset","fs_search");
+		$fs_search->setTitle("Search");
+		$txt_search =& $this->build("p4a_field", "txt_search");
+		$txt_search->addAction("onReturnPress");
+		$this->intercept($txt_search, "onReturnPress","search");
+		$txt_search->setLabel("Model");
+		$cmd_search =& $this->build("p4a_button","cmd_search");
+		$cmd_search->setValue("Go");
+		$this->intercept($cmd_search, "onClick","search");
+		$fs_search->anchor($txt_search);
+		$fs_search->anchorLeft($cmd_search);
 
 		// Toolbar
-		//$this->build("p4a_standard_toolbar", "toolbar");
-		//$this->toolbar->setMask($this);
-		
-		$this->build("p4a_toolbar", "toolbar");
-		$this->toolbar->addButton("Search model: ");
-		$this->toolbar->addField("txt_search");
-		$this->toolbar->addButton("go");
-		$this->intercept($this->toolbar->items->go, "onClick", "search");
+		$this->build("p4a_standard_toolbar", "toolbar");
+		$this->toolbar->setMask($this);
 
 		// Table
-		/*
-		$table = $this->build("p4a_table", "table");
+		$table =& $this->build("p4a_table", "table");
  		$table->setWidth(700);
 		$table->setSource($this->source);
 		$table->setVisibleCols(array("product_id","model","category",
 									 "brand"));
 		$table->cols->product_id->setLabel("Cod. Product");
 
-		while ($col = $table->cols->nextItem()) {
+		while ($col =& $table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
 		$table->showNavigationBar();
 
 		// Message
-		$message = $this->build("p4a_message", "message");
+		$message =& $this->build("p4a_message", "message");
 		$message->setWidth("300");
-		*/
 
 
 		//Fieldset con l'elenco dei campi
-		$fset= $this->build("p4a_fieldset", "frame");
+		$fset=& $this->build("p4a_fieldset", "frame");
 		$fset->setTitle("Product details");
 
  		$fset->anchor($this->fields->product_id);
@@ -112,40 +117,37 @@ class Products extends P4A_Mask
 		$fset->anchorLeft($this->fields->discount);
  		$fset->anchor($this->fields->little_photo);
  		$fset->anchorLeft($this->fields->big_photo);
-		//$fset->anchor($this->fields->is_new);
-		//$fset->anchorLeft($this->fields->visible);
+		$fset->anchor($this->fields->is_new);
+		$fset->anchorLeft($this->fields->visible);
 		$fset->anchor($this->fields->description);
 
 		// Frame
-		$frm= $this->build("p4a_frame", "frm");
-		
+		$frm=& $this->build("p4a_frame", "frm");
 		$frm->setWidth(730);
 		$frm->anchor($fs_search);
 		$frm->newRow();
-		//$frm->anchorCenter($message);
-		//$frm->anchor($table);
+		$frm->anchorCenter($message);
+		$frm->anchor($table);
   		$frm->anchor($fset);
 
 		// Mandatory Fields
-		/*
 	    $this->mf = array("product_id", "category_id", "brand_id", "model", "purchasing_price",
  					"selling_price", "description", "discount");
 		foreach($this->mf as $mf){
 			$fields->$mf->label->setFontWeight("bold");
 		}
-		*/
 
 		// Display
 		$this->display("main", $frm);
 		$this->display("menu", $p4a->menu);
-		$this->display("toolbar", $this->toolbar);
+		$this->display("top", $this->toolbar);
 	}
 
 	function setFieldsProperties()
 	{
-		$p4a = p4a::singleton();
+		$p4a =& p4a::singleton();
 
-		$fields = $this->fields;
+		$fields =& $this->fields;
 
 		$fields->product_id->setLabel("Product ID");
 		$fields->product_id->setWidth(200);
@@ -154,7 +156,7 @@ class Products extends P4A_Mask
 		/* To simplify this code with PHP5 you can instead use the helper loadSelectByTable
 		 * $fields->category_id->loadSelectByTable('categories','category_id','description');
 		 * */
-		$categories = $this->build("P4A_DB_Source","categories");
+		$categories =& $this->build("P4A_DB_Source","categories");
 		$categories->setTable("categories");
 		$categories->setPK("category_id");
 		$categories->addOrder("description");
@@ -183,10 +185,10 @@ class Products extends P4A_Mask
 		$fields->selling_price->setLabel("Price $");
 		$fields->selling_price->setWidth("40");
 
-		//$fields->little_photo->setType("image");
-		//$fields->big_photo->setType("image");
+		$fields->little_photo->setType("image");
+		$fields->big_photo->setType("image");
 
-		$fields->description->setType("textarea");
+		$fields->description->setType("rich_textarea");
 		$fields->description->enableUpload();
 	}
 
@@ -211,7 +213,6 @@ class Products extends P4A_Mask
 
 	function search()
 	{
-		/*
 		$value = $this->txt_search->getSQLNewValue();
 		$this->data->setWhere("model LIKE '%{$value}%'");
 		$this->data->firstRow();
@@ -222,6 +223,5 @@ class Products extends P4A_Mask
 			$this->data->setWhere(null);
 			$this->data->firstRow();
 		}
-		*/
 	}
 }

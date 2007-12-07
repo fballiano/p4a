@@ -1,5 +1,5 @@
 <?php
-//print_r($_REQUEST);die();
+
 /**
  * P4A - PHP For Applications.
  *
@@ -36,7 +36,7 @@
  * @package p4a
  */
 
-define("P4A_LOCALE", 'it_IT');
+define("P4A_LOCALE", 'en_US');
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
 //define("P4A_EXTENDED_ERRORS", true);
 //define("P4A_AJAX_DEBUG", "/tmp/p4a_ajax_debug.txt");
@@ -51,6 +51,6 @@ $check = p4a_check_configuration();
 if (is_string($check)) {
 	print $check;
 } else {
-	$p4a = p4a::singleton("products_catalogue");
+	$p4a =& p4a::singleton("products_catalogue");
 	$p4a->main();
 }
