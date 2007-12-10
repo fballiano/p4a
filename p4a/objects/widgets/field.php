@@ -1227,11 +1227,11 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				if ($p4a->isAjaxEnabled()) {
-					$action = 'executeAjaxEvent';
-				} else {
+				//if ($p4a->isAjaxEnabled()) {
+				//	$action = 'executeAjaxEvent';
+				//} else {
 					$action = 'executeEvent';
-				}
+				//}
 				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 				$this->intercept($this, 'onChange', 'redesign');
 				if (!$this->isEnabled()) {
@@ -1377,11 +1377,11 @@
 			$id = $this->getID();
 
 			if ($this->getNewValue() === null) {
-				if ($p4a->isAjaxEnabled()) {
-					$action = 'executeAjaxEvent';
-				} else {
+				//if ($p4a->isAjaxEnabled()) {
+				//	$action = 'executeAjaxEvent';
+				//} else {
 					$action = 'executeEvent';
-				}
+				//}
 				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
 				$this->intercept($this,'onChange','redesign');
 
