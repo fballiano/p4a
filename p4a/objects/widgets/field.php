@@ -1183,7 +1183,7 @@
 
 			$this->label->unsetProperty('for');
 			$return = $this->composeLabel() . "<div class='font_normal' style='float:left;text-align:left;'>$sContent</div>";
-			$this->label->setProperty('for', "{id}input");
+			$this->label->setProperty('for', "{$id}input");
 			return $return;
 		}
 
@@ -1280,7 +1280,7 @@
 			}
 
 			$sReturn = $this->composeLabel() . $sReturn;
-			$this->label->setProperty('for', "{id}input");
+			$this->label->setProperty('for', "{$id}input");
 			return $sReturn;
 		}
 
