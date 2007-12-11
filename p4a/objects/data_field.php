@@ -215,8 +215,7 @@
 				return $this->default_value;
 			} else {
 				$db =& P4A_DB::singleton($this->getDSN());
-				$next_id = $db->adapter->genId($this->sequence);
-				return $next_id;
+				return $db->nextSequenceId($this->sequence);
 			}
 		}
 

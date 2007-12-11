@@ -44,6 +44,8 @@
  */
 class P4A_DB
 {
+	protected $db_type = null;
+	
 	/**
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
@@ -72,6 +74,7 @@ class P4A_DB
 					p4a_error("db not supported");
 				}
 		
+				$$dbconn->db_type = $dsn_data['scheme'];
 				$driver = 'Zend_Db_Adapter_Pdo_' . ucfirst($dsn_data['scheme']);
 				$connection_params = array(
 					'host' => $dsn_data['host'],
@@ -104,6 +107,20 @@ class P4A_DB
 	function &connect($DSN = "")
 	{
 		return P4A_DB::singleton($DSN);
+	}
+	
+	function nextSequenceId($sequence_name)
+	{
+		switch ($this->db_type) {
+			case 'mysql':
+			case 'sqlite':
+				return 1;
+				break;
+			case 'postgres':
+			case 'oracle':
+				return $this->adapter->nextSequenceId($sequence_name);
+				break;
+		}
 	}
 	
 	function &select()

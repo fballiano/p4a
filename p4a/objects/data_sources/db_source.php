@@ -396,10 +396,12 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->fields->$name->setDSN($this->getDSN());
 		$this->fields->$name->setLength($meta['LENGTH']);
 		
-		switch ($meta['DATA_TYPE']) {
+		switch (strtolower($meta['DATA_TYPE'])) {
 			case 'int':
+			case 'int4':
 				$this->fields->$name->setType('integer');
 				break;
+			case 'bool':
 			case 'tinyint':
 				$this->fields->$name->setType('boolean');
 				break;
@@ -408,6 +410,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				break;
 			case 'decimal':
 			case 'float':
+			case 'numeric':
 				$this->fields->$name->setType('decimal');
 				break;
 			default:
