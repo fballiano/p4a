@@ -113,13 +113,17 @@ class P4A_DB
 	{
 		switch ($this->db_type) {
 			case 'mysql':
+				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)";
 			case 'sqlite':
+				if (!isset($create_sequence_sql)) {
+					$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTOINCREMENT PRIMARY KEY)";
+				}
 				try {
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				} catch (Exception $e) {
-					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)");
+					$this->adapter->query($create_sequence_sql);
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
