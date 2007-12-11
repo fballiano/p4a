@@ -114,8 +114,17 @@ class P4A_DB
 		switch ($this->db_type) {
 			case 'mysql':
 			case 'sqlite':
-				return 1;
-				break;
+				try {
+					$this->adapter->insert($sequence_name, array());
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				} catch (Exception $e) {
+					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)");
+					$this->adapter->insert($sequence_name, array());
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				}
+				return $id;
 			case 'postgres':
 			case 'oracle':
 				return $this->adapter->nextSequenceId($sequence_name);
