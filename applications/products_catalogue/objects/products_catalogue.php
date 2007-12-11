@@ -70,7 +70,7 @@ class Products_Catalogue extends P4A
 		$this->categories->load();
 
 		// Primary action
-		$this->openMask("brands");
+		$this->openMask("products");
 	}
 
 	function menuClick()
