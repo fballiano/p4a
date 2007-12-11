@@ -45,14 +45,12 @@ class Products extends P4A_Mask
 
 		// DB Source
 		$this->build("p4a_db_source", "source");
-		$this->source->setFields(array("products.*" => "*",
-									   "categories.description" => "category",
-									   "brands.description" => "brand"
-										));
 		$this->source->setTable("products");
 		$this->source->addJoin("categories",
-							   "products.category_id = categories.category_id");
-		$this->source->addJoin("brands", "products.brand_id = brands.brand_id");
+							   "products.category_id = categories.category_id",
+							   array('description'=>'category'));
+		$this->source->addJoin("brands", "products.brand_id = brands.brand_id",
+							   array('description'=>'brand'));
 		$this->source->setPk("product_id");
 		$this->source->addOrder("product_id");
 		$this->source->setPageLimit(10);

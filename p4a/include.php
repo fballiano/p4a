@@ -79,7 +79,7 @@
 	$include_path = explode(_SSS_, ini_get('include_path'));
 	$dot_key = array_search('.', $include_path);
 	unset($include_path[$dot_key]);
-	$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . join(_SSS_, $include_path);
+	$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries' . _SSS_ .  join(_SSS_, $include_path);
 	ini_set('include_path', $new_include_path);
 
 	//Libraries
@@ -89,6 +89,8 @@
 	require_once "$dir/libraries/date.php";
 	require_once "$dir/libraries/number.php";
 	require_once "$dir/libraries/validate.php";
+	require_once "$dir/libraries/p4a_db_select.php";
+	require_once "$dir/libraries/p4a_db_table.php";
 
 	//Core
 	require_once "$dir/p4a_object.php";

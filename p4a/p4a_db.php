@@ -36,7 +36,6 @@
  * @package p4a
  */
 
-require_once dirname(__FILE__) . "/libraries/adodb/adodb.inc.php";
 
 /**
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
@@ -67,14 +66,29 @@ class P4A_DB
 		if(!isset($$dbconn) or $$dbconn == null) {
 			if(strlen($DSN)) {
 				$$dbconn =& new p4a_db();
-				$$dbconn->adapter =& NewADOConnection($DSN);
+				$dsn_data = parse_url($DSN);
+		
+				if (!in_array($dsn_data['scheme'], array('mysql','oracle','pgsql','sqlite'))) {
+					p4a_error("db not supported");
+				}
+		
+				$driver = 'Zend_Db_Adapter_Pdo_' . ucfirst($dsn_data['scheme']);
+				$connection_params = array(
+					'host' => $dsn_data['host'],
+					'username' => $dsn_data['user'],
+					'password' => $dsn_data['pass'],
+					'dbname' => substr($dsn_data['path'], 1)
+				);
+				
+				require_once str_replace('_', '/', $driver) . '.php';
+				$$dbconn->adapter =& new $driver($connection_params);
     			if (!is_object($$dbconn->adapter)) {
 					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
     				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
     					die();
     				}
     			}
-    			$$dbconn->adapter->setFetchMode(ADODB_FETCH_ASSOC);
+    			$$dbconn->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
 			} else {
 				$$dbconn = null;
 			}
@@ -90,6 +104,11 @@ class P4A_DB
 	function &connect($DSN = "")
 	{
 		return P4A_DB::singleton($DSN);
+	}
+	
+	function &select()
+	{
+		return $this->adapter->select();
 	}
 
 	function beginTransaction()

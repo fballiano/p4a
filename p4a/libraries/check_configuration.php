@@ -139,6 +139,7 @@ function p4a_check_configuration($additionalDir = null)
 	}
 
     // DATABASE CONNECTION
+    /*
     $error .= "<div class='box'>Checking DATABASE CONNECTION: ";
     if (defined('P4A_DSN')) {
     	$db =& NewADOConnection(P4A_DSN);
@@ -152,6 +153,7 @@ function p4a_check_configuration($additionalDir = null)
     	$error .= "P4A_DSN is not defined, no database connection.";
     }
     $error .= "</div>";
+	*/
 
 	// FINAL STRINGS
 	$style = "<style>body {font-family:sans-serif; font-size:90%; color:#111} h1,h2,h3,h4{text-align:center} .box{padding:10px; border:1px solid #111; background-color:#fafafa; margin-bottom:10px;} .red{color:red;font-weight:bold} .green{color:green;font-weight:bold}</style>";
