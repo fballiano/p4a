@@ -40,7 +40,7 @@ class P4A_DB_Source extends P4A_Data_Source
 {
 	var $_DSN = "";
 
-	var $_pk = NULL;
+	var $_pk = null;
 
 	var $_select = "";
 	protected $_table = "";
@@ -240,7 +240,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		
 		$db =& P4A_DB::singleton($this->getDSN());
-		$select =& $this->_composeSelectQuery();
+		$select =& $this->_composeSelectStructureQuery();
 		$main_table = $this->getTable();
 		
 		
@@ -452,15 +452,8 @@ class P4A_DB_Source extends P4A_Data_Source
 	function getPkRow($pk)
 	{
 		$db =& P4A_DB::singleton($this->getDSN());
-		$query = $this->_composeSelectPkQuery($pk);
-		$row = $db->adapter->getRow($query);
-		if ($db->adapter->metaError()) {
-			$e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
-			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
-				die();
-			}
-		}
-		return $row;
+		$select =& $this->_composeSelectPkQuery($pk);
+		return $db->adapter->fetchRow($select);
 	}
 
 	function row($num_row = null, $move_pointer = true)
@@ -551,8 +544,10 @@ class P4A_DB_Source extends P4A_Data_Source
 	function getRowPosition($row=null)
 	{
 		if (!$this->getQuery()) {
-			$query  = $this->_composeSelectCountPart();
-			$query .= $this->_composeFromPart();
+			$db =& P4A_DB::singleton($this->getDSN());
+			$select =& $db->select();
+			$this->_composeSelectCountPart($select);
+			$this->_composeWherePart($select);
 
 			$new_order_array = array();
 			$new_order_array_values = array();
@@ -594,26 +589,17 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 
 				$where_order = substr($where_order, 0, -3);
-				$where = $this->_composeWherePart();
-				if ($where != '') {
-					$query .= "$where AND $where_order ";
-				} else {
-					$query .= " WHERE $where_order ";
-				}
-			} else {
-				$query .= $this->_composeWherePart();
+				$select->where($where_order);
 			}
 
-			$query .= $this->_composeGroupPart();
-			//$query .= $this->_composeOrderPart($new_order_array);
-			$db =& P4A_DB::singleton($this->getDSN());
+			$this->_composeGroupPart($select);
 
 			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
 			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
 			if (count($this->_join)) {
-				$db->adapter->getOne($query);
+				$db->adapter->fetchOne($select);
 			}
-			return $db->adapter->getOne($query) + 1;
+			return $db->adapter->fetchOne($select) + 1;
 		}
 	}
 
@@ -646,17 +632,11 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 
+			$p4a_db_table = new P4A_Db_Table(array('name'=>$this->getTable(), 'db'=>$db->adapter));
 			if ($this->isNew()) {
-				$res = $db->adapter->autoExecute($this->_table, $fields_values, "INSERT");
+				$p4a_db_table->insert($fields_values);
 			} else {
-				$res = $db->adapter->autoExecute($this->_table, $fields_values, "UPDATE", $this->_composePkString($pk_values));
-			}
-
-			if (!$res) {
-				$e = new P4A_ERROR('A query has returned an error', $this, $db->getNativeError());
-				if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
-					die();
-				}
+				$p4a_db_table->update($fields_values, $this->_composePkString($pk_values));
 			}
 
 			$pks = $this->getPk();
@@ -795,6 +775,21 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		return $select;
 	}
+	
+	function &_composeSelectStructureQuery()
+	{
+		if ($this->getQuery()) {
+			$query  = $this->getQuery();
+		} else {
+			$db =& P4A_Db::singleton($this->getDSN());
+			$select =& $db->select();
+			$this->_composeSelectPart($select);
+			$this->_composeWherePart($select);
+			$this->_composeGroupPart($select);
+		}
+
+		return $select;
+	}
 
 	function &_composeSelectQuery()
 	{
@@ -814,10 +809,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	function _composeSelectPkQuery($pk_value)
 	{
-		$query  = $this->_composeSelectPart();
-		$query .= $this->_composeFromPart();
-
-		$where = $this->_composeWherePart();
+		$db =& P4A_Db::singleton($this->getDSN());
+		$select =& $db->select();
+		$this->_composeSelectPart($select);
+		$this->_composeFromPart($select);
+		$this->_composeWherePart($select);
 
 		$pk_key = $this->getPK();
 		$pk_string = "";
@@ -833,17 +829,11 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 			$pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
 		}
-
-		if (strlen($where)) {
-			$where .= "AND " . $pk_string;
-		} else {
-			$where = "WHERE " . $pk_string;
-		}
-
-		$query .= $where;
-		$query .= $this->_composeGroupPart();
-		$query .= $this->_composeOrderPart();
-		return $query;
+		
+		$select->where($pk_string);
+		$this->_composeGroupPart($select);
+		$this->_composeOrderPart($select);
+		return $select;
 	}
 
 	function _composeSelectPart(&$select)
@@ -920,22 +910,17 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
-	function _composeOrderPart($order = array())
+	function _composeOrderPart(&$select, $order = array())
 	{
-		$query = "";
-		if (!$order) {
-			$order = $this->getOrder();
-		}
+		if (!$order) $order = $this->getOrder();
 		if ($order) {
-			$query .= "ORDER BY ";
-
+			$order_array = array();
 			foreach ($order as $field=>$direction) {
 				list($long_fld,$short_fld) = $this->getFieldName($field);
-				$query .= "$long_fld $direction,";
+				$order_array[] = "$long_fld $direction";
 			}
-			$query = substr($query,0, -1) . " ";
+			$select->order($order_array);
 		}
-		return $query;
 	}
 
 	function _composePkString($pk_values = array())
