@@ -283,6 +283,10 @@
 	if (!defined('P4A_AUTO_MAXLENGTH')) {
 		define('P4A_AUTO_MAXLENGTH', false);
 	}
+	
+	if (!defined('P4A_AUTO_DB_PRIMARY_KEYS')) {
+		define('P4A_AUTO_DB_PRIMARY_KEYS', true);
+	}
 
 	if (!defined('P4A_AUTO_DB_SEQUENCES')) {
 		define('P4A_AUTO_DB_SEQUENCES', true);

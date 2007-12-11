@@ -51,8 +51,6 @@ class P4A_DB_Source extends P4A_Data_Source
 
     var $_query = "";
 
-    var $_use_fields_aliases = FALSE;
-
     var $_multivalue_fields = array();
 
     var $_filters = array();
@@ -87,12 +85,6 @@ class P4A_DB_Source extends P4A_Data_Source
     {
         if ($this->getSelect()){
             p4a_error("Can't use setFields here");
-        }
-        $fields_keys = array_keys($fields);
-
-        //Check if dictionary or array
-        if ($fields_keys[0] !== 0){
-            $this->_use_fields_aliases = TRUE;
         }
         $this->_fields = $fields;
     }
@@ -196,15 +188,6 @@ class P4A_DB_Source extends P4A_Data_Source
         $this->isSortable(FALSE);
     }
 
-    function setLimitQuery($query, $limit, $offset=0)
-    {
-        $this->_query = $query;
-        $this->_limit = $limit;
-        $this->_offset = $offset;
-        $this->isReadOnly(TRUE);
-        $this->isSortable(FALSE);
-    }
-
     function getQuery()
     {
         return $this->_query;
@@ -258,13 +241,17 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		$db =& P4A_DB::singleton($this->getDSN());
 		$select =& $this->_composeSelectQuery();
+		$main_table = $this->getTable();
 		
+		
+		// retrieving tables metadata 
 		$tables = array();
 		foreach ($select->getPart('from') as $table=>$table_data) {
 			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'db'=>$db->adapter));
 			$tables[$table] = $p4a_db_table->info();
     	}
     	
+    	// creating data fields
     	foreach ($select->getPart('columns') as $column_data) {
     		$table_name = $column_data[0];
     		$column_name = $column_data[1];
@@ -279,6 +266,27 @@ class P4A_DB_Source extends P4A_Data_Source
     			$meta = $tables[$table_name]['metadata'][$column_name];
 				$this->createDataField($field_name, $meta);
     		}
+    	}
+    	
+    	// setting primary keys
+    	$primary_keys = array_values($tables[$main_table]['primary']);
+    	if (P4A_AUTO_DB_PRIMARY_KEYS) {
+	    	if (sizeof($primary_keys) == 1) {
+	    		$this->setPk($primary_keys[0]);
+	    	} else {
+	    		$this->setPk($primary_keys);
+	    	}
+    	}
+    	
+    	$main_table_sequence = $tables[$main_table]['sequence'];
+    	if (P4A_AUTO_DB_SEQUENCES and sizeof($primary_keys) == 1 and $main_table_sequence) {
+			$field_name = $primary_keys[0];
+			$table_name = $tables[$main_table]['metadata'][$field_name]['TABLE_NAME'];
+			if (is_string($main_table_sequence)) {
+				$this->fields->$field_name->setSequence($main_table_sequence);
+			} else {
+				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
+			}
     	}
 
 		/*
@@ -386,6 +394,24 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->fields->build("p4a_data_field", $name);
 		$this->fields->$name->setDSN($this->getDSN());
 		$this->fields->$name->setLength($meta['LENGTH']);
+		
+		switch ($meta['DATA_TYPE']) {
+			case 'int':
+				$this->fields->$name->setType('integer');
+				break;
+			case 'tinyint':
+				$this->fields->$name->setType('boolean');
+				break;
+			case 'date':
+				$this->fields->$name->setType('date');
+				break;
+			case 'decimal':
+			case 'float':
+				$this->fields->$name->setType('decimal');
+				break;
+			default:
+				$this->fields->$name->setType('text');
+		}
     }
 
 	function getFieldName($field)
