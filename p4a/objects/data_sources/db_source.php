@@ -479,38 +479,38 @@ class P4A_DB_Source extends P4A_Data_Source
 		$select->limit(1, $num_row-1);
 		$row = $db->adapter->fetchRow($select);
 
-			if ($move_pointer) {
-				if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+		if ($move_pointer) {
+			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
-				if ($this->isActionTriggered('onMoveRow')) {
-					if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
-				} else {
-					if (!empty($row)) {
-						$this->_pointer = $num_row;
+			if ($this->isActionTriggered('onMoveRow')) {
+				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			} else {
+				if (!empty($row)) {
+					$this->_pointer = $num_row;
 
-						foreach($row as $field=>$value){
-							$this->fields->$field->setValue($value);
-						}
-					} elseif ($this->getNumRows() == 0) {
-						$this->newRow();
+					foreach($row as $field=>$value){
+						$this->fields->$field->setValue($value);
 					}
+				} elseif ($this->getNumRows() == 0) {
+					$this->newRow();
 				}
-
-				$this->actionHandler('afterMoveRow');
 			}
 
-			foreach ($this->_multivalue_fields as $fieldname=>$mv) {
-				$fk = $mv["fk"];
-				$fk_field = $mv["fk_field"];
-				$table = $mv["table"];
+			$this->actionHandler('afterMoveRow');
+		}
 
-				$pk = $this->getPk();
-				$pk_value = $this->fields->$pk->getNewValue();
-				$fk_values = $db->adapter->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
-				$this->fields->$fieldname->setValue($fk_values);
-				$row[$fieldname] = $fk_values;
-			}
-			return $row;
+		foreach ($this->_multivalue_fields as $fieldname=>$mv) {
+			$fk = $mv["fk"];
+			$fk_field = $mv["fk_field"];
+			$table = $mv["table"];
+
+			$pk = $this->getPk();
+			$pk_value = $this->fields->$pk->getNewValue();
+			$fk_values = $db->adapter->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
+			$this->fields->$fieldname->setValue($fk_values);
+			$row[$fieldname] = $fk_values;
+		}
+		return $row;
 	}
 
 	function rowByPk($pk)
