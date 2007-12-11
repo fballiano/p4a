@@ -1,5 +1,9 @@
+2.99.0
+- Zend Framework 1.0.3 was added
+
 2.2.3
-- 
+- a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
+- ajax file upload was disabled due to a strange bug we hope to solve with future releases of jQuery and its "form" module
 
 2.2.2
 - Major bugfix on P4A_DB_Source::saveRow(), the patch from Edr (introduced in 2.2.0) was removed and a few checks were added to prevent inconsistency
