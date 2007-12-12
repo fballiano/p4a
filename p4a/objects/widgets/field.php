@@ -843,13 +843,13 @@
 			}
 
 			$id = $this->getId();
-			$date_format = $p4a->i18n->datetime->getFormat('date_default');
+			//$date_format = $p4a->i18n->datetime->getFormat('date_default');
 
-			$header 	   = "<input id='{$id}input' type='text' class='border_color1 font_normal' $enabled";
+			$header 	   = "<input id='{$id}input' type='text' class='p4a_date_calendar border_color1 font_normal' $enabled";
 			$close_header  = "/>";
 
 			if (!$p4a->isHandheld()) {
-				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return showCalendar('{$id}input', '$date_format', false, true);\"/>";
+				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return p4a_openCalendar('{$id}input');\" />";
 			}
 
 			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;

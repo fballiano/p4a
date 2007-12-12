@@ -767,3 +767,11 @@ legend {
 	background-color: Highlight;
 	color: HighlightText;
 }
+
+/***************/
+/* DATE PICKER */
+/***************/
+
+.datepicker_control {
+ display: none
+}

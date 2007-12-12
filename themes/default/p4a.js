@@ -162,6 +162,16 @@ function toggleColorPicker(id)
 	colorpicker.toggle();
 }
 
+function p4a_openCalendar(id)
+{
+	var element = $('#'+id);
+	if(!element.hasClass($.datepicker.markerClassName)) {
+		element.datepicker();
+	}
+	$.datepicker.showFor(element);
+	return false;
+}
+
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
