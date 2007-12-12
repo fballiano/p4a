@@ -36,6 +36,8 @@
  * @package p4a
  */
 
+require_once "Zend/Date.php";
+
 	/**
 	 * p4a internationalization class.
 	 *
@@ -121,6 +123,8 @@
 		 * @access private
 		 */
 		var $numbers_formats = NULL;
+		
+		protected $_locale_engine = null;
 
 		/**
 		 * Class constructor.
@@ -142,11 +146,16 @@
 			$this->language = strtolower(substr($locale, 0, 2));
 			$this->country = strtoupper(substr($locale, 3, 2));
 			$this->locale = "{$this->language}_{$this->country}";
-
+			
 			if (strlen($locale)>5) {
 				$this->charset = substr($locale, 6);
 			}
-
+			
+			$this->_locale_engine = new Zend_Locale($this->locale);
+			$this->messages = new p4a_i18n_messages($this->language, $this->country);
+			
+			
+			/*
 			$this->setSystemLocale();
 			$this->loadFormats();
 
@@ -154,21 +163,7 @@
 			$this->numbers = new p4a_i18n_numbers($this->numbers_formats);
 			$this->currency = new p4a_i18n_currency($this->currency_formats);
 			$this->datetime = new p4a_i18n_datetime($this->datetime_formats, $this->messages->messages);
-		}
-
-		/**
-		 * Sets PHP system level locale
-		 * @access private
-		 */
-		function setSystemLocale()
-		{
-			setlocale(LC_ALL, $this->locale);
-			setlocale(LC_NUMERIC, "C");
-			setlocale(LC_MONETARY, "C");
-
-			if (extension_loaded('mbstring')) {
-				mb_internal_encoding($this->charset);
-			}
+			*/
 		}
 
 		/**
@@ -252,8 +247,8 @@
 			switch($type) {
 				case 'boolean':
 					$value = ($value == 1) ? 'yes' : 'no';
-					$value = $this->messages->get($value);
-					break;
+					$yes_no = $this->_locale_engine->getQuestion();
+					return $yes_no[$value];
 				case 'date':
 					$value = $this->datetime->formatDateDefault($value);
 					break;
@@ -261,14 +256,11 @@
 					$value = $this->datetime->formatTimeDefault($value);
 					break;
 				case 'integer':
-					$value = $this->numbers->formatInteger($value);
-					break;
+					return Zend_Locale_Format::toNumber($value, array('precision'=>0, 'locale'=>$this->_locale_engine));
 				case 'float':
-					$value = $this->numbers->formatFloat($value);
-					break;
+					return Zend_Locale_Format::toNumber($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
 				case 'decimal':
-					$value = $this->numbers->formatDecimal($value);
-					break;
+					return Zend_Locale_Format::toNumber($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
 				case 'currency':
 					$value = $this->currency->formatLocal($value);
 					break;
@@ -289,6 +281,8 @@
 		{
 			switch($type) {
 				case 'boolean':
+					//$yes_no = $this->_locale_engine->getQuestion('en_US');
+					//print_r($yes_no);
 					$value = ($value == $this->messages->get('yes')) ? 1 : 0;
 					break;
 				case 'date':
@@ -298,14 +292,11 @@
 					$value = $this->datetime->unformatTimeDefault($value);
 					break;
 				case 'integer':
-					$value = $this->numbers->unformatInteger($value);
-					break;
+					return Zend_Locale_Format::getInteger($value, array('locale'=>$this->_locale_engine));
 				case 'float':
-					$value = $this->numbers->unformatFloat($value);
-					break;
+					return Zend_Locale_Format::getFloat($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
 				case 'decimal':
-					$value = $this->numbers->unformatDecimal($value);
-					break;
+					return Zend_Locale_Format::getFloat($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
 				case 'currency':
 					$value = $this->currency->unformatLocal($value);
 					break;

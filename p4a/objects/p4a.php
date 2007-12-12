@@ -172,7 +172,6 @@
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
 			$this->i18n =& new p4a_i18n(P4A_LOCALE);
-			$this->i18n->setSystemLocale();
 
 			$this->build("P4A_Collection", "masks");
 			$this->build("P4A_Collection", "listeners");
@@ -355,7 +354,6 @@
 		function main()
 		{
 			$this->_in_ajax_call = (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']);
-			$this->i18n->setSystemLocale();
 			$this->actionHandler('main');
 
 			// Processing get and post.
