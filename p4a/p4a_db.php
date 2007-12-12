@@ -85,12 +85,6 @@ class P4A_DB
 				
 				require_once str_replace('_', '/', $driver) . '.php';
 				$$dbconn->adapter =& new $driver($connection_params);
-    			if (!is_object($$dbconn->adapter)) {
-					$e = new P4A_ERROR('Database connection failed', $this, $$dbconn);
-    				if ($this->errorHandler('onDBConnectionError', $e) !== PROCEED) {
-    					die();
-    				}
-    			}
     			$$dbconn->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
 			} else {
 				$$dbconn = null;

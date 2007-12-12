@@ -189,17 +189,9 @@
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqmodal.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
-
-				$calendar_language = P4A_I18N_DATE_CALENDAR_LANGUAGE;
-				if (@file_exists(P4A_THEME_DIR . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js")) {
-					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-{$calendar_language}.js");
-				} else {
-					$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/lang/calendar-en.js");
-				}
-
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
 				$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
-				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/p4a.js");
-				$this->addCss(P4A_THEME_PATH . "/widgets/date_calendar/calendar.css", "screen");
+				$this->addCss(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
