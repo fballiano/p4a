@@ -250,8 +250,8 @@ require_once "Zend/Date.php";
 					$yes_no = $this->_locale_engine->getQuestion();
 					return $yes_no[$value];
 				case 'date':
-					$value = $this->datetime->formatDateDefault($value);
-					break;
+					$date = new Zend_Date($value);
+					return $date->get(Zend_Date::DATES, $this->_locale_engine);
 				case 'time':
 					$value = $this->datetime->formatTimeDefault($value);
 					break;
@@ -286,8 +286,8 @@ require_once "Zend/Date.php";
 					$value = ($value == $this->messages->get('yes')) ? 1 : 0;
 					break;
 				case 'date':
-					$value = $this->datetime->unformatDateDefault($value);
-					break;
+					$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine));
+					return "{$date['year']}-{$date['month']}-{$date['day']}";
 				case 'time':
 					$value = $this->datetime->unformatTimeDefault($value);
 					break;
