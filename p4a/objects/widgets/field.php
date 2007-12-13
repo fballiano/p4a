@@ -722,7 +722,7 @@
 				if (($this->formatter_name !== NULL) and ($this->format_name !== NULL)) {
 					$value = $p4a->i18n->{$this->formatter_name}->format($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
 				} else {
-					$value = $p4a->i18n->autoFormat($value, $this->data_field->getType());
+					$value = $p4a->i18n->format($value, $this->data_field->getType());
 				}
 			}
 
@@ -744,7 +744,7 @@
 				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
 					$value = $p4a->i18n->{$this->formatter_name}->unformat( $value, $p4a->i18n->{$this->formatter_name}->getFormat( $this->format_name ) );
 				} else {
-					$value = $p4a->i18n->autoUnformat( $value, $this->data_field->getType() );
+					$value = $p4a->i18n->normalize( $value, $this->data_field->getType() );
 				}
 			}
 
@@ -1004,7 +1004,7 @@
 
 				$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 				if ($this->isFormatted()) {
-					$sContent .= htmlspecialchars($p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType()));
+					$sContent .= htmlspecialchars($p4a->i18n->format($current[$description_field], $this->data->fields->$description_field->getType()));
 				} else {
 					$sContent .= htmlspecialchars($current[$description_field]);
 				}
@@ -1051,7 +1051,7 @@
 
 				$sReturn .= "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 				if ($this->isFormatted()) {
-					$sReturn .= htmlspecialchars($p4a->i18n->autoFormat($current[ $description_field ], $this->data->fields->$description_field->getType()));
+					$sReturn .= htmlspecialchars($p4a->i18n->format($current[ $description_field ], $this->data->fields->$description_field->getType()));
 				} else {
 					$sReturn .= htmlspecialchars($current[$description_field]);
 				}
@@ -1173,7 +1173,7 @@
 				$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 				$sContent .= "<label for='{$id}_{$key}input'>";
 				if ($this->isFormatted()) {
-					$sContent .= $p4a->i18n->autoFormat($current[$description_field], $this->data->fields->$description_field->getType());
+					$sContent .= $p4a->i18n->format($current[$description_field], $this->data->fields->$description_field->getType());
 				} else {
 					$sContent .= $current[$description_field];
 				}
@@ -1267,7 +1267,7 @@
 
 				$sReturn  = '<table class="border_box">';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 
 				if (P4A_Is_Mime_Type_Embeddable($mime_type)) {
@@ -1445,7 +1445,7 @@
 					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 				}
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->autoFormat($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;

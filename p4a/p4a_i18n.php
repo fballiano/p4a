@@ -50,30 +50,20 @@ require_once "Zend/Date.php";
 		/**
 		 * Here we store the current locale.
 		 * @var string
-		 * @access private
 		 */
-		var $locale = NULL;
+		private $locale = null;
 
 		/**
 		 * Here we store the current language.
 		 * @var string
-		 * @access private
 		 */
-		var $language = NULL;
+		private $language = null;
 
 		/**
 		 * Here we store the current country.
 		 * @var string
-		 * @access private
 		 */
-		var $country = NULL;
-
-		/**
-		 * Here we store the current charset. Default is UTF-8.
-		 * @var string
-		 * @access private
-		 */
-		var $charset = 'UTF-8';
+		private $region = null;
 
 		/**
 		 * Currency management object.
@@ -138,111 +128,50 @@ require_once "Zend/Date.php";
 
 		/**
 		 * Sets the desidered locale (it_IT|en_UK|en_US).
-		 * @param string				The desired locale.
-		 * @access public
+		 * @param string
 		 */
-		function setLocale($locale = P4A_LOCALE)
+		public function setLocale($locale = P4A_LOCALE)
 		{
 			$this->language = strtolower(substr($locale, 0, 2));
-			$this->country = strtoupper(substr($locale, 3, 2));
-			$this->locale = "{$this->language}_{$this->country}";
-			
-			if (strlen($locale)>5) {
-				$this->charset = substr($locale, 6);
-			}
+			$this->region = strtoupper(substr($locale, 3, 2));
+			$this->locale = "{$this->language}_{$this->region}";
 			
 			$this->_locale_engine = new Zend_Locale($this->locale);
-			$this->messages = new p4a_i18n_messages($this->language, $this->country);
-			
-			
-			/*
-			$this->setSystemLocale();
-			$this->loadFormats();
-
-			$this->messages = new p4a_i18n_messages($this->language, $this->country);
-			$this->numbers = new p4a_i18n_numbers($this->numbers_formats);
-			$this->currency = new p4a_i18n_currency($this->currency_formats);
-			$this->datetime = new p4a_i18n_datetime($this->datetime_formats, $this->messages->messages);
-			*/
+			$this->messages = new p4a_i18n_messages($this->language, $this->region);
 		}
 
 		/**
-		 * Returns the current locale.
 		 * @return string
-		 * @access public
 		 */
-		function getLocale()
+		public function getLocale()
 		{
 			return $this->locale;
 		}
 
 		/**
-		 * Returns the current language.
 		 * @return string
-		 * @access public
 		 */
-		function getLanguage()
+		public function getLanguage()
 		{
 			return $this->language;
 		}
 
 		/**
-		 * Returns the current country.
 		 * @return string
-		 * @access public
 		 */
-		function getCountry()
+		public function getRegion()
 		{
-			return $this->country;
-		}
-
-		/**
-		 * Sets the charset.
-		 * @access public
-		 * @param string		The charset
-		 */
-		function setCharset($charset = 'UTF-8')
-		{
-			$this->charset = $charset;
-		}
-
-		/**
-		 * Returns the current charset.
-		 * @return string
-		 * @access public
-		 */
-		function getCharset()
-		{
-			return $this->charset;
-		}
-
-		/**
-		 * Loads all available formats.
-		 * @access private
-		 */
-		function loadFormats()
-		{
-			$charset = "";
-			if ($this->charset != "UTF-8") {
-				$charset = ".{$this->charset}";
-			}
-
-			require dirname(__FILE__) . "/i18n/formats/{$this->language}/{$this->country}{$charset}.php";
-
-			$this->numbers_formats = $numbers_formats;
-			$this->datetime_formats = $datetime_formats;
-			$this->currency_formats = $currency_formats;
+			return $this->region;
 		}
 
 		/**
 		 * Calls the p4a default formatter for value with the given type.
 		 * If the type in not recognized, $value is returned as is.
-		 * @access public
-		 * @param mixed		The value to be formatter
-		 * @param string	The type (date|time|integer|float|decimal|currency)
+		 * @param mixed
+		 * @param string	(date|time|integer|float|decimal|currency)
 		 * @return mixed
 		 */
-		function autoFormat($value, $type)
+		public function format($value, $type)
 		{
 			switch($type) {
 				case 'boolean':
@@ -270,14 +199,13 @@ require_once "Zend/Date.php";
 		}
 
 		/**
-		 * Calls the p4a default unformatter for value with the given type.
+		 * Calls the default normalizer for value with the given type.
 		 * If the type in not recognized, $value is returned as is.
-		 * @access public
-		 * @param mixed		The value to be unformatter
+		 * @param mixed		The value to be normalized
 		 * @param string	The type (date|time|integer|float|decimal|currency)
 		 * @return mixed
 		 */
-		function autoUnformat($value, $type)
+		public function normalize($value, $type)
 		{
 			switch($type) {
 				case 'boolean':

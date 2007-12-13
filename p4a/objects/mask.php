@@ -338,11 +338,8 @@
 		 */
 		function main()
 		{
-			$p4a =& P4A::singleton();
-			$charset = $p4a->i18n->getCharset();
-
-			header("Content-Type: text/html; charset={$charset}");
-			print $this->getAsString();
+			header("Content-Type: text/html; charset=UTF-8");
+			echo $this->getAsString();
 		}
 
 		/**
@@ -364,8 +361,7 @@
 				}
 			}
 
-			$_charset = $p4a->i18n->getCharset();
-			$_xml_header = '<?xml version="1.0" encoding="' . $_charset . '"?>';
+			$_xml_header = '<?xml version="1.0" encoding="UTF-8"?>';
 			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 

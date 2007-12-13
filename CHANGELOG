@@ -1,5 +1,20 @@
+3.0.0 TODO
+- boolen unformat (wait for Zend_Locale yeststr regex)
+- "time" format/normalize
+- "currency" format/normalize
+- move translations to Zend_Translate
+- clean p4a_i18n and check what objects can be removed
+- make ui.datepicker.js work with our date format definitions
+- rename constructors to __construct
+
 2.99.0
 - Zend Framework 1.0.3 was added
+- P4A_I18N does not manage charset anymore, only UTF-8 will be supported from now on
+- P4A_I18N numbers format/normalization now relies on Zend_Locale
+- P4A_I18N dates format/normalization now relies on Zend_Date and Zend_Locale
+- P4A_I18N::getCountry() was renamed to getRegion()
+- P4A_I18N::autoFormat() was renamed to format()
+- P4A_I18N::autoUnFormat() was renamed to format()
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
