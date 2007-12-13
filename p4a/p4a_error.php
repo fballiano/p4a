@@ -36,74 +36,74 @@
  * @package p4a
  */
 
+/**
+ * p4a error management class.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ */
+class P4A_Error
+{
+	var $message = NULL;
+	var $data = array();
+	var $object_id = NULL;
+	var $external_object = NULL;
+	var $backtrace = array();
+
 	/**
-	 * p4a error management class.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
+	 * Class constructor.
 	 */
-	class P4A_Error
+	function p4a_error($message=NULL, $object=NULL, $external_object=NULL)
 	{
-		var $message = NULL;
-		var $data = array();
-		var $object_id = NULL;
-		var $external_object = NULL;
-		var $backtrace = array();
+		$this->data['class']	= NULL;
+		$this->data['function'] = NULL;
+		$this->data['file']		= NULL;
+		$this->data['line']		= NULL;
+		$this->data['type']		= NULL;
+		$this->data['args']		= array();
 
-		/**
-		 * Class constructor.
-		 */
-		function p4a_error($message=NULL, $object=NULL, $external_object=NULL)
-		{
-			$this->data['class']	= NULL;
-			$this->data['function'] = NULL;
-			$this->data['file']		= NULL;
-			$this->data['line']		= NULL;
-			$this->data['type']		= NULL;
-			$this->data['args']		= array();
+		if(function_exists('debug_backtrace')) {
+			$this->backtrace = debug_backtrace();
+			array_shift($this->backtrace);
+			$this->backtrace = array_slice($this->backtrace, 0, 2);
 
-			if(function_exists('debug_backtrace')) {
-				$this->backtrace = debug_backtrace();
-				array_shift($this->backtrace);
-				$this->backtrace = array_slice($this->backtrace, 0, 2);
-
-				$this->data = $this->backtrace[0];
-			}
-
-			$this->message = $message;
-
-			if (is_object($object)) {
-				$this->object_id = $object->getID();
-			}
-
-			$this->external_object = $external_object;
-			if (isset($this->external_object->backtrace)) {
-				unset($this->external_object->backtrace);
-			}
+			$this->data = $this->backtrace[0];
 		}
 
-		function getMessage()
-		{
-			return $this->message;
+		$this->message = $message;
+
+		if (is_object($object)) {
+			$this->object_id = $object->getID();
 		}
 
-		function getBacktrace()
-		{
-			return $this->backtrace;
-		}
-
-		function getData()
-		{
-			return $this->data;
-		}
-
-		function getObjectId()
-		{
-			return $this->object_id;
-		}
-
-		function getExternalObject()
-		{
-			return $this->external_object;
+		$this->external_object = $external_object;
+		if (isset($this->external_object->backtrace)) {
+			unset($this->external_object->backtrace);
 		}
 	}
+
+	function getMessage()
+	{
+		return $this->message;
+	}
+
+	function getBacktrace()
+	{
+		return $this->backtrace;
+	}
+
+	function getData()
+	{
+		return $this->data;
+	}
+
+	function getObjectId()
+	{
+		return $this->object_id;
+	}
+
+	function getExternalObject()
+	{
+		return $this->external_object;
+	}
+}

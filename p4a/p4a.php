@@ -35,10 +35,6 @@
  * @package p4a
  */
 
-/**
- * The main p4a file.
- */
-
 //Main inclusion file
 require_once(dirname(__FILE__) . '/include.php');
 
