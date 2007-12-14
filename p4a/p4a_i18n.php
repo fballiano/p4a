@@ -37,6 +37,7 @@
 
 require_once "Zend/Date.php";
 require_once "Zend/Translate.php";
+require_once "Zend/Translate/Adapter/Array.php";
 
 /**
  * p4a internationalization class.

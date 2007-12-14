@@ -74,8 +74,8 @@ $messages = array
 	"none_selected"		=> "None Selected",
 
 	// Confirmations
-	"confirm_general"	=> "Are you sure?",
+	//"confirm_general"	=> "Are you sure?",
 	"confirm_confirm"	=> "Confirm and save?",
 	"confirm_cancel"	=> "Cancel current operation?",
-	"confirm_delete"	=> "Delete current record?",
+	//"confirm_delete"	=> "Delete current record?",
 );
