@@ -72,7 +72,7 @@
 			$this->addSeparator();
 			
 			$this->addButton('delete', 'delete');
-			$this->buttons->delete->requireConfirmation('onClick', NULL, 'confirm_delete');
+			$this->buttons->delete->requireConfirmation('onclick', 'Delete current element?');
 			
 			$this->addSeparator();
 
