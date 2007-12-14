@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -37,6 +36,7 @@
  */
 
 require_once "Zend/Date.php";
+require_once "Zend/Translate.php";
 
 /**
  * p4a internationalization class.
@@ -115,6 +115,7 @@ class P4A_I18N
 	var $numbers_formats = NULL;
 	
 	protected $_locale_engine = null;
+	protected $_translation_engine = null;
 
 	/**
 	 * Class constructor.
@@ -137,7 +138,8 @@ class P4A_I18N
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
-		$this->messages = new p4a_i18n_messages($this->language, $this->region);
+		//$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, dirname(__FILE__) . '/i18n', $this->locale);
+		//$this->_translation_engine->addTranslation(P4A_APPLICATION_LOCALES_DIR, $this->locale);
 	}
 
 	/**
@@ -162,6 +164,15 @@ class P4A_I18N
 	public function getRegion()
 	{
 		return $this->region;
+	}
+	
+	/**
+	 * @param string $string
+	 * @return string
+	 */
+	public function translate($string)
+	{
+		return $this->_translation_engine->translate($string, $this->locale);
 	}
 
 	/**

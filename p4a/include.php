@@ -83,8 +83,6 @@ ini_set('include_path', $new_include_path);
 require_once "$dir/libraries/standard.php";
 require_once "$dir/libraries/check_configuration.php";
 require_once "$dir/libraries/pear/System.php";
-require_once "$dir/libraries/date.php";
-require_once "$dir/libraries/number.php";
 require_once "$dir/libraries/validate.php";
 require_once "$dir/libraries/p4a_db_select.php";
 require_once "$dir/libraries/p4a_db_table.php";
@@ -94,12 +92,6 @@ require_once "$dir/p4a_object.php";
 require_once "$dir/p4a_error.php";
 require_once "$dir/p4a_i18n.php";
 require_once "$dir/p4a_db.php";
-
-//I18N
-require_once "$dir/i18n/i18n_currency.php";
-require_once "$dir/i18n/i18n_datetime.php";
-require_once "$dir/i18n/i18n_messages.php";
-require_once "$dir/i18n/i18n_numbers.php";
 
 //Objects
 require_once "$dir/objects/p4a.php";
