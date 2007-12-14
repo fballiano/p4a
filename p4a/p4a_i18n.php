@@ -139,6 +139,9 @@ class P4A_I18N
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
+		
+		//require dirname(__FILE__) . '/i18n/it.php';
+		//$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale);
 		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, array(), $this->locale);
 		//$this->_translation_engine->addTranslation(P4A_APPLICATION_LOCALES_DIR, $this->locale);
 	}
@@ -221,10 +224,12 @@ class P4A_I18N
 	{
 		switch($type) {
 			case 'boolean':
-				//$yes_no = $this->_locale_engine->getQuestion('en_US');
-				//print_r($yes_no);
-				$value = ($value == $this->messages->get('yes')) ? 1 : 0;
-				break;
+				$yes_no = Zend_Locale_Data::getContent($this->_locale_engine, 'questionstrings');
+				$yes_regexp = '/^(' . str_replace(':', '|', $yes_no['yes']) . ')$/i';
+				if (preg_match($yes_regexp, $value)) {
+					return 1;
+				}
+				return 0;
 			case 'date':
 				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine));
 				return "{$date['year']}-{$date['month']}-{$date['day']}";

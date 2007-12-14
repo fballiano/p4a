@@ -1,5 +1,4 @@
 3.0.0 TODO
-- boolen unformat (wait for Zend_Locale yeststr regex)
 - "time" format/normalize
 - "currency" format/normalize
 - move translations to Zend_Translate
