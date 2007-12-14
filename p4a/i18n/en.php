@@ -55,9 +55,9 @@ $messages = array
 	"go"				=> "Go",
 
 	// Table
-	"current_page"		=> "Page",
-	"of_pages"			=> "of",
-	"go_to_page"		=> "Go to page",
+	//"current_page"		=> "Page",
+	//"of_pages"			=> "of",
+	//"go_to_page"		=> "Go to page",
 	"ascending"			=> "Ascending",
 	"descending"		=> "Descending",
 	"selected"			=> "Selected",

@@ -475,14 +475,12 @@
 		/**
 		 * Adds an action to the implemented actions stack for the widget.
 		 * @access public
-		 * @param string	The action's name.
-		 * @param string	The JavaScript event that triggers.
-		 * @param boolean	Action Requires confirmation?.
-		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
-		 * @param boolean	is an ajax action?
+		 * @param string			The action's name.
+		 * @param string			The JavaScript event that triggers.
+		 * @param string|boolean	If the action requires user confirmation, type here the confirmation message (use boolean true for a general message).
+		 * @param boolean			is an ajax action?
 		 */
-		function addAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general', $ajax = false)
+		function addAction($action, $event = null, $confirmation_text = null, $ajax = false)
 		{
 			$action = strtolower($action);
 			$event = strtolower($event);
@@ -491,13 +489,15 @@
 			if (!$event) {
 				$event = $action;
 			}
+			
+			if ($confirmation_text === true) {
+				$confirmation_text = 'Are you sure?';
+			}
 
 			$tmp_action = array();
 			$tmp_action['event'] = $event;
 			$this->actions[$action] = $tmp_action;
-			$this->actions[$action]['require_confirmation'] = $require_confirmation;
-			$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
+			$this->actions[$action]['confirm'] = $confirmation_text;
 			$this->actions[$action]['ajax'] = $ajax;
 		}
 
@@ -506,29 +506,27 @@
 		 * @access public
 		 * @param string	The action's name.
 		 * @param string	The JavaScript event that triggers.
-		 * @param boolean	Action Requires confirmation?.
-		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
+		 * @param string|boolean	If the action requires user confirmation, type here the confirmation message (use boolean true for a general message).
 		 */
-		function addAjaxAction($action, $event = null, $require_confirmation = false, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		function addAjaxAction($action, $event = null, $confirmation_text = null)
 		{
 			$p4a =& p4a::singleton();
-			$this->addAction($action, $event, $require_confirmation, $confirmation_text, $confirmation_text_handler, $p4a->isAjaxEnabled());
+			$this->addAction($action, $event, $confirmation_text, $p4a->isAjaxEnabled());
 		}
 
 		/**
 		 * Requires confirmation for an action.
 		 * @access public
-		 * @param string	The action.
-		 * @param string	Text for confirmation.
-		 * @param string	i18n message id for confirmation.
+		 * @param string			The action.
+		 * @param string|boolean	The confirmation message (default is boolean true for a general message).
 		 */
-		function requireConfirmation($action, $confirmation_text = null, $confirmation_text_handler = 'confirm_general')
+		function requireConfirmation($action, $confirmation_text = true)
 		{
 			$action = strtolower($action);
-			$this->actions[$action]['require_confirmation'] = true;
-			$this->actions[$action]['confirmation_text'] = $confirmation_text;
-			$this->actions[$action]['confirmation_text_handler'] = $confirmation_text_handler;
+			if ($confirmation_text === true) {
+				$confirmation_text = 'Are you sure?';
+			}
+			$this->actions[$action]['confirm'] = $confirmation_text;
 		}
 
 		/**
@@ -539,7 +537,7 @@
 		function unrequireConfirmation($action)
 		{
 			$action = strtolower($action);
-			$this->actions[$action]['require_confirmation'] = false;
+			$this->actions[$action]['confirm'] = null;
 		}
 
 		/**
@@ -639,14 +637,9 @@
 					$sParams .= ", getKeyPressed(event)";
 				}
 
-				if ($action_data['require_confirmation']) {
+				if ($action_data['confirm'] !== null) {
+					$prefix .= 'if(confirm(\''. str_replace('\'', '\\\'', __($action_data['confirm'])) .'\')){';
 					$suffix .= '}';
-
-					if ($action_data['confirmation_text'] === NULL) {
-						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $p4a->i18n->messages->get($action_data['confirmation_text_handler'])) .'\')){';
-					} else {
-						$prefix .= 'if(confirm(\''. str_replace( '\'', '\\\'', $action_data['confirmation_text'] ) .'\')){';
-					}
 				}
 
 				if (isset($action_data['ajax']) and $action_data['ajax'] == 1) {

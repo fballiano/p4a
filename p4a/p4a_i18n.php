@@ -138,7 +138,7 @@ class P4A_I18N
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
-		//$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, dirname(__FILE__) . '/i18n', $this->locale);
+		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, array(), $this->locale);
 		//$this->_translation_engine->addTranslation(P4A_APPLICATION_LOCALES_DIR, $this->locale);
 	}
 

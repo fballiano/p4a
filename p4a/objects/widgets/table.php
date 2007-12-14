@@ -1172,7 +1172,7 @@
 			$p4a =& P4A::singleton();
 			$parent =& $p4a->getObject($this->getParentID());
 
-			$this->buttons->field_num_page->setLabel( $p4a->i18n->messages->get('go_to_page'));
+			$this->buttons->field_num_page->setLabel('Go to page');
 			$this->buttons->field_num_page->setNewValue($parent->getCurrentPageNumber());
 
 			$num_pages = $parent->data->getNumPages();
@@ -1180,11 +1180,11 @@
 				$num_pages = 1;
 			}
 
-			$current_page  = $p4a->i18n->messages->get('current_page');
+			$current_page  = __('Page');
 			$current_page .= ' ';
 			$current_page .= $parent->getCurrentPageNumber();
 			$current_page .= ' ';
-			$current_page .= $p4a->i18n->messages->get('of_pages');
+			$current_page .= __('of');
 			$current_page .= ' ';
 			$current_page .= $num_pages;
 			$current_page .= ' ';

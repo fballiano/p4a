@@ -129,7 +129,7 @@
 
 			$string = $header . $this->composeStringProperties() .
 						$this->composeStringActions() .
-						$close_header . $tooltip_handler . $this->getLabel() . $footer . $tooltip_text;
+						$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
 
 			return $string;
 		}
