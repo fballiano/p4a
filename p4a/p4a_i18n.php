@@ -49,81 +49,34 @@ require_once "Zend/Translate/Adapter/Array.php";
 class P4A_I18N
 {
 	/**
-	 * Here we store the current locale.
 	 * @var string
 	 */
 	private $locale = null;
 
 	/**
-	 * Here we store the current language.
 	 * @var string
 	 */
 	private $language = null;
 
 	/**
-	 * Here we store the current country.
 	 * @var string
 	 */
 	private $region = null;
-
-	/**
-	 * Currency management object.
-	 * @var I18N_CURRENCY
-	 * @access public
-	 */
-	var $currency = NULL;
-
-	/**
-	 * Here we store all formats for currency data.
-	 * @var array
-	 * @access private
-	 */
-	var $currency_formats = NULL;
-
-	/**
-	 * Date/Time management object.
-	 * @var I18N_DATETIME
-	 * @access public
-	 */
-	var $datetime = NULL;
-
-	/**
-	 * Here we store all formats for date/time data.
-	 * @var array
-	 * @access private
-	 */
-	var $datetime_formats = NULL;
-
-	/**
-	 * Messages management object.
-	 * @var I18N_MESSAGES
-	 * @access public
-	 */
-	var $messages = NULL;
-
-	/**
-	 * Numbers management object.
-	 * @var I18N_NUMBERS
-	 * @access public
-	 */
-	var $numbers = NULL;
-
-	/**
-	 * Here we store all formats for numeric data.
-	 * @var array
-	 * @access private
-	 */
-	var $numbers_formats = NULL;
 	
+	/**
+	 * @var Zend_Locale
+	 */
 	protected $_locale_engine = null;
+	
+	/**
+	 * @var Zend_Translate_Adapter_Array
+	 */
 	protected $_translation_engine = null;
 
 	/**
-	 * Class constructor.
-	 * @param string				The desidered locale.
-	 * @access private
+	 * @param string $locale
 	 */
-	function p4a_i18n($locale = P4A_LOCALE)
+	public function __construct($locale = P4A_LOCALE)
 	{
 		$this->setLocale($locale);
 	}
@@ -180,10 +133,9 @@ class P4A_I18N
 	}
 
 	/**
-	 * Calls the p4a default formatter for value with the given type.
-	 * If the type in not recognized, $value is returned as is.
-	 * @param mixed
-	 * @param string	(date|time|integer|float|decimal|currency)
+	 * Reads a normalized value, localizes and returns it
+	 * @param mixed $value
+	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @return mixed
 	 */
 	public function format($value, $type)
@@ -214,10 +166,9 @@ class P4A_I18N
 	}
 
 	/**
-	 * Calls the default normalizer for value with the given type.
-	 * If the type in not recognized, $value is returned as is.
-	 * @param mixed		The value to be normalized
-	 * @param string	The type (date|time|integer|float|decimal|currency)
+	 * Reads a localized value, normalizes and returns it
+	 * @param mixed $value
+	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @return mixed
 	 */
 	public function normalize($value, $type)

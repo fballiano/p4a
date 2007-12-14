@@ -1,8 +1,7 @@
 3.0.0 TODO
 - "time" format/normalize
 - "currency" format/normalize
-- move translations to Zend_Translate
-- clean p4a_i18n and check what objects can be removed
+- move translations to Zend_Translate (in progress)
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct
 
