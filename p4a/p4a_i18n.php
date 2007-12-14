@@ -226,9 +226,7 @@ class P4A_I18N
 			case 'boolean':
 				$yes_no = Zend_Locale_Data::getContent($this->_locale_engine, 'questionstrings');
 				$yes_regexp = '/^(' . str_replace(':', '|', $yes_no['yes']) . ')$/i';
-				if (preg_match($yes_regexp, $value)) {
-					return 1;
-				}
+				if (preg_match($yes_regexp, $value)) return 1;
 				return 0;
 			case 'date':
 				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine));
