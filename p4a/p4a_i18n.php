@@ -102,7 +102,7 @@ class P4A_I18N
 	}
 	
 	/**
-	 * Reads a translation file (gettext) and merge to the messages array
+	 * Reads a translation file (gettext) and merges it to the messages array
 	 *
 	 * @param string $file
 	 * @param array $messages
