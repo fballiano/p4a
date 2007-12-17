@@ -2,6 +2,8 @@
 - "time" format/normalize
 - "currency" format/normalize
 - move translations to Zend_Translate (in progress)
+- check db_source with multivalues
+- check db_source for aliases
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct
 
