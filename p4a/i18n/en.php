@@ -38,10 +38,10 @@
 $messages = array
 (
 	// Standard Toolbar
-	"save"				=> "Confirm and save",
-	"cancel"			=> "Cancel current operation",
-	"new"				=> "Insert a new record",
-	"delete"			=> "Delete the current record",
+	//"save"				=> "Confirm and save",
+	//"cancel"			=> "Cancel current operation",
+	//"new"				=> "Insert a new record",
+	//"delete"			=> "Delete the current record",
 	"print"				=> "Print",
 	"exit"				=> "Exit",
 	"first"				=> "Go to the first element",
@@ -58,24 +58,24 @@ $messages = array
 	//"current_page"		=> "Page",
 	//"of_pages"			=> "of",
 	//"go_to_page"		=> "Go to page",
-	"ascending"			=> "Ascending",
-	"descending"		=> "Descending",
-	"selected"			=> "Selected",
+	//"ascending"			=> "Ascending",
+	//"descending"		=> "Descending",
+	//"selected"			=> "Selected",
 
 	// File uploads
-	"filename"			=> "Name",
-	"filesize"			=> "Size",
-	"filetype"			=> "Type",
-	"filepreview"		=> "Preview",
-	"filedelete"		=> "Delete",
-	"filedownload"		=> "Download",
+	//"filename"			=> "Name",
+	//"filesize"			=> "Size",
+	//"filetype"			=> "Type",
+	//"filepreview"		=> "Preview",
+	//"filedelete"		=> "Delete",
+	//"filedownload"		=> "Download",
 
 	// Fields
-	"none_selected"		=> "None Selected",
+	//"none_selected"		=> "None Selected",
 
 	// Confirmations
 	//"confirm_general"	=> "Are you sure?",
-	"confirm_confirm"	=> "Confirm and save?",
-	"confirm_cancel"	=> "Cancel current operation?",
+	//"confirm_confirm"	=> "Confirm and save?",
+	//"confirm_cancel"	=> "Cancel current operation?",
 	//"confirm_delete"	=> "Delete current record?",
 );

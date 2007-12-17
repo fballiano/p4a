@@ -520,7 +520,7 @@
 		 * @param string			The action.
 		 * @param string|boolean	The confirmation message (default is boolean true for a general message).
 		 */
-		function requireConfirmation($action, $confirmation_text = true)
+		function requireConfirmation($action = 'onclick', $confirmation_text = true)
 		{
 			$action = strtolower($action);
 			if ($confirmation_text === true) {

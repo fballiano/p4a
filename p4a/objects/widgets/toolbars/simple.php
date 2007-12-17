@@ -61,18 +61,22 @@
 		function addDefaultButtons()
 		{
 			$new =& $this->addButton('new', 'new');
+			$new->setValue("Insert a new element");
 			$new->setProperty("accesskey", "N");
 			
 			$save =& $this->addButton('save', 'save');
+			$save->setValue("Confirm and save");
 			$save->setAccessKey("S");
 
 			$cancel =& $this->addButton('cancel', 'cancel');
+			$cancel->setValue("Cancel current operation");
 			$cancel->setAccessKey("Z");
 
 			$this->addSeparator();
 
 			$this->addButton('delete', 'delete');
-			$this->buttons->delete->requireConfirmation('onclick', 'Delete current element?');
+			$this->buttons->delete->setValue("Delete current element");
+			$this->buttons->delete->requireConfirmation();
 
 			$this->addSeparator();
 

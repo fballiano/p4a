@@ -17,7 +17,7 @@
 				<?php if ($header['action']): ?>
 					<th class="font3 align_center clickable">
 						<?php if ($header['order']): ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __($header['order'].'ending')?>" />
+							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
 						<?php else: ?>
 							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
 						<?php endif; ?>
@@ -26,7 +26,7 @@
 				<?php else: ?>
 					<th class="font3 align_center">
 						<?php if ($header['order']): ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __($header['order'].'ending')?>" />
+							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
 						<?php else: ?>
 							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
 						<?php endif; ?>
@@ -46,7 +46,7 @@
 				<tr>
 				    <td>
 				    	<?php if ($row['row']['active']): ?>
-							<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/select.gif" width="18" height="15" alt="<?php echo __('selected')?>" />
+							<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/select.gif" width="18" height="15" alt="<?php echo __('Selected')?>" />
 						<?php else: ?>
 							<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
 						<?php endif; ?>

@@ -987,12 +987,12 @@
 
 			if ($this->isNullAllowed()) {
 				if ($this->null_message === null) {
-					$message = $p4a->i18n->messages->get('none_selected');
+					$message = 'none selected';
 				} else {
 					$message = $this->null_message;
 				}
 
-				$header .= "<option value=''>" . $message . "</option>";
+				$header .= "<option value=''>" . __($message) . "</option>";
 			}
 
 			foreach ($external_data as $key=>$current) {
@@ -1155,12 +1155,12 @@
 
 			if ($this->isNullAllowed()) {
 				if ($this->null_message === NULL) {
-					$message = $p4a->i18n->messages->get('none_selected');
+					$message = 'none_selected';
 				} else {
 					$message = $this->null_message;
 				}
 
-				array_unshift($external_data, array($value_field=>'', $description_field=>$message));
+				array_unshift($external_data, array($value_field=>'', $description_field=>__($message)));
 			}
 
 			foreach ($external_data as $key=>$current) {
@@ -1245,9 +1245,9 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setValue('Delete');
+					$button_file_preview->setValue('Preview');
+					$button_file_download->setValue('Download');
 
 					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
@@ -1266,9 +1266,9 @@
 				$this->label->unsetProperty('for');
 
 				$sReturn  = '<table class="border_box">';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
-				$sReturn .= '<tr><td align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
+				$sReturn .= '<tr><td align="left">' . __('Name') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
+				$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+				$sReturn .= '<tr><td align="left">' . __('Type') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 
 				if (P4A_Is_Mime_Type_Embeddable($mime_type)) {
 					$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
@@ -1399,9 +1399,9 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue($p4a->i18n->messages->get('filedelete'));
-					$button_file_preview->setValue($p4a->i18n->messages->get('filepreview'));
-					$button_file_download->setValue($p4a->i18n->messages->get('filedownload'));
+					$button_file_delete->setValue('Delete');
+					$button_file_preview->setValue('Preview');
+					$button_file_download->setValue('Download');
 
 					$button_file_delete->addAjaxAction("onClick");
 					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
@@ -1444,9 +1444,9 @@
 				} else {
 					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 				}
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filename') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filesize') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
-				$sReturn .= '<tr><th align="left">' . $p4a->i18n->messages->get('filetype') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
+				$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
+				$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+				$sReturn .= '<tr><th align="left">' . __('Type') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
 				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 				$sReturn .= '</table>' ;
 			}
