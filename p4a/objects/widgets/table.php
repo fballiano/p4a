@@ -1137,13 +1137,13 @@
 				$this->buttons->field_num_page->setVisible(false);
 			} else {
 				$this->addButton('button_last', 'last', 'right');
-				$this->buttons->button_last->setValue("last_page");
+				$this->buttons->button_last->setValue("Go to the last page");
 				$this->addButton('button_next', 'next', 'right');
-				$this->buttons->button_next->setValue("next_page");
+				$this->buttons->button_next->setValue("Go to the next page");
 				$this->addButton('button_prev', 'prev', 'right');
-				$this->buttons->button_prev->setValue("prev_page");
+				$this->buttons->button_prev->setValue("Go to the previous page");
 				$this->addButton('button_first', 'first', 'right');
-				$this->buttons->button_first->setValue("first_page");
+				$this->buttons->button_first->setValue("Go to the first page");
 			}
 
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');

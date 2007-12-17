@@ -31,6 +31,9 @@
 - POT file for the new translation system was prepared and committed to p4a/i18n/templates/p4a.pot
 - P4A_Generate_Default_Label() global function was added, it takes a string such as "this_is_field" and returns "This is a field", useful to generate labels from field names and other things
 - P4A_Button and P4A_Widget were ported to P4A_Generate_Default_Label() to generate default labels
+- default labels are now generated with ucfirst function instead of ucwords
+- P4A toolbars and P4A_Table were ported to the new translation system
+- translations are now applied at rendering time, not at build time
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

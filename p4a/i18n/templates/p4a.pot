@@ -66,3 +66,36 @@ msgstr ""
 
 msgid "Are you sure?"
 msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "Print"
+msgstr ""
+
+msgid "Close mask"
+msgstr ""
+
+msgid "Go to the first element"
+msgstr ""
+
+msgid "Go to the previous element"
+msgstr ""
+
+msgid "Go to the next element"
+msgstr ""
+
+msgid "Go to the last element"
+msgstr ""
+
+msgid "Go to the first page"
+msgstr ""
+
+msgid "Go to the previous page"
+msgstr ""
+
+msgid "Go to the next page"
+msgstr ""
+
+msgid "Go to the last page"
+msgstr ""
