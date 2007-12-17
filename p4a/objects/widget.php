@@ -260,14 +260,7 @@
 		 */
 		function setDefaultLabel()
 		{
-			$name = $this->getName();
-			$label = __($name);
-
-			if ($label == $name) {
-				$this->setLabel(ucwords(str_replace('_', ' ', $this->getName())));
-			} else {
-				$this->setLabel($label);
-			}
+			$this->setLabel(P4A_Generate_Default_Label($this->getName()));
 		}
 
 		/**

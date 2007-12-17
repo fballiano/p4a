@@ -398,3 +398,8 @@ function P4A_Is_Browser_Event($event)
 					'onmouseover', 'onmouseup', 'onscroll');
 	return in_array(strtolower($event), $events);
 }
+
+function P4A_Generate_Default_Label($string)
+{
+	return ucfirst(str_replace('_', ' ', $string));
+}

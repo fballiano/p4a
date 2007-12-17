@@ -67,7 +67,7 @@
 				$this->setIcon($icon);
 			}
 
-			$this->setValue($name);
+			$this->setValue(P4A_Generate_Default_Label($name));
 		}
 
 		/**

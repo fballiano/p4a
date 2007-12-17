@@ -68,6 +68,7 @@
 			$print->setAccessKey("P");
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
+			$exit->setValue("Close mask");
 			$exit->setAccessKey("X");
 			
 			$p4a->intercept($exit, "onClick", "showPrevMask");
