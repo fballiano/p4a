@@ -503,7 +503,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 			$pk = $this->getPk();
 			$pk_value = $this->fields->$pk->getNewValue();
-			$fk_values = $db->adapter->getCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
+			$fk_values = $db->adapter->fetchCol("SELECT $fk_field FROM $table WHERE $fk='$pk_value'");
 			$this->fields->$fieldname->setValue($fk_values);
 			$row[$fieldname] = $fk_values;
 		}
@@ -953,7 +953,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_num_rows = NULL;
 	}
 
-	function addMultivalueField($fieldname, $table = NULL, $fk = NULL, $fk_field = NULL)
+	function addMultivalueField($fieldname, $table = null, $fk = null, $fk_field = null)
 	{
 		$db =& P4A_DB::singleton($this->getDSN());
 		if ($table === null) $table = $fieldname;
@@ -972,17 +972,18 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_multivalue_fields[$fieldname]['fk'] = $fk;
 
 		if (!$fk_field) {
-			$info = $db->adapter->metaColumns($table);
-			foreach($info as $field) {
-				if ($field->name != $fk ) {
-					$fk_field = $field->name;
+			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'db'=>$db->adapter));
+			$info = $p4a_db_table->info();
+			foreach($info['metadata'] as $field_name=>$field_info) {
+				if ($field_name != $fk ) {
+					$fk_field = $field_name;
 					break;
 				}
 			}
 		}
 		$this->_multivalue_fields[$fieldname]['fk_field'] = $fk_field;
 
-		$this->fields->build("P4A_Data_Field",$fieldname);
+		$this->fields->build("P4A_Data_Field", $fieldname);
 		$this->fields->$fieldname->setDSN($this->getDSN());
 	}
 
