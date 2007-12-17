@@ -61,15 +61,19 @@
 		function addDefaultButtons()
 		{
 			$first =& $this->addButton('first', 'first');
+			$first->setValue("Go to the first element");
 			$first->setAccessKey(8);
 
 			$prev =& $this->addButton('prev', 'prev');
+			$prev->setValue("Go to the previous element");
 			$prev->setAccessKey(4);
 
 			$next =& $this->addButton('next', 'next');
+			$next->setValue("Go to the next element");
 			$next->setAccessKey(6);
 
 			$last =& $this->addButton('last', 'last');
+			$last->setValue("Go to the last element");
 			$last->setAccessKey(2);
 
 			$this->addSeparator();
