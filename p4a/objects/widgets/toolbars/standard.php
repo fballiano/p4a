@@ -61,7 +61,7 @@
 		function addDefaultButtons()
 		{
 			$new =& $this->addButton('new', 'new');
-			$new->setValue("Insert a new record");
+			$new->setValue("Insert a new element");
 			$new->setProperty("accesskey", "N");
 			
 			$save =& $this->addButton('save', 'save');
