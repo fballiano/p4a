@@ -93,12 +93,29 @@ class P4A_I18N
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
 		
-		$p4a_translate = new Zend_Translate('gettext', dirname(__FILE__) . '/i18n', $this->locale);
-		$p4a_messages = $p4a_translate->getMessages();
-		if (!is_array($p4a_messages)) $p4a_messages = array();
+		$messages = array();
+		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->language}/LC_MESSAGES/p4a.mo", $messages);
+		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->locale}/LC_MESSAGES/p4a.mo", $messages);
 		
-		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $p4a_messages, $this->locale);
+		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale);
 		//TODO: load application level translation
+	}
+	
+	/**
+	 * Reads a translation file (gettext) and merge to the messages array
+	 *
+	 * @param string $file
+	 * @param array $messages
+	 */
+	private function mergeTranslationFile($file, &$messages)
+	{
+		if (file_exists($file)) {
+			$translate = new Zend_Translate('gettext', $file, $this->locale);
+			$new_messages = $translate->getMessages();
+			if (is_array($new_messages)) {
+				array_merge($messages, $new_messages);
+			}
+		}
 	}
 
 	/**
