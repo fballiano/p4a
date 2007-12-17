@@ -92,8 +92,13 @@ class P4A_I18N
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
-		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, array(), $this->locale);
-		//$this->_translation_engine->addTranslation(P4A_APPLICATION_LOCALES_DIR, $this->locale);
+		
+		$p4a_translate = new Zend_Translate('gettext', dirname(__FILE__) . '/i18n', $this->locale);
+		$p4a_messages = $p4a_translate->getMessages();
+		if (!is_array($p4a_messages)) $p4a_messages = array();
+		
+		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $p4a_messages, $this->locale);
+		//TODO: load application level translation
 	}
 
 	/**

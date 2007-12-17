@@ -1,7 +1,8 @@
 3.0.0 TODO
 - "time" format/normalize
 - "currency" format/normalize
-- move translations to Zend_Translate (in progress)
+- implement application level translation
+- spread about the new translation system so users start translate
 - check db_source with multivalues
 - check db_source for aliases
 - make ui.datepicker.js work with our date format definitions
