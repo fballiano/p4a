@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Você tem certeza?",
-	"confirm_confirm"	=> "Confirmar e salvar?",
-	"confirm_cancel"	=> "Cancelar operação atual?",
-	"confirm_delete"	=> "Apagar registro atual?",
 );

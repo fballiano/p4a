@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Weet U het zeker?",
-	"confirm_confirm"	=> "Bevestigen en opslaan?",
-	"confirm_cancel"	=> "Huidige actie annuleren?",
-	"confirm_delete"	=> "Huidig veld vwerwijderen?",
 );

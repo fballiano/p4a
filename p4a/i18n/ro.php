@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Eşti sigur?",
-	"confirm_confirm"	=> "Confirmă şi salvează?",
-	"confirm_cancel"	=> "Anulează operaţia curentă?",
-	"confirm_delete"	=> "Şterge înregistrarea curentă?",
 );

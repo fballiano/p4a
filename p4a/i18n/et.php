@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Oled kindel?",
-	"confirm_confirm"	=> "Kindel, et salvestan?",
-	"confirm_cancel"	=> "Katkestada käesolev operatsioon?",
-	"confirm_delete"	=> "Kustutada see kirje?",
 );

@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Emin misiniz?",
-	"confirm_confirm"	=> "Onayla ve kaydet?",
-	"confirm_cancel"	=> "İşlemi iptal et?",
-	"confirm_delete"	=> "Kayıdı si?",
 );

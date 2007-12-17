@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Na pewno?",
-	"confirm_confirm"	=> "Zatwierdzić i zapisać?",
-	"confirm_cancel"	=> "Czy przerwać bieżącą operację?",
-	"confirm_delete"	=> "Czy skasować bieżący rekord?",
 );

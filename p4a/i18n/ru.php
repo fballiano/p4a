@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Вы уверены?",
-	"confirm_confirm"	=> "Подтвердить и сохранить?",
-	"confirm_cancel"	=> "Отменить текущую операцию?",
-	"confirm_delete"	=> "Удалить текущую запись?",
 );

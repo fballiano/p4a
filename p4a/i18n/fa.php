@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "آیا مطمین هستید؟",
-	"confirm_confirm"	=> "تایید و ذخیره؟",
-	"confirm_cancel"	=> "لغو عملیات جاری؟",
-	"confirm_delete"	=> "پاک کردن رکورد جاری؟",
 );

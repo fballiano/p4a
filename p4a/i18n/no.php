@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Er du sikker?",
-	"confirm_confirm"	=> "Bekreft og lagre?",
-	"confirm_cancel"	=> "Avbryt gjeldende operasjon?",
-	"confirm_delete"	=> "Slett gjeldende post?",
 );

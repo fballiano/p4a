@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Biztos benne?",
-	"confirm_confirm"	=> "Megerősítés és mentés?",
-	"confirm_cancel"	=> "Aktuális feladat megszakítása?",
-	"confirm_delete"	=> "Aktuális sor törlése?",
 );

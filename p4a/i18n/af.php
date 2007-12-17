@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Is jy seker?",
-	"confirm_confirm"	=> "Bevesting en stoor?",
-	"confirm_cancel"	=> "Kanselleer huidige aksie?",
-	"confirm_delete"	=> "Skrap die huidige rekord?",
 );

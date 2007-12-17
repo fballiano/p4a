@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "あなたは確実であるか",
-	"confirm_confirm"	=> "確認し, 貯えか",
-	"confirm_cancel"	=> "この操作を取り消したいか",
-	"confirm_delete"	=> "このデータベースの列を削除したいか",
 );

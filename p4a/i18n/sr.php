@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Da li ste sigurni?",
-	"confirm_confirm"	=> "Potvrdi i sačuvaj?",
-	"confirm_cancel"	=> "Poništi tekuću operaciju?",
-	"confirm_delete"	=> "Obriši tekući zapis?",
 );

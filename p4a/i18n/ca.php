@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Estàs segur?",
-	"confirm_confirm"	=> "Confirmar i desar?",
-	"confirm_cancel"	=> "Cancelar la operació en curs?",
-	"confirm_delete"	=> "Esborrar el registre actual?",
 );

@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "क्या आप निश्चित है?",
-	"confirm_confirm"	=> "क्या निश्चित कर के सहेजे?",
-	"confirm_cancel"	=> "क्या जारी कार्य रद्द करें?",
-	"confirm_delete"	=> "क्य जारी लेख पत्र को मिटाये?",
 );

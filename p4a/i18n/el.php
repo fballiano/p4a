@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Είσαι σίγουρος;",
-	"confirm_confirm"	=> "Επιβεβαίωση και αποθήκευση;",
-	"confirm_cancel"	=> "Ακύρωση τρέχουσας λειτουργίας;",
-	"confirm_delete"	=> "Διαγραφή τρέχουσας εγγραφής;",
 );

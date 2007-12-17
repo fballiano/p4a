@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Apakah anda yakin?",
-	"confirm_confirm"	=> "Konfirm dan simpan?",
-	"confirm_cancel"	=> "Batalkan operasi ini?",
-	"confirm_delete"	=> "Hapus record ini?",
 );

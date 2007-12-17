@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Jste si jist?",
-	"confirm_confirm"	=> "Potvrdit a uložit?",
-	"confirm_cancel"	=> "Zrušit tuto operaci?",
-	"confirm_delete"	=> "Vymazat tento záznam?",
 );

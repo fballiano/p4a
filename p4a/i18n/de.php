@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "Sind Sie sich sicher?",
-	"confirm_confirm"	=> "Änderungen übernehmen?",
-	"confirm_cancel"	=> "Laufende Operation wirklich abbrechen?",
-	"confirm_delete"	=> "Diesen Datensatz wirklich löschen?",
 );

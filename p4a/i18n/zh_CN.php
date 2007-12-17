@@ -75,7 +75,4 @@ $messages = array
 
 	// Confirmations
 	"confirm_general"	=> "一定吗?",
-	"confirm_confirm"	=> "确认和存储马?",
-	"confirm_cancel"	=> "取消这次行动吗?",
-	"confirm_delete"	=> "清除这项纪录吗?",
 );
