@@ -1,12 +1,13 @@
 3.0.0 TODO
-- "time" format/normalize
 - "currency" format/normalize
 - unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
 - implement application level translations
 - spread about the new translation system so users start translate
 - check db_source for aliases
+- custom formatter for date/time/etc
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct
+- integrate p4a_base_mask in core and port samples to it?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -19,6 +20,7 @@
 - P4A_I18N does not manage charset anymore, only UTF-8 will be supported from now on
 - P4A_I18N numbers format/normalization now relies on Zend_Locale
 - P4A_I18N dates format/normalization now relies on Zend_Date and Zend_Locale
+- P4A_I18N time format/normalization now relies on Zend_Date and Zend_Locale
 - P4A_I18N::getCountry() was renamed to getRegion()
 - P4A_I18N::autoFormat() was renamed to format()
 - P4A_I18N::autoUnFormat() was renamed to format()

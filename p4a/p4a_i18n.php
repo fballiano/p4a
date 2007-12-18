@@ -165,11 +165,11 @@ class P4A_I18N
 				$yes_no = $this->_locale_engine->getQuestion();
 				return $yes_no[$value];
 			case 'date':
-				$date = new Zend_Date($value);
+				$date = new Zend_Date($value, Zend_Date::DATES, $this->_locale_engine);
 				return $date->get(Zend_Date::DATES, $this->_locale_engine);
 			case 'time':
-				$value = $this->datetime->formatTimeDefault($value);
-				break;
+				$date = new Zend_Date($value, Zend_Date::TIME_SHORT, $this->_locale_engine);
+				return $date->get(Zend_Date::TIME_SHORT, $this->_locale_engine);
 			case 'integer':
 				return Zend_Locale_Format::toNumber($value, array('precision'=>0, 'locale'=>$this->_locale_engine));
 			case 'float':
@@ -202,8 +202,12 @@ class P4A_I18N
 				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine));
 				return "{$date['year']}-{$date['month']}-{$date['day']}";
 			case 'time':
-				$value = $this->datetime->unformatTimeDefault($value);
-				break;
+				$date_format = Zend_Locale_Format::getTimeFormat($this->_locale_engine);
+				$date =  Zend_Locale_Format::getDate($value, array('date_format'=>$date_format, 'locale'=>$this->_locale_engine));
+				if (!isset($date['hour'])) $date['hour'] = '00';
+				if (!isset($date['minute'])) $date['minute'] = '00';
+				if (!isset($date['second'])) $date['second'] = '00';
+				return "{$date['hour']}:{$date['minute']}:{$date['second']}";
 			case 'integer':
 				return Zend_Locale_Format::getInteger($value, array('locale'=>$this->_locale_engine));
 			case 'float':

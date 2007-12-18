@@ -408,6 +408,9 @@ class P4A_DB_Source extends P4A_Data_Source
 			case 'date':
 				$this->fields->$name->setType('date');
 				break;
+			case 'time':
+				$this->fields->$name->setType('time');
+				break;
 			case 'decimal':
 			case 'float':
 			case 'numeric':
