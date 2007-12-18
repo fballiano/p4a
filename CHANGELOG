@@ -1,6 +1,7 @@
 3.0.0 TODO
 - check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
+- port sample_i18n to the new translation system
 - spread about the new translation system so users start translate
 - check db_source for aliases
 - try to detect the decimal format and use it during formatting
