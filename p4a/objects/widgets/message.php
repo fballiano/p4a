@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,84 +35,83 @@
  * @package p4a
  */
 
- 	class P4A_Message extends P4A_Widget
+class P4A_Message extends P4A_Widget
+{
+	var $icon = 'warning';
+	var $size = 48;
+	var $auto_clear = true;
+	var $value = null;
+
+	function P4A_Message($name)
 	{
+		parent::P4A_Widget($name);
+	}
 
-		var $icon = 'warning';
-		var $size = 48;
-		var $auto_clear = true;
+	function getValue()
+	{
+		return $this->value;
+	}
 
-		function P4A_Message($name)
-		{
-			parent::P4A_Widget($name);
-		}
+	function setValue($value = null)
+	{
+		$this->value = $value;
+	}
 
-		function getValue()
-		{
-			return $this->value;
-		}
+	function getAsString()
+	{
+		$id = $this->getId();
+		$string = '';
+		if ($this->isVisible() and strlen($this->getValue())) {
+			$properties = $this->composeStringProperties();
+			$actions = $this->composeStringActions();
+			$value = $this->getValue();
+			$icon = $this->getIcon();
+			$size = $this->getSize();
+			$margin = $size + 5;
 
-		function setValue($value=NULL)
-		{
-			$this->value = $value;
-		}
-
-		function getAsString()
-		{
-			$id = $this->getId();
-			$string = '';
-			if ($this->isVisible() and strlen($this->getValue())) {
-				$properties = $this->composeStringProperties();
-				$actions = $this->composeStringActions();
-				$value = $this->getValue();
-				$icon = $this->getIcon();
-				$size = $this->getSize();
-				$margin = $size + 5;
-
-				$string  = "<dl class='message' $properties $actions>\n";
-				$string .= "<dt>";
-				if (!empty($icon)) {
-					$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' alt='' />";
-				}
-				$string .= "</dt>\n";
-				$string .= "<dd>$value</dd>\n";
-				$string .= "</dl>\n\n";
+			$string  = "<dl class='message' $properties $actions>\n";
+			$string .= "<dt>";
+			if (!empty($icon)) {
+				$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' alt='' />";
 			}
-
-			if ($this->auto_clear) {
-				$this->setValue('');
-			}
-
-			if ($string) {
-				return "<span id='$id'>$string</span>";
-			} else {
-				return "<span id='$id' class='hidden'></span>";
-			}
+			$string .= "</dt>\n";
+			$string .= "<dd>$value</dd>\n";
+			$string .= "</dl>\n\n";
 		}
 
-
-		function setIcon($type = 'warning')
-		{
-			$this->icon = $type;
+		if ($this->auto_clear) {
+			$this->setValue('');
 		}
 
-		function getIcon()
-		{
-			return $this->icon;
-		}
-
-		function setSize($size)
-		{
-			$this->size = $size;
-		}
-
-		function getSize()
-		{
-			return $this->size;
-		}
-
-		function autoClear($enable = true)
-		{
-			$this->auto_clear = $enable;
+		if ($string) {
+			return "<span id='$id'>$string</span>";
+		} else {
+			return "<span id='$id' class='hidden'></span>";
 		}
 	}
+
+	function setIcon($type = 'warning')
+	{
+		$this->icon = $type;
+	}
+
+	function getIcon()
+	{
+		return $this->icon;
+	}
+
+	function setSize($size)
+	{
+		$this->size = $size;
+	}
+
+	function getSize()
+	{
+		return $this->size;
+	}
+
+	function autoClear($enable = true)
+	{
+		$this->auto_clear = $enable;
+	}
+}

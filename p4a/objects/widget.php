@@ -48,25 +48,18 @@
 	class P4A_Widget extends P4A_Object
 	{
 		/**
-		 * Object's value. Used for widget with data binding.
-		 * @access private
-		 * @var string
-		 */
-		var $value = NULL;
-
-		/**
 		 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
 		 * @access private
 		 * @var boolean
 		 */
-		var $enabled = TRUE;
+		var $enabled = true;
 
 		/**
 		 * Defines object visibility.
 		 * @access private
 		 * @var boolean
 		 */
-		var $visible = TRUE;
+		var $visible = true;
 
 		/**
 		 * Keeps the association between an action and its listener.
@@ -88,7 +81,7 @@
 		 * @access public
 		 * @var mixed
 		 */
-		var $label = NULL;
+		var $label = null;
 
 		/**
 		 * Keeps all the HTML properties for the widget.
@@ -118,7 +111,7 @@
 		 * @access public
 		 * @var string
 		 */
-		var $template_name = NULL;
+		var $template_name = null;
 
 		/**
 		 * variables used for templates
@@ -142,31 +135,9 @@
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
 		 * @access private
 		 */
-		function p4a_widget($name = NULL, $prefix = 'wdg', $id = NULL)
+		function p4a_widget($name = null, $prefix = 'wdg', $id = null)
 		{
 			parent::p4a_object($name, $prefix, $id);
-		}
-
-		/**
-		 * Sets the value of the widget.
-		 * @param string	The value to be setted.
-		 * @access public
-		 * @see $value
-		 */
-		function setValue($value)
-		{
-			$this->value = $value;
-		}
-
-		/**
-		 * Retuns the value of the widget.
-		 * @return string
-		 * @access public
-		 * @see $value
-		 */
-		function getValue()
-		{
-			return $this->value;
 		}
 
 		/**
@@ -175,7 +146,7 @@
 		 * @access public
 		 * @see $enable
 		 */
-		function enable($enabled=TRUE)
+		function enable($enabled = true)
 		{
 			$this->enabled = $enabled;
 		}
@@ -187,7 +158,7 @@
 		 */
 		function disable()
 		{
-			$this->enabled = FALSE;
+			$this->enabled = false;
 		}
 
 		/**
@@ -205,7 +176,7 @@
 		 * @param boolean		Visibility flag
 		 * @access public
 		 */
-		function setVisible($visible=TRUE)
+		function setVisible($visible = true)
 		{
 			$this->visible = $visible;
 		}
@@ -216,7 +187,7 @@
 		 */
 		function setInvisible()
 		{
-			$this->visible = FALSE;
+			$this->visible = false;
 		}
 
 		/**

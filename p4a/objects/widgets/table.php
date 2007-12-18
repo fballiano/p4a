@@ -202,7 +202,7 @@
 			$this->addCol($column_name);
 			$this->cols->$column_name->setType('action');
 			$this->cols->$column_name->addAction('onClick');
-			$this->cols->$column_name->setValue($this->cols->$column_name->getLabel());
+			$this->cols->$column_name->setLabel($this->cols->$column_name->getLabel());
 		}
 
 		/**
@@ -1137,13 +1137,13 @@
 				$this->buttons->field_num_page->setVisible(false);
 			} else {
 				$this->addButton('button_last', 'last', 'right');
-				$this->buttons->button_last->setValue("Go to the last page");
+				$this->buttons->button_last->setLabel("Go to the last page");
 				$this->addButton('button_next', 'next', 'right');
-				$this->buttons->button_next->setValue("Go to the next page");
+				$this->buttons->button_next->setLabel("Go to the next page");
 				$this->addButton('button_prev', 'prev', 'right');
-				$this->buttons->button_prev->setValue("Go to the previous page");
+				$this->buttons->button_prev->setLabel("Go to the previous page");
 				$this->addButton('button_first', 'first', 'right');
-				$this->buttons->button_first->setValue("Go to the first page");
+				$this->buttons->button_first->setLabel("Go to the first page");
 			}
 
 			$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
@@ -1188,7 +1188,7 @@
 			$current_page .= ' ';
 			$current_page .= $num_pages;
 			$current_page .= ' ';
-			$this->buttons->current_page->setValue($current_page);
+			$this->buttons->current_page->setLabel($current_page);
 			return parent::getAsString();
 		}
 

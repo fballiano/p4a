@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,216 +35,216 @@
  * @package p4a
  */
 
+/**
+ * Every DATA_SOURCE field is a DATA_FIELD.
+ * It's used to emulate some database behaviours
+ * such as default values.<br>
+ * It can be considered the same as a database table's field.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Data_Field extends P4A_Object
+{
 	/**
-	 * Every DATA_SOURCE field is a DATA_FIELD.
-	 * It's used to emulate some database behaviours
-	 * such as default values.<br>
-	 * It can be considered the same as a database table's field.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
+	 * The value of field.
+	 * @var string
+	 * @access private
 	 */
-	class P4A_Data_Field extends P4A_Object
+	var $value = null;
+
+	/**
+	 * The new value of field
+	 * @var string
+	 * @access private
+	 */
+	var $new_value = null;
+
+	/**
+	 * The default value for the field in new rows.
+	 * @var string
+	 * @access private
+	 */
+	var $default_value = null;
+
+	/**
+	 * The default value for the field in new rows.
+	 * @var string
+	 * @access private
+	 */
+	var $type = 'text';
+
+	var $is_read_only = false;
+	var $sequence = null;
+	var $table = null;
+	var $alias_of = null;
+	var $length = null;
+
+	/**
+	 * Class constructor.
+	 * Sets ID and name for the object.
+	 * @param string		Mnemonic identifier for the object.
+	 * @access private
+	 */
+	function p4a_data_field($name)
 	{
-		/**
-		 * The value of field.
-		 * @var string
-		 * @access private
-		 */
-		var $value = NULL;
+		parent::p4a_object((string)$name);
+	}
 
-		/**
-		 * The new value of field
-		 * @var string
-		 * @access private
-		 */
-		var $new_value = NULL;
+	/**
+	 * Sets the value of the data field.
+	 * @access public
+	 */
+	function setValue($value)
+	{
+		$this->value = $value;
+		$this->setNewValue($value);
+	}
 
-		/**
-		 * The default value for the field in new rows.
-		 * @var string
-		 * @access private
-		 */
-		var $default_value = NULL;
+	/**
+	 * Returns the value of the data field.
+	 * @access public
+	 * @return mixed
+	 */
+	function getValue()
+	{
+		return $this->value;
+	}
 
-		/**
-		 * The default value for the field in new rows.
-		 * @var string
-		 * @access private
-		 */
-		var $type = 'text';
+	/**
+	 * Returns the value of the data field for safe SQL queries.
+	 * @access public
+	 * @return mixed
+	 */
+	function getSQLValue()
+	{
+		return addslashes($this->value);
+	}
 
-		var $is_read_only = FALSE;
-		var $sequence = NULL;
-		var $table = NULL;
-		var $alias_of = NULL;
-		var $length = NULL;
+	/**
+	 * Sets the new value of the data field.
+	 * @access public
+	 */
+	function setNewValue($value)
+	{
+		$this->new_value = $value;
+	}
 
-		/**
-		 * Class constructor.
-		 * Sets ID and name for the object.
-		 * @param string		Mnemonic identifier for the object.
-		 * @access private
-		 */
-		function p4a_data_field($name)
-		{
-			parent::p4a_object((string)$name);
-		}
+	/**
+	 * Returns the new value of the data field.
+	 * @access public
+	 * @return mixed
+	 */
+	function getNewValue()
+	{
+		return $this->new_value;
+	}
 
-		/**
-		 * Sets the value of the data field.
-		 * @access public
-		 */
-		function setValue($value)
-		{
-			$this->value = $value;
-			$this->setNewValue($value);
-		}
+	/**
+	 * Returns the value of the data field for safe SQL queries.
+	 * @access public
+	 * @return mixed
+	 */
+	function getSQLNewValue()
+	{
+		return addslashes($this->new_value);
+	}
 
-		/**
-		 * Returns the value of the data field.
-		 * @access public
-		 * @return mixed
-		 */
-		function getValue()
-		{
-			return $this->value;
-		}
+	/**
+	 * Sets the type of the data_field.
+	 * @access public
+	 * @param string		The type
+	 */
+	function setType($type)
+	{
+		$this->type = $type;
+	}
 
-		/**
-		 * Returns the value of the data field for safe SQL queries.
-		 * @access public
-		 * @return mixed
-		 */
-		function getSQLValue()
-		{
-			return addslashes($this->value);
-		}
+	/**
+	 * Returns the type of the data_field.
+	 * @access public
+	 * @return string
+	 */
+	function getType()
+	{
+		return $this->type;
+	}
 
-		/**
-		 * Sets the new value of the data field.
-		 * @access public
-		 */
-		function setNewValue($value)
-		{
-			$this->new_value = $value;
-		}
+	function setReadOnly($value = TRUE)
+	{
+		$this->is_read_only = $value;
+	}
 
-		/**
-		 * Returns the new value of the data field.
-		 * @access public
-		 * @return mixed
-		 */
-		function getNewValue()
-		{
-			return $this->new_value;
-		}
+	function isReadOnly()
+	{
+		return $this->is_read_only;
+	}
 
-		/**
-		 * Returns the value of the data field for safe SQL queries.
-		 * @access public
-		 * @return mixed
-		 */
-		function getSQLNewValue()
-		{
-			return addslashes($this->new_value);
-		}
+	function setDSN($DSN)
+	{
+		$this->_DSN = $DSN;
+	}
 
-		/**
-		 * Sets the type of the data_field.
-		 * @access public
-		 * @param string		The type
-		 */
-		function setType($type)
-		{
-			$this->type = $type;
-		}
+	function getDSN()
+	{
+		return $this->_DSN;
+	}
 
-		/**
-		 * Returns the type of the data_field.
-		 * @access public
-		 * @return string
-		 */
-		function getType()
-		{
-			return $this->type;
-		}
-
-		function setReadOnly($value = TRUE)
-		{
-			$this->is_read_only = $value;
-		}
-
-		function isReadOnly()
-		{
-			return $this->is_read_only;
-		}
-
-		function setDSN($DSN)
-		{
-			$this->_DSN = $DSN;
-		}
-
-		function getDSN()
-		{
-			return $this->_DSN;
-		}
-
-		function setDefaultValue($value = NULL)
-		{
-			if ($value === NULL) {
-				$this->setNewValue($this->getDefaultValue());
-			} else {
-				$this->default_value = $value;
-			}
-		}
-
-		function setSequence($name = null)
-		{
-			if ($name === null) {
-				$this->sequence = null;
-			} else {
-				$this->sequence = "{$name}_seq";
-			}
-		}
-
-		function getDefaultValue()
-		{
-			if ($this->sequence === NULL) {
-				return $this->default_value;
-			} else {
-				$db =& P4A_DB::singleton($this->getDSN());
-				return $db->nextSequenceId($this->sequence);
-			}
-		}
-
-		function setTable($table)
-		{
-			$this->table = $table;
-		}
-
-		function getTable()
-		{
-			return $this->table;
-		}
-
-		function setAliasOf($alias_of)
-		{
-			$this->alias_of = $alias_of;
-		}
-
-		function getAliasOf()
-		{
-			return $this->alias_of;
-		}
-
-		function setLength($length)
-		{
-			$this->length = $length;
-		}
-
-		function getLength()
-		{
-			return $this->length;
+	function setDefaultValue($value = NULL)
+	{
+		if ($value === NULL) {
+			$this->setNewValue($this->getDefaultValue());
+		} else {
+			$this->default_value = $value;
 		}
 	}
+
+	function setSequence($name = null)
+	{
+		if ($name === null) {
+			$this->sequence = null;
+		} else {
+			$this->sequence = "{$name}_seq";
+		}
+	}
+
+	function getDefaultValue()
+	{
+		if ($this->sequence === NULL) {
+			return $this->default_value;
+		} else {
+			$db =& P4A_DB::singleton($this->getDSN());
+			return $db->nextSequenceId($this->sequence);
+		}
+	}
+
+	function setTable($table)
+	{
+		$this->table = $table;
+	}
+
+	function getTable()
+	{
+		return $this->table;
+	}
+
+	function setAliasOf($alias_of)
+	{
+		$this->alias_of = $alias_of;
+	}
+
+	function getAliasOf()
+	{
+		return $this->alias_of;
+	}
+
+	function setLength($length)
+	{
+		$this->length = $length;
+	}
+
+	function getLength()
+	{
+		return $this->length;
+	}
+}

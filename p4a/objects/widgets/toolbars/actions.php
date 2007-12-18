@@ -62,11 +62,11 @@
 		function addDefaultButtons()
 		{
 			$save =& $this->addButton('save', 'save');
-			$save->setValue("Confirm and save");
+			$save->setLabel("Confirm and save");
 			$save->setAccessKey("S");
 
 			$cancel =& $this->addButton('cancel', 'cancel');
-			$cancel->setValue("Cancel current operation");
+			$cancel->setLabel("Cancel current operation");
 			$cancel->setAccessKey("Z");
 
 			$this->addSeparator();
@@ -77,7 +77,7 @@
 			$print->setAccessKey("P");
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setValue("Go back to the previous mask");
+			$exit->setLabel("Go back to the previous mask");
 			$exit->setAccessKey("X");
 		}
 

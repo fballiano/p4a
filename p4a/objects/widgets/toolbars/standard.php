@@ -61,39 +61,39 @@
 		function addDefaultButtons()
 		{
 			$new =& $this->addButton('new', 'new');
-			$new->setValue("Insert a new element");
+			$new->setLabel("Insert a new element");
 			$new->setProperty("accesskey", "N");
 			
 			$save =& $this->addButton('save', 'save');
-			$save->setValue("Confirm and save");
+			$save->setLabel("Confirm and save");
 			$save->setAccessKey("S");
 
 			$cancel =& $this->addButton('cancel', 'cancel');
-			$cancel->setValue("Cancel current operation");
+			$cancel->setLabel("Cancel current operation");
 			$cancel->setAccessKey("Z");
 			
 			$this->addSeparator();
 			
 			$this->addButton('delete', 'delete');
-			$this->buttons->delete->setValue("Delete current element");
+			$this->buttons->delete->setLabel("Delete current element");
 			$this->buttons->delete->requireConfirmation();
 			
 			$this->addSeparator();
 
 			$first =& $this->addButton('first', 'first');
-			$first->setValue("Go to the first element");
+			$first->setLabel("Go to the first element");
 			$first->setAccessKey(8);
 
 			$prev =& $this->addButton('prev', 'prev');
-			$prev->setValue("Go to the previous element");
+			$prev->setLabel("Go to the previous element");
 			$prev->setAccessKey(4);
 
 			$next =& $this->addButton('next', 'next');
-			$next->setValue("Go to the next element");
+			$next->setLabel("Go to the next element");
 			$next->setAccessKey(6);
 
 			$last =& $this->addButton('last', 'last');
-			$last->setValue("Go to the last element");
+			$last->setLabel("Go to the last element");
 			$last->setAccessKey(2);
 
 			$this->addSeparator();
@@ -104,7 +104,7 @@
 			$print->setAccessKey("P");
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setValue("Go back to the previous mask");
+			$exit->setLabel("Go back to the previous mask");
 			$exit->setAccessKey("X");
 		}
 
