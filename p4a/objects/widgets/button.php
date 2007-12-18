@@ -114,7 +114,7 @@ class P4A_Button extends P4A_Widget
 		$title = $label;
 		$accesskey = $this->getAccessKey();
 		if (strlen($accesskey) > 0) $title = "[$accesskey] $title";
-		if ($this->_label_visible) {
+		if ($this->_label_visible or !$this->_icon) {
 			$label = P4A_Highlight_AccessKey($label, $accesskey);
 		} else {
 			$label = null;
