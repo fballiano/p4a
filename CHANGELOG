@@ -1,5 +1,4 @@
 3.0.0 TODO
-- "currency" format/normalize
 - check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
 - spread about the new translation system so users start translate
@@ -53,6 +52,7 @@
 - P4A_Button::setVisible() method now has a second parameter "visible", check the reference
 - all constructors were converted to PHP5 naming (public function __construct)
 - P4A_Button::setIcon() now supports a path to an image instead of the icon name
+- "currency" format/normalize was removed, it was never used and should not be handled in an application contest (you won't print € only because your application is running with an european locale)
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

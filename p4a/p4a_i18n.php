@@ -176,9 +176,6 @@ class P4A_I18N
 				return Zend_Locale_Format::toNumber($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
 			case 'decimal':
 				return Zend_Locale_Format::toNumber($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
-			case 'currency':
-				$value = $this->currency->formatLocal($value);
-				break;
 		}
 
 		return $value;
@@ -214,9 +211,6 @@ class P4A_I18N
 				return Zend_Locale_Format::getFloat($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
 			case 'decimal':
 				return Zend_Locale_Format::getFloat($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
-			case 'currency':
-				$value = $this->currency->unformatLocal($value);
-				break;
 		}
 
 		return $value;
