@@ -38,9 +38,9 @@
 
 class Brands extends P4A_Mask
 {
-	function Brands()
+	public function __construct()
 	{
-		$this->p4a_mask();
+		parent::__construct();
 		$p4a =& p4a::singleton();
 
 		$this->build("p4a_message", "message");

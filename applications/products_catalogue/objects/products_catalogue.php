@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -38,9 +37,9 @@
 
 class Products_Catalogue extends P4A
 {
-	function Products_Catalogue()
+	public function __construct()
 	{
-		parent::p4a();
+		parent::__construct();
 		$this->setTitle("Products Catalogue");
 
 		// Menu
@@ -72,7 +71,7 @@ class Products_Catalogue extends P4A
 		$this->openMask("products");
 	}
 
-	function menuClick()
+	public function menuClick()
 	{
 		$this->openMask($this->active_object->getName());
 	}

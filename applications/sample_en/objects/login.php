@@ -7,13 +7,13 @@ authentication.
 */
 class Login extends P4A_Mask
 {
-	function Login()
+	public function __construct()
 	{
 		/*
 		Let's call the parent constructor, this line
 		is a must!
 		*/
-		parent::P4A_Mask();
+		parent::__construct();
 
 		/*
 		With this instruction we can set a title for the mask,

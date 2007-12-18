@@ -9,10 +9,10 @@ visualized.
 */
 class Sample_En extends P4A
 {
-	function Sample_En()
+	public function __construct()
 	{
 		// First of all let's call p4a constructor
-		parent::p4a();
+		parent::__construct();
 
 		// Setting the title of the whole application (window's title tag)
 		$this->setTitle("Sample EN");

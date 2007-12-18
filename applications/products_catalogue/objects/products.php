@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -38,9 +37,9 @@
 
 class Products extends P4A_Mask
 {
-	function Products()
+	public function __construct()
 	{
-		$this->p4a_mask();
+		parent::__construct();
 		$p4a =& p4a::singleton();
 
 		// DB Source
