@@ -96,6 +96,20 @@ class P4A_Button extends P4A_Widget
 	{
 		return $this->_size;
 	}
+	
+	/**
+	 * Sets the label and its visibility
+	 * When a label is visible it will be rendered next to the icon (if there's an icon),
+	 * otherwise you'll see the lable as a tooltip.
+	 *
+	 * @param string $label
+	 * @param boolean $visible
+	 */
+	function setLabel($label, $visible = false)
+	{
+		parent::setLabel($label);
+		$this->_label_visible = $visible;
+	}
 
 	/**
 	 * Retuns the HTML rendered button.

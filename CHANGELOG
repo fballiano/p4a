@@ -49,6 +49,7 @@
 - P4A_Widget::setValue() and getValue() methods were removed because they've not all widgets have a value
 - P4A_Button::setValue() and getValue() methods were removed, use setLabel() and getLabel() which are logically correct
 - README file was updated, dropping some old browsers support and removing PHP4
+- P4A_Button::setVisible() method now has a second parameter "visible", check the reference
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
