@@ -3,6 +3,7 @@
 - implement application level translations
 - spread about the new translation system so users start translate
 - check db_source for aliases
+- try to detect the decimal format and use it during formatting
 - check p4a_table ordering
 - custom formatter for date/time/etc
 - make ui.datepicker.js work with our new date format definitions
