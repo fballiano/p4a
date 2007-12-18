@@ -77,7 +77,7 @@
 			$print->setAccessKey("P");
 
 			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setValue("Close mask");
+			$exit->setValue("Go back to the previous mask");
 			$exit->setAccessKey("X");
 		}
 

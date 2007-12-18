@@ -73,7 +73,7 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-msgid "Close mask"
+msgid "Go back to the previous mask"
 msgstr ""
 
 msgid "Go to the first element"
