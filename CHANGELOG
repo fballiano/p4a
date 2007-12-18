@@ -4,7 +4,6 @@
 - unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
 - implement application level translations
 - spread about the new translation system so users start translate
-- check db_source with multivalues (in progress)
 - check db_source for aliases
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct

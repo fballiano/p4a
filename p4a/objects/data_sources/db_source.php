@@ -652,7 +652,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					$fk_table = $aField["table"];
 					$fk_field = $aField["fk_field"];
 					$fk = $aField["fk"];
-					$old_fk_values = $db->adapter->getCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
+					$old_fk_values = $db->adapter->fetchCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
 					$fk_values = $this->fields->$fieldname->getNewValue();
 	
 					if (!is_array($old_fk_values)) $old_fk_values = array();
@@ -663,21 +663,13 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 					if (!empty($toremove)) {
 						foreach ($toremove as $k=>$v) {
-							$toremove[$k] = array($pk_value, $v);
-						}
-						$res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", $toremove);
-						if ($db->adapter->metaError()) {
-							P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
+							$db->adapter->query("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", array($pk_value, $v));
 						}
 					}
 	
 					if (!empty($toadd)) {
 						foreach ($toadd as $k=>$v) {
-							$toadd[$k] = array($pk_value, $v);
-						}
-						$res = $db->adapter->execute("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", $toadd);
-						if ($db->adapter->metaError()) {
-							P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
+							$db->adapter->query("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", array($pk_value, $v));
 						}
 					}
 				}
