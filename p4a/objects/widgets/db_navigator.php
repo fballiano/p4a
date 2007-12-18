@@ -106,13 +106,11 @@ class P4A_DB_Navigator extends P4A_Widget
 	var $enable_selected_element = false;
 
 	/**
-	 * The constructor
 	 * @param string		The name of the widget
-	 * @access public
 	 */
-	function P4A_DB_Navigator($name)
+	public function __construct($name)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->addAction("onClick");
 		$this->intercept($this, "onClick", "onClick");
 	}

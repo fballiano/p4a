@@ -60,12 +60,11 @@ class P4A_Tab_Pane extends P4A_Widget
 	var $_active_page = null;
 
 	/**
-	 * Tab Pane constructor
 	 * @param string Object name (identifier)
 	 */
-	function P4A_Tab_Pane($name)
+	public function __construct($name)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->build("P4A_Collection", "pages");
 		$this->addAjaxAction("onClick");
 		$this->intercept($this, "onClick", "tabClick");

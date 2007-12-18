@@ -76,23 +76,19 @@
 		//Helper Cache
 		var $_helpers = array();
 
-
 		/**
-		 * Class constructor.
-		 * Sets default properties and store the object in the application object stack.
 		 * @param string	Object identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name.
 		 * @param string	Prefix string for ID generation.
 		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
 		 * @access private
 		 */
- 		function p4a_object($name = NULL, $prefix = 'obj', $id = NULL)
+ 		public function __construct($name = null, $prefix = 'obj', $id = null)
 		{
 			$this->setName($name);
 
-			// Setting unique identifier ID
-			if( $id === NULL )  {
+			if ($id === null) {
 				$this->_id = uniqid($prefix);
-			}else{
+			} else {
 				$this->_id = $prefix . $id ;
 			}
 		}

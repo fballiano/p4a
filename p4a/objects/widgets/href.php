@@ -46,22 +46,20 @@
 class P4A_Href extends P4A_Widget
 {
 	/**
-	 * Class constructor.
 	 * You can specify an object ID if you want to have the same
 	 * object with always the same ID. This is useful especially
 	 * for web sites (to allow bookmarking and correct spidering).
 	 * @param string		Mnemonic identifier for the object.
 	 * @param string		Object ID, if not specified will be generated.
-	 * @access private
 	 */
-	function P4A_Href ($name, $id = NULL)
+	public function __construct($name, $id = NULL)
 	{
 		$prefix = 'href' ;
 
 		if ($id === NULL) {
-			parent::P4A_Widget($name, $prefix);
+			parent::__construct($name, $prefix);
 		} else {
-			parent::P4A_Widget($name, $prefix, $id);
+			parent::__construct($name, $prefix, $id);
 		}
 	}
 

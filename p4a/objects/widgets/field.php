@@ -193,15 +193,13 @@
 		var $multivalue_separator = '';
 
 		/**
-		 * Class constructor.
-		 * Istances the widget, sets name and initializes its value.
 		 * @param string				Mnemonic identifier for the object.
 		 * @param string				If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 		 * @access private
 		 */
-		function P4A_Field($name, $add_default_data_field = TRUE)
+		function __construct($name, $add_default_data_field = true)
 		{
-			parent::P4A_Widget($name, 'fld');
+			parent::__construct($name, 'fld');
 			$this->setProperty('name', $this->getId());
 
 			$this->build("p4a_collection", "buttons");

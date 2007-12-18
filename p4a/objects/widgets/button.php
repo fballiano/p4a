@@ -54,14 +54,12 @@ class P4A_Button extends P4A_Widget
 	var $_label_visible = false;
 
 	/**
-	 * Class constructor.
 	 * @param string			Mnemonic identifier for the object.
 	 * @param string			The icon taken from icon set (file name without extension).
-	 * @access private
 	 */
-	function P4A_Button($name, $icon = null)
+	public function __construct($name, $icon = null)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->addAction('onclick');
 		$this->setIcon($icon);
 		$this->setLabel(P4A_Generate_Default_Label($name));

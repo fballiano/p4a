@@ -108,9 +108,9 @@ class P4A_Sheet extends P4A_Widget
 	 * Sheet construction does nothing but calling his parent constructor.
 	 * @param string	The name of the sheet
 	 */
-	function P4A_Sheet($name)
+	public function __construct($name)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->setDefaultLabel();
 		$this->setProperty('cellpadding', '0');
 		$this->setProperty('cellspacing', '0');

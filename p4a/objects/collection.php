@@ -40,11 +40,6 @@ class P4A_Collection extends P4A_Object
 {
     var $_pointer = 0;
 
-    function p4a_collection($name = null)
-    {
-        parent::p4a_object($name);
-    }
-
     //todo: in caso di destroy di un elemento fare l'unset della chiave e ridurre l'array
     function &nextItem()
     {

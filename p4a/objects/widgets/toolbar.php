@@ -61,16 +61,13 @@ class P4A_Toolbar extends P4A_Widget
 	var $_size = NULL;
 
 	/**
-	 * Class costructor.
 	 * @param string				Mnemonic identifier for the object.
 	 * @param mask					The mask on wich the toolbar will operate.
-	 * @access private
 	 */
-	function P4A_Toolbar($name)
+	public function __construct($name)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->build("p4a_collection", "buttons");
-
 		$this->setOrientation('horizontal');
 	}
 

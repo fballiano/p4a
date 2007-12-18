@@ -61,13 +61,11 @@ class P4A_Menu extends P4A_Widget
 	var $_active_item = NULL;
 	
 	/**
-	 * Class constructor.
 	 * @param string		Mnemonic identifier for the object.
-	 * @access private
 	 */
-	function P4A_Menu($name = '')
+	public function __construct($name = '')
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->build("P4A_Collection", "items");
 	}
 
@@ -192,14 +190,11 @@ class P4A_Menu_Item extends P4A_Widget
 	var $_icon = null;
 
 	/**
-	 * Class constructor.
 	 * @param string		Mnemonic identifier for the object.
-	 * @access private
 	 */
-	function P4A_Menu_Item($name)
+	public function __construct($name)
 	{
-		parent::P4A_Widget($name);
-
+		parent::__construct($name);
 		$this->setDefaultLabel();
 		$this->addAction('onClick');
 		$this->build("P4A_Collection", "items");

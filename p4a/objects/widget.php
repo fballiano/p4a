@@ -128,19 +128,6 @@
 		var $_temp_vars = array();
 
 		/**
-		 * Class constructor.
-		 * Sets default properties and store the object in the application object stack.
-		 * @param string	Widget identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name.
-		 * @param string	Prefix string for ID generation.
-		 * @param string	Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
-		 * @access private
-		 */
-		function p4a_widget($name = null, $prefix = 'wdg', $id = null)
-		{
-			parent::p4a_object($name, $prefix, $id);
-		}
-
-		/**
 		 * Sets the widget enabled.
 		 * @param boolean		Visibility flag
 		 * @access public

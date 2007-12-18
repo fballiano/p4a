@@ -81,17 +81,6 @@ class P4A_Data_Field extends P4A_Object
 	var $length = null;
 
 	/**
-	 * Class constructor.
-	 * Sets ID and name for the object.
-	 * @param string		Mnemonic identifier for the object.
-	 * @access private
-	 */
-	function p4a_data_field($name)
-	{
-		parent::p4a_object((string)$name);
-	}
-
-	/**
 	 * Sets the value of the data field.
 	 * @access public
 	 */

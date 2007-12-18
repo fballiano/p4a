@@ -42,11 +42,6 @@ class P4A_Message extends P4A_Widget
 	var $auto_clear = true;
 	var $value = null;
 
-	function P4A_Message($name)
-	{
-		parent::P4A_Widget($name);
-	}
-
 	function getValue()
 	{
 		return $this->value;

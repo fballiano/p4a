@@ -51,15 +51,13 @@ class P4A_Image extends P4A_Widget
 	var $label_position = 'bottom';
 
 	/**
-	 * The class constructor.
 	 * @param string	Object identifier.
 	 * @param string	The absolute source path of the image.
-	 * @access private
 	 */
-	function P4A_Image($name, $value = NULL )
+	public function __construct($name, $value = null)
 	{
-		parent::P4A_Widget($name);
-		if ($value !== NULL){
+		parent::__construct($name);
+		if ($value !== null){
 			$this->setValue($value);
 		}
 	}

@@ -160,13 +160,9 @@
 		var $close_popup_button = null;
 
 		/**
-		 * Mask constructor.
-		 * Generates unique ID for the object, istance a new
-		 * {@link SHEET} for widget positioning and store
-		 * itself into p4a application.
 		 * @param string Object name (identifier).
 		 */
-		function p4a_mask($name = null)
+		public function __construct($name = null)
 		{
 			$p4a =& p4a::singleton();
 			if ($name == null) {
@@ -174,7 +170,7 @@
 			}
 
 			$name = strtolower($name);
-			parent::p4a_object($name, 'ma');
+			parent::__construct($name, 'ma');
 
 			$this->build("p4a_collection", "fields");
 			$this->build("p4a_button", "close_popup_button");

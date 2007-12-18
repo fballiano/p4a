@@ -47,11 +47,6 @@ class P4A_Icon extends P4A_Widget
 	var $_icon = NULL;
 	var $_size = 32;
 
-	function P4A_Icon($name)
-	{
-		parent::P4A_Widget($name);
-	}
-
 	function setSize($size)
 	{
 		$this->_size = $size;

@@ -116,13 +116,11 @@
 		var $_current_page_number = 1;
 
 		/**
-		 * Class constructor.
 		 * @param string				Mnemonic identifier for the object.
-		 * @access private
 		 */
-		function P4A_Table($name)
+		public function __construct($name)
 		{
-			parent::P4A_Widget($name);
+			parent::__construct($name);
 			$this->useTemplate('table');
 		}
 
@@ -628,13 +626,11 @@
 		var $_type = "text";
 
 		/**
-		 * Class constructor.
 		 * @param string		Mnemonic identifier for the object.
-		 * @access private
 		 */
-		function P4A_Table_Col($name)
+		public function __construct($name)
 		{
-			parent::P4A_Widget($name);
+			parent::__construct($name);
 			$this->setDefaultLabel();
 			$this->addAjaxAction('onClick');
 		}
@@ -947,9 +943,9 @@
 		 * @param string		Mnemonic identifier for the object
 		 * @access private
 		 */
-		function P4A_Table_Rows($name = 'rows')
+		public function __construct($name = 'rows')
 		{
-			parent::P4A_Widget($name);
+			parent::__construct($name);
 			$this->addAction('onClick');
 		}
 
@@ -1104,7 +1100,7 @@
 		{
 			$p4a =& P4A::singleton();
 
-			parent::P4A_Frame("table_navigation_bar");
+			parent::__construct("table_navigation_bar");
 			$this->build("p4a_collection", "buttons");
 			$this->setStyleProperty("float", "none");
 

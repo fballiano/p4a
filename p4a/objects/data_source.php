@@ -57,8 +57,9 @@ class P4A_Data_Source extends P4A_Object
 
 	var $fields = null;
 
-	function P4A_Data_Source($name) {
-		parent::P4A_Object($name);
+	public function __construct($name)
+	{
+		parent::__construct($name);
 		$this->build("P4A_Collection", "fields");
 	}
 

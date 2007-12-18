@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -46,12 +45,6 @@
 class P4A_Fieldset extends P4A_Frame
 {
 	var $_title = "";
-
-	//constructor
-	function P4A_Fieldset($name)
-	{
-		parent::P4A_Frame($name);
-	}
 
 	function setTitle($title)
 	{

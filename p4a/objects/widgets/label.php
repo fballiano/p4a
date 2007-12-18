@@ -67,15 +67,12 @@ class P4A_Label extends P4A_Widget
 	var $_tooltip = '';
 
 	/**
-	 * The class constructor
 	 * @param string	Object identifier.
 	 * @param string	The Value of the label.
-	 * @access private
 	 */
-
-	function P4A_Label($name, $value=null)
+	public function __construct($name, $value=null)
 	{
-		parent::P4A_Widget($name);
+		parent::__construct($name);
 		$this->setLabel($value);
 	}
 

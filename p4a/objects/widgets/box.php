@@ -35,39 +35,41 @@
  * @package p4a
  */
 
- 	/**
-	 * The box: renders raw HTML.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
-	 */
-	class P4A_Box extends P4A_Widget
+/**
+ * The box: renders raw HTML.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Box extends P4A_Widget
+{
+	var $value = null;
+
+	function getValue()
 	{
-		/**
-		 * Class constructor.
-		 * @param string			Mnemonic identifier for the object.
-		 * @access private
-		 */
-		function P4A_Box($name)
-		{
-			parent::P4A_Widget($name);
-		}
-
-		/**
-		 * Retuns the HTML rendered button.
-		 * @access public
-		 * @return string
-		 */
-		function getAsString()
-		{
-			$id = $this->getId();
-			if (!$this->isVisible()) {
-				return "<div id='$id' class='hidden'></div>";
-			}
-
-			$properties = $this->composeStringProperties();
-			$actions = $this->composeStringActions();
-			$value = $this->getValue();
-			return "<div id='$id' $properties $actions>$value</div>";
-		}
+		return $this->value;
 	}
+
+	function setValue($value = null)
+	{
+		$this->value = $value;
+	}
+	
+	/**
+	 * Retuns the HTML rendered button.
+	 * @access public
+	 * @return string
+	 */
+	function getAsString()
+	{
+		$id = $this->getId();
+		if (!$this->isVisible()) {
+			return "<div id='$id' class='hidden'></div>";
+		}
+
+		$properties = $this->composeStringProperties();
+		$actions = $this->composeStringActions();
+		$value = $this->getValue();
+		return "<div id='$id' $properties $actions>$value</div>";
+	}
+}

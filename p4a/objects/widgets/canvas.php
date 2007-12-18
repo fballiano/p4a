@@ -52,11 +52,6 @@ class P4A_Canvas extends P4A_Widget
 	var $offset_top = 0;
 	var $offset_left = 0;
 
-	function P4A_Canvas($name)
-	{
-		parent::P4A_Widget($name);
-	}
-
 	function anchor(&$object, $top, $left=0)
 	{
 		$this->objects[] = array($object, $top, $left);

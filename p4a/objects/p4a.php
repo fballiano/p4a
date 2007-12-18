@@ -163,11 +163,7 @@
 
 		var $_do_refresh = false;
 
-		/**
-		 * Class constructor.
-		 * @access private
-		 */
-		function p4a()
+		public function __construct()
 		{
 			//do not call parent constructor
 			$_SESSION["p4a"] =& $this;
