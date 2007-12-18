@@ -13,6 +13,7 @@
 - remove p4a_href and p4a_link?
 - what about p4a_icon and p4a_image?
 - rename p4a_box::setvalue() to setContent()? or setHTML? it should be clearer than now
+- auto addaction on intercept and implementmethod when the action is a browser action
 
 2.99.0
 - Zend Framework 1.0.3 was added
