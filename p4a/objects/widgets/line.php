@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,50 +35,50 @@
  * @package p4a
  */
 
+/**
+ * Line
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Line extends P4A_Widget
+{
 	/**
-	 * Line
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
+	 * Class constructor.
+	 * You can specify an object ID if you want to have the same
+	 * object with always the same ID. This is useful especially
+	 * for web sites (to allow bookmarking and correct spidering).
+	 * @param string		Mnemonic identifier for the object.
+	 * @param string		Object ID, if not specified will be generated.
+	 * @access private
 	 */
-	class P4A_Line extends P4A_Widget
+	function P4A_Line($name, $id = null)
 	{
-		/**
-		 * Class constructor.
-		 * You can specify an object ID if you want to have the same
-		 * object with always the same ID. This is useful especially
-		 * for web sites (to allow bookmarking and correct spidering).
-		 * @param string		Mnemonic identifier for the object.
-		 * @param string		Object ID, if not specified will be generated.
-		 * @access private
-		 */
-		function P4A_Line($name, $id = null)
-		{
-			$prefix = 'line';
+		$prefix = 'line';
 
-			if ($id === null) {
-				parent::P4A_Widget($name, $prefix);
-			} else {
-				parent::P4A_Widget($name, $prefix, $id);
-			}
-		}
-
-		/**
-		 * HTML rendered link.
-		 * @return string
-		 * @access public
-		 */
-		function getAsString()
-		{
-			$id = $this->getId();
-			if (!$this->isVisible()) {
-				return "<div id='$id' class='hidden'></div>";
-			}
-
-			$header 		= '<hr ' . $id . 'noshade class="color2" ';
-			$close_header 	= '/>';
-			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
-
-			return $sReturn;
+		if ($id === null) {
+			parent::P4A_Widget($name, $prefix);
+		} else {
+			parent::P4A_Widget($name, $prefix, $id);
 		}
 	}
+
+	/**
+	 * HTML rendered link.
+	 * @return string
+	 * @access public
+	 */
+	function getAsString()
+	{
+		$id = $this->getId();
+		if (!$this->isVisible()) {
+			return "<div id='$id' class='hidden'></div>";
+		}
+
+		$header 		= '<hr ' . $id . 'noshade class="color2" ';
+		$close_header 	= '/>';
+		$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
+
+		return $sReturn;
+	}
+}

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,55 +35,55 @@
  * @package p4a
  */
 
+/**
+ * "HREF" part on a "A" tag.
+ * The href is built rendering a partial "A" tag,
+ * the complete "A" tag is {@link LINK}.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Href extends P4A_Widget
+{
 	/**
-	 * "HREF" part on a "A" tag.
-	 * The href is built rendering a partial "A" tag,
-	 * the complete "A" tag is {@link LINK}.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
+	 * Class constructor.
+	 * You can specify an object ID if you want to have the same
+	 * object with always the same ID. This is useful especially
+	 * for web sites (to allow bookmarking and correct spidering).
+	 * @param string		Mnemonic identifier for the object.
+	 * @param string		Object ID, if not specified will be generated.
+	 * @access private
 	 */
-	class P4A_Href extends P4A_Widget
+	function P4A_Href ($name, $id = NULL)
 	{
-		/**
-		 * Class constructor.
-		 * You can specify an object ID if you want to have the same
-		 * object with always the same ID. This is useful especially
-		 * for web sites (to allow bookmarking and correct spidering).
-		 * @param string		Mnemonic identifier for the object.
-		 * @param string		Object ID, if not specified will be generated.
-		 * @access private
-		 */
-		function P4A_Href ($name, $id = NULL)
-		{
-			$prefix = 'href' ;
+		$prefix = 'href' ;
 
-			if ($id === NULL) {
-				parent::P4A_Widget($name, $prefix);
-			} else {
-				parent::P4A_Widget($name, $prefix, $id);
-			}
-		}
-
-		/**
-		 * Composes a string containing all the actions implemented by the widget.
-		 * In the case of "HREF" we have only the link target.
-		 * @return string
-		 * @access public
-		 */
-		function composeStringActions()
-		{
-			$sActions = P4A_APPLICATION_URL . '/index.php?action=onclick&amp;object=' . $this->getID();
-			return $sActions;
-		}
-
-		/**
-		 * HTML rendered "HREF".
-		 * @return string
-		 * @access public
-		 */
-		function getAsString()
-		{
-			return 'href="' . $this->composeStringActions() .'"';
+		if ($id === NULL) {
+			parent::P4A_Widget($name, $prefix);
+		} else {
+			parent::P4A_Widget($name, $prefix, $id);
 		}
 	}
+
+	/**
+	 * Composes a string containing all the actions implemented by the widget.
+	 * In the case of "HREF" we have only the link target.
+	 * @return string
+	 * @access public
+	 */
+	function composeStringActions()
+	{
+		$sActions = P4A_APPLICATION_URL . '/index.php?action=onclick&amp;object=' . $this->getID();
+		return $sActions;
+	}
+
+	/**
+	 * HTML rendered "HREF".
+	 * @return string
+	 * @access public
+	 */
+	function getAsString()
+	{
+		return 'href="' . $this->composeStringActions() .'"';
+	}
+}

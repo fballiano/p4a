@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,130 +35,130 @@
  * @package p4a
  */
 
+/**
+ * The label is associated to an input field, do not use it otherwise.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Label extends P4A_Widget
+{
 	/**
-	 * The label is associated to an input field, do not use it otherwise.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
+	 * Tells if the fields content is formatted or not.
+	 * @var string
+	 * @access private
 	 */
-	class P4A_Label extends P4A_Widget
+	var $formatted = true;
+
+	/**
+	 * The formatter class name for the data field.
+	 * @var string
+	 * @access private
+	 */
+	var $formatter_name = NULL;
+
+	/**
+	 * The format name for the data field.
+	 * @var string
+	 * @access private
+	 */
+	var $format_name = NULL;
+
+	var $_tooltip = '';
+
+	/**
+	 * The class constructor
+	 * @param string	Object identifier.
+	 * @param string	The Value of the label.
+	 * @access private
+	 */
+
+	function P4A_Label($name, $value=null)
 	{
-		/**
-		 * Tells if the fields content is formatted or not.
-		 * @var string
-		 * @access private
-		 */
-		var $formatted = true;
-
-		/**
-		 * The formatter class name for the data field.
-		 * @var string
-		 * @access private
-		 */
-		var $formatter_name = NULL;
-
-		/**
-		 * The format name for the data field.
-		 * @var string
-		 * @access private
-		 */
-		var $format_name = NULL;
-
-		var $_tooltip = '';
-
-		/**
-		 * The class constructor
-		 * @param string	Object identifier.
-		 * @param string	The Value of the label.
-		 * @access private
-		 */
-
-		function P4A_Label($name, $value=null)
-		{
-			parent::P4A_Widget($name);
-			$this->setLabel($value);
-		}
-
-		/**
-		 * Only returns the value of the label.
-		 * @return string
-		 * @access public
-		 */
-		function getValue()
-		{
-			return $this->getLabel();
-		}
-
-		/**
-		 * Only returns the value of the label.
-		 * @param string Label's value.
-		 * @access public
-		 */
-		function setValue($value=null)
-		{
-			$this->setLabel($value);
-		}
-
-		/**
-		 * Returns the HTML rendered label.
-		 * This is done by building a SPAN, because with a SPAN you
-		 * can trigger events such as onClick ect.
-		 * Label is rendered only if the widget is visible.
-		 * @param string Label's value.
-		 * @access public
-		 */
-		function getAsString()
-		{
-			$id = $this->getId();
-			if (!$this->isVisible()) {
-				return "<span id='$id' class='hidden'></span>";
-			}
-
-			$header	= "<label id='{$id}' class='label' ";
-			$close_header = ">";
-			$footer	= "</label>\n";
-
-			$tooltip_text = $this->_tooltip;
-			$tooltip_handler = '';
-			if ($tooltip_text) {
-				$tooltip_text = "<div id='{$id}_tt' class='hidden'>{$tooltip_text}</div>";
-				$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/info.png' alt='' /> ";
-				$header .= " onmouseover='showTooltip(this, \"{$id}_tt\")' ";
-			}
-
-			$string = $header . $this->composeStringProperties() .
-						$this->composeStringActions() .
-						$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
-
-			return $string;
-		}
-
-		/**
-		 * Set the label type, normal or temporary
-		 * @param string label type.
-		 * @access public
-		 */
-		function setType($type = 'normal')
-		{
-			$this->type = $type;
-		}
-
-		/**
-		 * Returns the label type
-		 * @access public
-		 */
-		function getType()
-		{
-			return $this->type;
-		}
-
-		function setTooltip($text)
-		{
-			$this->_tooltip = $text;
-		}
-
-		function getTooltip()
-		{
-			return $this->_tooltip;
-		}
+		parent::P4A_Widget($name);
+		$this->setLabel($value);
 	}
+
+	/**
+	 * Only returns the value of the label.
+	 * @return string
+	 * @access public
+	 */
+	function getValue()
+	{
+		return $this->getLabel();
+	}
+
+	/**
+	 * Only returns the value of the label.
+	 * @param string Label's value.
+	 * @access public
+	 */
+	function setValue($value=null)
+	{
+		$this->setLabel($value);
+	}
+
+	/**
+	 * Returns the HTML rendered label.
+	 * This is done by building a SPAN, because with a SPAN you
+	 * can trigger events such as onClick ect.
+	 * Label is rendered only if the widget is visible.
+	 * @param string Label's value.
+	 * @access public
+	 */
+	function getAsString()
+	{
+		$id = $this->getId();
+		if (!$this->isVisible()) {
+			return "<span id='$id' class='hidden'></span>";
+		}
+
+		$header	= "<label id='{$id}' class='label' ";
+		$close_header = ">";
+		$footer	= "</label>\n";
+
+		$tooltip_text = $this->_tooltip;
+		$tooltip_handler = '';
+		if ($tooltip_text) {
+			$tooltip_text = "<div id='{$id}_tt' class='hidden'>{$tooltip_text}</div>";
+			$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/info.png' alt='' /> ";
+			$header .= " onmouseover='showTooltip(this, \"{$id}_tt\")' ";
+		}
+
+		$string = $header . $this->composeStringProperties() .
+					$this->composeStringActions() .
+					$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
+
+		return $string;
+	}
+
+	/**
+	 * Set the label type, normal or temporary
+	 * @param string label type.
+	 * @access public
+	 */
+	function setType($type = 'normal')
+	{
+		$this->type = $type;
+	}
+
+	/**
+	 * Returns the label type
+	 * @access public
+	 */
+	function getType()
+	{
+		return $this->type;
+	}
+
+	function setTooltip($text)
+	{
+		$this->_tooltip = $text;
+	}
+
+	function getTooltip()
+	{
+		return $this->_tooltip;
+	}
+}

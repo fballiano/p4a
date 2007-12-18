@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -35,182 +34,182 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
+
+/**
+ * A toolbar is a buttons/images set.
+ * Every button/image can have an action handler.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ */
+class P4A_Toolbar extends P4A_Widget
+{
 	/**
-	 * A toolbar is a buttons/images set.
-	 * Every button/image can have an action handler.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
+	 * Counts the number of separators/spacers in the toolbar.
+	 * @var integer
+	 * @access private
 	 */
-	class P4A_Toolbar extends P4A_Widget
+	var $separators_counter = 0;
+
+	/**
+	 * Buttons collection.
+	 * @var array
+	 * @access public
+	 */
+	var $buttons = NULL;
+
+	var $_size = NULL;
+
+	/**
+	 * Class costructor.
+	 * @param string				Mnemonic identifier for the object.
+	 * @param mask					The mask on wich the toolbar will operate.
+	 * @access private
+	 */
+	function P4A_Toolbar($name)
 	{
-		/**
-		 * Counts the number of separators/spacers in the toolbar.
-		 * @var integer
-		 * @access private
-		 */
-		var $separators_counter = 0;
+		parent::P4A_Widget($name);
+		$this->build("p4a_collection", "buttons");
 
-		/**
-		 * Buttons collection.
-		 * @var array
-		 * @access public
-		 */
-		var $buttons = NULL;
-
-		var $_size = NULL;
-
-		/**
-		 * Class costructor.
-		 * @param string				Mnemonic identifier for the object.
-		 * @param mask					The mask on wich the toolbar will operate.
-		 * @access private
-		 */
-		function P4A_Toolbar($name)
-		{
-			parent::P4A_Widget($name);
-			$this->build("p4a_collection", "buttons");
-
-			$this->setOrientation('horizontal');
-		}
-
-		/**
-		 * Istances a new p4a_button object and than adds it to the toolbar.
-		 * @param string			Mnemonic identifier for the object.
-		 * @param string			The icon taken from icon set (file name without extension).
-		 * @access public
-		 * @see P4A_Button
-		 */
-		function &addButton($button_name, $icon = NULL, $position = "left")
-		{
-			$this->buttons->build("p4a_button", $button_name);
-			$this->buttons->$button_name->setIcon($icon);
-			$this->buttons->$button_name->setStyleProperty("float", $position);
-			if ($this->_size) {
-				$this->buttons->$button_name->setSize($this->_size);
-			}
-			return $this->buttons->$button_name;
-		}
-
-		/**
-		 * Adds a separator image.
-		 * @access public
-		 */
-		function addSeparator($position = "left")
-		{
-			$name = 's' . $this->separators_counter++;
-			$this->buttons->build("p4a_icon", $name);
-			$this->buttons->$name->setIcon('separator');
-			$this->buttons->$name->setStyleProperty("float", $position);
-			return $this->buttons->$name;
-		}
-
-		/**
-		 * Adds a label object.
-		 * @access public
-		 */
-		function addLabel($name, $text, $position = "left")
-		{
-			$this->buttons->build('p4a_box', $name);
-			$this->buttons->$name->setValue($text);
-			$this->buttons->$name->setStyleProperty("float", $position);
-		}
-
-		/**
-		 * Adds a spacer image of the desidered width.
-		 * @param integer		Width in pixel from the spacer.
-		 * @access public
-		 */
-		function addSpacer($width = 10, $position = "left")
-		{
-			$name = 's' . $this->separators_counter++;
-			$this->buttons->build("p4a_image", $name);
-			$this->buttons->$name->setStyleProperty("float", $position);
-			$this->buttons->$name->setIcon('spacer');
-			$this->buttons->$name->setWidth($width);
-			return $this->buttons->$name;
-		}
-
-		/**
-		 * Turns off the action handler for the desidered button.
-		 * @param string		Button identifier.
-		 * @access public
-		 */
-		function disable($button_name = NULL)
-		{
-			if ($button_name === NULL) {
-				while ($button =& $this->buttons->nextItem()) {
-					$button->disable();
-				}
-			} else {
-				if (is_object($this->buttons->$button_name)) {
-					$this->buttons->$button_name->disable();
-				}
-			}
-		}
-
-		/**
-		 * Turns on the action handler for the desidered button.
-		 * @param string		Button identifier.
-		 * @access public
-		 */
-		function enable($button_name = NULL)
-		{
-			if ($button_name === NULL) {
-				while ($button =& $this->buttons->nextItem()) {
-					$button->enable();
-				}
-			} else {
-				if (is_object($this->buttons->$button_name)) {
-					$this->buttons->$button_name->enable();
-				}
-			}
-		}
-
-		function setSize($size)
-		{
-			$this->_size = $size;
-
-			while ($button =& $this->buttons->nextItem()) {
-				$button->setSize($size);
-			}
-		}
-
-		function getSize()
-		{
-			return $this->_size;
-		}
-
-		/**
-		 * Sets the rendering orientation for the toolbar.
-		 * @param string		Orientation (horizontal|vertical).
-		 * @access public
-		 */
-		function setOrientation($orientation)
-		{
-			$this->orientation = $orientation;
-		}
-
-		/**
-		 * Returns the HTML rendered widget.
-		 * @return string
-		 * @access public
-		 */
-		function getAsString()
-		{
-			$id = $this->getId();
-			if (!$this->isVisible()) {
-				return "<div id='$id' class='hidden'></div>";
-			}
-
-			$properties = $this->composeStringProperties();
-			$string   = "<div id='$id' class='toolbar' $properties >";
-			while($button =& $this->buttons->nextItem()) {
-  				$string .= $button->getAsString();
-			}
- 			$string .= "<div class='br'></div>\n";
-			$string .= "</div>\n\n";
-			return $string;
-		}
-
+		$this->setOrientation('horizontal');
 	}
+
+	/**
+	 * Istances a new p4a_button object and than adds it to the toolbar.
+	 * @param string			Mnemonic identifier for the object.
+	 * @param string			The icon taken from icon set (file name without extension).
+	 * @access public
+	 * @see P4A_Button
+	 */
+	function &addButton($button_name, $icon = NULL, $position = "left")
+	{
+		$this->buttons->build("p4a_button", $button_name);
+		$this->buttons->$button_name->setIcon($icon);
+		$this->buttons->$button_name->setStyleProperty("float", $position);
+		if ($this->_size) {
+			$this->buttons->$button_name->setSize($this->_size);
+		}
+		return $this->buttons->$button_name;
+	}
+
+	/**
+	 * Adds a separator image.
+	 * @access public
+	 */
+	function addSeparator($position = "left")
+	{
+		$name = 's' . $this->separators_counter++;
+		$this->buttons->build("p4a_icon", $name);
+		$this->buttons->$name->setIcon('separator');
+		$this->buttons->$name->setStyleProperty("float", $position);
+		return $this->buttons->$name;
+	}
+
+	/**
+	 * Adds a label object.
+	 * @access public
+	 */
+	function addLabel($name, $text, $position = "left")
+	{
+		$this->buttons->build('p4a_box', $name);
+		$this->buttons->$name->setValue($text);
+		$this->buttons->$name->setStyleProperty("float", $position);
+	}
+
+	/**
+	 * Adds a spacer image of the desidered width.
+	 * @param integer		Width in pixel from the spacer.
+	 * @access public
+	 */
+	function addSpacer($width = 10, $position = "left")
+	{
+		$name = 's' . $this->separators_counter++;
+		$this->buttons->build("p4a_image", $name);
+		$this->buttons->$name->setStyleProperty("float", $position);
+		$this->buttons->$name->setIcon('spacer');
+		$this->buttons->$name->setWidth($width);
+		return $this->buttons->$name;
+	}
+
+	/**
+	 * Turns off the action handler for the desidered button.
+	 * @param string		Button identifier.
+	 * @access public
+	 */
+	function disable($button_name = NULL)
+	{
+		if ($button_name === NULL) {
+			while ($button =& $this->buttons->nextItem()) {
+				$button->disable();
+			}
+		} else {
+			if (is_object($this->buttons->$button_name)) {
+				$this->buttons->$button_name->disable();
+			}
+		}
+	}
+
+	/**
+	 * Turns on the action handler for the desidered button.
+	 * @param string		Button identifier.
+	 * @access public
+	 */
+	function enable($button_name = NULL)
+	{
+		if ($button_name === NULL) {
+			while ($button =& $this->buttons->nextItem()) {
+				$button->enable();
+			}
+		} else {
+			if (is_object($this->buttons->$button_name)) {
+				$this->buttons->$button_name->enable();
+			}
+		}
+	}
+
+	function setSize($size)
+	{
+		$this->_size = $size;
+
+		while ($button =& $this->buttons->nextItem()) {
+			$button->setSize($size);
+		}
+	}
+
+	function getSize()
+	{
+		return $this->_size;
+	}
+
+	/**
+	 * Sets the rendering orientation for the toolbar.
+	 * @param string		Orientation (horizontal|vertical).
+	 * @access public
+	 */
+	function setOrientation($orientation)
+	{
+		$this->orientation = $orientation;
+	}
+
+	/**
+	 * Returns the HTML rendered widget.
+	 * @return string
+	 * @access public
+	 */
+	function getAsString()
+	{
+		$id = $this->getId();
+		if (!$this->isVisible()) {
+			return "<div id='$id' class='hidden'></div>";
+		}
+
+		$properties = $this->composeStringProperties();
+		$string   = "<div id='$id' class='toolbar' $properties >";
+		while($button =& $this->buttons->nextItem()) {
+			$string .= $button->getAsString();
+		}
+		$string .= "<div class='br'></div>\n";
+		$string .= "</div>\n\n";
+		return $string;
+	}
+}

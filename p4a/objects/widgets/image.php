@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,106 +35,106 @@
  * @package p4a
  */
 
+/**
+ * Use this whan you want to put an image in your application.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+class P4A_Image extends P4A_Widget
+{
 	/**
-	 * Use this whan you want to put an image in your application.
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @package p4a
+	* The label position
+	* @access public
+	* @var string
+	*/
+	var $label_position = 'bottom';
+
+	/**
+	 * The class constructor.
+	 * @param string	Object identifier.
+	 * @param string	The absolute source path of the image.
+	 * @access private
 	 */
-	class P4A_Image extends P4A_Widget
+	function P4A_Image($name, $value = NULL )
 	{
-		/**
-		* The label position
-		* @access public
-		* @var string
-		*/
-		var $label_position = 'bottom';
-
-		/**
-		 * The class constructor.
-		 * @param string	Object identifier.
-		 * @param string	The absolute source path of the image.
-		 * @access private
-		 */
-		function P4A_Image($name, $value = NULL )
-		{
-			parent::P4A_Widget($name);
-			if ($value !== NULL){
-				$this->setValue($value);
-			}
-		}
-
-		/**
-		 * Sets label position.
-		 * @param strig		bottom or right
-		 * @access public
-		 */
-		function setLabelPosition($position = "bottom")
-		{
-			$this->label_position = $position;
-		}
-
-		/**
-		 * Returns label position.
-		 * @access public
-		 */
-		function getLabelPosition()
-		{
-			return $this->label_position;
-		}
-
-		/**
-		 * Sets image's source from icon set repository.
-		 * @param strig		The image filename without extension (e.g.: "new").
-		 * @access public
-		 */
-		function setIcon($icon)
-		{
-			$p4a =& P4A::singleton();
-			$value = P4A_ICONS_PATH . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
+		parent::P4A_Widget($name);
+		if ($value !== NULL){
 			$this->setValue($value);
 		}
-
-		/**
-		 * Sets image's source from absolute url.
-		 * @param strig		The image source url.
-		 * @access public
-		 */
-		function setValue($value)
-		{
-			parent::setValue($value);
-			$this->setProperty('src', $value);
-		}
-
-
-		/**
-		 * Returns the HTML rendered label.
-		 * @access public
-		 */
-		function getAsString()
-		{
-			$id = $this->getId();
-			if (!$this->isVisible()) {
-				return "<span id='$id' class='hidden'></span>";
-			}
-
-			$label = $this->getLabel();
-			$actions = $this->composeStringActions();
-			$properties = $this->composeStringProperties();
-			if ($label) {
-				if ($this->getLabelPosition() == 'bottom') {
-					$class = "dd_block";
-				} else {
-					$class = "dd_inline";
-				}
-				$sReturn  = "<dl>";
-				$sReturn .= "<dt><img alt='' $properties $actions /></dt>";
-				$sReturn .= "<dd class=\"$class\">$label</dd>";
-				$sReturn .= "</dl>\n";
-			} else {
-				$sReturn  = "<img alt='' $properties $actions />\n";
-			}
-			$sReturn = "<span id='$id'>$sReturn</span>";
-			return $sReturn;
-		}
 	}
+
+	/**
+	 * Sets label position.
+	 * @param strig		bottom or right
+	 * @access public
+	 */
+	function setLabelPosition($position = "bottom")
+	{
+		$this->label_position = $position;
+	}
+
+	/**
+	 * Returns label position.
+	 * @access public
+	 */
+	function getLabelPosition()
+	{
+		return $this->label_position;
+	}
+
+	/**
+	 * Sets image's source from icon set repository.
+	 * @param strig		The image filename without extension (e.g.: "new").
+	 * @access public
+	 */
+	function setIcon($icon)
+	{
+		$p4a =& P4A::singleton();
+		$value = P4A_ICONS_PATH . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
+		$this->setValue($value);
+	}
+
+	/**
+	 * Sets image's source from absolute url.
+	 * @param strig		The image source url.
+	 * @access public
+	 */
+	function setValue($value)
+	{
+		parent::setValue($value);
+		$this->setProperty('src', $value);
+	}
+
+
+	/**
+	 * Returns the HTML rendered label.
+	 * @access public
+	 */
+	function getAsString()
+	{
+		$id = $this->getId();
+		if (!$this->isVisible()) {
+			return "<span id='$id' class='hidden'></span>";
+		}
+
+		$label = $this->getLabel();
+		$actions = $this->composeStringActions();
+		$properties = $this->composeStringProperties();
+		if ($label) {
+			if ($this->getLabelPosition() == 'bottom') {
+				$class = "dd_block";
+			} else {
+				$class = "dd_inline";
+			}
+			$sReturn  = "<dl>";
+			$sReturn .= "<dt><img alt='' $properties $actions /></dt>";
+			$sReturn .= "<dd class=\"$class\">$label</dd>";
+			$sReturn .= "</dl>\n";
+		} else {
+			$sReturn  = "<img alt='' $properties $actions />\n";
+		}
+		$sReturn = "<span id='$id'>$sReturn</span>";
+		return $sReturn;
+	}
+}

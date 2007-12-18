@@ -2,8 +2,7 @@
 - "currency" format/normalize
 - unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
 - p4a_button should be rendered as an HTML button
-- p4a_button::setIcon() should support a path to an image instead of the icon name
-- accesskey highlight moved away from setLabel to getasstring 
+- p4a_button::setIcon() should support a path to an image instead of the icon name 
 - implement application level translations
 - spread about the new translation system so users start translate
 - check db_source for aliases
