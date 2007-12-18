@@ -143,9 +143,13 @@ class P4A_Button extends P4A_Widget
 				list($width, $size) = explode('x', $size);
 			}
 			
-			$icon = P4A_ICONS_PATH . "/{$size}/{$this->_icon}";
-			if (!$this->isEnabled()) $icon .= "_disabled";
-			$icon .= '.' . P4A_ICONS_EXTENSION;
+			if (strpos($this->_icon, '.') !== false) {
+				$icon = $this->_icon;
+			} else {
+				$icon = P4A_ICONS_PATH . "/{$size}/{$this->_icon}";
+				if (!$this->isEnabled()) $icon .= "_disabled";
+				$icon .= '.' . P4A_ICONS_EXTENSION;
+			}
 			$icon = "<img src='$icon' alt=''>";
 		}
 		
