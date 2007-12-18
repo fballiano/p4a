@@ -72,7 +72,7 @@ http://p4a.sourceforge.net
 
 Linux/Windows
 Apache 1.3.x/2.0.x
-php/mod_php 4.3.x/4.4.x/5.x.x
+php/mod_php >= 5.2.0
 
 P4A does not work with MS IIS.
 
@@ -92,15 +92,12 @@ tested browsers:
 -----------------------------------------
 
 Tested browsers:
-- Mozilla Firefox 1.x, 2.x
-- Internet Explorer 5.5, 6.x, 7.0
-- Safari 1.x
-- Opera 7.x, 8.x, 9.x
-- Konqueror 3.x
+- Mozilla Firefox 2.x
+- Internet Explorer 6.x, 7.x
+- Safari 3.x
+- Opera 9.x
 
-These browsers should work as well:
-- all gecko browsers (Netscape 7.x/8.x/9.x, Epiphany, Galeon)
-- all Javascript 1.2/CSS2 browser
+P4A should also work with all Javascript 1.2/CSS2 browsers.
 
 ------------------------------------
 -- P4A compatibility: Mobile Side --
@@ -116,12 +113,6 @@ These browsers should work as well:
 You can't switch between two application with the same
 P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
-
-If you use PostgreSQL, when you create a P4A_DB_Source and use
-the AddJoin() method, the db_source could be read only beacause
-of the lack of some features with some PHP versions... thus you'll
-have to do a setTable("tablename") for every field of the db_source
-and do a setReadOnly(false).
 
 -------------
 -- Authors --
