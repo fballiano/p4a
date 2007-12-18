@@ -9,6 +9,7 @@
 - check db_source for aliases
 - custom formatter for date/time/etc
 - make ui.datepicker.js work with our date format definitions
+- change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - rename constructors to __construct
 - integrate p4a_base_mask in core and port samples to it?
 - remove all those messy functions from p4a_db?
@@ -17,7 +18,7 @@
 - Zend Framework 1.0.3 was added
 - Database connection now relies on Zend_DB PDO adapters
 - check_configuration.php was ported to Zend_DB to check the database connection
-- P4A_DB_Source was ported to Zend_DB
+- P4A_DB_Source was ported to Zend_DB (only PDO drivers are used)
 - P4A_DB_Source::setFields() syntax was changed, now you must provide only fields from the main table and not from joines ones
 - P4A_DB_Source::addJoin() syntax was changed, join type param was dropped and now you have a third param to pass the columns you want to extract from the joined table (default extracts all columns)
 - P4A_DB_Source now has many methods to add joins: addJoinCross(), addJoinFull(), addJoinInner(), addJoinLeft(), addJoinNatural(), addJoinRight()
