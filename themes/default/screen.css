@@ -775,3 +775,41 @@ legend {
 .datepicker_control {
  display: none
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.p4a_button {
+	background: none;
+	border: 1px solid #fafafa;
+	cursor: pointer;
+}
+
+.p4a_button:hover {
+	border: 1px solid #c6d3de;
+	background: white;
+}
+
+.p4a_button img {
+	display: table-cell;
+	vertical-align: middle;
+	margin-right: 5px;
+}
