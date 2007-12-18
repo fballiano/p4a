@@ -1,6 +1,9 @@
 3.0.0 TODO
 - "currency" format/normalize
 - unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
+- p4a_button should be rendered as an HTML button
+- p4a_button::setIcon() should support a path to an image instead of the icon name
+- accesskey highlight moved away from setLabel to getasstring 
 - implement application level translations
 - spread about the new translation system so users start translate
 - check db_source for aliases
@@ -37,6 +40,10 @@
 - default labels are now generated with ucfirst function instead of ucwords
 - P4A toolbars and P4A_Table were ported to the new translation system
 - translations are now applied at rendering time, not at build time
+- P4A_Highlight_AccessKey() global function was added
+- P4A_Widget::setLabel() does not automatically create accesskey now, it would cause problems with translations
+- P4A_Object::intercept() and P4A_Object::actionHandler() now turn action name to lower before processing
+- P4A_Menu now uses P4A_Highlight_AccessKey()
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

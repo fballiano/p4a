@@ -240,14 +240,6 @@
 		{
 			// Used for sheets group->sheets labels
 			$this->actionHandler('set_label', $label);
-			$result = preg_match("/(&(\w))/", $label, $a);
-			if ($result) {
-				$amp_key = $a[0];
-				$key = $a[2];
-				$label = str_replace($amp_key,"<span class=\"accesskey\">$key</span>", $label);
-				$this->setProperty("accesskey",$key);
-			}
-
 			$this->label = $label;
 		}
 
@@ -332,7 +324,7 @@
 		}
 
 		function setAccessKey($key) {
-			$this->setProperty("accesskey",$key);
+			$this->setProperty("accesskey", $key);
 		}
 
 		function getAccessKey() {

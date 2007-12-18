@@ -111,7 +111,7 @@ function P4A_Array2file($aFile)
  * @param string	The uploads dir
  * @return string	The "file"
  */
-function P4A_Filename2File($filename,$uploads_dir)
+function P4A_Filename2File($filename, $uploads_dir)
 {
 	if (!is_file($filename)) return false;
 	
@@ -402,4 +402,10 @@ function P4A_Is_Browser_Event($event)
 function P4A_Generate_Default_Label($string)
 {
 	return ucfirst(str_replace('_', ' ', $string));
+}
+
+function P4A_Highlight_AccessKey($string, $accesskey)
+{
+	if (strlen($accesskey) == 0) return $string;
+	return str_replace($accesskey, "<span class=\"accesskey\">$accesskey</span>", $string);
 }

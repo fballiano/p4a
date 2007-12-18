@@ -188,6 +188,7 @@
 		 */
 		function actionHandler($action, $param = NULL)
 		{
+			$action = strtolower($action);
 			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
 				$method = $this->_map_actions[$action]['method'];
@@ -211,6 +212,7 @@
 		 */
 		function intercept(&$object, $action, $method=null)
 		{
+			$action = strtolower($action);
 			if ($method === null) $method = $action;
 			$object->_map_actions[$action] = array();
 			$object->_map_actions[$action]['object'] =& $this;
