@@ -1,6 +1,5 @@
 3.0.0 TODO
 - "currency" format/normalize
-- unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
 - p4a_button::setIcon() should support a path to an image instead of the icon name
 - check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
