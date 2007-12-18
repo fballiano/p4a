@@ -137,7 +137,8 @@ class P4A_Button extends P4A_Widget
 			$icon = "<img src='$icon' alt=''>";
 		}
 		
-		$return .= $icon . $label . "</button>";
+		$spacer = ($icon and $label) ? $spacer = "<span style='margin-left: 5px'></span>" : '';
+		$return .= $icon . $spacer . $label . "</button>";
 		return $return;
 	}
 

@@ -801,6 +801,7 @@ legend {
 	background: none;
 	border: 1px solid #fafafa;
 	cursor: pointer;
+	padding: 0;
 }
 
 .p4a_button:hover {
@@ -811,5 +812,4 @@ legend {
 .p4a_button img {
 	display: table-cell;
 	vertical-align: middle;
-	margin-right: 5px;
 }
