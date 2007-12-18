@@ -48,10 +48,9 @@ class P4A_DB
 	/**
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
-	 * @access public
 	 * @throws onDBConnectionError
 	 */
-	function &singleton($DSN = "")
+	public function &singleton($DSN = "")
   	{
 		//If DSN is not specified I use default connection
 		if (!strlen($DSN) and defined("P4A_DSN")){
@@ -95,14 +94,13 @@ class P4A_DB
 	/**
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
-	 * @access private
 	 */
-	function &connect($DSN = "")
+	private function &connect($DSN = "")
 	{
 		return P4A_DB::singleton($DSN);
 	}
 	
-	function nextSequenceId($sequence_name)
+	public function nextSequenceId($sequence_name)
 	{
 		switch ($this->db_type) {
 			case 'mysql':
@@ -129,7 +127,7 @@ class P4A_DB
 		}
 	}
 	
-	function &select()
+	public function &select()
 	{
 		return $this->adapter->select();
 	}

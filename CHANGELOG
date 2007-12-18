@@ -2,7 +2,8 @@
 - "currency" format/normalize
 - unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
 - p4a_button should be rendered as an HTML button
-- p4a_button::setIcon() should support a path to an image instead of the icon name 
+- p4a_button::setIcon() should support a path to an image instead of the icon name
+- check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
 - spread about the new translation system so users start translate
 - check db_source for aliases
@@ -10,6 +11,7 @@
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct
 - integrate p4a_base_mask in core and port samples to it?
+- remove all those messy functions from p4a_db?
 
 2.99.0
 - Zend Framework 1.0.3 was added
