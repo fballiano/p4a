@@ -354,11 +354,11 @@
 				}
 			}
 
-			if (empty($this->_map_actions["onClick"]["method"]) or !$this->isEnabled()) {
+			if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
 				$sReturn = "<li>$icon<div $properties>" . $this->getLabel() . "</div>";
 			} else {
 				$actions = $this->composeStringActions();
-				$sReturn = "<li>$icon<a href='#' $actions $properties>" . $this->getLabel() . "</a>";
+				$sReturn = "<li>$icon<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>";
 			}
 
 			if ($this->hasItems()) {
