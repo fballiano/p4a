@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,41 +35,38 @@
  * @package p4a
  */
 
+/**
+ * Very simple toolbar.
+ * This toolbar has only "print", "quit" buttons.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ * @see P4A_Toolbar
+ */
+class P4A_Quit_Toolbar extends P4A_Toolbar
+{
 	/**
-	 * Very simple toolbar.
-	 * This toolbar has only "print", "quit" buttons.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
-	 * @see P4A_Toolbar
+	 * @param string				Mnemonic identifier for the object.
 	 */
-	class P4A_Quit_Toolbar extends P4A_Toolbar
+	public function __construct($name)
 	{
-		/**
-		 * Class costructor.
-		 * @param string				Mnemonic identifier for the object.
-		 * @param mask					The mask on wich the toolbar will operate.
-		 * @access private
-		 */
-		function P4A_Quit_Toolbar($name)
-		{
-			parent::P4A_Toolbar($name);
-			$this->addDefaultButtons();
-		}
-		
-		function addDefaultButtons()
-		{
-			$p4a =& p4a::singleton();
-		
-			$print =& $this->addButton('print', 'print');
-			$print->dropAction('onclick');
-			$print->setProperty('onclick', 'window.print(); return false;');
-			$print->setAccessKey("P");
-
-			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setLabel("Go back to the previous mask");
-			$exit->setAccessKey("X");
-			
-			$p4a->intercept($exit, "onClick", "showPrevMask");
-		}
+		parent::__construct($name);
+		$this->addDefaultButtons();
 	}
+	
+	private function addDefaultButtons()
+	{
+		$p4a =& p4a::singleton();
+	
+		$print =& $this->addButton('print', 'print');
+		$print->dropAction('onclick');
+		$print->setProperty('onclick', 'window.print(); return false;');
+		$print->setAccessKey("P");
+
+		$exit =& $this->addButton('exit', 'exit', 'right');
+		$exit->setLabel("Go back to the previous mask");
+		$exit->setAccessKey("X");
+		
+		$p4a->intercept($exit, "onClick", "showPrevMask");
+	}
+}

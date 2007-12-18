@@ -36,35 +36,35 @@
  * @package p4a
  */
 
-	/**
-	 * Preview mask.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
-	 */
-	class P4A_Mask_Preview extends P4A_Mask
+/**
+ * Preview mask.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ */
+class P4A_Mask_Preview extends P4A_Mask
+{
+	var $raw_html = "";
+
+	public function __construct()
 	{
-		var $raw_html = "";
+		parent::__construct();
+		$p4a =& P4A::singleton();
 
-		function P4A_Mask_Preview()
-		{
-			$this->P4A_Mask();
-			$p4a =& P4A::singleton();
+		$this->build("P4A_Quit_Toolbar", "toolbar");
+		$this->build("P4A_Box", "box");
 
-			$this->build("P4A_Quit_Toolbar", "toolbar");
-			$this->build("P4A_Box", "box");
-
-			$this->display("top", $this->toolbar);
-		}
-
-		function main()
-		{
-			$this->display("main", $this->raw_html);
-			parent::main();
-		}
-
-		function setRawHTML($html)
-		{
-			$this->raw_html = $html;
-		}
+		$this->display("top", $this->toolbar);
 	}
+
+	function main()
+	{
+		$this->display("main", $this->raw_html);
+		parent::main();
+	}
+
+	function setRawHTML($html)
+	{
+		$this->raw_html = $html;
+	}
+}

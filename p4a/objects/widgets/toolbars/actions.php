@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,55 +35,51 @@
  * @package p4a
  */
 
+/**
+ * Standard toolbar for data source operations.
+ * This toolbar has "confirm", "cancel", "exit" buttons.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ * @see P4A_Toolbar
+ */
+class P4A_Actions_Toolbar extends P4A_Toolbar
+{
 	/**
-	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "exit" buttons.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
-	 * @see P4A_Toolbar
+	 * @param string				Mnemonic identifier for the object.
 	 */
-	class P4A_Actions_Toolbar extends P4A_Toolbar
+	public function __construct($name)
 	{
-		/**
-		 * Class costructor.
-		 * @param string				Mnemonic identifier for the object.
-		 * @param mask					The mask on wich the toolbar will operate.
-		 * @access private
-		 */
-		function P4A_Actions_Toolbar($name)
-		{
-			parent::P4A_Toolbar($name);
-			$this->addDefaultButtons();
-		}
-		
-		
-		function addDefaultButtons()
-		{
-			$save =& $this->addButton('save', 'save');
-			$save->setLabel("Confirm and save");
-			$save->setAccessKey("S");
-
-			$cancel =& $this->addButton('cancel', 'cancel');
-			$cancel->setLabel("Cancel current operation");
-			$cancel->setAccessKey("Z");
-
-			$this->addSeparator();
-
-			$print =& $this->addButton('print', 'print');
-			$print->dropAction('onclick');
-			$print->setProperty('onclick', 'window.print(); return false;');
-			$print->setAccessKey("P");
-
-			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setLabel("Go back to the previous mask");
-			$exit->setAccessKey("X");
-		}
-
-		function setMask(&$mask)
-		{
-			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
-			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
-			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
-		}
+		parent::__construct($name);
+		$this->addDefaultButtons();
 	}
+	
+	private function addDefaultButtons()
+	{
+		$save =& $this->addButton('save', 'save');
+		$save->setLabel("Confirm and save");
+		$save->setAccessKey("S");
+
+		$cancel =& $this->addButton('cancel', 'cancel');
+		$cancel->setLabel("Cancel current operation");
+		$cancel->setAccessKey("Z");
+
+		$this->addSeparator();
+
+		$print =& $this->addButton('print', 'print');
+		$print->dropAction('onclick');
+		$print->setProperty('onclick', 'window.print(); return false;');
+		$print->setAccessKey("P");
+
+		$exit =& $this->addButton('exit', 'exit', 'right');
+		$exit->setLabel("Go back to the previous mask");
+		$exit->setAccessKey("X");
+	}
+
+	public function setMask(&$mask)
+	{
+		$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
+		$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
+		$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
+	}
+}

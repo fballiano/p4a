@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,113 +35,110 @@
  * @package p4a
  */
 
+/**
+ * Standard toolbar for data source operations.
+ * This toolbar has "confirm", "cancel", "first", "prev", "next", "last", "new", "delete", "exit" buttons.
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @package p4a
+ * @see P4A_Toolbar
+ */
+class P4A_Standard_Toolbar extends P4A_Toolbar
+{
 	/**
-	 * Standard toolbar for data source operations.
-	 * This toolbar has "confirm", "cancel", "first", "prev", "next", "last", "new", "delete", "exit" buttons.
-	 * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
-	 * @author Andrea Giardina <andrea.giardina@crealabs.it>
-	 * @package p4a
-	 * @see P4A_Toolbar
+	 * @param string				Mnemonic identifier for the object.
 	 */
-	class P4A_Standard_Toolbar extends P4A_Toolbar
+	public function __construct($name)
 	{
-		/**
-		 * Class costructor.
-		 * @param string				Mnemonic identifier for the object.
-		 * @param mask					The mask on wich the toolbar will operate.
-		 * @access private
-		 */
-		function P4A_Standard_Toolbar($name)
-		{
-			parent::P4A_Toolbar($name);
-			$this->addDefaultButtons();
-		}
-		
-		function addDefaultButtons()
-		{
-			$new =& $this->addButton('new', 'new');
-			$new->setLabel("Insert a new element");
-			$new->setProperty("accesskey", "N");
-			
-			$save =& $this->addButton('save', 'save');
-			$save->setLabel("Confirm and save");
-			$save->setAccessKey("S");
-
-			$cancel =& $this->addButton('cancel', 'cancel');
-			$cancel->setLabel("Cancel current operation");
-			$cancel->setAccessKey("Z");
-			
-			$this->addSeparator();
-			
-			$this->addButton('delete', 'delete');
-			$this->buttons->delete->setLabel("Delete current element");
-			$this->buttons->delete->requireConfirmation();
-			
-			$this->addSeparator();
-
-			$first =& $this->addButton('first', 'first');
-			$first->setLabel("Go to the first element");
-			$first->setAccessKey(8);
-
-			$prev =& $this->addButton('prev', 'prev');
-			$prev->setLabel("Go to the previous element");
-			$prev->setAccessKey(4);
-
-			$next =& $this->addButton('next', 'next');
-			$next->setLabel("Go to the next element");
-			$next->setAccessKey(6);
-
-			$last =& $this->addButton('last', 'last');
-			$last->setLabel("Go to the last element");
-			$last->setAccessKey(2);
-
-			$this->addSeparator();
-
-			$print =& $this->addButton('print', 'print');
-			$print->dropAction('onclick');
-			$print->setProperty('onclick', 'window.print(); return false;');
-			$print->setAccessKey("P");
-
-			$exit =& $this->addButton('exit', 'exit', 'right');
-			$exit->setLabel("Go back to the previous mask");
-			$exit->setAccessKey("X");
-		}
-
-		function setMask(&$mask)
-		{
-			$this->_mask_name = $mask->getName();
-
-			$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
-			$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
-			$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
-			$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
-			$this->buttons->next->implementMethod('onClick', $mask, 'nextRow');
-			$this->buttons->last->implementMethod('onClick', $mask, 'lastRow');
-			$this->buttons->new->implementMethod('onClick', $mask, 'newRow');
-			$this->buttons->delete->implementMethod('onClick', $mask, 'deleteRow');
-			$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
-		}
-
-		function getAsString()
-		{
-			$mask =& p4a_mask::singleton($this->_mask_name);
-
-			if ($mask->data->isNew() and $mask->data->getNumRows() > 0) {
-				$this->buttons->first->enable(FALSE);
-				$this->buttons->prev->enable(FALSE);
-				$this->buttons->next->enable(FALSE);
-				$this->buttons->last->enable(FALSE);
-				$this->buttons->new->enable(FALSE);
-				$this->buttons->delete->enable(FALSE);
-			} else {
-				$this->buttons->first->enable(TRUE);
-				$this->buttons->prev->enable(TRUE);
-				$this->buttons->next->enable(TRUE);
-				$this->buttons->last->enable(TRUE);
-				$this->buttons->new->enable(TRUE);
-				$this->buttons->delete->enable(TRUE);
-			}
-
-			return parent::getAsString();
-		}
+		parent::__construct($name);
+		$this->addDefaultButtons();
 	}
+	
+	private function addDefaultButtons()
+	{
+		$new =& $this->addButton('new', 'new');
+		$new->setLabel("Insert a new element");
+		$new->setProperty("accesskey", "N");
+		
+		$save =& $this->addButton('save', 'save');
+		$save->setLabel("Confirm and save");
+		$save->setAccessKey("S");
+
+		$cancel =& $this->addButton('cancel', 'cancel');
+		$cancel->setLabel("Cancel current operation");
+		$cancel->setAccessKey("Z");
+		
+		$this->addSeparator();
+		
+		$this->addButton('delete', 'delete');
+		$this->buttons->delete->setLabel("Delete current element");
+		$this->buttons->delete->requireConfirmation();
+		
+		$this->addSeparator();
+
+		$first =& $this->addButton('first', 'first');
+		$first->setLabel("Go to the first element");
+		$first->setAccessKey(8);
+
+		$prev =& $this->addButton('prev', 'prev');
+		$prev->setLabel("Go to the previous element");
+		$prev->setAccessKey(4);
+
+		$next =& $this->addButton('next', 'next');
+		$next->setLabel("Go to the next element");
+		$next->setAccessKey(6);
+
+		$last =& $this->addButton('last', 'last');
+		$last->setLabel("Go to the last element");
+		$last->setAccessKey(2);
+
+		$this->addSeparator();
+
+		$print =& $this->addButton('print', 'print');
+		$print->dropAction('onclick');
+		$print->setProperty('onclick', 'window.print(); return false;');
+		$print->setAccessKey("P");
+
+		$exit =& $this->addButton('exit', 'exit', 'right');
+		$exit->setLabel("Go back to the previous mask");
+		$exit->setAccessKey("X");
+	}
+
+	public function setMask(&$mask)
+	{
+		$this->_mask_name = $mask->getName();
+
+		$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
+		$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
+		$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
+		$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
+		$this->buttons->next->implementMethod('onClick', $mask, 'nextRow');
+		$this->buttons->last->implementMethod('onClick', $mask, 'lastRow');
+		$this->buttons->new->implementMethod('onClick', $mask, 'newRow');
+		$this->buttons->delete->implementMethod('onClick', $mask, 'deleteRow');
+		$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
+	}
+
+	function getAsString()
+	{
+		$mask =& p4a_mask::singleton($this->_mask_name);
+
+		if ($mask->data->isNew() and $mask->data->getNumRows() > 0) {
+			$this->buttons->first->enable(FALSE);
+			$this->buttons->prev->enable(FALSE);
+			$this->buttons->next->enable(FALSE);
+			$this->buttons->last->enable(FALSE);
+			$this->buttons->new->enable(FALSE);
+			$this->buttons->delete->enable(FALSE);
+		} else {
+			$this->buttons->first->enable(TRUE);
+			$this->buttons->prev->enable(TRUE);
+			$this->buttons->next->enable(TRUE);
+			$this->buttons->last->enable(TRUE);
+			$this->buttons->new->enable(TRUE);
+			$this->buttons->delete->enable(TRUE);
+		}
+
+		return parent::getAsString();
+	}
+}

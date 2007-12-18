@@ -41,10 +41,6 @@ class P4A_Array_Source extends P4A_Data_Source
 	var $_array = array();
 	var $fields = null;
 
-	function P4A_Array_Source($name){
-		parent::P4A_Data_Source($name);
-	}
-
 	function load($array)
 	{
 		if (!is_object($this->fields)) {

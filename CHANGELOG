@@ -10,9 +10,10 @@
 - custom formatter for date/time/etc
 - make ui.datepicker.js work with our new date format definitions
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
-- rename constructors to __construct
 - integrate p4a_base_mask in core and port samples to it?
 - remove all those messy functions from p4a_db?
+- remove p4a_href and p4a_link?
+- what about p4a_icon and p4a_image?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -51,6 +52,7 @@
 - README file was updated, dropping some old browsers support and removing PHP4
 - P4A_Button are now rendered as HTML buttons
 - P4A_Button::setVisible() method now has a second parameter "visible", check the reference
+- all constructors were converted to PHP5 naming (public function __construct)
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

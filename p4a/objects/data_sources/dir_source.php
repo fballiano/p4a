@@ -46,9 +46,9 @@ class P4A_Dir_Source extends P4A_Data_Source
 	var $_files = array();
 	var $_is_loaded = FALSE;
 
-	function P4A_Dir_Source($name)
+	public function __construct($name)
 	{
-		parent::P4A_Data_Source($name);
+		parent::__construct($name);
 		$this->build("P4A_Collection", "fields");
 		$this->fields->build("p4a_data_field", 'filename');
 		$this->setPk('filename');

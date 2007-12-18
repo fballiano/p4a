@@ -57,12 +57,6 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	protected $_tables_metadata = array();
 
-
-	function P4A_DB_Source($name)
-	{
-		parent::P4A_Data_Source($name);
-	}
-
 	function setDSN($DSN)
 	{
 		$this->_DSN = $DSN;
