@@ -1,9 +1,10 @@
 3.0.0 TODO
 - "time" format/normalize
 - "currency" format/normalize
-- implement application level translation
+- unify p4a_button::setlabel and setvalue (with icon and label set alt="", add label_type='inside, right')
+- implement application level translations
 - spread about the new translation system so users start translate
-- check db_source with multivalues
+- check db_source with multivalues (in progress)
 - check db_source for aliases
 - make ui.datepicker.js work with our date format definitions
 - rename constructors to __construct
@@ -12,7 +13,7 @@
 - Zend Framework 1.0.3 was added
 - Database connection now relies on Zend_DB PDO adapters
 - check_configuration.php was ported to Zend_DB to check the database connection
-- P4A_DB_Source was ported to Zend_DB (not completely done and tested, check the TODO list)
+- P4A_DB_Source was ported to Zend_DB
 - P4A_DB_Source::setFields() syntax was changed, now you must provide only fields from the main table and not from joines ones
 - P4A_DB_Source::addJoin() syntax was changed, join type param was dropped and now you have a third param to pass the columns you want to extract from the joined table (default extracts all columns)
 - P4A_DB_Source now has many methods to add joins: addJoinCross(), addJoinFull(), addJoinInner(), addJoinLeft(), addJoinNatural(), addJoinRight()
