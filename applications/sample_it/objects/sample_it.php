@@ -8,10 +8,10 @@ e che lancia la prima maschera che dovrà essere visualizzata.
 */
 class Sample_it extends P4A
 {
-	function Sample_It()
+	public function __construct()
 	{
 		// Prima di tutto richiamo il costruttore di p4a
-		parent::p4a();
+		parent::__construct();
 
 		// Imposto il titolo generale dell'applicazione (il tag title)
 		$this->setTitle("Sample IT");

@@ -2,9 +2,9 @@
 
 class mask1 extends p4a_mask
 {
-	function mask1()
+	public function __construct()
 	{
-		parent::p4a_mask();
+		parent::__construct();
 
 		// let's build a message
 		$this->build("p4a_message", "message");

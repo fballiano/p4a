@@ -5,9 +5,9 @@
 
 class sample_i18n extends p4a
 {
-	function sample_i18n()
+	public function __construct()
 	{
-		parent::p4a();
+		parent::__construct();
 		$this->openMask('mask1');
 	}
 }

@@ -7,9 +7,9 @@ D'altra parte questo è solo un esempio ;-)
 */
 class Finito extends P4A_Mask
 {
-	function Finito()
+	public function __construct()
 	{
-		parent::P4A_Mask();
+		parent::__construct();
 
 		$this->setTitle("Autenticazione riuscita");
 
