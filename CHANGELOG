@@ -10,8 +10,6 @@
 - make ui.datepicker.js work with our new date format definitions (maybe call p4a by ajax to reformat)
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
-- check zend_db transactions and maybe remove transaction related funcitons from zend_db
-- remove p4a_href
 - remove p4a_icon and port its funcionalities inside p4a_image
 - auto addaction on intercept and implementmethod when the action is a browser action
 - implement db_source::setquery, maybe separate db_sources
