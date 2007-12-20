@@ -7,14 +7,17 @@
 - try to detect the decimal format and use it during formatting
 - check p4a_table ordering
 - custom formatter for date/time/etc
-- make ui.datepicker.js work with our new date format definitions
+- make ui.datepicker.js work with our new date format definitions (maybe call p4a by ajax to reformat)
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
-- integrate p4a_base_mask in core and port samples to it?
-- remove all those messy functions from p4a_db?
-- remove p4a_href and p4a_link?
-- what about p4a_icon and p4a_image?
-- rename p4a_box::setvalue() to setContent()? or setHTML? it should be clearer than now
+- integrate p4a_base_mask in core and port samples to it
+- remove limitquery from p4a_db
+- check zend_db transactions and maybe remove transaction related funcitons from zend_db
+- remove p4a_href
+- remove p4a_icon and port its funcionalities inside p4a_image
 - auto addaction on intercept and implementmethod when the action is a browser action
+- fieldset::setLabel
+- implement db_source::setquery, maybe separate db_sources
+- implement p4a_table::addCheckboxCol
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -56,6 +59,7 @@
 - all constructors were converted to PHP5 naming (public function __construct)
 - P4A_Button::setIcon() now supports a path to an image instead of the icon name
 - "currency" format/normalize was removed, it was never used and should not be handled in an application contest (you won't print € only because your application is running with an european locale)
+- P4A_Href widget was removed
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
