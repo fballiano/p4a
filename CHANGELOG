@@ -14,7 +14,6 @@
 - remove p4a_href
 - remove p4a_icon and port its funcionalities inside p4a_image
 - auto addaction on intercept and implementmethod when the action is a browser action
-- fieldset::setLabel
 - implement db_source::setquery, maybe separate db_sources
 - implement p4a_table::addCheckboxCol
 
@@ -59,9 +58,11 @@
 - P4A_Button::setIcon() now supports a path to an image instead of the icon name
 - "currency" format/normalize was removed, it was never used and should not be handled in an application contest (you won't print € only because your application is running with an european locale)
 - P4A_Href widget was removed
-- P4A_DB::limitQuery(), selectLimit() getError(), getNativeError() and close() methods were removed because they can't work with Zend_DB
+- P4A_DB::limitQuery(), selectLimit() getError(), getNativeError(), query() and close() methods were removed because they can't work with Zend_DB
 - P4A_DB::rollback() and select() methods were added
 - P4A_DB::fetchOne(), fetchCol(), fetchRow() and fetchAll() methods were added for Zend_Db naming convention compatibility
+- P4A_Fieldset now uses getLabel() instead of getTitle() to render its legend, setTitle() and getTile() are now deprecated
+- P4A_DB::get*() and query*() methods are now deprecated
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

@@ -69,7 +69,7 @@ class Brands extends P4A_Mask
 		$this->table->showNavigationBar();
 
 		$this->build("p4a_fieldset", "fields_sheet");
-		$this->fields_sheet->setTitle("Brand detail");
+		$this->fields_sheet->setLabel("Brand detail");
 		$this->fields_sheet->anchor($this->fields->brand_id);
 		$this->fields_sheet->anchor($this->fields->description);
 		$this->fields_sheet->anchor($this->fields->visible);

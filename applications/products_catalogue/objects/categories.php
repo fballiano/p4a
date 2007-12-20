@@ -68,7 +68,7 @@ class Categories extends P4A_Mask
 		$this->table->showNavigationBar();
 
 		$this->build("p4a_fieldset", "fields_sheet");
-		$this->fields_sheet->setTitle("Category detail");
+		$this->fields_sheet->setLabel("Category detail");
 		$this->fields_sheet->anchor($this->fields->category_id);
 		$this->fields_sheet->anchor($this->fields->description);
 		$this->fields_sheet->anchor($this->fields->visible);

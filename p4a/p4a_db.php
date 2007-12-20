@@ -42,6 +42,9 @@
  */
 class P4A_DB
 {
+	/**
+	 * @var string
+	 */
 	protected $db_type = null;
 	
 	/**
@@ -99,6 +102,10 @@ class P4A_DB
 		return P4A_DB::singleton($DSN);
 	}
 	
+	/**
+	 * @param string $sequence_name
+	 * @return integer
+	 */
 	public function nextSequenceId($sequence_name)
 	{
 		switch ($this->db_type) {
@@ -149,68 +156,119 @@ class P4A_DB
 		$this->adapter->rollback();
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function getAll($query)
 	{
 		return $this->adapter->fetchAll($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function queryAll($query)
 	{
 		return $this->adapter->fetchAll($query);
 	}
 	
+	/**
+	 * @param string $query
+	 * @return array
+	 */
 	public function fetchAll($query)
 	{
 		return $this->adapter->fetchAll($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function getRow($query)
 	{
 		return $this->adapter->fetchRow($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function queryRow($query)
 	{
 		return $this->adapter->fetchRow($query);
 	}
 	
+	/**
+	 * @param string $query
+	 * @return array
+	 */
 	public function fetchRow($query)
 	{
 		return $this->adapter->fetchRow($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function getCol($query)
 	{
 		return $this->adapter->fetchCol($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return array
+	 * @deprecated 
+	 */
 	public function queryCol($query)
 	{
 		return $this->adapter->fetchCol($query);
 	}
 	
+	/**
+	 * @param string $query
+	 * @return array
+	 */
 	public function fetchCol($query)
 	{
 		return $this->adapter->fetchCol($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return string
+	 * @deprecated 
+	 */
 	public function getOne($query)
 	{
 		return $this->adapter->fetchOne($query);
 	}
 
+	/**
+	 * @param string $query
+	 * @return string
+	 * @deprecated 
+	 */
 	public function queryOne($query)
 	{
 		return $this->adapter->fetchOne($query);
 	}
 	
+	/**
+	 * @param string $query
+	 * @return string
+	 */
 	public function fetchOne($query)
 	{
 		return $this->adapter->fetchOne($query);
-	}
-
-	public function query($query,$inputarr=false)
-	{
-		return $this->adapter->execute($query, $inputarr);
 	}
 }

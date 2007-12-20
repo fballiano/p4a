@@ -44,18 +44,27 @@
  */
 class P4A_Fieldset extends P4A_Frame
 {
-	var $_title = "";
-
+	/**
+	 * @param string $title
+	 * @deprecated
+	 */
 	function setTitle($title)
 	{
-		$this->_title = $title;
+		$this->setLabel($title);
 	}
 
+	/**
+	 * @return string
+	 * @deprecated 
+	 */
 	function getTitle()
 	{
-		return $this->_title;
+		return $this->getLabel();
 	}
 
+	/**
+	 * @return string
+	 */
 	function getAsString()
 	{
 		$id = $this->getId();
@@ -68,8 +77,8 @@ class P4A_Fieldset extends P4A_Frame
 		$actions = $this->composeStringActions();
 
 		$string  = "<fieldset id='$id' class='frame' $properties $actions >";
-		if ($this->getTitle()) {
-			$string  .= "<legend>" . $this->getTitle() . "</legend>";
+		if ($this->getLabel()) {
+			$string  .= "<legend>" . $this->getLabel() . "</legend>";
 		}
 		foreach($this->_map as $i=>$row){
 			$row_html = "\n<div class='row'>";
