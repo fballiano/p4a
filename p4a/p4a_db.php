@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -132,94 +131,58 @@ class P4A_DB
 		return $this->adapter->select();
 	}
 
-	function beginTransaction()
+	public function beginTransaction()
 	{
 		$this->adapter->startTrans();
 	}
 
-	function commit()
+	public function commit()
 	{
 		$this->adapter->completeTrans();
 	}
 
-	function getAll($query)
+	public function getAll($query)
 	{
 		return $this->adapter->getAll($query);
 	}
 
-	function queryAll($query)
+	public function queryAll($query)
 	{
 		return $this->adapter->getAll($query);
 	}
 
-	function getRow($query)
+	public function getRow($query)
 	{
 		return $this->adapter->getRow($query);
 	}
 
-	function queryRow($query)
+	public function queryRow($query)
 	{
 		return $this->adapter->getRow($query);
 	}
 
-	function getCol($query)
+	public function getCol($query)
 	{
 		return $this->adapter->getCol($query);
 	}
 
-	function queryCol($query)
+	public function queryCol($query)
 	{
 		return $this->adapter->getCol($query);
 	}
 
-	function getOne($query)
+	public function getOne($query)
 	{
 		return $this->adapter->getOne($query);
 	}
 
-	function queryOne($query)
+	public function queryOne($query)
 	{
 		return $this->adapter->getOne($query);
 	}
 
-	function limitQuery($query,$offset=-1,$limit=-1,$params=false)
-	{
-		return $this->adapter->selectLimit($query, $limit, $offset, $params);
-	}
-
-	function selectLimit($sql,$numrows=-1,$offset=-1,$inputarr=false)
-	{
-		return $this->adapter->selectLimit($sql, $numrows, $offset, $inputarr);
-	}
-
-	function query($query,$inputarr=false)
+	public function query($query,$inputarr=false)
 	{
 		return $this->adapter->execute($query, $inputarr);
-	}
-
-	function getError()
-	{
-		if ($this->adapter->metaError()) {
-			return $this->adapter->metaErrorMsg($this->adapter->metaError());
-		}
-
-		return false;
-	}
-
-	
-	function getNativeError()
-	{
-		return $this->adapter->errorMsg();
-	}
-	/**
-	 * Close the connection to the database.
-	 * @access private
-	 */
-	function close($DSN = "")
-	{
-		$db = P4A_DB::singleton($DSN);
-		if(is_object($db)) {
-			$db->disconnect();
-		}
 	}
 }
