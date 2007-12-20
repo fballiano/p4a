@@ -126,6 +126,9 @@ class P4A_DB
 		}
 	}
 	
+	/**
+	 * @return Zend_Db_Select
+	 */
 	public function &select()
 	{
 		return $this->adapter->select();
@@ -133,52 +136,77 @@ class P4A_DB
 
 	public function beginTransaction()
 	{
-		$this->adapter->startTrans();
+		$this->adapter->beginTransaction();
 	}
 
 	public function commit()
 	{
-		$this->adapter->completeTrans();
+		$this->adapter->commit();
+	}
+	
+	public function rollback()
+	{
+		$this->adapter->rollback();
 	}
 
 	public function getAll($query)
 	{
-		return $this->adapter->getAll($query);
+		return $this->adapter->fetchAll($query);
 	}
 
 	public function queryAll($query)
 	{
-		return $this->adapter->getAll($query);
+		return $this->adapter->fetchAll($query);
+	}
+	
+	public function fetchAll($query)
+	{
+		return $this->adapter->fetchAll($query);
 	}
 
 	public function getRow($query)
 	{
-		return $this->adapter->getRow($query);
+		return $this->adapter->fetchRow($query);
 	}
 
 	public function queryRow($query)
 	{
-		return $this->adapter->getRow($query);
+		return $this->adapter->fetchRow($query);
+	}
+	
+	public function fetchRow($query)
+	{
+		return $this->adapter->fetchRow($query);
 	}
 
 	public function getCol($query)
 	{
-		return $this->adapter->getCol($query);
+		return $this->adapter->fetchCol($query);
 	}
 
 	public function queryCol($query)
 	{
-		return $this->adapter->getCol($query);
+		return $this->adapter->fetchCol($query);
+	}
+	
+	public function fetchCol($query)
+	{
+		return $this->adapter->fetchCol($query);
 	}
 
 	public function getOne($query)
 	{
-		return $this->adapter->getOne($query);
+		return $this->adapter->fetchOne($query);
 	}
 
 	public function queryOne($query)
 	{
-		return $this->adapter->getOne($query);
+		return $this->adapter->fetchOne($query);
+	}
+	
+	public function fetchOne($query)
+	{
+		return $this->adapter->fetchOne($query);
 	}
 
 	public function query($query,$inputarr=false)

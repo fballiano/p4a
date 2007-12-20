@@ -60,6 +60,8 @@
 - "currency" format/normalize was removed, it was never used and should not be handled in an application contest (you won't print € only because your application is running with an european locale)
 - P4A_Href widget was removed
 - P4A_DB::limitQuery(), selectLimit() getError(), getNativeError() and close() methods were removed because they can't work with Zend_DB
+- P4A_DB::rollback() and select() methods were added
+- P4A_DB::fetchOne(), fetchCol(), fetchRow() and fetchAll() methods were added for Zend_Db naming convention compatibility
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
