@@ -13,6 +13,7 @@
 - auto addaction on intercept and implementmethod when the action is a browser action
 - implement db_source::setquery, maybe separate db_sources
 - implement p4a_table::addCheckboxCol
+- p4a_table action col should also support html (for images)
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
 
 2.99.0
@@ -68,6 +69,7 @@
 - P4A_Toolbar::enable() and disable() methods params were removed
 - P4A_Toolbar::addLabel() method was renamed to addBox()
 - P4A_Toolbar::setOrientation() method was removed cause unused
+- jQuery::dimensions plugin was updated to 1.2
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
