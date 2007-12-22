@@ -124,6 +124,6 @@ class P4A_Image extends P4A_Widget
 			$icon .= '.' . P4A_ICONS_EXTENSION;
 		}
 		
-		return "<div><img id='$id' src='$icon' alt='$label' $properties $actions /></div>\n";
+		return "<div><img class='p4a_image' id='$id' src='$icon' alt='$label' $properties $actions /></div>\n";
 	}
 }

@@ -132,7 +132,7 @@ class P4A_Button extends P4A_Widget
 			$label = null;
 		}
 		
-		$return = "<button class='p4a_button' title='$title' " . $this->composeStringProperties();
+		$return = "<div><button class='p4a_button' id='$id' title='$title' " . $this->composeStringProperties();
 		if ($this->isEnabled()) $return .= $this->composeStringActions();
 		$return .= ">";
 		
@@ -154,7 +154,7 @@ class P4A_Button extends P4A_Widget
 		}
 		
 		$spacer = ($icon and $label) ? $spacer = "<span style='margin-left: 5px'></span>" : '';
-		$return .= $icon . $spacer . $label . "</button>";
+		$return .= $icon . $spacer . $label . "</button></div>";
 		return $return;
 	}
 }
