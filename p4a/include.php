@@ -116,7 +116,6 @@ require_once "$dir/objects/widgets/db_navigator.php";
 require_once "$dir/objects/widgets/field.php";
 require_once "$dir/objects/widgets/frame.php";
 require_once "$dir/objects/widgets/image.php";
-require_once "$dir/objects/widgets/icon.php";
 require_once "$dir/objects/widgets/label.php";
 require_once "$dir/objects/widgets/line.php";
 require_once "$dir/objects/widgets/link.php";

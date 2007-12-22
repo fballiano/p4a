@@ -157,28 +157,4 @@ class P4A_Button extends P4A_Widget
 		$return .= $icon . $spacer . $label . "</button>";
 		return $return;
 	}
-
-	/**
-	 * Composes a string containing all the HTML properties of the widget.
-	 * Note: it will also contain the name and the value.
-	 * @return string
-	 * @access public
-	 */
-	function composeStringProperties()
-	{
-		$sReturn = "";
-		$p4a =& p4a::singleton();
-		$properties = $this->properties;
-
-		if (isset($properties['value'])) {
-			unset($properties['value']);
-		}
-
-		foreach ($properties as $property_name=>$property_value) {
-			$sReturn .= $property_name . '="' . htmlspecialchars($property_value) . '" ' ;
-		}
-
-		$sReturn .= $this->composeStringStyle();
-		return $sReturn;
-	}
 }

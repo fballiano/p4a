@@ -119,24 +119,27 @@ class P4A_Standard_Toolbar extends P4A_Toolbar
 		$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
 	}
 
-	function getAsString()
+	/**
+	 * @return string
+	 */
+	public function getAsString()
 	{
 		$mask =& p4a_mask::singleton($this->_mask_name);
 
 		if ($mask->data->isNew() and $mask->data->getNumRows() > 0) {
-			$this->buttons->first->enable(FALSE);
-			$this->buttons->prev->enable(FALSE);
-			$this->buttons->next->enable(FALSE);
-			$this->buttons->last->enable(FALSE);
-			$this->buttons->new->enable(FALSE);
-			$this->buttons->delete->enable(FALSE);
+			$this->buttons->first->enable(false);
+			$this->buttons->prev->enable(false);
+			$this->buttons->next->enable(false);
+			$this->buttons->last->enable(false);
+			$this->buttons->new->enable(false);
+			$this->buttons->delete->enable(false);
 		} else {
-			$this->buttons->first->enable(TRUE);
-			$this->buttons->prev->enable(TRUE);
-			$this->buttons->next->enable(TRUE);
-			$this->buttons->last->enable(TRUE);
-			$this->buttons->new->enable(TRUE);
-			$this->buttons->delete->enable(TRUE);
+			$this->buttons->first->enable(false);
+			$this->buttons->prev->enable(false);
+			$this->buttons->next->enable(false);
+			$this->buttons->last->enable(false);
+			$this->buttons->new->enable(false);
+			$this->buttons->delete->enable(false);
 		}
 
 		return parent::getAsString();

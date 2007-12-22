@@ -36,7 +36,6 @@
  */
 
 /**
- * Use this whan you want to put an image in your application.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -44,95 +43,87 @@
 class P4A_Image extends P4A_Widget
 {
 	/**
-	* The label position
-	* @access public
-	* @var string
-	*/
-	var $label_position = 'bottom';
+	 * @var string
+	 */
+	protected $_icon = '';
+	
+	/**
+	 * @var integer
+	 */
+	protected $_size = 32;
 
 	/**
-	 * @param string	Object identifier.
-	 * @param string	The absolute source path of the image.
+	 * @param integer $size
 	 */
-	public function __construct($name, $value = null)
+	public function setSize($size)
 	{
-		parent::__construct($name);
-		if ($value !== null){
-			$this->setValue($value);
-		}
+		$this->_size = $size;
 	}
 
 	/**
-	 * Sets label position.
-	 * @param strig		bottom or right
-	 * @access public
+	 * @return integer
 	 */
-	function setLabelPosition($position = "bottom")
+	public function getSize()
 	{
-		$this->label_position = $position;
+		return $this->_size;
 	}
 
 	/**
-	 * Returns label position.
-	 * @access public
+	 * @param string $icon
 	 */
-	function getLabelPosition()
+	public function setIcon($icon)
 	{
-		return $this->label_position;
+		$this->_icon = $icon;
 	}
 
 	/**
-	 * Sets image's source from icon set repository.
-	 * @param strig		The image filename without extension (e.g.: "new").
-	 * @access public
+	 * @return string
 	 */
-	function setIcon($icon)
+	public function getIcon()
 	{
-		$p4a =& P4A::singleton();
-		$value = P4A_ICONS_PATH . '/' . $icon . '.' . P4A_ICONS_EXTENSION ;
-		$this->setValue($value);
+		return $this->_icon;
+	}
+	
+	/**
+	 * alias for setIcon()
+	 * @param string $image
+	 */
+	public function setSource($source)
+	{
+		$this->_icon = $source;
+	}
+	
+	/**
+	 * alias for getIcon()
+	 * @return string
+	 */
+	public function getSource()
+	{
+		return $this->_icon;
 	}
 
 	/**
-	 * Sets image's source from absolute url.
-	 * @param strig		The image source url.
-	 * @access public
+	 * @return string
 	 */
-	function setValue($value)
-	{
-		parent::setValue($value);
-		$this->setProperty('src', $value);
-	}
-
-
-	/**
-	 * Returns the HTML rendered label.
-	 * @access public
-	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<span id='$id' class='hidden'></span>";
 		}
 
-		$label = $this->getLabel();
 		$actions = $this->composeStringActions();
 		$properties = $this->composeStringProperties();
-		if ($label) {
-			if ($this->getLabelPosition() == 'bottom') {
-				$class = "dd_block";
-			} else {
-				$class = "dd_inline";
-			}
-			$sReturn  = "<dl>";
-			$sReturn .= "<dt><img alt='' $properties $actions /></dt>";
-			$sReturn .= "<dd class=\"$class\">$label</dd>";
-			$sReturn .= "</dl>\n";
+		$label = $this->getLabel();
+		
+		if (strpos($this->_icon, '.') !== false) {
+			$icon = $this->_icon;
 		} else {
-			$sReturn  = "<img alt='' $properties $actions />\n";
+			$icon = P4A_ICONS_PATH . "/{$this->_size}/{$this->_icon}";
+			if (!$this->isEnabled()) $icon .= "_disabled";
+			$icon .= '.' . P4A_ICONS_EXTENSION;
 		}
-		$sReturn = "<span id='$id'>$sReturn</span>";
-		return $sReturn;
+		
+		return "<div><img id='$id' src='$icon' alt='$label' $properties $actions /></div>\n";
 	}
 }

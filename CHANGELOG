@@ -10,10 +10,10 @@
 - make ui.datepicker.js work with our new date format definitions (maybe call p4a by ajax to reformat)
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
-- remove p4a_icon and port its funcionalities inside p4a_image
 - auto addaction on intercept and implementmethod when the action is a browser action
 - implement db_source::setquery, maybe separate db_sources
 - implement p4a_table::addCheckboxCol
+- remove P4A_Toolbar::getAsString() method with its strange behaviour?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -61,6 +61,13 @@
 - P4A_DB::fetchOne(), fetchCol(), fetchRow() and fetchAll() methods were added for Zend_Db naming convention compatibility
 - P4A_Fieldset now uses getLabel() instead of getTitle() to render its legend, setTitle() and getTile() are now deprecated
 - P4A_DB::get*() and query*() methods are now deprecated
+- P4A_Image was removed
+- P4A_Icon was renamed to P4A_Image
+- P4A_Button::composeStringProperties() method was removed
+- P4A_Image::setIcon() now supports a path to an image instead of the icon name
+- P4A_Toolbar::enable() and disable() methods params were removed
+- P4A_Toolbar::addLabel() method was renamed to addBox()
+- P4A_Toolbar::setOrientation() method was removed cause unused
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
