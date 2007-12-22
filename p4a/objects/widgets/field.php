@@ -458,11 +458,11 @@
 
 		/**
 		 * Sets the field's type.
-		 * @param strings		The type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|multiselect|multicheckbox).
+		 * @param strings		The type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|image|multiselect|multicheckbox).
  		 * @param strings		The multivalue separator		 
 		 * @access public
 		 */
-		function setType($type,$multivalue_separator=NULL)
+		function setType($type, $multivalue_separator = null)
 		{
 			$p4a =& p4a::singleton();
 			if ($p4a->isHandheld() and $type == 'rich_textarea') {
@@ -1242,14 +1242,14 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue('Delete');
-					$button_file_preview->setValue('Preview');
-					$button_file_download->setValue('Download');
+					$button_file_delete->setLabel('Delete');
+					$button_file_preview->setLabel('Preview');
+					$button_file_download->setLabel('Download');
 
 					$button_file_delete->addAjaxAction("onClick");
-					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
-					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
-					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
+					$this->intercept($button_file_delete, 'onclick', 'fileDeleteOnClick');
+					$this->intercept($button_file_preview, 'onclick', 'filePreviewOnClick');
+					$this->intercept($button_file_download, 'onclick', 'fileDownloadOnClick');
 				}
 
 				if ($this->isEnabled()) {
@@ -1396,14 +1396,14 @@
 					$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
 					$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
 
-					$button_file_delete->setValue('Delete');
-					$button_file_preview->setValue('Preview');
-					$button_file_download->setValue('Download');
+					$button_file_delete->setLabel('Delete');
+					$button_file_preview->setLabel('Preview');
+					$button_file_download->setLabel('Download');
 
 					$button_file_delete->addAjaxAction("onClick");
-					$this->intercept($button_file_delete, 'onClick', 'fileDeleteOnClick');
-					$this->intercept($button_file_preview, 'onClick', 'filePreviewOnClick');
-					$this->intercept($button_file_download, 'onClick', 'fileDownloadOnClick');
+					$this->intercept($button_file_delete, 'onclick', 'fileDeleteOnClick');
+					$this->intercept($button_file_preview, 'onclick', 'filePreviewOnClick');
+					$this->intercept($button_file_download, 'onclick', 'fileDownloadOnClick');
 				}
 
 				if ($mime_type != 'image') {
@@ -1437,9 +1437,9 @@
 
 				$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
 				if (P4A_GD) {
-					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 				} else {
-					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . $p4a->i18n->messages->get('filepreview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+					$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 				}
 				$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 				$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
