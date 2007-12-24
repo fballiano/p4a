@@ -470,9 +470,11 @@
 					$all = $data->getAll();
 					$data->setWhere($old_where);
 					foreach ($all as $row) {
-						print $row[$description_field] . "\n";
+						print "{$row[$description_field]}\n";
 					}
 				}
+			} elseif (isset($_REQUEST['_p4a_date_format'])) {
+				print $this->i18n->format($_REQUEST['_p4a_date_format'], 'date');
 			} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 				$this->_action_history_id++;
 				$this->active_mask->main();
