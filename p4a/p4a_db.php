@@ -47,6 +47,8 @@ class P4A_DB
 	 */
 	protected $db_type = null;
 	
+	protected $like_operator = 'LIKE';
+	
 	/**
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
@@ -72,6 +74,10 @@ class P4A_DB
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oracle','pgsql','sqlite'))) {
 					p4a_error("db not supported");
+				}
+				
+				if ($dsn_data['scheme'] == 'pgsql') {
+					$this->like_operator = 'ILIKE';
 				}
 		
 				$$dbconn->db_type = $dsn_data['scheme'];
@@ -270,5 +276,21 @@ class P4A_DB
 	public function fetchOne($query)
 	{
 		return $this->adapter->fetchOne($query);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getLikeOperator()
+	{
+		return $this->like_operator;
+	}
+	
+	/**
+	 * @param string $value
+	 */
+	public function setLikeOperator($value)
+	{
+		$this->like_operator = $value;
 	}
 }

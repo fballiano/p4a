@@ -458,10 +458,12 @@
 					isset($_REQUEST['q']) and
 					isset($this->objects[$_REQUEST['_object']])) {
 					$object =& $this->objects[$_REQUEST['_object']];
+					$db =& p4a_db::singleton($object->data_field->getDSN());
 					$data =& $object->data;
 					$description_field = $object->getSourceDescriptionField();
 					$q = addslashes($_REQUEST['q']);
-					$where = "{$description_field} LIKE '%{$q}%'";
+					$like = $db->getLikeOperator();
+					$where = "{$description_field} {$like} '%{$q}%'";
 					$old_where = $data->getWhere();
 					if ($old_where) {
 						$where = "({$old_where}) AND ($where)";

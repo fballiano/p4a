@@ -10,10 +10,12 @@
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
 - auto addaction on intercept and implementmethod when the action is a browser action
-- implement db_source::setquery, maybe separate db_sources
+- implement db_source::setquery, maybe separate db_sources?
+- implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
+- generate datepicker regional settings
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -71,6 +73,8 @@
 - jQuery::dimensions plugin was updated to 1.2
 - DHTMLCalendar by dynarch was dropped and replaced by jQuery::UI::datepicker 3.2
 - P4A_Field::getAsDate() now it's fully working with the jQuery::UI::datepicker with an additional ajax call to reformat the date
+- P4A_DB::getLikeOperator() and setLikeOperator() methods were added, like operator (LIKE/ILIKE) is autodetected and it's useful when you're generating a query
+- P4A_Field's autocomplete was ported to P4A_DB::getLikeOperator() thus now it should work better with different databases (eg: postgreSQL)
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
