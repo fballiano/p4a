@@ -48,42 +48,42 @@
 		 * @var array
 		 * @access private
 		 */
-		var $buttons = NULL;
+		var $buttons = null;
 
 		/**
 		 * Data source for the field.
 		 * @var data_source
 		 * @access private
 		 */
-		var $data = NULL;
+		var $data = null;
 
 		/**
 		 * Data source for the field.
 		 * @var data_field
 		 * @access private
 		 */
-		var $data_field = NULL;
+		var $data_field = null;
 
 		/**
 		 * Will be used for future implementations.
 		 * @var data_field
 		 * @access private
 		 */
-		var $data_member = NULL;
+		var $data_member = null;
 
 		/**
 		 * The data source member that contains the values for this field.
 		 * @var string
 		 * @access private
 		 */
-		var $data_value_field = NULL ;
+		var $data_value_field = null;
 
 		/**
 		 * The data source member that contains the descriptions for this field.
 		 * @var string
 		 * @access private
 		 */
-		var $data_description_field	= NULL ;
+		var $data_description_field	= null;
 
 		/**
 		 * Field type.
@@ -91,28 +91,28 @@
 		 * @access private
 		 * @see set_type()
 		 */
-		var $type = 'text' ;
+		var $type = 'text';
 
 		/**
 		 * Max size in pixels for image thumbnail.
 		 * @var integer
 		 * @access private
 		 */
-		var $max_thumbnail_size = 100 ;
+		var $max_thumbnail_size = 100;
 
 		/**
 		 * Defines if a SELECT has "none selected" record.
 		 * @var integer
 		 * @access private
 		 */
-		var $allow_null = false ;
+		var $allow_null = false;
 
 		/**
 		 * Defines the message for "none selected" record for select.
 		 * @var integer
 		 * @access private
 		 */
-		var $null_message = NULL ;
+		var $null_message = null;
 
 		/**
 		 * Field align.
@@ -133,21 +133,21 @@
 		 * @var string
 		 * @access private
 		 */
-		var $formatter_name = NULL;
+		var $formatter_name = null;
 
 		/**
 		 * The format name for the data field.
 		 * @var string
 		 * @access private
 		 */
-		var $format_name = NULL;
+		var $format_name = null;
 
 		/**
 		 * Path under P4A_UPLOADS_PATH where uploads happens.
 		 * @var string
 		 * @access private
 		 */
-		var $upload_subpath = NULL;
+		var $upload_subpath = null;
 
 		/**
 		 * Type of encryption to use for password fields
@@ -183,7 +183,7 @@
 		 * @var string
 		 * @access private
 		 */
-		var $_error = NULL;
+		var $_error = null;
 		
 		/**
 		 * The multivalue separator
@@ -254,7 +254,7 @@
 		 */
 		function setDefaultVisualizationProperties()
 		{
-			$visualization_data_type = NULL;
+			$visualization_data_type = null;
 			$source_description_field = $this->getSourceDescriptionField();
 
 			if (!is_null( $source_description_field ) and is_object($this->data)) {
@@ -531,11 +531,11 @@
 			$pk = $this->data->getPk();
 
 			if (is_string($pk)) {
-				if ($this->getSourceValueField() === NULL) {
+				if ($this->getSourceValueField() === null) {
 					$this->setSourceValueField($pk);
 				}
 
-				if ($this->getSourceDescriptionField() === NULL)
+				if ($this->getSourceDescriptionField() === null)
 				{
 					$num_fields = $this->data->fields->getNumItems();
 					$fields = $this->data->fields->getNames();
@@ -695,8 +695,8 @@
 		 */
 		function unsetFormat()
 		{
-			$this->formatter_name = NULL;
-			$this->format_name = NULL;
+			$this->formatter_name = null;
+			$this->format_name = null;
 			$this->unsetFormatted();
 		}
 
@@ -716,7 +716,7 @@
 
 			$p4a =& P4A::singleton();
 			if (strlen($value) > 0) {
-				if (($this->formatter_name !== NULL) and ($this->format_name !== NULL)) {
+				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
 					$value = $p4a->i18n->{$this->formatter_name}->format($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
 				} else {
 					$value = $p4a->i18n->format($value, $this->data_field->getType());
@@ -754,7 +754,7 @@
 		 */
         function cleanNewValue()
         {
-			$this->setNewValue(NULL);
+			$this->setNewValue(null);
         }
 
         function getAutoMaxlength()
@@ -795,10 +795,10 @@
 			$string = $this->$new_method();
 			$sReturn =  $string . $suffix ;
 
-			if ($this->_error !== NULL) {
+			if ($this->_error !== null) {
 				$container_class = 'class="field_error"';
 				$error = "<div class='field_error_msg' >{$this->_error}</div>";
-				$this->_error = NULL;
+				$this->_error = null;
 			} else {
 				$container_class = '';
 				$error = '';
@@ -832,26 +832,21 @@
 		function getAsDate()
 		{
 			$p4a =& P4A::singleton();
-
-			if ($this->isEnabled()) {
-				$enabled = "";
-			} else {
-				$enabled = " disabled='disabled' ";
-			}
-
 			$id = $this->getId();
-			//$date_format = $p4a->i18n->datetime->getFormat('date_default');
 
-			$header 	   = "<input id='{$id}input' type='text' class='p4a_date_calendar border_color1 font_normal' $enabled";
-			$close_header  = "/>";
+			$enabled = $this->isEnabled();
+			$disabled = $enabled ? "": " disabled='disabled' ";
+
+			$header = "<input id='{$id}input' type='text' class='p4a_date_calendar border_color1 font_normal' $disabled";
+			$close_header = "/>";
 
 			if (!$p4a->isHandheld()) {
-				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick=\"return p4a_openCalendar('{$id}input');\" />";
+				$value = $this->data_field->getNewValue();
+				if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' class='p4a_date_picker' />";
+				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $disabled onclick=\"return p4a_openCalendar('p4a_{$id}');\" />";
 			}
 
-			$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
-
-			return $sReturn;
+			return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 		}
 
 		/**
@@ -1104,10 +1099,10 @@
 		 * @param string		The message for "none selected"
 		 * @access public
 		 */
-		function allowNull( $message = NULL )
+		function allowNull($message = null)
 		{
-			$this->allow_null = true ;
-			$this->null_message = $message ;
+			$this->allow_null = true;
+			$this->null_message = $message;
 		}
 
 		/**
@@ -1151,7 +1146,7 @@
 			}
 
 			if ($this->isNullAllowed()) {
-				if ($this->null_message === NULL) {
+				if ($this->null_message === null) {
 					$message = 'none_selected';
 				} else {
 					$message = $this->null_message;
@@ -1340,7 +1335,7 @@
 		 * @access public
 		 * @param string	The subdir (can be "test", "test/", "test/test", "test/test/test/")
 		 */
-		function setUploadSubpath( $subpath = NULL )
+		function setUploadSubpath($subpath = null)
 		{
 			$this->upload_subpath = $subpath;
 		}
@@ -1351,7 +1346,7 @@
 		 */
 		function unsetUploadSubpath()
 		{
-			$this->upload_subpath = NULL;
+			$this->upload_subpath = null;
 		}
 
 		/**
@@ -1424,12 +1419,12 @@
 				$str_height = '';
 
 				if ($width > $height) {
-					if ($this->max_thumbnail_size !== NULL and $width > $this->max_thumbnail_size) {
+					if ($this->max_thumbnail_size !== null and $width > $this->max_thumbnail_size) {
 						$width = $this->max_thumbnail_size ;
 						$str_width = "width=\"$width\"" ;
 					}
 				} else {
-					if ($this->max_thumbnail_size !== NULL and $height > $this->max_thumbnail_size) {
+					if ($this->max_thumbnail_size !== null and $height > $this->max_thumbnail_size) {
 						$height = $this->max_thumbnail_size ;
 						$str_height = "height=\"$height\"" ;
 					}
@@ -1467,7 +1462,7 @@
 		 */
 		function unsetMaxThumbnailSize()
 		{
-			$this->max_thumbnail_size = NULL;
+			$this->max_thumbnail_size = null;
 		}
 
 		/**

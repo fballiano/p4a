@@ -175,3 +175,7 @@ function p4a_openCalendar(id)
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
+
+$(function() {
+	$.datepicker._defaults['dateFormat'] = 'yy-mm-dd';
+});

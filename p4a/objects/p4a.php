@@ -179,9 +179,7 @@
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
-			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 			if (!$this->isHandheld()) {
-				$this->addJavascript(P4A_THEME_PATH . "/widgets/date_calendar/calendar_stripped.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/jqmodal.js");
 				$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
@@ -192,6 +190,7 @@
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
 				$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 			}
+			$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
 			$this->addCss(P4A_THEME_PATH . "/screen.css", "print");
