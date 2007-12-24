@@ -23,9 +23,11 @@
 <?php foreach ($_css as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media))?>"></link>
 <?php endforeach; ?>
+
+<?php echo $this->getP4AJavascript() ?>
 </head>
 
-<body onload="setFocus('<?php echo $_focus_id?>');hideLoading();">
+<body onload="hideLoading()">
 <div id='body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <?php echo $this->maskOpen()?>
