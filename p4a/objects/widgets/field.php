@@ -842,7 +842,7 @@
 
 			if (!$p4a->isHandheld()) {
 				$value = $this->data_field->getNewValue();
-				if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' class='p4a_date_picker' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
+				if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
 				$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" />";
 			}
 
