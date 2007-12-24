@@ -52,18 +52,11 @@
 		var $data = null;
 
        	/**
-		 * The mask's data browser.
-		 * @var DATA_BROWSER
-		 * @access public
-		 */
-		var $data_browser = null;
-
-       	/**
 		 * The fields collection
 		 * @var array
 		 * @access public
 		 */
-		var $fields = null;
+		public $fields = null;
 
 		/**
 		 * Store the external fields' object_id
@@ -103,58 +96,51 @@
 		/**
 		 * Currently used template name.
 		 * @var string
-		 * @access private
 		 */
-		var $template_name = null;
+		protected $template_name = null;
 
 		/**
 		 * CSS container.
 		 * @var array
-		 * @access private
 		 */
-		var $_css = array();
+		protected $_css = array();
 
 		/**
 		 * Temporary javascript container.
 		 * These javascripts are rendered and removed
 		 * @var array
-		 * @access private
 		 */
-		var $_temp_javascript = array();
+		protected $_temp_javascript = array();
 
 		/**
 		 * Temporary CSS container.
 		 * These CSS are rendered and removed
 		 * @var array
-		 * @access private
 		 */
-		var $_temp_css = array();
+		protected $_temp_css = array();
 
 		/**
 		 * Temporary variables container.
 		 * These vars are usally in the templates, removed after main
 		 * @var array
-		 * @access private
 		 */
-		var $_temp_vars = array();
+		protected $_temp_vars = array();
 
 		/**
 		 * javascript container.
 		 * @var array
-		 * @access private
 		 */
-		var $_javascript = array();
+		protected $_javascript = array();
 
 		/**
 		 * variables used for templates
 		 * @var array
-		 * @access private
 		 */
-		var $_tpl_vars = array();
+		protected $_tpl_vars = array();
 
-		var $is_popup = FALSE;
+		var $is_popup = false;
 
-		var $_icon = NULL;
+		var $_icon = null;
 		var $_icon_size = 48;
 
 		var $close_popup_button = null;
