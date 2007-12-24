@@ -772,7 +772,7 @@ legend {
 /* DATE PICKER */
 /***************/
 
-.datepicker_control {
+.datepicker_control, .datepicker_links {
  display: none
 }
 

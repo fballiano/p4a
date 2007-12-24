@@ -37,7 +37,7 @@ function getKeyPressed(event)
 	return (window.event) ? event.keyCode : event.which;
 }
 
-function setFocus(id)
+p4a_set_focus = function (id)
 {
 	try {
 		document.forms['p4a'].elements[id].focus();
@@ -186,8 +186,3 @@ p4a_calendar_select = function (value_id, description_id)
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
-
-$(function() {
-	$.datepicker._defaults['dateFormat'] = 'yy-mm-dd';
-	//$.datepicker._defaults['onSelect'] = p4a_calendar_select;
-});

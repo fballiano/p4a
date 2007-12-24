@@ -351,8 +351,6 @@
 			$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
 			$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
 
-			$_focus_id = $p4a->getFocusedObjectId();
-
 			$_icon = '';
 			$_title = $this->getTitle();
 			if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
@@ -791,5 +789,23 @@
 		function getIconSize()
 		{
 			return $this->_icon_size;
+		}
+		
+		/**
+		 * Returns the Javascript code neede for P4A initialization
+		 *
+		 * @return string
+		 */
+		protected function getP4AJavascript()
+		{
+			$locale_engine = p4a::singleton()->i18n->getLocaleEngine();
+			return '<script type="text/javascript">' .
+			'$(function() {' . "\n" .
+			'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
+			'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
+			'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
+			'p4a_set_focus("' . P4A::singleton()->getFocusedObjectId() . '");' . "\n" .
+			'});' . "\n" .
+			'</script>';
 		}
 	}

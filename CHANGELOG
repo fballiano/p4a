@@ -76,6 +76,9 @@
 - P4A_DB::getLikeOperator() and setLikeOperator() methods were added, like operator (LIKE/ILIKE) is autodetected and it's useful when you're generating a query
 - P4A_Field's autocomplete was ported to P4A_DB::getLikeOperator() thus now it should work better with different databases (eg: postgreSQL)
 - P4A_Widget::raise() method was removed
+- P4A_I18N::getLocaleEngine() method was added to retrieve a copy of the Zend_Locale object
+- standard.php library file was cleaned removing PHP4 functions
+- P4A::getP4AJavascript() method was added, it will return a bunch of javascript code needed for P4A initialization
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -35,17 +34,6 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-
-if (version_compare(phpversion(), '5.0') < 0 and !function_exists('clone')) {
-	eval('function clone($object) {return unserialize(serialize($object));}');
-}
-
-if (!function_exists('htmlspecialchars_decode')) {
-	function htmlspecialchars_decode($str, $quote_style = ENT_COMPAT)
-	{
-		return strtr($str, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
-	}
-}
 
 /**
  * Stops program execution with an error.

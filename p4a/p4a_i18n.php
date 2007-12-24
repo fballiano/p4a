@@ -215,4 +215,13 @@ class P4A_I18N
 
 		return $value;
 	}
+	
+	/**
+	 * Clones and return the Zend_Locale engine
+	 * @return Zend_Locale
+	 */
+	public function getLocaleEngine()
+	{
+		return clone $this->_locale_engine;
+	}
 }
