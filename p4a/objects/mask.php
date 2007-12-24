@@ -799,6 +799,7 @@
 		protected function getP4AJavascript()
 		{
 			$locale_engine = p4a::singleton()->i18n->getLocaleEngine();
+			
 			return '<script type="text/javascript">' .
 			'$(function() {' . "\n" .
 			'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .

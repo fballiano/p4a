@@ -15,7 +15,7 @@
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
-- generate datepicker regional settings
+- generate datepicker "firstDay" telling which is the first day of the week (we've to wait for ZF fix about that)
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -79,6 +79,7 @@
 - P4A_I18N::getLocaleEngine() method was added to retrieve a copy of the Zend_Locale object
 - standard.php library file was cleaned removing PHP4 functions
 - P4A::getP4AJavascript() method was added, it will return a bunch of javascript code needed for P4A initialization
+- jQuery::UI::datepicker was localized using Zend Framework data, no need to sync with datepicked localization files
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
