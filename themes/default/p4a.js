@@ -162,7 +162,7 @@ function toggleColorPicker(id)
 	colorpicker.toggle();
 }
 
-function p4a_openCalendar(id)
+p4a_calendar_open = function (id)
 {
 	var element = $('#'+id);
 	if(!element.hasClass($.datepicker.markerClassName)) {
@@ -172,10 +172,22 @@ function p4a_openCalendar(id)
 	return false;
 }
 
+p4a_calendar_select = function (value_id, description_id)
+{
+	$.get(
+		$('#p4a').attr('action'),
+		{_p4a_date_format: $('#'+value_id).attr('value')},
+		function (new_value) {
+			$('#'+description_id).attr('value', new_value);
+		}
+	);
+}
+
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
 
 $(function() {
 	$.datepicker._defaults['dateFormat'] = 'yy-mm-dd';
+	//$.datepicker._defaults['onSelect'] = p4a_calendar_select;
 });
