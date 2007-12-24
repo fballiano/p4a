@@ -729,19 +729,8 @@
 		 * widget that extends P4A_this class.
 		 * @access public
 		 */
-		function getAsString()
+		public function getAsString()
 		{
-		}
-
-		/**
-		 * Prints the value returned by get_as_string().
-		 * It Should never be used by "normal" p4a users.
-		 * @access public
-		 * @see get_as_string()
-		 */
-		function raise()
-		{
-			print $this->getAsString();
 		}
 
 		/**
