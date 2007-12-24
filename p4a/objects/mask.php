@@ -182,8 +182,11 @@
 			$this->useTemplate('default');
 		}
 
-		//todo
-		function &singleton($name)
+		/**
+		 * @param string $name
+		 * @return P4A_Mask
+		 */
+		public function &singleton($name)
 		{
 			$name = strtolower($name);
 			$p4a =& P4A::singleton();
@@ -194,9 +197,15 @@
  			return $p4a->masks->$name;
 		}
 
-		function isPopup($is_popup=NULL)
+		/**
+		 * gets/sets popup state
+		 *
+		 * @param boolean|null $is_popup
+		 * @return boolean
+		 */
+		public function isPopup($is_popup = null)
 		{
-			if ($is_popup !== NULL) {
+			if ($is_popup !== null) {
 				$this->is_popup = $is_popup;
 			}
 			return $this->is_popup;
@@ -204,10 +213,10 @@
 
 		/**
 		 * Sets the focus on object
-		 * @access public
-		 * @param object
+		 *
+		 * @param object $object
 		 */
-		function setFocus($object = null)
+		public function setFocus($object = null)
 		{
 			if (is_object($object)) {
 				$this->focus_object_id = $object->getId();
@@ -218,9 +227,8 @@
 
 		/**
 		 * Removes focus property
-		 * @access public
 		 */
-		function unsetFocus()
+		public function unsetFocus()
 		{
 			$this->focus_object_id = null;
 		}
@@ -236,20 +244,18 @@
 		}
 
 		/**
-		 * Shows the caller mask.
-		 * @access public
+		 * Shows the previous mask.
 		 */
-		function showPrevMask()
+		public function showPrevMask()
 		{
 			$p4a =& P4A::singleton();
 			$p4a->showPrevMask();
 		}
 
 		/**
-		 * Get the caller mask.
-		 * @access public
+		 * Get the previous mask.
 		 */
-		function &getPrevMask()
+		public function &getPrevMask()
 		{
 			$p4a =& P4A::singleton();
 			return $p4a->getPrevMask();
@@ -257,10 +263,9 @@
 
 		/**
 		 * Tells the mask that we're going to use a template.
-		 * @param string	"template name" stands for "template name.tpl" in the "CURRENT THEME\masks\" directory.
-		 * @access public
+		 * @param string|false $template_name "template name" stands for "template name.tpl" in the "CURRENT THEME\masks\" directory. If false removes template.
 		 */
-		function useTemplate($template_name)
+		public function useTemplate($template_name)
 		{
 			if ($template_name === false) {
 				$this->use_template = false;
@@ -273,10 +278,9 @@
 
 		/**
 		 * Returns the currently used template name.
-		 * @access public
 		 * @return string
 		 */
-		function getTemplateName()
+		public function getTemplateName()
 		{
 			if ($this->isPopup()) {
 				return 'popup';
