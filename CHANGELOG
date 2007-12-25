@@ -79,6 +79,9 @@
 - standard.php library file was cleaned removing PHP4 functions
 - P4A::getP4AJavascript() method was added, it will return a bunch of javascript code needed for P4A initialization
 - jQuery::UI::datepicker was localized using Zend Framework data, no need to sync with datepicked localization files
+- P4A_DB::setSelect() was removed
+- P4A_DB_Source and P4A_Data_Source were php5ized
+- P4A_DB_Source::__sleep() was turned into __wakeup()
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

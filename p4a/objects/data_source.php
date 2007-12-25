@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -38,24 +37,18 @@
 
 class P4A_Data_Source extends P4A_Object
 {
-	var $_pointer = null;
-
-	var $_pk = null;
-
-	var $_limit = null;
-	var $_offset = null;
-
-	var $_num_rows = null;
-	var $_num_pages = null;
-	var $_page_limit = 10;
-
-	var $_fields = null;
-
-	var $_is_read_only = false;
-	var $_is_sortable = false;
-	var $_order = array();
-
-	var $fields = null;
+	protected $_pointer = null;
+	protected $_pk = null;
+	protected $_limit = null;
+	protected $_offset = null;
+	protected $_num_rows = null;
+	protected $_num_pages = null;
+	protected $_page_limit = 10;
+	protected $_fields = null;
+	protected $_is_read_only = false;
+	protected $_is_sortable = false;
+	protected $_order = array();
+	public $fields = null;
 
 	public function __construct($name)
 	{
@@ -63,15 +56,15 @@ class P4A_Data_Source extends P4A_Object
 		$this->build("P4A_Collection", "fields");
 	}
 
-	function load() {
+	public function load() {
 		return;
 	}
 
-	function row($num_row = NULL, $move_pointer = TRUE) {
+	public function row($num_row = null, $move_pointer = true) {
 		return ;
 	}
 
-	function newRow()
+	public function newRow()
 	{
 		if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
@@ -84,7 +77,7 @@ class P4A_Data_Source extends P4A_Object
 		$this->actionHandler('afterMoveRow');
 	}
 
-	function isNew()
+	public function isNew()
 	{
 		if ($this->_pointer === 0) {
 			return true;
@@ -93,7 +86,7 @@ class P4A_Data_Source extends P4A_Object
 		}
 	}
 
-    function isSortable($value=null)
+    public function isSortable($value = null)
     {
         if ($value !== null) {
             $this->_is_sortable = $value;
@@ -101,18 +94,18 @@ class P4A_Data_Source extends P4A_Object
         return $this->_is_sortable;
     }
 
-    function addOrder($field, $direction = P4A_ORDER_ASCENDING)
+    public function addOrder($field, $direction = P4A_ORDER_ASCENDING)
     {
 		$this->_order[$field] = strtoupper($direction);
     }
 
-    function setOrder($field, $direction = P4A_ORDER_ASCENDING)
+    public function setOrder($field, $direction = P4A_ORDER_ASCENDING)
     {
         $this->_order = array();
         $this->addOrder($field, $direction);
     }
 
-    function getOrder()
+    public function getOrder()
     {
         $pk = $this->getPk();
         $order = $this->_order;
@@ -130,12 +123,12 @@ class P4A_Data_Source extends P4A_Object
         return $order;
     }
 
-    function hasOrder()
+    public function hasOrder()
     {
         return (sizeof($this->_order) > 0);
     }
 
-    function dropOrder($field = null)
+    public function dropOrder($field = null)
     {
         if ($field === null) {
             $this->_order = array();
@@ -144,26 +137,26 @@ class P4A_Data_Source extends P4A_Object
         }
     }
 
-	function getAll($from = 0, $count = 0) {
+	public function getAll($from = 0, $count = 0) {
 		return;
 	}
 
-	function getNumRows()
+	public function getNumRows()
 	{
 		return;
 	}
 
-	function getRowNumber()
+	public function getRowNumber()
 	{
 		return $this->_pointer;
 	}
 
-    function updateRowPosition()
+    public function updateRowPosition()
     {
        return;
     }
 
-	function firstRow()
+	public function firstRow()
 	{
 		$num_rows = $this->getNumRows();
 
@@ -176,7 +169,7 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
-	function prevRow()
+	public function prevRow()
 	{
 		$num_rows = $this->getNumRows();
 
@@ -189,7 +182,7 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
-	function nextRow()
+	public function nextRow()
 	{
 		$num_rows = $this->getNumRows();
 
@@ -202,7 +195,7 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
-	function lastRow()
+	public function lastRow()
 	{
 		$num_rows = $this->getNumRows();
 
@@ -215,18 +208,18 @@ class P4A_Data_Source extends P4A_Object
 		return;
 	}
 
-	function getOffset()
+	public function getOffset()
 	{
 		$limit = $this->getPageLimit();
 		return ($this->getNumPage() * $limit) - $limit;
 	}
 
-	function setPageLimit($page_limit)
+	public function setPageLimit($page_limit)
 	{
 		$this->_page_limit = $page_limit;
 	}
 
-	function getPageLimit()
+	public function getPageLimit()
 	{
 		return $this->_page_limit;
 	}
@@ -234,9 +227,8 @@ class P4A_Data_Source extends P4A_Object
 	/**
 	 * Returns the number of pages in the data source
 	 * @return integer
-	 * @access public
 	 */
-	function getNumPages()
+	public function getNumPages()
 	{
 		$num_rows = $this->getNumRows();
 		$page_limit = $this->getPageLimit();
@@ -255,9 +247,8 @@ class P4A_Data_Source extends P4A_Object
 	/**
 	 * Returns the number of the current page
 	 * @return integer
-	 * @access public
 	 */
-	function getNumPage()
+	public function getNumPage()
 	{
 		$row_number = $this->_pointer;
 		$page_limit = $this->_page_limit;
@@ -272,9 +263,8 @@ class P4A_Data_Source extends P4A_Object
 	/**
 	 * Returns a page of date (some rows)
 	 * @return array
-	 * @access public
 	 */
-	function page($num_page = null, $move_pointer=true)
+	public function page($num_page = null, $move_pointer=true)
 	{
 		$limit = $this->getPageLimit();
 		$num_pages = $this->getNumPages();
@@ -306,40 +296,40 @@ class P4A_Data_Source extends P4A_Object
 		return $rows;
 	}
 
-	function firstPage($move_pointer=true)
+	public function firstPage($move_pointer = true)
 	{
 		return $this->page(1, $move_pointer);
 	}
 
-	function prevPage($move_pointer=true)
+	public function prevPage($move_pointer = true)
 	{
 		$current_page = $this->getNumPage();
 		return $this->page($current_page - 1, $move_pointer);
 	}
 
-	function nextPage($move_pointer=true)
+	public function nextPage($move_pointer = true)
 	{
 		$current_page = $this->getNumPage();
 		return $this->page($current_page + 1, $move_pointer);
 	}
 
-	function lastPage($move_pointer=true)
+	public function lastPage($move_pointer = true)
 	{
 		$num_pages = $this->getNumPages();
 		return $this->page($num_pages, $move_pointer);
 	}
 
-	function setPk($pk)
+	public function setPk($pk)
 	{
 		$this->_pk = $pk;
 	}
 
-	function getPk()
+	public function getPk()
 	{
 		return $this->_pk;
 	}
 
-	function getPkValues()
+	public function getPkValues()
 	{
 		$pks = $this->getPk();
 
@@ -356,12 +346,12 @@ class P4A_Data_Source extends P4A_Object
 		}
 	}
 
-	function getPkRow($pk)
+	public function getPkRow($pk)
 	{
 		return;
 	}
 
-	function getAsCSV($separator = ',', $fields_names = null)
+	public function getAsCSV($separator = ',', $fields_names = null)
 	{
 		if ($fields_names === true or is_array($fields_names)) {
 			$insert_header = true;
@@ -398,12 +388,12 @@ class P4A_Data_Source extends P4A_Object
 		return 	$csv;
 	}
 
-	function exportToCSV($filename = "", $separator = ',', $fields_names = null)
+	public function exportToCSV($filename = "", $separator = ',', $fields_names = null)
 	{
 		$this->exportAsCSV($filename, $separator, $fields_names);
 	}
 
-	function exportAsCSV($filename = "", $separator = ',', $fields_names = null)
+	public function exportAsCSV($filename = "", $separator = ',', $fields_names = null)
 	{
 		$p4a =& P4A::singleton();
 		$output =  $this->getAsCSV($separator, $fields_names);
@@ -423,7 +413,7 @@ class P4A_Data_Source extends P4A_Object
 		die();
 	}
 
-	function deleteRow()
+	public function deleteRow()
 	{
 		$num_rows = $this->getNumRows();
 
