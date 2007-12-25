@@ -49,42 +49,35 @@ class P4A_Data_Field extends P4A_Object
 	/**
 	 * The value of field.
 	 * @var string
-	 * @access private
 	 */
-	var $value = null;
+	protected $value = null;
 
 	/**
 	 * The new value of field
 	 * @var string
-	 * @access private
 	 */
-	var $new_value = null;
+	protected $new_value = null;
 
 	/**
 	 * The default value for the field in new rows.
 	 * @var string
-	 * @access private
 	 */
-	var $default_value = null;
+	protected $default_value = null;
 
 	/**
 	 * The default value for the field in new rows.
 	 * @var string
-	 * @access private
 	 */
-	var $type = 'text';
+	protected $type = 'text';
 
-	var $is_read_only = false;
-	var $sequence = null;
-	var $table = null;
-	var $alias_of = null;
-	var $length = null;
+	protected $is_read_only = false;
+	protected $sequence = null;
+	protected $schema = null;
+	protected $table = null;
+	protected $alias_of = null;
+	protected $length = null;
 
-	/**
-	 * Sets the value of the data field.
-	 * @access public
-	 */
-	function setValue($value)
+	public function setValue($value)
 	{
 		$this->value = $value;
 		$this->setNewValue($value);
@@ -92,96 +85,81 @@ class P4A_Data_Field extends P4A_Object
 
 	/**
 	 * Returns the value of the data field.
-	 * @access public
 	 * @return mixed
 	 */
-	function getValue()
+	public function getValue()
 	{
 		return $this->value;
 	}
 
 	/**
 	 * Returns the value of the data field for safe SQL queries.
-	 * @access public
 	 * @return mixed
 	 */
-	function getSQLValue()
+	public function getSQLValue()
 	{
 		return addslashes($this->value);
 	}
 
 	/**
 	 * Sets the new value of the data field.
-	 * @access public
 	 */
-	function setNewValue($value)
+	public function setNewValue($value)
 	{
 		$this->new_value = $value;
 	}
 
 	/**
 	 * Returns the new value of the data field.
-	 * @access public
 	 * @return mixed
 	 */
-	function getNewValue()
+	public function getNewValue()
 	{
 		return $this->new_value;
 	}
 
 	/**
 	 * Returns the value of the data field for safe SQL queries.
-	 * @access public
 	 * @return mixed
 	 */
-	function getSQLNewValue()
+	public function getSQLNewValue()
 	{
 		return addslashes($this->new_value);
 	}
 
-	/**
-	 * Sets the type of the data_field.
-	 * @access public
-	 * @param string		The type
-	 */
-	function setType($type)
+	public function setType($type)
 	{
 		$this->type = $type;
 	}
 
-	/**
-	 * Returns the type of the data_field.
-	 * @access public
-	 * @return string
-	 */
-	function getType()
+	public function getType()
 	{
 		return $this->type;
 	}
 
-	function setReadOnly($value = TRUE)
+	public function setReadOnly($value = true)
 	{
 		$this->is_read_only = $value;
 	}
 
-	function isReadOnly()
+	public function isReadOnly()
 	{
 		return $this->is_read_only;
 	}
 
-	function setDSN($DSN)
+	public function setDSN($DSN)
 	{
 		$this->_DSN = $DSN;
 	}
 
-	function getDSN()
+	public function getDSN()
 	{
 		return $this->_DSN;
 	}
 
-	function setDefaultValue($value = NULL)
+	function setDefaultValue($value = null)
 	{
-		if ($value === NULL) {
+		if ($value === null) {
 			$this->setNewValue($this->getDefaultValue());
 		} else {
 			$this->default_value = $value;
@@ -199,40 +177,50 @@ class P4A_Data_Field extends P4A_Object
 
 	function getDefaultValue()
 	{
-		if ($this->sequence === NULL) {
+		if ($this->sequence === null) {
 			return $this->default_value;
 		} else {
 			$db =& P4A_DB::singleton($this->getDSN());
 			return $db->nextSequenceId($this->sequence);
 		}
 	}
+	
+	public function setSchema($schema)
+	{
+		$this->schema = $schema;
+	}
 
-	function setTable($table)
+	public function getSchema()
+	{
+		return $this->schema;
+	}
+
+	public function setTable($table)
 	{
 		$this->table = $table;
 	}
 
-	function getTable()
+	public function getTable()
 	{
 		return $this->table;
 	}
 
-	function setAliasOf($alias_of)
+	public function setAliasOf($column)
 	{
-		$this->alias_of = $alias_of;
+		$this->alias_of = $column;
 	}
 
-	function getAliasOf()
+	public function getAliasOf()
 	{
 		return $this->alias_of;
 	}
 
-	function setLength($length)
+	public function setLength($length)
 	{
 		$this->length = $length;
 	}
 
-	function getLength()
+	public function getLength()
 	{
 		return $this->length;
 	}

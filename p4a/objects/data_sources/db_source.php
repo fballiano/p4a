@@ -265,6 +265,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->fields->build("P4A_Data_Field", $name);
 		$this->fields->$name->setDSN($this->getDSN());
 		$this->fields->$name->setLength($meta['LENGTH']);
+		if ($meta['SCHEMA_NAME']) $this->fields->$name->setSchema($meta['SCHEMA_NAME']);
+		$this->fields->$name->setTable($meta['TABLE_NAME']);
+		if ($name != $meta['COLUMN_NAME']) {
+			$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
+		}
 		
 		switch (strtolower($meta['DATA_TYPE'])) {
 			case 'int':
