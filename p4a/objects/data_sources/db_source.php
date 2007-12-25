@@ -393,7 +393,6 @@ class P4A_DB_Source extends P4A_Data_Source
 	function getFieldName($field)
 	{
 		$dot_pos = strpos($field, '.');
-
 		if ($dot_pos !== false) {
 			$short_fld = substr($field, $dot_pos + 1);
 		} else {
@@ -805,7 +804,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
-	function _composeSelectPart(&$select)
+	protected function &_composeSelectPart(&$select)
 	{
 		$select->from($this->getTable());
 		
