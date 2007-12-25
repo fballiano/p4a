@@ -258,110 +258,11 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
 			}
 		}
-
-		/*
-		$query = $this->_composeSelectStructureQuery();
-		$rs = $db->adapter->selectLimit($query, 1, 0);
-
-		if ($db->adapter->metaError()) {
-			$e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
-			if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
-				die();
-			}
-		} else {
-			$main_table = $this->getTable();
-			$array_fields = $this->getFields();
-
-			for ($i=0; $i<$rs->fieldCount(); $i++) {
-				$col = $rs->fetchField($i);
-				$field_name = $col->name;
-				$dot_pos = strpos($field_name, '.');
-				if ($dot_pos !== false) {
-					list($table_name, $field_name) = explode('.', $field_name);
-					$col->table = $table_name;
-				}
-				$col->meta_type = $rs->metaType($col);
-				if (isset($this->fields->$field_name)) {
-					continue;
-				}
-				$this->fields->build("p4a_data_field",$field_name);
-				$this->fields->$field_name->setDSN($this->getDSN());
-				$this->fields->$field_name->setLength($col->max_length);
-				if ($col->meta_type == 'I' and $col->max_length == 1) {
-					$col->meta_type = 'L';
-				}
-
-				switch ($col->meta_type) {
-					case 'C':
-						// Character fields that should be shown in a <input type="text"> tag
-						$this->fields->$field_name->setType('text');
-						break;
-					case 'X':
-						// Clob (character large objects), or large text fields that should be shown in a <textarea>
-						$this->fields->$field_name->setType('text');
-						break;
-					case 'D':
-						// Date field
-						$this->fields->$field_name->setType('date');
-						break;
-					case 'T':
-						// Timestamp field
-						$this->fields->$field_name->setType('text');
-						break;
-					case 'L':
-						// Logical field (boolean or bit-field)
-						$this->fields->$field_name->setType('boolean');
-						break;
-					case 'N':
-						// Numeric field. Includes decimal, numeric, floating point, and real
-						$this->fields->$field_name->setType('decimal');
-						break;
-					case 'R':
-						// Counter or Autoincrement field. Must be numeric
-						if (P4A_AUTO_DB_SEQUENCES) {
-							$this->fields->$field_name->setSequence("{$col->table}_{$field_name}");
-						}
-					case 'I':
-						// Integer field
-						$this->fields->$field_name->setType('integer');
-						break;
-					case 'B':
-						// Blob, or binary large objects
-						$this->fields->$field_name->setType('text');
-						break;
-					default:
-						p4a_error("unknown type {$col->meta_type} for field {$field_name}");
-				}
-
-				// if field is not on main table is not updatable
-				if ($this->getQuery()) {
-					$this->fields->$field_name->setReadOnly();
-				} else {
-					if (!isset($col->table) or !strlen($col->table)) {
-						if (count($this->getJoin())) {
-							$this->fields->$field_name->setReadOnly();
-						} else {
-							$this->fields->$field_name->setTable($main_table);
-						}
-					} elseif ($col->table != $main_table){
-						$this->fields->$field_name->setReadOnly();
-						$this->fields->$field_name->setTable($col->table);
-					} else {
-						$this->fields->$field_name->setTable($col->table);
-					}
-
-					if ($this->_use_fields_aliases and ($alias_of = array_search($field_name, $array_fields))){
-						$this->fields->$field_name->setAliasOf($alias_of);
-					}
-				}
-			}
-		}
-		*/
 	}
 	
 	protected function createDataField($name, $meta)
 	{
-		$this->fields->build("p4a_data_field", $name);
+		$this->fields->build("P4A_Data_Field", $name);
 		$this->fields->$name->setDSN($this->getDSN());
 		$this->fields->$name->setLength($meta['LENGTH']);
 		
@@ -780,7 +681,6 @@ class P4A_DB_Source extends P4A_Data_Source
 		$db =& P4A_Db::singleton($this->getDSN());
 		$select =& $db->select();
 		$this->_composeSelectPart($select);
-		$this->_composeFromPart($select);
 		$this->_composeWherePart($select);
 
 		$pk_key = $this->getPK();
@@ -812,47 +712,11 @@ class P4A_DB_Source extends P4A_Data_Source
 			$method = "join{$join[0]}";
 			$select->$method($join[1], $join[2], array_flip($join[3]));
 		}
-
-		/*
-		$query = "SELECT ";
-		if ($select_part = $this->getSelect()){
-			$query .= "$select_part ";
-		} else {
-			if ($this->_use_fields_aliases){
-				foreach($this->getFields() as $field_name=>$field_alias){
-					if ($field_alias != "" and $field_alias != "*"){
-						$query .= "$field_name AS $field_alias,";
-					}else{
-						$query .= "$field_name,";
-					}
-				}
-				$query = substr($query,0, -1) . " ";
-			} elseif($fields = $this->getFields()) {
-				foreach($fields as $field_name){
-					$query .= "$field_name,";
-				}
-				$query = substr($query,0, -1) . " ";
-			} else {
-				$query .= "* ";
-			}
-		}
-		return $query;
-		*/
 	}
 
 	protected function _composeSelectCountPart(&$select)
 	{
 		$select->from($this->getTable(), 'count(*)');
-	}
-
-	protected function _composeFromPart()
-	{
-		$query = "FROM {$this->_table} ";
-
-		foreach ($this->_join as $join) {
-			$query .= "{$join[0]} JOIN {$join[1]} ON ({$join[2]}) ";
-		}
-		return $query;
 	}
 
 	protected function _composeWherePart(&$select)
