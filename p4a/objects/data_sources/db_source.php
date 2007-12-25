@@ -394,12 +394,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		$dot_pos = strpos($field, '.');
 
-		if ($dot_pos) {
+		if ($dot_pos !== false) {
 			$short_fld = substr($field, $dot_pos + 1);
 		} else {
 			$short_fld = $field;
 		}
-
+		
 		if ($this->fields->$short_fld->getAliasOf()) {
 			$long_fld = $this->fields->$short_fld->getAliasOf();
 		} else {
