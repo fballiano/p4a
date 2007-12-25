@@ -15,7 +15,6 @@
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
-- generate datepicker "firstDay" telling which is the first day of the week (we've to wait for ZF fix about that)
 
 2.99.0
 - Zend Framework 1.0.3 was added

@@ -64,6 +64,11 @@ class P4A_I18N
 	private $region = null;
 	
 	/**
+	 * @var integer
+	 */
+	private $first_day_of_the_week = 0;
+	
+	/**
 	 * @var Zend_Locale
 	 */
 	protected $_locale_engine = null;
@@ -92,6 +97,7 @@ class P4A_I18N
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
+		$this->setFirstDayOfTheWeek();
 		
 		$messages = array();
 		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->language}/LC_MESSAGES/p4a.mo", $messages);
@@ -223,5 +229,54 @@ class P4A_I18N
 	public function getLocaleEngine()
 	{
 		return clone $this->_locale_engine;
+	}
+	
+	private function setFirstDayOfTheWeek()
+	{
+		$supplemental_data = simplexml_load_file(dirname(__FILE__) . '/libraries/Zend/Locale/Data/supplementalData.xml');
+		
+		$dayname = 'mon';
+		foreach ($supplemental_data->xpath("//firstDay") as $data) {
+			list($tmp_dayname, $territories) = $data->attributes();
+			foreach (explode(' ', $territories) as $territory) {
+				if ($territory == $this->region) {
+					$dayname = $tmp_dayname;
+					break 2;
+				}
+			}
+		}
+		
+		switch ($dayname) {
+			case 'mon':
+				$daynumber = 1;
+				break;
+			case 'tue':
+				$daynumber = 2;
+				break;
+			case 'wed':
+				$daynumber = 3;
+				break;
+			case 'thu':
+				$daynumber = 4;
+				break;
+			case 'fri':
+				$daynumber = 5;
+				break;
+			case 'sat':
+				$daynumber = 6;
+				break;
+			default:
+				$daynumber = 0;
+		}
+		
+		$this->first_day_of_the_week = $daynumber;
+	}
+	
+	/**
+	 * @return integer
+	 */
+	function getFirstDayOfTheWeek()
+	{
+		return $this->first_day_of_the_week;
 	}
 }
