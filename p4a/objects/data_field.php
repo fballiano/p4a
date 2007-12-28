@@ -47,19 +47,16 @@
 class P4A_Data_Field extends P4A_Object
 {
 	/**
-	 * The value of field.
 	 * @var string
 	 */
 	protected $value = null;
 
 	/**
-	 * The new value of field
 	 * @var string
 	 */
 	protected $new_value = null;
 
 	/**
-	 * The default value for the field in new rows.
 	 * @var string
 	 */
 	protected $default_value = null;
@@ -70,13 +67,40 @@ class P4A_Data_Field extends P4A_Object
 	 */
 	protected $type = 'text';
 
+	/**
+	 * @var boolean
+	 */
 	protected $is_read_only = false;
+	
+	/**
+	 * @var string
+	 */
 	protected $sequence = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $schema = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $table = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $alias_of = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $length = null;
 
+	/**
+	 * Sets value and new_value
+	 * @param string $value
+	 */
 	public function setValue($value)
 	{
 		$this->value = $value;
@@ -84,8 +108,7 @@ class P4A_Data_Field extends P4A_Object
 	}
 
 	/**
-	 * Returns the value of the data field.
-	 * @return mixed
+	 * @return string
 	 */
 	public function getValue()
 	{
@@ -102,7 +125,7 @@ class P4A_Data_Field extends P4A_Object
 	}
 
 	/**
-	 * Sets the new value of the data field.
+	 * @param string $value
 	 */
 	public function setNewValue($value)
 	{
@@ -110,8 +133,7 @@ class P4A_Data_Field extends P4A_Object
 	}
 
 	/**
-	 * Returns the new value of the data field.
-	 * @return mixed
+	 * @return string
 	 */
 	public function getNewValue()
 	{
@@ -120,13 +142,16 @@ class P4A_Data_Field extends P4A_Object
 
 	/**
 	 * Returns the value of the data field for safe SQL queries.
-	 * @return mixed
+	 * @return string
 	 */
 	public function getSQLNewValue()
 	{
 		return addslashes($this->new_value);
 	}
 
+	/**
+	 * @param string $type
+	 */
 	public function setType($type)
 	{
 		$this->type = $type;
