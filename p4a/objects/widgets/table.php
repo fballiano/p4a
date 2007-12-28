@@ -1091,12 +1091,7 @@
 		 */
 		var $buttons = null;
 
-		/**
-		 * Class constructor.
-		 * @param string		Mnemonic identifier for the object.
-		 * @access private
-		 */
-		function P4A_Table_Navigation_Bar()
+		public function __construct()
 		{
 			$p4a =& P4A::singleton();
 
@@ -1105,6 +1100,7 @@
 			$this->setStyleProperty("float", "none");
 
 			$this->addButton('button_go', 'apply', 'right');
+			$this->buttons->button_go->setLabel("Go");
 			$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
 
 			$field_num_page =& $this->buttons->build(P4A_FIELD_CLASS, 'field_num_page');
