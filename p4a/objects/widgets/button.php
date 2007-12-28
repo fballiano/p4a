@@ -123,7 +123,7 @@ class P4A_Button extends P4A_Widget
 
 		$p4a =& P4A::singleton();
 		$label = __($this->getLabel());
-		$title = $label;
+		$title = htmlspecialchars($label, ENT_QUOTES);
 		$accesskey = $this->getAccessKey();
 		if (strlen($accesskey) > 0) $title = "[$accesskey] $title";
 		if ($this->_label_visible or !$this->_icon) {
