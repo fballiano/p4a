@@ -86,6 +86,7 @@
 - P4A_DB_Source and P4A_Data_Source were php5ized
 - P4A_DB_Source::__sleep() was turned into __wakeup()
 - P4A_Data_Field::setSchema() and getSchema() methods were added
+- P4A_DB_Source::getFieldName() now returns "schema.table.field" and can accept "schema.table.field" as a param
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

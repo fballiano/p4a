@@ -287,34 +287,39 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$name->setType('time');
 				break;
 			case 'decimal':
-			case 'float':
 			case 'numeric':
 				$this->fields->$name->setType('decimal');
+				break;
+			case 'float':
+				$this->fields->$name->setType('float');
 				break;
 			default:
 				$this->fields->$name->setType('text');
 		}
 	}
 
+	/**
+	 * Returns the DB field name (converting alias) in 2 formats: "schema.table.field" and "field"
+	 * @param string $field
+	 * @return array
+	 */
 	function getFieldName($field)
 	{
-		$dot_pos = strpos($field, '.');
-		if ($dot_pos !== false) {
-			$short_fld = substr($field, $dot_pos + 1);
-		} else {
-			$short_fld = $field;
+		$field = explode('.', $field);
+		$field = $field[sizeof($field) - 1];
+		
+		$alias_of = $this->fields->$field->getAliasOf();
+		if (!strlen($alias_of)) {
+			$alias_of = $field;
 		}
 		
-		if ($this->fields->$short_fld->getAliasOf()) {
-			$long_fld = $this->fields->$short_fld->getAliasOf();
-		} else {
-			$table = (string)$this->fields->$short_fld->getTable();
-			if (strlen($table)) {
-				$table = "{$table}.";
-			}
-			$long_fld = $table . $this->fields->$short_fld->getName();
-		}
-		return array($long_fld, $short_fld);
+		$schema = $this->fields->$field->getSchema();
+		if (strlen($schema)) $schema = "{$schema}.";
+
+		$table = $this->fields->$field->getTable();
+		if (strlen($table)) $table = "{$table}.";
+
+		return array($schema . $table . $alias_of, $alias_of);
 	}
 
 	public function isReadOnly($value=null)
@@ -435,7 +440,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			if ($order = $this->getOrder()) {
 				$where_order = "";
 				foreach($order as $field=>$direction) {
-					list($long_fld,$short_fld) = $this->getFieldName($field);
+					list($long_fld, $short_fld) = $this->getFieldName($field);
 
 					$p_order = "";
 					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
@@ -753,7 +758,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($order) {
 			$order_array = array();
 			foreach ($order as $field=>$direction) {
-				list($long_fld,$short_fld) = $this->getFieldName($field);
+				list($long_fld, $short_fld) = $this->getFieldName($field);
 				$order_array[] = "$long_fld $direction";
 			}
 			$select->order($order_array);
