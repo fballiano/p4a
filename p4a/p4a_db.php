@@ -77,7 +77,7 @@ class P4A_DB
 				}
 				
 				if ($dsn_data['scheme'] == 'pgsql') {
-					$this->like_operator = 'ILIKE';
+					$$dbconn->like_operator = 'ILIKE';
 				}
 		
 				$$dbconn->db_type = $dsn_data['scheme'];
