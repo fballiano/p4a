@@ -119,7 +119,7 @@ class P4A_I18N
 			$translate = new Zend_Translate('gettext', $file, $this->locale);
 			$new_messages = $translate->getMessages();
 			if (is_array($new_messages)) {
-				array_merge($messages, $new_messages);
+				$messages = array_merge($messages, $new_messages);
 			}
 		}
 	}
