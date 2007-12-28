@@ -395,5 +395,5 @@ function P4A_Generate_Default_Label($string)
 function P4A_Highlight_AccessKey($string, $accesskey)
 {
 	if (strlen($accesskey) == 0) return $string;
-	return str_replace($accesskey, "<span class=\"accesskey\">$accesskey</span>", $string);
+	return preg_replace("/($accesskey)/i", "<span class=\"accesskey\">$1</span>", $string);
 }
