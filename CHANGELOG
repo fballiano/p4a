@@ -5,7 +5,6 @@
 - spread about the new translation system so users start translate
 - check db_source for aliases
 - try to detect the decimal format and use it during formatting
-- check p4a_table ordering
 - custom formatter for date/time/etc
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
@@ -15,6 +14,8 @@
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
+- use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
+- check if the new yesexpr is right when ZF 1.5 will be out
 
 2.99.0
 - Zend Framework 1.0.3 was added
