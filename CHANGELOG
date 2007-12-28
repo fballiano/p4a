@@ -4,6 +4,7 @@
 - port sample_i18n to the new translation system
 - spread about the new translation system so users start translate
 - check db_source for aliases
+- check db_source for calculated fields
 - try to detect the decimal format and use it during formatting
 - custom formatter for date/time/etc
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
@@ -16,6 +17,7 @@
 - remove P4A_Toolbar::getAsString() method with its strange behaviour?
 - use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
 - check if the new yesexpr is right when ZF 1.5 will be out
+- implement errors with exceptions
 
 2.99.0
 - Zend Framework 1.0.3 was added
