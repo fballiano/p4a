@@ -233,8 +233,11 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			} else {
 				$field_name = strlen($column_alias) ? $column_alias : $column_name;
-				$meta = $this->_tables_metadata[$table_name]['metadata'][$column_name];
-				$this->createDataField($field_name, $meta);
+				if (in_array($column_name, array_keys($this->_tables_metadata[$table_name]['metadata']))) {
+					$this->createDataField($field_name, $this->_tables_metadata[$table_name]['metadata'][$column_name]);
+				} else {
+					$this->createDataField($field_name);
+				}
 			}
 		}
 		
@@ -260,15 +263,20 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 	
-	protected function createDataField($name, $meta)
+	protected function createDataField($name, $meta = null)
 	{
 		$this->fields->build("P4A_Data_Field", $name);
 		$this->fields->$name->setDSN($this->getDSN());
-		$this->fields->$name->setLength($meta['LENGTH']);
-		if ($meta['SCHEMA_NAME']) $this->fields->$name->setSchema($meta['SCHEMA_NAME']);
-		$this->fields->$name->setTable($meta['TABLE_NAME']);
-		if ($name != $meta['COLUMN_NAME']) {
-			$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
+		
+		if ($meta === null) {
+			$this->fields->$name->setReadOnly();
+		} else {
+			$this->fields->$name->setLength($meta['LENGTH']);
+			if ($meta['SCHEMA_NAME']) $this->fields->$name->setSchema($meta['SCHEMA_NAME']);
+			$this->fields->$name->setTable($meta['TABLE_NAME']);
+			if ($name != $meta['COLUMN_NAME']) {
+				$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
+			}
 		}
 		
 		switch (strtolower($meta['DATA_TYPE'])) {
@@ -716,7 +724,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	protected function &_composeSelectPart(&$select)
 	{
-		$select->from($this->getTable());
+		if (empty($this->_fields)) {
+			$select->from($this->getTable());
+		} else {
+			$select->from($this->getTable(), array_flip($this->_fields));
+		}
 		
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
