@@ -51,15 +51,8 @@ class P4A_Link extends P4A_Widget
 	 */
 	public function __construct($name, $id = null)
 	{
-		$prefix = 'lnk';
-
-		if ($id === null) {
-			parent::__construct($name, $prefix);
-		} else {
-			parent::__construct($name, $prefix, $id);
-		}
-
-		$this->addAction("onClick");
+		parent::__construct($name, 'lnk', $id);
+		$this->addAction("onclick");
 	}
 
 	function setLabel($label)
