@@ -2,7 +2,6 @@
 - check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
 - port sample_i18n to the new translation system
-- spread about the new translation system so users start translate
 - try to detect the decimal format and use it during formatting
 - custom formatter for date/time/etc
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
