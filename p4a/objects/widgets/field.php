@@ -1225,7 +1225,7 @@
 					$action = 'executeEvent';
 				//}
 				$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
-				$this->intercept($this, 'onChange', 'redesign');
+				$this->intercept($this, 'onchange', 'redesign');
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
 				}
@@ -1375,7 +1375,7 @@
 					$action = 'executeEvent';
 				//}
 				$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
-				$this->intercept($this,'onChange','redesign');
+				$this->intercept($this,'onchange','redesign');
 
 				if (!$this->isEnabled()) {
 					$sReturn .= 'disabled="disabled" ';
