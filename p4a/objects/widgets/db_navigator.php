@@ -111,8 +111,8 @@ class P4A_DB_Navigator extends P4A_Widget
 	public function __construct($name)
 	{
 		parent::__construct($name);
-		$this->addAction("onClick");
-		$this->intercept($this, "onClick", "onClick");
+		$this->addAction("onclick");
+		$this->intercept($this, "onclick", "onClick");
 	}
 
 	/**
@@ -183,7 +183,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	function allowMovement(&$field)
 	{
 		$this->field_to_update_on_movement = $field->getId();
-		$this->intercept($field, 'onChange', 'onMovement');
+		$this->intercept($field, 'onchange', 'onMovement');
 	}
 
 	/**

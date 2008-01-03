@@ -196,7 +196,7 @@ class P4A_Menu_Item extends P4A_Widget
 	{
 		parent::__construct($name);
 		$this->setDefaultLabel();
-		$this->addAction('onClick');
+		$this->addAction('onclick');
 		$this->build("P4A_Collection", "items");
 	}
 

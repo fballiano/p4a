@@ -198,7 +198,7 @@
 		{
 			$this->addCol($column_name);
 			$this->cols->$column_name->setType('action');
-			$this->cols->$column_name->addAction('onClick');
+			$this->cols->$column_name->addAction('onclick');
 			$this->cols->$column_name->setLabel($this->cols->$column_name->getLabel());
 		}
 
@@ -946,7 +946,7 @@
 		public function __construct($name = 'rows')
 		{
 			parent::__construct($name);
-			$this->addAction('onClick');
+			$this->addAction('onclick');
 		}
 
 		/**

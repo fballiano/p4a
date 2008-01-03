@@ -66,8 +66,8 @@ class P4A_Tab_Pane extends P4A_Widget
 	{
 		parent::__construct($name);
 		$this->build("P4A_Collection", "pages");
-		$this->addAjaxAction("onClick");
-		$this->intercept($this, "onClick", "tabClick");
+		$this->addAjaxAction("onclick");
+		$this->intercept($this, "onclick", "tabClick");
 	}
 
 	/**
