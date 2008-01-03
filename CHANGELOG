@@ -85,6 +85,8 @@
 - P4A_DB_Source::__sleep() was turned into __wakeup()
 - P4A_Data_Field::setSchema() and getSchema() methods were added
 - P4A_DB_Source::getFieldName() now returns "schema.table.field" and can accept "schema.table.field" as a param
+- P4A_DB::getLikeOperator() and setLikeOperator() methods were dropped, they were not flexible enough to handle all DB insensitive "like" syntax
+- P4A_DB::getCaseInsensitiveLikeSQL() method was added
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

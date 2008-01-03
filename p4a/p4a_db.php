@@ -47,8 +47,6 @@ class P4A_DB
 	 */
 	protected $db_type = null;
 	
-	protected $like_operator = 'LIKE';
-	
 	/**
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
@@ -74,10 +72,6 @@ class P4A_DB
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oracle','pgsql','sqlite'))) {
 					p4a_error("db not supported");
-				}
-				
-				if ($dsn_data['scheme'] == 'pgsql') {
-					$$dbconn->like_operator = 'ILIKE';
 				}
 		
 				$$dbconn->db_type = $dsn_data['scheme'];
@@ -132,7 +126,7 @@ class P4A_DB
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				}
 				return $id;
-			case 'postgres':
+			case 'pgsql':
 			case 'oracle':
 				return $this->adapter->nextSequenceId($sequence_name);
 				break;
@@ -279,18 +273,20 @@ class P4A_DB
 	}
 	
 	/**
+	 * @param string $column_name
+	 * @param string $search_pattern
 	 * @return string
 	 */
-	public function getLikeOperator()
+	public function getCaseInsensitiveLikeSQL($column_name, $search_pattern)
 	{
-		return $this->like_operator;
-	}
-	
-	/**
-	 * @param string $value
-	 */
-	public function setLikeOperator($value)
-	{
-		$this->like_operator = $value;
+		switch ($this->db_type) {
+			case 'mysql':
+			case 'sqlite':
+				return "$column_name LIKE '$search_pattern'";
+			case 'pgsql':
+				return "$column_name ILIKE '$search_pattern'";
+			case 'oracle':
+				return "UPPER($column_name) LIKE UPPER('$search_pattern')";
+		}
 	}
 }
