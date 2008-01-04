@@ -87,6 +87,7 @@
 - P4A_DB::getLikeOperator() and setLikeOperator() methods were dropped, they were not flexible enough to handle all DB insensitive "like" syntax
 - P4A_DB::getCaseInsensitiveLikeSQL() method was added
 - P4A_Field::setFormat(), unsetFormat(), cleanNewValue() methods were removed
+- P4A_Object::actionHandler() methods now supports unlimited params instead of only one
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

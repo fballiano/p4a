@@ -178,20 +178,22 @@
 		/**
 		 * Handle an action implemented by the object.
 		 * @param string	The action to be handled.
-		 * @param mixed		Parameter that will be passed to the action handler.
 		 * @access private
 		 */
-		function actionHandler($action, $param = null)
+		function actionHandler($action)
 		{
 			$action = strtolower($action);
 			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
 				$method = $this->_map_actions[$action]['method'];
-				if ($param !== null){
-					eval('$return = $interceptor->' . $method . '($this,$param);');
-				} else {
-					eval('$return = $interceptor->' . $method . '($this);');
+				$arguments = func_get_args();
+				$arguments[0] =& $this;
+				$params = '';
+				foreach ($arguments as $k=>$v) {
+					$params .= "\$arguments[$k],";
 				}
+				$params = substr($params, 0, -1);
+				eval("\$return = \$interceptor->$method($params);");
 				return $return;
 			} else {
 				return null;
