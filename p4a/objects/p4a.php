@@ -519,9 +519,7 @@ class P4A extends P4A_Object
 			}
 			if ($this->_redesign_popup) {
 				if ($this->_popup) {
-					$popup =& p4a_mask::singleton($this->_popup);
-					$as_string = $popup->getAsString();
-
+					$as_string = p4a_mask::singleton($this->_popup)->getAsString();
 					$javascript_codes = array();
 					$javascript = "showPopup();\n\n";
 					$html = preg_replace("/{$script_detector}/si", '', $as_string);
