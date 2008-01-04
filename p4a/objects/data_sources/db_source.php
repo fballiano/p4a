@@ -297,9 +297,15 @@ class P4A_DB_Source extends P4A_Data_Source
 			case 'decimal':
 			case 'numeric':
 				$this->fields->$name->setType('decimal');
+				if (is_numeric($meta['SCALE'])) {
+					$this->fields->$name->setNumOfDecimals((int)$meta['SCALE']);
+				}
 				break;
 			case 'float':
 				$this->fields->$name->setType('float');
+				if (is_numeric($meta['SCALE'])) {
+					$this->fields->$name->setNumOfDecimals((int)$meta['SCALE']);
+				}
 				break;
 			default:
 				$this->fields->$name->setType('text');

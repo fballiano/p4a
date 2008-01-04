@@ -96,6 +96,11 @@ class P4A_Data_Field extends P4A_Object
 	 * @var integer
 	 */
 	protected $length = null;
+	
+	/**
+	 * @var integer
+	 */
+	protected $num_of_decimals = null;
 
 	/**
 	 * Sets value and new_value
@@ -247,5 +252,15 @@ class P4A_Data_Field extends P4A_Object
 	public function getLength()
 	{
 		return $this->length;
+	}
+	
+	public function setNumOfDecimals($num_of_decimals)
+	{
+		$this->num_of_decimals = $num_of_decimals;
+	}
+	
+	public function getNumOfDecimals()
+	{
+		return $this->num_of_decimals;
 	}
 }

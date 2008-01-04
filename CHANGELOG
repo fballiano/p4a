@@ -14,6 +14,7 @@
 - use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
+- deprecate and remove p4a_auto_maxlength
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -29,7 +30,7 @@
 - P4A_I18N time format/normalization now relies on Zend_Date and Zend_Locale
 - P4A_I18N::getCountry() was renamed to getRegion()
 - P4A_I18N::autoFormat() was renamed to format()
-- P4A_I18N::autoUnFormat() was renamed to format()
+- P4A_I18N::autoUnFormat() was renamed to normalize()
 - P4A_Number format/normalization class was removed
 - P4A_Date format/normalization class was removed
 - all P4A i18n format definition files were removed
@@ -90,6 +91,8 @@
 - P4A_Field now triggers onFormat and onNormalize events you can intercept to do custom format/normalize (your method must return the formatted/normalized value)
 - P4A_Field::unformat() method was renamed to normalize()
 - P4A_Field::getUnformattedNewValue() was renamed to getNormalizedNewValue()
+- P4A_Data_Field::setNumOfDecimals() and getNumOfDecimals() methods were added
+- P4A_Field::createDataField() methods now automatically calls P4A_Data_Field::setNumOfDecimals() setting the number of decimals detected from the DB structure
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
