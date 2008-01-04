@@ -44,68 +44,49 @@
 	class P4A_Field extends P4A_Widget
 	{
 		/**
-		 * Buttons collection.
-		 * @var array
-		 * @access private
+		 * @var P4A_Collection
 		 */
-		var $buttons = null;
+		public $buttons = null;
 
 		/**
-		 * Data source for the field.
-		 * @var data_source
-		 * @access private
+		 * @var P4A_Data_Source
 		 */
-		var $data = null;
+		protected $data = null;
 
 		/**
-		 * Data source for the field.
-		 * @var data_field
-		 * @access private
+		 * @var P4A_Data_Field
 		 */
-		var $data_field = null;
-
-		/**
-		 * Will be used for future implementations.
-		 * @var data_field
-		 * @access private
-		 */
-		var $data_member = null;
+		public $data_field = null;
 
 		/**
 		 * The data source member that contains the values for this field.
 		 * @var string
-		 * @access private
 		 */
-		var $data_value_field = null;
+		protected $data_value_field = null;
 
 		/**
 		 * The data source member that contains the descriptions for this field.
 		 * @var string
 		 * @access private
 		 */
-		var $data_description_field	= null;
+		protected $data_description_field	= null;
 
 		/**
-		 * Field type.
 		 * @var string
-		 * @access private
-		 * @see set_type()
 		 */
-		var $type = 'text';
+		protected $type = 'text';
 
 		/**
 		 * Max size in pixels for image thumbnail.
 		 * @var integer
-		 * @access private
 		 */
-		var $max_thumbnail_size = 100;
+		protected $max_thumbnail_size = 100;
 
 		/**
 		 * Defines if a SELECT has "none selected" record.
-		 * @var integer
-		 * @access private
+		 * @var boolean
 		 */
-		var $allow_null = false;
+		protected $allow_null = false;
 
 		/**
 		 * Defines the message for "none selected" record for select.
@@ -891,7 +872,7 @@
 				}
 
 				if (empty($value)) {
-					$value = $this->null_message;
+					$value = __($this->null_message);
 				}
 			}
 			return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
@@ -924,7 +905,7 @@
 
 			if ($this->isNullAllowed()) {
 				if ($this->null_message === null) {
-					$message = 'none selected';
+					$message = 'None Selected';
 				} else {
 					$message = $this->null_message;
 				}
