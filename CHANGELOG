@@ -2,7 +2,6 @@
 - check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
 - port sample_i18n to the new translation system
-- try to detect the decimal format and use it during formatting
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
 - auto addaction on intercept and implementmethod when the action is a browser action
@@ -15,6 +14,7 @@
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
 - deprecate and remove p4a_auto_maxlength
+- implement the "system message"
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -94,6 +94,7 @@
 - P4A_Data_Field::setNumOfDecimals() and getNumOfDecimals() methods were added
 - P4A_Field::createDataField() methods now automatically calls P4A_Data_Field::setNumOfDecimals() setting the number of decimals detected from the DB structure
 - P4A_I18N::format() method now has a third param "num_of_decimals", used only if type is float or decimal
+- P4A_Field::format() method now uses the P4A_Data_Field->getNumOfDecimals() to automatically format numbers the most coherent way
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

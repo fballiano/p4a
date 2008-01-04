@@ -647,18 +647,20 @@ class P4A_Field extends P4A_Widget
 	 * If formatting is turned of it does nothing.
 	 * @param mixed $value
 	 * @param string $type
+	 * @param integer $num_of_decimals
 	 * @return mixed
 	 */
-	protected function format($value, $type = null)
+	protected function format($value, $type = null, $num_of_decimals = null)
 	{
 		if ($type === null) $type = $this->data_field->getType();
+		if ($num_of_decimals === null) $num_of_decimals = $this->data_field->getNumOfDecimals();
 		
 		if ($this->isActionTriggered("onformat")) {
-			return $this->actionHandler("onformat", $value, $type);
+			return $this->actionHandler("onformat", $value, $type, $num_of_decimals);
 		} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
 			return $value;
 		} else {
-			return p4a::singleton()->i18n->format($value, $type);
+			return p4a::singleton()->i18n->format($value, $type, $num_of_decimals);
 		}
 	}
 
@@ -922,7 +924,7 @@ class P4A_Field extends P4A_Widget
 
 			$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 			if ($this->isFormatted()) {
-				$sContent .= htmlspecialchars($this->format($current[$description_field], $this->data->fields->$description_field->getType()));
+				$sContent .= htmlspecialchars($this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals()));
 			} else {
 				$sContent .= htmlspecialchars($current[$description_field]);
 			}
@@ -969,7 +971,7 @@ class P4A_Field extends P4A_Widget
 
 			$sReturn .= "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 			if ($this->isFormatted()) {
-				$sReturn .= htmlspecialchars($this->format($current[ $description_field ], $this->data->fields->$description_field->getType()));
+				$sReturn .= htmlspecialchars($this->format($current[ $description_field ], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals()));
 			} else {
 				$sReturn .= htmlspecialchars($current[$description_field]);
 			}
@@ -1091,7 +1093,7 @@ class P4A_Field extends P4A_Widget
 			$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 			$sContent .= "<label for='{$id}_{$key}input'>";
 			if ($this->isFormatted()) {
-				$sContent .= $this->format($current[$description_field], $this->data->fields->$description_field->getType());
+				$sContent .= $this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals());
 			} else {
 				$sContent .= $current[$description_field];
 			}
