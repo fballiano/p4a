@@ -129,20 +129,6 @@
 		var $formatted = true;
 
 		/**
-		 * The formatter class name for the data field.
-		 * @var string
-		 * @access private
-		 */
-		var $formatter_name = null;
-
-		/**
-		 * The format name for the data field.
-		 * @var string
-		 * @access private
-		 */
-		var $format_name = null;
-
-		/**
 		 * Path under P4A_UPLOADS_PATH where uploads happens.
 		 * @var string
 		 * @access private
@@ -345,17 +331,17 @@
 		 * @return string
 		 * @access public
 		 */
-        function getStringValue()
-        {
-            $value = $this->data_field->getValue();
-            if (is_array($value)) {
-                $sReturn = implode(', ', $value);
-                $sReturn = '{' . $sReturn . '}';
-                return $sReturn;
-            } else {
-                return $value;
-            }
-        }
+		function getStringValue()
+		{
+			$value = $this->data_field->getValue();
+			if (is_array($value)) {
+				$sReturn = implode(', ', $value);
+				$sReturn = '{' . $sReturn . '}';
+				return $sReturn;
+			} else {
+				return $value;
+			}
+		}
 
 		/**
 		 * Examines the value passed by the web form and set the new value.
@@ -411,14 +397,14 @@
 				if ($this->isFormattable() and $this->isFormatted()) {
 					$new_value = $this->format($new_value);
 				}
-            } elseif (is_array($new_value)) {
-                $new_value = $new_value[$index];
-            } elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
-                $tmp_value = substr($new_value, 1, -1);
-                $tmp_value = explode("," , $tmp_value);
-                $new_value = $tmp_value[$index];
-            } 
-            return $new_value;
+			} elseif (is_array($new_value)) {
+				$new_value = $new_value[$index];
+			} elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
+				$tmp_value = substr($new_value, 1, -1);
+				$tmp_value = explode("," , $tmp_value);
+				$new_value = $tmp_value[$index];
+			} 
+			return $new_value;
 		}
 
 		/**
@@ -445,15 +431,15 @@
 				// $new_value = null;
 			} elseif ($index === null) {
 				// $new_value = $new_value;
-            } elseif (is_array($new_value)) {
-                $new_value = $new_value[$index];
-            } elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
-                $tmp_value = substr($new_value, 1, -1);
-                $tmp_value = explode("," , $tmp_value);
-                $new_value = $tmp_value[$index];
-            }
+			} elseif (is_array($new_value)) {
+				$new_value = $new_value[$index];
+			} elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
+				$tmp_value = substr($new_value, 1, -1);
+				$tmp_value = explode("," , $tmp_value);
+				$new_value = $tmp_value[$index];
+			}
 
-            return $new_value;
+			return $new_value;
 		}
 
 		/**
@@ -660,7 +646,7 @@
 		 * Sets the field as formatted.
 		 * @access public
 		 */
-		function setFormatted( $value = true )
+		function setFormatted($value = true)
 		{
 			$this->formatted = $value;
 		}
@@ -675,55 +661,26 @@
 		}
 
 		/**
-		 * Sets the field formatter and format.
-		 * This also turns formatting on.<br>
-		 * Eg: set_format('numbers', 'decimal')
-		 * @access public
-		 * @param string	The formatter name.
-		 * @param string	The format name.
-		 */
-		function setFormat( $formatter_name, $format_name )
-		{
-			$this->formatter_name = $formatter_name;
-			$this->format_name = $format_name;
-			$this->setFormatted();
-		}
-
-		/**
-		 * Removes formatting options and turns formatting off.
-		 * @access public
-		 */
-		function unsetFormat()
-		{
-			$this->formatter_name = null;
-			$this->format_name = null;
-			$this->unsetFormatted();
-		}
-
-		/**
 		 * Format the given value using the current formatting options.
 		 * Empty values are not formatted.<br>
 		 * If formatting is turned of it does nothing.
-		 * @access private
-		 * @param string	The value to be formatted.
-		 * @return string
+		 * @param mixed $value
+		 * @param string $type
+		 * @return mixed
 		 */
-		function format( $value )
+		protected function format($value, $type = null)
 		{
-			if (is_array($value) or is_object($value)) {
-				return '';
+			if (is_array($value) or is_object($value) or strlen($value) == 0 or $value === null) {
+				return $value;
 			}
-
-			$p4a =& P4A::singleton();
-			if (strlen($value) > 0) {
-				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
-					$value = $p4a->i18n->{$this->formatter_name}->format($value, $p4a->i18n->{$this->formatter_name}->getFormat($this->format_name));
-				} else {
-					$value = $p4a->i18n->format($value, $this->data_field->getType());
-				}
+			
+			if ($type === null) $type = $this->data_field->getType();
+			
+			if ($this->isActionTriggered("onformat")) {
+				return $this->actionHandler("onformat");
+			} else {
+				return p4a::singleton()->i18n->format($value, $type);
 			}
-
-			return $value;
 		}
 
 		/**
@@ -748,24 +705,15 @@
 			return $value;
 		}
 
-		/**
-		 * Resets the "new_value".
-		 * @access public
-		 */
-        function cleanNewValue()
-        {
-			$this->setNewValue(null);
-        }
-
-        function getAutoMaxlength()
-        {
+		protected function getAutoMaxlength()
+		{
 			$length = $this->data_field->getLength();
 			if (P4A_AUTO_MAXLENGTH and $length and !isset($this->properties['maxlength'])) {
 				return " maxlength=\"$length\" ";
 			}
 
 			return '';
-        }
+		}
 
 		/**
 		 * Returns the HTML rendered field.
@@ -927,29 +875,29 @@
 		 */
 		function getAsLabel()
 		{
-            $header         = '<div class="field_as_label" ';
-            $close_header   = '>';
-            $footer         = '</div>';
-            $value			= '';
+			$header         = '<div class="field_as_label" ';
+			$close_header   = '>';
+			$footer         = '</div>';
+			$value			= '';
 
-            if ($this->data === null) {
+			if ($this->data === null) {
 				$value = nl2br(htmlspecialchars_decode($this->composeStringValue()));
-            } else {
+			} else {
 				$external_data		= $this->data->getAll() ;
 				$value_field		= $this->getSourceValueField() ;
 				$description_field	= $this->getSourceDescriptionField() ;
 
-    			foreach ($external_data as $key=>$current) {
-    				if ($current[$value_field] == $this->getNewValue()) {
-    					$value = $current[$description_field] ;
-    				}
-    			}
+				foreach ($external_data as $key=>$current) {
+					if ($current[$value_field] == $this->getNewValue()) {
+						$value = $current[$description_field] ;
+					}
+				}
 
-    			if (empty($value)) {
-    				$value = $this->null_message;
-    			}
-            }
-            return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
+				if (empty($value)) {
+					$value = $this->null_message;
+				}
+			}
+			return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header . $value . $footer ;
 		}
 
 		/**
@@ -996,7 +944,7 @@
 
 				$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 				if ($this->isFormatted()) {
-					$sContent .= htmlspecialchars($p4a->i18n->format($current[$description_field], $this->data->fields->$description_field->getType()));
+					$sContent .= htmlspecialchars($this->format($current[$description_field], $this->data->fields->$description_field->getType()));
 				} else {
 					$sContent .= htmlspecialchars($current[$description_field]);
 				}
@@ -1043,7 +991,7 @@
 
 				$sReturn .= "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
 				if ($this->isFormatted()) {
-					$sReturn .= htmlspecialchars($p4a->i18n->format($current[ $description_field ], $this->data->fields->$description_field->getType()));
+					$sReturn .= htmlspecialchars($this->format($current[ $description_field ], $this->data->fields->$description_field->getType()));
 				} else {
 					$sReturn .= htmlspecialchars($current[$description_field]);
 				}
@@ -1165,7 +1113,7 @@
 				$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 				$sContent .= "<label for='{$id}_{$key}input'>";
 				if ($this->isFormatted()) {
-					$sContent .= $p4a->i18n->format($current[$description_field], $this->data->fields->$description_field->getType());
+					$sContent .= $this->format($current[$description_field], $this->data->fields->$description_field->getType());
 				} else {
 					$sContent .= $current[$description_field];
 				}

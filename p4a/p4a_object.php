@@ -70,10 +70,9 @@
 		 */
 		var $_map_actions = array();
 
-		//todo
 		var $_objects = array();
 
-		//Helper Cache
+		//Helpers cache
 		var $_helpers = array();
 
 		/**
@@ -182,7 +181,7 @@
 		 * @param mixed		Parameter that will be passed to the action handler.
 		 * @access private
 		 */
-		function actionHandler($action, $param = NULL)
+		function actionHandler($action, $param = null)
 		{
 			$action = strtolower($action);
 			if (array_key_exists($action, $this->_map_actions)) {
@@ -241,7 +240,7 @@
 		 */
 		function isActionTriggered($action)
 		{
-			if (array_key_exists($action, $this->_map_actions)){
+			if (array_key_exists($action, $this->_map_actions)) {
 				return true;
 			} else {
 				return false;
@@ -267,11 +266,11 @@
 		 * @param mixed		Parameter that will be passed to the error handler.
 		 * @access private
 		 */
-		function errorHandler($action, $param = NULL)
+		function errorHandler($action, $param = null)
 		{
 			$p4a =& P4A::singleton();
-			$interceptor = NULL;
-			$method = NULL;
+			$interceptor = null;
+			$method = null;
 
 			if (array_key_exists($action, $this->_map_actions)) {
 				$interceptor =& $this->_map_actions[$action]['object'];
@@ -284,8 +283,8 @@
 				$method = $p4a->_map_actions['onError']['method'];
 			}
 
-			if ($interceptor !== NULL) {
-    			if ($param !== NULL) {
+			if ($interceptor !== null) {
+    			if ($param !== null) {
     				eval('$return = $interceptor->' . $method . '($param);');
     			} else {
     				eval('$return = $interceptor->' . $method . '();');
@@ -301,7 +300,7 @@
 			}
 		}
 
-		function void($params = NULL)
+		function void($params = null)
 		{
 			return $this->actionHandler('void', $params);
 		}
@@ -332,7 +331,7 @@
 			if (!$func) {
 				die("Method $name not found");
 			} else {
-				$this->_helpers[$name] = array($file,$func);
+				$this->_helpers[$name] = array($file, $func);
 			}
 
 		}
@@ -340,16 +339,16 @@
 		function __call($name, $args)
 		{
         	$name = strtolower($name);
-			if (!array_key_exists($name,$this->_helpers)) {
+			if (!array_key_exists($name, $this->_helpers)) {
 				$this->_loadHelper($name);
 			}
 
-			list($file,$func) = $this->_helpers[$name];
+			list($file, $func) = $this->_helpers[$name];
 			require_once $file;
 
          	// call the helper method
          	$a = array($this);
-         	array_push($a,$args);
-        	return call_user_func_array($func,$a);
+         	array_push($a, $args);
+        	return call_user_func_array($func, $a);
     	}
 	}
