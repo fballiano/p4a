@@ -36,7 +36,7 @@
  */
 
 //Main inclusion file
-require_once(dirname(__FILE__) . '/include.php');
+require_once dirname(__FILE__) . '/include.php';
 
 //Setting PHP error reporting
 if (P4A_EXTENDED_ERRORS) {
