@@ -161,9 +161,10 @@ class P4A_I18N
 	 * Reads a normalized value, localizes and returns it
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param integer $num_of_decimals used only if type is float or decimal
 	 * @return mixed
 	 */
-	public function format($value, $type)
+	public function format($value, $type, $num_of_decimals = null)
 	{
 		switch($type) {
 			case 'boolean':
@@ -179,9 +180,11 @@ class P4A_I18N
 			case 'integer':
 				return Zend_Locale_Format::toNumber($value, array('precision'=>0, 'locale'=>$this->_locale_engine));
 			case 'float':
-				return Zend_Locale_Format::toNumber($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
+				if ($num_of_decimals === null) $num_of_decimals = 3;
+				return Zend_Locale_Format::toNumber($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine));
 			case 'decimal':
-				return Zend_Locale_Format::toNumber($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
+				if ($num_of_decimals === null) $num_of_decimals = 2;
+				return Zend_Locale_Format::toNumber($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine));
 		}
 
 		return $value;

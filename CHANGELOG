@@ -93,6 +93,7 @@
 - P4A_Field::getUnformattedNewValue() was renamed to getNormalizedNewValue()
 - P4A_Data_Field::setNumOfDecimals() and getNumOfDecimals() methods were added
 - P4A_Field::createDataField() methods now automatically calls P4A_Data_Field::setNumOfDecimals() setting the number of decimals detected from the DB structure
+- P4A_I18N::format() method now has a third param "num_of_decimals", used only if type is float or decimal
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
