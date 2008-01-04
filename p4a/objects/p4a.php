@@ -820,4 +820,9 @@ class P4A extends P4A_Object
 		}
 		return $this->active_mask->focus_object_id;
 	}
+	
+	public function message($text, $icon = null)
+	{
+		$this->messages[] = array($text, $icon);
+	}
 }

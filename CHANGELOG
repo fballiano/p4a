@@ -99,6 +99,7 @@
 - P4A_Field::createDataField() methods now automatically calls P4A_Data_Field::setNumOfDecimals() setting the number of decimals detected from the DB structure
 - P4A_I18N::format() method now has a third param "num_of_decimals", used only if type is float or decimal
 - P4A_Field::format() method now uses the P4A_Data_Field->getNumOfDecimals() to automatically format numbers the most coherent way
+- P4A::message() method was added, you can use it to print out messages to users without having to instance any P4A_Message
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
