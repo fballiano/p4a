@@ -15,6 +15,7 @@
 - implement errors with exceptions
 - deprecate and remove p4a_auto_maxlength
 - implement the "system message"
+- review p4a_field for strange methods to clean up
 
 2.99.0
 - Zend Framework 1.0.3 was added
