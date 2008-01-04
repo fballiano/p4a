@@ -357,7 +357,7 @@
 			} elseif (($this->type == 'multicheckbox' or $this->type == 'multiselect') and $this->multivalue_separator and is_array($new_value)) {
 				$new_value = implode($this->multivalue_separator,$new_value);
 			} elseif ($this->isFormattable() and $this->isFormatted()) {
-				$new_value = $this->unformat($new_value);
+				$new_value = $this->normalize($new_value);
 			} elseif (($this->type == 'password') and ($new_value != P4A_PASSWORD_OBFUSCATOR)) {
 				switch ($this->getEncryptionType()) {
 					case 'md5':
@@ -423,7 +423,7 @@
 		 * @return string
 		 * @access public
 		 */
-		function getUnformattedNewValue($index = null)
+		function getNormalizedNewValue($index = null)
 		{
 			$new_value = $this->data_field->getNewValue();
 
@@ -670,41 +670,39 @@
 		 */
 		protected function format($value, $type = null)
 		{
-			if (is_array($value) or is_object($value) or strlen($value) == 0 or $value === null) {
-				return $value;
-			}
-			
 			if ($type === null) $type = $this->data_field->getType();
 			
 			if ($this->isActionTriggered("onformat")) {
-				return $this->actionHandler("onformat");
+				return $this->actionHandler("onformat", $value, $type);
+			} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
+				return $value;
 			} else {
 				return p4a::singleton()->i18n->format($value, $type);
 			}
 		}
 
 		/**
-		 * Takes the formatted passed value and takes it back to its unformatted form.
-		 * @access private
-		 * @param string	The formatted value.
-		 * @return string
-		 * @see P4A_Number::unformat()
-		 * @see P4A_Date::unformat()
+		 * Takes the formatted passed value and takes it back to its normalized form.
+		 * @param mixed $value
+		 * @param string $type
+		 * @return mixed
 		 */
-		function unformat( $value )
+		protected function normalize($value, $type = null)
 		{
-			$p4a =& P4A::singleton();
-			if (strlen($value) > 0) {
-				if (($this->formatter_name !== null) and ($this->format_name !== null)) {
-					$value = $p4a->i18n->{$this->formatter_name}->unformat( $value, $p4a->i18n->{$this->formatter_name}->getFormat( $this->format_name ) );
-				} else {
-					$value = $p4a->i18n->normalize( $value, $this->data_field->getType() );
-				}
+			if ($type === null) $type = $this->data_field->getType();
+			
+			if ($this->isActionTriggered("onformat")) {
+				return $this->actionHandler("onformat", $value, $type);
+			} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
+				return $value;
+			} else {
+				return p4a::singleton()->i18n->normalize($value, $type);
 			}
-
-			return $value;
 		}
 
+		/**
+		 * @return string
+		 */
 		protected function getAutoMaxlength()
 		{
 			$length = $this->data_field->getLength();
@@ -718,9 +716,8 @@
 		/**
 		 * Returns the HTML rendered field.
 		 * @return string
-		 * @access public
 		 */
-		function getAsString()
+		public function getAsString()
 		{
 			$id = $this->getId();
 			if (!$this->isVisible()) {

@@ -396,7 +396,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
 		$current = $this->source->fields->{$pk}->getValue();
-		$new_value = $field->getUnformattedNewValue();
+		$new_value = $field->getNormalizedNewValue();
 
 		$receiver_path = $this->getPath($new_value, $table, $pk);
 		foreach ($receiver_path as $record) {
