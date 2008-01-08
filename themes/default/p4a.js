@@ -78,6 +78,14 @@ function processAjaxResponse(response)
 	   			}
 	   		}
 		}
+		
+		var messages = response.getElementsByTagName('message');
+		if (messages.length > 0) {
+			for (i=0; i<messages.length; i++) {
+				$('<div>'+messages[i].firstChild.data+'</div>').appendTo('#p4a_messages');
+			}
+			p4a_messages_show();
+		}
 
 		if (window.fixPng) fixPng();
 	} catch (e) {
@@ -183,6 +191,25 @@ p4a_calendar_select = function (value_id, description_id)
 	);
 }
 
+p4a_messages_show = function ()
+{
+	$('#p4a_messages').slideDown('normal', function() {p4a_messages_timeout = setTimeout(p4a_messages_hide, 2000)});
+}
+
+p4a_messages_hide = function ()
+{
+	$('#p4a_messages').slideUp('normal', function () {$('#p4a_messages').empty()});
+}
+
 $(document).ajaxStart(function(request, settings){showLoading()});
 $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
+
+$(function () {
+	$('#p4a_messages').mouseover(function () {
+		clearTimeout(p4a_messages_timeout);
+	});
+	$('#p4a_messages').mouseout(function () {
+		p4a_messages_timeout = setTimeout(p4a_messages_hide, 500);
+	});
+});

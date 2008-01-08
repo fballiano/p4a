@@ -498,6 +498,10 @@ class P4A extends P4A_Object
 			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 			print "</widget>";
 		} else {
+			foreach ($this->messages as $message) {
+				print "\n<message>{$message[0]}</message>";
+			}
+			$this->messages = array();
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
 				$display = $object->isVisible() ? 'block' : 'none';
@@ -643,11 +647,7 @@ class P4A extends P4A_Object
 		$this->_redesign_popup = TRUE;
 	}
 
-	 /**
-	 * Sets the previous mask the active mask
-	 * @access public
-	 */
-     function showPrevMask()
+     public function showPrevMask()
      {
 		//Close opened popup
 		if ($this->_popup) {
@@ -661,11 +661,12 @@ class P4A extends P4A_Object
      	}
      }
 
-	 /**
-	 * Gets an instance of the previous mask
-	 * @access public
-	 */
-     function &getPrevMask()
+     /**
+      * Gets an instance of the previous mask
+      *
+      * @return P4A_Mask
+      */
+     public function &getPrevMask()
      {
 	 	$num_masks = sizeof($this->masks_history);
      	if ($num_masks > 0){
@@ -674,18 +675,16 @@ class P4A extends P4A_Object
      	}
      }
 
-	/**
-	 * Checks if the desidered mask is in the masks collection.
-	 * @param string		The mask's name.
-	 * @access private
-	 */
-	function maskExists($mask_name)
+     /**
+      * @param string $mask_name
+      * @return boolean
+      */
+	public function maskExists($mask_name)
 	{
-		if (array_key_exists($mask_name, $this->masks)){
+		if (array_key_exists($mask_name, $this->masks)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
@@ -703,14 +702,14 @@ class P4A extends P4A_Object
 		}
 	}
 
-	function &getObject($object_id)
+	public function &getObject($object_id)
 	{
 		if (array_key_exists($object_id, $this->objects)){
 			return $this->objects[$object_id];
-		} else {
-			$return = null;
-			return $return;
 		}
+		
+		$return = null;
+		return $return;
 	}
 
 	/**
@@ -802,16 +801,17 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Gets P4A version
-	 * @return string p4a version
-	 * @access public
+	 * @return string
 	 */
-	function getVersion()
+	public function getVersion()
 	{
 		return P4A_VERSION;
 	}
 
-	function getFocusedObjectId()
+	/**
+	 * @return string
+	 */
+	public function getFocusedObjectId()
 	{
 		if ($this->_popup) {
 			return p4a_mask::singleton($this->_popup)->focus_object_id;
@@ -819,6 +819,10 @@ class P4A extends P4A_Object
 		return $this->active_mask->focus_object_id;
 	}
 	
+	/**
+	 * @param string $text
+	 * @param string $icon
+	 */
 	public function message($text, $icon = null)
 	{
 		$this->messages[] = array($text, $icon);
