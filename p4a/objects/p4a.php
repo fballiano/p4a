@@ -498,10 +498,9 @@ class P4A extends P4A_Object
 			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 			print "</widget>";
 		} else {
-			foreach ($this->messages as $message) {
+			foreach ($this->getMessages() as $message) {
 				print "\n<message>{$message[0]}</message>";
 			}
-			$this->messages = array();
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
 				$display = $object->isVisible() ? 'block' : 'none';
@@ -826,5 +825,17 @@ class P4A extends P4A_Object
 	public function message($text, $icon = null)
 	{
 		$this->messages[] = array($text, $icon);
+	}
+	
+	/**
+	 * Returns all the messages and clean the queue
+	 *
+	 * @return array
+	 */
+	public function getMessages()
+	{
+		$messages = $this->messages;
+		$this->messages = array();
+		return $messages;
 	}
 }

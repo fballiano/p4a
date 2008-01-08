@@ -206,10 +206,14 @@ $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
 
 $(function () {
-	$('#p4a_messages').mouseover(function () {
+	var p4a_messages = $('#p4a_messages');
+	p4a_messages.mouseover(function () {
 		clearTimeout(p4a_messages_timeout);
 	});
-	$('#p4a_messages').mouseout(function () {
+	p4a_messages.mouseout(function () {
 		p4a_messages_timeout = setTimeout(p4a_messages_hide, 500);
 	});
+	if (p4a_messages.children().size() > 0) {
+		p4a_messages_show();
+	}
 });
