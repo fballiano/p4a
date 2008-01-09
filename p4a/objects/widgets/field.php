@@ -258,78 +258,60 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets the error message.
-	 * @param string				Error.
-	 * @access public
+	 * Sets the error message
+	 * @param string $error
 	 */
-	function setError($error = '')
+	public function setError($error = '')
 	{
 		$this->_error = $error;
 	}
 
 	/**
 	 * Returns the error message.
-	 * @access public
 	 */
-	function getError()
+	public function getError()
 	{
 		return $this->_error;
 	}
 
-	function setTooltip($text)
+	/**
+	 * @param string $text
+	 */
+	public function setTooltip($text)
 	{
 		$this->label->setTooltip($text);
 	}
 
-	function getTooltip()
+	/**
+	 * @return string
+	 */
+	public function getTooltip()
 	{
 		return $this->label->getTooltip();
 	}
 
 	/**
-	 * Returns the value for the field.
 	 * @return mixed
-	 * @access public
 	 */
-	function getValue()
+	public function getValue()
 	{
 		return $this->data_field->getValue();
 	}
 
 	/**
-	 * Returns the "value" for the field to make safe SQL query
+	 * Returns the "value" for the field to create safe SQL query
 	 * @return string
-	 * @access public
 	 */
-	function getSQLValue()
+	public function getSQLValue()
 	{
 		return $this->data_field->getSQLValue();
 	}
 
 	/**
-	 * Return the field's value always as string.
-	 * If the value is an array, it will be encoded in {value1, value2}
-	 * @return string
-	 * @access public
-	 */
-	function getStringValue()
-	{
-		$value = $this->data_field->getValue();
-		if (is_array($value)) {
-			$sReturn = implode(', ', $value);
-			$sReturn = '{' . $sReturn . '}';
-			return $sReturn;
-		} else {
-			return $value;
-		}
-	}
-
-	/**
 	 * Examines the value passed by the web form and set the new value.
-	 * @param mixed		The new value for the field.
-	 * @access public
+	 * @param mixed $new_value
 	 */
-	function setNewValue($new_value)
+	public function setNewValue($new_value)
 	{
 		$set = true;
 
@@ -362,11 +344,10 @@ class P4A_Field extends P4A_Widget
 
 	/**
 	 * Returns the "new_value" for the field (with locale formatting).
-	 * @param integer		If the value is an array that we can return only one element.
+	 * @param integer $index If the value is an array that we can return only one element.
 	 * @return string
-	 * @access public
 	 */
-	function getNewValue($index = null)
+	public function getNewValue($index = null)
 	{
 		$new_value = $this->data_field->getNewValue();
 
@@ -391,20 +372,18 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the "new_value" for the field to make safe SQL query
 	 * @return string
-	 * @access public
 	 */
-	function getSQLNewValue()
+	public function getSQLNewValue()
 	{
 		return $this->data_field->getSQLNewValue();
 	}
 
 	/**
 	 * Returns the "new_value" for the field (without locale formatting).
-	 * @param integer		If the value is an array that we can return only one element.
+	 * @param integer $index If the value is an array that we can return only one element.
 	 * @return string
-	 * @access public
 	 */
-	function getNormalizedNewValue($index = null)
+	public function getNormalizedNewValue($index = null)
 	{
 		$new_value = $this->data_field->getNewValue();
 
@@ -424,12 +403,10 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets the field's type.
-	 * @param strings		The type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|image|multiselect|multicheckbox).
-	 * @param strings		The multivalue separator		 
-	 * @access public
+	 * @param unknown_type $type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|image|multiselect|multicheckbox)
+	 * @param unknown_type $multivalue_separator
 	 */
-	function setType($type, $multivalue_separator = null)
+	public function setType($type, $multivalue_separator = null)
 	{
 		$p4a =& p4a::singleton();
 		if ($p4a->isHandheld() and $type == 'rich_textarea') {
@@ -465,14 +442,12 @@ class P4A_Field extends P4A_Widget
 			break;
 		}
 	}
-
+	
 	/**
 	 * Set type of encryption to use for password fields
-	 * (md5|none)
-	 *
-	 * @access	public
+	 * @param string $type (md5|none)
 	 */
-	function setEncryptionType($type) {
+	public function setEncryptionType($type) {
 		switch ($type) {
 			case 'md5':
 			case 'none':
@@ -487,23 +462,20 @@ class P4A_Field extends P4A_Widget
 	 * If we use fields like combo box we have to set a data source.
 	 * By default we'll take the data source primary key as value field
 	 * and the first fiels (not pk) as description.
-	 * @param data_source		The data source.
-	 * @access public
+	 * @param P4A_Data_Source $data_source
 	 */
-	function setSource(&$data_source)
+	public function setSource(&$data_source)
 	{
-		unset( $this->data ) ;
+		unset($this->data);
 		$this->data =& $data_source;
 
 		$pk = $this->data->getPk();
-
 		if (is_string($pk)) {
 			if ($this->getSourceValueField() === null) {
 				$this->setSourceValueField($pk);
 			}
 
-			if ($this->getSourceDescriptionField() === null)
-			{
+			if ($this->getSourceDescriptionField() === null) {
 				$num_fields = $this->data->fields->getNumItems();
 				$fields = $this->data->fields->getNames();
 				$pk = $this->getSourceValueField();
@@ -531,26 +503,20 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets what data source member is the keeper of the field's value.
-	 * @param string		The name of the data source member.
-	 * @access public
+	 * When the field has a source, this is used to know which source's field keeps the value to be used in this field
+	 * @param string $name
 	 */
-	function setSourceValueField( $name )
+	public function setSourceValueField($name)
 	{
-		// No controls if $name exists...
-		// too many controls may be too performance expensive.
 		$this->data_value_field = $name ;
 	}
 
 	/**
-	 * Sets what data source member is the keeper of the field's description.
-	 * @param string		The name of the data source member.
-	 * @access public
+	 * When the field has a source, this is used to know which source's field keeps the description to be displayed by this field
+	 * @param string $name
 	 */
-	function setSourceDescriptionField( $name )
+	public function setSourceDescriptionField($name)
 	{
-		// No controls if $name exists...
-		// too many controls may be too performance expensive
 		$this->data_description_field = $name ;
 		$this->setDefaultVisualizationProperties();
 	}
@@ -558,9 +524,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the name of the data source member that keeps the field's value.
 	 * @return string
-	 * @access public
 	 */
-	function getSourceValueField()
+	public function getSourceValueField()
 	{
 		return $this->data_value_field ;
 	}
@@ -568,30 +533,25 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the name of the data source member that keeps the field's description.
 	 * @return string
-	 * @access public
 	 */
-	function getSourceDescriptionField()
+	public function getSourceDescriptionField()
 	{
 		return $this->data_description_field ;
 	}
 
 	/**
-	 * Returns the field's type.
 	 * @return string
-	 * @access public
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->type;
 	}
 
 	/**
 	 * Returns the encryption type (for password fields)
-	 *
 	 * @return	string
-	 * @access	public
 	 */
-	function getEncryptionType() {
+	public function getEncryptionType() {
 		return $this->encryption_type;
 	}
 

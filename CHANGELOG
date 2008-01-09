@@ -105,6 +105,7 @@
 - P4A::getMessages() method was added to read and clean the messages queue
 - P4A::getMessages() method is now used to print out messages to users in a nice way
 - P4A_Field::setFormatted() and unsetFormatted() methods were removed, now you can use only isFormatted(true/false)
+- P4A_Field::getStringValue() method was removed
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
