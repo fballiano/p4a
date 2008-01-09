@@ -51,7 +51,7 @@ class Brands extends P4A_Mask
 
 		$this->fields->brand_id->disable();
 
-		$this->build("p4a_standard_toolbar", "toolbar");
+		$this->build("p4a_full_toolbar", "toolbar");
 		$this->toolbar->setMask($this);
 
 		$this->build("p4a_table", "table");

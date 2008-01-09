@@ -78,7 +78,7 @@ class Products extends P4A_Mask
 		$fs_search->anchorLeft($cmd_search);
 
 		// Toolbar
-		$this->build("p4a_standard_toolbar", "toolbar");
+		$this->build("p4a_full_toolbar", "toolbar");
 		$this->toolbar->setMask($this);
 
 		// Table
