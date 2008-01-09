@@ -107,6 +107,7 @@
 - P4A_Field::getStringValue() method was removed
 - P4A_Standard_Toolbar strange behaviour that automatically disables some buttons one certain conditions was removed
 - P4A_Standard_Toolbar was renamed to P4A_Full_Toolbar
+- P4A_AUTO_MAXLENGTH constant was removed because its feauture was troubleful 
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
