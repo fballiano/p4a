@@ -19,6 +19,8 @@
 - rename config.php to constants.php?
 - php5ize all components
 - style system messages and implement icon
+- style calendar
+- redo the css
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -102,6 +104,7 @@
 - P4A::message() method was added, you can use it to print out messages to users without having to instance any P4A_Message
 - P4A::getMessages() method was added to read and clean the messages queue
 - P4A::getMessages() method is now used to print out messages to users in a nice way
+- P4A_Field::setFormatted() and unsetFormatted() methods were removed, now you can use only isFormatted(true/false)
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

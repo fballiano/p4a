@@ -596,11 +596,10 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Returns true if the field is text or textarea.
-	 * @access public
+	 * Returns true if the field is text, textarea, label or date
 	 * @return boolean
 	 */
-	function isFormattable()
+	protected function isFormattable()
 	{
 		switch ($this->type) {
 			case 'label':
@@ -612,33 +611,18 @@ class P4A_Field extends P4A_Widget
 
 		return false;
 	}
-
+	
 	/**
-	 * Returns true if a formatting format for the field has been set.
-	 * @access public
+	 * Tells you if the field is formatted or not, also sets formatting on/off
+	 *
+	 * @param boolean $enable_formatting
 	 * @return boolean
 	 */
-	function isFormatted()
+	public function isFormatted($enable_formatting = null)
 	{
-		return $this->formatted;
-	}
-
-	/**
-	 * Sets the field as formatted.
-	 * @access public
-	 */
-	function setFormatted($value = true)
-	{
-		$this->formatted = $value;
-	}
-
-	/**
-	 * Sets the field as not formatted.
-	 * @access public
-	 */
-	function unsetFormatted()
-	{
-		$this->formatted = false;
+		if ($enable_formatting === null) return $this->formatted;
+		$this->formatted = $enable_formatting;
+		return $enable_formatting;
 	}
 
 	/**
