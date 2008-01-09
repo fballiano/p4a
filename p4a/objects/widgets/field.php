@@ -628,19 +628,6 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * @return string
-	 */
-	protected function getAutoMaxlength()
-	{
-		$length = $this->data_field->getLength();
-		if (P4A_AUTO_MAXLENGTH and $length and !isset($this->properties['maxlength'])) {
-			return " maxlength=\"$length\" ";
-		}
-
-		return '';
-	}
-
-	/**
 	 * Returns the HTML rendered field.
 	 * @return string
 	 */
@@ -694,7 +681,7 @@ class P4A_Field extends P4A_Widget
 			$header .= 'disabled="disabled" ';
 		}
 
-		$sReturn = $this->composeLabel() . $header . $this->getAutoMaxlength() . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 		if ($this->isEnabled() and is_object($this->data)) {
 			$sReturn .= "<script type='text/javascript'>\$(function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true});});</script>";
 		}
@@ -741,7 +728,7 @@ class P4A_Field extends P4A_Widget
 			$header .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
 		}
 
-		$sReturn = $this->composeLabel() . $header . $this->getAutoMaxlength() . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 		return $sReturn;
 	}
 
