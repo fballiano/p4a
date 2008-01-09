@@ -13,8 +13,6 @@
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
 - review p4a_field for strange methods to clean up
-- move include.php inside p4a.php?
-- rename config.php to constants.php?
 - php5ize all components
 - style system messages and implement icon
 - style calendar
@@ -108,6 +106,8 @@
 - P4A_Standard_Toolbar was renamed to P4A_Full_Toolbar
 - P4A_AUTO_MAXLENGTH constant was removed because its feauture was troubleful
 - P4A_Field::getAutoMaxLength() method was removed
+- include.php file content was moved to p4a.php and include.php file was removed
+- config.php file was renamed to constants.php, config makes users think they can change it but it should never be modified
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

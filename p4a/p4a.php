@@ -35,8 +35,87 @@
  * @package p4a
  */
 
-//Main inclusion file
-require_once dirname(__FILE__) . '/include.php';
+$dir = dirname(__FILE__);
+
+//Configuration container
+require_once "$dir/constants.php";
+
+// Changing inclusion path
+$include_path = explode(_SSS_, ini_get('include_path'));
+$dot_key = array_search('.', $include_path);
+unset($include_path[$dot_key]);
+$new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LIBRARIES_DIR . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries/pear' . _SSS_ . P4A_ROOT_DIR . '/p4a/libraries' . _SSS_ .  join(_SSS_, $include_path);
+ini_set('include_path', $new_include_path);
+
+//Libraries
+require_once "$dir/libraries/standard.php";
+require_once "$dir/libraries/check_configuration.php";
+require_once "$dir/libraries/pear/System.php";
+require_once "$dir/libraries/validate.php";
+require_once "$dir/libraries/p4a_db_select.php";
+require_once "$dir/libraries/p4a_db_table.php";
+
+//Core
+require_once "$dir/p4a_object.php";
+require_once "$dir/p4a_error.php";
+require_once "$dir/p4a_i18n.php";
+require_once "$dir/p4a_db.php";
+
+//Objects
+require_once "$dir/objects/p4a.php";
+require_once "$dir/objects/mask.php";
+require_once "$dir/objects/collection.php";
+require_once "$dir/objects/data_field.php";
+require_once "$dir/objects/data_source.php";
+require_once "$dir/objects/data_sources/db_source.php";
+require_once "$dir/objects/data_sources/array_source.php";
+require_once "$dir/objects/data_sources/dir_source.php";
+require_once "$dir/objects/widget.php";
+
+//Masks
+require_once "$dir/objects/masks/error.php";
+require_once "$dir/objects/masks/preview.php";
+
+//Widget Extensions
+require_once "$dir/objects/widgets/box.php";
+require_once "$dir/objects/widgets/button.php";
+require_once "$dir/objects/widgets/canvas.php";
+require_once "$dir/objects/widgets/db_navigator.php";
+require_once "$dir/objects/widgets/field.php";
+require_once "$dir/objects/widgets/frame.php";
+require_once "$dir/objects/widgets/image.php";
+require_once "$dir/objects/widgets/label.php";
+require_once "$dir/objects/widgets/line.php";
+require_once "$dir/objects/widgets/link.php";
+require_once "$dir/objects/widgets/menu.php";
+require_once "$dir/objects/widgets/message.php";
+require_once "$dir/objects/widgets/sheet.php";
+require_once "$dir/objects/widgets/toolbar.php";
+require_once "$dir/objects/widgets/table.php";
+require_once "$dir/objects/widgets/tab_pane.php";
+require_once "$dir/objects/widgets/frames/fieldset.php";
+
+//Toolbar Extensions
+require_once "$dir/objects/widgets/toolbars/actions.php";
+require_once "$dir/objects/widgets/toolbars/navigation.php";
+require_once "$dir/objects/widgets/toolbars/simple.php";
+require_once "$dir/objects/widgets/toolbars/full.php";
+require_once "$dir/objects/widgets/toolbars/quit.php";
+
+//External application inclusion
+if (defined("P4A_REQUIRE_APPLICATION")) {
+	if (strpos(P4A_REQUIRE_APPLICATION, "/") !== false) {
+		$objects_dir = P4A_REQUIRE_APPLICATION . '/objects';
+	} else {
+		$objects_dir = P4A_ROOT_DIR . '/applications/' . P4A_REQUIRE_APPLICATION . '/objects';
+	}
+	P4A_Include_Objects($objects_dir);
+}
+
+//Application inclusion
+if (P4A_ENABLE_AUTO_INCLUSION) {
+	P4A_Include_Objects(P4A_APPLICATION_DIR . '/objects');
+}
 
 //Setting PHP error reporting
 if (P4A_EXTENDED_ERRORS) {
