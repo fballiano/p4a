@@ -9,7 +9,6 @@
 - implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
-- remove P4A_Toolbar::getAsString() method with its strange behaviour?
 - use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
