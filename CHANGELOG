@@ -106,6 +106,8 @@
 - P4A::getMessages() method is now used to print out messages to users in a nice way
 - P4A_Field::setFormatted() and unsetFormatted() methods were removed, now you can use only isFormatted(true/false)
 - P4A_Field::getStringValue() method was removed
+- P4A_Standard_Toolbar strange behaviour that automatically disables some buttons one certain conditions was removed
+- P4A_Standard_Toolbar was renamed to P4A_Full_Toolbar
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

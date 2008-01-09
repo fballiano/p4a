@@ -131,7 +131,7 @@ require_once "$dir/objects/widgets/frames/fieldset.php";
 require_once "$dir/objects/widgets/toolbars/actions.php";
 require_once "$dir/objects/widgets/toolbars/navigation.php";
 require_once "$dir/objects/widgets/toolbars/simple.php";
-require_once "$dir/objects/widgets/toolbars/standard.php";
+require_once "$dir/objects/widgets/toolbars/full.php";
 require_once "$dir/objects/widgets/toolbars/quit.php";
 
 //External application inclusion
