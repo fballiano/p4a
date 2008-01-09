@@ -12,7 +12,6 @@
 - use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
-- deprecate and remove p4a_auto_maxlength
 - review p4a_field for strange methods to clean up
 - move include.php inside p4a.php?
 - rename config.php to constants.php?
