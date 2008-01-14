@@ -212,6 +212,15 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		
 		$db =& P4A_DB::singleton($this->getDSN());
+		
+		if ($this->getQuery()) {
+			$row = $db->getRow($this->getQuery());
+			foreach ($row as $column_name=>$column_value) {
+				$this->createDataField($column_name);
+			}
+			return;
+		}
+		
 		$select =& $this->_composeSelectStructureQuery();
 		$main_table = $this->getTable();
 		
@@ -359,7 +368,6 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function row($num_row = null, $move_pointer = true)
 	{
 		$db =& P4A_DB::singleton($this->getDSN());
-		$select =& $this->_composeSelectQuery();
 
 		if ($num_row === null) {
 			$num_row = $this->_pointer;
@@ -369,7 +377,12 @@ class P4A_DB_Source extends P4A_Data_Source
 			$num_row = 1;
 		}
 		
-		$select->limit(1, $num_row-1);
+		if ($this->getQuery()) {
+			$select = $db->adapter->limit($this->getQuery(), 1, $num_row-1);
+		} else {
+			$select =& $this->_composeSelectQuery();
+			$select->limit(1, $num_row-1);
+		}
 		$row = $db->adapter->fetchRow($select);
 
 		if ($move_pointer) {
@@ -417,25 +430,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		if ($this->_num_rows === null) {
 			$db =& P4A_DB::singleton($this->getDSN());
-			$group = $this->getGroup();
-			if (count($group)) {
-				$query = $this->_composeSelectCountQuery();
-				$result = $db->adapter->getCol($query);
-				if ($db->adapter->metaError()) {
-					$name = $this->getName();
-					p4a_error("query error retrieving number of rows for P4A_DB_Source \"{$name}\"");
-				}
-				$this->_num_rows = count($result);
-			} else {
-				if (!$this->getQuery() or ($this->_limit === null and $this->_offset === null)) {
-					$query = $this->_composeSelectCountQuery();
-					$result = $db->adapter->fetchOne($query);
-					$this->_num_rows = (int)$result;
-				} else {
-					$this->_num_rows = sizeof($this->getall());
-
-				}
-			}
+			$this->_num_rows = $db->adapter->fetchOne($this->_composeSelectCountQuery());
 		}
 
 		return $this->_num_rows;
@@ -643,7 +638,11 @@ class P4A_DB_Source extends P4A_Data_Source
 				$rows = array();
 			}
 		} else {
-			$select->limit($count, $from);
+			if (is_string($select)) {
+				$select = $db->adapter->limit($select, $count, $from);
+			} else {
+				$select->limit($count, $from);
+			}
 			$rows = $db->adapter->fetchAll($select);
 			if (!is_array($rows)) {
 				$rows = array();
@@ -656,47 +655,40 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function &_composeSelectCountQuery()
 	{
 		if ($this->getQuery()) {
-			$query = $this->getQuery();
-			$query = $this->_composeSelectCountPart() . " FROM ($query) AS p4a_count";
-		} else {
-			$db =& P4A_Db::singleton($this->getDSN());
-			$select =& $db->select();
-			$this->_composeSelectCountPart($select);
-			$this->_composeWherePart($select);
-			$this->_composeGroupPart($select);
+			return "SELECT count(*) p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
-
+		
+		$select =& P4A_DB::singleton($this->getDSN())->select();
+		$this->_composeSelectCountPart($select);
+		$this->_composeWherePart($select);
+		$this->_composeGroupPart($select);
 		return $select;
 	}
 	
 	protected function &_composeSelectStructureQuery()
 	{
 		if ($this->getQuery()) {
-			$query  = $this->getQuery();
-		} else {
-			$db =& P4A_Db::singleton($this->getDSN());
-			$select =& $db->select();
-			$this->_composeSelectPart($select);
-			$this->_composeWherePart($select);
-			$this->_composeGroupPart($select);
+			return "SELECT * FROM (". $this->getQuery() . ") p4a_structure";
 		}
-
+		
+		$select =& P4A_DB::singleton($this->getDSN())->select();
+		$this->_composeSelectPart($select);
+		$this->_composeWherePart($select);
+		$this->_composeGroupPart($select);
 		return $select;
 	}
 
 	protected function &_composeSelectQuery()
 	{
 		if ($this->getQuery()) {
-			$query =  $this->getQuery();
-		} else {
-			$db =& P4A_Db::singleton($this->getDSN());
-			$select =& $db->select();
-			$this->_composeSelectPart($select);
-			$this->_composeWherePart($select);
-			$this->_composeGroupPart($select);
-			$this->_composeOrderPart($select);
+			return "SELECT * FROM (". $this->getQuery() . ") p4a_select";
 		}
-
+		
+		$select =& P4A_DB::singleton($this->getDSN())->select();
+		$this->_composeSelectPart($select);
+		$this->_composeWherePart($select);
+		$this->_composeGroupPart($select);
+		$this->_composeOrderPart($select);
 		return $select;
 	}
 
