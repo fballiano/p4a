@@ -5,7 +5,6 @@
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
 - integrate p4a_base_mask in core and port samples to it
 - auto addaction on intercept and implementmethod when the action is a browser action
-- implement db_source::setquery, maybe separate db_sources?
 - implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
@@ -108,6 +107,7 @@
 - P4A_Field::getAutoMaxLength() method was removed
 - include.php file content was moved to p4a.php and include.php file was removed
 - config.php file was renamed to constants.php, config makes users think they can change it but it should never be modified
+- P4A_DB_Source::setQuery() was rewritten and now it's works again
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
