@@ -81,8 +81,9 @@ function processAjaxResponse(response)
 		
 		var messages = response.getElementsByTagName('message');
 		if (messages.length > 0) {
+			var new_messages_container = $('<div class="p4a_system_messages"></div>').appendTo(document.body);
 			for (i=0; i<messages.length; i++) {
-				$('<div>'+messages[i].firstChild.data+'</div>').appendTo('#p4a_messages');
+				$('<div class="p4a_system_message">'+messages[i].firstChild.data+'</div>').appendTo(new_messages_container);
 			}
 			p4a_messages_show();
 		}
@@ -193,12 +194,35 @@ p4a_calendar_select = function (value_id, description_id)
 
 p4a_messages_show = function ()
 {
-	$('#p4a_messages').slideDown('normal', function() {p4a_messages_timeout = setTimeout(p4a_messages_hide, 2000)});
+	if (typeof p4a_system_messages != 'undefined') {
+		return false;
+	}
+	p4a_system_messages = $('.p4a_system_messages');
+	if (p4a_system_messages.children().size() == 0) {
+		delete p4a_system_messages;
+		return false;
+	}
+	p4a_system_messages.mouseover(function () {
+		clearTimeout(p4a_messages_timeout);
+	});
+	p4a_system_messages.mouseout(function () {
+		p4a_messages_timeout = setTimeout(p4a_messages_hide, 500);
+	});
+	var left = ($(window).width() - p4a_system_messages.outerWidth()) / 2;
+	p4a_system_messages.css('left', left)
+	p4a_system_messages.css('top', $(window).scrollTop());
+	p4a_system_messages.slideDown('normal', function() {
+		p4a_messages_timeout = setTimeout(p4a_messages_hide, 2000);
+	});
 }
 
 p4a_messages_hide = function ()
 {
-	$('#p4a_messages').slideUp('normal', function () {$('#p4a_messages').empty()});
+	p4a_system_messages.slideUp('normal', function () {
+		p4a_system_messages.remove();
+		delete p4a_system_messages;
+		p4a_messages_show();
+	});
 }
 
 $(document).ajaxStart(function(request, settings){showLoading()});
@@ -206,14 +230,5 @@ $(document).ajaxStop(function(request, settings){hideLoading()});
 $(document).ajaxError(function(request, settings){ajaxError()});
 
 $(function () {
-	var p4a_messages = $('#p4a_messages');
-	p4a_messages.mouseover(function () {
-		clearTimeout(p4a_messages_timeout);
-	});
-	p4a_messages.mouseout(function () {
-		p4a_messages_timeout = setTimeout(p4a_messages_hide, 500);
-	});
-	if (p4a_messages.children().size() > 0) {
-		p4a_messages_show();
-	}
+	p4a_messages_show();
 });

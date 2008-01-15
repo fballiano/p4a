@@ -30,9 +30,9 @@
 <body onload="hideLoading()">
 <div id='body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
-<div id='p4a_messages'>
+<div class='p4a_system_messages'>
 	<?php foreach (P4A::singleton()->getMessages() as $message): ?>
-	<div><?php echo $message[0] ?></div>
+	<div class='p4a_system_message'><?php echo $message[0] ?></div>
 	<?php endforeach; ?>
 </div>
 <?php echo $this->maskOpen()?>

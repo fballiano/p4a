@@ -793,16 +793,17 @@ legend {
 
 
 
-#p4a_messages {
-	width: 100%;
-	margin: auto;
+.p4a_system_messages {
 	border: 2px solid black;
 	z-index: 10000;
 	background: white;
-	position: fixed;
-	top: 0;
-	padding: 20px;
+	position: absolute;
 	display: none;
+	width: 300px;
+}
+
+.p4a_system_message {
+	margin: 20px;
 }
 
 
