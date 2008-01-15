@@ -794,7 +794,7 @@ legend {
 
 
 .p4a_system_messages {
-	border: 2px solid black;
+	border: 2px solid #588FA3;
 	z-index: 10000;
 	background: white;
 	position: absolute;

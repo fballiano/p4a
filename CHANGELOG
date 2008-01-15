@@ -109,6 +109,7 @@
 - config.php file was renamed to constants.php, config makes users think they can change it but it should never be modified
 - P4A_DB_Source::setQuery() was rewritten and now it's works again
 - jQuery was updated to 1.2.2
+- javascript code for P4A system messages was rewritten from scratch
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

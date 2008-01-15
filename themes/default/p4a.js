@@ -52,11 +52,11 @@ function executeAjaxEvent(object_name, action_name, param1, param2, param3, para
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
-		success: function (response) {processAjaxResponse(response)}
+		success: p4a_process_ajax_response
 	});
 }
 
-function processAjaxResponse(response)
+p4a_process_ajax_response = function (response)
 {
 	try {
 		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
@@ -194,35 +194,22 @@ p4a_calendar_select = function (value_id, description_id)
 
 p4a_messages_show = function ()
 {
-	if (typeof p4a_system_messages != 'undefined') {
-		return false;
-	}
-	p4a_system_messages = $('.p4a_system_messages');
+	if ($('.p4a_system_messages:visible').size() > 0) return false;
+	var p4a_system_messages = $('.p4a_system_messages:hidden:first');
 	if (p4a_system_messages.children().size() == 0) {
-		delete p4a_system_messages;
+		p4a_system_messages.remove();
 		return false;
 	}
-	p4a_system_messages.mouseover(function () {
-		clearTimeout(p4a_messages_timeout);
-	});
-	p4a_system_messages.mouseout(function () {
-		p4a_messages_timeout = setTimeout(p4a_messages_hide, 500);
-	});
 	var left = ($(window).width() - p4a_system_messages.outerWidth()) / 2;
-	p4a_system_messages.css('left', left)
-	p4a_system_messages.css('top', $(window).scrollTop());
-	p4a_system_messages.slideDown('normal', function() {
-		p4a_messages_timeout = setTimeout(p4a_messages_hide, 2000);
-	});
-}
-
-p4a_messages_hide = function ()
-{
-	p4a_system_messages.slideUp('normal', function () {
-		p4a_system_messages.remove();
-		delete p4a_system_messages;
-		p4a_messages_show();
-	});
+	p4a_system_messages
+		.css('top', $(window).scrollTop())
+		.css('left', left)
+		.slideDown('normal')
+		.animate({opacity: 1.0}, 2000)
+		.slideUp('normal', function() {
+			$(this).remove();
+			p4a_messages_show();
+		});
 }
 
 $(document).ajaxStart(function(request, settings){showLoading()});
