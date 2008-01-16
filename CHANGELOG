@@ -13,7 +13,6 @@
 - implement errors with exceptions
 - review p4a_field for strange methods to clean up
 - php5ize all components
-- style system messages and implement icon
 - style calendar
 - redo the css
 

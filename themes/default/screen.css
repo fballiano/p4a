@@ -806,6 +806,12 @@ legend {
 	margin: 20px;
 }
 
+.p4a_system_message .icon, .p4a_system_message .text {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
 
 
 .p4a_button {

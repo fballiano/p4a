@@ -31,8 +31,8 @@
 <div id='body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <div class='p4a_system_messages'>
-	<?php foreach (P4A::singleton()->getMessages() as $message): ?>
-	<div class='p4a_system_message'><?php echo $message[0] ?></div>
+	<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
+	<div class='p4a_system_message'><?php echo $message ?></div>
 	<?php endforeach; ?>
 </div>
 <?php echo $this->maskOpen()?>

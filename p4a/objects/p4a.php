@@ -498,10 +498,8 @@ class P4A extends P4A_Object
 			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 			print "</widget>";
 		} else {
-			foreach ($this->getMessages() as $message) {
-				$icon = "";
-				if (strlen($message[1])) $icon = "<div class='icon'>{$message[1]}</div>";
-				print "\n<message>$icon<div class='text'>{$message[0]}</div></message>";
+			foreach ($this->getRenderedMessages() as $message) {
+				print "\n<message><![CDATA[$message]]></message>";
 			}
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
@@ -821,23 +819,46 @@ class P4A extends P4A_Object
 	}
 	
 	/**
+	 * Outputs a system message to user
 	 * @param string $text
 	 * @param string $icon
+	 * @param integer $icon_size
 	 */
-	public function message($text, $icon = null)
+	public function message($text, $icon = null, $icon_size = 32)
 	{
-		$this->messages[] = array($text, $icon);
+		$this->messages[] = array($text, $icon, $icon_size);
 	}
 	
 	/**
 	 * Returns all the messages and clean the queue
-	 *
 	 * @return array
 	 */
 	public function getMessages()
 	{
 		$messages = $this->messages;
 		$this->messages = array();
+		return $messages;
+	}
+	
+	/**
+	 * Returns HTML rendered system messages and clean the queue
+	 * @return array
+	 */
+	public function getRenderedMessages()
+	{
+		$messages = $this->getMessages();
+		foreach ($messages as &$message) {
+			$text = $message[0];
+			$icon = $message[1];
+			$icon_size = $message[2];
+			if (strlen($icon)) {
+				if (strpos($icon, '.') === false) {
+					$icon = P4A_ICONS_PATH . "/$icon_size/$icon";
+				}
+				$icon = "<div class='icon'><img src='$icon' alt='' /></div>";
+			}
+			$message = "$icon<div class='text'>$text</div>";
+		}
 		return $messages;
 	}
 }
