@@ -37,9 +37,24 @@
 
 class P4A_Message extends P4A_Widget
 {
+	/**
+	 * @var string
+	 */
 	protected $icon = 'warning';
+	
+	/**
+	 * @var integer
+	 */
 	protected $size = 48;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $auto_clear = true;
+	
+	/**
+	 * @var string
+	 */
 	protected $value = null;
 
 	public function getValue()
@@ -47,11 +62,17 @@ class P4A_Message extends P4A_Widget
 		return $this->value;
 	}
 
+	/**
+	 * @param string $value
+	 */
 	public function setValue($value = null)
 	{
 		$this->value = $value;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getAsString()
 	{
 		$id = $this->getId();
@@ -75,7 +96,7 @@ class P4A_Message extends P4A_Widget
 		}
 
 		if ($this->auto_clear) {
-			$this->setValue('');
+			$this->setValue();
 		}
 
 		if ($string) {
@@ -85,26 +106,41 @@ class P4A_Message extends P4A_Widget
 		}
 	}
 
+	/**
+	 * @param string $type
+	 */
 	public function setIcon($type = 'warning')
 	{
 		$this->icon = $type;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getIcon()
 	{
 		return $this->icon;
 	}
 
+	/**
+	 * @param integer $size
+	 */
 	public function setSize($size)
 	{
 		$this->size = $size;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getSize()
 	{
 		return $this->size;
 	}
 
+	/**
+	 * @param boolean $enable
+	 */
 	public function autoClear($enable = true)
 	{
 		$this->auto_clear = $enable;
