@@ -37,22 +37,22 @@
 
 class P4A_Message extends P4A_Widget
 {
-	var $icon = 'warning';
-	var $size = 48;
-	var $auto_clear = true;
-	var $value = null;
+	protected $icon = 'warning';
+	protected $size = 48;
+	protected $auto_clear = true;
+	protected $value = null;
 
-	function getValue()
+	public function getValue()
 	{
 		return $this->value;
 	}
 
-	function setValue($value = null)
+	public function setValue($value = null)
 	{
 		$this->value = $value;
 	}
 
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		$string = '';
@@ -85,27 +85,27 @@ class P4A_Message extends P4A_Widget
 		}
 	}
 
-	function setIcon($type = 'warning')
+	public function setIcon($type = 'warning')
 	{
 		$this->icon = $type;
 	}
 
-	function getIcon()
+	public function getIcon()
 	{
 		return $this->icon;
 	}
 
-	function setSize($size)
+	public function setSize($size)
 	{
 		$this->size = $size;
 	}
 
-	function getSize()
+	public function getSize()
 	{
 		return $this->size;
 	}
 
-	function autoClear($enable = true)
+	public function autoClear($enable = true)
 	{
 		$this->auto_clear = $enable;
 	}
