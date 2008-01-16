@@ -48,19 +48,17 @@ class P4A_Tab_Pane extends P4A_Widget
 {
    	/**
 	 * @var P4A_Collection
-	 * @access public
 	 */
-	var $pages = null;
+	public $pages = null;
 
 	/**
 	 * The name of current page
 	 * @var string
-	 * @access private
 	 */
-	var $_active_page = null;
+	protected $_active_page_name = null;
 
 	/**
-	 * @param string Object name (identifier)
+	 * @param string $name Object name (identifier)
 	 */
 	public function __construct($name)
 	{
@@ -72,10 +70,9 @@ class P4A_Tab_Pane extends P4A_Widget
 
 	/**
 	 * Builds a new page inside the pane
-	 * The new page is a P4A_Frame
-	 * @access public
+	 * @return P4A_Frame
 	 */
-	function &addPage($page_name, $label=null)
+	public function &addPage($page_name, $label=null)
 	{
 		$this->pages->build('p4a_frame', $page_name);
 		if ($label !== null) {
@@ -85,20 +82,19 @@ class P4A_Tab_Pane extends P4A_Widget
 	}
 
 	/**
-	 * Sets the name of currently page open
-	 * @access public
-	 * @param string, object
+	 * @param string|P4A_Frame $page
+	 * @return P4A_Frame
 	 */
-	function setActivePage($page)
+	public function &setActivePage($page)
 	{
 		if ($this->actionHandler('beforeSetActivePage') == ABORT) return ABORT;
 
 		switch (gettype($page)) {
 			case "string":
-				$this->_active_page = $page;
+				$this->_active_page_name = $page;
 				break;
 			case "object":
-				$this->_active_page = $page->getName();
+				$this->_active_page_name = $page->getName();
 				break;
 			default:
 				P4A_Error('P4A_Tab_pane "' . $this->getName() . '": unable to set "' . gettype($page) . '" as active page, reason: unsopported type');
@@ -106,24 +102,23 @@ class P4A_Tab_Pane extends P4A_Widget
 		}
 
 		if ($this->actionHandler('afterSetActivePage') == ABORT) return ABORT;
+		return $this->getActivePage();
 	}
 
 	/**
-	 * Returns the name of currently page open
-	 * @access public
-	 * @return object
+	 * @return P4A_Frame
 	 */
-	function &getActivePage()
+	public function &getActivePage()
 	{
 		if ($this->pages->getNumItems() == 0) {
 			$return = null;
 			return $return;
 		}
 
-		if (strlen($this->_active_page) and
-			isset($this->pages->{$this->_active_page}) and
-			is_object($this->pages->{$this->_active_page})) {
-			return $this->pages->{$this->_active_page};
+		if (strlen($this->_active_page_name) and
+			isset($this->pages->{$this->_active_page_name}) and
+			is_object($this->pages->{$this->_active_page_name})) {
+			return $this->pages->{$this->_active_page_name};
 		}
 
 		$this->pages->reset();
@@ -132,13 +127,17 @@ class P4A_Tab_Pane extends P4A_Widget
 		return $page;
 	}
 
-	function getActivePageName()
+	/**
+	 * @return string
+	 */
+	public function getActivePageName()
 	{
-		$page =& $this->getActivePage();
-		if ($page === null) return null;
-		return $page->getName();
+		return $this->_active_page_name;
 	}
 
+	/**
+	 * @return P4A_Frame
+	 */
 	function &nextPage()
 	{
 		if ($this->pages->getNumItems() == 0) {
@@ -157,7 +156,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				if ($page === null) {
 					return $active_page;
 				} else {
-					$this->setActivePage($page);
+					return $this->setActivePage($page);
 				}
 			}
 		}
@@ -165,9 +164,10 @@ class P4A_Tab_Pane extends P4A_Widget
 
 	/**
 	 * onClick event interceptor
-	 * @access private
+	 * @param P4A_Object $triggering_object
+	 * @param array $params
 	 */
-	function tabClick($triggering_object, $params)
+	public function tabClick($triggering_object, $params)
 	{
 		$this->setActivePage($params[0]);
 		$this->redesign();
@@ -175,17 +175,15 @@ class P4A_Tab_Pane extends P4A_Widget
 
 	/**
 	 * Returns the rendered HTML
-	 * @access public
+	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$active_page =& $this->getActivePage();
-		$active_page_name = $active_page->getName();
 		$height = $this->getHeight();
 		$this->setHeight(null);
 
@@ -197,7 +195,7 @@ class P4A_Tab_Pane extends P4A_Widget
 			if (!$page->isVisible()) continue;
 			$actions = $this->composeStringActions($page->getName());
 			$active = '';
-			if ($page->getName() == $active_page_name) {
+			if ($page->getName() == $this->_active_page_name) {
 				$active = "class='active'";
 			}
 			if (!strlen($page->getLabel())) {
@@ -207,7 +205,7 @@ class P4A_Tab_Pane extends P4A_Widget
 			$return .= "<li><a href='#' {$actions} {$active}>{$label}</a></li>";
 		}
 		$return .= "</ul>";
-		$return .= "<div class='tab_pane_page' style='height:$height'>" . $active_page->getAsString() . "</div>";
+		$return .= "<div class='tab_pane_page' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
 		$return .= "</div>";
 
 		$this->setHeight($height);
