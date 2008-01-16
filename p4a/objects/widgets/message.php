@@ -87,8 +87,11 @@ class P4A_Message extends P4A_Widget
 
 			$string  = "<dl class='message' $properties $actions>\n";
 			$string .= "<dt>";
-			if (!empty($icon)) {
-				$string .= "<img src='" . P4A_ICONS_PATH . "/$size/" . $this->getIcon()  . "." . P4A_ICONS_EXTENSION . "' width='$size' height='$size' alt='' />";
+			if (strlen($icon)) {
+				if (strpos($icon, '.') === false) {
+					$icon = P4A_ICONS_PATH . "/$size/$icon." . P4A_ICONS_EXTENSION;
+				}
+				$string .= "<img src='$icon' alt='' />";
 			}
 			$string .= "</dt>\n";
 			$string .= "<dd>$value</dd>\n";

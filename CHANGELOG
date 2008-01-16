@@ -15,6 +15,7 @@
 - php5ize all components
 - style calendar
 - redo the css
+- unify system message/p4a_message html/css?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -112,6 +113,7 @@
 - P4A_Message and P4A_Tab_Pane were php5ized
 - P4A_Tab_Pane::setActivePage() method now returns the active page
 - P4A_Tab_Pane::nextPage() method now returns the active page
+- P4A_Message::setIcon() now supports a path to an image instead of the icon name
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
