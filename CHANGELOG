@@ -15,7 +15,6 @@
 - php5ize all components
 - style calendar
 - redo the css
-- unify system message/p4a_message html/css?
 
 2.99.0
 - Zend Framework 1.0.3 was added
