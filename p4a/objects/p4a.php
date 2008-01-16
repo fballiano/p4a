@@ -499,7 +499,9 @@ class P4A extends P4A_Object
 			print "</widget>";
 		} else {
 			foreach ($this->getMessages() as $message) {
-				print "\n<message>{$message[0]}</message>";
+				$icon = "";
+				if (strlen($message[1])) $icon = "<div class='icon'>{$message[1]}</div>";
+				print "\n<message>$icon<div class='text'>{$message[0]}</div></message>";
 			}
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
