@@ -13,7 +13,6 @@
 - implement errors with exceptions
 - review p4a_field for strange methods to clean up
 - php5ize all components
-- style calendar
 - redo the css
 
 2.99.0
@@ -114,6 +113,7 @@
 - P4A_Tab_Pane::nextPage() method now returns the active page
 - P4A_Message::setIcon() now supports a path to an image instead of the icon name
 - P4A_Message and p4a->message HTML/CSS was unified
+- jQuery UI datepicker CSS was reworked
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

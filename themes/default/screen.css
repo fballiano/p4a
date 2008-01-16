@@ -748,28 +748,49 @@ legend {
 	color: HighlightText;
 }
 
-/***************/
-/* DATE PICKER */
-/***************/
 
-.datepicker_control, .datepicker_links {
- display: none
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*************************/
+/* jQuery UI date picker */
+/*************************/
+
+#datepicker_div {
+	border: 1px solid #588fa3;
 }
 
+.datepicker_control, .datepicker_links {
+	display: none;
+}
 
+.datepicker_header {
+	background: #777;
+}
 
+select.datepicker_newMonth, select.datepicker_newYear {
+	background: white;
+	color: #4b718a;
+	font-weight: normal;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+/***********************************/
+/* P4A_Message and system messages */
+/***********************************/
 
 .p4a_message {
 	width: 300px;
@@ -792,7 +813,7 @@ legend {
 }
 
 .p4a_system_messages {
-	border: 2px solid #588FA3;
+	border: 2px solid #588fa3;
 	z-index: 10000;
 	background: white;
 	position: absolute;
@@ -805,8 +826,9 @@ legend {
 	font-weight: normal;
 }
 
-
-
+/**************/
+/* P4A_Button */
+/**************/
 
 .p4a_button {
 	background: none;
