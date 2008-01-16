@@ -425,26 +425,6 @@ select {
 /* END MENU WIDGET */
 /*******************/
 
-.message {
-	width: 300px;
-	font-weight: bold;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.message dt {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.message dd {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: left;
-	color: black;
-}
-
 #sidebar_right {
 	border-left: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
@@ -791,7 +771,25 @@ legend {
 
 
 
+.p4a_message {
+	width: 300px;
+	font-weight: bold;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 
+.p4a_message dt {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.p4a_message dd {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	color: black;
+}
 
 .p4a_system_messages {
 	border: 2px solid #588FA3;
@@ -800,15 +798,11 @@ legend {
 	position: absolute;
 	display: none;
 	width: 300px;
+	padding: 20px;
 }
 
-.p4a_system_message {
-	margin: 20px;
-}
-
-.p4a_system_message .icon, .p4a_system_message .text {
-	display: table-cell;
-	vertical-align: middle;
+.p4a_system_messages .p4a_message {
+	font-weight: normal;
 }
 
 

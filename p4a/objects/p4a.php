@@ -855,9 +855,9 @@ class P4A extends P4A_Object
 				if (strpos($icon, '.') === false) {
 					$icon = P4A_ICONS_PATH . "/$icon_size/$icon." . P4A_ICONS_EXTENSION;
 				}
-				$icon = "<div class='icon'><img src='$icon' alt='' /></div>";
+				$icon = "<img src='$icon' alt='' />";
 			}
-			$message = "$icon<div class='text'>$text</div>";
+			$message = "<dl class='p4a_message'><dt>$icon</dt><dd>$text</dd></dl>";
 		}
 		return $messages;
 	}

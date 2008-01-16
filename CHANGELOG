@@ -114,6 +114,7 @@
 - P4A_Tab_Pane::setActivePage() method now returns the active page
 - P4A_Tab_Pane::nextPage() method now returns the active page
 - P4A_Message::setIcon() now supports a path to an image instead of the icon name
+- P4A_Message and p4a->message HTML/CSS was unified
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

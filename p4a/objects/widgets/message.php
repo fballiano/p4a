@@ -85,7 +85,7 @@ class P4A_Message extends P4A_Widget
 			$size = $this->getSize();
 			$margin = $size + 5;
 
-			$string  = "<dl class='message' $properties $actions>\n";
+			$string  = "<dl class='p4a_message' $properties $actions>\n";
 			$string .= "<dt>";
 			if (strlen($icon)) {
 				if (strpos($icon, '.') === false) {
