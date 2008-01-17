@@ -413,7 +413,6 @@ class P4A extends P4A_Object
 
 		if ($this->_in_ajax_call) {
 			$this->_action_history_id++;
-			$this->active_mask->main();
 			$this->raiseXMLResponse();
 		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
 			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {

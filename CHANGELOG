@@ -118,8 +118,6 @@
 - P4A_Message::setIcon() now supports a path to an image instead of the icon name
 - P4A_Message and p4a->message HTML/CSS was unified
 - jQuery UI datepicker CSS was reworked
-- a serious bug with P4A::main() was fixed, active_mask->main() method was not called within an ajax call
-- P4A_Mask::main() method now prints out the mask's HTML only if it's not within an ajax call
 - P4A_Generate_Widget_Layout_Table() global function was added to P4A's standard library, this creates an HTML table (1row, 2cols) useful when you've to output an image on a col and a text on the other col
 - HTML output for P4A_Message, P4A system messages and P4A_Button was rewritten using HTML tables because we need users to have the same browsing experience on all browsers
 

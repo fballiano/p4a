@@ -323,10 +323,8 @@
 		 */
 		public function main()
 		{
-			if (!P4A::singleton()->inAjaxCall()) {
-				header("Content-Type: text/html; charset=UTF-8");
-				echo $this->getAsString();
-			}
+			header("Content-Type: text/html; charset=UTF-8");
+			echo $this->getAsString();
 		}
 
 		/**
