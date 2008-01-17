@@ -132,9 +132,9 @@ class P4A_Button extends P4A_Widget
 			$label = null;
 		}
 		
-		$return = "<div><button class='p4a_button' id='$id' title='$title' " . $this->composeStringProperties();
-		if ($this->isEnabled()) $return .= $this->composeStringActions();
-		$return .= ">";
+		$header = "<button class='p4a_button' id='$id' title='$title' " . $this->composeStringProperties();
+		if ($this->isEnabled()) $header .= $this->composeStringActions();
+		$header .= ">";
 		
 		$icon = "";
 		if ($this->_icon != null and !$p4a->isHandheld()) {
@@ -153,8 +153,6 @@ class P4A_Button extends P4A_Widget
 			$icon = "<img src='$icon' alt=''>";
 		}
 		
-		$spacer = ($icon and $label) ? $spacer = "<span style='margin-left: 5px'></span>" : '';
-		$return .= $icon . $spacer . $label . "</button></div>";
-		return $return;
+		return $header . P4A_Generate_Widget_Layout_Table($icon, $label) . '</button>';
 	}
 }

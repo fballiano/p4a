@@ -15,8 +15,9 @@
 - php5ize all components
 - redo the css
 - style p4a_field as file
-- look at button style cause table-cell breaks opera
-- look at button to find it we can remove the wrapping div
+- p4a_toolbar on ie6 have too much bottom padding
+- after ajax call we've to use pngfix (system messages)
+- can we use a jquery pngfix?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -117,6 +118,10 @@
 - P4A_Message::setIcon() now supports a path to an image instead of the icon name
 - P4A_Message and p4a->message HTML/CSS was unified
 - jQuery UI datepicker CSS was reworked
+- a serious bug with P4A::main() was fixed, active_mask->main() method was not called within an ajax call
+- P4A_Mask::main() method now prints out the mask's HTML only if it's not within an ajax call
+- P4A_Generate_Widget_Layout_Table() global function was added to P4A's standard library, this creates an HTML table (1row, 2cols) useful when you've to output an image on a col and a text on the other col
+- HTML output for P4A_Message, P4A system messages and P4A_Button was rewritten using HTML tables because we need users to have the same browsing experience on all browsers
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)

@@ -788,28 +788,34 @@ select.datepicker_newMonth, select.datepicker_newYear {
 	font-weight: normal;
 }
 
+/***************************/
+/* P4A_Widget_Layout_Table */
+/***************************/
+
+table.p4a_widget_layout_table {
+	border-collapse: collapse;
+	margin: 0 auto;
+	text-align: left;
+}
+
+table.p4a_widget_layout_table td {
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+}
+
+table.p4a_widget_layout_table td.c1 {
+	width: 1px;
+	padding-right: 5px;
+}
+
 /***********************************/
 /* P4A_Message and system messages */
 /***********************************/
 
-.p4a_message {
-	width: 300px;
-	font-weight: bold;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.p4a_message dt {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.p4a_message dd {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: left;
+table.p4a_message td.c2 {
 	color: black;
+	font-weight: bold;
 }
 
 .p4a_system_messages {
@@ -819,10 +825,14 @@ select.datepicker_newMonth, select.datepicker_newYear {
 	position: absolute;
 	display: none;
 	width: 300px;
-	padding: 20px;
+	apadding: 20px;
 }
 
-.p4a_system_messages .p4a_message {
+.p4a_system_messages table.p4a_message {
+	margin: 10px 20px;
+}
+
+.p4a_system_messages table.p4a_message td.c2 {
 	font-weight: normal;
 }
 
@@ -835,14 +845,10 @@ select.datepicker_newMonth, select.datepicker_newYear {
 	border: 1px solid #fafafa;
 	cursor: pointer;
 	padding: 0;
+	overflow: visible; /* used to fix the IE stretched buttons bug */
 }
 
 .p4a_button:hover {
 	border: 1px solid #c6d3de;
 	background: white;
-}
-
-.p4a_button img {
-	display: table-cell;
-	vertical-align: middle;
 }

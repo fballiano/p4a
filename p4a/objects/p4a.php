@@ -413,6 +413,7 @@ class P4A extends P4A_Object
 
 		if ($this->_in_ajax_call) {
 			$this->_action_history_id++;
+			$this->active_mask->main();
 			$this->raiseXMLResponse();
 		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
 			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
@@ -857,7 +858,7 @@ class P4A extends P4A_Object
 				}
 				$icon = "<img src='$icon' alt='' />";
 			}
-			$message = "<dl class='p4a_message'><dt>$icon</dt><dd>$text</dd></dl>";
+			$message = P4A_Generate_Widget_Layout_Table($icon, $text, 'p4a_message');
 		}
 		return $messages;
 	}

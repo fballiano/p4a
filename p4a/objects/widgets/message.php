@@ -76,37 +76,30 @@ class P4A_Message extends P4A_Widget
 	public function getAsString()
 	{
 		$id = $this->getId();
-		$string = '';
+		$return = '';
 		if ($this->isVisible() and strlen($this->getValue())) {
 			$properties = $this->composeStringProperties();
 			$actions = $this->composeStringActions();
 			$value = $this->getValue();
 			$icon = $this->getIcon();
 			$size = $this->getSize();
-			$margin = $size + 5;
 
-			$string  = "<dl class='p4a_message' $properties $actions>\n";
-			$string .= "<dt>";
 			if (strlen($icon)) {
 				if (strpos($icon, '.') === false) {
 					$icon = P4A_ICONS_PATH . "/$size/$icon." . P4A_ICONS_EXTENSION;
 				}
-				$string .= "<img src='$icon' alt='' />";
+				$icon = "<img src='$icon' alt='' />";
 			}
-			$string .= "</dt>\n";
-			$string .= "<dd>$value</dd>\n";
-			$string .= "</dl>\n\n";
+			
+			$return = P4A_Generate_Widget_Layout_Table($icon, $value, "p4a_message", "id='$id' $properties $actions");
 		}
 
 		if ($this->auto_clear) {
 			$this->setValue();
 		}
 
-		if ($string) {
-			return "<span id='$id'>$string</span>";
-		} else {
-			return "<span id='$id' class='hidden'></span>";
-		}
+		if (!strlen($return)) return "<span id='$id' class='hidden'></span>";
+		return $return;
 	}
 
 	/**

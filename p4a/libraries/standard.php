@@ -387,13 +387,38 @@ function P4A_Is_Browser_Event($event)
 	return in_array(strtolower($event), $events);
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function P4A_Generate_Default_Label($string)
 {
 	return ucfirst(str_replace('_', ' ', $string));
 }
 
+/**
+ * @param string $string
+ * @param string $accesskey
+ * @return string
+ */
 function P4A_Highlight_AccessKey($string, $accesskey)
 {
 	if (strlen($accesskey) == 0) return $string;
 	return preg_replace("/($accesskey)/i", "<span class=\"accesskey\">$1</span>", $string);
+}
+
+/**
+ * @param string $column1
+ * @param string $column2
+ * @param string $additional_css_classes
+ * @param string $html_attributes
+ * @return string
+ */
+function P4A_Generate_Widget_Layout_Table($column1 = null, $column2 = null, $additional_css_classes = null, $html_attributes = null)
+{
+	if (!strlen($html_attributes) and !strlen($additional_css_classes)) {
+		if (!strlen($column1)) return $column2;
+		if (!strlen($column2)) return $column1;
+	}
+	return "<table class='p4a_widget_layout_table $additional_css_classes' $html_attributes><tr><td class='c1'>$column1</td><td class='c2'>$column2</td></tr></table>";
 }
