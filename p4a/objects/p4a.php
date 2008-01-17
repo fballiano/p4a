@@ -525,7 +525,7 @@ class P4A extends P4A_Object
 				if ($this->_popup) {
 					$as_string = p4a_mask::singleton($this->_popup)->getAsString();
 					$javascript_codes = array();
-					$javascript = "showPopup();\n\n";
+					$javascript = "p4a_popup_show();\n\n";
 					$html = preg_replace("/{$script_detector}/si", '', $as_string);
 					preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
 					$javascript_codes = $javascript_codes[1];
@@ -534,7 +534,7 @@ class P4A extends P4A_Object
 					}
 				} else {
 					$html = '';
-					$javascript = 'hidePopup();';
+					$javascript = 'p4a_popup_hide();';
 				}
 				print "<widget id='popup' display='inherit'>\n";
 				print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";

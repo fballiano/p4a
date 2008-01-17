@@ -121,13 +121,13 @@ function hideLoading()
 	$('#p4a_loading').hide();
 }
 
-function showPopup()
+p4a_popup_show = function ()
 {
 	p4a_popup = $('#popup');
 
 	p4a_popup.css('left', 100000).show();
 	var width = p4a_popup.width();
-	var top = $(window).scrollTop() + (($(window).height() - p4a_popup.height() - 100) / 2) + "px";
+	var top = $(window).scrollTop() + (($(window).height() - p4a_popup.outerHeight() - 100) / 2) + "px";
 	var left = (($(window).width() - p4a_popup.width()) / 2) + "px";
 	p4a_popup.hide();
 
@@ -138,7 +138,7 @@ function showPopup()
 	p4a_popup.jqm({modal:true}).jqmShow();
 }
 
-function hidePopup()
+p4a_popup_hide = function ()
 {
 	p4a_popup.jqmHide();
 }

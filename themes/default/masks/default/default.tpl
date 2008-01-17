@@ -89,7 +89,7 @@
 
 <?php if (strlen($_popup)): ?>
 <script type="text/javascript">
-showPopup();
+p4a_popup_show();
 </script>
 <?php endif; ?>
 
