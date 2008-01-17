@@ -35,8 +35,4 @@
  * @package p4a
  */
 
-	/**
-	 * The main p4a file.
-	 */
-
-	require_once dirname(__FILE__) . "/p4a/p4a.php";
+require_once dirname(__FILE__) . "/p4a/p4a.php";
