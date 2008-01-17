@@ -202,7 +202,7 @@ p4a_messages_show = function ()
 	}
 	var left = ($(window).width() - p4a_system_messages.outerWidth()) / 2;
 	p4a_system_messages
-		.css('top', $(window).scrollTop())
+		.css('top', $(window).scrollTop() + 20)
 		.css('left', left)
 		.fadeIn('normal')
 		.animate({opacity: 1.0}, 2000)
