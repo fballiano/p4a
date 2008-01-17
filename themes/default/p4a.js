@@ -204,10 +204,10 @@ p4a_messages_show = function ()
 	p4a_system_messages
 		.css('top', $(window).scrollTop())
 		.css('left', left)
-		.slideDown('normal')
+		.fadeIn('normal')
 		.animate({opacity: 1.0}, 2000)
-		.slideUp('normal', function() {
-			$(this).remove();
+		.fadeOut('normal', function() {
+			$(this).hide().remove();
 			p4a_messages_show();
 		});
 }
