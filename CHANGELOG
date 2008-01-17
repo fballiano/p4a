@@ -15,8 +15,6 @@
 - php5ize all components
 - redo the css
 - style p4a_field as file
-- p4a_toolbar on ie6 have too much bottom padding
-- after ajax call we've to use pngfix (system messages)
 - include jquery ajax queue manager?
 
 2.99.0
