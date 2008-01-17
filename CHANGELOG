@@ -14,6 +14,9 @@
 - review p4a_field for strange methods to clean up
 - php5ize all components
 - redo the css
+- style p4a_field as file
+- look at button style cause table-cell breaks opera
+- look at button to find it we can remove the wrapping div
 
 2.99.0
 - Zend Framework 1.0.3 was added
