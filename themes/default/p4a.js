@@ -87,8 +87,8 @@ p4a_process_ajax_response = function (response)
 			}
 			p4a_messages_show();
 		}
-
-		if (window.fixPng) fixPng();
+		
+		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 	} catch (e) {
 		ajaxError();
 	}

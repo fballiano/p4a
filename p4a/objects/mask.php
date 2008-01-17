@@ -798,7 +798,8 @@
 			$p4a_i18n =& p4a::singleton()->i18n;
 			$locale_engine = $p4a_i18n->getLocaleEngine();
 			
-			return '<script type="text/javascript">' .
+			return '<script type="text/javascript">' . "\n" .
+			'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 			'$(function() {' . "\n" .
 			'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
 			'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .

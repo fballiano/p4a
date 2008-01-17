@@ -3,7 +3,7 @@
 - implement application level translations
 - port sample_i18n to the new translation system
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
-- integrate p4a_base_mask in core and port samples to it
+- integrate p4a_base_mask in core and port samples to it, ok but remove messages
 - auto addaction on intercept and implementmethod when the action is a browser action
 - implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
@@ -17,7 +17,7 @@
 - style p4a_field as file
 - p4a_toolbar on ie6 have too much bottom padding
 - after ajax call we've to use pngfix (system messages)
-- can we use a jquery pngfix?
+- include jquery ajax queue manager?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -120,6 +120,8 @@
 - jQuery UI datepicker CSS was reworked
 - P4A_Generate_Widget_Layout_Table() global function was added to P4A's standard library, this creates an HTML table (1row, 2cols) useful when you've to output an image on a col and a text on the other col
 - HTML output for P4A_Message, P4A system messages and P4A_Button was rewritten using HTML tables because we need users to have the same browsing experience on all browsers
+- P4A's javascript PNG fix routine was dropped
+- jQuery::iFixPng 1.7 was introduced
 
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
