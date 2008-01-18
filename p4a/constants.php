@@ -93,10 +93,8 @@ if (!defined('P4A_ROOT_DIR')) {
 
 if (!defined('P4A_ROOT_PATH')) {
 	if (strpos(P4A_ROOT_DIR, P4A_SERVER_DIR) === false) {
-		define('P4A_IN_DOCUMENT_ROOT', false);
 		define('P4A_ROOT_PATH', '/p4a');
 	} else {
-		define('P4A_IN_DOCUMENT_ROOT', true);
 		define('P4A_ROOT_PATH', str_replace('\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR)));
 	}
 }
@@ -196,11 +194,7 @@ if (!defined('P4A_THEME_PATH')) {
 }
 
 if (!defined('P4A_THEME_DIR')) {
-	if (P4A_IN_DOCUMENT_ROOT) {
-		define('P4A_THEME_DIR', P4A_ROOT_DIR . _DS_ . 'themes' . _DS_ . P4A_THEME_NAME);
-	} else {
-		define('P4A_THEME_DIR', dirname(P4A_ROOT_DIR) . P4A_THEME_PATH);
-	}
+	define('P4A_THEME_DIR', P4A_ROOT_DIR . _DS_ . 'themes' . _DS_ . P4A_THEME_NAME);
 }
 
 //Image configuration
@@ -218,11 +212,7 @@ if (!defined('P4A_ICONS_PATH')) {
 }
 
 if (!defined('P4A_ICONS_DIR')) {
-	if (P4A_IN_DOCUMENT_ROOT) {
-		define('P4A_ICONS_DIR', P4A_ROOT_DIR . P4A_ICONS_PATH);
-	} else {
-		define('P4A_ICONS_DIR', dirname(P4A_ROOT_DIR) . P4A_ICONS_PATH);
-	}
+	define('P4A_ICONS_DIR', P4A_ROOT_DIR . _DS_ . 'icons' . _DS_ . P4A_ICONS_NAME);
 }
 
 if (!defined('P4A_ICONS_URL')) {

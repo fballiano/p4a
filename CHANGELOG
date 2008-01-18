@@ -120,6 +120,10 @@
 - P4A's javascript PNG fix routine was dropped
 - jQuery::iFixPng 1.7 was introduced
 
+2.2.4
+- rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
+- P4A_IN_DOCUMENT_ROOT was removed because it was never used
+
 2.2.3
 - a bug with P4A_Label was fixed ("for" property was erroneous with radio and file P4A_Field)
 - ajax file upload was disabled due to a strange bug we hope to solve with future releases of jQuery and its "form" module
