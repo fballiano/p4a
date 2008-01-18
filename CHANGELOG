@@ -119,6 +119,7 @@
 - HTML output for P4A_Message, P4A system messages and P4A_Button was rewritten using HTML tables because we need users to have the same browsing experience on all browsers
 - P4A's javascript PNG fix routine was dropped
 - jQuery::iFixPng 1.7 was introduced
+- P4A_THEMES_PATH and P4A_THEMES_DIR constants were dropped
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

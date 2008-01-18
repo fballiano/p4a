@@ -174,23 +174,13 @@ define('P4A_UPLOADS_TMP_PATH', P4A_UPLOADS_PATH . '/' . P4A_UPLOADS_TMP_NAME);
 define('P4A_UPLOADS_TMP_DIR', P4A_SERVER_DIR . P4A_UPLOADS_TMP_PATH);
 define('P4A_UPLOADS_TMP_URL', P4A_SERVER_URL . P4A_UPLOADS_TMP_PATH);
 
-//Themes Path
-if (!defined('P4A_THEMES_PATH')) {
-	define('P4A_THEMES_PATH', P4A_ROOT_PATH . '/themes');
-}
-
-//Themes Dir
-if (!defined('P4A_THEMES_DIR')) {
-	define('P4A_THEMES_DIR', P4A_ROOT_DIR . P4A_THEMES_PATH);
-}
-
 //Current Theme Configuration
 if (!defined('P4A_THEME_NAME')) {
 	define('P4A_THEME_NAME', 'default');
 }
 
 if (!defined('P4A_THEME_PATH')) {
-	define('P4A_THEME_PATH', P4A_THEMES_PATH . '/' . P4A_THEME_NAME);
+	define('P4A_THEME_PATH', P4A_ROOT_PATH . '/themes/' . P4A_THEME_NAME);
 }
 
 if (!defined('P4A_THEME_DIR')) {
