@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -13,7 +12,7 @@
 function p4a_mask_setTableAsSource($mask, $params)
 {
 	list($table, $pk) = $params;
-	$source =& $mask->build('p4a_db_source', 'source');
+	$source =& $mask->build('P4A_DB_Source', 'source');
 	$source->setTable($table);
 	$source->setPK($pk);
 	$source->load();

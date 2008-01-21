@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -10,15 +9,6 @@
  * @package p4a
  */
 
-/**
-* Build a tab_pane and anchor on frame
-* @access public
-* @param  string		The name of tab_pane
-* @param  string		The name of first page
-* @param  string		The name of second page
-* @param  string		The name of nth page
-* @return object
-*/
 function p4a_frame_anchorTabPane(&$obj, $params)
 {
 	$tab_pane_name = $params[0];
