@@ -36,31 +36,39 @@
  */
 
 /**
- * The box: renders raw HTML.
+ * The box: renders raw HTML
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
 class P4A_Box extends P4A_Widget
 {
-	var $value = null;
+	/**
+	 * @var string
+	 */
+	protected $value = null;
 
-	function getValue()
+	/**
+	 * @return string
+	 */
+	public function getValue()
 	{
 		return $this->value;
 	}
 
-	function setValue($value = null)
+	/**
+	 * @param string $value
+	 */
+	public function setValue($value = null)
 	{
 		$this->value = $value;
 	}
 	
 	/**
 	 * Retuns the HTML rendered button.
-	 * @access public
 	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
