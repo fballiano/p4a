@@ -76,7 +76,7 @@ class P4A_Toolbar extends P4A_Widget
 	 * @param string			The icon taken from icon set (file name without extension).
 	 * @see P4A_Button
 	 */
-	public function &addButton($button_name, $icon = NULL, $position = "left")
+	public function &addButton($button_name, $icon = null, $position = "left")
 	{
 		$this->buttons->build("p4a_button", $button_name);
 		$this->buttons->$button_name->setIcon($icon);
