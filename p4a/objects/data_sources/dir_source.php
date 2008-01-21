@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,66 +35,71 @@
  * @package p4a
  */
 
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
 class P4A_Dir_Source extends P4A_Data_Source
 {
 
-	var $_dir = NULL;
-	var $_cache_enabled = FALSE;
-	var $_scan_subdirs = FALSE;
-	var $_listing_subdirs = FALSE;
-	var $_files = array();
-	var $_is_loaded = FALSE;
+	protected $_dir = null;
+	protected $_cache_enabled = false;
+	protected $_scan_subdirs = false;
+	protected $_listing_subdirs = false;
+	protected $_files = array();
+	protected $_is_loaded = false;
 
 	public function __construct($name)
 	{
 		parent::__construct($name);
 		$this->build("P4A_Collection", "fields");
-		$this->fields->build("p4a_data_field", 'filename');
+		$this->fields->build("P4A_Data_Field", 'filename');
 		$this->setPk('filename');
 	}
 
-	function load($dir=NULL)
+	public function load($dir = null)
 	{
-		if ($dir !== NULL) {
+		if ($dir !== null) {
 			$this->setDir($dir);
 		}
 
-		if ($this->_cache_enabled == TRUE) {
+		if ($this->_cache_enabled == true) {
 			$files = array();
-			$this->_array = $this->_scanDir($this->_dir,$files);
+			$this->_array = $this->_scanDir($this->_dir, $files);
 		} else {
 			$this->_array = array();
 		}
 
-		$this->_is_loaded = TRUE;
+		$this->_is_loaded = true;
 	}
 
-	function reload()
+	public function reload()
 	{
 		$this->load();
 	}
 
-	function setDir($dir)
+	public function setDir($dir)
 	{
 		$this->_dir = $dir;
 	}
 
-	function getDir()
+	public function getDir()
 	{
 		return $this->_dir;
 	}
 
-	function scanSubDirs($scan_subdirs=TRUE)
+	public function scanSubDirs($scan_subdirs = true)
 	{
 		$this->_scan_subdirs = $scan_subdirs;
 	}
 
-	function listingSubDirs($listing_subdirs=TRUE)
+	public function listingSubDirs($listing_subdirs = true)
 	{
 		$this->_listing_subdirs = $listing_subdirs;
 	}
 
-	function enableCache($cache_enabled=TRUE)
+	public function enableCache($cache_enabled = true)
 	{
 		$this->_cache_enabled = $cache_enabled;
 		if ($this->_is_loaded) {
@@ -103,28 +107,27 @@ class P4A_Dir_Source extends P4A_Data_Source
 		}
 	}
 
-	function getAll()
+	public function getAll()
 	{
 		if ($this->_cache_enabled) {
 			return $this->_array();
 		} else {
 			$files = array();
-			return $this->_scanDir($this->_dir,$files);
+			return $this->_scanDir($this->_dir, $files);
 		}
 	}
 
-	function _scanDir($dir,&$files)
+	protected function _scanDir($dir, &$files)
 	{
-		if ($dir==$this->_dir or $dir == '') {
+		if ($dir == $this->_dir or $dir == '') {
 			$basepath = '';
 			$real_dir = $this->_dir;
 		} else {
-			$basepath = $dir . '/';
-			$real_dir = $this->_dir . '/' . $dir;
+			$basepath = "$dir/";
+			$real_dir = "{$this->_dir}/{$dir}";
 		}
 
 		$dh = opendir($real_dir);
-
 		while (false !== ($filename = readdir($dh))) {
 			if ($filename != '.' and $filename != '..') {
 				$filepath = $real_dir . '/' . $filename;

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,12 +35,21 @@
  * @package p4a
  */
 
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
 class P4A_Array_Source extends P4A_Data_Source
 {
-	var $_array = array();
-	var $fields = null;
+	protected $_array = array();
+	
+	/**
+	 * @var P4A_Collection
+	 */
+	public $fields = null;
 
-	function load($array)
+	public function load($array)
 	{
 		if (!is_object($this->fields)) {
 			$this->build("P4A_Collection", "fields");
@@ -73,9 +81,9 @@ class P4A_Array_Source extends P4A_Data_Source
 		}
 	}
 
-	function row($num_row = NULL, $move_pointer = TRUE)
+	public function row($num_row = null, $move_pointer = true)
 	{
-		if ($num_row !== NULL) {
+		if ($num_row !== null) {
 			$row = $this->_array[$num_row-1];
 		} else {
 			$num_row = $this->_pointer;
@@ -105,7 +113,7 @@ class P4A_Array_Source extends P4A_Data_Source
 		return $row;
 	}
 
-	function getAll($from = 0, $count = 0)
+	public function getAll($from = 0, $count = 0)
 	{
 		if ($this->getNumRows()==0) {
 			return array();
@@ -122,12 +130,12 @@ class P4A_Array_Source extends P4A_Data_Source
 		}
 	}
 
-	function getNumRows()
+	public function getNumRows()
 	{
 		return count($this->_array) - 1;
 	}
 
-	function getPkRow($pk)
+	public function getPkRow($pk)
 	{
 		foreach ($this->_array as $row) {
 			if ($row[$this->_pk] == $pk) {
@@ -137,7 +145,7 @@ class P4A_Array_Source extends P4A_Data_Source
 		return false;
 	}
 
-	function deleteRow()
+	public function deleteRow()
 	{
 		$pointer = $this->getRowNumber();
 		unset($this->_array[$pointer-1]);

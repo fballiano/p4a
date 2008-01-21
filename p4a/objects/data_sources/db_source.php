@@ -35,6 +35,11 @@
  * @package p4a
  */
 
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
 class P4A_DB_Source extends P4A_Data_Source
 {
 	protected $_DSN = "";
