@@ -65,9 +65,8 @@ class P4A_Field extends P4A_Widget
 	protected $data_value_field = null;
 
 	/**
-	 * The data source member that contains the descriptions for this field.
+	 * The data source member that contains the descriptions for this field
 	 * @var string
-	 * @access private
 	 */
 	protected $data_description_field	= null;
 
@@ -77,94 +76,75 @@ class P4A_Field extends P4A_Widget
 	protected $type = 'text';
 
 	/**
-	 * Max size in pixels for image thumbnail.
+	 * Max size in pixels for image thumbnail
 	 * @var integer
 	 */
 	protected $max_thumbnail_size = 100;
 
 	/**
-	 * Defines if a SELECT has "none selected" record.
+	 * Defines if a SELECT has "none selected" record
 	 * @var boolean
 	 */
 	protected $allow_null = false;
 
 	/**
-	 * Defines the message for "none selected" record for select.
-	 * @var integer
-	 * @access private
+	 * Defines the message for "none selected" record for select
+	 * @var string
 	 */
-	var $null_message = null;
+	protected $null_message = null;
 
 	/**
-	 * Field align.
+	 * Field alignment
 	 * @var string
-	 * @access private
 	 */
-	var $align = 'left';
+	protected $align = 'left';
 
 	/**
-	 * Tells if the fields content is formatted or not.
-	 * @var string
-	 * @access private
+	 * Tells if the fields content is formatted or not
+	 * @var boolean
 	 */
-	var $formatted = true;
+	protected $formatted = true;
 
 	/**
-	 * Path under P4A_UPLOADS_PATH where uploads happens.
+	 * Path under P4A_UPLOADS_PATH where uploads will be stored
 	 * @var string
-	 * @access private
 	 */
-	var $upload_subpath = null;
+	protected $upload_subpath = null;
 
 	/**
 	 * Type of encryption to use for password fields
-	 * @var		string
-	 * @access	private
+	 * @var string
 	 */
-	var $encryption_type = 'md5';
+	protected $encryption_type = 'md5';
 
 	/**
 	 * Is upload enabled on rich text area?
 	 * This is disabled by default for security reasons, enable it only after a well done permission check.
-	 * @var		boolean
-	 * @access	private
+	 * @var boolean
 	 */
-	var $upload = false;
+	protected $upload = false;
 
 	/**
-	 * rich textarea theme/toolbar (advanced|simple)
 	 * @var string
-	 * @access private
 	 */
-	var $rich_textarea_theme = 'Default';
-
-	/**
-	 * buttons for rich textarea toolbars
-	 * @var array
-	 * @access private
-	 */
-	var $rich_textarea_toolbars = array();
+	protected $rich_textarea_theme = 'Default';
 
 	/**
 	 * The error message
 	 * @var string
-	 * @access private
 	 */
-	var $_error = null;
+	protected $_error = null;
 	
 	/**
-	 * The multivalue separator
 	 * @var string
-	 * @access public
 	 */		
-	var $multivalue_separator = '';
+	protected $multivalue_separator = '';
 
 	/**
-	 * @param string				Mnemonic identifier for the object.
-	 * @param string				If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
-	 * @access private
+	 * @param string $name Mnemonic identifier for the object.
+	 * @param string $add_default_data_field If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 	 */
-	function __construct($name, $add_default_data_field = true)
+	public function __construct($name, $add_default_data_field = true)
 	{
 		parent::__construct($name, 'fld');
 		$this->setProperty('name', $this->getId());
@@ -172,30 +152,23 @@ class P4A_Field extends P4A_Widget
 		$this->build("p4a_collection", "buttons");
 		$this->setType('text');
 
-		//Data field
-		if ($add_default_data_field){
+		if ($add_default_data_field) {
 			$this->build("P4A_Data_Field", "data_field");
 		}
 
-		//Rich textarea things
-		$this->setRichTextareaToolbar(0, 'Cut,Copy,Paste,PasteText,PasteWord,-,Undo,Redo,-,Find,Replace,-,SelectAll,RemoveFormat,-,SourceSimple,FitWindow,Preview,Print');
-		$this->setRichTextareaToolbar(1, 'Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,OrderedList,UnorderedList,-,Outdent,Indent,-,FontFormat');
-		$this->setRichTextareaToolbar(2, 'Link,Unlink,Anchor,-,Image,Flash,-,Table,TableInsertRow,TableDeleteRows,TableInsertColumn,TableDeleteColumns,TableInsertCell,TableDeleteCells,TableMergeCells,TableSplitCell,-,Rule,SpecialChar');
-
-		//Label
 		$this->build("P4A_Label", "label");
 		$this->label->setProperty("for", $this->getId() . 'input');
 		$this->setDefaultLabel();
 	}
-
+	
 	/**
 	 * Sets a data field as current data_field.
 	 * This changes default text alignment for
 	 * integer, decimal, float, date, time to right.
-	 * @access public
-	 * @param DATA_FIELD		The new data field
+	 * 
+	 * @param P4A_Data_Field $data_field
 	 */
-	function setDataField(&$data_field)
+	public function setDataField(&$data_field)
 	{
 		unset($this->data_field);
 
@@ -215,11 +188,7 @@ class P4A_Field extends P4A_Widget
 		$this->setDefaultVisualizationProperties();
 	}
 
-	/**
-	 * Sets the default visualization property for the field.
-	 * @access private
-	 */
-	function setDefaultVisualizationProperties()
+	protected function setDefaultVisualizationProperties()
 	{
 		$visualization_data_type = null;
 		$source_description_field = $this->getSourceDescriptionField();
@@ -248,11 +217,9 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets the value for the field.
-	 * @param mixed				Value.
-	 * @access public
+	 * @param mixed $value
 	 */
-	function setValue($value)
+	public function setValue($value)
 	{
 		$this->data_field->setValue($value);
 	}
@@ -267,7 +234,8 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Returns the error message.
+	 * Returns the error message
+	 * @return string
 	 */
 	public function getError()
 	{
@@ -549,7 +517,7 @@ class P4A_Field extends P4A_Widget
 
 	/**
 	 * Returns the encryption type (for password fields)
-	 * @return	string
+	 * @return string
 	 */
 	public function getEncryptionType() {
 		return $this->encryption_type;
@@ -669,9 +637,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as '<input type="text"'.
 	 * @return string
-	 * @access public
 	 */
-	function getAsText()
+	public function getAsText()
 	{
 		$id = $this->getId();
 		$header 		= "<input id='{$id}input' type='text' class='border_color1 font_normal' ";
@@ -688,7 +655,10 @@ class P4A_Field extends P4A_Widget
 		return $sReturn;
 	}
 
-	function getAsDate()
+	/**
+	 * @return string
+	 */
+	public function getAsDate()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getId();
@@ -712,9 +682,8 @@ class P4A_Field extends P4A_Widget
 	 * Returns the HTML rendered field as '<input type="password"'.
 	 * We use P4A_PASSWORD_OBFUSCATOR for password value so the old password isn't sent over the net.
 	 * @return string
-	 * @access public
 	 */
-	function getAsPassword()
+	public function getAsPassword()
 	{
 		$id = $this->getId();
 		$header = "<input id='{$id}input' type='password' class='border_color1 font_normal' ";
@@ -735,9 +704,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as '<input type="textarea"'.
 	 * @return string
-	 * @access public
 	 */
-	function getAsTextarea()
+	public function getAsTextarea()
 	{
 		$id = $this->getId();
 		$cols = floor($this->getWidth() / 6) - 4;
@@ -759,9 +727,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as '<input type="textarea"' with rich text editing features.
 	 * @return string
-	 * @access public
 	 */
-	function getAsRichTextarea()
+	public function getAsRichTextarea()
 	{
 		$this->useTemplate('rich_textarea');
 		$this->addTempVar("connector", urlencode(P4A_APPLICATION_PATH . "/index.php?_rte_file_manager=1&_object_id=" . $this->getId()));
@@ -771,9 +738,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as '<input type="hidden"'.
 	 * @return string
-	 * @access public
 	 */
-	function getAsHidden()
+	public function getAsHidden()
 	{
 		$id = $this->getId();
 		return "<input type='hidden' id='{$id}input' " . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . " />";
@@ -782,9 +748,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as '<div>$value</div>'.
 	 * @return string
-	 * @access public
 	 */
-	function getAsLabel()
+	public function getAsLabel()
 	{
 		$header         = '<div class="field_as_label" ';
 		$close_header   = '>';
@@ -814,9 +779,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the HTML rendered field as combo box.
 	 * @return string
-	 * @access public
 	 */
-	function getAsSelect()
+	public function getAsSelect()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getId();
@@ -867,7 +831,10 @@ class P4A_Field extends P4A_Widget
 		return $this->composeLabel() . $header . $footer ;
 	}
 
-	function getAsMultiselect()
+	/**
+	 * @return string
+	 */
+	public function getAsMultiselect()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getID();
@@ -914,7 +881,10 @@ class P4A_Field extends P4A_Widget
 		return $this->composeLabel() . $sReturn;
 	}
 
-	function getAsMulticheckbox()
+	/**
+	 * @return string
+	 */
+	public function getAsMulticheckbox()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getID();
@@ -948,47 +918,44 @@ class P4A_Field extends P4A_Widget
 		return $this->composeLabel() . $sReturn;
 	}
 
+	/**
+	 * Use this method when you're creating a multivalue field which rely on a single db field instead of an external table
+	 * @param string $string
+	 */
 	function setMultivalueSeparator($string)
 	{
 		$this->multivalue_separator = $string;
 	}
 
 	/**
-	 * Used ony for select, sets the select to allow a "none selected" record.
-	 * @param string		The message for "none selected"
-	 * @access public
+	 * Used ony for select, sets the select to allow a "none selected" record
+	 * @param string|boolean $message If false disable the feature, otherwise enable it
 	 */
-	function allowNull($message = null)
+	public function allowNull($message = null)
 	{
-		$this->allow_null = true;
-		$this->null_message = $message;
+		if ($message === false) {
+			$this->allow_null = false;
+			$this->null_message = null;
+		} else {
+			$this->allow_null = true;
+			$this->null_message = $message;
+		}
 	}
 
 	/**
-	 * Used ony for select, sets the select to do not allow a "none selected" record.
-	 * @access public
-	 */
-	function noAllowNull()
-	{
-		$this->allow_null = false ;
-	}
-
-	/**
-	 * Used ony for select, returns if the select allows a "none selected" record.
+	 * Used ony for select, returns if the select allows a "none selected" record
 	 * @return boolean
-	 * @access public
 	 */
-	function isNullAllowed()
+	public function isNullAllowed()
 	{
-		return $this->allow_null ;
+		return $this->allow_null;
 	}
 
 	/**
-	 * Returns the HTML rendered field as radio buttons group.
+	 * Returns the HTML rendered field as radio buttons group
 	 * @return string
-	 * @access public
 	 */
-	function getAsRadio()
+	public function getAsRadio()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getId();
@@ -1039,11 +1006,10 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Returns the HTML rendered field as checkbox.
+	 * Returns the HTML rendered field as checkbox
 	 * @return string
-	 * @access public
 	 */
-	function getAsCheckbox()
+	public function getAsCheckbox()
 	{
 		$new_value = $this->getNewValue();
 
@@ -1068,11 +1034,10 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Returns the HTML rendered field as file upload.
+	 * Returns the HTML rendered field as file upload
 	 * @return string
-	 * @access public
 	 */
-	function getAsFile()
+	public function getAsFile()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getID();
@@ -1136,20 +1101,18 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Action handler for file deletetion.
-	 * @access public
+	 * Action handler for file deletetion
 	 */
-	function fileDeleteOnClick()
+	public function fileDeleteOnClick()
 	{
 		$this->redesign();
 		$this->setNewValue(null);
 	}
 
 	/**
-	 * Action handler for file preview (only images).
-	 * @access public
+	 * Action handler for file preview (only images)
 	 */
-	function filePreviewOnClick()
+	public function filePreviewOnClick()
 	{
 		$p4a =& p4a::singleton();
 		$p4a->openMask("P4A_Mask_Preview");
@@ -1164,10 +1127,9 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Action handler for file download.
-	 * @access public
+	 * Action handler for file download
 	 */
-	function fileDownloadOnClick()
+	public function fileDownloadOnClick()
 	{
 		$name = $this->getNewValue(0);
 		$src = P4A_UPLOADS_DIR . $this->getNewValue(1);
@@ -1190,39 +1152,27 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen.
-	 * @access public
-	 * @param string	The subdir (can be "test", "test/", "test/test", "test/test/test/")
+	 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen
+	 * @param string The subdir (can be "test", "test/", "test/test", "test/test/test/")
 	 */
-	function setUploadSubpath($subpath = null)
+	public function setUploadSubpath($subpath = null)
 	{
 		$this->upload_subpath = $subpath;
 	}
 
 	/**
-	 * Removes the subpath for upload.
-	 * @access public
+	 * @return string
 	 */
-	function unsetUploadSubpath()
-	{
-		$this->upload_subpath = null;
-	}
-
-	/**
-	 * Return the subpath for upload..
-	 * @access public
-	 */
-	function getUploadSubpath()
+	public function getUploadSubpath()
 	{
 		return $this->upload_subpath;
 	}
 
 	/**
-	 * Returns the HTML rendered field as image upload.
+	 * Returns the HTML rendered field as image upload
 	 * @return string
-	 * @access public
 	 */
-	function getAsImage()
+	public function getAsImage()
 	{
 		$p4a =& P4A::singleton();
 		$id = $this->getID();
@@ -1306,35 +1256,28 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Sets the maximum size for image thumbnails.
-	 * @param integer		Max size (width and height)
-	 * @access public
+	 * Sets the maximum size for image thumbnails
+	 * @param integer
 	 */
-	function setMaxThumbnailSize($size)
+	public function setMaxThumbnailSize($size = null)
 	{
 		$this->max_thumbnail_size = $size;
 	}
 
 	/**
-	 * Removes the maximum size for image thumbnails.
-	 * @access public
-	 */
-	function unsetMaxThumbnailSize()
-	{
-		$this->max_thumbnail_size = null;
-	}
-
-	/**
 	 * Returns the maximum size for image thumbnails.
 	 * @return integer
-	 * @access public
 	 */
-	function getMaxThumbnailSize()
+	public function getMaxThumbnailSize()
 	{
 		return $this->max_thumbnail_size;
 	}
 
-	function getAsColor()
+	/**
+	 * Renders the fields as a color picker
+	 * @return string
+	 */
+	public function getAsColor()
 	{
 		$p4a =& p4a::singleton();
 		$id = $this->getId();
@@ -1356,41 +1299,36 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Sets the label for the field.
 	 * In rendering phase it will be added with ':  '.
-	 * @param string	The string to set as label.
-	 * @access public
-	 * @see P4A_Widget::$label
+	 * @param string $value
 	 */
-	function setLabel($value)
+	public function setLabel($value)
 	{
 		$this->label->setLabel($value);
 	}
 
 	/**
-	 * Returns the label for the field.
+	 * Returns the label for the field
 	 * @return string
-	 * @access public
 	 */
-	function getLabel()
+	public function getLabel()
 	{
 		return $this->label->getLabel();
 	}
 
 	/**
-	 * Gets the HTML rendered field's label.
+	 * Renders the label to HTML
 	 * @return string
-	 * @access public
 	 */
-	function composeLabel()
+	protected function composeLabel()
 	{
 		return $this->label->getAsString();
 	}
 
 	/**
 	 * Sets the alignment property for the field.
-	 * @access public
-	 * @param string		The align property.
+	 * @param string $align
 	 */
-	function setAlign($align)
+	public function setAlign($align)
 	{
 		$this->align = $align;
 	}
@@ -1399,9 +1337,8 @@ class P4A_Field extends P4A_Widget
 	 * Composes a string containing all the HTML properties of the widget.
 	 * Note: it will also contain the name and the value.
 	 * @return string
-	 * @access public
 	 */
-	function composeStringProperties()
+	protected function composeStringProperties()
 	{
 		$sReturn = "";
 		foreach($this->properties as $property_name=>$property_value) {
@@ -1417,9 +1354,8 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Returns the field's value differently if we are in an '<input value="' environment on in a '<tag>value</tag>' environment.
 	 * @return string
-	 * @access public
 	 */
-	function composeStringValue()
+	protected function composeStringValue()
 	{
 		$value = $this->getNewValue();
 		if (is_array($value)) {
@@ -1443,62 +1379,36 @@ class P4A_Field extends P4A_Widget
 		}
 	}
 
-	function enableUpload($enable = true)
+	/**
+	 * Enables upload for rich_textarea fields
+	 * @param boolean $enable
+	 */
+	public function enableUpload($enable = true)
 	{
 		$this->upload = $enable;
 	}
 
-	function isUploadEnabled()
+	/**
+	 * @return boolean
+	 */
+	public function isUploadEnabled()
 	{
 		return $this->upload;
 	}
 
 	/**
 	 * sets the rich textarea theme (Basic|Default|Full)
-	 * @access public
 	 */
-	function setRichTextareaTheme($theme)
+	public function setRichTextareaTheme($theme)
 	{
 		$this->rich_textarea_theme = $theme;
 	}
 
 	/**
-	 * DOESN'T WORK WITH FCK
-	 * @access public
 	 * @return string
 	 */
-	function getRichTextareaTheme()
+	public function getRichTextareaTheme()
 	{
 		return $this->rich_textarea_theme;
-	}
-
-	/**
-	 * sets buttons for every richtextarea toolbar
-	 * @access public
-	 * @param integer the toolbar index (1|2|3)
-	 * @param string buttons in a comma separated list
-	 */
-	function setRichTextareaToolbar($index, $buttons)
-	{
-		$this->rich_textarea_toolbars[$index] = $buttons;
-	}
-
-	/**
-	 * @access public
-	 * @return string
-	 */
-	function getRichTextareaToolbar($index)
-	{
-		return $this->rich_textarea_toolbars[$index];
-	}
-
-	/**
-	 * returns all toolbars buttons
-	 * @access public
-	 * @return array
-	 */
-	function getRichTextareaToolbars()
-	{
-		return $this->rich_textarea_toolbars;
 	}
 }
