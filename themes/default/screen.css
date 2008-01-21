@@ -222,12 +222,6 @@ a.link_button:hover {
 	text-decoration: none;
 }
 
-.toolbar input {
-	font-weight: normal;
-	margin-top: 10px;
-	margin-right: 10px;
-}
-
 .hidden {
 	display: none;
 }
@@ -851,4 +845,20 @@ table.p4a_message td.c2 {
 .p4a_button:hover {
 	border: 1px solid #c6d3de;
 	background: white;
+}
+
+/***************/
+/* P4A_Toolbar */
+/***************/
+
+.p4a_toolbar_16 button {
+	height: 21px;
+}
+
+.p4a_toolbar_32 button {
+	height: 37px;
+}
+
+.p4a_toolbar_48 button {
+	height: 53px;
 }

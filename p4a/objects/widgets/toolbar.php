@@ -45,7 +45,7 @@
 class P4A_Toolbar extends P4A_Widget
 {
 	/**
-	 * Counts the number of separators/spacers in the toolbar.
+	 * Counts the number of separators/spacers in the toolbar
 	 * @var integer
 	 */
 	protected $separators_counter = 0;
@@ -53,7 +53,7 @@ class P4A_Toolbar extends P4A_Widget
 	/**
 	 * @var integer
 	 */
-	protected $_size = null;
+	protected $_size = 32;
 
 	/**
 	 * Buttons collection
@@ -186,13 +186,15 @@ class P4A_Toolbar extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
+		$size = $this->getSize();
 		$properties = $this->composeStringProperties();
-		$string   = "<div id='$id' class='toolbar' $properties >";
+		$class = $this->composeStringClass(array("p4a_toolbar", "p4a_toolbar_$size"));
+		$return = "<div id='$id' $class $properties>";
 		while($button =& $this->buttons->nextItem()) {
-			$string .= $button->getAsString();
+			$return .= $button->getAsString();
 		}
-		$string .= "<div class='br'></div>\n";
-		$string .= "</div>\n\n";
-		return $string;
+		$return .= "<div class='br'></div>\n";
+		$return .= "</div>\n\n";
+		return $return;
 	}
 }

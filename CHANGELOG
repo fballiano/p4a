@@ -1,5 +1,4 @@
 3.0.0 TODO
-- check p4a_button sizes when we have a toolbar with buttons with icons and without icons
 - implement application level translations
 - port sample_i18n to the new translation system
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php  
@@ -131,6 +130,8 @@
 - P4A_Object was php5ized
 - P4A_Button was php5ized
 - P4A_Widget::composeStringClassStyle() was rewritten and renamed to composeStringClass()
+- P4A_Toolbar default size is now 32
+- P4A_Button now inherits height from toolbar (just done via CSS)
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
