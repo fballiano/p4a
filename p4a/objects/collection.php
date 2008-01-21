@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -38,49 +37,54 @@
 
 class P4A_Collection extends P4A_Object
 {
-    var $_pointer = 0;
+	protected $_pointer = 0;
 
-    //todo: in caso di destroy di un elemento fare l'unset della chiave e ridurre l'array
-    function &nextItem()
-    {
-        $p4a =& P4A::singleton();
-        if ($this->_pointer < $this->getNumItems()) {
-            $id = $this->_objects[$this->_pointer];
-            $this->_pointer++;
-            if (!isset($p4a->objects[$id]) or !is_object($p4a->objects[$id])) {
-            	$this->_pointer--;
-            	unset($this->_objects[$this->_pointer]);
-            	$this->_objects = array_values($this->_objects);
-            	return $this->nextItem();
-            } else {
-            	return $p4a->objects[$id];
-            }
-        } else {
-            $this->_pointer = 0;
-            $ret = null; //php 4.4 fix
-            return $ret;
-        }
-    }
+	//todo: in caso di destroy di un elemento fare l'unset della chiave e ridurre l'array
+	public function &nextItem()
+	{
+		$p4a =& P4A::singleton();
+		if ($this->_pointer < $this->getNumItems()) {
+			$id = $this->_objects[$this->_pointer];
+			$this->_pointer++;
+			if (!isset($p4a->objects[$id]) or !is_object($p4a->objects[$id])) {
+				$this->_pointer--;
+				unset($this->_objects[$this->_pointer]);
+				$this->_objects = array_values($this->_objects);
+				return $this->nextItem();
+			} else {
+				return $p4a->objects[$id];
+			}
+		} else {
+			$this->_pointer = 0;
+			$ret = null; //php 4.4 fix
+			return $ret;
+		}
+	}
 
-    //todo
-    function getNumItems()
-    {
-        return count($this->_objects);
-    }
+	/**
+	 * @return integer
+	 */
+	public function getNumItems()
+	{
+		return count($this->_objects);
+	}
 
-    function reset()
-    {
-        $this->_pointer = 0;
-    }
+	public function reset()
+	{
+		$this->_pointer = 0;
+	}
 
-    function getNames()
-    {
-        $names = array();
+	/**
+	 * @return array
+	 */
+	public function getNames()
+	{
+		$names = array();
 
-        while ($item =& $this->nextItem()) {
-            $names[] = $item->getName();
-        }
+		while ($item =& $this->nextItem()) {
+			$names[] = $item->getName();
+		}
 
-        return $names;
-    }
+		return $names;
+	}
 }
