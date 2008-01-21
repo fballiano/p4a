@@ -130,6 +130,7 @@
 - P4A_Box was php5ized
 - P4A_Object was php5ized
 - P4A_Button was php5ized
+- P4A_Widget::composeStringClassStyle() was rewritten and renamed to composeStringClass()
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

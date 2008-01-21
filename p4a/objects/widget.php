@@ -616,16 +616,14 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Composes a string contaning the CSS class property for the widget.
+	 * Composes a string contaning the class property for the widget
+	 * @param array $classes
 	 * @return string
 	 */
-	protected function composeStringClassStyle()
+	protected function composeStringClass($classes = array())
 	{
-		$sClassStyle = '';
-		if ($this->class_style) {
-			$sClassStyle = 'class="' . $this->class_style . '" ';
-		}
-		return $sClassStyle;
+		if (empty($classes)) return '';
+		return 'class="' . join(' ', $classes) . '" ';
 	}
 
 	/**
