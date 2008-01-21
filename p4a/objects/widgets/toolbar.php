@@ -56,13 +56,13 @@ class P4A_Toolbar extends P4A_Widget
 	protected $_size = null;
 
 	/**
-	 * Buttons collection.
+	 * Buttons collection
 	 * @var array
 	 */
 	public $buttons = null;
 
 	/**
-	 * @param string				Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name)
 	{
@@ -71,9 +71,10 @@ class P4A_Toolbar extends P4A_Widget
 	}
 
 	/**
-	 * Istances a new p4a_button object and than adds it to the toolbar.
-	 * @param string			Mnemonic identifier for the object.
-	 * @param string			The icon taken from icon set (file name without extension).
+	 * Istances a new p4a_button object and than adds it to the toolbar
+	 * @param string $button_name Mnemonic identifier for the object
+	 * @param string $icon The icon taken from icon set (file name without extension)
+	 * @param string $position (left|right)
 	 * @see P4A_Button
 	 */
 	public function &addButton($button_name, $icon = null, $position = "left")
@@ -88,7 +89,9 @@ class P4A_Toolbar extends P4A_Widget
 	}
 
 	/**
-	 * Adds a separator image.
+	 * Adds a separator image
+	 * @param string $position (left|right)
+	 * @return P4A_Image
 	 */
 	public function &addSeparator($position = "left")
 	{
@@ -102,6 +105,10 @@ class P4A_Toolbar extends P4A_Widget
 	/**
 	 * Adds a P4A_Box object
 	 * @see P4A_Box
+	 * @param string $name
+	 * @param string $text
+	 * @param string $position (left|right)
+	 * @return P4A_Box
 	 */
 	public function &addBox($name, $text, $position = "left")
 	{
@@ -112,8 +119,10 @@ class P4A_Toolbar extends P4A_Widget
 	}
 
 	/**
-	 * Adds a spacer image of the desidered width.
-	 * @param integer		Width in pixel from the spacer.
+	 * Adds a spacer image of the desidered width
+	 * @param integer $width
+	 * @param string $position (left|right)
+	 * @return P4A_Image
 	 */
 	public function &addSpacer($width = 10, $position = "left")
 	{
@@ -146,6 +155,9 @@ class P4A_Toolbar extends P4A_Widget
 		}
 	}
 
+	/**
+	 * @param integer $size
+	 */
 	public function setSize($size)
 	{
 		$this->_size = $size;
@@ -155,13 +167,16 @@ class P4A_Toolbar extends P4A_Widget
 		}
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getSize()
 	{
 		return $this->_size;
 	}
 
 	/**
-	 * Returns the HTML rendered widget.
+	 * Returns the HTML rendered widget
 	 * @return string
 	 */
 	public function getAsString()
