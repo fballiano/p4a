@@ -46,16 +46,24 @@ class P4A_Button extends P4A_Widget
 {
 	/**
 	* The icon used by button, if null standard html button is used.
-	* @access private
 	* @var string
 	*/
-	var $_icon = null;
-	var $_size = 32;
-	var $_label_visible = false;
+	protected $_icon = null;
+	
+	/**
+	 * Height of the button
+	 * @var integer
+	 */
+	protected $_size = 32;
+	
+	/**
+	 * @var boolean
+	 */
+	protected $_label_visible = false;
 
 	/**
-	 * @param string			Mnemonic identifier for the object.
-	 * @param string			The icon taken from icon set (file name without extension).
+	 * @param string $name Mnemonic identifier for the object
+	 * @param string $icon The icon taken from icon set (file name without extension)
 	 */
 	public function __construct($name, $icon = null)
 	{
@@ -66,31 +74,33 @@ class P4A_Button extends P4A_Widget
 	}
 
 	/**
-	 * Sets the icon for the button.
-	 * @param string		The icon taken from icon set (file name without extension).
-	 * @access public
+	 * @param string $icon The icon taken from icon set (file name without extension) or path to an external image
 	 */
-	function setIcon($icon)
+	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
 	}
 
 	/**
-	 * Returns the icon for the button.
-	 * @access public
 	 * @return string
 	 */
-	function getIcon()
+	public function getIcon()
 	{
 		return $this->_icon;
 	}
 
-	function setSize($size)
+	/**
+	 * @param integer $size
+	 */
+	public function setSize($size)
 	{
 		$this->_size = strtolower($size);
 	}
 
-	function getSize()
+	/**
+	 * @return integer
+	 */
+	public function getSize()
 	{
 		return $this->_size;
 	}
@@ -103,18 +113,17 @@ class P4A_Button extends P4A_Widget
 	 * @param string $label
 	 * @param boolean $visible
 	 */
-	function setLabel($label, $visible = false)
+	public function setLabel($label, $visible = false)
 	{
 		parent::setLabel($label);
 		$this->_label_visible = $visible;
 	}
 
 	/**
-	 * Retuns the HTML rendered button.
-	 * @access public
+	 * Retuns the HTML rendered button
 	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
