@@ -13,6 +13,7 @@
 - php5ize all components (mask, p4a, widget)
 - redo the css
 - style p4a_field as file
+- check if p4a_validate can be ported to ZF
 
 2.99.0
 - Zend Framework 1.0.3 was added
