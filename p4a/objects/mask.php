@@ -219,16 +219,6 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Inizializes the mask.
-	 * It means that the 'init' function of the current mask's listener is called.
-	 * @access private
-	 */
-	function init()
-	{
-		$this->actionHandler('init');
-	}
-
-	/**
 	 * Shows the previous mask.
 	 */
 	public function showPrevMask()
