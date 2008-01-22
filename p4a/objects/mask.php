@@ -44,112 +44,110 @@
 class P4A_Mask extends P4A_Object
 {
    	/**
-	 * The mask's data source.
-	 * @var mixed
-	 * @access public
+	 * The mask's data source
+	 * @var P4A_Data_Source
 	 */
-	var $data = null;
+	private $data = null;
 
    	/**
 	 * The fields collection
-	 * @var array
-	 * @access public
+	 * @var P4A_Collection
 	 */
 	public $fields = null;
 
 	/**
 	 * Store the external fields' object_id
 	 * @var array
-	 * @access private
 	 */
-	var $external_fields = array();
+	private $external_fields = array();
 
    	/**
 	 * Keeps the association between actions events and actions.
 	 * @var array
-	 * @access public
 	 */
-	var $map_actions = array();
+	private $map_actions = array();
 
    	/**
-	 * Mask's title.
 	 * @var string
-	 * @access private
 	 */
-	var $title = null;
-
-   	/**
-	 * Stores opening code for form.
-	 * @var string
-	 * @access private
-	 */
-	var $sOpen = null;
+	private $title = null;
 
 	/**
 	 * The id of the object with active focus
 	 * @var string
-	 * @access private
 	 */
-	var $focus_object_id = null;
+	private $focus_object_id = null;
 
 	/**
-	 * Currently used template name.
+	 * Currently used template name
 	 * @var string
 	 */
-	protected $template_name = null;
+	private $template_name = null;
 
 	/**
-	 * CSS container.
+	 * CSS files to be added to the mask's HTML
 	 * @var array
 	 */
-	protected $_css = array();
+	private $_css = array();
 
 	/**
 	 * Temporary javascript container.
-	 * These javascripts are rendered and removed
+	 * These javascripts are rendered and removed.
 	 * @var array
 	 */
-	protected $_temp_javascript = array();
+	private $_temp_javascript = array();
 
 	/**
 	 * Temporary CSS container.
-	 * These CSS are rendered and removed
+	 * These CSS are rendered and removed.
 	 * @var array
 	 */
-	protected $_temp_css = array();
+	private $_temp_css = array();
 
 	/**
 	 * Temporary variables container.
-	 * These vars are usally in the templates, removed after main
+	 * These vars are usally in the templates, removed after main.
 	 * @var array
 	 */
-	protected $_temp_vars = array();
+	private $_temp_vars = array();
 
 	/**
-	 * javascript container.
+	 * javascript container
 	 * @var array
 	 */
-	protected $_javascript = array();
+	private $_javascript = array();
 
 	/**
 	 * variables used for templates
 	 * @var array
 	 */
-	protected $_tpl_vars = array();
-
-	var $is_popup = false;
-
-	var $_icon = null;
-	var $_icon_size = 48;
-
-	var $close_popup_button = null;
+	private $_tpl_vars = array();
 
 	/**
-	 * @param string Object name (identifier).
+	 * @var boolean
+	 */
+	private $is_popup = false;
+
+	/**
+	 * @var string
+	 */
+	private $_icon = null;
+	
+	/**
+	 * @var integer
+	 */
+	private $_icon_size = 48;
+
+	/**
+	 * @var P4A_Button
+	 */
+	public $close_popup_button = null;
+
+	/**
+	 * @param string $name Object name (identifier)
 	 */
 	public function __construct($name = null)
 	{
-		$p4a =& p4a::singleton();
 		if ($name == null) {
 			$name = get_class($this);
 		}
@@ -157,11 +155,11 @@ class P4A_Mask extends P4A_Object
 		$name = strtolower($name);
 		parent::__construct($name, 'ma');
 
-		$this->build("p4a_collection", "fields");
-		$this->build("p4a_button", "close_popup_button");
-		$this->close_popup_button->addAjaxAction("onClick");
+		$this->build("P4A_Collection", "fields");
+		$this->build("P4A_Button", "close_popup_button");
+		$this->close_popup_button->addAjaxAction("onclick");
 		$this->close_popup_button->setIcon("exit");
-		$p4a->intercept($this->close_popup_button, "onClick", "closePopup");
+		P4A::singleton()->intercept($this->close_popup_button, "onclick", "closePopup");
 
 		$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 		$this->useTemplate('default');
@@ -198,7 +196,6 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Sets the focus on object
-	 *
 	 * @param object $object
 	 */
 	public function setFocus($object = null)
@@ -219,7 +216,7 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Shows the previous mask.
+	 * Shows the previous mask
 	 */
 	public function showPrevMask()
 	{
@@ -228,7 +225,8 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Get the previous mask.
+	 * Get the previous mask
+	 * @return P4A_Mask
 	 */
 	public function &getPrevMask()
 	{
@@ -237,7 +235,7 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Tells the mask that we're going to use a template.
+	 * Tells the mask that we're going to use a template
 	 * @param string|false $template_name "template name" stands for "template name.tpl" in the "CURRENT THEME\masks\" directory. If false removes template.
 	 */
 	public function useTemplate($template_name)
@@ -252,7 +250,7 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Returns the currently used template name.
+	 * Returns the currently used template name
 	 * @return string
 	 */
 	public function getTemplateName()
@@ -267,19 +265,18 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * Tells the template engine to show an object as a variable.
 	 * $object will be shown in the $variable template zone.
-	 * @param string	Variable name, stands for a template zone.
-	 * @param mixed		Widget or string, the value of the assignment.
-	 * @access public
+	 * @param string $variable Variable name, stands for a template zone
+	 * @param mixed $object Widget or string, the value of the assignment
 	 */
-	function display($variable, &$object)
+	public function display($variable, &$object)
 	{
 		$this->_tpl_vars[$variable] =& $object;
 	}
 
 	 /**
-	 * Tells the template engine to show a strng as a variable.
-	 * @param string	Variable name, stands for a template variable.
-	 * @param mixed		String, the value of the assignment.
+	 * Tells the template engine to show a strng as a variable
+	 * @param string $variable Variable name, stands for a template variable
+	 * @param string $text String, the value of the assignment
 	 * @access public
 	 */
 	function displayText($variable, $text)
@@ -288,27 +285,25 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Sets the title for the mask.
-	 * @param string	Mask title.
-	 * @access public
+	 * Sets the title for the mask
+	 * @param string $title
 	 */
-	function setTitle( $title )
+	public function setTitle($title)
 	{
 		$this->title = $title ;
 	}
 
 	/**
-	 * Returns the title for the mask.
+	 * Returns the title for the mask
 	 * @return string
-	 * @access public
 	 */
-	function getTitle()
+	public function getTitle()
 	{
-		return $this->title ;
+		return $this->title;
 	}
 
 	/**
-	 * Prints out the mask.
+	 * Prints out the mask
 	 */
 	public function main()
 	{
@@ -317,12 +312,13 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Return the output mask
+	 * Renders the mask as HTML code and returns it
+	 * @param string $_template
+	 * @return string
 	 */
-	function getAsString($_template = false)
+	public function getAsString($_template = false)
 	{
 		$p4a =& P4A::singleton();
-
 		if (!$_template) {
 			$_template = $this->getTemplateName();
 		}
@@ -368,10 +364,9 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Removes every template variable assigned.
-	 * @access public
+	 * Removes every template variable assigned
 	 */
-	function clearTemplateVars()
+	public function clearTemplateVars()
 	{
 		$this->_tpl_vars = array();
 	}
@@ -380,10 +375,10 @@ class P4A_Mask extends P4A_Object
 	 * Associates a data source with the mask.
 	 * Also set the data structure to allow correct widget rendering.
 	 * Also moves to the first row of the data source.
-	 * @param data_source
-	 * @access public
+	 * @param P4A_Data_Source $data_source
+	 * @return P4A_Collection the fields collection
 	 */
-	function &setSource(&$data_source)
+	public function &setSource(&$data_source)
 	{
 		$this->data =& $data_source;
 
@@ -397,20 +392,18 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Loads the current record data.
-	 * @param integer		The wanted row number.
-	 * @access public
+	 * Loads the current record data
+	 * @param integer $num_row The wanted row number
 	 */
-	function loadRow($num_row = NULL)
+	public function loadRow($num_row = null)
 	{
 		$this->data->row($num_row);
 	}
 
 	/**
-	 * Reloads data for the current record.
-	 * @access public
+	 * Reloads data for the current record
 	 */
-	function reloadRow()
+	public function reloadRow()
 	{
 		if ($this->data->isNew()) {
 			$this->firstRow();
@@ -421,10 +414,9 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Manages file uploads when arriving from HTTP POST
-	 * @access private
 	 * @throws onFileSystemError
 	 */
-	function saveUploads()
+	protected function saveUploads()
 	{
 		while ($field =& $this->fields->nextItem()) {
 			$field_type = $field->getType();
@@ -497,11 +489,9 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Overwrites internal data with the data arriving from the submitted mask.
-	 * @access public
-	 * @throws onFileSystemError
+	 * Overwrites internal data with the data arriving from the submitted mask
 	 */
-	function saveRow()
+	public function saveRow()
 	{
 		$this->saveUploads();
 		$this->data->saveRow();
@@ -511,64 +501,57 @@ class P4A_Mask extends P4A_Object
 	 * Goes in "new row" modality.
 	 * This means that we prepare p4a for adding a new record
 	 * to the data source wich is associated to the mask.
-	 * @access public
 	 */
-	function newRow()
+	public function newRow()
 	{
 		$this->data->newRow();
 	}
 
 	/**
-	 * Deletes the currently pointed record.
-	 * @access public
+	 * Deletes the currently pointed record
 	 */
-	function deleteRow()
+	public function deleteRow()
 	{
 		$this->data->deleteRow();
 	}
 
 	/**
-	 * Moves to the next row.
-	 * @access public
+	 * Moves to the next row
 	 */
-	function nextRow()
+	public function nextRow()
 	{
 		$this->data->nextRow();
 	}
 
 	/**
-	 * Moves to the previous row.
-	 * @access public
+	 * Moves to the previous row
 	 */
-	function prevRow()
+	public function prevRow()
 	{
 		$this->data->prevRow();
 	}
 
 	/**
-	 * Moves to the last row.
-	 * @access public
+	 * Moves to the last row
 	 */
-	function lastRow()
+	public function lastRow()
 	{
 		$this->data->lastRow();
 	}
 
 	/**
-	 * Moves to the first row.
-	 * @access public
+	 * Moves to the first row
 	 */
-	function firstRow()
+	public function firstRow()
 	{
 		$this->data->firstRow();
 	}
 
 	/**
-	 * Returns the opening code for the mask.
+	 * Returns the opening code for the mask
 	 * @return string
-	 * @access public
 	 */
-	function maskOpen()
+	protected function maskOpen()
 	{
 		$return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
 		$return .= "<div>\n";
@@ -585,30 +568,27 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Returns the closing code for the mask.
+	 * Returns the closing code for the mask
 	 * @return string
-	 * @access public
 	 */
-	function maskClose()
+	protected function maskClose()
 	{
 		return "</div>\n</form>";
 	}
 
 	/**
-	 * Does nothing.
-	 * @access public
+	 * Does nothing
 	 */
-	function none()
+	public function none()
 	{
 	}
 
 	/**
-	 * Include CSS
-	 * @param string		The URI of CSS.
-	 * @param string		The CSS media.
-	 * @access public
+	 * Include a CSS file in the mask
+	 * @param string $uri The URI of CSS
+	 * @param string $media The CSS media
 	 */
-	function addCss($uri, $media = "screen")
+	public function addCss($uri, $media = "screen")
 	{
 		if (!isset($this->_css[$uri])) {
 			$this->_css[$uri] = array();
@@ -618,10 +598,10 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Drop inclusion of CSS file
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * @param string $uri The URI of CSS
+	 * @param string $media The CSS media
 	 */
-	function dropCss($uri, $media = "screen")
+	public function dropCss($uri, $media = "screen")
 	{
 		if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])) {
 			unset($this->_css[$uri][$media]);
@@ -632,13 +612,11 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Include CSS
-	 * These CSS are removed after rendering
-	 * @param string		The URI of CSS.
-	 * @param string		The CSS media.
-	 * @access public
+	 * Include a CSS file that will be removed after rendering
+	 * @param string $uri The URI of CSS
+	 * @param string $media The CSS media
 	 */
-	function addTempCss($uri, $media = "screen")
+	public function addTempCss($uri, $media = "screen")
 	{
 		if (!isset($this->_temp_css[$uri])) {
 			$this->_temp_css[$uri] = array();
@@ -647,12 +625,11 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Drop inclusion of CSS file
-	 * These CSS are removed after rendering
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * Drop inclusion of temp CSS file
+	 * @param string $uri The URI of CSS
+	 * @param string $media The CSS media
 	 */
-	function dropTempCss($uri, $media = "screen")
+	public function dropTempCss($uri, $media = "screen")
 	{
 		if(isset($this->_temp_css[$uri]) and isset($this->_temp_css[$uri][$media])) {
 			unset($this->_temp_css[$uri][$media]);
@@ -664,29 +641,26 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Clear temporary CSS list
-	 * @access public
 	 */
-	function clearTempCss()
+	public function clearTempCss()
 	{
 		$this->_temp_css = array();
 	}
 
 	/**
 	 * Include a javascript file
-	 * @param string		The URI of file.
-	 * @access public
+	 * @param string $uri
 	 */
-	function addJavascript($uri)
+	public function addJavascript($uri)
 	{
 		$this->_javascript[$uri] = null;
 	}
 
 	/**
 	 * Drop inclusion of javascript file
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * @param string $uri
 	 */
-	function dropJavascript($uri)
+	public function dropJavascript($uri)
 	{
 		if(isset($this->_javascript[$uri])){
 			unset($this->_javascript[$uri]);
@@ -696,10 +670,9 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * Include a javascript file
 	 * These javascripts are removed after rendering
-	 * @param string		The URI of file.
-	 * @access public
+	 * @param string $uri
 	 */
-	function addTempJavascript($uri)
+	public function addTempJavascript($uri)
 	{
 		$this->_temp_javascript[$uri] = null;
 	}
@@ -707,10 +680,9 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * Drop inclusion of javascript file
 	 * These javascripts are removed after rendering
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * @param string $uri
 	 */
-	function dropTempJavascript($uri)
+	public function dropTempJavascript($uri)
 	{
 		if(isset($this->_temp_javascript[$uri])){
 			unset($this->_temp_javascript[$uri]);
@@ -719,29 +691,27 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Clear temporary javascript list
-	 * @access public
 	 */
-	function clearTempJavascript()
+	public function clearTempJavascript()
 	{
 		$this->_temp_javascript = array();
 	}
 
 	/**
 	 * Add a temporary variable
-	 * @param string		The URI of file.
-	 * @access public
+	 * @param string $name
+	 * @param string $value
 	 */
-	function addTempVar($name, $value)
+	public function addTempVar($name, $value)
 	{
 		$this->_temp_vars[$name] = $value;
 	}
 
 	/**
 	 * Drop a temporary variable
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * @param string $name
 	 */
-	function dropTempVar($name)
+	public function dropTempVar($name)
 	{
 		if(isset($this->_temp_vars[$name])){
 			unset($this->_temp_vars[$name]);
@@ -750,36 +720,43 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Clear temporary vars list
-	 * @access public
 	 */
-	function clearTempVars()
+	public function clearTempVars()
 	{
 		$this->_temp_vars = array();
 	}
 
-	function setIcon($icon)
+	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
 	}
 
-	function getIcon()
+	/**
+	 * @return string
+	 */
+	public function getIcon()
 	{
 		return $this->_icon;
 	}
 
-	function setIconSize($size)
+	/**
+	 * @param integer $size
+	 */
+	public function setIconSize($size)
 	{
 		$this->_icon_size = strtolower($size);
 	}
 
-	function getIconSize()
+	/**
+	 * @return integer
+	 */
+	public function getIconSize()
 	{
 		return $this->_icon_size;
 	}
 	
 	/**
 	 * Returns the Javascript code neede for P4A initialization
-	 *
 	 * @return string
 	 */
 	protected function getP4AJavascript()
