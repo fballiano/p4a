@@ -48,140 +48,119 @@ class P4A_Widget extends P4A_Object
 {
 	/**
 	 * Object's enabled status. If the widget is visible but not enable it won't be clickable.
-	 * @access private
 	 * @var boolean
 	 */
-	var $enabled = true;
+	protected $enabled = true;
 
 	/**
-	 * Defines object visibility.
-	 * @access private
 	 * @var boolean
 	 */
-	var $visible = true;
+	protected $visible = true;
 
 	/**
-	 * Keeps the association between an action and its listener.
-	 * @access private
+	 * Keeps the association between an action and its listener
 	 * @var array
 	 */
-	var $map_actions = array();
+	protected $map_actions = array();
 
 	/**
-	 * Keeps all the actions implemented by the widget.
-	 * @access private
+	 * Keeps all the actions implemented by the widget
 	 * @var array
 	 */
-	var $actions = array();
+	protected $actions = array();
 
 	/**
-	 * Keeps the label associated with the widget.
-	 * The label will be displayed on the left of the widget.
-	 * @access public
-	 * @var mixed
+	 * Keeps the label associated with the widget
+	 * The label will be displayed on the left of the widget
+	 * @var P4A_Label
 	 */
-	var $label = null;
+	public $label = null;
 
 	/**
-	 * Keeps all the HTML properties for the widget.
-	 * @access private
+	 * Keeps all the HTML properties for the widget
 	 * @var array
 	 */
-	var $properties = array();
+	protected $properties = array();
 
 	/**
-	 * Keeps all the CSS properties for the widget.
-	 * @access private
+	 * Keeps all the CSS properties for the widget
 	 * @var array
 	 */
-	var $style = array();
+	protected $style = array();
 
 	/**
-	 * Defines if we are going to use a template for the widget.
-	 * @access public
+	 * Defines if we are going to use a template for the widget
 	 * @var boolean
 	 */
-	var $use_template = false;
+	protected $use_template = false;
 
 	/**
-	 * Defines the name of the widget.
+	 * Defines the name of the widget
 	 * if you set it to 'menu' P4A will search for "menu/menu.tpl"
 	 * in the "themes/CURRENT_THEME/widgets/" directory.
-	 * @access public
 	 * @var string
 	 */
-	var $template_name = null;
+	protected $template_name = null;
 
 	/**
 	 * variables used for templates
 	 * @var array
-	 * @access private
 	 */
-	var $_tpl_vars = array();
+	protected $_tpl_vars = array();
 
 	/**
 	 * Temporary variables (destroyed after rendering)
-	 * @access private
 	 * @var array
 	 */
-	var $_temp_vars = array();
+	protected $_temp_vars = array();
 
 	/**
-	 * Sets the widget enabled.
-	 * @param boolean		Visibility flag
-	 * @access public
-	 * @see $enable
+	 * @param boolean $enabled
+	 * @see $enabled
 	 */
-	function enable($enabled = true)
+	public function enable($enabled = true)
 	{
 		$this->enabled = $enabled;
 	}
 
 	/**
-	 * Sets the widget disabled.
-	 * @access public
 	 * @see $enabled
 	 */
-	function disable()
+	public function disable()
 	{
 		$this->enabled = false;
 	}
 
 	/**
-	 * Returns true if the widget is enabled.
-	 * @access public
+	 * Returns true if the widget is enabled
 	 * @see $enable
 	 */
-	function isEnabled()
+	public function isEnabled()
 	{
 		return $this->enabled;
 	}
 
 	/**
-	 * Sets the widget visible.
-	 * @param boolean		Visibility flag
-	 * @access public
+	 * @param boolean $visible
 	 */
-	function setVisible($visible = true)
+	public function setVisible($visible = true)
 	{
 		$this->visible = $visible;
 	}
 
 	/**
-	 * Sets the widget invisible.
-	 * @access public
+	 * Sets the widget invisible
 	 */
-	function setInvisible()
+	public function setInvisible()
 	{
 		$this->visible = false;
 	}
 
 	/**
-	 * Returns true if the widget is visible.
+	 * Returns true if the widget is visible
 	 * @return boolean
-	 * @access public
 	 */
-	function isVisible()
+	public function isVisible()
 	{
 		return $this->visible;
 	}
@@ -189,11 +168,10 @@ class P4A_Widget extends P4A_Object
 	/**
 	 * Sets the label for the widget.
 	 * In rendering phase it will be added with ':  '.
-	 * @param string	The string to set as label.
-	 * @access public
+	 * @param string $label
 	 * @see $label
 	 */
-	function setLabel($label)
+	public function setLabel($label)
 	{
 		// Used for sheets group->sheets labels
 		$this->actionHandler('set_label', $label);
@@ -203,53 +181,47 @@ class P4A_Widget extends P4A_Object
 	/**
 	 * Create from name a default label for the widget
 	 * In rendering phase it will be added with ':  '.
-	 * @param string	The string to set as label.
-	 * @access public
 	 * @see $label
 	 */
-	function setDefaultLabel()
+	public function setDefaultLabel()
 	{
 		$this->setLabel(P4A_Generate_Default_Label($this->getName()));
 	}
 
 	/**
-	 * Returns the label for the widget.
+	 * Returns the label for the widget
 	 * @return string
-	 * @access public
 	 */
-	function getLabel()
+	public function getLabel()
 	{
 		return $this->label;
 	}
 
 	/**
-	 * Sets an HTML property for the widget.
-	 * @param string	The property's name.
-	 * @param string	The property's value.
-	 * @access public
+	 * Sets an HTML property for the widget
+	 * @param string $property
+	 * @param string $value
 	 */
-	function setProperty($property, $value)
+	public function setProperty($property, $value)
 	{
 		$this->properties[strtolower($property)] = $value;
 	}
 
 	/**
-	 * Unsets an HTML property for the widget.
-	 * @param string	The property's name.
-	 * @access public
+	 * Unsets an HTML property for the widget
+	 * @param string $property
 	 */
-	function unsetProperty($property)
+	public function unsetProperty($property)
 	{
 		unset($this->properties[strtolower($property)]);
 	}
 
 	/**
-	 * Returns the value of a property.
-	 * @param string	The property's name.
+	 * Returns the value of a property
+	 * @param string $property
 	 * @return string
-	 * @access public
 	 */
-	function getProperty($property)
+	public function getProperty($property)
 	{
 		$property = strtolower($property);
 		if (array_key_exists($property, $this->properties)) {
@@ -260,43 +232,32 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Sets a CSS property for the widget.
-	 * @param string	The property's name.
-	 * @param string	The property's value.
-	 * @access public
+	 * Sets a CSS property for the widget
+	 * @param string $property
+	 * @param string $value
 	 */
-	function setStyleProperty($property, $value)
+	public function setStyleProperty($property, $value)
 	{
 		$this->style[$property] = $value;
 	}
 
 	/**
-	 * Unset a CSS property for the widget.
-	 * @param string	The property's name.
-	 * @access public
+	 * Unset a CSS property for the widget
+	 * @param string $property
 	 */
-	function unsetStyleProperty($property)
+	public function unsetStyleProperty($property)
 	{
 		unset($this->style[$property]);
 	}
-
-	function setAccessKey($key) {
-		$this->setProperty("accesskey", $key);
-	}
-
-	function getAccessKey() {
-		return $this->getProperty("accesskey");
-	}
-
+	
 	/**
-	 * Returns the value of a CSS property.
-	 * @param string	The property's name.
+	 * Returns the value of a CSS property
+	 * @param string $property
 	 * @return string
-	 * @access public
 	 */
-	function getStyleProperty($property)
+	public function getStyleProperty($property)
 	{
-		if( array_key_exists( $property, $this->style ) ) {
+		if (array_key_exists($property, $this->style)) {
 			return $this->style[$property];
 		} else {
 			return null;
@@ -304,14 +265,27 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Sets the width for the widget.
-	 * It's a wrapper for set_style_property().
-	 * @param integer	The value to be used as width.
-	 * @param string	The measure unit (px|pt|%) etc...
-	 * @access public
-	 * @see set_style_property()
+	 * @param string $key
 	 */
-	function setWidth($value = null, $unit = 'px')
+	function setAccessKey($key) {
+		$this->setProperty("accesskey", $key);
+	}
+
+	/**
+	 * @return string
+	 */
+	function getAccessKey() {
+		return $this->getProperty("accesskey");
+	}
+
+	/**
+	 * Sets the width for the widget.
+	 * It's a wrapper for setStyleProperty().
+	 * @param integer $value The value to be used as width
+	 * @param string $unit The measure unit (px|pt|%) etc...
+	 * @see setStyleProperty()
+	 */
+	public function setWidth($value = null, $unit = 'px')
 	{
 		if (is_numeric($value)) {
 			$value = $value . $unit;
@@ -325,25 +299,23 @@ class P4A_Widget extends P4A_Object
 
 	/**
 	 * Returns the width for the widget.
-	 * It's a wrapper for get_style_property().
-	 * @access public
+	 * It's a wrapper for getStyleProperty().
 	 * @return string
-	 * @see get_style_property()
+	 * @see getStyleProperty()
 	 */
-	function getWidth()
+	public function getWidth()
 	{
 		return $this->getStyleProperty('width');
 	}
 
 	/**
 	 * Sets the height for the widget.
-	 * It's a wrapper for set_style_property().
-	 * @param integer	The value to be used as height.
-	 * @param string	The measure unit (px|pt|%) etc...
-	 * @access public
-	 * @see set_style_property()
+	 * It's a wrapper for setStyleProperty().
+	 * @param integer $value The value to be used as height.
+	 * @param string $unit The measure unit (px|pt|%) etc...
+	 * @see setStyleProperty()
 	 */
-	function setHeight($value = null, $unit = 'px')
+	public function setHeight($value = null, $unit = 'px')
 	{
 		if (is_numeric($value)) {
 			$value = $value . $unit;
@@ -357,72 +329,66 @@ class P4A_Widget extends P4A_Object
 
 	/**
 	 * Returns the height for the widget.
-	 * It's a wrapper for get_style_property().
-	 * @access public
-	 * @see get_style_property()
+	 * It's a wrapper for getStyleProperty().
+	 * @see getStyleProperty()
 	 */
-	function getHeight()
+	public function getHeight()
 	{
 		return $this->getStyleProperty('height');
 	}
 
 	/**
 	 * Sets the background color for the widget.
-	 * It's a wrapper for set_style_property().
-	 * @param string	The value to be used as color.
-	 * @access public
-	 * @see set_style_property()
+	 * It's a wrapper for setStyleProperty().
+	 * @param string $value The value to be used as color
+	 * @see setStyleProperty()
 	 */
-	function setBgcolor($value)
+	public function setBgcolor($value)
 	{
 		$this->setStyleProperty('background-color', $value) ;
 	}
 
 	/**
 	 * Sets the background image for the widget.
-	 * It's a wrapper for set_style_property().
-	 * @param string	The url of the image.
-	 * @access public
-	 * @see set_style_property()
+	 * It's a wrapper for setStyleProperty().
+	 * @param string $value The url of the image
+	 * @see setStyleProperty()
 	 */
-	function setBgimage($value)
+	public function setBgimage($value)
 	{
 		$this->setStyleProperty('background-image', "url('" . $value . "')");
 	}
 
 	/**
-	 * Sets the font weight for the widget
-	 * It's a wrapper for set_style_property().
-	 * @param string	The url of the image.
-	 * @access public
-	 * @see set_style_property()
+	 * Sets the font weight for the widget.
+	 * It's a wrapper for setStyleProperty().
+	 * @param string $value The url of the image
+	 * @see setStyleProperty()
 	 */
-	function setFontWeight($value)
+	public function setFontWeight($value)
 	{
 		$this->setStyleProperty('font-weight', $value);
 	}
 
 	/**
 	 * Sets the font color for the widget
-	 * It's a wrapper for set_style_property().
-	 * @param string	The url of the image.
-	 * @access public
-	 * @see set_style_property()
+	 * It's a wrapper for setStyleProperty().
+	 * @param string $value The url of the image
+	 * @see setStyleProperty()
 	 */
-	function setFontColor($value)
+	public function setFontColor($value)
 	{
 		$this->setStyleProperty('color', $value);
 	}
 
 	/**
-	 * Adds an action to the implemented actions stack for the widget.
-	 * @access public
-	 * @param string			The action's name.
-	 * @param string			The JavaScript event that triggers.
-	 * @param string|boolean	If the action requires user confirmation, type here the confirmation message (use boolean true for a general message).
-	 * @param boolean			is an ajax action?
+	 * Adds an action to the implemented actions stack for the widget
+	 * @param string $action
+	 * @param string $event The JavaScript event that triggers
+	 * @param string|boolean $confirmation_text If the action requires user confirmation, type here the confirmation message (use boolean true for a general message)
+	 * @param boolean $ajax is an ajax action?
 	 */
-	function addAction($action, $event = null, $confirmation_text = null, $ajax = false)
+	public function addAction($action, $event = null, $confirmation_text = null, $ajax = false)
 	{
 		$action = strtolower($action);
 		$event = strtolower($event);
@@ -444,25 +410,23 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Adds an ajax action to the implemented actions stack for the widget.
-	 * @access public
-	 * @param string	The action's name.
-	 * @param string	The JavaScript event that triggers.
-	 * @param string|boolean	If the action requires user confirmation, type here the confirmation message (use boolean true for a general message).
+	 * Adds an ajax action to the implemented actions stack for the widget
+	 * @param string $action
+	 * @param string $event The JavaScript event that triggers
+	 * @param string|boolean $confirmation_text If the action requires user confirmation, type here the confirmation message (use boolean true for a general message)
 	 */
-	function addAjaxAction($action, $event = null, $confirmation_text = null)
+	public function addAjaxAction($action, $event = null, $confirmation_text = null)
 	{
 		$p4a =& p4a::singleton();
 		$this->addAction($action, $event, $confirmation_text, $p4a->isAjaxEnabled());
 	}
 
 	/**
-	 * Requires confirmation for an action.
-	 * @access public
-	 * @param string			The action.
-	 * @param string|boolean	The confirmation message (default is boolean true for a general message).
+	 * Requires confirmation for an action
+	 * @param string $action
+	 * @param string|boolean $confirmation_text The confirmation message (default is boolean true for a general message)
 	 */
-	function requireConfirmation($action = 'onclick', $confirmation_text = true)
+	public function requireConfirmation($action = 'onclick', $confirmation_text = true)
 	{
 		$action = strtolower($action);
 		if ($confirmation_text === true) {
@@ -472,11 +436,10 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Removes confirmation for an action.
-	 * @access public
-	 * @param string	The action.
+	 * Removes confirmation for an action
+	 * @param string $action
 	 */
-	function unrequireConfirmation($action)
+	public function unrequireConfirmation($action)
 	{
 		$action = strtolower($action);
 		$this->actions[$action]['confirm'] = null;
@@ -486,11 +449,10 @@ class P4A_Widget extends P4A_Object
 	 * Changes the event associated to an action.
 	 * If no event is given, here we set event=action.
 	 *
-	 * @param string	The action's name.
-	 * @param string	The JavaScript event that triggers.
-	 * @access public
+	 * @param string $action
+	 * @param string $event The JavaScript event that triggers
 	 */
-	function changeEvent($action, $event = NULL)
+	public function changeEvent($action, $event = null)
 	{
 		$action = strtolower($action);
 		$event = strtolower($event);
@@ -721,109 +683,121 @@ class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnBlur action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnBlur action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onBlur($params = NULL)
+	public function onBlur($params = null)
 	{
 		return $this->actionHandler('onBlur', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnClick action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnClick action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onClick($params = NULL)
+	public function onClick($params = null)
 	{
 		return $this->actionHandler('onClick', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnChange action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnChange action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onChange($params = NULL)
+	public function onChange($params = null)
 	{
 		return $this->actionHandler('onChange', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onDblClick action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onDblClick action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onDblClick($params = NULL)
+	public function onDblClick($params = null)
 	{
 		return $this->actionHandler('onDblClick', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onFocus action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onFocus action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onFocus($params = NULL)
+	public function onFocus($params = null)
 	{
 		return $this->actionHandler('onFocus', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onMouseDown action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onMouseDown action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onMouseDown($params = NULL)
+	public function onMouseDown($params = null)
 	{
 		return $this->actionHandler('onMouseDown', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onMouseMove action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onMouseMove action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onMouseMove($params = NULL)
+	public function onMouseMove($params = null)
 	{
 		return $this->actionHandler('onMouseMove', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onMouseOver action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onMouseOver action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onMouseOver($params = NULL)
+	public function onMouseOver($params = null)
 	{
 		return $this->actionHandler('onMouseOver', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onMouseUp action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onMouseUp action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onMouseUp($params = NULL)
+	public function onMouseUp($params = null)
 	{
 		return $this->actionHandler('onMouseUp', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyPress action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnKeyPress action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onKeyPress($params = NULL)
+	public function onKeyPress($params = null)
 	{
 		return $this->actionHandler('onKeyPress', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyUp action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnKeyUp action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onKeyUp($params = NULL)
+	public function onKeyUp($params = null)
 	{
 		return $this->actionHandler('onKeyUp', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyDown action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of OnKeyDown action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onKeyDown($params = NULL)
+	public function onKeyDown($params = null)
 	{
 		return $this->actionHandler('onKeyDown', $params);
 	}
@@ -832,54 +806,54 @@ class P4A_Widget extends P4A_Object
 	 * Wrapper used to add the handling of onReturnPress action.
 	 * The onReturnPress action is an onKeyPress with checking if
 	 * the pressed key is return.
-	 * @see action_handler()
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onReturnPress($params = NULL)
+	public function onReturnPress($params = null)
 	{
 		return $this->actionHandler('onReturnPress', $params);
 	}
 
 	/**
-	 * Wrapper used to add the handling of onSelect action.
-	 * @see action_handler()
+	 * Wrapper used to add the handling of onSelect action
+	 * @return unknown
+	 * @see actionHandler()
 	 */
-	function onSelect($params = NULL)
+	public function onSelect($params = null)
 	{
 		return $this->actionHandler('onSelect', $params);
 	}
 
 	/**
 	 * Add a temporary variable
-	 * @param string		The URI of file.
-	 * @access public
+	 * @param string $name
+	 * @param string $value
 	 */
-	function addTempVar($name, $value)
+	public function addTempVar($name, $value)
 	{
 		$this->_temp_vars[$name] = $value;
 	}
 
 	/**
 	 * Drop a temporary variable
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * @param string $name
 	 */
-	function dropTempVar($name)
+	public function dropTempVar($name)
 	{
-		if(isset($this->_temp_vars[$name])){
+		if (isset($this->_temp_vars[$name])) {
 			unset($this->_temp_vars[$name]);
 		}
 	}
 
 	/**
 	 * Clear temporary vars list
-	 * @access public
 	 */
-	function clearTempVars()
+	public function clearTempVars()
 	{
 		$this->_temp_vars = array();
 	}
 
-	function redesign()
+	public function redesign()
 	{
 		$p4a =& p4a::singleton();
 		$p4a->redesign($this->getId());
