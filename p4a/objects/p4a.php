@@ -45,34 +45,30 @@
 class P4A extends P4A_Object
 {
 	/**
-	 * All P4A objects are stored here.
+	 * All P4A objects are stored here
 	 * @var array
-	 * @access public
 	 */
-	var $objects = array();
+	public $objects = array();
 
 	/**
 	 * The currently active object.
 	 * This means that here is the pointer to
 	 * the last object that has triggered an event/action.
-	 * @var object object
-	 * @access public
+	 * @var P4A_Object
 	 */
-	var $active_object = null;
+	public $active_object = null;
 
 	/**
-	 * Pointer to the currently active mask.
-	 * @var object object
-	 * @access public
+	 * Pointer to the currently active mask
+	 * @var P4A_Mask
 	 */
-	var $active_mask = null;
+	public $active_mask = null;
 
 	/**
 	 * History of opened masks
-	 * @var object object
-	 * @access public
+	 * @var array
 	 */
-	var $masks_history = array();
+	private $masks_history = array();
 
 	/**
 	 * Opened masks are stored here
@@ -81,83 +77,93 @@ class P4A extends P4A_Object
 	public $masks = null;
 
 	/**
-	 * I18n objects and methods
 	 * @var P4A_I18N
 	 */
-	public $i18n = array();
+	public $i18n = null;
 
 	/**
 	 * @var string
 	 */
-	protected $title = null;
+	private $title = null;
 
 	/**
-	 * Loaded libraries registry
-	 * A library is a file in P4A_APPLICATION_LIBRARIES_DIR wich is included every time
-	 *
+	 * Timers container
 	 * @var array
 	 */
-	protected $libraries = array();
+	private $timer = array();
 
 	/**
-	 * Timers container.
+	 * CSS container
 	 * @var array
-	 * @access private
 	 */
-	var $timer = array();
+	private $_css = array();
 
 	/**
-	 * CSS container.
+	 * javascript container
 	 * @var array
-	 * @access private
 	 */
-	var $_css = array();
-
-	/**
-	 * javascript container.
-	 * @var array
-	 * @access private
-	 */
-	var $_javascript = array();
+	private $_javascript = array();
 
 	/**
 	 * Is the browser a handheld?
 	 * @var boolean
-	 * @access private
 	 */
-	var $handheld = false;
+	private $handheld = false;
 
 	/**
 	 * Is the browser Internet Explorer?
 	 * @var boolean
-	 * @access private
 	 */
-	var $internet_explorer = false;
+	private $internet_explorer = false;
 
 	/**
 	 * Find wich browser is the user using
 	 * @var array
-	 * @access public
 	 */
-	var $browser_identification = array();
+	private $browser_identification = array();
 
 	/**
 	 * Counter to avoid browser's back/forward
 	 * @var integer
-	 * @access private
 	 */
-	var $_action_history_id = 0;
+	private $_action_history_id = 0;
 
-	var $_to_redesign = array();
-	var $_redesign_popup = false;
-	var $_ajax_enabled = P4A_AJAX_ENABLED;
-	var $_in_ajax_call = false;
-
-	var $_popup = null;
-
-	var $_do_refresh = false;
+	/**
+	 * @var array
+	 */
+	private $_to_redesign = array();
 	
-	protected $messages = array();
+	/**
+	 * @var boolean
+	 */
+	private $_redesign_popup = false;
+	
+	/**
+	 * @var boolean
+	 */
+	private $_ajax_enabled = P4A_AJAX_ENABLED;
+	
+	/**
+	 * @var boolean
+	 */
+	private $_in_ajax_call = false;
+
+	/**
+	 * The name of the popup mask
+	 * @var string
+	 */
+	private $_popup = null;
+
+	/**
+	 * forces an HTTP refresh event
+	 * @var boolean
+	 */
+	private $_do_refresh = false;
+
+	/**
+	 * @var array
+	 */
+	private $messages = array();
 
 	public function __construct()
 	{
@@ -166,8 +172,6 @@ class P4A extends P4A_Object
 		$this->i18n =& new p4a_i18n(P4A_LOCALE);
 
 		$this->build("P4A_Collection", "masks");
-		$this->build("P4A_Collection", "listeners");
-
 		$this->browser_identification = $this->detectClient();
 
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
@@ -208,7 +212,10 @@ class P4A extends P4A_Object
 		}
 	}
 
-	function detectClient()
+	/**
+	 * @return array
+	 */
+	public function detectClient()
 	{
 		require_once dirname(dirname(__FILE__)) . '/libraries/pear/Net/UserAgent/Detect.php';
 		Net_UserAgent_Detect::detect();
@@ -223,12 +230,18 @@ class P4A extends P4A_Object
 		return Net_UserAgent_Detect::_getStaticProperty('browser');
 	}
 
-	function isInternetExplorer()
+	/**
+	 * @return boolean
+	 */
+	public function isInternetExplorer()
 	{
 		return $this->internet_explorer;
 	}
 
-	function isHandheld()
+	/**
+	 * @return boolean
+	 */
+	public function isHandheld()
 	{
 		if (P4A_FORCE_HANDHELD_RENDERING) {
 			return true;
@@ -237,32 +250,31 @@ class P4A extends P4A_Object
 		return $this->handheld;
 	}
 
-	function isAjaxEnabled()
+	/**
+	 * @return boolean
+	 */
+	public function isAjaxEnabled()
 	{
 		return $this->_ajax_enabled;
 	}
 
 	/**
-	 * Tells you if there's a popup opened
-	 * @access public
 	 * @return boolean
 	 */
-	function isPopupOpened()
+	public function isPopupOpened()
 	{
 		return ($this->_popup !== null);
 	}
 
 	/**
-	 * was the current action called thru ajax?
-	 * @access public
 	 * @return boolean
 	 */
-	function inAjaxCall()
+	public function inAjaxCall()
 	{
 		return $this->_in_ajax_call;
 	}
 
-	function &singleton($class_name = "p4a")
+	public function &singleton($class_name = "p4a")
 	{
 		if (!isset($_SESSION)) {
 			session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
@@ -277,30 +289,25 @@ class P4A extends P4A_Object
 		}
 	}
 
-
 	/**
-	 * Destroys P4A data.
-	 * @access public
+	 * Destroys P4A data
 	 */
-	function close()
+	public function close()
 	{
 		session_destroy();
 	}
 
 	/**
-	 * Calls close() and then restart the application.
+	 * Calls close() and then restart the application
+	 * @see close()
 	 */
-	function restart()
+	public function restart()
 	{
 		$this->close();
 		header('Location: ' . P4A_APPLICATION_PATH );
 	}
 
-	/**
-	 * Inits the timer.
-	 * @access public
-	 */
-	function initTimer()
+	public function initTimer()
 	{
 		$this->timer = array();
 		$this->timer[0]['description'] = 'START';
@@ -309,11 +316,10 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Takes a time snapshot with a given description.
-	 * @access public
-	 * @param string		The description
+	 * Takes a time snapshot with a given description
+	 * @param string $description
 	 */
-	function timer($description = 'TIMER')
+	public function timer($description = 'TIMER')
 	{
 		$num_record = count($this->timer);
 		$this->timer[$num_record]['description'] = $description;
@@ -322,10 +328,9 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Prints out all timer values.
-	 * @access public
+	 * Prints out all timer values
 	 */
-	function dumpTimer()
+	public function dumpTimer()
 	{
 		foreach($this->timer as $time){
 			print $time['diff'] .':' . $time['description'] . "\n";
@@ -483,7 +488,7 @@ class P4A extends P4A_Object
 		flush();
 	}
 
-	function raiseXMLResponse()
+	public function raiseXMLResponse()
 	{
 		ob_start();
 		$script_detector = '<script.*?>(.*?)<\/script>';
@@ -556,32 +561,24 @@ class P4A extends P4A_Object
 
 	/**
 	 * Sets the desidered mask as active.
-	 * @param string		The name of the mask.
-	 * @access private
+	 * @param string $mask_name
 	 */
-	function setActiveMask($mask_name)
+	private function setActiveMask($mask_name)
 	{
-		$mask =& P4A_Mask::singleton($mask_name);
-		$this->active_mask =& $mask;
+		$this->active_mask =& P4A_Mask::singleton($mask_name);
 	}
 
 	/**
 	 * Sets the desidered object as active.
-	 * @param object object		The object
-	 * @access private
-	 * @see $active_object
+	 * @param P4A_Object
 	 */
-	function setActiveObject(&$object)
+	private function setActiveObject(&$object)
 	{
 		unset($this->active_object);
 		$this->active_object =& $object;
 	}
 
-	 /**
-	 * Opens a mask ed sets it active.
-	 * @access public
-	 */
-	function &openMask($mask_name)
+	public function &openMask($mask_name)
 	{
 		if ($this->actionHandler('beforeOpenMask') == ABORT) return ABORT;
 
@@ -611,11 +608,7 @@ class P4A extends P4A_Object
 		return $this->active_mask;
 	}
 
-	 /**
-	 * Opens a mask in popup.
-	 * @access public
-	 */
-	function openPopup($mask_name)
+	public function openPopup($mask_name)
 	{
 		//Close opened popup
 		if ($this->_popup) {
@@ -624,27 +617,23 @@ class P4A extends P4A_Object
 
 		$this->_popup = $mask_name;
 		$mask =& p4a_mask::singleton($mask_name);
-		$mask->isPopup(TRUE);
+		$mask->isPopup(true);
 
-		$this->_redesign_popup = TRUE;
+		$this->_redesign_popup = true;
 		return $mask;
 	}
 
-	 /**
-	 * Closes the popup mask.
-	 * @access public
-	 */
-	function closePopup($destroy = FALSE)
+	public function closePopup($destroy = false)
 	{
 		if ($destroy) {
 			$mask =& p4a_mask::singleton($this->_popup);
 			$mask->destroy();
 		} else {
 			$mask =& p4a_mask::singleton($this->_popup);
-			$mask->isPopup(FALSE);
+			$mask->isPopup(false);
 		}
-		$this->_popup = NULL;
-		$this->_redesign_popup = TRUE;
+		$this->_popup = null;
+		$this->_redesign_popup = true;
 	}
 
      public function showPrevMask()
@@ -663,7 +652,6 @@ class P4A extends P4A_Object
 
      /**
       * Gets an instance of the previous mask
-      *
       * @return P4A_Mask
       */
      public function &getPrevMask()
@@ -688,11 +676,10 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Adds an object to the objects collection.
-	 * @param object object		The object.
-	 * @access private
+	 * Adds an object to the objects collection
+	 * @param P4A_Object
 	 */
-	function store(&$object)
+	public function store(&$object)
 	{
 		$object_id = $object->getId();
 		if (array_key_exists($object_id, $this->objects)){
@@ -702,6 +689,10 @@ class P4A extends P4A_Object
 		}
 	}
 
+	/**
+	 * @param string $object_id
+	 * @return P4A_Object
+	 */
 	public function &getObject($object_id)
 	{
 		if (array_key_exists($object_id, $this->objects)){
@@ -713,32 +704,29 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Sets the title for the application.
-	 * @param string	Mask title.
-	 * @access public
+	 * Sets the title for the application
+	 * @param string $title
 	 */
-	function setTitle($title)
+	public function setTitle($title)
 	{
-		$this->title = $title ;
+		$this->title = $title;
 	}
 
 	/**
-	 * Returns the title for the application.
+	 * Returns the title for the application
 	 * @return string
-	 * @access public
 	 */
-	function getTitle()
+	public function getTitle()
 	{
-		return $this->title ;
+		return $this->title;
 	}
 
 	/**
-	 * Include CSS
-	 * @param string		The URI of CSS.
-	 * @param string		The CSS media.
-	 * @access public
+	 * Include a CSS file
+	 * @param string $uri
+	 * @param string $media
 	 */
-	function addCss($uri, $media = "screen")
+	public function addCss($uri, $media = "screen")
 	{
 		if (!isset($this->_css[$uri])) {
 			$this->_css[$uri] = array();
@@ -748,12 +736,11 @@ class P4A extends P4A_Object
 	
 
 	/**
-	 * Drop inclusion of CSS file
-	 * @param string		The URI of CSS.
-	 * @param string		The CSS media.
-	 * @access public
+	 * Drops inclusion of a CSS file
+	 * @param string $uri
+	 * @param string $media
 	 */
-	function dropCss($uri, $media = "screen")
+	public function dropCss($uri, $media = "screen")
 	{
 		if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])){
 			unset($this->_css[$uri][$media]);
@@ -762,27 +749,38 @@ class P4A extends P4A_Object
 			}
 		}
 	}
+	
+	public function getCss()
+	{
+		return $this->_css;
+	}
 
 	/**
-	 * Include a javascript file
-	 * @param string		The URI of file.
-	 * @access public
+	 * Includes a javascript file
+	 * @param string $uri
 	 */
-	function addJavascript($uri)
+	public function addJavascript($uri)
 	{
 		$this->_javascript[$uri] = null;
 	}
 
 	/**
-	 * Drop inclusion of javascript file
-	 * @param string		The URI of CSS.
-	 * @access public
+	 * Drops inclusion of a javascript file
+	 * @param string $uri
 	 */
-	function dropJavascript($uri)
+	public function dropJavascript($uri)
 	{
 		if(isset($this->_javascript[$uri])){
 			unset($this->_javascript[$uri]);
 		}
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getJavascript()
+	{
+		return $this->_javascript;
 	}
 
 	/**
@@ -790,12 +788,15 @@ class P4A extends P4A_Object
 	 * @access public
 	 * @return integer
 	 */
-	function getActionHistoryId()
+	public function getActionHistoryId()
 	{
 		return $this->_action_history_id;
 	}
 
-	function redesign($id)
+	/**
+	 * @param string $id the id of the object to be redesigned
+	 */
+	public function redesign($id)
 	{
 		$this->_to_redesign[] = $id;
 	}

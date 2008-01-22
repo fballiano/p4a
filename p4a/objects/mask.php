@@ -332,8 +332,8 @@ class P4A_Mask extends P4A_Object
 		}
 
 		$_xml_header = '<?xml version="1.0" encoding="UTF-8"?>';
-		$_javascript = array_merge($p4a->_javascript, $this->_javascript, $this->_temp_javascript);
-		$_css = array_merge_recursive($p4a->_css, $this->_css, $this->_temp_css);
+		$_javascript = array_merge($p4a->getJavascript(), $this->_javascript, $this->_temp_javascript);
+		$_css = array_merge_recursive($p4a->getCSS(), $this->_css, $this->_temp_css);
 
 		$_icon = '';
 		$_title = $this->getTitle();

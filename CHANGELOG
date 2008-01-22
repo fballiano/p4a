@@ -10,7 +10,7 @@
 - use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
 - check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
-- php5ize all components (p4a)
+- php5ize all components
 - redo the css
 - style p4a_field as file
 - check if p4a_validate can be ported to ZF
@@ -125,7 +125,7 @@
 - P4A_Field::unsetMaxThumbnailSize() method was removed, use setMaxThumbnailSize(null) to disable the feature
 - P4A_Field::setRichTextareaToolbar(), getRichTextareaToolbar() and getRichTextareaToolbars() were removed because unsupported by fckeditor
 - P4A::init() method was removed
-- helpers, P4A_Box, P4A_Object, P4A_Button, P4A_Collection, P4A_Field, P4A_Array_Source, P4A_DB_Source, P4A_Widget, P4A_Mask were php5ized
+- helpers, P4A_Box, P4A_Object, P4A_Button, P4A_Collection, P4A_Field, P4A_Array_Source, P4A_DB_Source, P4A_Widget, P4A_Mask, P4A were php5ized
 - P4A_Widget::composeStringClassStyle() was rewritten and renamed to composeStringClass()
 - P4A_Toolbar default size is now 32
 - P4A_Button now inherits height from toolbar (just done via CSS)
