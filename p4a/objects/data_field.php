@@ -187,7 +187,7 @@ class P4A_Data_Field extends P4A_Object
 		return $this->_DSN;
 	}
 
-	function setDefaultValue($value = null)
+	public function setDefaultValue($value = null)
 	{
 		if ($value === null) {
 			$this->setNewValue($this->getDefaultValue());
@@ -196,7 +196,7 @@ class P4A_Data_Field extends P4A_Object
 		}
 	}
 
-	function setSequence($name = null)
+	public function setSequence($name = null)
 	{
 		if ($name === null) {
 			$this->sequence = null;
@@ -205,7 +205,7 @@ class P4A_Data_Field extends P4A_Object
 		}
 	}
 
-	function getDefaultValue()
+	public function getDefaultValue()
 	{
 		if ($this->sequence === null) {
 			return $this->default_value;
