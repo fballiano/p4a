@@ -61,18 +61,6 @@ h2 img {
 	border:none;
 }
 
-.link_button {
-	border: 1px solid #FAFAFA;
-	display:block;
-	text-decoration:none;
-	text-align:center;
-}
-
-a.link_button:hover {
-	border: 1px solid #C6D3DE;
-	background:white;
-}
-
 .radio {
 	border: none;
 }
@@ -162,11 +150,6 @@ a.link_button:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color:#4B718A;
-}
-
-.link {
-	text-decoration:underline;
-	color: #4B718A;
 }
 
 .align_left {

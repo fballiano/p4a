@@ -36,18 +36,16 @@
  */
 
 /**
- * The fieldset
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
- * @see P4A_Frame
  */
 class P4A_Fieldset extends P4A_Frame
 {
 	/**
 	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {

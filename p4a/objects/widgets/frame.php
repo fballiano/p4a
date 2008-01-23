@@ -45,11 +45,17 @@
  */
 class P4A_Frame extends P4A_Widget
 {
+	/**
+	 * @var array
+	 */
+	protected $_map = array();
+	
+	/**
+	 * @var integer
+	 */
+	protected $_row = 1;
 
-	var $_map = array();
-	var $_row = 1;
-
-	function _anchor(&$object, $margin = "20px", $float="left")
+	protected function _anchor(&$object, $margin = "20px", $float = "left")
 	{
 		if (is_object($object)) {
 			$to_add = array("id"=>$object->getId(), "margin" => $margin, "float" => $float);
@@ -57,39 +63,39 @@ class P4A_Frame extends P4A_Widget
 		}
 	}
 
-	function anchor(&$object, $margin = "10px", $float="left")
+	public function anchor(&$object, $margin = "10px", $float="left")
 	{
 		$this->newRow();
 		$this->_anchor($object, $margin, $float);
 	}
 
-	function anchorRight(&$object, $margin = "10px")
+	public function anchorRight(&$object, $margin = "10px")
 	{
 		$this->_anchor($object, $margin, "right");
 	}
 
-	function anchorLeft(&$object, $margin = "10px")
+	public function anchorLeft(&$object, $margin = "10px")
 	{
 		$this->_anchor($object, $margin, "left");
 	}
 
-	function anchorCenter(&$object, $margin = "auto")
+	public function anchorCenter(&$object, $margin = "auto")
 	{
 		$this->newRow();
 		$this->_anchor($object, $margin, "none");
 	}
 
-	function clean()
+	public function clean()
 	{
 		$this->_map = array();
 	}
 
-	function newRow()
+	public function newRow()
 	{
 		$this->_row++;
 	}
 
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
@@ -102,7 +108,7 @@ class P4A_Frame extends P4A_Widget
 		$actions = $this->composeStringActions();
 
 		$string  = "<div id='{$id}' class='frame' $properties $actions >";
-		foreach($this->_map as $objs){
+		foreach($this->_map as $objs) {
 			$one_visible = false;
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
@@ -115,7 +121,7 @@ class P4A_Frame extends P4A_Widget
 					if (empty($this->_map[$i])) unset($this->_map[$i]);
 					$as_string = '';
 				}
-				if (strlen($as_string)>0) {
+				if (strlen($as_string) > 0) {
 					$one_visible = true;
 					$float = $obj["float"];
 					if ($obj["float"] != "none") {

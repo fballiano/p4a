@@ -36,7 +36,7 @@
  */
 
 /**
- * The label is associated to an input field, do not use it otherwise.
+ * The label is associated to an input field, do not use it otherwise
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -44,54 +44,32 @@
 class P4A_Label extends P4A_Widget
 {
 	/**
-	 * Tells if the fields content is formatted or not.
 	 * @var string
-	 * @access private
 	 */
-	var $formatted = true;
+	protected $_tooltip = null;
 
 	/**
-	 * The formatter class name for the data field.
-	 * @var string
-	 * @access private
+	 * @param string $name Object identifier
+	 * @param string $value
 	 */
-	var $formatter_name = NULL;
-
-	/**
-	 * The format name for the data field.
-	 * @var string
-	 * @access private
-	 */
-	var $format_name = NULL;
-
-	var $_tooltip = '';
-
-	/**
-	 * @param string	Object identifier.
-	 * @param string	The Value of the label.
-	 */
-	public function __construct($name, $value=null)
+	public function __construct($name, $value = null)
 	{
 		parent::__construct($name);
 		$this->setLabel($value);
 	}
 
 	/**
-	 * Only returns the value of the label.
 	 * @return string
-	 * @access public
 	 */
-	function getValue()
+	public function getValue()
 	{
 		return $this->getLabel();
 	}
 
 	/**
-	 * Only returns the value of the label.
-	 * @param string Label's value.
-	 * @access public
+	 * @param string $value
 	 */
-	function setValue($value=null)
+	public function setValue($value = null)
 	{
 		$this->setLabel($value);
 	}
@@ -101,10 +79,8 @@ class P4A_Label extends P4A_Widget
 	 * This is done by building a SPAN, because with a SPAN you
 	 * can trigger events such as onClick ect.
 	 * Label is rendered only if the widget is visible.
-	 * @param string Label's value.
-	 * @access public
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
@@ -123,37 +99,39 @@ class P4A_Label extends P4A_Widget
 			$header .= " onmouseover='showTooltip(this, \"{$id}_tt\")' ";
 		}
 
-		$string = $header . $this->composeStringProperties() .
-					$this->composeStringActions() .
-					$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
-
-		return $string;
+		return $header . $this->composeStringProperties() .
+				$this->composeStringActions() .
+				$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
 	}
 
 	/**
 	 * Set the label type, normal or temporary
-	 * @param string label type.
-	 * @access public
+	 * @param string $type (normal|temporary)
 	 */
-	function setType($type = 'normal')
+	public function setType($type = 'normal')
 	{
 		$this->type = $type;
 	}
 
 	/**
-	 * Returns the label type
-	 * @access public
+	 * @return string
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->type;
 	}
 
-	function setTooltip($text)
+	/**
+	 * @param string $text
+	 */
+	public function setTooltip($text)
 	{
 		$this->_tooltip = $text;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getTooltip()
 	{
 		return $this->_tooltip;

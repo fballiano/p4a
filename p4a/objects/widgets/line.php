@@ -36,7 +36,6 @@
  */
 
 /**
- * Line
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -44,8 +43,8 @@
 class P4A_Line extends P4A_Widget
 {
 	/**
-	 * @param string		Mnemonic identifier for the object.
-	 * @param string		Object ID, if not specified will be generated.
+	 * @param string $name Mnemonic identifier for the object
+	 * @param string $id Object ID, if not specified will be generated
 	 */
 	public function __construct($name, $id = null)
 	{
@@ -59,21 +58,18 @@ class P4A_Line extends P4A_Widget
 	}
 
 	/**
-	 * HTML rendered link.
+	 * HTML rendered link
 	 * @return string
-	 * @access public
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$header 		= '<hr ' . $id . 'noshade class="color2" ';
-		$close_header 	= '/>';
-		$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
-
-		return $sReturn;
+		$header = '<hr ' . $id . 'noshade class="color2" ';
+		$close_header = '/>';
+		return $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
 	}
 }

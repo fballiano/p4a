@@ -36,9 +36,7 @@
  */
 
 /**
- * "A" HTML tag.
- * The link is built rendering a complete "A" tag,
- * the {@link HREF} instead is only the href part of the "A" tag.
+ * "A" HTML tag
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -46,8 +44,8 @@
 class P4A_Link extends P4A_Widget
 {
 	/**
-	 * @param string		Mnemonic identifier for the object.
-	 * @param string		Object ID, if not specified will be generated.
+	 * @param string $name Mnemonic identifier for the object
+	 * @param string $id Object ID, if not specified will be generated
 	 */
 	public function __construct($name, $id = null)
 	{
@@ -55,17 +53,11 @@ class P4A_Link extends P4A_Widget
 		$this->addAction("onclick");
 	}
 
-	function setLabel($label)
-	{
-		$this->setValue($label);
-	}
-
 	/**
-	 * HTML rendered link.
+	 * HTML rendered link
 	 * @return string
-	 * @access public
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
@@ -73,14 +65,14 @@ class P4A_Link extends P4A_Widget
 		}
 
 		if ($this->isEnabled()) {
-			$header 		= '<a href="#" class="link" ';
+			$header 		= '<a href="#" class="p4a_link" ';
 			$close_header 	= '>';
 			$footer			= '</a>';
 			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
-			$sReturn .= $this->getValue();
+			$sReturn .= $this->getLabel();
 			$sReturn .= $footer;
 		} else {
-			$sReturn = $this->getValue();
+			$sReturn = $this->getLabel();
 		}
 
 		return "<span id='$id'>$sReturn</span>";
