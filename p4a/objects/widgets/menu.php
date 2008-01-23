@@ -36,7 +36,7 @@
  */
 
 /**
- * p4a menu system.
+ * p4a menu system
  * As in every big IDE such as Sun ONE or Microsoft Visual Studio
  * you have the possibility to add the top menu for simple
  * organization of masks.
@@ -49,33 +49,30 @@ class P4A_Menu extends P4A_Widget
 	/**
 	 * Menu elements
 	 * @var P4A_Collection
-	 * @access public
 	 */
-	var $items = NULL;
+	public $items = null;
 
 	/**
-	 * The element/subelement currently active.
-	 * @var menu_item
-	 * @access private
+	 * The element/subelement currently active
+	 * @var P4A_Menu_Item
 	 */
-	var $_active_item = NULL;
+	protected $_active_item = null;
 	
 	/**
-	 * @param string		Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
-	public function __construct($name = '')
+	public function __construct($name)
 	{
 		parent::__construct($name);
 		$this->build("P4A_Collection", "items");
 	}
 
 	/**
-	 * Adds an element to the menu.
-	 * @param string		Mnemonic identifier for the element.
-	 * @param string		Item's label.
-	 * @access public
+	 * Adds an element to the menu
+	 * @param string $name Mnemonic identifier for the element
+	 * @param string $label
 	 */
-	function &addItem($name, $label = null)
+	public function &addItem($name, $label = null)
 	{
 		$item =& $this->items->build("P4A_Menu_Item", $name);
 		if ($label !== null) $item->setLabel($label);
@@ -83,58 +80,50 @@ class P4A_Menu extends P4A_Widget
 	}
 
 	/**
-	 * Removes an element from the menu.
-	 * @param string		Mnemonic identifier for the element.
-	 * @access public
+	 * Removes an element from the menu
+	 * @param string $name
 	 */
-	function dropItem($name)
+	public function dropItem($name)
 	{
 		if (isset($name, $this->items->$name)) {
 			$this->items->$name->destroy();
 			unset($this->items->$name);
-		} else {
-			P4A_Error("ITEM NOT FOUND");
 		}
 	}
 
 	/**
-	 * Returns true if the menu has items.
 	 * @return boolean
-	 * @access public
 	 */
-	function hasItems()
+	public function hasItems()
 	{
 		if ($this->items->getNumItems()) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
-	 * Sets the desidered element as active.
-	 * @access private
+	 * @param string $name
 	 */
-	function setActiveItem($name)
+	protected function setActiveItem($name)
 	{
 		$this->_active_item = $name;
 	}
 
 	/**
 	 * Returns the active item name
-	 * @access public
+	 * @return string
 	 */
-	function getActiveItem()
+	public function getActiveItem()
 	{
 		return $this->_active_item;
 	}
 
 	/**
-	 * Returns the HTML rendered widget.
+	 * Returns the HTML rendered widget
 	 * @return string
-	 * @access public
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
@@ -154,7 +143,7 @@ class P4A_Menu extends P4A_Widget
 }
 
 /**
- * Rapresents every menu item.
+ * Rapresents every menu item
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
@@ -162,32 +151,23 @@ class P4A_Menu extends P4A_Widget
 class P4A_Menu_Item extends P4A_Widget
 {
 	/**
-	 * Subelements array.
+	 * Subelements collection
 	 * @var P4A_Collection
-	 * @access private
 	 */
-	var $items = null;
+	public $items = null;
 
 	/**
-	 * The element/subelement currently active.
-	 * @var menu_item
-	 * @access private
+	 * The element/subelement currently active
+	 * @var P4A_Menu_Item
 	 */
-	var $_active_item = null;
-
-	/**
-	 * Stores the shortkey associated with the element.
-	 * @var string
-	 * @access private
-	 */
-	var $key = null;
+	protected $_active_item = null;
 
 	/**
 	 * Icon associated to the element
 	 * @var string
 	 * @access private
 	 */
-	var $_icon = null;
+	protected $_icon = null;
 
 	/**
 	 * @param string		Mnemonic identifier for the object.
@@ -201,12 +181,12 @@ class P4A_Menu_Item extends P4A_Widget
 	}
 
 	/**
-	 * Adds an element to the element.
-	 * @param string		Mnemonic identifier for the element.
-	 * @param string		Item's label.
-	 * @access public
+	 * Adds an element to the element
+	 * @param string $name Mnemonic identifier for the element
+	 * @param string $label
+	 * @return P4A_Menu_Item
 	 */
-	function &addItem($name, $label = null)
+	public function &addItem($name, $label = null)
 	{
 		$item =& $this->items->build("P4A_Menu_Item", $name);
 
@@ -218,40 +198,33 @@ class P4A_Menu_Item extends P4A_Widget
 	}
 
 	/**
-	 * Removes an element from the element.
-	 * @param string		Mnemonic identifier for the element.
-	 * @access public
+	 * Removes an element from the current element
+	 * @param string $name Mnemonic identifier for the element
 	 */
-	function dropItem($name)
+	public function dropItem($name)
 	{
 		if (isset($this->items->$name)) {
 			$this->items->$name->destroy();
 			unset($this->items->$name);
-		} else {
-			P4A_Error("ITEM NOT FOUND");
 		}
 	}
 
 	/**
-	 * Returns true if the element has subelements.
 	 * @return boolean
-	 * @access public
 	 */
-	function hasItems()
+	public function hasItems()
 	{
 		if ($this->items->getNumItems()) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
-	 * Sets the desidered subelement as active.
-	 * @param string		Mnemonic identifier for the element.
-	 * @access private
+	 * Sets the desidered subelement as active
+	 * @param string $name
 	 */
-	function setActiveItem($name)
+	protected function setActiveItem($name)
 	{
 		$this->_active_item = $name;
 		$this->setActive();
@@ -259,50 +232,25 @@ class P4A_Menu_Item extends P4A_Widget
 
 	/**
 	 * Returns the active item name
-	 * @access public
+	 * @return string
 	 */
-	function getActiveItem()
+	public function getActiveItem()
 	{
 		return $this->_active_item;
 	}
 
 	/**
-	 * Sets the access key for the element.
-	 * @param string		The access key.
-	 * @access public
-	 * @see $key
+	 * @param string $icon
 	 */
-	function setAccessKey($key)
-	{
-		$this->setProperty('accesskey', $key);
-	}
-
-	/**
-	 * Removes the access key for the element.
-	 * @access public
-	 * @see $key
-	 */
-	function unsetAccessKey()
-	{
-		$this->unsetProperty('accesskey');
-	}
-
-	/**
-	 * Sets the icon
-	 * @access public
-	 * @param string
-	 */
-	function setIcon($icon)
+	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
 	}
 
 	/**
-	 * Gets icon name
-	 * @access public
 	 * @return string
 	 */
-	function getIcon()
+	public function getIcon()
 	{
 		return $this->_icon;
 	}
@@ -311,11 +259,10 @@ class P4A_Menu_Item extends P4A_Widget
 	 * What is executed on a click on the element.
 	 * If the current element has subitems,
 	 * than we pass the action to the subitem.
-	 * @access public
 	 */
-	function onClick()
+	public function onClick()
 	{
-		return $this->actionHandler('onClick');
+		return $this->actionHandler('onclick');
 	}
 
 	/**
@@ -323,10 +270,11 @@ class P4A_Menu_Item extends P4A_Widget
 	 * @access public
 	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return "";
+			return "<div id='$id' class='hidden'></div>";
 		}
 
 		$p4a =& p4a::singleton();

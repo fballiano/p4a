@@ -14,6 +14,7 @@
 - redo the css
 - style p4a_field as file
 - check if p4a_validate can be ported to ZF
+- p4a_menu_item, icon should also be a path, remove the inline stile
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -125,7 +126,7 @@
 - P4A_Field::unsetMaxThumbnailSize() method was removed, use setMaxThumbnailSize(null) to disable the feature
 - P4A_Field::setRichTextareaToolbar(), getRichTextareaToolbar() and getRichTextareaToolbars() were removed because unsupported by fckeditor
 - P4A::init() method was removed
-- helpers, P4A_Box, P4A_Object, P4A_Button, P4A_Collection, P4A_Field, P4A_Array_Source, P4A_DB_Source, P4A_Widget, P4A_Mask, P4A, P4A_Frame, P4A_Fieldset, P4A_Label, P4A_Line, P4A_Link were php5ized
+- helpers, P4A_Box, P4A_Object, P4A_Button, P4A_Collection, P4A_Field, P4A_Array_Source, P4A_DB_Source, P4A_Widget, P4A_Mask, P4A, P4A_Frame, P4A_Fieldset, P4A_Label, P4A_Line, P4A_Link, P4A_Menu, P4A_Menu_Item were php5ized
 - P4A_Widget::composeStringClassStyle() was rewritten and renamed to composeStringClass()
 - P4A_Toolbar default size is now 32
 - P4A_Button now inherits height from toolbar (just done via CSS)
@@ -134,6 +135,7 @@
 - P4A::getPopupMask() and getPopupMaskName() methods were added
 - P4A_Mask::getFocusedObjectId() method was added
 - P4A_Link::setLabel() method was removed 'cause inherited from P4A_Widget
+- P4A_Menu_Item::setAccessKey() and getAccessKey() methods were removed 'cause inherited from P4A_Widget
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
