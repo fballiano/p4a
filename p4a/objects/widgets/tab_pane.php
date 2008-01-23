@@ -138,7 +138,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	/**
 	 * @return P4A_Frame
 	 */
-	function &nextPage()
+	public function &nextPage()
 	{
 		if ($this->pages->getNumItems() == 0) {
 			$return = null;
