@@ -10,7 +10,6 @@
 - implement errors with exceptions
 - redo the css
 - check if p4a_validate can be ported to ZF
-- p4a_menu_item, icon should also be a path, remove the inline stile
 - import latest fckeditor
 
 2.99.0
@@ -135,6 +134,7 @@
 - P4A_Menu_Item::setAccessKey() and getAccessKey() methods were removed 'cause inherited from P4A_Widget
 - P4A_Table::addToolbar() and newToolbar() methods were removed 'cause not implemented
 - P4A_Table::addNavigationBar() method was removed
+- P4A_Menu_Item::setIcon() now supports a path to an image instead of the icon name
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

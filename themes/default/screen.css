@@ -318,91 +318,6 @@ select {
 	margin-right: 10px;
 }
 
-/***********************************************************/
-/* MENU WIDGET                                             */
-/* original code by Justin Koivisto - http://www.koivi.com */
-/***********************************************************/
-
-#menu {
-	background: #fafafa;
-	border-bottom: 1px solid #ccc;
-}
-
-.p4a_menu {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	position: static;
-	z-index: 20;
-}
-
-.p4a_menu .accesskey {
-	color: black;
-}
-
-.p4a_menu li {
-	float: left;
-	background: #fafafa;
-	margin-left: 10px;
-	display: block;
-	color: black;
-}
-
-.p4a_menu ul {
-	position: absolute;
-	margin: 0px;
-	padding: 0px;
-	list-style-type: none;
-	display: none;
-	background-color: #fafafa;
-	z-index: 40;
-	border: 1px solid #ccc;
-	width: 120px;
-}
-
-.p4a_menu ul li {
-	width: 120px;
-	margin: 0;
-}
-
-.p4a_menu li a, .p4a_menu li div {
-	display: block;
-	text-decoration: none;
-	color: black;
-	margin: 0;
-	padding: 5px;
-}
-
-.p4a_menu a:hover, .p4a_menu li:hover {
-	display: block;
-	background-color: #e2e7ed;
-}
-
-.p4a_menu ul ul{
-	display: none;
-	margin-top: -2em;
-	margin-left: 120px;
-}
-
-.p4a_menu li:hover ul ul,
-.p4a_menu li:hover ul ul ul,
-.p4a_menu li:hover ul ul ul ul,
-.p4a_menu li:hover ul ul ul ul ul{
-	display:none;
-}
-
-.p4a_menu li:hover ul,
-.p4a_menu ul li:hover ul,
-.p4a_menu ul ul li:hover ul,
-.p4a_menu ul ul ul li:hover ul,
-.p4a_menu ul ul ul ul li:hover ul{
-	display:block;
-}
-
-/*******************/
-/* END MENU WIDGET */
-/*******************/
-
 #sidebar_right {
 	border-left: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
@@ -845,4 +760,92 @@ table.p4a_message td.c2 {
 
 .p4a_toolbar_48 button {
 	height: 53px;
+}
+
+/***********************************************************/
+/* P4A_Menu                                                */
+/* original code by Justin Koivisto - http://www.koivi.com */
+/***********************************************************/
+
+#p4a_menu {
+	background: #fafafa;
+	border-bottom: 1px solid #ccc;
+}
+
+.p4a_menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: static;
+	z-index: 20;
+}
+
+.p4a_menu table.p4a_widget_layout_table {
+	margin: 0;
+}
+
+.p4a_menu table.p4a_widget_layout_table td.c1 img {
+	margin-left: 5px;
+}
+
+.p4a_menu .accesskey {
+	color: black;
+}
+
+.p4a_menu li {
+	float: left;
+	background: #fafafa;
+	display: block;
+	color: black;
+}
+
+.p4a_menu ul {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: none;
+	background-color: #fafafa;
+	z-index: 40;
+	border: 1px solid #ccc;
+	width: 120px;
+}
+
+.p4a_menu ul li {
+	width: 120px;
+	margin: 0;
+}
+
+.p4a_menu li a, .p4a_menu li div {
+	display: block;
+	text-decoration: none;
+	color: black;
+	margin: 0;
+	padding: 5px;
+}
+
+.p4a_menu a:hover, .p4a_menu li:hover {
+	display: block;
+	background-color: #e2e7ed;
+}
+
+.p4a_menu ul ul{
+	display: none;
+	margin-top: -2em;
+	margin-left: 120px;
+}
+
+.p4a_menu li:hover ul ul,
+.p4a_menu li:hover ul ul ul,
+.p4a_menu li:hover ul ul ul ul,
+.p4a_menu li:hover ul ul ul ul ul{
+	display:none;
+}
+
+.p4a_menu li:hover ul,
+.p4a_menu ul li:hover ul,
+.p4a_menu ul ul li:hover ul,
+.p4a_menu ul ul ul li:hover ul,
+.p4a_menu ul ul ul ul li:hover ul{
+	display:block;
 }

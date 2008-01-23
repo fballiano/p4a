@@ -52,7 +52,7 @@
 <!-- TOP -->
 <div id="topContainer">
 	<?php if (isset($menu)): ?>
-	<div id="menu">
+	<div id="p4a_menu">
 		<?php echo $menu?>
 		<div class="br"></div>
 	</div>

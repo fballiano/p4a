@@ -132,7 +132,7 @@ class P4A_Menu extends P4A_Widget
 
 		$sReturn = "";
 		if ($this->hasItems()) {
-			$sReturn .= "<ul class='p4a_menu'>";
+			$sReturn .= "<ul id='$id' class='p4a_menu'>";
 			while ($item =& $this->items->nextItem()) {
 				$sReturn .= $item->getAsString();
 			}
@@ -283,21 +283,23 @@ class P4A_Menu_Item extends P4A_Widget
 			$icon = '';
 		} else {
 			$icon = $this->getIcon();
-			if ($icon) {
-				$icon_disabled = '';
-				if (!$this->isEnabled()) {
-					$icon_disabled = '_disabled';
+			if (strlen($icon)) {
+				if (strpos($this->_icon, '.') === false) {
+					$icon_disabled = '';
+					if (!$this->isEnabled()) {
+						$icon_disabled = '_disabled';
+					}
+					$icon = P4A_ICONS_PATH . "/16/{$icon}{$icon_disabled}." . P4A_ICONS_EXTENSION;
 				}
-				// we've to add inline styles because if we put them in css file it won't work with IE and png fix
-				$icon = "<img src='" . P4A_ICONS_PATH . "/16/{$icon}{$icon_disabled}." . P4A_ICONS_EXTENSION . "' alt='' style='float:left;margin-right:5px;' />";
+				$icon = "<img src='$icon' alt='' />";
 			}
 		}
 
 		if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
-			$sReturn = "<li>$icon<div $properties>" . $this->getLabel() . "</div>";
+			$sReturn = "<li>" . P4A_Generate_Widget_Layout_Table($icon, "<div $properties>" . $this->getLabel() . "</div>");
 		} else {
 			$actions = $this->composeStringActions();
-			$sReturn = "<li>$icon<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>";
+			$sReturn = "<li>" . P4A_Generate_Widget_Layout_Table($icon, "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>");
 		}
 
 		if ($this->hasItems()) {
