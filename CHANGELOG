@@ -136,6 +136,8 @@
 - P4A_Mask::getFocusedObjectId() method was added
 - P4A_Link::setLabel() method was removed 'cause inherited from P4A_Widget
 - P4A_Menu_Item::setAccessKey() and getAccessKey() methods were removed 'cause inherited from P4A_Widget
+- P4A_Table::addToolbar() and newToolbar() methods were removed 'cause not implemented
+- P4A_Table::addNavigationBar() method was removed
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
