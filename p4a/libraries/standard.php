@@ -36,10 +36,9 @@
  */
 
 /**
- * Stops program execution with an error.
- * @param string	Error identifier.
- * @param string	Error description or other message.
- * @access public
+ * Stops program execution with an error
+ * @param string $error Error identifier
+ * @param string $message Error description or other message
  */
 function P4A_Error($error, $message = '')
 {
@@ -50,9 +49,8 @@ function P4A_Error($error, $message = '')
 }
 
 /**
- * Converts a "file" value into an array.
- * @access public
- * @param string	The file.
+ * Converts a "file" value into an array
+ * @param string $file
  * @return array
  */
 function P4A_File2array($file)
@@ -73,9 +71,8 @@ function P4A_File2array($file)
 }
 
 /**
- * Converts an array into a "file" value.
- * @access public
- * @param array		The file.
+ * Converts an array into a "file" value
+ * @param array $aFile
  * @return string
  */
 function P4A_Array2file($aFile)
@@ -94,10 +91,9 @@ function P4A_Array2file($aFile)
 
 /**
  * Converts a file path into a "file" format value
- * @access public
- * @param string	The filename
- * @param string	The uploads dir
- * @return string	The "file"
+ * @param string $filename
+ * @param string $uploads_dir
+ * @return string
  */
 function P4A_Filename2File($filename, $uploads_dir)
 {
@@ -118,11 +114,10 @@ function P4A_Filename2File($filename, $uploads_dir)
 }
 
 /**
- * Takes page number, records number, page limit and returns the necessary  offset for a query.
- * @access public
- * @param integer	Page limit.
- * @param integer	Records limit.
- * @param integer	Page limit.
+ * Takes page number, records number, page limit and returns the necessary  offset for a query
+ * @param integer $page_number
+ * @param integer $records_number
+ * @param integer $page_limit
  * @return integer
  */
 function P4A_Get_Offset($page_number, $records_number, $page_limit)
@@ -135,13 +130,13 @@ function P4A_Get_Offset($page_number, $records_number, $page_limit)
 }
 
 /**
- * Takes records number, page limit and returns the num of pages.
- * @access public
- * @param integer	Page Number.
- * @param integer	Records
+ * Takes records number, page limit and returns the num of pages
+ * @param integer $records_number
+ * @param integer $page_limit
  * @return integer
  */
-function P4A_Get_Num_Pages($records_number, $page_limit){
+function P4A_Get_Num_Pages($records_number, $page_limit)
+{
 	if ($records_number % $page_limit == 0) {
 		return $records_number / $page_limit ;
 	} else {
@@ -152,12 +147,11 @@ function P4A_Get_Num_Pages($records_number, $page_limit){
 /**
  * Tests if a file with the same name exists and return the correct file name.
  * Appends _1 (_2, _3) at the end fo the file name.
- * @access private
- * @param string		The filename without path.
- * @param string		The directory (absolute).
+ * @param string $filename The filename without path
+ * @param string $directory The directory (absolute)
  * @return string
  */
-function P4A_Get_Unique_File_Name( $filename, $directory )
+function P4A_Get_Unique_File_Name($filename, $directory)
 {
 	$aParts = explode('.', $filename);
 	$base = '' ;
@@ -180,10 +174,9 @@ function P4A_Get_Unique_File_Name( $filename, $directory )
 }
 
 /**
- * Strips "strange" chars from filename.
- * @access public
+ * Strips "strange" chars from filename
+ * @param string $filename
  * @return string
- * @param string
  */
 function P4A_Get_Valid_File_Name($filename)
 {
@@ -193,20 +186,17 @@ function P4A_Get_Valid_File_Name($filename)
 }
 
 /**
- * Returns the microtime.
- * @access public
  * @return integer
  */
 function P4A_Get_Microtime()
 {
-	list($usec, $sec) = explode(" ",microtime());
+	list($usec, $sec) = explode(' ', microtime());
 	return ((float)$usec + (float)$sec);
 }
 
 /**
- * Includes all p4a objects for the application.
- * @access private
- * @param string
+ * Includes all p4a objects for the application
+ * @param string $dir
  */
 function P4A_Include_Objects($dir)
 {
@@ -237,10 +227,9 @@ function P4A_Include_Objects($dir)
 }
 
 /**
- * Returns the extension of the passed file path/url.
- * @access public
+ * Returns the extension of the passed file path/url
+ * @param string $url
  * @return string
- * @param string
  */
 function P4A_Get_File_Extension($url)
 {
@@ -249,9 +238,8 @@ function P4A_Get_File_Extension($url)
 
 /**
  * Check if the extension is allowed to be uploaded
- * @access public
+ * @param string $extension
  * @return boolean
- * @param string
  */
 function P4A_Is_Extension_Allowed($extension)
 {
@@ -261,9 +249,8 @@ function P4A_Is_Extension_Allowed($extension)
 
 /**
  * Returns an i18n translated string (like gettext)
- * @access public
+ * @param string $string string to be translated
  * @return string
- * @param string string to be translated
  */
 function __($string)
 {
@@ -271,6 +258,10 @@ function __($string)
 	return $p4a->i18n->translate($string);
 }
 
+/**
+ * @param string $mime_type
+ * @return boolean
+ */
 function P4A_Is_Mime_Type_Embeddable($mime_type)
 {
 	list($type, $application) = explode('/', $mime_type);
@@ -283,12 +274,11 @@ function P4A_Is_Mime_Type_Embeddable($mime_type)
 }
 
 /**
- * Return HTML tag containig embedded audio/video player.
- * @param string	File path.
- * @param string	Mime type.
- * @param string	Width.
- * @param string	Height.
- * @access public
+ * Return HTML tag containig embedded audio/video player
+ * @param string $src File path
+ * @param string $mime_type
+ * @param string $width
+ * @param string $height
  * @return string
  */
 function P4A_Embedded_Player($src, $mime_type, $width=300, $height=200)
@@ -319,10 +309,9 @@ function P4A_Embedded_Player($src, $mime_type, $width=300, $height=200)
 }
 
 /**
- * Used for internal debugging (within session browser).
- * @param mixed		Variable to print
- * @access private
- * @return mixed
+ * Used for internal debugging (within session browser)
+ * @param mixed $v Variable to print
+ * @return string
  */
 function _P4A_Debug_Print_Variable($v)
 {
@@ -359,9 +348,8 @@ function _P4A_Debug_Print_Variable($v)
 }
 
 /*
- * @param string
+ * @param string $string
  * @return string
- * @access public
  */
 function P4A_Strip_Double_Slashes($string)
 {
