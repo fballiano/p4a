@@ -7,14 +7,11 @@
 - implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
-- use LocaleData:getContent($locale, 'week') to read the firstDay of the week when ZF 1.5 will be out
-- check if the new yesexpr is right when ZF 1.5 will be out
 - implement errors with exceptions
-- php5ize all components
 - redo the css
-- style p4a_field as file
 - check if p4a_validate can be ported to ZF
 - p4a_menu_item, icon should also be a path, remove the inline stile
+- import latest fckeditor
 
 2.99.0
 - Zend Framework 1.0.3 was added
