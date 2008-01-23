@@ -50,17 +50,6 @@ body {
 	color: #4B718A;
 }
 
-/* mask title icon */
-h2 img {
-	display: inline;
-	vertical-align: middle;
-	border: 1px solid #FAFAFA;
-	padding-left:3px;
-	padding-right:3px;
-	padding:3px;
-	border:none;
-}
-
 .radio {
 	border: none;
 }
@@ -244,6 +233,11 @@ form {
 h2 {
 	text-align:center;
 	font-size: 16px;
+}
+
+h2 table td {
+	font-size: 16px;
+	font-weight: bold;
 }
 
 hr {

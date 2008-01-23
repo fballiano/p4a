@@ -68,7 +68,7 @@
 <!-- MAIN  -->
 <div id="mainContainer" style="margin-top:<?php echo $_top_margin?>px; <?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width}px;"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width}px;"?>">
 	<?php if (strlen($_title)): ?>
-	<h2><?php echo $_icon . $_title?></h2>
+	<h2><?php echo P4A_Generate_Widget_Layout_Table($_icon, $_title) ?></h2>
 	<?php endif; ?>
 
 	<?php if (isset($main)): ?>
