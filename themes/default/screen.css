@@ -50,7 +50,8 @@ body {
 	color: #4B718A;
 }
 
-.img_button {
+/* mask title icon */
+h2 img {
 	display: inline;
 	vertical-align: middle;
 	border: 1px solid #FAFAFA;

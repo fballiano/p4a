@@ -339,8 +339,13 @@ class P4A_Mask extends P4A_Object
 		$_title = $this->getTitle();
 		if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
 			$_icon = $this->getIcon();
-			$_icon_size = $this->getIconSize();
-			$_icon = "<img class=\"img_button\" src=\"" . P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION . "\" alt=\"\" />";
+			if (strpos($_icon, '.') !== false) {
+				$_icon = $_icon;
+			} else {
+				$_icon_size = $this->getIconSize();
+				$_icon = P4A_ICONS_PATH . "/{$_icon_size}/{$_icon}." . P4A_ICONS_EXTENSION;
+			}
+			$_icon = "<img src='$_icon' alt='' />";
 		}
 
 		extract($this->_temp_vars);
