@@ -135,6 +135,7 @@
 - P4A_Table::addToolbar() and newToolbar() methods were removed 'cause not implemented
 - P4A_Table::addNavigationBar() method was removed
 - P4A_Menu_Item::setIcon() now supports a path to an image instead of the icon name
+- P4A_Sheet was removed 'cause had too many performance issues and it should be rewritten
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

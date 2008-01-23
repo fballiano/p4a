@@ -89,7 +89,6 @@ require_once "$dir/objects/widgets/line.php";
 require_once "$dir/objects/widgets/link.php";
 require_once "$dir/objects/widgets/menu.php";
 require_once "$dir/objects/widgets/message.php";
-require_once "$dir/objects/widgets/sheet.php";
 require_once "$dir/objects/widgets/toolbar.php";
 require_once "$dir/objects/widgets/table.php";
 require_once "$dir/objects/widgets/tab_pane.php";
