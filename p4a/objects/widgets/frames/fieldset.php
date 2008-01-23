@@ -36,7 +36,7 @@
  */
 
 /**
- * The fieldset.
+ * The fieldset
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
@@ -44,24 +44,6 @@
  */
 class P4A_Fieldset extends P4A_Frame
 {
-	/**
-	 * @param string $title
-	 * @deprecated
-	 */
-	function setTitle($title)
-	{
-		$this->setLabel($title);
-	}
-
-	/**
-	 * @return string
-	 * @deprecated 
-	 */
-	function getTitle()
-	{
-		return $this->getLabel();
-	}
-
 	/**
 	 * @return string
 	 */
