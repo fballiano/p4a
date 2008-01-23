@@ -132,6 +132,7 @@
 - P4A_Mask::setIcon() now supports a path to an image instead of the icon name
 - P4A_Fieldset::setTitle() and getTitle() methods were removed cause deprecated, use setLabel() and getLabel() instead
 - P4A::getPopupMask() and getPopupMaskName() methods were added
+- P4A_Mask::getFocusedObjectId() method was added
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

@@ -777,4 +777,12 @@ class P4A_Mask extends P4A_Object
 		'});' . "\n" .
 		'</script>';
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getFocusedObjectId()
+	{
+		return $this->focus_object_id;
+	}
 }
