@@ -344,11 +344,11 @@ class P4A_Table extends P4A_Widget
 	 */
 	function showNavigationBar()
 	{
-		if ($this->navigation_bar === NULL) {
+		if ($this->navigation_bar === null) {
 			$this->addNavigationBar();
 		}
 		$this->navigation_bar->setVisible();
-		$this->_auto_navigation_bar = FALSE;
+		$this->_auto_navigation_bar = false;
 	}
 
 	/**
@@ -357,10 +357,10 @@ class P4A_Table extends P4A_Widget
 	 */
 	function hideNavigationBar()
 	{
-		if ($this->navigation_bar !== NULL) {
+		if ($this->navigation_bar !== null) {
 			$this->navigation_bar->setInvisible();
 		}
-		$this->_auto_navigation_bar = FALSE;
+		$this->_auto_navigation_bar = false;
 	}
 
 	/**
@@ -369,7 +369,7 @@ class P4A_Table extends P4A_Widget
 	 */
 	function showTitleBar()
 	{
-		if ($this->title_bar !== NULL) {
+		if ($this->title_bar !== null) {
 			$this->setTitle($this->getName());
 		}
 		$this->title_bar->setVisible();
@@ -381,7 +381,7 @@ class P4A_Table extends P4A_Widget
 	 */
 	function showHeaders()
 	{
-		$this->_show_headers = TRUE;
+		$this->_show_headers = true;
 	}
 
 	/**
@@ -391,7 +391,7 @@ class P4A_Table extends P4A_Widget
 	 */
 	function hideHeaders()
 	{
-		$this->_show_headers = FALSE;
+		$this->_show_headers = false;
 	}
 
 	/**
@@ -536,28 +536,28 @@ class P4A_Table_Col extends P4A_Widget
 	 * @var string
 	 * @access private
 	 */
-	var $header = NULL;
+	var $header = null;
 
 	/**
 	 * Data source for the field.
 	 * @var data_source
 	 * @access private
 	 */
-	var $data = NULL;
+	var $data = null;
 
 	/**
 	 * The data source member that contains the values for this field.
 	 * @var string
 	 * @access private
 	 */
-	var $data_value_field = NULL ;
+	var $data_value_field = null ;
 
 	/**
 	 * The data source member that contains the descriptions for this field.
 	 * @var string
 	 * @access private
 	 */
-	var $data_description_field	= NULL ;
+	var $data_description_field	= null ;
 
 	/**
 	 * Tells if the fields content is formatted or not.
@@ -571,14 +571,14 @@ class P4A_Table_Col extends P4A_Widget
 	 * @var string
 	 * @access private
 	 */
-	var $formatter_name = NULL;
+	var $formatter_name = null;
 
 	/**
 	 * The format name for the data field.
 	 * @var string
 	 * @access private
 	 */
-	var $format_name = NULL;
+	var $format_name = null;
 
 	/**
 	 * Tells if the table can order by this col
@@ -657,8 +657,8 @@ class P4A_Table_Col extends P4A_Widget
 		$this->data =& $data_source;
 		$pk = $this->data->getPk();
 
-		if ($pk !== NULL) {
-			if( $this->getSourceValueField() === NULL ) {
+		if ($pk !== null) {
+			if ($this->getSourceValueField() === null) {
 				if (is_array($pk)) {
 					P4A_Error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
 				} else {
@@ -666,7 +666,7 @@ class P4A_Table_Col extends P4A_Widget
 				}
 			}
 
-			if ($this->getSourceDescriptionField() === NULL) {
+			if ($this->getSourceDescriptionField() === null) {
 				$source_value = $this->getSourceValueField();
 				$names = $this->data->fields->getNames();
 				foreach ($names as $name) {
@@ -796,8 +796,8 @@ class P4A_Table_Col extends P4A_Widget
 	 */
 	function unsetFormat()
 	{
-		$this->formatter_name = NULL;
-		$this->format_name = NULL;
+		$this->formatter_name = null;
+		$this->format_name = null;
 		$this->unsetFormatted();
 	}
 
@@ -1106,10 +1106,10 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 			$this->buttons->button_first->setLabel("Go to the first page");
 		}
 
-		$this->intercept($this->buttons->button_last, 'onClick', 'lastOnClick');
-		$this->intercept($this->buttons->button_next, 'onClick', 'nextOnClick');
-		$this->intercept($this->buttons->button_prev, 'onClick', 'prevOnClick');
-		$this->intercept($this->buttons->button_first, 'onClick', 'firstOnClick');
+		$this->intercept($this->buttons->button_last, 'onclick', 'lastOnClick');
+		$this->intercept($this->buttons->button_next, 'onclick', 'nextOnClick');
+		$this->intercept($this->buttons->button_prev, 'onclick', 'prevOnClick');
+		$this->intercept($this->buttons->button_first, 'onclick', 'firstOnClick');
 	}
 
 	function addButton($button_name, $icon = null, $float = "left")
