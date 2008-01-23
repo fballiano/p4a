@@ -527,7 +527,7 @@ class P4A_DB_Source extends P4A_Data_Source
 						!array_key_exists($name, $this->_multivalue_fields)) {
 							$fields_values[$name] = $field->getNewValue();
 							if ($fields_values[$name] === "") {
-								$fields_values[$name] = NULL;
+								$fields_values[$name] = null;
 							}
 					}
 				}
@@ -802,7 +802,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	public function resetNumRows()
 	{
-		$this->_num_rows = NULL;
+		$this->_num_rows = null;
 	}
 
 	public function addMultivalueField($fieldname, $table = null, $fk = null, $fk_field = null)

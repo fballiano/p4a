@@ -439,8 +439,8 @@ class P4A_Mask extends P4A_Object
 				$a_new_value = explode(',', substr($new_value, 1, -1 ));
 				$a_old_value = explode(',', substr($old_value, 1, -1 ));
 
-				if ($old_value === NULL) {
-					if ($new_value !== NULL) {
+				if ($old_value === null) {
+					if ($new_value !== null) {
 						$a_new_value[0] = P4A_Get_Unique_File_Name( $a_new_value[0], $target_dir );
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
@@ -453,10 +453,10 @@ class P4A_Mask extends P4A_Object
 						$a_new_value[1] = str_replace(P4A_UPLOADS_DIR , '', $new_path);
 						$field->setNewValue('{' . join($a_new_value, ',') . '}');
 					} else {
-						$field->setNewValue(NULL);
+						$field->setNewValue(null);
 					}
 				} else {
-					if ($new_value === NULL) {
+					if ($new_value === null) {
 						$path = $target_dir . '/' . $a_old_value[0];
 						if (!@unlink($path) and @file_exists($path)) {
 							$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
@@ -464,7 +464,7 @@ class P4A_Mask extends P4A_Object
 								die();
 							}
 						}
-						$field->setNewValue(NULL);
+						$field->setNewValue(null);
 					} elseif ($new_value!=$old_value) {
 						$path = $target_dir . '/' . $a_old_value[0];
 						if (!@unlink($path) and @file_exists($path)) {
