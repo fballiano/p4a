@@ -45,38 +45,80 @@
  */
 class P4A_Canvas extends P4A_Widget
 {
-	var $objects = array();
-	var $top = 10;
-	var $left = 10;
-	var $unit = "px";
-	var $offset_top = 0;
-	var $offset_left = 0;
+	/**
+	 * @var array
+	 */
+	protected $objects = array();
+	
+	/**
+	 * @var integer
+	 */
+	protected $top = 10;
+	
+	/**
+	 * @var integer
+	 */
+	protected $left = 10;
+	
+	/**
+	 * @var string
+	 */
+	protected $unit = "px";
+	
+	/**
+	 * @var integer
+	 */
+	protected $offset_top = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $offset_left = 0;
 
-	function anchor(&$object, $top, $left=0)
+	/**
+	 * @param P4A_Object $object
+	 * @param integer $top
+	 * @param integer $left
+	 */
+	public function anchor(&$object, $top, $left=0)
 	{
 		$this->objects[] = array($object, $top, $left);
 	}
 
-	function setOffset($top, $left)
+	/**
+	 * @param integer $top
+	 * @param integer $left
+	 */
+	public function setOffset($top, $left)
 	{
 		$this->offset_top += $top;
 		$this->offset_left += $left;
 	}
 
-	function defineGrid($top = 10, $left = 10, $unit = 'px')
+	/**
+	 * @param integer $top
+	 * @param integer $left
+	 * @param string $unit
+	 */
+	public function defineGrid($top = 10, $left = 10, $unit = 'px')
 	{
 		$this->top = $top;
 		$this->left = $top;
 		$this->unit = $unit;
 	}
 
-	function getAsString()
+	/**
+	 * @return string
+	 */
+	public function getAsString()
 	{
 		$id = $this->getId();
-		$this->debug = true;
+		if (!$this->isVisible()) {
+			return "<div id='$id' class='hidden'></div>";
+		}
+		
 		$string  = "";
-
-		foreach(array_keys($this->objects) as $key){
+		foreach (array_keys($this->objects) as $key) {
 			if (is_object($this->objects[$key][0])) {
 				$top = ($this->objects[$key][1] * $this->top) + $this->offset_top;
 				$left = ($this->objects[$key][2] * $this->left) + $this->offset_left;
