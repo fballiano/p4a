@@ -130,6 +130,8 @@
 - P4A_Toolbar default size is now 32
 - P4A_Button now inherits height from toolbar (just done via CSS)
 - P4A_Mask::setIcon() now supports a path to an image instead of the icon name
+- P4A_Fieldset::setTitle() and getTitle() methods were removed cause deprecated, use setLabel() and getLabel() instead
+- P4A::getPopupMask() and getPopupMaskName() methods were added
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

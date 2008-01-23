@@ -662,11 +662,27 @@ class P4A extends P4A_Object
 			return $this->masks->$mask_name;
      	}
      }
-
+     
      /**
-      * @param string $mask_name
-      * @return boolean
+      * @return string
       */
+     public function &getPopupMaskName()
+     {
+     	return $this->_popup;
+     }
+     
+     /**
+      * @return P4A_Mask
+      */
+     public function &getPopupMask()
+     {
+     	return p4a_mask::singleton($this->_popup);
+     }
+     
+	/**
+	 * @param string $mask_name
+	 * @return boolean
+	 */
 	public function maskExists($mask_name)
 	{
 		if (array_key_exists($mask_name, $this->masks)) {

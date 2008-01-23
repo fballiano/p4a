@@ -220,8 +220,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function showPrevMask()
 	{
-		$p4a =& P4A::singleton();
-		$p4a->showPrevMask();
+		P4A::singleton()->showPrevMask();
 	}
 
 	/**
@@ -230,8 +229,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function &getPrevMask()
 	{
-		$p4a =& P4A::singleton();
-		return $p4a->getPrevMask();
+		return P4A::singleton()->getPrevMask();
 	}
 
 	/**
@@ -351,9 +349,8 @@ class P4A_Mask extends P4A_Object
 		extract($this->_temp_vars);
 
 		$_popup = '';
-		if ($p4a->_popup and !$this->isPopup()) {
-			$_popup_mask = P4A_Mask::singleton($p4a->_popup);
-			$_popup = $_popup_mask->getAsString();
+		if ($p4a->isPopupOpened() and !$this->isPopup()) {
+			$_popup = $p4a->getPopupMask()->getAsString();
 		}
 
 		ob_start();
