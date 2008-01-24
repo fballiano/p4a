@@ -122,6 +122,7 @@ function Ok()
 		return false ;
 	}
 
+	oEditor.FCKUndo.SaveUndoStep() ;
 	if ( !oEmbed )
 	{
 		oEmbed		= FCK.EditorDocument.createElement( 'EMBED' ) ;
@@ -133,10 +134,8 @@ function Ok()
 	{
 		oFakeImage	= oEditor.FCKDocumentProcessor_CreateFakeImage( 'FCK__Flash', oEmbed ) ;
 		oFakeImage.setAttribute( '_fckflash', 'true', 0 ) ;
-		oFakeImage	= FCK.InsertElementAndGetIt( oFakeImage ) ;
+		oFakeImage	= FCK.InsertElement( oFakeImage ) ;
 	}
-	else
-		oEditor.FCKUndo.SaveUndoStep() ;
 
 	oEditor.FCKFlashProcessor.RefreshView( oFakeImage, oEmbed ) ;
 

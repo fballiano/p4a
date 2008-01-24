@@ -442,7 +442,7 @@ class P4A extends P4A_Object
 			}
 			echo "</table>";
 		} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
-			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/browser/default/connectors/php/connector.php';
+			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/connectors/php/connector.php';
 		} elseif (isset($_REQUEST['_upload_path'])) {
 			$path = P4A_UPLOADS_PATH;
 			if (isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {

@@ -70,7 +70,7 @@ class P4A_DB
 				$$dbconn =& new p4a_db();
 				$dsn_data = parse_url($DSN);
 		
-				if (!in_array($dsn_data['scheme'], array('mysql','oracle','pgsql','sqlite'))) {
+				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
 					p4a_error("db not supported");
 				}
 		
@@ -127,7 +127,7 @@ class P4A_DB
 				}
 				return $id;
 			case 'pgsql':
-			case 'oracle':
+			case 'oci':
 				return $this->adapter->nextSequenceId($sequence_name);
 				break;
 		}
@@ -285,7 +285,7 @@ class P4A_DB
 				return "$column_name LIKE '$search_pattern'";
 			case 'pgsql':
 				return "$column_name ILIKE '$search_pattern'";
-			case 'oracle':
+			case 'oci':
 				return "UPPER($column_name) LIKE UPPER('$search_pattern')";
 		}
 	}

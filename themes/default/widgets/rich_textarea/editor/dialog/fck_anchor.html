@@ -68,6 +68,7 @@ window.onload = function()
 		oAnchor = null ;
 
 	window.parent.SetOkButton( true ) ;
+	window.parent.SetAutoSize( true ) ;
 }
 
 function Ok()
@@ -83,7 +84,8 @@ function Ok()
 		// Remove the anchor if the user leaves the name blank
 		if ( oAnchor )
 		{
-			RemoveAnchor() ;
+			// Removes the current anchor from the document using the new command
+			FCK.Commands.GetCommand( 'AnchorDelete' ).Execute() ;
 			return true ;
 		}
 
@@ -115,7 +117,7 @@ function Ok()
 	if ( aNewAnchors.length == 0 )
 	{
 		// Nothing was selected, so now just create a normal A
-		aNewAnchors.push( oEditor.FCK.CreateElement( 'a' ) ) ;
+		aNewAnchors.push( oEditor.FCK.InsertElement( 'a' ) ) ;
 	}
 	else
 	{
@@ -157,36 +159,6 @@ function Ok()
 	return true ;
 }
 
-// Removes the current anchor from the document
-function RemoveAnchor()
-{
-	// If it's also a link, then just remove the name and exit
-	if ( oAnchor.href.length != 0 )
-	{
-		oAnchor.removeAttribute( 'name' ) ;
-		// Remove temporary class for IE
-		if ( FCKBrowserInfo.IsIE )
-			oAnchor.className = oAnchor.className.replace( FCKRegexLib.FCK_Class, '' ) ;
-		return ;
-	}
-
-	// We need to remove the anchor
-	// If we got a fake image, then just remove it and we're done
-	if ( oFakeImage )
-	{
-		oFakeImage.parentNode.removeChild( oFakeImage ) ;
-		return ;
-	}
-	// Empty anchor, so just remove it
-	if ( oAnchor.innerHTML.length == 0 )
-	{
-		oAnchor.parentNode.removeChild( oAnchor ) ;
-		return ;
-	}
-	// Anchor with content, leave the content
-	FCKTools.RemoveOuterTags( oAnchor ) ;
-}
-
 // Checks all the links in the current page pointing to the current name and changes them to the new name
 function ReadjustLinksToAnchor( sCurrent, sNew )
 {
@@ -217,7 +189,7 @@ function ReadjustLinksToAnchor( sCurrent, sNew )
 
 		</script>
 	</head>
-	<body style="OVERFLOW: hidden" scroll="no">
+	<body style="overflow: hidden">
 		<table height="100%" width="100%">
 			<tr>
 				<td align="center">

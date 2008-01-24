@@ -45,6 +45,7 @@ InsertLinkLbl		: "پیوند",
 InsertLink			: "گنجاندن/ویرایش ِپیوند",
 RemoveLink			: "برداشتن پیوند",
 Anchor				: "گنجاندن/ویرایش ِلنگر",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "تصویر",
 InsertImage			: "گنجاندن/ویرایش ِتصویر",
 InsertFlashLbl		: "Flash",
@@ -70,6 +71,7 @@ RightJustify		: "راست‌چین",
 BlockJustify		: "بلوک‌چین",
 DecreaseIndent		: "کاهش تورفتگی",
 IncreaseIndent		: "افزایش تورفتگی",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "واچیدن",
 Redo				: "بازچیدن",
 NumberedListLbl		: "فهرست شماره‌دار",
@@ -103,20 +105,27 @@ SelectionField	: "فیلد چندگزینه‌ای",
 ImageButton		: "دکمهٴ تصویری",
 
 FitWindow		: "بیشینه‌سازی ِاندازهٴ ویرایشگر",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "ویرایش پیوند",
 CellCM				: "سلول",
 RowCM				: "سطر",
 ColumnCM			: "ستون",
-InsertRow			: "گنجاندن سطر",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "حذف سطرها",
-InsertColumn		: "گنجاندن ستون",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "حذف ستونها",
-InsertCell			: "گنجاندن سلول",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "حذف سلولها",
 MergeCells			: "ادغام سلولها",
-SplitCell			: "جداسازی سلول",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "پاک‌کردن جدول",
 CellProperties		: "ویژگیهای سلول",
 TableProperties		: "ویژگیهای جدول",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "ویژگیهای فیلد چندگزینه‌ای",
 TextareaProp		: "ویژگیهای ناحیهٴ متنی",
 FormProp			: "ویژگیهای فرم",
 
-FontFormats			: "نرمال;فرمت‌شده;آدرس;سرنویس 1;سرنویس 2;سرنویس 3;سرنویس 4;سرنویس 5;سرنویس 6;بند;(DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "نرمال;فرمت‌شده;آدرس;سرنویس 1;سرنویس 2;سرنویس 3;سرنویس 4;سرنویس 5;سرنویس 6;بند;(DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "پردازش XHTML. لطفا صبر کنید...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "یک لنگر برگزینید",
 DlgLnkAnchorByName	: "با نام لنگر",
 DlgLnkAnchorById	: "با شناسهٴ المان",
-DlgLnkNoAnchors		: "(در این سند لنگری دردسترس نیست)",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(در این سند لنگری دردسترس نیست)",
 DlgLnkEMail			: "نشانی پست الکترونیکی",
 DlgLnkEMailSubject	: "موضوع پیام",
 DlgLnkEMailBody		: "متن پیام",
@@ -321,6 +330,9 @@ DlgCellCollSpan		: "گستردگی ستونها",
 DlgCellBackColor	: "رنگ پس‌زمینه",
 DlgCellBorderColor	: "رنگ لبه",
 DlgCellBtnSelect	: "برگزینید...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
 
 // Find Dialog
 DlgFindTitle		: "یافتن",

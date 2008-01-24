@@ -10,7 +10,6 @@
 - implement errors with exceptions
 - redo the css
 - check if p4a_validate can be ported to ZF
-- import latest fckeditor
 - php5ize db_navigator
 - check db for '' to replace the addslash
 
@@ -138,6 +137,8 @@
 - P4A_Table::addNavigationBar() method was removed
 - P4A_Menu_Item::setIcon() now supports a path to an image instead of the icon name
 - P4A_Sheet was removed 'cause had too many performance issues and it should be rewritten
+- FCKEditor was updated to 2.5.1
+- "oracle" was renamed to "oci" within P4A_DB to reflect PDO naming
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

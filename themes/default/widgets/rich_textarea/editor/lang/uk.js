@@ -45,6 +45,7 @@ InsertLinkLbl		: "Посилання",
 InsertLink			: "Вставити/Редагувати посилання",
 RemoveLink			: "Знищити посилання",
 Anchor				: "Вставити/Редагувати якір",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Зображення",
 InsertImage			: "Вставити/Редагувати зображення",
 InsertFlashLbl		: "Flash",
@@ -70,6 +71,7 @@ RightJustify		: "По правому краю",
 BlockJustify		: "По ширині",
 DecreaseIndent		: "Зменшити відступ",
 IncreaseIndent		: "Збільшити відступ",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Повернути",
 Redo				: "Повторити",
 NumberedListLbl		: "Нумерований список",
@@ -103,20 +105,27 @@ SelectionField	: "Список",
 ImageButton		: "Кнопка із зображенням",
 
 FitWindow		: "Розвернути вікно редактора",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Вставити посилання",
 CellCM				: "Осередок",
 RowCM				: "Рядок",
 ColumnCM			: "Колонка",
-InsertRow			: "Вставити строку",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Видалити строки",
-InsertColumn		: "Вставити колонку",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Видалити колонки",
-InsertCell			: "Вставити комірку",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Видалити комірки",
 MergeCells			: "Об'єднати комірки",
-SplitCell			: "Роз'єднати комірку",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Видалити таблицю",
 CellProperties		: "Властивості комірки",
 TableProperties		: "Властивості таблиці",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "Властивості списку",
 TextareaProp		: "Властивості текстової області",
 FormProp			: "Властивості форми",
 
-FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальний (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальний (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Обробка XHTML. Зачекайте, будь ласка...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Оберіть якір",
 DlgLnkAnchorByName	: "За ім'ям якоря",
 DlgLnkAnchorById	: "За ідентифікатором елемента",
-DlgLnkNoAnchors		: "<Немає якорів доступних в цьому документі>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Немає якорів доступних в цьому документі)",
 DlgLnkEMail			: "Адреса ел. пошти",
 DlgLnkEMailSubject	: "Тема листа",
 DlgLnkEMailBody		: "Тіло повідомлення",
@@ -321,6 +330,9 @@ DlgCellCollSpan		: "Діапазон колонок (span)",
 DlgCellBackColor	: "Колір фона",
 DlgCellBorderColor	: "Колір бордюра",
 DlgCellBtnSelect	: "Оберіть...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
 
 // Find Dialog
 DlgFindTitle		: "Пошук",

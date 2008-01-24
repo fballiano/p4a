@@ -14,7 +14,7 @@ FCKConfig.ToolbarSets['Default'] = [
 	'/',
 	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript','-','OrderedList','UnorderedList','-','Outdent','Indent','-','FontFormat'],
 	'/',
-	['Link','Unlink','Anchor','-','Image','Flash','-','Table','TableInsertRow','TableDeleteRows','TableInsertColumn','TableDeleteColumns','TableInsertCell','TableDeleteCells','TableMergeCells','TableSplitCell','-','Rule','SpecialChar']
+	['Link','Unlink','Anchor','-','Image','Flash','-','Table','TableInsertRowAfter','TableDeleteRows','TableInsertColumnAfter','TableDeleteColumns','TableInsertCellAfter','TableDeleteCells','TableMergeCells','TableHorizontalSplitCell','-','Rule','SpecialChar']
 ];
 
 FCKConfig.ToolbarSets["Full"] = [
