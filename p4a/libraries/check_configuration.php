@@ -49,7 +49,7 @@ function p4a_check_configuration($additionalDir = null)
     $error = "<center><h2>$title</h2></center>\n" ;
 
     // OPERATING SYSTEM
-    $error .= "<div class='box'>Checking SERVER OPERATING SYSTEM:<br/>";
+    $error .= "<div class='box'>Checking SERVER OPERATING SYSTEM:<br />";
     if (_DS_ == '/') {
     	$error .= "P4A is configured as running on <b>Linux</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
     } else {
@@ -60,7 +60,7 @@ function p4a_check_configuration($additionalDir = null)
     // DOCUMENT ROOT
     $error .= "<div class='box'>Checking DOCUMENT_ROOT: ";
     if (strlen(P4A_SERVER_DIR) == 0) {
-    	$error .= "<span class='red'>FAILED</span><br/>Define P4A_SERVER_DIR as your DOCUMENT_ROOT.";
+    	$error .= "<span class='red'>FAILED</span><br />Define P4A_SERVER_DIR as your DOCUMENT_ROOT.";
     	$correct = false;
     } else {
     	$error .= "<span class='green'>OK</span>";
@@ -85,7 +85,7 @@ function p4a_check_configuration($additionalDir = null)
     if ($ok) {
     	$error .= "<span class='green'>OK</span>";
     } else {
-    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
+    	$error .= "<span class='red'>FAILED</span><br />Create \"" . P4A_UPLOADS_DIR . "\" and set it writable.";
     	$correct = false;
     }
     $error .= "</div>";
@@ -108,7 +108,7 @@ function p4a_check_configuration($additionalDir = null)
     if ($ok) {
     	$error .= "<span class='green'>OK</span>";
     } else {
-    	$error .= "<span class='red'>FAILED</span><br/>Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
+    	$error .= "<span class='red'>FAILED</span><br />Create \"" . P4A_UPLOADS_TMP_DIR . "\" and set it writable.";
     	$correct = false;
     }
     $error .= "</div>";
@@ -132,7 +132,7 @@ function p4a_check_configuration($additionalDir = null)
 		if ($ok) {
 			$error .= "<span class='green'>OK</span>";
 		} else {
-			$error .= "<span class='red'>FAILED</span><br/>Create \"$additionalDir\" and set it writable.";
+			$error .= "<span class='red'>FAILED</span><br />Create \"$additionalDir\" and set it writable.";
 			$correct = false;
 		}
 		$error .= "</div>";
@@ -146,7 +146,7 @@ function p4a_check_configuration($additionalDir = null)
     		$db->adapter->getConnection();
     		$error .= "<span class='green'>OK</span>";
     	} catch (Exception $e) {
-    		$error .= "<span class='red'>FAILED</span><br/>Check P4A_DSN definition.";
+    		$error .= "<span class='red'>FAILED</span><br />Error: " . $e->getMessage() . "<br />Check P4A_DSN definition.";
     		$correct = false;
     	}
     } else {
