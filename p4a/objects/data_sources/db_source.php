@@ -45,6 +45,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected $_DSN = "";
 	protected $_pk = null;
 	protected $_table = "";
+	protected $_schema = "";
 	protected $_fields = array();
 	protected $_join = array();
 	protected $_where = "";
@@ -55,24 +56,52 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected $_filters = array();
 	protected $_tables_metadata = array();
 
+	/**
+	 * @param string $DSN
+	 */
 	public function setDSN($DSN)
 	{
 		$this->_DSN = $DSN;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDSN()
 	{
 		return $this->_DSN;
 	}
 
+	/**
+	 * @param string $table
+	 */
 	public function setTable($table)
 	{
 		$this->_table = $table;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTable()
 	{
 		return $this->_table;
+	}
+	
+	/**
+	 * @param string $schema
+	 */
+	public function setSchema($schema)
+	{
+		$this->_schema = $schema;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSchema()
+	{
+		return $this->_schema;
 	}
 
 	public function setFields($fields)
@@ -231,7 +260,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		// retrieving tables metadata 
 		foreach ($select->getPart('from') as $table=>$table_data) {
-			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'db'=>$db->adapter));
+			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'schema'=>$table_data['schema'], 'db'=>$db->adapter));
 			$this->_tables_metadata[$table] = $p4a_db_table->info();
 		}
 		
@@ -389,6 +418,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$select->limit(1, $num_row-1);
 		}
 		$row = $db->adapter->fetchRow($select);
+		if (isset($row['ZEND_DB_ROWNUM'])) unset($row['ZEND_DB_ROWNUM']);
 
 		if ($move_pointer) {
 			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
@@ -728,9 +758,9 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function &_composeSelectPart(&$select)
 	{
 		if (empty($this->_fields)) {
-			$select->from($this->getTable());
+			$select->from($this->getTable(), '*', $this->getSchema());
 		} else {
-			$select->from($this->getTable(), array_flip($this->_fields));
+			$select->from($this->getTable(), array_flip($this->_fields), $this->getSchema());
 		}
 		
 		foreach ($this->_join as $join) {

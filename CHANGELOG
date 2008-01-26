@@ -139,6 +139,8 @@
 - P4A_Sheet was removed 'cause had too many performance issues and it should be rewritten
 - FCKEditor was updated to 2.5.1
 - "oracle" was renamed to "oci" within P4A_DB to reflect PDO naming
+- P4A_DB_Source::setSchema() and getSchema() methods were added
+- some minor bugfixes to P4A_DB_Source were applied in order to make oracle work
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
