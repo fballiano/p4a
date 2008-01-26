@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -36,19 +35,17 @@
  * @package p4a
  */
 
-class Brands extends P4A_Mask
+class Brands extends P4A_Base_Mask
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$p4a =& p4a::singleton();
 
-		$this->build("p4a_message", "message");
-		$this->message->setWidth("300");
-
 		$this->setSource($p4a->brands);
 		$this->firstRow();
 
+		$this->addMandatoryField("description");
 		$this->fields->brand_id->disable();
 
 		$this->build("p4a_full_toolbar", "toolbar");
@@ -58,64 +55,31 @@ class Brands extends P4A_Mask
 		$this->table->setSource($p4a->brands);
 		$this->table->showNavigationBar();
 		$this->table->setWidth(500);
-
-		$this->build("p4a_frame", "sheet");
-		$this->sheet->setWidth(700);
-		$this->sheet->anchorCenter($this->message);
-		$this->sheet->anchor($this->table);
+		$this->frame->anchor($this->table);
 
 		$this->fields->brand_id->setLabel("Brand ID");
 		$this->table->cols->brand_id->setLabel("Brand ID");
 		$this->table->showNavigationBar();
 
-		$this->build("p4a_fieldset", "fields_sheet");
-		$this->fields_sheet->setLabel("Brand detail");
-		$this->fields_sheet->anchor($this->fields->brand_id);
-		$this->fields_sheet->anchor($this->fields->description);
-		$this->fields_sheet->anchor($this->fields->visible);
-
- 		$this->sheet->anchor($this->fields_sheet);
-
-		//Mandatory Fields
-	    $this->mf = array("description");
-		foreach($this->mf as $mf){
-			$this->fields->$mf->label->setFontWeight("bold");
-		}
+		$this->build("p4a_fieldset", "fs_details");
+		$this->fs_details->setLabel("Brand detail");
+		$this->fs_details->anchor($this->fields->brand_id);
+		$this->fs_details->anchor($this->fields->description);
+		$this->fs_details->anchor($this->fields->visible);
+ 		$this->frame->anchor($this->fs_details);
 
 		$this->display("menu", $p4a->menu);
 		$this->display("top", $this->toolbar);
-		$this->display("main", $this->sheet);
 
 		$this->setFocus($this->fields->description);
 	}
 
-	function saveRow()
+	public function saveRow()
 	{
-		$errors = array();
-
-		foreach ($this->mf as $field) {
-			if (strlen($this->fields->$field->getNewValue()) == 0) {
-				$errors[] = $field;
-			}
-		}
-
-		if (sizeof($errors) > 0) {
-			$this->message->setValue("Please fill all required fields");
-
-			foreach ($errors as $field) {
-				$this->fields->$field->setStyleProperty("border", "1px solid red");
-			}
+		if (!$this->checkMandatoryFields()) {
+			$this->warning("Please fill all required fields");
 		} else {
 			parent::saveRow();
-		}
-	}
-
-	function main()
-	{
-		parent::main();
-
-		foreach ($this->mf as $field) {
-			$this->fields->$field->unsetStyleProperty("border");
 		}
 	}
 }
