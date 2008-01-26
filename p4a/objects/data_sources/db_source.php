@@ -42,16 +42,16 @@
  */
 class P4A_DB_Source extends P4A_Data_Source
 {
-	protected $_DSN = "";
+	protected $_DSN = null;
 	protected $_pk = null;
-	protected $_table = "";
-	protected $_schema = "";
+	protected $_table = null;
+	protected $_schema = null;
 	protected $_fields = array();
 	protected $_join = array();
-	protected $_where = "";
+	protected $_where = null;
 	protected $_group = array();
 	protected $_is_sortable = true;
-	protected $_query = "";
+	protected $_query = null;
 	protected $_multivalue_fields = array();
 	protected $_filters = array();
 	protected $_tables_metadata = array();
