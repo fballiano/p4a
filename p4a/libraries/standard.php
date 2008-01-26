@@ -381,7 +381,7 @@ function P4A_Is_Browser_Event($event)
  */
 function P4A_Generate_Default_Label($string)
 {
-	return ucfirst(str_replace('_', ' ', $string));
+	return ucfirst(str_replace('_', ' ', strtolower($string)));
 }
 
 /**

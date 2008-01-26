@@ -141,6 +141,7 @@
 - "oracle" was renamed to "oci" within P4A_DB to reflect PDO naming
 - P4A_DB_Source::setSchema() and getSchema() methods were added
 - some minor bugfixes to P4A_DB_Source were applied in order to make oracle work
+- P4A_Generate_Default_Label() global function now turns the original label lowercase before applying the default rules, this is due for databases which returns uppercase field names
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
