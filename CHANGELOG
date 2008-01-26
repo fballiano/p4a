@@ -143,6 +143,7 @@
 - some minor bugfixes to P4A_DB_Source were applied in order to make oracle work
 - P4A_Generate_Default_Label() global function now turns the original label lowercase before applying the default rules, this is due for databases which returns uppercase field names
 - a new version of P4A_Base_Mask was added to the core
+- "products catalogue" sample app was ported to P4A_Base_Mask
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

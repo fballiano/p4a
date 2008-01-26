@@ -35,7 +35,7 @@
  * @package p4a
  */
 
-class Products extends P4A_Mask
+class Products extends P4A_Base_Mask
 {
 	public function __construct()
 	{
@@ -94,46 +94,36 @@ class Products extends P4A_Mask
 		}
 		$table->showNavigationBar();
 
-		// Message
-		$message =& $this->build("p4a_message", "message");
-		$message->setWidth("300");
+		$this->build("p4a_fieldset", "fs_details");
+		$this->fs_details->setLabel("Product details");
+ 		$this->fs_details->anchor($this->fields->product_id);
+		$this->fs_details->anchor($this->fields->category_id);
+		$this->fs_details->anchorLeft($this->fields->brand_id);
+		$this->fs_details->anchor($this->fields->model);
+		$this->fs_details->anchor($this->fields->purchasing_price);
+ 		$this->fs_details->anchor($this->fields->selling_price);
+		$this->fs_details->anchorLeft($this->fields->discount);
+ 		$this->fs_details->anchor($this->fields->little_photo);
+ 		$this->fs_details->anchorLeft($this->fields->big_photo);
+		$this->fs_details->anchor($this->fields->is_new);
+		$this->fs_details->anchorLeft($this->fields->visible);
+		$this->fs_details->anchor($this->fields->description);
 
-
-		//Fieldset con l'elenco dei campi
-		$fset=& $this->build("p4a_fieldset", "frame");
-		$fset->setLabel("Product details");
-
- 		$fset->anchor($this->fields->product_id);
-		$fset->anchor($this->fields->category_id);
-		$fset->anchorLeft($this->fields->brand_id);
-		$fset->anchor($this->fields->model);
-		$fset->anchor($this->fields->purchasing_price);
- 		$fset->anchor($this->fields->selling_price);
-		$fset->anchorLeft($this->fields->discount);
- 		$fset->anchor($this->fields->little_photo);
- 		$fset->anchorLeft($this->fields->big_photo);
-		$fset->anchor($this->fields->is_new);
-		$fset->anchorLeft($this->fields->visible);
-		$fset->anchor($this->fields->description);
-
-		// Frame
-		$frm=& $this->build("p4a_frame", "frm");
-		$frm->setWidth(730);
-		$frm->anchor($fs_search);
-		$frm->newRow();
-		$frm->anchorCenter($message);
-		$frm->anchor($table);
-  		$frm->anchor($fset);
-
-		// Mandatory Fields
-	    $this->mf = array("product_id", "category_id", "brand_id", "model", "purchasing_price",
- 					"selling_price", "description", "discount");
-		foreach($this->mf as $mf){
-			$fields->$mf->label->setFontWeight("bold");
-		}
+		$this->frame->anchor($fs_search);
+		$this->frame->newRow();
+		$this->frame->anchor($table);
+  		$this->frame->anchor($this->fs_details);
+  		
+  		$this->addMandatoryField("product_id");
+  		$this->addMandatoryField("category_id");
+  		$this->addMandatoryField("brand_id");
+  		$this->addMandatoryField("model");
+  		$this->addMandatoryField("purchasing_price");
+  		$this->addMandatoryField("selling_price");
+  		$this->addMandatoryField("description");
+  		$this->addMandatoryField("discount");
 
 		// Display
-		$this->display("main", $frm);
 		$this->display("menu", $p4a->menu);
 		$this->display("top", $this->toolbar);
 	}
@@ -148,16 +138,8 @@ class Products extends P4A_Mask
 		$fields->product_id->setWidth(200);
 		$fields->product_id->enable(false);
 
-		/* To simplify this code with PHP5 you can instead use the helper loadSelectByTable
-		 * $fields->category_id->loadSelectByTable('categories','category_id','description');
-		 * */
-		$categories =& $this->build("P4A_DB_Source","categories");
-		$categories->setTable("categories");
-		$categories->setPK("category_id");
-		$categories->addOrder("description");
-		$categories->load();
 		$fields->category_id->setType("select");
-		$fields->category_id->setSource($categories);
+		$fields->category_id->setSource($p4a->categories);
 		$fields->category_id->setSourceDescriptionField("description");
 
 		$fields->category_id->setLabel("Category");
@@ -180,43 +162,33 @@ class Products extends P4A_Mask
 		$fields->selling_price->setLabel("Price $");
 		$fields->selling_price->setWidth("40");
 
-		$fields->little_photo->setType("image");
-		$fields->big_photo->setType("image");
+		$fields->little_photo->setType("file");
+		$fields->big_photo->setType("file");
 
 		$fields->description->setType("rich_textarea");
 		$fields->description->enableUpload();
 	}
 
-	function saveRow()
+	public function saveRow()
 	{
-		$valid = true;
-
-		foreach($this->mf as $mf){
-			$value = $this->fields->$mf->getNewValue();
-			if(trim($value) === ""){
-				$this->fields->$mf->setError();
-				$valid = false;
-			}
-		}
-
-		if ($valid) {
+		if (!$this->checkMandatoryFields()) {
+			$this->warning("Please fill all required fields");
+		} else {
 			parent::saveRow();
-		}else{
-			$this->message->setValue("Please fill all required fields");
 		}
 	}
 
-	function search()
+	public function search()
 	{
 		$value = $this->txt_search->getSQLNewValue();
-		$this->data->setWhere("model LIKE '%{$value}%'");
-		$this->data->firstRow();
-		$num_rows = $this->data->getNumRows();
+		$this->source->setWhere("model LIKE '%{$value}%'");
+		$this->source->firstRow();
+		$num_rows = $this->source->getNumRows();
 
 		if (!$num_rows) {
 			$this->message->setValue("No results were found");
-			$this->data->setWhere(null);
-			$this->data->firstRow();
+			$this->source->setWhere(null);
+			$this->source->firstRow();
 		}
 	}
 }
