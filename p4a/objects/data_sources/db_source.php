@@ -543,6 +543,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if(!$this->isReadOnly()) {
 			$db =& P4A_DB::singleton($this->getDSN());
 			$table = $this->getTable();
+			$schema = $this->getSchema();
 			
 			if (empty($fields_values)) {
 				while($field =& $this->fields->nextItem()) {
@@ -563,7 +564,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 
-			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'db'=>$db->adapter));
+			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'schema'=>$schema, 'db'=>$db->adapter));
 			if ($this->isNew()) {
 				$p4a_db_table->insert($fields_values);
 			} else {
@@ -771,7 +772,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	protected function _composeSelectCountPart(&$select)
 	{
-		$select->from($this->getTable(), 'count(*)');
+		$select->from($this->getTable(), 'count(*)', $this->getSchema());
 	}
 
 	protected function _composeWherePart(&$select)
