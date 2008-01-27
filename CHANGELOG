@@ -2,7 +2,6 @@
 - implement application level translations
 - port products_catalogue to the new translation system
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php
-- implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
