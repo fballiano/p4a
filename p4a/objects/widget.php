@@ -417,7 +417,7 @@ class P4A_Widget extends P4A_Object
 	 */
 	public function addAjaxAction($action, $event = null, $confirmation_text = null)
 	{
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 		$this->addAction($action, $event, $confirmation_text, $p4a->isAjaxEnabled());
 	}
 

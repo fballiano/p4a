@@ -52,7 +52,7 @@ class P4A_DB
 	 * Database is configured by setting P4A_DSN constant.
 	 * @throws onDBConnectionError
 	 */
-	public function singleton($DSN = "")
+	public static function singleton($DSN = "")
   	{
 		//If DSN is not specified I use default connection
 		if (!strlen($DSN) and defined("P4A_DSN")){
