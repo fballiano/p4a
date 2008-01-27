@@ -207,12 +207,12 @@ class P4A_Object
 	}
 
 	/**
-	 * Tells an object to execute a method when an action is called.
+	 * Tells an object to execute a method when an action is called
 	 * @param object $object
-	 * @param string $action The action triggered by an event.
-	 * @param string $method The method that will be executed.
+	 * @param string $action The action triggered by an event
+	 * @param string $method The method that will be executed
 	 */
-	public function intercept(&$object, $action, $method=null)
+	public function intercept(&$object, $action, $method = null)
 	{
 		$action = strtolower($action);
 		if ($method === null) $method = $action;

@@ -2,7 +2,6 @@
 - implement application level translations
 - port products_catalogue to the new translation system
 - change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php
-- auto addaction on intercept and implementmethod when the action is a browser action
 - implement db_source::setZendSelect or something like that, maybe separate db_sources? 
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
@@ -145,6 +144,7 @@
 - "products catalogue" sample app was ported to P4A_Base_Mask
 - sample_en, sample_it and sample_i18n applications were removed
 - some minor enhancements were made to products_catalogue sample
+- P4A_Widget::intercept() and implementMethod() methods now automatically call the addAction() method when the event is recognized as a browser event
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

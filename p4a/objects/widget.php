@@ -858,4 +858,19 @@ class P4A_Widget extends P4A_Object
 		$p4a =& p4a::singleton();
 		$p4a->redesign($this->getId());
 	}
+	
+	/**
+	 * Check if the event is a browser event (if yes calls addAction()) then calls parent::intercept()
+	 * @param object $object
+	 * @param string $action The action triggered by an event
+	 * @param string $method The method that will be executed
+	 */
+	public function intercept(&$object, $action, $method = null)
+	{
+  		$action = strtolower($action);
+		if (P4A_Is_Browser_Event($action)) {
+			$object->addAction($action);
+		}
+		parent::intercept($object, $action, $method);
+	}
 }
