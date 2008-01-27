@@ -9,7 +9,6 @@
 - redo the css
 - check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
 - php5ize db_navigator
-- check db for '' to replace the addslash
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -145,6 +144,7 @@
 - sample_en, sample_it and sample_i18n applications were removed
 - some minor enhancements were made to products_catalogue sample
 - P4A_Widget::intercept() and implementMethod() methods now automatically call the addAction() method when the event is recognized as a browser event
+- P4A_Data_Field::getSQLValue() and getSQLNewValue() now returns data quoted with "double single quote" instead using addslashes (which is deprecated and not working for oracle)
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

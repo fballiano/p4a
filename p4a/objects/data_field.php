@@ -126,7 +126,7 @@ class P4A_Data_Field extends P4A_Object
 	 */
 	public function getSQLValue()
 	{
-		return addslashes($this->value);
+		return str_replace("'", "''", $this->value);
 	}
 
 	/**
@@ -151,7 +151,7 @@ class P4A_Data_Field extends P4A_Object
 	 */
 	public function getSQLNewValue()
 	{
-		return addslashes($this->new_value);
+		return str_replace("'", "''", $this->new_value);
 	}
 
 	/**
