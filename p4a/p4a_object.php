@@ -151,6 +151,7 @@ class P4A_Object
 	{
 		$p4a = P4A::singleton();
 		$parent = $p4a->getObject($this->getParentID());
+		if ($parent === null) $parent = $p4a;
 
 		$this_id = $this->getID();
 		$this_name = $this->getName();
