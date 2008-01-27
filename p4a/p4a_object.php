@@ -99,9 +99,8 @@ class P4A_Object
 	 * @param string $name
 	 * @return P4A_Object
 	 */
-	function &build($class, $name)
+	function build($class, $name)
 	{
-		$p4a =& P4A::singleton();
 		$args = func_get_args();
 		$str_args = '$this->$name =& new $class(';
 
@@ -114,7 +113,7 @@ class P4A_Object
 
 		eval($str_args);
 
-		$p4a->store($this->$name);
+		P4A::singleton()->store($this->$name);
 		$this->_objects[] = $this->$name->getID();
 		$this->$name->setParentID($this->getID());
 		return $this->$name;
@@ -148,21 +147,20 @@ class P4A_Object
 	 * Destroys the object
 	 * Retrieves all children objects and destroy them.
 	 */
-	public function destroy()
+	public function destroy($name = null)
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$p4a = P4A::singleton();
+		$parent = $p4a->getObject($this->getParentID());
 
 		$this_id = $this->getID();
 		$this_name = $this->getName();
 
-		foreach($this->_objects as $key=>$object_id){
-			if (array_key_exists($object_id, $p4a->objects)) {
-				$p4a->objects[$object_id]->destroy();
-			}
+		foreach($this->_objects as $key=>$object_id) {
+			$p4a->objects[$object_id]->destroy();
+			unset($this->_objects[$key]);
 		}
-
-		unset($parent->$this_name);
+		
+		$parent->$this_name = null;
 		unset($p4a->objects[$this_id]);
 	}
 

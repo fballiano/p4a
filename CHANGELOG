@@ -146,6 +146,7 @@
 - P4A_Data_Field::getSQLValue() and getSQLNewValue() now returns data quoted with "double single quote" instead using addslashes (which is deprecated and not working for oracle)
 - P4A_Object::dropIntercept() method was removed
 - P4A_Object::dropMethod() method was added
+- P4A_Object::destroy() now does not unset the variable from parent but sets it to null
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

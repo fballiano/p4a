@@ -37,6 +37,21 @@
 
 class Products_Catalogue extends P4A
 {
+	/**
+	 * @var P4A_Menu
+	 */
+	public $menu = null;
+	
+	/**
+	 * @var P4A_DB_Source
+	 */
+	public $brands = null;
+	
+	/**
+	 * @var P4A_DB_Source
+	 */
+	public $categories = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -44,7 +59,7 @@ class Products_Catalogue extends P4A
 
 		// Menu
 		$this->build("p4a_menu", "menu");
-		$this->menu->addItem("products", "Products");
+		$this->menu->addItem("products");
 		$this->menu->items->products->setAccessKey("r");
 		$this->intercept($this->menu->items->products, "onclick", "menuClick");
 
