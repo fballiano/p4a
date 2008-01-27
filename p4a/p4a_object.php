@@ -207,38 +207,43 @@ class P4A_Object
 	}
 
 	/**
-	 * Tells an object to execute a method when an action is called
+	 * Tells an object to execute a method on the current object when an action is called
 	 * @param object $object
 	 * @param string $action The action triggered by an event
 	 * @param string $method The method that will be executed
 	 */
 	public function intercept(&$object, $action, $method = null)
 	{
-		$action = strtolower($action);
-		if ($method === null) $method = $action;
-		$object->_map_actions[$action] = array();
-		$object->_map_actions[$action]['object'] =& $this;
-		$object->_map_actions[$action]['method'] = $method;
+		$object->implementMethod($action, $this, $method);
 	}
 
 	/**
-	 * @param string $action
-	 */
-	public function dropIntercept($action)
-	{
-		$object->_map_actions[$action] = array();
-	}
-
-	/**
-	 * Wrapper for setting an intercepted event on an object
-	 *
+	 * Tells the current object to execute a method on another object when an action is called
 	 * @param string $action The action's name
 	 * @param object $object The object that will intercept the action
 	 * @param string $method The method that will be called
 	 */
-	public function implementMethod($action, &$object, $method)
+	public function implementMethod($action, &$object, $method = null)
 	{
-		$object->intercept($this, $action, $method);
+		$action = strtolower($action);
+		if ($method === null) $method = $action;
+		if (P4A_Is_Browser_Event($action) and !isset($this->actions[$action])) {
+			$this->addAction($action);
+		}
+		$this->_map_actions[$action] = array();
+		$this->_map_actions[$action]['object'] =& $object;
+		$this->_map_actions[$action]['method'] = $method;
+	}
+	
+	/**
+	 * Removes handling an action
+	 * @param string $action
+	 */
+	public function dropMethod($action)
+	{
+		if (isset($this->_map_actions[$action])) {
+			unset($this->_map_actions[$action]);
+		}
 	}
 
 	/**

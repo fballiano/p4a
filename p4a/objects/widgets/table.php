@@ -1076,8 +1076,8 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$field_num_page->label->setStyleProperty("text-align", "right");
 		$field_num_page->label->setWidth(80);
 		$this->buttons->field_num_page->setWidth(30);
-		$this->buttons->field_num_page->addAjaxAction('onReturnPress');
-		$this->intercept($this->buttons->field_num_page, 'onReturnPress', 'goOnClick');
+		$this->buttons->field_num_page->addAjaxAction('onreturnpress');
+		$this->intercept($this->buttons->field_num_page, 'onreturnpress', 'goOnClick');
 		$this->anchorRight($field_num_page);
 
 		$current_page =& $this->buttons->build('p4a_label', 'current_page');

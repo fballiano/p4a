@@ -60,15 +60,14 @@ class Products extends P4A_Base_Mask
 		$this->setFieldsProperties();
 
 		// Search Fieldset
-		$fs_search =& $this->build("p4a_fieldset","fs_search");
+		$fs_search =& $this->build("p4a_fieldset", "fs_search");
 		$fs_search->setLabel("Search");
 		$txt_search =& $this->build("p4a_field", "txt_search");
-		$txt_search->addAction("onReturnPress");
-		$this->intercept($txt_search, "onReturnPress","search");
+		$this->intercept($txt_search, "onreturnpress", "search");
 		$txt_search->setLabel("Model");
-		$cmd_search =& $this->build("p4a_button","cmd_search");
+		$cmd_search =& $this->build("p4a_button", "cmd_search");
 		$cmd_search->setLabel("Go");
-		$this->intercept($cmd_search, "onClick","search");
+		$this->intercept($cmd_search, "onclick", "search");
 		$fs_search->anchor($txt_search);
 		$fs_search->anchorLeft($cmd_search);
 

@@ -361,7 +361,7 @@ function P4A_Strip_Double_Slashes($string)
 }
 	
 /**
- * Can the event be manager by browser?
+ * Can the event be managed by the browser?
  * eg: P4A_Is_Browser_Event('onclick') will return true
  *
  * @param string $event
@@ -369,10 +369,11 @@ function P4A_Strip_Double_Slashes($string)
  */
 function P4A_Is_Browser_Event($event)
 {
-	$events = array('onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onkeydown', 
-					'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 
-					'onmouseover', 'onmouseup', 'onscroll');
-	return in_array(strtolower($event), $events);
+	return in_array(strtolower($event), array(
+		'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onkeydown', 
+		'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 
+		'onmouseover', 'onmouseup', 'onscroll', 'onreturnpress'
+	));
 }
 
 /**

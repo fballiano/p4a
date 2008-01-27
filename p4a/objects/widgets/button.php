@@ -68,7 +68,6 @@ class P4A_Button extends P4A_Widget
 	public function __construct($name, $icon = null)
 	{
 		parent::__construct($name);
-		$this->addAction('onclick');
 		$this->setIcon($icon);
 		$this->setLabel(P4A_Generate_Default_Label($name));
 	}
