@@ -8,7 +8,7 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - redo the css
-- check if p4a_validate can be ported to ZF
+- check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
 - php5ize db_navigator
 - check db for '' to replace the addslash
 
@@ -144,6 +144,7 @@
 - a new version of P4A_Base_Mask was added to the core
 - "products catalogue" sample app was ported to P4A_Base_Mask
 - sample_en, sample_it and sample_i18n applications were removed
+- some minor enhancements were made to products_catalogue sample
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

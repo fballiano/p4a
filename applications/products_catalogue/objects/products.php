@@ -40,7 +40,6 @@ class Products extends P4A_Base_Mask
 	public function __construct()
 	{
 		parent::__construct();
-		$p4a =& p4a::singleton();
 
 		// DB Source
 		$this->build("p4a_db_source", "source");
@@ -57,12 +56,8 @@ class Products extends P4A_Base_Mask
 		$this->setSource($this->source);
 		$this->firstRow();
 
-		$this->source->fields->purchasing_price->setType("decimal");
-		$this->source->fields->selling_price->setType("decimal");
-
 		// Customizing fields properties
 		$this->setFieldsProperties();
-		$fields =& $this->fields;
 
 		// Search Fieldset
 		$fs_search =& $this->build("p4a_fieldset","fs_search");
@@ -88,7 +83,6 @@ class Products extends P4A_Base_Mask
 		$table->setVisibleCols(array("product_id","model","category",
 									 "brand"));
 		$table->cols->product_id->setLabel("Cod. Product");
-
 		while ($col =& $table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
@@ -124,14 +118,13 @@ class Products extends P4A_Base_Mask
   		$this->addMandatoryField("discount");
 
 		// Display
-		$this->display("menu", $p4a->menu);
+		$this->display("menu", P4A::singleton()->menu);
 		$this->display("top", $this->toolbar);
 	}
 
-	function setFieldsProperties()
+	private function setFieldsProperties()
 	{
 		$p4a =& p4a::singleton();
-
 		$fields =& $this->fields;
 
 		$fields->product_id->setLabel("Product ID");
@@ -181,12 +174,12 @@ class Products extends P4A_Base_Mask
 	public function search()
 	{
 		$value = $this->txt_search->getSQLNewValue();
-		$this->source->setWhere("model LIKE '%{$value}%'");
+		$this->source->setWhere(P4A_DB::singleton()->getCaseInsensitiveLikeSQL('model', "%{$value}%"));
 		$this->source->firstRow();
 		$num_rows = $this->source->getNumRows();
 
 		if (!$num_rows) {
-			$this->message->setValue("No results were found");
+			$this->warning("No results were found");
 			$this->source->setWhere(null);
 			$this->source->firstRow();
 		}
