@@ -72,9 +72,9 @@ class P4A_Menu extends P4A_Widget
 	 * @param string $name Mnemonic identifier for the element
 	 * @param string $label
 	 */
-	public function &addItem($name, $label = null)
+	public function addItem($name, $label = null)
 	{
-		$item =& $this->items->build("P4A_Menu_Item", $name);
+		$item = $this->items->build("P4A_Menu_Item", $name);
 		if ($label !== null) $item->setLabel($label);
 		return $item;
 	}
@@ -186,14 +186,10 @@ class P4A_Menu_Item extends P4A_Widget
 	 * @param string $label
 	 * @return P4A_Menu_Item
 	 */
-	public function &addItem($name, $label = null)
+	public function addItem($name, $label = null)
 	{
-		$item =& $this->items->build("P4A_Menu_Item", $name);
-
-		if ($label !== null) {
-			$item->setLabel($label);
-		}
-
+		$item = $this->items->build("P4A_Menu_Item", $name);
+		if ($label !== null) $item->setLabel($label);
 		return $item;
 	}
 
