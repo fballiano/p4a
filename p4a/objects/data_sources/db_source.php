@@ -756,7 +756,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
-	protected function &_composeSelectPart(&$select)
+	protected function _composeSelectPart(&$select)
 	{
 		if (empty($this->_fields)) {
 			$select->from($this->getTable(), '*', $this->getSchema());

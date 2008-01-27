@@ -52,7 +52,7 @@ class P4A_DB
 	 * Database is configured by setting P4A_DSN constant.
 	 * @throws onDBConnectionError
 	 */
-	public function &singleton($DSN = "")
+	public function singleton($DSN = "")
   	{
 		//If DSN is not specified I use default connection
 		if (!strlen($DSN) and defined("P4A_DSN")){
@@ -69,6 +69,8 @@ class P4A_DB
 			if(strlen($DSN)) {
 				$$dbconn =& new p4a_db();
 				$dsn_data = parse_url($DSN);
+				if (!isset($dsn_data['port'])) $dsn_data['port'] = null;
+				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
 					p4a_error("db not supported");
@@ -78,6 +80,7 @@ class P4A_DB
 				$driver = 'Zend_Db_Adapter_Pdo_' . ucfirst($dsn_data['scheme']);
 				$connection_params = array(
 					'host' => $dsn_data['host'],
+					'port' => $dsn_data['port'],
 					'username' => $dsn_data['user'],
 					'password' => $dsn_data['pass'],
 					'dbname' => substr($dsn_data['path'], 1)
@@ -136,7 +139,7 @@ class P4A_DB
 	/**
 	 * @return Zend_Db_Select
 	 */
-	public function &select()
+	public function select()
 	{
 		return $this->adapter->select();
 	}
