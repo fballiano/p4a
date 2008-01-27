@@ -40,7 +40,7 @@ class Brands extends P4A_Base_Mask
 	public function __construct()
 	{
 		parent::__construct();
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 
 		$this->setSource($p4a->brands);
 		$this->firstRow();

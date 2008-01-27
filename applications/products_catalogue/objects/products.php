@@ -60,12 +60,12 @@ class Products extends P4A_Base_Mask
 		$this->setFieldsProperties();
 
 		// Search Fieldset
-		$fs_search =& $this->build("p4a_fieldset", "fs_search");
+		$fs_search = $this->build("p4a_fieldset", "fs_search");
 		$fs_search->setLabel("Search");
-		$txt_search =& $this->build("p4a_field", "txt_search");
+		$txt_search = $this->build("p4a_field", "txt_search");
 		$this->intercept($txt_search, "onreturnpress", "search");
 		$txt_search->setLabel("Model");
-		$cmd_search =& $this->build("p4a_button", "cmd_search");
+		$cmd_search = $this->build("p4a_button", "cmd_search");
 		$cmd_search->setLabel("Go");
 		$this->intercept($cmd_search, "onclick", "search");
 		$fs_search->anchor($txt_search);
@@ -76,13 +76,13 @@ class Products extends P4A_Base_Mask
 		$this->toolbar->setMask($this);
 
 		// Table
-		$table =& $this->build("p4a_table", "table");
+		$table = $this->build("p4a_table", "table");
  		$table->setWidth(700);
 		$table->setSource($this->source);
 		$table->setVisibleCols(array("product_id","model","category",
 									 "brand"));
 		$table->cols->product_id->setLabel("Cod. Product");
-		while ($col =& $table->cols->nextItem()) {
+		while ($col = $table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
 		$table->showNavigationBar();
@@ -123,8 +123,8 @@ class Products extends P4A_Base_Mask
 
 	private function setFieldsProperties()
 	{
-		$p4a =& p4a::singleton();
-		$fields =& $this->fields;
+		$p4a = p4a::singleton();
+		$fields = $this->fields;
 
 		$fields->product_id->setLabel("Product ID");
 		$fields->product_id->setWidth(200);
