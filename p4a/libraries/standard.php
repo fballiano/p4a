@@ -254,8 +254,7 @@ function P4A_Is_Extension_Allowed($extension)
  */
 function __($string)
 {
-	$p4a =& p4a::singleton();
-	return $p4a->i18n->translate($string);
+	return p4a::singleton()->i18n->translate($string);
 }
 
 /**

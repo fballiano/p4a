@@ -142,8 +142,7 @@ function p4a_check_configuration($additionalDir = null)
     $error .= "<div class='box'>Checking DATABASE CONNECTION: ";
     if (defined('P4A_DSN')) {
     	try {
-    		$db =& P4A_DB::singleton(P4A_DSN);
-    		$db->adapter->getConnection();
+    		P4A_DB::singleton(P4A_DSN)->adapter->getConnection();
     		$error .= "<span class='green'>OK</span>";
     	} catch (Exception $e) {
     		$error .= "<span class='red'>FAILED</span><br />Error: " . $e->getMessage() . "<br />Check P4A_DSN definition.";
