@@ -89,7 +89,7 @@ class P4A_Object
 		if ($id === null) {
 			$this->_id = uniqid($prefix);
 		} else {
-			$this->_id = $prefix . $id ;
+			$this->_id = $prefix . $id;
 		}
 	}
 
@@ -171,7 +171,7 @@ class P4A_Object
 	 */
 	protected function setName($name)
 	{
-		$this->_name=$name;
+		$this->_name = $name;
 	}
 
 	/**
