@@ -46,127 +46,109 @@
 class P4A_Table extends P4A_Widget
 {
 	/**
-	 * Data source associated with the table.
-	 * @var data_source
-	 * @access private
+	 * Data source associated with the table
+	 * @var P4A_Data_Source
 	 */
-	var $data = null;
+	protected $data = null;
 
 	/**
-	 * The gui widgets to allow table navigation.
-	 * @var table_navigation_bar
-	 * @access private
+	 * The gui widgets to allow table navigation
+	 * @var P4A_Table_Navigation_Bar
 	 */
-	var $navigation_bar = null;
+	public $navigation_bar = null;
 
 	/**
-	 * The table toolbar.
-	 * @var toolbar
-	 * @access private
+	 * The table toolbar
+	 * @var P4A_Toolbar
 	 */
-	var $toolbar = null;
+	public $toolbar = null;
 
 	/**
-	 * All the table's rows.
-	 * @var rows
-	 * @access public
+	 * All the table's rows
+	 * @var P4A_Table_Rows
 	 */
 	var $rows = null;
 
 	/**
-	 * Decides if the table will show the "field's header" row.
+	 * Decides if the table will show the "field's header" row
 	 * @var boolean
-	 * @access private
 	 */
-	var $_show_headers = true;
+	protected $_show_headers = true;
 
 	/**
-	 * Stores the table's structure (table_cols).
+	 * Stores the table's structure (table_cols)
 	 * @var array
-	 * @access public
 	 */
-	var $cols = array();
+	public $cols = array();
 
 	/**
-	 * Displaying order of columns.
+	 * Displaying order of columns
 	 * @var array
-	 * @access private
 	 */
-	var $_cols_order = array();
+	protected $_cols_order = array();
 
 	/**
-	 * A title (caption) for the table.
+	 * A title (caption) for the table
 	 * @var string
-	 * @access private
 	 */
-	var $_title = "";
+	protected $_title = "";
 
 	/**
 	 * Automatically add the navigation bar?
 	 * @var boolean
-	 * @access private
 	 */
-	var $_auto_navigation_bar = true;
+	protected $_auto_navigation_bar = true;
 
 	/**
 	 * Wich page is shown?
 	 * @var integer
-	 * @access private
 	 */
-	var $_current_page_number = 1;
+	protected $_current_page_number = 1;
 
 	/**
-	 * @param string				Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name)
 	{
 		parent::__construct($name);
+		$this->build('p4a_table_rows', 'rows');
+		$this->build('p4a_table_navigation_bar', 'navigation_bar');
 		$this->useTemplate('table');
 	}
 
 	/**
 	 * Sets the title for the table
-	 * @param string		The title.
-	 * @access public
-	 * @see $title
+	 * @param string $title
 	 */
-	function setTitle($title)
+	public function setTitle($title)
 	{
 		$this->_title = $title;
 	}
 
 	/**
-	 * Returns the title of the table.
+	 * Returns the title of the table
 	 * @return string
-	 * @access public
 	 */
-	function getTitle()
+	public function getTitle()
 	{
 		return $this->_title;
 	}
 
 	/**
-	 * Sets the data source that the table will navigate.
-	 * @param data_source		The data source.
-	 * @access public
+	 * Sets the data source that the table will navigate
+	 * @param P4A_Data_Source $data_source
 	 */
-	function setSource(&$data_source)
+	public function setSource($data_source)
 	{
-		unset($this->data);
-		$this->data =& $data_source;
-
+		$this->data = $data_source;
 		$this->setDataStructure($this->data->fields->getNames());
-
-		$this->build("p4a_table_rows", "rows");
-		$this->build("p4a_table_navigation_bar", "navigation_bar");
 	}
 
 	/**
-	 * Sets the table's structure (fields).
-	 * @param array		All the fields.
-	 * @access public
+	 * Sets the table's structure (fields)
+	 * @param array $array_fields
 	 */
-	function setDataStructure($array_fields)
+	public function setDataStructure($array_fields)
 	{
 		$this->build('p4a_collection', 'cols');
 		foreach($array_fields as $field) {
@@ -175,25 +157,22 @@ class P4A_Table extends P4A_Widget
 	}
 
 	/**
-	 * Adds a column to the data structure.
-	 * @param string		Column name.
-	 * @access public
+	 * Adds a column to the data structure
+	 * @param string $column_name
 	 */
-	function addCol($column_name)
+	public function addCol($column_name)
 	{
-		$this->cols->build("p4a_table_col", $column_name);
-
+		$this->cols->build('p4a_table_col', $column_name);
 		if (!empty($this->_cols_order)) {
 			$this->_cols_order[] = $column_name;
 		}
 	}
 
 	/**
-	 * Adds a special clickable column.
-	 * @param string		Column name.
-	 * @access public
+	 * Adds a special clickable column
+	 * @param string $column_name
 	 */
-	function addActionCol($column_name)
+	public function addActionCol($column_name)
 	{
 		$this->addCol($column_name);
 		$this->cols->$column_name->setType('action');
@@ -202,10 +181,10 @@ class P4A_Table extends P4A_Widget
 	}
 
 	/**
-	 * Returns the HTML rendered object.
-	 * @access public
+	 * Returns the HTML rendered object
+	 * @return string
 	 */
-	function getAsString()
+	public function getAsString()
 	{
 		if (!$this->isVisible()) {
 			return '<div id="' . $this->getId() . '">';
@@ -311,62 +290,29 @@ class P4A_Table extends P4A_Widget
 		return $return;
 	}
 
-	/**
-	 * Makes the toolbar visible.
-	 * @access public
-	 */
-	function showToolbar()
+	public function showToolbar()
 	{
-		if (is_object($this->toolbar)) {
-			$this->toolbar->setVisible();
-		} else {
-			P4A_Error('NO TOOLBAR');
-		}
+		$this->toolbar->setVisible();
 	}
 
-	/**
-	 * Makes the toolbar invisible.
-	 * @access public
-	 */
-	function hideToolbar()
+	public function hideToolbar()
 	{
-		if (is_object($this->toolbar)) {
-			$this->toolbar->setInvisible();
-		} else {
-			P4A_Error('NO TOOLBAR');
-		}
+		$this->toolbar->setVisible(false);
 	}
 
-	/**
-	 * Makes the navigation bar visible.
-	 * @access public
-	 */
-	function showNavigationBar()
+	public function showNavigationBar()
 	{
-		if ($this->navigation_bar === null) {
-			$this->addNavigationBar();
-		}
 		$this->navigation_bar->setVisible();
 		$this->_auto_navigation_bar = false;
 	}
 
-	/**
-	 * Makes the navigation bar hidden.
-	 * @access public
-	 */
-	function hideNavigationBar()
+	public function hideNavigationBar()
 	{
-		if ($this->navigation_bar !== null) {
-			$this->navigation_bar->setInvisible();
-		}
+		$this->navigation_bar->setVisible(false);
 		$this->_auto_navigation_bar = false;
 	}
 
-	/**
-	 * Sets the title bar visible
-	 * @access public
-	 */
-	function showTitleBar()
+	public function showTitleBar()
 	{
 		if ($this->title_bar !== null) {
 			$this->setTitle($this->getName());
@@ -375,40 +321,35 @@ class P4A_Table extends P4A_Widget
 	}
 
 	/**
-	 * Sets the title bar hidden
-	 * @access public
+	 * Shows the bar with column names
 	 */
-	function showHeaders()
+	public function showHeaders()
 	{
 		$this->_show_headers = true;
 	}
 
 	/**
-	 * Sets the header row hidden
-	 * @access public
-	 * @see $_show_headers
+	 * Hides the bar with column names
 	 */
-	function hideHeaders()
+	public function hideHeaders()
 	{
 		$this->_show_headers = false;
 	}
 
 	/**
-	 * Return an array with all columns id.
-	 * @access public
+	 * Return all column names
 	 * @return array
 	 */
-	function getCols()
+	public function getCols()
 	{
 		return $this->cols->getNames();
 	}
 
 	/**
-	 * Return an array with all id of visible columns.
-	 * @access public
+	 * Return an array with all names of visible columns
 	 * @return array
 	 */
-	function getVisibleCols()
+	public function getVisibleCols()
 	{
 		$return = array();
 
@@ -430,11 +371,10 @@ class P4A_Table extends P4A_Widget
 	}
 
 	/**
-	 * Return an array with all id of invisible columns.
-	 * @access public
+	 * Return an array with all names of invisible columns
 	 * @return array
 	 */
-	function getInvisibleCols()
+	public function getInvisibleCols()
 	{
 		$return = array();
 
@@ -451,9 +391,9 @@ class P4A_Table extends P4A_Widget
 	 * Sets all passed columns visible.
 	 * If no array is given, than sets all columns visible.
 	 * @access public
-	 * @params array	Columns id in indexed array.
+	 * @params array 
 	 */
-	function setVisibleCols($cols = array())
+	public function setVisibleCols(array $cols = array())
 	{
 		$this->setInvisibleCols();
 		if (sizeof($cols) == 0) {
@@ -474,10 +414,9 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets all passed columns invisible.
 	 * If no array is given, than sets all columns invisible.
-	 * @access public
-	 * @params array	Columns id in indexed array.
+	 * @params array $cols Columns names in indexed array
 	 */
-	function setInvisibleCols($cols = array())
+	public function setInvisibleCols($cols = array())
 	{
 		if (sizeof( $cols ) == 0) {
 			$cols = $this->getCols();
@@ -494,36 +433,33 @@ class P4A_Table extends P4A_Widget
 
 	/**
 	 * Returns the current page number
-	 * @access public
 	 * @return integer
 	 */
-	function getCurrentPageNumber()
+	public function getCurrentPageNumber()
 	{
 		return $this->_current_page_number;
 	}
 
 	/**
 	 * Sets the current page number
-	 * @access public
-	 * @params integer
+	 * @params integer $page
 	 */
-	function setCurrentPageNumber($page)
+	public function setCurrentPageNumber($page)
 	{
 		$this->_current_page_number = $page;
 	}
 
 	/**
 	 * Sets the page number reading it from the data source
-	 * @access public
 	 */
-	function syncPageWithSource()
+	public function syncPageWithSource()
 	{
 		$this->setCurrentPageNumber($this->data->getNumPage());
 	}
 }
 
 /**
- * Keeps the data for a single table column.
+ * Keeps the data for a single table column
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
