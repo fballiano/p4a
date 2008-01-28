@@ -129,7 +129,6 @@ class P4A_Button extends P4A_Widget
 			return "<span id='$id' class='hidden'></span>";
 		}
 
-		$p4a =& P4A::singleton();
 		$label = htmlspecialchars(__($this->getLabel()), ENT_QUOTES);
 		$title = $label;
 		$accesskey = $this->getAccessKey();
@@ -145,7 +144,7 @@ class P4A_Button extends P4A_Widget
 		$header .= ">";
 		
 		$icon = "";
-		if ($this->_icon != null and !$p4a->isHandheld()) {
+		if ($this->_icon != null and !P4A::singleton()->isHandheld()) {
 			$size = $this->getSize();
 			if (strpos($size, 'x') !== false) {
 				list($width, $size) = explode('x', $size);

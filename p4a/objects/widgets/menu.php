@@ -273,9 +273,8 @@ class P4A_Menu_Item extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$p4a =& p4a::singleton();
 		$properties = $this->composeStringProperties();
-		if ($p4a->isHandheld()) {
+		if (P4A::singleton()->isHandheld()) {
 			$icon = '';
 		} else {
 			$icon = $this->getIcon();
