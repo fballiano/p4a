@@ -9,6 +9,7 @@
 - check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
 - php5ize db_navigator and p4a_table
 - make p4a_object abstract classes
+- ordering on a joined field doesn't work
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -150,7 +151,8 @@
 - P4A_Object::destroy() method now does not unset the variable from parent but sets it to null
 - a bug with P4A_Object::destroy() was solved, it happened when destroying an object directly stored in the $p4a object
 - PEAR::Net_Useragent_Detect was updated to 2.4.0
-- P4A_Widget and P4A_Data_Source are now declared as abstract
+- P4A_Object, P4A_Widget and P4A_Data_Source are now declared as abstract
+- the "eval" call within P4A_Object::actionHandler() method was changed to a call_user_func_array which seems to be faster
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

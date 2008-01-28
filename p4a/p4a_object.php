@@ -43,7 +43,7 @@
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
-class P4A_Object
+abstract class P4A_Object
 {
 	/**
 	 * @var string
@@ -61,7 +61,7 @@ class P4A_Object
 	protected $_name = null;
 
 	/**
-	 * Keeps the association between an action and its listener.
+	 * Keeps the association between an action and its listener
 	 * @var array
 	 */
 	protected $_map_actions = array();
@@ -102,7 +102,7 @@ class P4A_Object
 	function build($class, $name)
 	{
 		$args = func_get_args();
-		$str_args = '$this->$name =& new $class(';
+		$str_args = '$this->$name = new $class(';
 
 		for ($i=1; $i<sizeof($args); $i++) {
 			$str_args .= '$args[' . $i . '], ';
@@ -193,13 +193,7 @@ class P4A_Object
 			$method = $this->_map_actions[$action]['method'];
 			$arguments = func_get_args();
 			$arguments[0] =& $this;
-			$params = '';
-			foreach ($arguments as $k=>$v) {
-				$params .= "\$arguments[$k],";
-			}
-			$params = substr($params, 0, -1);
-			eval("\$return = \$interceptor->$method($params);");
-			return $return;
+			return call_user_func_array(array($interceptor, $method), $arguments);
 		} else {
 			return null;
 		}
@@ -211,7 +205,7 @@ class P4A_Object
 	 * @param string $action The action triggered by an event
 	 * @param string $method The method that will be executed
 	 */
-	public function intercept(&$object, $action, $method = null)
+	public function intercept($object, $action, $method = null)
 	{
 		$object->implementMethod($action, $this, $method);
 	}
@@ -222,7 +216,7 @@ class P4A_Object
 	 * @param object $object The object that will intercept the action
 	 * @param string $method The method that will be called
 	 */
-	public function implementMethod($action, &$object, $method = null)
+	public function implementMethod($action, $object, $method = null)
 	{
 		$action = strtolower($action);
 		if ($method === null) $method = $action;
@@ -230,7 +224,7 @@ class P4A_Object
 			$this->addAction($action);
 		}
 		$this->_map_actions[$action] = array();
-		$this->_map_actions[$action]['object'] =& $object;
+		$this->_map_actions[$action]['object'] = $object;
 		$this->_map_actions[$action]['method'] = $method;
 	}
 	
@@ -278,7 +272,7 @@ class P4A_Object
 	 */
 	public function errorHandler($action, $param = null)
 	{
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 		$interceptor = null;
 		$method = null;
 
@@ -295,11 +289,10 @@ class P4A_Object
 
 		if ($interceptor !== null) {
 			if ($param !== null) {
-				eval('$return = $interceptor->' . $method . '($param);');
+				return eval('return $interceptor->' . $method . '($param);');
 			} else {
-				eval('$return = $interceptor->' . $method . '();');
+				return eval('return $interceptor->' . $method . '();');
 			}
-			return $return;
 		} else {
 			ob_start();
 			$p4a->openMask('p4a_mask_error');
