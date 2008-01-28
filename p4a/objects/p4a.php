@@ -455,7 +455,7 @@ class P4A extends P4A_Object
 				isset($_REQUEST['q']) and
 				isset($this->objects[$_REQUEST['_object']])) {
 				$object =& $this->objects[$_REQUEST['_object']];
-				$db =& p4a_db::singleton($object->data_field->getDSN());
+				$db = p4a_db::singleton($object->data_field->getDSN());
 				$data =& $object->data;
 				$description_field = $object->getSourceDescriptionField();
 				$q = addslashes($_REQUEST['q']);					
