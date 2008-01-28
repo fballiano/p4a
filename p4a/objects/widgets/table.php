@@ -767,7 +767,7 @@ class P4A_Table_Col extends P4A_Widget
 	 * @param array $aParams
 	 * @return unknown
 	 */
-	function onClick($aParams)
+	public function onClick($aParams)
 	{
 		if ($this->isActionTriggered('beforeClick')) {
 			if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
@@ -787,7 +787,7 @@ class P4A_Table_Col extends P4A_Widget
 		}
 	}
 
-	function order()
+	public function order()
 	{
 		$p4a = P4A::singleton();
 		$parent = $p4a->getObject($this->getParentID());
@@ -795,7 +795,7 @@ class P4A_Table_Col extends P4A_Widget
 		$parent->redesign();
 
 		if ($parent->data->isSortable()) {
-			$data_field =& $parent->data->fields->{$this->getName()};
+			$data_field = $parent->data->fields->{$this->getName()};
 			$field_name = $data_field->getName();
 			$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
 
@@ -837,8 +837,7 @@ class P4A_Table_Rows extends P4A_Widget
 	/**
 	 * Class constructor.
 	 * By default we add an onClick action.
-	 * @param string		Mnemonic identifier for the object
-	 * @access private
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name = 'rows')
 	{
@@ -849,21 +848,19 @@ class P4A_Table_Rows extends P4A_Widget
 	/**
 	 * Sets the max height for the data rows.
 	 * This is done adding a scrollbar to the table body.
-	 * @param integer		The desidered height.
-	 * @param string		Measure unit
-	 * @access public
+	 * @param integer $height
+	 * @param string $unit (px|pt|em)
 	 */
-	function setMaxHeight($height, $unit = 'px')
+	public function setMaxHeight($height, $unit = 'px')
 	{
 		$this->setStyleProperty('max-height', $height . $unit);
 	}
 
 	/**
-	 * Retrive data for the current page.
+	 * Retrive data for the current page
 	 * @return array
-	 * @access private
 	 */
-	function getRows($num_page, $rows)
+	public function getRows($num_page, $rows)
 	{
 		$p4a = P4A::singleton();
 
@@ -942,6 +939,7 @@ class P4A_Table_Rows extends P4A_Widget
 					}
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				} else {
+					$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType());
 					$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				}
@@ -957,19 +955,16 @@ class P4A_Table_Rows extends P4A_Widget
 	/**
 	 * onClick action handler for the row.
 	 * We move pointer to the clicked row.
-	 * @param array		All passed params.
-	 * @access public
+	 * @param array $aParams
 	 */
-	function onClick($aParams)
+	public function onClick($aParams)
 	{
-		$p4a = P4A::singleton();
-		$parent = $p4a->getObject($this->getParentID());
+		if ($this->actionHandler('beforeclick', $aParams) == ABORT) return ABORT;
 
-		if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
-
+		$parent = P4A::singleton()->getObject($this->getParentID());
 		if ($parent->data->row($aParams[0] + (($parent->getCurrentPageNumber() - 1) * $parent->data->getPageLimit()) + 1) == ABORT) return ABORT;
 
-		if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
+		if ($this->actionHandler('afterclick', $aParams) == ABORT) return ABORT;
 	}
 }
 
