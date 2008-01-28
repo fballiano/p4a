@@ -67,7 +67,7 @@ class P4A_Table extends P4A_Widget
 	 * All the table's rows
 	 * @var P4A_Table_Rows
 	 */
-	var $rows = null;
+	public $rows = null;
 
 	/**
 	 * Decides if the table will show the "field's header" row
