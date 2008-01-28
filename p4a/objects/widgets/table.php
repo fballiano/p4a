@@ -138,7 +138,7 @@ class P4A_Table extends P4A_Widget
 	 * Sets the data source that the table will navigate
 	 * @param P4A_Data_Source $data_source
 	 */
-	public function setSource($data_source)
+	public function setSource(P4A_Data_Source $data_source)
 	{
 		$this->data = $data_source;
 		$this->setDataStructure($this->data->fields->getNames());
@@ -148,7 +148,7 @@ class P4A_Table extends P4A_Widget
 	 * Sets the table's structure (fields)
 	 * @param array $array_fields
 	 */
-	public function setDataStructure($array_fields)
+	public function setDataStructure(array $array_fields)
 	{
 		$this->build('p4a_collection', 'cols');
 		foreach($array_fields as $field) {
@@ -415,7 +415,7 @@ class P4A_Table extends P4A_Widget
 	 * If no array is given, than sets all columns invisible.
 	 * @params array $cols Columns names in indexed array
 	 */
-	public function setInvisibleCols($cols = array())
+	public function setInvisibleCols(array $cols = array())
 	{
 		if (sizeof( $cols ) == 0) {
 			$cols = $this->getCols();
@@ -574,13 +574,11 @@ class P4A_Table_Col extends P4A_Widget
 	 * If we use fields like combo box we have to set a data source.
 	 * By default we'll take the data source primary key as value field
 	 * and the first fiels (not pk) as description.
-	 * @param data_source		The data source.
-	 * @access public
+	 * @param P4A_Data_Source $data_source
 	 */
-	function setSource(&$data_source)
+	public function setSource(P4A_Data_Source $data_source)
 	{
-		unset( $this->data ) ;
-		$this->data =& $data_source;
+		$this->data = $data_source;
 		$pk = $this->data->getPk();
 
 		if ($pk !== null) {
@@ -588,7 +586,7 @@ class P4A_Table_Col extends P4A_Widget
 				if (is_array($pk)) {
 					P4A_Error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
 				} else {
-					$this->setSourceValueField($pk) ;
+					$this->setSourceValueField($pk);
 				}
 			}
 
@@ -597,7 +595,7 @@ class P4A_Table_Col extends P4A_Widget
 				$names = $this->data->fields->getNames();
 				foreach ($names as $name) {
 					if ($name != $source_value) {
-						$this->setSourceDescriptionField($name) ;
+						$this->setSourceDescriptionField($name);
 						break;
 					}
 				}
@@ -606,56 +604,47 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Sets what data source member is the keeper of the field's value.
-	 * @param string		The name of the data source member.
-	 * @access public
+	 * Sets what data source member is the keeper of the field's value
+	 * @param string $name The name of the data source member
 	 */
-	function setSourceValueField( $name )
+	public function setSourceValueField($name)
 	{
-		// No controls if $name exists...
-		// too many controls may be too performance expensive.
-		$this->data_value_field = $name ;
+		$this->data_value_field = $name;
 	}
 
 	/**
-	 * Sets what data source member is the keeper of the field's description.
-	 * @param string		The name of the data source member.
-	 * @access public
+	 * Sets what data source member is the keeper of the field's description
+	 * @param string $name The name of the data source member
 	 */
-	function setSourceDescriptionField( $name )
+	public function setSourceDescriptionField($name)
 	{
-		// No controls if $name exists...
-		// too many controls may be too performance expensive
-		$this->data_description_field = $name ;
+		$this->data_description_field = $name;
 	}
 
 	/**
 	 * Returns the name of the data source member that keeps the field's value.
 	 * @return string
-	 * @access public
 	 */
-	function getSourceValueField()
+	public function getSourceValueField()
 	{
-		return $this->data_value_field ;
+		return $this->data_value_field;
 	}
 
 	/**
-	 * Returns the name of the data source member that keeps the field's description.
+	 * Returns the name of the data source member that keeps the field's description
 	 * @return string
-	 * @access public
 	 */
-	function getSourceDescriptionField()
+	public function getSourceDescriptionField()
 	{
-		return $this->data_description_field ;
+		return $this->data_description_field;
 	}
 
 	/**
 	 * Translate the value with the description
-	 * @param string		The value to translate
+	 * @param string $value The value to translate
 	 * @return string
-	 * @access public
 	 */
-	function getDescription($value)
+	public function getDescription($value)
 	{
 		if (!$this->data) {
 			return $value;
