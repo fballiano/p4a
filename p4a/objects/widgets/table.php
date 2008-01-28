@@ -866,7 +866,11 @@ class P4A_Table_Rows extends P4A_Widget
 					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
 				} else {
 					if ($parent->cols->$col_name->isFormatted()) {
-						$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType());
+						if ($parent->cols->$col_name->isActionTriggered('onformat')) {
+							$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->actionHandler('onformat', $row[$col_name], $parent->data->fields->$col_name->getType(), $parent->data->fields->$col_name->getNumOfDecimals());
+						} else {
+							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType(), $parent->data->fields->$col_name->getNumOfDecimals());
+						}
 					} else {
 						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					}
