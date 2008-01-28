@@ -858,7 +858,8 @@ class P4A_Table_Col extends P4A_Widget
 	function order()
 	{
 		$p4a = P4A::singleton();
-		$parent = $p4a->getObject($parent->getParentID());
+		$parent = $p4a->getObject($this->getParentId());
+		$parent = $p4a->getObject($parent->getParentId());
 		$parent->redesign();
 
 		if ($parent->data->isSortable()) {
