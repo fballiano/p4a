@@ -376,8 +376,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function setType($type, $multivalue_separator = null)
 	{
-		$p4a =& p4a::singleton();
-		if ($p4a->isHandheld() and $type == 'rich_textarea') {
+		if (P4A::singleton()->isHandheld() and $type == 'rich_textarea') {
 			$type = 'textarea';
 		}
 
@@ -660,16 +659,14 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsDate()
 	{
-		$p4a =& P4A::singleton();
 		$id = $this->getId();
-
 		$enabled = $this->isEnabled();
 		$disabled = $enabled ? "": " disabled='disabled' ";
 
 		$header = "<input id='{$id}input' type='text' class='p4a_date_calendar border_color1 font_normal' $disabled";
 		$close_header = "/>";
 
-		if (!$p4a->isHandheld()) {
+		if (!P4A::singleton()->isHandheld()) {
 			$value = $this->data_field->getNewValue();
 			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
 			$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" />";
@@ -782,7 +779,6 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsSelect()
 	{
-		$p4a =& P4A::singleton();
 		$id = $this->getId();
 
 		$header 			= "<select id='{$id}input' class='border_box font_normal' ";
@@ -836,7 +832,6 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsMultiselect()
 	{
-		$p4a =& P4A::singleton();
 		$id = $this->getID();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
@@ -886,7 +881,6 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsMulticheckbox()
 	{
-		$p4a =& P4A::singleton();
 		$id = $this->getID();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
@@ -957,9 +951,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsRadio()
 	{
-		$p4a =& P4A::singleton();
 		$id = $this->getId();
-
 		$external_data		= $this->data->getAll() ;
 		$value_field		= $this->getSourceValueField() ;
 		$description_field	= $this->getSourceDescriptionField() ;
@@ -1039,7 +1031,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsFile()
 	{
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 		$id = $this->getID();
 
 		if ($this->getNewValue() === null) {
@@ -1057,18 +1049,18 @@ class P4A_Field extends P4A_Widget
 			$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 		} else {
 			if (!isset($this->buttons->button_file_delete)) {
-				$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
-				$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
-				$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
+				$this->buttons->build("p4a_button", "button_file_delete");
+				$this->buttons->build("p4a_button", "button_file_preview");
+				$this->buttons->build("p4a_button", "button_file_download");
 
-				$button_file_delete->setLabel('Delete');
-				$button_file_preview->setLabel('Preview');
-				$button_file_download->setLabel('Download');
+				$this->buttons->button_file_delete->setLabel('Delete');
+				$this->buttons->button_file_preview->setLabel('Preview');
+				$this->buttons->button_file_download->setLabel('Download');
 
-				$button_file_delete->addAjaxAction("onClick");
-				$this->intercept($button_file_delete, 'onclick', 'fileDeleteOnClick');
-				$this->intercept($button_file_preview, 'onclick', 'filePreviewOnClick');
-				$this->intercept($button_file_download, 'onclick', 'fileDownloadOnClick');
+				$this->buttons->button_file_delete->addAjaxAction('onclick');
+				$this->intercept($this->buttons->button_file_delete, 'onclick', 'fileDeleteOnClick');
+				$this->intercept($this->buttons->button_file_preview, 'onclick', 'filePreviewOnClick');
+				$this->intercept($this->buttons->button_file_download, 'onclick', 'fileDownloadOnClick');
 			}
 
 			if ($this->isEnabled()) {
@@ -1114,7 +1106,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function filePreviewOnClick()
 	{
-		$p4a =& p4a::singleton();
+		$p4a = p4a::singleton();
 		$p4a->openMask("P4A_Mask_Preview");
 		$p4a->active_mask->setTitle($this->getNewValue(0));
 
@@ -1174,7 +1166,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsImage()
 	{
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 		$id = $this->getID();
 
 		if ($this->getNewValue() === null) {
@@ -1196,18 +1188,18 @@ class P4A_Field extends P4A_Widget
 			$mime_type = $mime_type[0];
 
 			if (!isset($this->buttons->button_file_delete)) {
-				$button_file_delete =& $this->buttons->build("p4a_button", "button_file_delete");
-				$button_file_preview =& $this->buttons->build("p4a_button", "button_file_preview");
-				$button_file_download =& $this->buttons->build("p4a_button", "button_file_download");
+				$this->buttons->build("p4a_button", "button_file_delete");
+				$this->buttons->build("p4a_button", "button_file_preview");
+				$this->buttons->build("p4a_button", "button_file_download");
 
-				$button_file_delete->setLabel('Delete');
-				$button_file_preview->setLabel('Preview');
-				$button_file_download->setLabel('Download');
+				$this->buttons->button_file_delete->setLabel('Delete');
+				$this->buttons->button_file_preview->setLabel('Preview');
+				$this->buttons->button_file_download->setLabel('Download');
 
-				$button_file_delete->addAjaxAction("onClick");
-				$this->intercept($button_file_delete, 'onclick', 'fileDeleteOnClick');
-				$this->intercept($button_file_preview, 'onclick', 'filePreviewOnClick');
-				$this->intercept($button_file_download, 'onclick', 'fileDownloadOnClick');
+				$this->buttons->button_file_delete->addAjaxAction('onclick');
+				$this->intercept($this->buttons->button_file_delete, 'onclick', 'fileDeleteOnClick');
+				$this->intercept($this->buttons->button_file_preview, 'onclick', 'filePreviewOnClick');
+				$this->intercept($this->buttons->button_file_download, 'onclick', 'fileDownloadOnClick');
 			}
 
 			if ($mime_type != 'image') {
@@ -1279,9 +1271,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsColor()
 	{
-		$p4a =& p4a::singleton();
 		$id = $this->getId();
-
 		if ($this->isEnabled()) {
 			$enabled = "";
 		} else {
@@ -1289,7 +1279,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$return  = $this->getAsText();
-		if (!$p4a->isHandheld()) {
+		if (!P4A::singleton()->isHandheld()) {
 			$return .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick='toggleColorPicker(\"$id\")' />";
 		}
 
