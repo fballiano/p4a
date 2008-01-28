@@ -49,7 +49,7 @@ class P4A_Table extends P4A_Widget
 	 * Data source associated with the table
 	 * @var P4A_Data_Source
 	 */
-	protected $data = null;
+	public $data = null;
 
 	/**
 	 * The gui widgets to allow table navigation
@@ -467,39 +467,34 @@ class P4A_Table extends P4A_Widget
 class P4A_Table_Col extends P4A_Widget
 {
 	/**
-	 * Keeps the header string.
+	 * Keeps the header string
 	 * @var string
-	 * @access private
 	 */
-	var $header = null;
+	protected $header = null;
 
 	/**
-	 * Data source for the field.
-	 * @var data_source
-	 * @access private
+	 * Data source for the field
+	 * @var P4A_Data_Source
 	 */
-	var $data = null;
+	public $data = null;
 
 	/**
-	 * The data source member that contains the values for this field.
+	 * The data source member that contains the values for this field
 	 * @var string
-	 * @access private
 	 */
-	var $data_value_field = null ;
+	protected $data_value_field = null;
 
 	/**
-	 * The data source member that contains the descriptions for this field.
+	 * The data source member that contains the descriptions for this field
 	 * @var string
-	 * @access private
 	 */
-	var $data_description_field	= null ;
+	protected $data_description_field	= null;
 
 	/**
-	 * Tells if the fields content is formatted or not.
+	 * Tells if the fields content is formatted or not
 	 * @var boolean
-	 * @access private
 	 */
-	var $formatted = true;
+	protected $formatted = true;
 
 	/**
 	 * The formatter class name for the data field.
@@ -530,13 +525,13 @@ class P4A_Table_Col extends P4A_Widget
 	var $_type = "text";
 
 	/**
-	 * @param string		Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name)
 	{
 		parent::__construct($name);
 		$this->setDefaultLabel();
-		$this->addAjaxAction('onClick');
+		$this->addAjaxAction('onclick');
 	}
 
 	/**
@@ -753,24 +748,26 @@ class P4A_Table_Col extends P4A_Widget
 
 	/**
 	 * Sets the type of the column (text|image)
-	 * @access public
 	 * @param string
 	 */
-	function setType($type)
+	public function setType($type)
 	{
 		$this->_type = $type;
 	}
 
 	/**
 	 * Gets the type of the column (text|image)
-	 * @access public
 	 * @return string
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->_type;
 	}
 
+	/**
+	 * @param array $aParams
+	 * @return unknown
+	 */
 	function onClick($aParams)
 	{
 		if ($this->isActionTriggered('beforeClick')) {
@@ -794,8 +791,8 @@ class P4A_Table_Col extends P4A_Widget
 	function order()
 	{
 		$p4a = P4A::singleton();
-		$parent = $p4a->getObject($this->getParentId());
-		$parent = $p4a->getObject($parent->getParentId());
+		$parent = $p4a->getObject($this->getParentID());
+		$parent = $p4a->getObject($parent->getParentID());
 		$parent->redesign();
 
 		if ($parent->data->isSortable()) {
@@ -986,11 +983,9 @@ class P4A_Table_Rows extends P4A_Widget
 class P4A_Table_Navigation_Bar extends P4A_Frame
 {
 	/**
-	 * Buttons collection
-	 * @var p4a_collection
-	 * @access public
+	 * @var P4A_Collection
 	 */
-	var $buttons = null;
+	public $buttons = null;
 
 	public function __construct()
 	{
@@ -1010,8 +1005,8 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$this->intercept($this->buttons->field_num_page, 'onreturnpress', 'goOnClick');
 		$this->anchorRight($field_num_page);
 
-		$current_page =& $this->buttons->build('p4a_label', 'current_page');
-		$this->anchorLeft($current_page);
+		$this->buttons->build('p4a_label', 'current_page');
+		$this->anchorLeft($this->buttons->current_page);
 
 		if (P4A::singleton()->isHandheld()) {
 			$this->addButton('button_first');
@@ -1042,10 +1037,16 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$this->intercept($this->buttons->button_first, 'onclick', 'firstOnClick');
 	}
 
-	function addButton($button_name, $icon = null, $float = "left")
+	/**
+	 * @param string $button_name
+	 * @param string $icon
+	 * @param string $float
+	 * @return P4A_Button
+	 */
+	public function addButton($button_name, $icon = null, $float = "left")
 	{
-		$button =& $this->buttons->build("p4a_button", $button_name);
-		$button->addAjaxAction('onClick');
+		$button = $this->buttons->build("p4a_button", $button_name);
+		$button->addAjaxAction('onclick');
 
 		if (strlen($icon)>0) {
 			$button->setIcon($icon);
@@ -1057,7 +1058,10 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		return $button;
 	}
 
-	function getAsString()
+	/**
+	 * @return string
+	 */
+	public function getAsString()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
@@ -1082,10 +1086,9 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	}
 
 	/**
-	 * Action handler for "next" button click.
-	 * @access public
+	 * Action handler for "next" button click
 	 */
-	function nextOnClick()
+	public function nextOnClick()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
@@ -1101,10 +1104,9 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	}
 
 	/**
-	 * Action handler for "previous" button click.
-	 * @access public
+	 * Action handler for "previous" button click
 	 */
-	function prevOnClick()
+	public function prevOnClick()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
@@ -1118,10 +1120,9 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	}
 
 	/**
-	 * Action handler for "first" button click.
-	 * @access public
+	 * Action handler for "first" button click
 	 */
-	function firstOnClick()
+	public function firstOnClick()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 		$parent->setCurrentPageNumber(1);
@@ -1129,10 +1130,9 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	}
 
 	/**
-	 * Action handler for "last" button click.
-	 * @access public
+	 * Action handler for "last" button click
 	 */
-	function lastOnClick()
+	public function lastOnClick()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 		$parent->setCurrentPageNumber($parent->data->getNumPages());
@@ -1140,10 +1140,9 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	}
 
 	/**
-	 * Action handler for "go" button click.
-	 * @access public
+	 * Action handler for "go" button click
 	 */
-	function goOnClick()
+	public function goOnClick()
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
