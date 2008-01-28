@@ -67,7 +67,7 @@ class P4A_DB
 
 		if(!isset($$dbconn) or $$dbconn == null) {
 			if(strlen($DSN)) {
-				$$dbconn =& new p4a_db();
+				$$dbconn = new p4a_db();
 				$dsn_data = parse_url($DSN);
 				if (!isset($dsn_data['port'])) $dsn_data['port'] = null;
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
@@ -87,7 +87,7 @@ class P4A_DB
 				);
 				
 				require_once str_replace('_', '/', $driver) . '.php';
-				$$dbconn->adapter =& new $driver($connection_params);
+				$$dbconn->adapter = new $driver($connection_params);
     			$$dbconn->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
 			} else {
 				$$dbconn = null;
