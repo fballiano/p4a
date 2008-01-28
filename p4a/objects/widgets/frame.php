@@ -102,7 +102,7 @@ class P4A_Frame extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 		$handheld = $p4a->isHandheld();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
