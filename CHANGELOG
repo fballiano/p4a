@@ -8,6 +8,7 @@
 - redo the css
 - check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
 - php5ize db_navigator and p4a_table
+- make p4a_data_source, p4a_widget, p4a_object abstract classes with some abstract methods?
 
 2.99.0
 - Zend Framework 1.0.3 was added
