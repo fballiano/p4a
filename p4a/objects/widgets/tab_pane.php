@@ -72,7 +72,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	 * Builds a new page inside the pane
 	 * @return P4A_Frame
 	 */
-	public function &addPage($page_name, $label=null)
+	public function addPage($page_name, $label=null)
 	{
 		$this->pages->build('p4a_frame', $page_name);
 		if ($label !== null) {
@@ -85,7 +85,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	 * @param string|P4A_Frame $page
 	 * @return P4A_Frame
 	 */
-	public function &setActivePage($page)
+	public function setActivePage($page)
 	{
 		if ($this->actionHandler('beforeSetActivePage') == ABORT) return ABORT;
 
@@ -108,7 +108,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	/**
 	 * @return P4A_Frame
 	 */
-	public function &getActivePage()
+	public function getActivePage()
 	{
 		if ($this->pages->getNumItems() == 0) {
 			$return = null;
@@ -122,7 +122,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		}
 
 		$this->pages->reset();
-		$page =& $this->pages->nextItem();
+		$page = $this->pages->nextItem();
 		$this->setActivePage($page);
 		return $page;
 	}
@@ -138,7 +138,7 @@ class P4A_Tab_Pane extends P4A_Widget
 	/**
 	 * @return P4A_Frame
 	 */
-	public function &nextPage()
+	public function nextPage()
 	{
 		if ($this->pages->getNumItems() == 0) {
 			$return = null;
@@ -146,13 +146,12 @@ class P4A_Tab_Pane extends P4A_Widget
 		}
 
 		$this->redesign();
-		$active_page =& $this->getActivePage();
-		$active_page_name = $active_page->getName();
+		$active_page_name = $this->getActivePage()->getName();
 
 		$this->pages->reset();
-		while ($page =& $this->pages->nextItem()) {
+		while ($page = $this->pages->nextItem()) {
 			if ($page->getName() == $active_page_name) {
-				$page =& $this->pages->nextItem();
+				$page = $this->pages->nextItem();
 				if ($page === null) {
 					return $active_page;
 				} else {
@@ -191,7 +190,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		$return .= "<ul class='tabs'>";
 
 		$this->pages->reset();
-		while ($page =& $this->pages->nextItem()) {
+		while ($page = $this->pages->nextItem()) {
 			if (!$page->isVisible()) continue;
 			$actions = $this->composeStringActions($page->getName());
 			$active = '';

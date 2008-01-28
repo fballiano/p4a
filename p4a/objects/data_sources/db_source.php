@@ -546,7 +546,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$schema = $this->getSchema();
 			
 			if (empty($fields_values)) {
-				while($field =& $this->fields->nextItem()) {
+				while($field = $this->fields->nextItem()) {
 					if ($field->getAliasOf()) {
 						$name = $field->getAliasOf();
 					} else {

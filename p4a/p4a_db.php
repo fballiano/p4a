@@ -100,7 +100,7 @@ class P4A_DB
 	 * Connects to the configured database.
 	 * Database is configured by setting P4A_DSN constant.
 	 */
-	private function &connect($DSN = "")
+	private function connect($DSN = "")
 	{
 		return P4A_DB::singleton($DSN);
 	}

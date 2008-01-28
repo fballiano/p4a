@@ -133,7 +133,7 @@ class P4A_Menu extends P4A_Widget
 		$sReturn = "";
 		if ($this->hasItems()) {
 			$sReturn .= "<ul id='$id' class='p4a_menu'>";
-			while ($item =& $this->items->nextItem()) {
+			while ($item = $this->items->nextItem()) {
 				$sReturn .= $item->getAsString();
 			}
 			$sReturn .= "</ul>";
@@ -299,7 +299,7 @@ class P4A_Menu_Item extends P4A_Widget
 
 		if ($this->hasItems()) {
 			$sReturn .= "<ul>";
-			while ($item =& $this->items->nextItem()) {
+			while ($item = $this->items->nextItem()) {
 				$sReturn .= $item->getAsString();
 			}
 			$sReturn .= "</ul>";

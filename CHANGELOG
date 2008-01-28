@@ -153,6 +153,8 @@
 - PEAR::Net_Useragent_Detect was updated to 2.4.0
 - P4A_Object, P4A_Widget and P4A_Data_Source are now declared as abstract
 - the "eval" call within P4A_Object::actionHandler() method was changed to a call_user_func_array which seems to be faster
+- all "function &function_name" declarations were changed to "function function_name", removing the & symbol
+- many '&' symbols were removed cause of the new PHP5 reference management
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

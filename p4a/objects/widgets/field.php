@@ -168,10 +168,8 @@ class P4A_Field extends P4A_Widget
 	 * 
 	 * @param P4A_Data_Field $data_field
 	 */
-	public function setDataField(&$data_field)
+	public function setDataField($data_field)
 	{
-		unset($this->data_field);
-
 		if (!$data_field->isReadOnly()) {
 			switch(strtolower($data_field->getType())) {
 				case 'date':
@@ -184,7 +182,8 @@ class P4A_Field extends P4A_Widget
 		} else {
 			$this->setType('label');
 		}
-		$this->data_field =& $data_field;
+		
+		$this->data_field = $data_field;
 		$this->setDefaultVisualizationProperties();
 	}
 

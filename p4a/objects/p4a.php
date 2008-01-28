@@ -576,7 +576,7 @@ class P4A extends P4A_Object
 		$this->active_object =& $object;
 	}
 
-	public function &openMask($mask_name)
+	public function openMask($mask_name)
 	{
 		if ($this->actionHandler('beforeOpenMask') == ABORT) return ABORT;
 
@@ -652,7 +652,7 @@ class P4A extends P4A_Object
       * Gets an instance of the previous mask
       * @return P4A_Mask
       */
-     public function &getPrevMask()
+     public function getPrevMask()
      {
 	 	$num_masks = sizeof($this->masks_history);
      	if ($num_masks > 0){
@@ -664,7 +664,7 @@ class P4A extends P4A_Object
      /**
       * @return string
       */
-     public function &getPopupMaskName()
+     public function getPopupMaskName()
      {
      	return $this->_popup;
      }
@@ -672,7 +672,7 @@ class P4A extends P4A_Object
      /**
       * @return P4A_Mask
       */
-     public function &getPopupMask()
+     public function getPopupMask()
      {
      	return p4a_mask::singleton($this->_popup);
      }
@@ -707,14 +707,12 @@ class P4A extends P4A_Object
 	 * @param string $object_id
 	 * @return P4A_Object
 	 */
-	public function &getObject($object_id)
+	public function getObject($object_id)
 	{
 		if (array_key_exists($object_id, $this->objects)){
 			return $this->objects[$object_id];
 		}
-		
-		$return = null;
-		return $return;
+		return null;
 	}
 
 	/**

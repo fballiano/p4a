@@ -77,7 +77,7 @@ class P4A_Toolbar extends P4A_Widget
 	 * @param string $position (left|right)
 	 * @see P4A_Button
 	 */
-	public function &addButton($button_name, $icon = null, $position = "left")
+	public function addButton($button_name, $icon = null, $position = "left")
 	{
 		$this->buttons->build("p4a_button", $button_name);
 		$this->buttons->$button_name->setIcon($icon);
@@ -93,7 +93,7 @@ class P4A_Toolbar extends P4A_Widget
 	 * @param string $position (left|right)
 	 * @return P4A_Image
 	 */
-	public function &addSeparator($position = "left")
+	public function addSeparator($position = "left")
 	{
 		$name = 's' . $this->separators_counter++;
 		$this->buttons->build("p4a_image", $name);
@@ -110,7 +110,7 @@ class P4A_Toolbar extends P4A_Widget
 	 * @param string $position (left|right)
 	 * @return P4A_Box
 	 */
-	public function &addBox($name, $text, $position = "left")
+	public function addBox($name, $text, $position = "left")
 	{
 		$this->buttons->build("p4a_box", $name);
 		$this->buttons->$name->setValue($text);
@@ -124,7 +124,7 @@ class P4A_Toolbar extends P4A_Widget
 	 * @param string $position (left|right)
 	 * @return P4A_Image
 	 */
-	public function &addSpacer($width = 10, $position = "left")
+	public function addSpacer($width = 10, $position = "left")
 	{
 		$name = 's' . $this->separators_counter++;
 		$this->buttons->build("p4a_image", $name);
@@ -140,7 +140,7 @@ class P4A_Toolbar extends P4A_Widget
 	 */
 	public function disable()
 	{
-		while ($button =& $this->buttons->nextItem()) {
+		while ($button = $this->buttons->nextItem()) {
 			$button->disable();
 		}
 	}
@@ -150,7 +150,7 @@ class P4A_Toolbar extends P4A_Widget
 	 */
 	public function enable()
 	{
-		while ($button =& $this->buttons->nextItem()) {
+		while ($button = $this->buttons->nextItem()) {
 			$button->enable();
 		}
 	}
@@ -162,7 +162,7 @@ class P4A_Toolbar extends P4A_Widget
 	{
 		$this->_size = $size;
 
-		while ($button =& $this->buttons->nextItem()) {
+		while ($button = $this->buttons->nextItem()) {
 			$button->setSize($size);
 		}
 	}
@@ -190,7 +190,7 @@ class P4A_Toolbar extends P4A_Widget
 		$properties = $this->composeStringProperties();
 		$class = $this->composeStringClass(array("p4a_toolbar", "p4a_toolbar_$size"));
 		$return = "<div id='$id' $class $properties>";
-		while($button =& $this->buttons->nextItem()) {
+		while($button = $this->buttons->nextItem()) {
 			$return .= $button->getAsString();
 		}
 		$return .= "<div class='br'></div>\n";

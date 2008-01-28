@@ -169,7 +169,7 @@ class P4A_Mask extends P4A_Object
 	 * @param string $name
 	 * @return P4A_Mask
 	 */
-	public function &singleton($name)
+	public function singleton($name)
 	{
 		$name = strtolower($name);
 		$p4a = P4A::singleton();
@@ -226,7 +226,7 @@ class P4A_Mask extends P4A_Object
 	 * Get the previous mask
 	 * @return P4A_Mask
 	 */
-	public function &getPrevMask()
+	public function getPrevMask()
 	{
 		return P4A::singleton()->getPrevMask();
 	}
@@ -379,11 +379,11 @@ class P4A_Mask extends P4A_Object
 	 * @param P4A_Data_Source $data_source
 	 * @return P4A_Collection the fields collection
 	 */
-	public function &setSource(&$data_source)
+	public function setSource($data_source)
 	{
-		$this->data =& $data_source;
+		$this->data = $data_source;
 
-		while($field =& $this->data->fields->nextItem()) {
+		while($field = $this->data->fields->nextItem()) {
 			$field_name = $field->getName();
 			$this->fields->build(P4A_FIELD_CLASS, $field_name, false);
 			$this->fields->$field_name->setDataField($field);
@@ -419,7 +419,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	protected function saveUploads()
 	{
-		while ($field =& $this->fields->nextItem()) {
+		while ($field = $this->fields->nextItem()) {
 			$field_type = $field->getType();
 			if ($field_type=='file' or $field_type=='image') {
 				$new_value  = $field->getNewValue();

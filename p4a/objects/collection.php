@@ -40,7 +40,7 @@ class P4A_Collection extends P4A_Object
 	protected $_pointer = 0;
 
 	//todo: in caso di destroy di un elemento fare l'unset della chiave e ridurre l'array
-	public function &nextItem()
+	public function nextItem()
 	{
 		$p4a = P4A::singleton();
 		if ($this->_pointer < $this->getNumItems()) {
@@ -81,7 +81,7 @@ class P4A_Collection extends P4A_Object
 	{
 		$names = array();
 
-		while ($item =& $this->nextItem()) {
+		while ($item = $this->nextItem()) {
 			$names[] = $item->getName();
 		}
 

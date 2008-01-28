@@ -419,7 +419,7 @@ class P4A_Table extends P4A_Widget
 				}
 			}
 		} else {
-			while ($col =& $this->cols->nextItem()) {
+			while ($col = $this->cols->nextItem()) {
 				if ($col->isVisible()) {
 					$return[] = $col->getName();
 				}
@@ -438,7 +438,7 @@ class P4A_Table extends P4A_Widget
 	{
 		$return = array();
 
-		while ($col =& $this->cols->nextItem()) {
+		while ($col = $this->cols->nextItem()) {
 			if (!$col->isVisible()) {
 				$return[] = $col->getName();
 			}

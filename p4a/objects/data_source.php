@@ -74,7 +74,7 @@ abstract class P4A_Data_Source extends P4A_Object
 		if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
 
 		$this->_pointer = 0;
-		while ($field =& $this->fields->nextItem()) {
+		while ($field = $this->fields->nextItem()) {
 			$field->setValue(null);
 			$field->setDefaultValue();
 		}
@@ -366,7 +366,7 @@ abstract class P4A_Data_Source extends P4A_Object
 
 		if ($fields_names === null or $fields_names === false or $fields_names === true) {
 			$fields_names = array();
-			while ($field =& $this->fields->nextItem()) {
+			while ($field = $this->fields->nextItem()) {
 				$name = $field->getName();
 				$fields_names[$name] = $name;
 			}
