@@ -388,15 +388,14 @@ class P4A_Data_Source extends P4A_Object
 		return 	$csv;
 	}
 
-	public function exportToCSV($filename = "", $separator = ',', $fields_names = null)
+	public function exportToCSV($filename = '', $separator = ',', $fields_names = null)
 	{
 		$this->exportAsCSV($filename, $separator, $fields_names);
 	}
 
-	public function exportAsCSV($filename = "", $separator = ',', $fields_names = null)
+	public function exportAsCSV($filename = '', $separator = ',', $fields_names = null)
 	{
-		$p4a =& P4A::singleton();
-		$output =  $this->getAsCSV($separator, $fields_names);
+		$output = $this->getAsCSV($separator, $fields_names);
 
 		if (!strlen($filename)) {
 			$filename = $this->getName() . ".csv";
@@ -405,7 +404,7 @@ class P4A_Data_Source extends P4A_Object
 		header("Pragma: public");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header("Cache-Control: private", false);
-		header("Content-Type: text/comma-separated-value; charset=" . $p4a->i18n->getCharset());
+		header("Content-Type: text/comma-separated-value; charset=UTF-8");
 		header("Content-Disposition: attachment; filename={$filename}");
 		header("Content-Length: " . strlen($output));
 
