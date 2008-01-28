@@ -46,7 +46,7 @@
 class P4A_Quit_Toolbar extends P4A_Toolbar
 {
 	/**
-	 * @param string				Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name)
 	{
@@ -56,17 +56,15 @@ class P4A_Quit_Toolbar extends P4A_Toolbar
 	
 	private function addDefaultButtons()
 	{
-		$p4a =& p4a::singleton();
-	
-		$print =& $this->addButton('print', 'print');
-		$print->dropAction('onclick');
-		$print->setProperty('onclick', 'window.print(); return false;');
-		$print->setAccessKey("P");
+		$this->addButton('print', 'print');
+		$this->buttons->print->dropAction('onclick');
+		$this->buttons->print->setProperty('onclick', 'window.print(); return false;');
+		$this->buttons->print->setAccessKey("P");
 
-		$exit =& $this->addButton('exit', 'exit', 'right');
-		$exit->setLabel("Go back to the previous mask");
-		$exit->setAccessKey("X");
+		$this->addButton('exit', 'exit', 'right');
+		$this->buttons->exit->setLabel("Go back to the previous mask");
+		$this->buttons->exit->setAccessKey("X");
 		
-		$p4a->intercept($exit, "onclick", "showPrevMask");
+		P4A::singleton()->intercept($exit, "onclick", "showPrevMask");
 	}
 }
