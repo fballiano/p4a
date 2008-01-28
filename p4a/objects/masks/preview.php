@@ -1,5 +1,4 @@
 <?php
-
 /**
  * P4A - PHP For Applications.
  *
@@ -37,7 +36,7 @@
  */
 
 /**
- * Preview mask.
+ * Preview mask
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
@@ -49,11 +48,7 @@ class P4A_Mask_Preview extends P4A_Mask
 	public function __construct()
 	{
 		parent::__construct();
-		$p4a =& P4A::singleton();
-
 		$this->build("P4A_Quit_Toolbar", "toolbar");
-		$this->build("P4A_Box", "box");
-
 		$this->display("top", $this->toolbar);
 	}
 
