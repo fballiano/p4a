@@ -417,8 +417,7 @@ class P4A_Widget extends P4A_Object
 	 */
 	public function addAjaxAction($action, $event = null, $confirmation_text = null)
 	{
-		$p4a = p4a::singleton();
-		$this->addAction($action, $event, $confirmation_text, $p4a->isAjaxEnabled());
+		$this->addAction($action, $event, $confirmation_text, P4A::singleton()->isAjaxEnabled());
 	}
 
 	/**
@@ -502,8 +501,6 @@ class P4A_Widget extends P4A_Object
 	 */
 	protected function composeStringActions($params = null, $check_enabled_state = true)
 	{
-		$p4a =& P4A::singleton();
-
 		$sParams = '';
 		$sActions = '';
 
@@ -639,8 +636,6 @@ class P4A_Widget extends P4A_Object
 	public function fetchTemplate()
 	{
 		if ($this->use_template) {
-			$p4a =& p4a::singleton();
-
 			if (strpos($this->template_name, '/') !== false) {
 				list($_template_dir, $_template_file) = explode('/', $this->template_name);
 			} else {
@@ -855,7 +850,6 @@ class P4A_Widget extends P4A_Object
 
 	public function redesign()
 	{
-		$p4a =& p4a::singleton();
-		$p4a->redesign($this->getId());
+		P4A::singleton()->redesign($this->getId());
 	}
 }
