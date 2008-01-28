@@ -207,11 +207,10 @@ class P4A_Table extends P4A_Widget
 	 */
 	function getAsString()
 	{
-		$p4a =& P4A::singleton();
-
 		if (!$this->isVisible()) {
 			return '<div id="' . $this->getId() . '">';
 		}
+		
 		$width = $this->getStyleProperty("width");
 		if (substr($width,-2) == "px") {
 			$width = substr($width,0,-2);
@@ -605,15 +604,14 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Sets the column visible (and add it as the last in the coloumn display order).
-	 * @param boolean		Visibility flag
-	 * @access public
+	 * Sets the column visible (and add it as the last in the coloumn display order)
+	 * @param boolean $visible
 	 */
-	function setVisible($visible=true)
+	public function setVisible($visible = true)
 	{
 		parent::setVisible($visible);
 
-		$p4a =& p4a::singleton();
+		$p4a = P4A::singleton();
 		$parent = $this->getParentID();
 		$parent = $p4a->objects[$parent]->getParentID();
 		$parent = $p4a->objects[$parent];
@@ -624,12 +622,10 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Sets the header for the column.
-	 * @param string		The header
-	 * @access public
-	 * @see $header
+	 * Sets the header for the column
+	 * @param string $header
 	 */
-	function setHeader($header)
+	public function setHeader($header)
 	{
 		$this->setLabel($header);
 	}
@@ -639,7 +635,7 @@ class P4A_Table_Col extends P4A_Widget
 	 * @access public
 	 * @see $header
 	 */
-	function getHeader()
+	public function getHeader()
 	{
 		return $this->getLabel();
 	}
@@ -846,9 +842,9 @@ class P4A_Table_Col extends P4A_Widget
 		}
 
 		if ($this->getType() == 'action') {
-			$p4a =& P4A::singleton();
-			$cols =& $p4a->getObject($this->getParentID());
-			$table =& $p4a->getObject($cols->getParentID());
+			$p4a = P4A::singleton();
+			$cols = $p4a->getObject($this->getParentID());
+			$table = $p4a->getObject($cols->getParentID());
 			if ($table->data->row($aParams[0] + (($table->getCurrentPageNumber() - 1) * $table->data->getPageLimit()) + 1) == ABORT) return ABORT;
 		} else {
 			$this->order();
@@ -861,9 +857,8 @@ class P4A_Table_Col extends P4A_Widget
 
 	function order()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
-		$parent =& $p4a->getObject($parent->getParentID());
+		$p4a = P4A::singleton();
+		$parent = $p4a->getObject($parent->getParentID());
 		$parent->redesign();
 
 		if ($parent->data->isSortable()) {
@@ -937,10 +932,10 @@ class P4A_Table_Rows extends P4A_Widget
 	 */
 	function getRows($num_page, $rows)
 	{
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 
 		$aReturn = array();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = $p4a->getObject($this->getParentID());
 		$num_page_from_data_source = $parent->data->getNumPage();
 		$aCols = $parent->getVisibleCols();
 		$limit = $parent->data->getPageLimit();
@@ -1034,8 +1029,8 @@ class P4A_Table_Rows extends P4A_Widget
 	 */
 	function onClick($aParams)
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$p4a = P4A::singleton();
+		$parent = $p4a->getObject($this->getParentID());
 
 		if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
 
@@ -1062,8 +1057,6 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 
 	public function __construct()
 	{
-		$p4a =& P4A::singleton();
-
 		parent::__construct("table_navigation_bar");
 		$this->build("p4a_collection", "buttons");
 		$this->setStyleProperty("float", "none");
@@ -1083,7 +1076,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$current_page =& $this->buttons->build('p4a_label', 'current_page');
 		$this->anchorLeft($current_page);
 
-		if ($p4a->isHandheld()) {
+		if (P4A::singleton()->isHandheld()) {
 			$this->addButton('button_first');
 			$this->buttons->button_first->setLabel('<<');
 			$this->addButton('button_prev');
@@ -1129,8 +1122,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 
 	function getAsString()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 
 		$this->buttons->field_num_page->setLabel('Go to page');
 		$this->buttons->field_num_page->setNewValue($parent->getCurrentPageNumber());
@@ -1158,8 +1150,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 */
 	function nextOnClick()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 
 		$num_page = $parent->getCurrentPageNumber() + 1;
 		$num_pages = $parent->data->getNumPages();
@@ -1178,8 +1169,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 */
 	function prevOnClick()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 
 		$num_page = $parent->getCurrentPageNumber() - 1;
 		if ($num_page < 1) {
@@ -1196,8 +1186,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 */
 	function firstOnClick()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 		$parent->setCurrentPageNumber(1);
 		$parent->redesign();
 	}
@@ -1208,8 +1197,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 */
 	function lastOnClick()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 		$parent->setCurrentPageNumber($parent->data->getNumPages());
 		$parent->redesign();
 	}
@@ -1220,8 +1208,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 */
 	function goOnClick()
 	{
-		$p4a =& P4A::singleton();
-		$parent =& $p4a->getObject($this->getParentID());
+		$parent = P4A::singleton()->getObject($this->getParentID());
 
 		$num_page = (int)$this->buttons->field_num_page->getNewValue();
 		$num_pages = $parent->data->getNumPages();
