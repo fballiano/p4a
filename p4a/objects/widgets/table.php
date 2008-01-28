@@ -496,20 +496,6 @@ class P4A_Table_Col extends P4A_Widget
 	protected $formatted = true;
 
 	/**
-	 * The formatter class name for the data field.
-	 * @var string
-	 * @access private
-	 */
-	var $formatter_name = null;
-
-	/**
-	 * The format name for the data field.
-	 * @var string
-	 * @access private
-	 */
-	var $format_name = null;
-
-	/**
 	 * Tells if the table can order by this col
 	 * @var boolean
 	 * @access private
@@ -663,57 +649,15 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Returns true if a formatting format for the field has been set.
-	 * @access public
+	 * Sets/returns if the column should be formatted
+	 *
+	 * @param boolean $formatted
 	 * @return boolean
 	 */
-	function isFormatted()
+	public function isFormatted($formatted = null)
 	{
-		return $this->formatted;
-	}
-
-	/**
-	 * Sets the column as formatted.
-	 * @access public
-	 */
-	function setFormatted($value = true)
-	{
-		$this->formatted = $value;
-	}
-
-	/**
-	 * Sets the column as not formatted.
-	 * @access public
-	 */
-	function unsetFormatted()
-	{
-		$this->formatted = false;
-	}
-
-	/**
-	 * Sets the formatter and format for the column.
-	 * This also turns formatting on.<br>
-	 * Eg: set_format('numbers', 'decimal')
-	 * @access public
-	 * @param string	The formatter name.
-	 * @param string	The format name.
-	 */
-	function setFormat($formatter_name, $format_name)
-	{
-		$this->formatter_name = $formatter_name;
-		$this->format_name = $format_name;
-		$this->setFormatted();
-	}
-
-	/**
-	 * Removes formatting options and turns formatting off.
-	 * @access public
-	 */
-	function unsetFormat()
-	{
-		$this->formatter_name = null;
-		$this->format_name = null;
-		$this->unsetFormatted();
+		if ($formatted === null) return $this->formatted;
+		$this->formatted = $formatted;
 	}
 
 	/**
@@ -920,16 +864,12 @@ class P4A_Table_Rows extends P4A_Widget
 					$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getValue();
 					$aReturn[$i]['cells'][$j]['type'] = 'action';
 					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
-				} elseif ($parent->cols->$col_name->isFormatted()) {
-					if (($parent->cols->$col_name->formatter_name === null) and ($parent->cols->$col_name->format_name === null)) {
+				} else {
+					if ($parent->cols->$col_name->isFormatted()) {
 						$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType());
 					} else {
-						$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->{$parent->cols->$col_name->formatter_name}->format( $row[$col_name], $p4a->i18n->{$parent->cols->$col_name->formatter_name}->getFormat($parent->cols->$col_name->format_name));
+						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					}
-					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
-				} else {
-					$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType());
-					$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				}
 

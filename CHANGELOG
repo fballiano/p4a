@@ -154,6 +154,9 @@
 - the "eval" call within P4A_Object::actionHandler() method was changed to a call_user_func_array which seems to be faster
 - all "function &function_name" declarations were changed to "function function_name", removing the & symbol
 - many '&' symbols were removed cause of the new PHP5 reference management
+- P4A_Table was php5ized
+- P4A_Table_Col::setFormatted() and unsetFormatted() methods were removed, use isFormatted(null/true/false) instead
+- P4A_Table_Col::setFormat() and unsetFormat() methods were removed
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
