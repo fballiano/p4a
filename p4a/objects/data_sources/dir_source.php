@@ -42,7 +42,6 @@
  */
 class P4A_Dir_Source extends P4A_Data_Source
 {
-
 	protected $_dir = null;
 	protected $_cache_enabled = false;
 	protected $_scan_subdirs = false;
@@ -53,8 +52,7 @@ class P4A_Dir_Source extends P4A_Data_Source
 	public function __construct($name)
 	{
 		parent::__construct($name);
-		$this->build("P4A_Collection", "fields");
-		$this->fields->build("P4A_Data_Field", 'filename');
+		$this->fields->build('P4A_Data_Field', 'filename');
 		$this->setPk('filename');
 	}
 
@@ -138,7 +136,7 @@ class P4A_Dir_Source extends P4A_Data_Source
 						$files[]['filename'] = $filename;
 					}
 					if ($this->_scan_subdirs) {
-						$this->_scanDir($filename,$files);
+						$this->_scanDir($filename, $files);
 					}
 				} elseif(is_file($filepath)) {
 					$files[]['filename'] = $filename;

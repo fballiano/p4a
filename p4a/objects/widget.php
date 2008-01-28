@@ -44,7 +44,7 @@
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @package p4a
  */
-class P4A_Widget extends P4A_Object
+abstract class P4A_Widget extends P4A_Object
 {
 	/**
 	 * Object's enabled status. If the widget is visible but not enable it won't be clickable.

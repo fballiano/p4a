@@ -35,7 +35,12 @@
  * @package p4a
  */
 
-class P4A_Data_Source extends P4A_Object
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @package p4a
+ */
+abstract class P4A_Data_Source extends P4A_Object
 {
 	protected $_pointer = null;
 	protected $_pk = null;
