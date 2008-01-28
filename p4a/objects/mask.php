@@ -172,8 +172,7 @@ class P4A_Mask extends P4A_Object
 	public function &singleton($name)
 	{
 		$name = strtolower($name);
-		$p4a =& P4A::singleton();
-
+		$p4a = P4A::singleton();
 		if (!isset($p4a->masks->$name)) {
 			$p4a->masks->build($name, $name);
 		}
@@ -316,7 +315,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function getAsString($_template = false)
 	{
-		$p4a =& P4A::singleton();
+		$p4a = P4A::singleton();
 		if (!$_template) {
 			$_template = $this->getTemplateName();
 		}
