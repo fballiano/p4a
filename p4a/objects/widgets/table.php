@@ -390,7 +390,6 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets all passed columns visible.
 	 * If no array is given, than sets all columns visible.
-	 * @access public
 	 * @params array 
 	 */
 	public function setVisibleCols(array $cols = array())
