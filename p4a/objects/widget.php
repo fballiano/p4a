@@ -58,12 +58,6 @@ abstract class P4A_Widget extends P4A_Object
 	protected $visible = true;
 
 	/**
-	 * Keeps the association between an action and its listener
-	 * @var array
-	 */
-	protected $map_actions = array();
-
-	/**
 	 * Keeps all the actions implemented by the widget
 	 * @var array
 	 */
