@@ -121,12 +121,12 @@ class P4A_Data_Field extends P4A_Object
 	}
 
 	/**
-	 * Returns the value of the data field for safe SQL queries.
-	 * @return mixed
+	 * Returns the value of the data field for safe SQL queries
+	 * @return string
 	 */
 	public function getSQLValue()
 	{
-		return str_replace("'", "''", $this->value);
+		return P4A_Quote_SQL_Value($this->value);
 	}
 
 	/**
@@ -146,12 +146,12 @@ class P4A_Data_Field extends P4A_Object
 	}
 
 	/**
-	 * Returns the value of the data field for safe SQL queries.
+	 * Returns the value of the data field for safe SQL queries
 	 * @return string
 	 */
 	public function getSQLNewValue()
 	{
-		return str_replace("'", "''", $this->new_value);
+		return P4A_Quote_SQL_Value($this->new_value);
 	}
 
 	/**
@@ -162,19 +162,23 @@ class P4A_Data_Field extends P4A_Object
 		$this->type = $type;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getType()
 	{
 		return $this->type;
 	}
 
-	public function setReadOnly($value = true)
+	/**
+	 * Gets/sets read only state
+	 * @param boolean $read_only
+	 * @return boolean
+	 */
+	public function isReadOnly($read_only = null)
 	{
-		$this->is_read_only = $value;
-	}
-
-	public function isReadOnly()
-	{
-		return $this->is_read_only;
+		if ($read_only === null) return $this->is_read_only;
+		$this->is_read_only = $read_only;
 	}
 
 	public function setDSN($DSN)

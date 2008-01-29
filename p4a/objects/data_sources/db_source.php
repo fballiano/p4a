@@ -455,49 +455,50 @@ class P4A_DB_Source extends P4A_Data_Source
 			$this->_composeSelectPart($select);
 			$this->_composeWherePart($select);
 
+			$new_order_array = array();
+			$new_order_array_values = array();
 			if ($order = $this->getOrder()) {
 				$where_order = "";
 				foreach($order as $field=>$direction) {
+					$long_fld = $this->fields->$field->getSchemaTableField();
+					$p_order = '';
+					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
+						$p_order .= "$p_long_fld = '$p_value' AND ";
+					}
+					
 					/*
 					where order_field < "value" or (order_field="value" and pk1 <
 					"valuepk1") or ( order_field="value" and pk1 = "valuepk1" and
 					pk2<"valuepk2")
 					*/
 
-					$real_field_name = $this->fields->$field->getSchemaTableField();
 					if ($direction == P4A_ORDER_ASCENDING) {
 						$operator = '<';
-						$null_case = " OR $real_field_name IS NULL ";
+						$null_case = " OR $long_fld IS NULL ";
 					} else {
 						$operator = '>';
 						$null_case = '';
 					}
 					if (is_array($row)) {
-						$value = addslashes($row[$field]);
+						$value = P4A_Quote_SQL_Value($row[$field]);
 					} else {
 						$value = $this->fields->$field->getSQLValue();
 					}
-					
-					$where_order .= " ($real_field_name $operator '$value' $null_case) OR ";
+					$where_order .= " ($p_order ($long_fld $operator '$value' $null_case)) OR ";
+					$new_order_array[$long_fld] = $direction;
+					$new_order_array_values[$long_fld] = $value;
 				}
-				
-				$where_order = substr($where_order, 0, -4);
-				$select->where($where_order);
+
+				$select->where(substr($where_order, 0, -4));
 			}
 
 			$this->_composeGroupPart($select);
 			$select = $this->_composeSelectCountQuery((string)$select);
-
-			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
-			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
-			/*
-			if (count($this->_join)) {
-				$db->adapter->fetchOne($select);
-			}
-			*/
 			return $db->adapter->fetchOne($select) + 1;
 		}
 	}
+	
+	
 
 	public function updateRowPosition()
 	{

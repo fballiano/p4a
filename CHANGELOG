@@ -159,6 +159,8 @@
 - P4A_Table_Col now has the "onformat" event that can be triggered to do custom format operations (same as P4A_Field)
 - P4A_DB_Source::getFieldName() method was removed
 - P4A_Data_Field::getSchemaTableField() method was added, it will return "schema.table.field"
+- P4A_Data_Field::setReadOnly() method was removed, use isReadOnly(null/true/false)
+- P4A_Quote_SQL_Value() global function was added
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

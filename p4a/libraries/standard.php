@@ -410,3 +410,12 @@ function P4A_Generate_Widget_Layout_Table($column1 = null, $column2 = null, $add
 	}
 	return "<table class='p4a_widget_layout_table $additional_css_classes' $html_attributes><tr><td class='c1'>$column1</td><td class='c2'>$column2</td></tr></table>";
 }
+
+/**
+ * @param string $value
+ * @return string
+ */
+function P4A_Quote_SQL_Value($value)
+{
+	return str_replace("'", "''", $value);
+}
