@@ -355,6 +355,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function onMovement()
 	{
+		$this->redesign();
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
 		$current = $this->source->fields->{$pk}->getValue();
@@ -378,7 +379,6 @@ class P4A_DB_Navigator extends P4A_Widget
 			} else {
 				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor}=NULL WHERE $pk='$current'");
 			}
-			$this->redesign();
 		}
 
 		return $this->actionHandler('afterMovement');
