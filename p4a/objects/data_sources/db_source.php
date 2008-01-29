@@ -513,6 +513,8 @@ class P4A_DB_Source extends P4A_Data_Source
 			
 			if (empty($fields_values)) {
 				while($field = $this->fields->nextItem()) {
+					if ($field->getSchema() != $schema) continue;
+					if ($field->getTable() != $table) continue;
 					if ($field->getAliasOf()) {
 						$name = $field->getAliasOf();
 					} else {
@@ -523,7 +525,7 @@ class P4A_DB_Source extends P4A_Data_Source
 						!$field->isReadOnly() and
 						!array_key_exists($name, $this->_multivalue_fields)) {
 							$fields_values[$name] = $field->getNewValue();
-							if ($fields_values[$name] === "") {
+							if ($fields_values[$name] === '') {
 								$fields_values[$name] = null;
 							}
 					}
