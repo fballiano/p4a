@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * To contact the authors write to:								<br>
+ * To contact the authors write to:									<br>
  * CreaLabs															<br>
  * Via Medail, 32													<br>
- * 10144 Torino (Italy)											<br>
+ * 10144 Torino (Italy)												<br>
  * Web:    {@link http://www.crealabs.it}							<br>
  * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
  *
