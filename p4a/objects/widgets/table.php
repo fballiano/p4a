@@ -231,12 +231,12 @@ class P4A_Table extends P4A_Widget
 		if($this->_show_headers) {
 			$headers = array();
 			$i = 0;
-			$is_orderable	= false;
+			$is_sortable	= false;
 			$order_field	= null;
 			$order_mode		= null;
 
 			if ($this->data->isSortable()) {
-				$is_orderable = true;
+				$is_sortable = true;
 				if ($this->data->hasOrder()) {
    					$order = $this->data->getOrder();
    					list($order_field, $order_mode)	= each($order);
@@ -253,7 +253,7 @@ class P4A_Table extends P4A_Widget
 					$headers[$i]['value'] = $col->getLabel();
 					$headers[$i]['order'] = null;
 
-					if ($is_orderable and $col->isOrderable()) {
+					if ($is_sortable and $col->isSortable()) {
 						$headers[$i]['action'] = $col->composeStringActions(null, false);
 					} else {
 						$headers[$i]['action'] = "";
@@ -262,7 +262,7 @@ class P4A_Table extends P4A_Widget
 					$data_field =& $this->data->fields->{$col->getName()};
 					$field_name = $data_field->getName();
 					$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
-					if ($is_orderable and ($order_field == $field_name or $order_field == $complete_field_name)) {
+					if ($is_sortable and ($order_field == $field_name or $order_field == $complete_field_name)) {
 						 $headers[$i]['order'] = strtolower($order_mode);
 					}
 				}
@@ -498,16 +498,14 @@ class P4A_Table_Col extends P4A_Widget
 	/**
 	 * Tells if the table can order by this col
 	 * @var boolean
-	 * @access private
 	 */
-	var $orderable = true;
+	protected $sortable = true;
 
 	/**
 	 * Type of the column
-	 * @access private
 	 * @var string
 	 */
-	var $_type = "text";
+	protected $_type = "text";
 
 	/**
 	 * @param string $name Mnemonic identifier for the object
@@ -661,21 +659,13 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Sets the ability to order by this column
+	 * Tell if the column is sortable or not
 	 * @access public
 	 */
-	function setOrderable($orderable = true)
+	public function isSortable($sortable = null)
 	{
-		$this->orderable = $orderable;
-	}
-
-	/**
-	 * Tell if the column is orderable or not
-	 * @access public
-	 */
-	function isOrderable()
-	{
-		return $this->orderable;
+		if ($sortable === null) return $this->sortable;
+		$this->sortable = $sortable;
 	}
 
 	/**

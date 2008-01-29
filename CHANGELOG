@@ -157,6 +157,7 @@
 - P4A_Table was php5ized
 - P4A_Table_Col::setFormatted() and unsetFormatted() methods were removed, use isFormatted(null/true/false) instead
 - P4A_Table_Col::setFormat() and unsetFormat() methods were removed
+- P4A_Table_Col now has the "onformat" event that can be triggered to do custom format operations (same as P4A_Field)
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
