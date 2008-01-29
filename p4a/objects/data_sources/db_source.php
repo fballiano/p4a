@@ -355,30 +355,6 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
-	/**
-	 * Returns the DB field name (converting alias) in 2 formats: "schema.table.field" and "field"
-	 * @param string $field
-	 * @return array
-	 */
-	function getFieldName($field)
-	{
-		$field = explode('.', $field);
-		$field = $field[sizeof($field) - 1];
-		
-		$alias_of = $this->fields->$field->getAliasOf();
-		if (!strlen($alias_of)) {
-			$alias_of = $field;
-		}
-		
-		$schema = $this->fields->$field->getSchema();
-		if (strlen($schema)) $schema = "{$schema}.";
-
-		$table = $this->fields->$field->getTable();
-		if (strlen($table)) $table = "{$table}.";
-
-		return array($schema . $table . $alias_of, $alias_of);
-	}
-
 	public function isReadOnly($value=null)
 	{
 		if ($value !== null) {
@@ -476,59 +452,49 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (!$this->getQuery()) {
 			$db = P4A_DB::singleton($this->getDSN());
 			$select = $db->select();
-			$this->_composeSelectCountPart($select);
+			$this->_composeSelectPart($select);
 			$this->_composeWherePart($select);
 
-			$new_order_array = array();
-			$new_order_array_values = array();
 			if ($order = $this->getOrder()) {
 				$where_order = "";
 				foreach($order as $field=>$direction) {
-					list($long_fld, $short_fld) = $this->getFieldName($field);
-
-					$p_order = "";
-					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
-						$p_order .= "$p_long_fld = '$p_value' AND ";
-					}
 					/*
 					where order_field < "value" or (order_field="value" and pk1 <
 					"valuepk1") or ( order_field="value" and pk1 = "valuepk1" and
 					pk2<"valuepk2")
 					*/
 
+					$real_field_name = $this->fields->$field->getSchemaTableField();
 					if ($direction == P4A_ORDER_ASCENDING) {
 						$operator = '<';
-						$null_case = " OR $long_fld IS NULL ";
+						$null_case = " OR $real_field_name IS NULL ";
 					} else {
 						$operator = '>';
 						$null_case = '';
 					}
 					if (is_array($row)) {
-						if (isset($row[$short_fld])) {
-							$value = addslashes($row[$short_fld]);
-						} else {
-							p4a_error("error in P4A_DB_Source::getRowPosition(): maybe you passed an incomplete row");
-						}
+						$value = addslashes($row[$field]);
 					} else {
-						$value = addslashes($this->fields->$short_fld->getValue());
+						$value = $this->fields->$field->getSQLValue();
 					}
-					$where_order .= " ($p_order ($long_fld $operator '$value' $null_case)) OR ";
-
-					$new_order_array[$long_fld] = $direction;
-					$new_order_array_values[$long_fld] = $value;
+					
+					$where_order .= " ($real_field_name $operator '$value' $null_case) OR ";
 				}
-
-				$where_order = substr($where_order, 0, -3);
+				
+				$where_order = substr($where_order, 0, -4);
 				$select->where($where_order);
 			}
 
 			$this->_composeGroupPart($select);
+			$select = $this->_composeSelectCountQuery((string)$select);
 
 			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
 			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
+			/*
 			if (count($this->_join)) {
 				$db->adapter->fetchOne($select);
 			}
+			*/
 			return $db->adapter->fetchOne($select) + 1;
 		}
 	}
@@ -688,8 +654,12 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $rows;
 	}
 
-	protected function _composeSelectCountQuery()
+	protected function _composeSelectCountQuery($query = null)
 	{
+		if ($query !== null) {
+			return "SELECT count(*) p4a_count FROM ($query) p4a_count";
+		}
+		
 		if ($this->getQuery()) {
 			return "SELECT count(*) p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
@@ -756,7 +726,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
-	protected function _composeSelectPart(&$select)
+	protected function _composeSelectPart($select)
 	{
 		if (empty($this->_fields)) {
 			$select->from($this->getTable(), '*', $this->getSchema());
@@ -770,12 +740,12 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
-	protected function _composeSelectCountPart(&$select)
+	protected function _composeSelectCountPart($select)
 	{
 		$select->from($this->getTable(), 'count(*)', $this->getSchema());
 	}
 
-	protected function _composeWherePart(&$select)
+	protected function _composeWherePart($select)
 	{
 		$query = "";
 		if ($where = $this->getWhere()){
@@ -791,21 +761,21 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
-	protected function _composeGroupPart(&$select)
+	protected function _composeGroupPart($select)
 	{
 		if ($this->getGroup()) {
 			$select->group(join(',', $this->getGroup()));
 		}
 	}
 
-	protected function _composeOrderPart(&$select, $order = array())
+	protected function _composeOrderPart($select, $order = array())
 	{
 		if (!$order) $order = $this->getOrder();
 		if ($order) {
 			$order_array = array();
 			foreach ($order as $field=>$direction) {
-				list($long_fld, $short_fld) = $this->getFieldName($field);
-				$order_array[] = "$long_fld $direction";
+				$real_field_name = $this->fields->$field->getSchemaTableField();
+				$order_array[] = "$real_field_name $direction";
 			}
 			$select->order($order_array);
 		}

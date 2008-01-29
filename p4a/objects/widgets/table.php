@@ -720,15 +720,11 @@ class P4A_Table_Col extends P4A_Widget
 		if ($parent->data->isSortable()) {
 			$data_field = $parent->data->fields->{$this->getName()};
 			$field_name = $data_field->getName();
-			$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
 
-			$new_order = P4A_ORDER_ASCENDING;
 			$order_mode = P4A_ORDER_ASCENDING;
 			if ($parent->data->hasOrder()) {
-				$order = $parent->data->getOrder();
-				list($order_field, $order_mode)	= each($order);
-
-				if ($order_field == $complete_field_name or $order_field == $field_name) {
+				list($order_field, $order_mode)	= each($parent->data->getOrder());
+				if ($order_field == $field_name) {
    					if ($order_mode == P4A_ORDER_ASCENDING) {
    						$order_mode = P4A_ORDER_DESCENDING;
    					} else {
@@ -738,12 +734,7 @@ class P4A_Table_Col extends P4A_Widget
 					$order_mode = P4A_ORDER_ASCENDING;
 				}
 			}
-			if ($data_field->getAliasOf()){
-				$order_field = $data_field->getName();
-			} else {
-				$order_field = $data_field->getTable() . "." . $data_field->getName();
-			}
-			$parent->data->setOrder($order_field, $order_mode);
+			$parent->data->setOrder($field_name, $order_mode);
 			$parent->data->updateRowPosition();
 		}
 	}

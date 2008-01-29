@@ -263,4 +263,21 @@ class P4A_Data_Field extends P4A_Object
 	{
 		return $this->num_of_decimals;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSchemaTableField()
+	{
+		$schema = $this->getSchema();
+		if (strlen($schema)) $schema = "{$schema}.";
+
+		$table = $this->getTable();
+		if (strlen($table)) $table = "{$table}.";
+		
+		$alias_of = $this->getAliasOf();
+		if (!strlen($alias_of)) $alias_of = $this->getName();
+
+		return $schema . $table . $alias_of;
+	}
 }

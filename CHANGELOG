@@ -7,8 +7,7 @@
 - implement errors with exceptions
 - redo the css
 - check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
-- php5ize db_navigator and p4a_table
-- ordering on a joined field doesn't work
+- php5ize db_navigator
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -158,6 +157,8 @@
 - P4A_Table_Col::setFormatted() and unsetFormatted() methods were removed, use isFormatted(null/true/false) instead
 - P4A_Table_Col::setFormat() and unsetFormat() methods were removed
 - P4A_Table_Col now has the "onformat" event that can be triggered to do custom format operations (same as P4A_Field)
+- P4A_DB_Source::getFieldName() method was removed
+- P4A_Data_Field::getSchemaTableField() method was added, it will return "schema.table.field"
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

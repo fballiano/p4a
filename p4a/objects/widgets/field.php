@@ -183,7 +183,7 @@ class P4A_Field extends P4A_Widget
 			$this->setType('label');
 		}
 		
-		$this->data_field = $data_field;
+		$this->data_field =& $data_field;
 		$this->setDefaultVisualizationProperties();
 	}
 
