@@ -310,6 +310,7 @@ class P4A_DB_Navigator extends P4A_Widget
 
 	public function getPath($id, $table, $pk)
 	{
+		$id = P4A_Quote_SQL_Value($id);
 		$section = p4a_db::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk='$id'");
 		$return = array();
 		$return[] = $section;
