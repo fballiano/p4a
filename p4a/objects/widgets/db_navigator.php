@@ -252,7 +252,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		return $return . $js;
 	}
 
-	private function _getAsString($id, &$all, $obj_id, $table, $pk, $order, $current, $recurse = true)
+	private function _getAsString($id, $all, $obj_id, $table, $pk, $order, $current, $recurse = true)
 	{
 		if (!isset($all[$id])) {
 			return '';
