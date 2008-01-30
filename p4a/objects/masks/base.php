@@ -43,7 +43,7 @@
  */
 class P4A_Base_Mask extends P4A_Mask
 {
-	private $mandatory_fields = array();
+	private $required_fields = array();
 	public $frame = null;
 
 	public function __construct()
@@ -55,17 +55,16 @@ class P4A_Base_Mask extends P4A_Mask
 		$this->display("main", $this->frame);
 	}
 
-	public function addMandatoryField($field_name)
+	public function setRequiredField($field_name)
 	{
-		$this->mandatory_fields[] = $field_name;
+		$this->required_fields[] = $field_name;
 		$this->fields->$field_name->label->setStyleProperty("font-weight", "bold");
 	}
 
-	public function checkMandatoryFields()
+	public function checkRequiredFields()
 	{
 		$error = false;
-		
-		foreach ($this->mandatory_fields as $field) {
+		foreach ($this->required_fields as $field) {
 			$value = $this->fields->$field->getNewValue();
 			if (strlen($value) == 0) {
 				$error = true;

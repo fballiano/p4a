@@ -204,6 +204,7 @@
 - P4A_Tab_Pane::addPage() method now returns the added page
 - a bug with unformatted P4A_Fields with type set to "select" or "multiselect" or "radio" was fixed
 - P4A_Standard_Toolbar's buttons are now enabled if the mask's data source is empty
+- P4A_Base_Mask::addMandatoryField() method was renamed to setRequiredField()
 
 2.1.7
 - colorpicker javascript and html was rewritten
