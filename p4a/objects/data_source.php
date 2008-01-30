@@ -42,17 +42,59 @@
  */
 abstract class P4A_Data_Source extends P4A_Object
 {
+	/**
+	 * @var integer
+	 */
 	protected $_pointer = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $_pk = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $_limit = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $_offset = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $_num_rows = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $_num_pages = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $_page_limit = 10;
-	protected $_fields = null;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_is_read_only = false;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_is_sortable = false;
+	
+	/**
+	 * @var array
+	 */
 	protected $_order = array();
+	
+	/**
+	 * @var P4A_Collection
+	 */
 	public $fields = null;
 
 	public function __construct($name)
