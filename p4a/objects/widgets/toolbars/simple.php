@@ -86,6 +86,9 @@ class P4A_Simple_Toolbar extends P4A_Toolbar
 		$this->buttons->exit->setAccessKey("X");
 	}
 
+	/**
+	 * @param P4A_Mask $mask
+	 */
 	public function setMask(P4A_Mask $mask)
 	{
 		$this->_mask_name = $mask->getName();
