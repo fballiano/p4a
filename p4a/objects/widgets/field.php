@@ -370,7 +370,7 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * @param unknown_type $type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|image|multiselect|multicheckbox)
+	 * @param unknown_type $type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|multiselect|multicheckbox)
 	 * @param unknown_type $multivalue_separator
 	 */
 	public function setType($type, $multivalue_separator = null)
@@ -378,8 +378,6 @@ class P4A_Field extends P4A_Widget
 		if (P4A::singleton()->isHandheld() and $type == 'rich_textarea') {
 			$type = 'textarea';
 		}
-
-		$this->type = $type;
 
 		switch($type) {
 		case 'label':
@@ -402,11 +400,24 @@ class P4A_Field extends P4A_Widget
 			break;
 		case 'multicheckbox':
 		case 'multiselect':
-			if ($multivalue_separator) {
+			if ($multivalue_separator !== null) {
 				$this->setMultivalueSeparator($multivalue_separator);
 			}
 			break;
+		case 'text':
+		case 'date':
+		case 'hidden':
+		case 'select':
+		case 'radio':
+		case 'checkbox':
+		case 'file':
+		case 'multiselect':
+		case 'multicheckbox':
+			break;
+		default:
+			p4a_error("$type is not a supported P4A_Field type");
 		}
+		$this->type = $type;
 	}
 	
 	/**
@@ -1047,26 +1058,16 @@ class P4A_Field extends P4A_Widget
 
 			$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 		} else {
-			if (!isset($this->buttons->button_file_delete)) {
-				$this->buttons->build("p4a_button", "button_file_delete");
-				$this->buttons->build("p4a_button", "button_file_preview");
-				$this->buttons->build("p4a_button", "button_file_download");
-
-				$this->buttons->button_file_delete->setLabel('Delete');
-				$this->buttons->button_file_preview->setLabel('Preview');
-				$this->buttons->button_file_download->setLabel('Download');
-
-				$this->buttons->button_file_delete->addAjaxAction('onclick');
-				$this->intercept($this->buttons->button_file_delete, 'onclick', 'fileDeleteOnClick');
-				$this->intercept($this->buttons->button_file_preview, 'onclick', 'filePreviewOnClick');
-				$this->intercept($this->buttons->button_file_download, 'onclick', 'fileDownloadOnClick');
-			}
-
+			$this->buildDeletePreviewDownloadButtons();
 			if ($this->isEnabled()) {
 				$this->buttons->button_file_delete->enable();
 			} else {
 				$this->buttons->button_file_delete->disable();
 			}
+			
+			$mime_type = explode('/', $this->getNewValue(3));
+			$mime_type = $mime_type[0];
+			if ($mime_type == 'image') return $this->getAsImage();
 
 			$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 			$mime_type = $this->getNewValue(3);
@@ -1165,83 +1166,41 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsImage()
 	{
-		$p4a = P4A::singleton();
-		$id = $this->getID();
+		if ($this->getNewValue() === null) return $this->getAsFile();
 
-		if ($this->getNewValue() === null) {
-			//if ($p4a->isAjaxEnabled()) {
-			//	$action = 'executeAjaxEvent';
-			//} else {
-				$action = 'executeEvent';
-			//}
-			$sReturn = "<div style='float:left'><input id='{$id}input' onchange='{$action}(\"$id\", \"onchange\");' type='file' class='border_box font_normal clickable' ";
-			$this->intercept($this,'onchange','redesign');
+		$mime_type = explode('/', $this->getNewValue(3));
+		$mime_type = $mime_type[0];
+		if ($mime_type != 'image') return $this->getAsFile();
 
-			if (!$this->isEnabled()) {
-				$sReturn .= 'disabled="disabled" ';
+		$src = P4A_UPLOADS_URL . $this->getNewValue(1);
+		$width = $this->getNewValue(4);
+		$str_width = '';
+		$height = $this->getNewValue(5);
+		$str_height = '';
+
+		if ($width > $height) {
+			if ($this->max_thumbnail_size !== null and $width > $this->max_thumbnail_size) {
+				$width = $this->max_thumbnail_size ;
+				$str_width = "width=\"$width\"" ;
 			}
-
-			$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
 		} else {
-			$mime_type = explode('/', $this->getNewValue(3));
-			$mime_type = $mime_type[0];
-
-			if (!isset($this->buttons->button_file_delete)) {
-				$this->buttons->build("p4a_button", "button_file_delete");
-				$this->buttons->build("p4a_button", "button_file_preview");
-				$this->buttons->build("p4a_button", "button_file_download");
-
-				$this->buttons->button_file_delete->setLabel('Delete');
-				$this->buttons->button_file_preview->setLabel('Preview');
-				$this->buttons->button_file_download->setLabel('Download');
-
-				$this->buttons->button_file_delete->addAjaxAction('onclick');
-				$this->intercept($this->buttons->button_file_delete, 'onclick', 'fileDeleteOnClick');
-				$this->intercept($this->buttons->button_file_preview, 'onclick', 'filePreviewOnClick');
-				$this->intercept($this->buttons->button_file_download, 'onclick', 'fileDownloadOnClick');
+			if ($this->max_thumbnail_size !== null and $height > $this->max_thumbnail_size) {
+				$height = $this->max_thumbnail_size ;
+				$str_height = "height=\"$height\"" ;
 			}
-
-			if ($mime_type != 'image') {
-				return $this->getAsFile();
-			}
-
-			if ($this->isEnabled()) {
-				$this->buttons->button_file_delete->enable();
-			} else {
-				$this->buttons->button_file_delete->disable();
-			}
-
-			$src = P4A_UPLOADS_URL . $this->getNewValue(1);
-
-			$width = $this->getNewValue(4);
-			$str_width = '';
-			$height = $this->getNewValue(5);
-			$str_height = '';
-
-			if ($width > $height) {
-				if ($this->max_thumbnail_size !== null and $width > $this->max_thumbnail_size) {
-					$width = $this->max_thumbnail_size ;
-					$str_width = "width=\"$width\"" ;
-				}
-			} else {
-				if ($this->max_thumbnail_size !== null and $height > $this->max_thumbnail_size) {
-					$height = $this->max_thumbnail_size ;
-					$str_height = "height=\"$height\"" ;
-				}
-			}
-
-			$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
-			if (P4A_GD) {
-				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
-			} else {
-				$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
-			}
-			$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-			$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
-			$sReturn .= '<tr><th align="left">' . __('Type') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
-			$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
-			$sReturn .= '</table>' ;
 		}
+
+		$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
+		if (P4A_GD) {
+			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+		} else {
+			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+		}
+		$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
+		$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+		$sReturn .= '<tr><th align="left">' . __('Type') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
+		$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+		$sReturn .= '</table>' ;
 
 		return $this->composeLabel() . $sReturn;
 	}
@@ -1262,6 +1221,26 @@ class P4A_Field extends P4A_Widget
 	public function getMaxThumbnailSize()
 	{
 		return $this->max_thumbnail_size;
+	}
+	
+	protected function buildDeletePreviewDownloadButtons()
+	{
+		if (!isset($this->buttons->button_file_delete)) {
+			$this->buttons->build("p4a_button", "button_file_delete");
+			$this->buttons->button_file_delete->setLabel('Delete');
+			$this->buttons->button_file_delete->addAjaxAction('onclick');
+			$this->buttons->button_file_delete->implementMethod('onclick', $this, 'fileDeleteOnClick');
+		}
+		if (!isset($this->buttons->button_file_preview)) {
+			$this->buttons->build("p4a_button", "button_file_preview");
+			$this->buttons->button_file_preview->setLabel('Preview');
+			$this->buttons->button_file_preview->implementMethod('onclick', $this, 'filePreviewOnClick');
+		}
+		if (!isset($this->buttons->button_file_download)) {
+			$this->buttons->build("p4a_button", "button_file_download");
+			$this->buttons->button_file_download->setLabel('Download');
+			$this->buttons->button_file_download->implementMethod('onclick', $this, 'fileDownloadOnClick');
+		}
 	}
 
 	/**
