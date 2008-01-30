@@ -160,7 +160,7 @@ class P4A_Table extends P4A_Widget
 	 * Adds a column to the data structure
 	 * @param string $column_name
 	 */
-	public function addCol($column_name)
+	protected function addCol($column_name)
 	{
 		$this->cols->build('p4a_table_col', $column_name);
 		if (!empty($this->_cols_order)) {
@@ -177,7 +177,6 @@ class P4A_Table extends P4A_Widget
 		$this->addCol($column_name);
 		$this->cols->$column_name->setType('action');
 		$this->cols->$column_name->addAction('onclick');
-		$this->cols->$column_name->setLabel($this->cols->$column_name->getLabel());
 	}
 
 	/**
@@ -261,9 +260,9 @@ class P4A_Table extends P4A_Widget
 
 					$data_field =& $this->data->fields->{$col->getName()};
 					$field_name = $data_field->getName();
-					$complete_field_name = $data_field->getTable() . "." . $data_field->getName();
+					$complete_field_name = $data_field->getSchemaTableField();
 					if ($is_sortable and ($order_field == $field_name or $order_field == $complete_field_name)) {
-						 $headers[$i]['order'] = strtolower($order_mode);
+						$headers[$i]['order'] = strtolower($order_mode);
 					}
 				}
 				$i++;
@@ -826,8 +825,7 @@ class P4A_Table_Rows extends P4A_Widget
 						$value = substr($value, 1, -1);
 						$value = explode(',', $value);
 						list($type) = explode('/',$value[3]);
-						if ($type == 'image') 
-						{  
+						if ($type == 'image') {  
 							$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
 							$thumb_height = P4A_TABLE_THUMB_HEIGHT;
 							if (P4A_GD) {
@@ -842,7 +840,7 @@ class P4A_Table_Rows extends P4A_Widget
 					}
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				} elseif ($parent->cols->$col_name->getType() == "action") {
-					$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->getValue();
+					$aReturn[$i]['cells'][$j]['value'] = __($parent->cols->$col_name->getLabel());
 					$aReturn[$i]['cells'][$j]['type'] = 'action';
 					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
 				} else {
