@@ -6,7 +6,8 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - redo the css
-- move setRequiredField validateFields warning error and info methods from p4a_base_mask to p4a_mask?
+- move setRequiredField, validateFields, warning, error, and info methods from p4a_base_mask to p4a_mask?
+- change field's error message and show it as a tooltip (with an error icon)
 
 2.99.0
 - Zend Framework 1.0.3 was added
