@@ -51,7 +51,6 @@ class P4A_Base_Mask extends P4A_Mask
 		parent::__construct();
 		$this->build("P4A_Frame", "frame");
 		$this->frame->setWidth(730);
-
 		$this->display("main", $this->frame);
 	}
 
