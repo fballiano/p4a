@@ -169,6 +169,8 @@
 - a bunch of unuseful referenced were removed from core helpers
 - GetId3 library was updated to 2.0.0b4 (which is php5 only), helper apps for windows servers were removed, they've to be installed in the system path thus we cannot ship them with p4a package 'cause they would be unuseful
 - P4A_Field::setType('image') now causes a fatal error, image is not a recognized type anymore, always use file, it will render images/video/audio preview if it's possible
+- P4A_DEFAULT_ERROR_REPORTING, P4A_EXTENDED_ERROR_REPORTING, P4A_MINIMAL_ERROR_REPORTING constants were added
+- P4A now sets error_reporting to P4A_MINIMAL_ERROR_REPORTING before using getid3() and then restore the error_reporting to the previous value
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

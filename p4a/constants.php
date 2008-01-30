@@ -281,6 +281,9 @@ define('ABORT', 'P4A_ABORT');
 define('P4A_DATE', '%Y-%m-%d');
 define('P4A_TIME', '%H:%M:%S');
 define('P4A_DATETIME', '%Y-%m-%d %H:%M:%S');
+define('P4A_DEFAULT_ERROR_REPORTING', E_ALL ^ E_NOTICE);
+define('P4A_EXTENDED_ERROR_REPORTING', E_ALL);
+define('P4A_DEFAULT_MINIMAL_REPORTING', P4A_DEFAULT_ERROR_REPORTING ^ E_WARNING);
 
 if (!defined('P4A_GD') and function_exists('ImageJPEG') and
 	function_exists('ImagePNG') and function_exists('ImageGIF')) {

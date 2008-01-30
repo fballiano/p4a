@@ -118,7 +118,7 @@ if (P4A_ENABLE_AUTO_INCLUSION) {
 
 //Setting PHP error reporting
 if (P4A_EXTENDED_ERRORS) {
-	error_reporting(E_ALL);
+	error_reporting(P4A_EXTENDED_ERROR_REPORTING);
 } else {
-	error_reporting(E_ALL ^ E_NOTICE);
+	error_reporting(P4A_DEFAULT_ERROR_REPORTING);
 }
