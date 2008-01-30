@@ -69,7 +69,9 @@ class P4A_DB
 			if(strlen($DSN)) {
 				$$dbconn = new p4a_db();
 				$dsn_data = parse_url($DSN);
+				if (!isset($dsn_data['host'])) $dsn_data['host'] = null;
 				if (!isset($dsn_data['port'])) $dsn_data['port'] = null;
+				if (!isset($dsn_data['user'])) $dsn_data['user'] = null;
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
