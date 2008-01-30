@@ -46,7 +46,7 @@
 class P4A_Actions_Toolbar extends P4A_Toolbar
 {
 	/**
-	 * @param string				Mnemonic identifier for the object.
+	 * @param string $name Mnemonic identifier for the object
 	 */
 	public function __construct($name)
 	{
@@ -76,7 +76,7 @@ class P4A_Actions_Toolbar extends P4A_Toolbar
 		$exit->setAccessKey("X");
 	}
 
-	public function setMask(&$mask)
+	public function setMask(P4A_Mask $mask)
 	{
 		$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
 		$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
