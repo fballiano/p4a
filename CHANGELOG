@@ -161,6 +161,7 @@
 - P4A_Data_Field::setReadOnly() method was removed, use isReadOnly(null/true/false)
 - P4A_Quote_SQL_Value() global function was added
 - a bug with P4A_DB was fixed to allow sqlite to work the right way with sequences
+- PEAR::Calendar, PEAR::Console, PEAR::Date and PEAR::OS were removed 'cause unused
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
