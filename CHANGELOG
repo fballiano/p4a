@@ -6,7 +6,7 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - redo the css
-- check if p4a_validate can be ported to ZF, maybe drop p4a_validate, add a valitator to p4a_field, user could add a ZF validator object to the field
+- move setRequiredField validateFields warning error and info methods from p4a_base_mask to p4a_mask?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -171,6 +171,11 @@
 - P4A_Field::setType('image') now causes a fatal error, image is not a recognized type anymore, always use file, it will render images/video/audio preview if it's possible
 - P4A_DEFAULT_ERROR_REPORTING, P4A_EXTENDED_ERROR_REPORTING, P4A_MINIMAL_ERROR_REPORTING constants were added
 - P4A now sets error_reporting to P4A_MINIMAL_ERROR_REPORTING before using getid3() and then restore the error_reporting to the previous value
+- P4A_Validate and PEAR::Validate classes were removed
+- P4A_Field::addValidator() method was added, you can pass it Zend_Validate_* obejects
+- P4A_Field::isValid() method was added to check if the validators chain is respected or not 
+- P4A_Base_Mask::setRequiredField() method now relies on Zend_Validator_NotEmpty
+- P4A_Base_Mask::checkRequiredFields() method was renamed to validateFields() and now checks all validators chains for all fields and not only required fields
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

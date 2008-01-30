@@ -43,35 +43,33 @@
  */
 class P4A_Base_Mask extends P4A_Mask
 {
-	private $required_fields = array();
 	public $frame = null;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->build("P4A_Frame", "frame");
+		$this->build('P4A_Frame', 'frame');
 		$this->frame->setWidth(730);
-		$this->display("main", $this->frame);
+		$this->display('main', $this->frame);
 	}
 
 	public function setRequiredField($field_name)
 	{
-		$this->required_fields[] = $field_name;
-		$this->fields->$field_name->label->setStyleProperty("font-weight", "bold");
+		$this->fields->$field_name->addValidator(new Zend_Validate_NotEmpty, true);
+		$this->fields->$field_name->label->setStyleProperty('font-weight', 'bold');
 	}
 
-	public function checkRequiredFields()
+	public function validateFields()
 	{
-		$error = false;
-		foreach ($this->required_fields as $field) {
-			$value = $this->fields->$field->getNewValue();
-			if (strlen($value) == 0) {
-				$error = true;
-				$value = $this->fields->$field->seterror();
+		while ($field = $this->fields->nextItem()) {
+			$validation_results = $field->isValid();
+			if ($validation_results !== true) {
+				foreach ($validation_results as &$message) {
+					$message = __($message);
+				}
+				$field->setError(join('. ', $validation_results) . '.');
 			}
 		}
-
-		return !$error;
 	}
 	
 	public function warning($message)

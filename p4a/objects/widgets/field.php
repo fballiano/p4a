@@ -139,6 +139,11 @@ class P4A_Field extends P4A_Widget
 	 * @var string
 	 */		
 	protected $multivalue_separator = '';
+	
+	/**
+	 * @var Zend_Validate
+	 */
+	protected $_validator_chain = null;
 
 	/**
 	 * @param string $name Mnemonic identifier for the object.
@@ -148,16 +153,14 @@ class P4A_Field extends P4A_Widget
 	{
 		parent::__construct($name, 'fld');
 		$this->setProperty('name', $this->getId());
-
-		$this->build("p4a_collection", "buttons");
-		$this->setType('text');
+		$this->build('p4a_collection', 'buttons');
 
 		if ($add_default_data_field) {
-			$this->build("P4A_Data_Field", "data_field");
+			$this->build('P4A_Data_Field', 'data_field');
 		}
 
-		$this->build("P4A_Label", "label");
-		$this->label->setProperty("for", $this->getId() . 'input');
+		$this->build('P4A_Label', 'label');
+		$this->label->setProperty('for', $this->getId() . 'input');
 		$this->setDefaultLabel();
 	}
 	
@@ -1378,5 +1381,32 @@ class P4A_Field extends P4A_Widget
 	public function getRichTextareaTheme()
 	{
 		return $this->rich_textarea_theme;
+	}
+	
+	/**
+	 * @param Zend_Validate_Abstract $validator
+	 * @param boolean $break_chain_on_failure
+	 */
+	public function addValidator(Zend_Validate_Interface $validator, $break_chain_on_failure = false)
+	{
+		if ($this->_validator_chain === null) {
+			$this->_validator_chain = new Zend_Validate();
+		}
+		
+		$this->_validator_chain->addValidator($validator, $break_chain_on_failure);
+	}
+	
+	/**
+	 * Validate the normalized new value.
+	 * Returns true if there are no validators or if validation passes,
+	 * returns the array of error messages if validators fail.
+	 *
+	 * @return boolean|array
+	 */
+	public function isValid()
+	{
+		if ($this->_validator_chain === null) return true;
+		if ($this->_validator_chain->isValid($this->getNormalizedNewValue())) return true;
+		return $this->_validator_chain->getMessages();
 	}
 }
