@@ -325,9 +325,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		switch (strtolower($meta['DATA_TYPE'])) {
 			case 'int':
 			case 'int4':
+			case 'integer':
 				$this->fields->$name->setType('integer');
 				break;
 			case 'bool':
+			case 'boolean':
 			case 'tinyint':
 				$this->fields->$name->setType('boolean');
 				break;
