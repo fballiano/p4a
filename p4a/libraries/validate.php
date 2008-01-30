@@ -35,7 +35,7 @@
  * @package p4a
  */
 
-require_once dirname(__FILE__) . "/pear/Validate.php";
+require_once dirname(__FILE__) . "/pear_validate.php";
 
 /**
  * Data validation class

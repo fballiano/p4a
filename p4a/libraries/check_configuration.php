@@ -73,7 +73,7 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_UPLOADS_DIR) and is_writable(P4A_UPLOADS_DIR)) {
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_DIR)) {
-		if (@System::mkDir("-p " . P4A_UPLOADS_DIR)) {
+		if (P4A_Mkdir_Recursive(P4A_UPLOADS_DIR)) {
 			$ok = true;
 		} else {
 			$ok = false;
@@ -96,7 +96,7 @@ function p4a_check_configuration($additionalDir = null)
 	if (is_dir(P4A_UPLOADS_TMP_DIR) and is_writable(P4A_UPLOADS_TMP_DIR)) {
 		$ok = true;
 	} elseif (!is_dir(P4A_UPLOADS_TMP_DIR)) {
-		if (@System::mkDir("-p " . P4A_UPLOADS_TMP_DIR)) {
+		if (P4A_Mkdir_Recursive(P4A_UPLOADS_TMP_DIR)) {
 			$ok = true;
 		} else {
 			$ok = false;
@@ -120,7 +120,7 @@ function p4a_check_configuration($additionalDir = null)
 		if (is_dir($additionalDir) and is_writable($additionalDir)) {
 			$ok = true;
 		} elseif (!is_dir($additionalDir)) {
-			if (@System::mkDir("-p " . $additionalDir)) {
+			if (P4A_Mkdir_Recursive($additionalDir)) {
 				$ok = true;
 			} else {
 				$ok = false;

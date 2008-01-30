@@ -419,3 +419,19 @@ function P4A_Quote_SQL_Value($value)
 {
 	return str_replace("'", "''", $value);
 }
+
+/**
+ * @param string $dir
+ * @return boolean
+ */
+function P4A_Mkdir_Recursive($dir)
+{
+	$parts = explode(_DS_, $dir);
+	$dir = '';
+	foreach ($parts as $part) {
+		$dir .= _DS_ . $part;
+		if (@is_dir($dir)) continue;
+		if (!@mkdir($dir)) return false;
+	}
+	return true;
+}
