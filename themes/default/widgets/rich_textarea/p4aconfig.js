@@ -32,4 +32,9 @@ FCKConfig.ToolbarSets["Full"] = [
 	['Image','Flash','Table','Rule','Smiley','SpecialChar','PageBreak'],
 	'/',
 	['Style','FontFormat','FontName','-','About'],
-] ;
+];
+
+FCKConfig.CoreStyles['Bold'] = {Element: 'strong'};
+FCKConfig.CoreStyles['Italic'] = {Element: 'em'};
+FCKConfig.CoreStyles['Underline'] = {Element: 'span', Styles: {'text-decoration': 'underline'}};
+FCKConfig.CoreStyles['StrikeThrough'] = {Element: 'span', Styles: {'text-decoration': 'line-through'}};
