@@ -118,7 +118,7 @@ class P4A_DB
 				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)";
 			case 'sqlite':
 				if (!isset($create_sequence_sql)) {
-					$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTOINCREMENT PRIMARY KEY)";
+					$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT)";
 				}
 				try {
 					$this->adapter->insert($sequence_name, array());
