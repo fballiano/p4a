@@ -116,10 +116,6 @@ class P4A_DB
 		switch ($this->db_type) {
 			case 'mysql':
 				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)";
-			case 'sqlite':
-				if (!isset($create_sequence_sql)) {
-					$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT)";
-				}
 				try {
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
@@ -131,10 +127,22 @@ class P4A_DB
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				}
 				return $id;
+			case 'sqlite':
+				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, p4a CHAR)";
+				try {
+					$this->adapter->insert($sequence_name, array('p4a'=>null));
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				} catch (Exception $e) {
+					$this->adapter->query($create_sequence_sql);
+					$this->adapter->insert($sequence_name, array('p4a'=>null));
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				}
+				return $id;
 			case 'pgsql':
 			case 'oci':
 				return $this->adapter->nextSequenceId($sequence_name);
-				break;
 		}
 	}
 	
