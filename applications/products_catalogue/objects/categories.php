@@ -45,7 +45,7 @@ class Categories extends P4A_Base_Mask
 		$this->setSource($p4a->categories);
 		$this->firstRow();
 
-		$this->addMandatoryField("description");
+		$this->setRequiredField("description");
 		$this->fields->category_id->disable();
 
 		$this->build("p4a_full_toolbar", "toolbar");

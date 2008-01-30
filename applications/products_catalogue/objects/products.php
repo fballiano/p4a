@@ -107,14 +107,14 @@ class Products extends P4A_Base_Mask
 		$this->frame->anchor($table);
   		$this->frame->anchor($this->fs_details);
   		
-  		$this->addMandatoryField("product_id");
-  		$this->addMandatoryField("category_id");
-  		$this->addMandatoryField("brand_id");
-  		$this->addMandatoryField("model");
-  		$this->addMandatoryField("purchasing_price");
-  		$this->addMandatoryField("selling_price");
-  		$this->addMandatoryField("description");
-  		$this->addMandatoryField("discount");
+  		$this->setRequiredField("product_id");
+  		$this->setRequiredField("category_id");
+  		$this->setRequiredField("brand_id");
+  		$this->setRequiredField("model");
+  		$this->setRequiredField("purchasing_price");
+  		$this->setRequiredField("selling_price");
+  		$this->setRequiredField("description");
+  		$this->setRequiredField("discount");
 
 		// Display
 		$this->display("menu", P4A::singleton()->menu);
@@ -163,7 +163,7 @@ class Products extends P4A_Base_Mask
 
 	public function saveRow()
 	{
-		if (!$this->checkMandatoryFields()) {
+		if (!$this->checkRequiredFields()) {
 			$this->warning("Please fill all required fields");
 		} else {
 			parent::saveRow();

@@ -45,7 +45,7 @@ class Brands extends P4A_Base_Mask
 		$this->setSource($p4a->brands);
 		$this->firstRow();
 
-		$this->addMandatoryField("description");
+		$this->setRequiredField("description");
 		$this->fields->brand_id->disable();
 
 		$this->build("p4a_full_toolbar", "toolbar");
