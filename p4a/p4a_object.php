@@ -339,12 +339,8 @@ abstract class P4A_Object
 			}
 		}
 
-		if (!$func) {
-			die("Method $name not found");
-		} else {
-			$this->_helpers[$name] = array($file, $func);
-		}
-
+		if (!$func) p4a_error("Method $name not found");
+		$this->_helpers[$name] = array($file, $func);
 	}
 
 	/**
