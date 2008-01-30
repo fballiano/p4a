@@ -427,7 +427,7 @@ class P4A_Mask extends P4A_Object
 				$target_dir = P4A_UPLOADS_DIR . '/' . $field->getUploadSubpath();
 
 				if (!is_dir($target_dir)) {
-					if (!@System::mkDir("-p $target_dir")) {
+					if (!P4A_Mkdir_Recursive($target_dir)) {
 						$e = new P4A_ERROR("Cannot create directory \"$target_dir\"", $this);
 						if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
 							die();

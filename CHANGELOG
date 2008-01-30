@@ -161,7 +161,10 @@
 - P4A_Data_Field::setReadOnly() method was removed, use isReadOnly(null/true/false)
 - P4A_Quote_SQL_Value() global function was added
 - a bug with P4A_DB was fixed to allow sqlite to work the right way with sequences
-- PEAR::Calendar, PEAR::Console, PEAR::Date and PEAR::OS were removed 'cause unused
+- PEAR repository was removed
+- PEAR::validate module was renamed to pear_validate.php and moved to p4a/libraries/ directory
+- PEAR::Net_Useragent_Detect module was renamed to pear_net_useragent_detect.php and moved to p4a/libraries/ directory
+- P4A_Mkdir_Recursive global function was added to P4A standard library
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
