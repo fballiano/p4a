@@ -167,6 +167,7 @@
 - P4A_Mkdir_Recursive() global function was added to P4A standard library
 - All System::mkdir calls were changed to use the new P4A_Mkdir_Recursive() function
 - a bunch of unuseful referenced were removed from core helpers
+- GetId3 library was updated to 2.0.0b4 (which is php5 only), helper apps for windows servers were removed, they've to be installed in the system path thus we cannot ship them with p4a package 'cause they would be unuseful
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

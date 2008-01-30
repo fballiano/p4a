@@ -1,11 +1,22 @@
-/////////////////////////////////////////////////////////////////
-/// getID3() by James Heinrich <info@getid3.org>               //
-//  available at http://getid3.sourceforge.net                 //
-//            or http://www.getid3.org                        ///
-/////////////////////////////////////////////////////////////////
-/// getID3() v2.x optimized for PHP5 by:                       //
-//    Allan Hansen <ahÿartemis*dk>                            ///
-/////////////////////////////////////////////////////////////////
+// +----------------------------------------------------------------------+
+// | PHP version 5                                                        |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 2002-2006 James Heinrich, Allan Hansen                 |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2 of the GPL license,         |
+// | that is bundled with this package in the file license.txt and is     |
+// | available through the world-wide-web at the following url:           |
+// | http://www.gnu.org/copyleft/gpl.html                                 |
+// +----------------------------------------------------------------------+
+// | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
+// +----------------------------------------------------------------------+
+// | Authors: James Heinrich <infoÿgetid3*org>                            |
+// |          Allan Hansen <ahÿartemis*dk>                                |
+// +----------------------------------------------------------------------+
+// | Dependencies                                                         |
+// +----------------------------------------------------------------------+
+//
+// $Id: readme.txt,v 1.6 2006/12/03 19:46:04 ah Exp $
 
         This code is released under the GNU GPL:
           http://www.gnu.org/copyleft/gpl.html
@@ -18,15 +29,18 @@
      | http://www.getid3.org for PayPal donations. |
      +---------------------------------------------+
 
+
+
 Quick Start
-===========
+===========================================================================
 
 Q: How can I check that getID3() works on my server/files?
 A: Unzip getID3() to a directory, then access /demos/demo.browse.php
 
 
+
 Sourceforge Notification
-========================
+===========================================================================
 
 It's highly recommended that you sign up for notification from
 Sourceforge for when new versions are released. Please visit:
@@ -37,8 +51,9 @@ been discontinued, only the automated Sourceforge notification
 will be used from now on.
 
 
+
 What does getID3() do?
-======================
+===========================================================================
 
 Reads & parses (to varying degrees):
  § tags:
@@ -101,42 +116,33 @@ Writes:
   * Lyrics3 (delete only)
 
 
-Requirements
-============
 
-* PHP 4.1.0 (or higher)
+Requirements
+===========================================================================
+
+* PHP 4.2.0 (or higher) for getID3() 1.7.8 (and up).
+* PHP 5.0.0 (or higher) for getID3() 2.0.0 (and up).
 * at least 4MB memory for PHP. 8MB is highly recommended.
   12MB is required with all modules loaded.
 
 
-Usage
-=====
 
-require_once('/path/getid3.php');
-$getID3 = new getID3;
-$fileinfo = $getID3->analyze($filename);
+Usage
+===========================================================================
+
+See /demos/demo.basic.php for a very basic use of getID3() with no
+fancy output, just scanning one file.
 
 See structure.txt for the returned data structure.
-
 
 *>  For an example of a complete directory-browsing,       <*
 *>  file-scanning implementation of getID3(), please run   <*
 *>  /demos/demo.browse.php                                 <*
 
-
-See /demos/demo.basic.php for a very basic use of getID3() with no
-fancy output, just scanning one file.
-
 See /demos/demo.mysql.php for a sample recursive scanning code that
 scans every file in a given directory, and all sub-directories, stores
 the results in a database and allows various analysis / maintenance
 operations
-
-See /demos/demo.simple.php for a simple example script that scans all
-files in one directory and output artist, title, bitrate and playtime
-
-See /demos/demo.mimeonly.php for a simple example script that scans a
-single file and returns only the MIME information
 
 To analyze remote files over HTTP or FTP you need to copy the file
 locally first before running getID3(). Your code would look something
@@ -164,26 +170,12 @@ if ($fp_remote = fopen($remotefilename, 'rb')) {
 }
 
 
-// Writing tags:
-require_once('getid3.php');
-$getID3 = new getID3;
-getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'write.php', __FILE__);
-$tagwriter = new getid3_writetags;
-$tagwriter->filename   = $Filename;
-$tagwriter->tagformats = array('id3v2.3', 'ape');
-$TagData['title'][]  = 'Song Title';
-$TagData['artist'][] = 'Artist Name';
-$tagwriter->tag_data = array(;
-if ($tagwriter->WriteTags()) {
-	echo 'success';
-} else {
-	echo 'failure';
-}
+See /demos/demo.write.php for how to write tags.
 
 
 
 What does the returned data structure look like?
-================================================
+===========================================================================
 
 See structure.txt
 
@@ -195,9 +187,11 @@ may vary considerably depending on what information is available in
 the file itself.
 
 
-Notes
-=====
 
+Notes
+===========================================================================
+
+getID3() 1.7:
 If the format parser encounters a critical problem, it will return
 something in $fileinfo['error'], describing the encountered error. If
 a less critical error or notice is generated it will appear in
@@ -211,16 +205,13 @@ other programs. Some warnings may indicate that the data that is
 returned is OK but that some data could not be extracted due to
 errors in the file.
 
+getID3() 2.0:
+See above except errors are thrown (so you will only get one error).
 
-Known Bugs/Issues
-=================
-
-See the end of changelog.txt for notes on known issues with
-getID3(), encoders, players, etc.
 
 
 Disclaimer
-==========
+===========================================================================
 
 getID3() has been tested on many systems, on many types of files,
 under many operating systems, and is generally believe to be stable
@@ -231,7 +222,9 @@ agree that it's not my fault if any of your files are corrupted.
 In fact, I'm not liable for anything :)
 
 
-/////////////////////////////////////////////////////////////////////
+
+License
+===========================================================================
 
 GNU General Public License - see license.txt
 
@@ -251,7 +244,6 @@ Free Software Foundation, Inc.
 59 Temple Place - Suite 330
 Boston, MA  02111-1307, USA.
 
-
 FAQ:
 Q: Can I use getID3() in my program? Do I need a commercial license?
 A: You're generally free to use getID3 however you see fit. The only
@@ -263,9 +255,198 @@ A: You're generally free to use getID3 however you see fit. The only
    getid3.sourceforge.net"
 
 
-/////////////////////////////////////////////////////////////////////
+
+Future Plans
+===========================================================================
+
+* Writing support for Real
+* Better support for MP4 container format
+* Support for Matroska (www.matroska.org)
+  http://corecodec.com/modules.php?op=modload&name=PNphpBB2&file=viewtopic&t=227
+* Scan for appended ID3v2 tag at end of file per ID3v2.4 specs (Section 5.0)
+* Support for JPEG-2000 (http://www.morgan-multimedia.com/jpeg2000_overview.htm)
+* Support for MOD (mod/stm/s3m/it/xm/mtm/ult/669)
+* Support for ACE (thanks Vince)
+* Support for Ogg other than Vorbis, Speex and OggFlac (ie. Ogg+Xvid)
+* Ability to create Xing/LAME VBR header for VBR MP3s that are missing VBR header
+* Ability to "clean" ID3v2 padding (replace invalid padding with valid padding)
+* Warn if MP3s change version mid-stream (in full-scan mode)
+* check for corrupt/broken mid-file MP3 streams in histogram scan
+* Support for lossless-compression formats
+  (http://www.firstpr.com.au/audiocomp/lossless/#Links)
+  (http://compression.ca/act-sound.html)
+  (http://web.inter.nl.net/users/hvdh/lossless/lossless.htm)
+* Support for RIFF-INFO chunks
+  * http://lotto.st-andrews.ac.uk/~njh/tag_interchange.html
+    (thanks Nick Humfrey <njhÿsurgeradio*co*uk>)
+  * http://abcavi.narod.ru/sof/abcavi/infotags.htm
+    (thanks Kibi)
+* Better support for Bink video
+* http://www.hr/josip/DSP/AudioFile2.html
+* http://www.pcisys.net/~melanson/codecs/
+* Detect mp3PRO
+* Support for PSD
+* Support for JPC
+* Support for JP2
+* Support for JPX
+* Support for JB2
+* Support for IFF
+* Support for ICO
+* Support for ANI
+* Support for EXE (comments, author, etc) (thanks p*quaedackersÿplanet*nl)
+* Support for DVD-IFO (region, subtitles, aspect ratio, etc)
+  (thanks p*quaedackersÿplanet*nl)
+* More complete support for SWF - parsing encapsulated MP3 and/or JPEG content
+    (thanks n8n8ÿyahoo*com)
+* Support for a2b
+* Optional scan-through-frames for AVI verification
+  (thanks rockcohenÿmassive-interactive*nl)
+* Support for TTF (thanks infoÿbutterflyx*com)
+* Support for DSS (http://www.getid3.org/phpBB2/viewtopic.php?t=171)
+* Support for SMAF (http://smaf-yamaha.com/what/demo.html)
+  http://www.getid3.org/phpBB2/viewtopic.php?t=182
+* Support for AMR (http://www.getid3.org/phpBB2/viewtopic.php?t=195)
+* Support for 3gpp (http://www.getid3.org/phpBB2/viewtopic.php?t=195)
+* Support for ID4 (http://www.wackysoft.cjb.net grizlyY2Kÿhotmail*com)
+* Parse XML data returned in Ogg comments
+* Parse XML data from Quicktime SMIL metafiles (klausrathÿmac*com)
+* ID3v2 genre string creator function
+* More complete parsing of JPG
+* Support for all old-style ASF packets
+* ASF/WMA/WMV tag writing
+* Parse declared T??? ID3v2 text information frames, where appropriate
+    (thanks Christian Fritz for the idea)
+* Recognize encoder:
+  http://www.guerillasoft.com/EncSpot2/index.html
+  http://ff123.net/identify.html
+  http://www.hydrogenaudio.org/?act=ST&f=16&t=9414
+  http://www.hydrogenaudio.org/?showtopic=11785
+* Support for other OS/2 bitmap structures: Bitmap Array('BA'),
+  Color Icon('CI'), Color Pointer('CP'), Icon('IC'), Pointer ('PT')
+  http://netghost.narod.ru/gff/graphics/summary/os2bmp.htm
+* Support for WavPack RAW mode
+* ASF/WMA/WMV data packet parsing
+* ID3v2FrameFlagsLookupTagAlter()
+* ID3v2FrameFlagsLookupFileAlter()
+* obey ID3v2 tag alter/preserve/discard rules
+* http://www.geocities.com/SiliconValley/Sector/9654/Softdoc/Illyrium/Aolyr.htm
+* proper checking for LINK/LNK frame validity in ID3v2 writing
+* proper checking for ASPI-TLEN frame validity in ID3v2 writing
+* proper checking for COMR frame validity in ID3v2 writing
+* http://www.geocities.co.jp/SiliconValley-Oakland/3664/index.html
+* decode GEOB ID3v2 structure as encoded by RealJukebox,
+  decode NCON ID3v2 structure as encoded by MusicMatch
+  (probably won't happen - the formats are proprietary)
+
+
+
+Known Bugs/Issues in getID3() that may be fixed eventually
+===========================================================================
+
+* Cannot determine bitrate for MPEG video with VBR video data
+  (need documentation)
+* Interlace/progressive cannot be determined for MPEG video
+  (need documentation)
+* MIDI playtime is sometimes inaccurate
+* AAC-RAW mode files cannot be identified
+* WavPack-RAW mode files cannot be identified
+* mp4 files report lots of "Unknown QuickTime atom type"
+   (need documentation)
+* Encrypted ASF/WMA/WMV files warn about "unhandled GUID
+  ASF_Content_Encryption_Object"
+* Bitrate split between audio and video cannot be calculated for
+  NSV, only the total bitrate. (need documentation)
+* All Ogg formats (Vorbis, OggFLAC, Speex) are affected by the
+  problem of large VorbisComments spanning multiple Ogg pages, but
+  but only OggVorbis files can be processed with vorbiscomment.
+* The version of "head" supplied with Mac OS 10.2.8 (maybe other
+  versions too) does only understands a single option (-n) and
+  therefore fails. getID3 ignores this and returns wrong md5_data.
+
+
+
+Known Bugs/Issues in getID3() that cannot be fixed
+--------------------------------------------------
+
+* Files larger than 2GB (of any format) cannot be parsed by
+  getID3() due to limitations in the PHP filesystem functions
+
+
+
+Known Bugs/Issues in other programs
+-----------------------------------
+
+* Winamp (up to v2.80 at least) does not support ID3v2.4 tags,
+    only ID3v2.3
+    see: http://forums.winamp.com/showthread.php?postid=387524
+* Some versions of Helium2 (www.helium2.com) do not write
+    ID3v2.4-compliant Frame Sizes, even though the tag is marked
+    as ID3v2.4)  (detected by getID3())
+* MP3ext V3.3.17 places a non-compliant padding string at the end
+    of the ID3v2 header. This is supposedly fixed in v3.4b21 but
+    only if you manually add a registry key. This fix is not yet
+    confirmed.  (detected by getID3())
+* CDex v1.40 (fixed by v1.50b7) writes non-compliant Ogg comment
+    strings, supposed to be in the format "NAME=value" but actually
+    written just "value"  (detected by getID3())
+* Oggenc 0.9-rc3 flags the encoded file as ABR whether it's
+    actually ABR or VBR.
+* iTunes (versions "X v2.0.3", "v3.0.1" are known-guilty, probably
+    other versions are too) writes ID3v2.3 comment tags using a
+    frame name 'COM ' which is not valid for ID3v2.3+ (it's an
+    ID3v2.2-style frame name)  (detected by getID3())
+* MP2enc does not encode mono CBR MP2 files properly (half speed
+    sound and double playtime)
+* MP2enc does not encode mono VBR MP2 files properly (actually
+    encoded as stereo)
+* tooLAME does not encode mono VBR MP2 files properly (actually
+    encoded as stereo)
+* AACenc encodes files in VBR mode (actually ABR) even if CBR is
+   specified
+* AAC/ADIF - bitrate_mode = cbr for vbr files
+* LAME 3.90-3.92 prepends one frame of null data (space for the
+  LAME/VBR header, but it never gets written) when encoding in CBR
+  mode with the DLL
+* Ahead Nero encodes TwinVQF with a DSIZ value (which is supposed
+  to be the filesize in bytes) of "0" for TwinVQF v1.0 and "1" for
+  TwinVQF v2.0  (detected by getID3())
+* Ahead Nero encodes TwinVQF files 1 second shorter than they
+  should be
+* AAC-ADTS files are always actually encoded VBR, even if CBR mode
+  is specified (the CBR-mode switches on the encoder enable ABR
+  mode, not CBR as such, but it's not possible to tell the
+  difference between such ABR files and true VBR)
+* STREAMINFO.audio_signature in OggFLAC is always null. "The reason
+  it's like that is because there is no seeking support in
+  libOggFLAC yet, so it has no way to go back and write the
+  computed sum after encoding. Seeking support in Ogg FLAC is the
+  #1 item for the next release." - Josh Coalson (FLAC developer)
+  NOTE: getID3() will calculate md5_data in a method similar to
+  other file formats, but that value cannot be compared to the
+  md5_data value from FLAC data in a FLAC file format.
+* STREAMINFO.audio_signature is not calculated in FLAC v0.3.0 &
+  v0.4.0 - getID3() will calculate md5_data in a method similar to
+  other file formats, but that value cannot be compared to the
+  md5_data value from FLAC v0.5.0+
+* RioPort (various versions including 2.0 and 3.11) tags ID3v2 with
+  a WCOM frame that has no data portion
+* Earlier versions of Coolplayer adds illegal ID3 tags to Ogg Vorbis
+  files, thus making them corrupt.
+* Meracl ID3 Tag Writer v1.3.4 (and older) incorrectly truncates the
+  last byte of data from an MP3 file when appending a new ID3v1 tag.
+  (detected by getID3())
+* Lossless-Audio files encoded with and without the -noseek switch
+  do actually differ internally and therefore cannot match md5_data
+* iTunes has been known to append a new ID3v1 tag on the end of an
+  existing ID3v1 tag when ID3v2 tag is also present
+  (detected by getID3())
+
+
+
 
 Reference material:
+===========================================================================
+
 [www.id3.org material now mirrored at http://id3lib.sourceforge.net/id3/]
 * http://www.id3.org/id3v2.4.0-structure.txt
 * http://www.id3.org/id3v2.4.0-frames.txt
@@ -353,3 +534,4 @@ Reference material:
 * http://www.unicode.org/unicode/faq/utf_bom.html
 * http://tta.corecodec.org/?menu=format
 * http://www.scvi.net/nsvformat.htm
+* http://pda.etsi.org/pda/queryform.asp
