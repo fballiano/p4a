@@ -9,10 +9,10 @@
  * @package p4a
  */
 
-function p4a_frame_anchorTabPane(&$obj, $params)
+function p4a_frame_anchorTabPane($obj, $params)
 {
 	$tab_pane_name = $params[0];
-	$tab_pane =& $obj->build('p4a_tab_pane', $tab_pane_name);
+	$tab_pane = $obj->build('p4a_tab_pane', $tab_pane_name);
 
 	for ($i=1; $i<count($params); $i++) {
 		$tab_pane->addPage($params[$i]);

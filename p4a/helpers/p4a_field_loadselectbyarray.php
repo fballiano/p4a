@@ -9,13 +9,13 @@
  * @package p4a
  */
 
-function p4a_field_loadSelectByArray(&$field, $params)
+function p4a_field_loadSelectByArray($field, $params)
 {
 	list($array) = $params;
 
-	$source =& $field->build('p4a_array_source', 'source');
-	$source->load($array);
+	$field->build('p4a_array_source', 'source');
+	$field->source->load($array);
 	
 	$field->setType('select');
-	$field->setSource($source);
+	$field->setSource($field->source);
 }

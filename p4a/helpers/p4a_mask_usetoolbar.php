@@ -9,7 +9,7 @@
  * @package p4a
  */
 
-function p4a_mask_useToolbar(&$obj, $params)
+function p4a_mask_useToolbar($obj, $params)
 {
 	$toolbar = $params[0];
 	$obj->build("P4A_{$toolbar}_Toolbar", 'toolbar');

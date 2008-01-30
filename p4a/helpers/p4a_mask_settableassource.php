@@ -12,11 +12,11 @@
 function p4a_mask_setTableAsSource($mask, $params)
 {
 	list($table, $pk) = $params;
-	$source =& $mask->build('P4A_DB_Source', 'source');
-	$source->setTable($table);
-	$source->setPK($pk);
-	$source->load();
-	$source->firstRow();
+	$mask->build('P4A_DB_Source', 'source');
+	$mask->source->setTable($table);
+	$mask->source->setPK($pk);
+	$mask->source->load();
+	$mask->source->firstRow();
 
-	$mask->setSource($source);
+	$mask->setSource($mask->source);
 }

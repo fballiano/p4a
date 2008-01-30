@@ -9,20 +9,20 @@
  * @package p4a
  */
 
-function p4a_field_loadSelectByTable(&$field, $params)
+function p4a_field_loadSelectByTable($field, $params)
 {
 	list($table, $pk, $description_field) = $params;
 	if (!$description_field) {
 		$description_field = $pk;
 	}
 
-	$source =& $field->build('p4a_db_source', 'source');
-	$source->setTable($table);
-	$source->setPK($pk);
-	$source->addOrder($description_field);
-	$source->load();
+	$field->build('p4a_db_source', 'source');
+	$field->source->setTable($table);
+	$field->source->setPK($pk);
+	$field->source->addOrder($description_field);
+	$field->source->load();
 
 	$field->setType('select');
-	$field->setSource($source);
+	$field->setSource($field->source);
 	$field->setSourceDescriptionField($description_field);
 }
