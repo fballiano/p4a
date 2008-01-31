@@ -70,7 +70,7 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 
 p4a_ajax_process_response = function (response)
 {
-	//try {
+	try {
 		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
 
 		var widgets = response.getElementsByTagName('widget');
@@ -100,9 +100,9 @@ p4a_ajax_process_response = function (response)
 		}
 		
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
-	//} catch (e) {
-	//	p4a_ajax_error();
-	//}
+	} catch (e) {
+		p4a_ajax_error();
+	}
 }
 
 p4a_ajax_error = function ()
