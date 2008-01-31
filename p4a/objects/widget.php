@@ -521,12 +521,12 @@ abstract class P4A_Widget extends P4A_Object
 			if ($action == 'onreturnpress') {
 				$browser_action = 'onkeypress';
 				$return = 'true';
-				$prefix .= 'if(isReturnPressed(event)){';
+				$prefix .= 'if(p4a_keypressed_is_return(event)){';
 				$suffix .= '}';
 			} elseif ($action == 'onkeypress'
 				   or $action == 'onkeydown'
 				   or $action == 'onkeyup') {
-				$sParams .= ", getKeyPressed(event)";
+				$sParams .= ", p4a_keypressed_get(event)";
 			}
 
 			if ($action_data['confirm'] !== null) {
@@ -535,9 +535,9 @@ abstract class P4A_Widget extends P4A_Object
 			}
 
 			if (isset($action_data['ajax']) and $action_data['ajax'] == 1) {
-				$execute = 'executeAjaxEvent';
+				$execute = 'p4a_event_execute_ajax';
 			} else {
-				$execute = 'executeEvent';
+				$execute = 'p4a_event_execute';
 			}
 
 			if (isset($action_data['event'])) {

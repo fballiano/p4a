@@ -27,7 +27,7 @@
 <?php echo $this->getP4AJavascript() ?>
 </head>
 
-<body onload="hideLoading()">
+<body>
 <div id='body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <div class='p4a_system_messages'>
@@ -82,16 +82,10 @@
 </div>
 
 <!-- POPUP -->
-<div style="display:block"><div id="popup" style="display:none"><?php echo $_popup?></div></div>
+<div style="display:block"><div id="p4a_popup" style="display:none"><?php echo $_popup?></div></div>
 
 <?php echo $this->maskClose()?>
 </div>
-
-<?php if (strlen($_popup)): ?>
-<script type="text/javascript">
-p4a_popup_show();
-</script>
-<?php endif; ?>
 
 </body>
 </html>

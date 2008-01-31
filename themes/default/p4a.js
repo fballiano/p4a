@@ -1,6 +1,6 @@
-function prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4)
+p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
-	updateAllRichTextEditors(document.forms['p4a']);
+	p4a_rte_update_all_instances(document.forms['p4a']);
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
@@ -19,20 +19,32 @@ function prepareExecuteEvent(object_name, action_name, param1, param2, param3, p
 	if (typeof f.onsubmit == "function") f.onsubmit();
 }
 
-function executeEvent(object_name, action_name, param1, param2, param3, param4)
+p4a_rte_update_all_instances = function (form)
 {
-	prepareExecuteEvent(object_name, action_name, 0, param1, param2, param3, param4);
+	for (i=0; i<form.elements.length; i++) {
+		var e = form.elements[i];
+		if (e.type == 'textarea') {
+			try {
+				FCKeditorAPI.GetInstance(e.id).UpdateLinkedField();
+			} catch (e) {}
+		}
+	}
+}
+
+p4a_event_execute = function (object_name, action_name, param1, param2, param3, param4)
+{
+	p4a_event_execute_prepare(object_name, action_name, 0, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 0;
 	document.getElementById('p4a').submit();
 }
 
-function isReturnPressed(event)
+p4a_keypressed_is_return = function (event)
 {
 	var characterCode = (window.event) ? event.keyCode : event.which;
 	return (characterCode == 13);
 }
 
-function getKeyPressed(event)
+p4a_keypressed_get = function (event)
 {
 	return (window.event) ? event.keyCode : event.which;
 }
@@ -44,19 +56,19 @@ p4a_set_focus = function (id)
 	} catch (e) {}
 }
 
-function executeAjaxEvent(object_name, action_name, param1, param2, param3, param4)
+p4a_event_execute_ajax = function (object_name, action_name, param1, param2, param3, param4)
 {
-	prepareExecuteEvent(object_name, action_name, param1, param2, param3, param4);
+	p4a_event_execute_prepare(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
 	$('#colorpicker').hide();
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
-		success: p4a_process_ajax_response
+		success: p4a_ajax_process_response
 	});
 }
 
-p4a_process_ajax_response = function (response)
+p4a_ajax_process_response = function (response)
 {
 	try {
 		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
@@ -90,40 +102,29 @@ p4a_process_ajax_response = function (response)
 		
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 	} catch (e) {
-		ajaxError();
+		p4a_ajax_error();
 	}
 }
 
-function ajaxError()
+p4a_ajax_error = function ()
 {
 	document.location = 'index.php';
 }
 
-function updateAllRichTextEditors(form)
-{
-	for (i=0; i<form.elements.length; i++) {
-		var e = form.elements[i];
-		if (e.type == 'textarea') {
-			try {
-				FCKeditorAPI.GetInstance(e.id).UpdateLinkedField();
-			} catch (e) {}
-		}
-	}
-}
-
-function showLoading()
+p4a_loading_show = function ()
 {
 	$('#p4a_loading').jqm({modal:true, overlay:0}).show();
 }
 
-function hideLoading()
+p4a_loading_hide = function ()
 {
 	$('#p4a_loading').hide();
 }
 
 p4a_popup_show = function ()
 {
-	p4a_popup = $('#popup');
+	p4a_popup = $('#p4a_popup');
+	if (p4a_popup.children().size() == 0) return;
 
 	p4a_popup.css('left', 100000).show();
 	var width = p4a_popup.width();
@@ -143,7 +144,7 @@ p4a_popup_hide = function ()
 	p4a_popup.jqmHide();
 }
 
-function showTooltip(handler, text_id)
+p4a_tooltip_show = function (handler, text_id)
 {
 	handler = $(handler);
 	var tooltip = $('#p4a_tooltip');
@@ -157,7 +158,7 @@ function showTooltip(handler, text_id)
 	handler.mouseout(function() {tooltip.jqmHide()});
 }
 
-function toggleColorPicker(id)
+p4a_colorpicker_toggle = function (id)
 {
 	var left = $('#' + id + 'button').offset().left + $('#' + id + 'button').width() + 10;
 	var top = $('#' + id + 'button').offset().top;
@@ -212,10 +213,12 @@ p4a_messages_show = function ()
 		});
 }
 
-$(document).ajaxStart(function(request, settings){showLoading()});
-$(document).ajaxStop(function(request, settings){hideLoading()});
-$(document).ajaxError(function(request, settings){ajaxError()});
+$(document).ajaxStart(p4a_loading_show);
+$(document).ajaxStop(p4a_loading_hide);
+$(document).ajaxError(p4a_ajax_error);
 
 $(function () {
+	p4a_popup_show();
 	p4a_messages_show();
+	p4a_loading_hide();
 });

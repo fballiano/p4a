@@ -177,6 +177,7 @@
 - P4A_Field::isValid() method was added to check if the validators chain is respected or not 
 - P4A_Base_Mask::setRequiredField() method now relies on Zend_Validator_NotEmpty
 - P4A_Base_Mask::checkRequiredFields() method was renamed to validateFields() and now checks all validators chains for all fields and not only required fields
+- all javascripts were refactored
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

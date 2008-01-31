@@ -1,4 +1,4 @@
-p4a_activate_menu = function ()
+p4a_menu_activate = function ()
 {
 	var nav = 'p4a_menu';
 	var navroot = document.getElementById(nav);
@@ -39,5 +39,5 @@ p4a_png_fix = function ()
 
 $(function () {
 	p4a_png_fix();
-	p4a_activate_menu();
+	p4a_menu_activate();
 });

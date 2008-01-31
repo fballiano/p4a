@@ -1049,9 +1049,9 @@ class P4A_Field extends P4A_Widget
 
 		if ($this->getNewValue() === null) {
 			//if ($p4a->isAjaxEnabled()) {
-			//	$action = 'executeAjaxEvent';
+			//	$action = 'p4a_event_execute_ajax';
 			//} else {
-				$action = 'executeEvent';
+				$action = 'p4a_event_execute';
 			//}
 			$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 			$this->intercept($this, 'onchange', 'redesign');
@@ -1261,7 +1261,7 @@ class P4A_Field extends P4A_Widget
 
 		$return  = $this->getAsText();
 		if (!P4A::singleton()->isHandheld()) {
-			$return .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick='toggleColorPicker(\"$id\")' />";
+			$return .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick='p4a_colorpicker_toggle(\"$id\")' />";
 		}
 
 		return $return;
