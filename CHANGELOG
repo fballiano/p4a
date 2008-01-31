@@ -6,7 +6,8 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - redo the css
-- change field's error message and show it as a tooltip (with an error icon)
+- fix field's error message that breaks its css
+- translate ZF_Validate error messages
 - check ajax calls within popup
 
 2.99.0
