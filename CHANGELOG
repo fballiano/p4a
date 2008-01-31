@@ -7,7 +7,6 @@
 - implement errors with exceptions
 - redo the css
 - fix field's error message that breaks its css
-- check ajax calls within popup
 
 2.99.0
 - Zend Framework 1.0.3 was added
