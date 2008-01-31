@@ -335,7 +335,6 @@ class P4A extends P4A_Object
 	public function main()
 	{
 		$this->_in_ajax_call = (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']);
-		$this->actionHandler('main');
 
 		// Processing get and post.
 		if (array_key_exists('_object', $_REQUEST) and
