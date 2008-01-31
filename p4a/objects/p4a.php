@@ -499,7 +499,7 @@ class P4A extends P4A_Object
 		if ($this->_do_refresh) {
 			$this->_do_refresh = false;
 			$javascript = 'document.location="' . P4A_APPLICATION_PATH . '";';
-			print "<widget id='popup' display='inherit'>\n";
+			print "<widget id='p4a_popup' display='inherit'>\n";
 			print "<html><![CDATA[]]></html>\n";
 			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 			print "</widget>";
@@ -541,8 +541,8 @@ class P4A extends P4A_Object
 					$html = '';
 					$javascript = 'p4a_popup_hide();';
 				}
-				print "<widget id='popup' display='inherit'>\n";
-				print "<html><![CDATA[<div id='popup' style='display:none'>{$html}</div>]]></html>\n";
+				print "<widget id='p4a_popup' display='inherit'>\n";
+				print "<html><![CDATA[<div id='p4a_popup' style='display:none'>{$html}</div>]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>";
 			}
