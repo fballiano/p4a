@@ -70,19 +70,18 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 
 p4a_ajax_process_response = function (response)
 {
-	try {
+	//try {
 		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
 
 		var widgets = response.getElementsByTagName('widget');
 		for (i=0; i<widgets.length; i++) {
 	   		var object_id = widgets[i].attributes[0].value;
-			if ($(object_id) != undefined) {
+	   		var object = $('#'+object_id);
+			if (object.size() > 0) {
 	   			var display = widgets[i].attributes[1].value;
 	   			var html = widgets[i].getElementsByTagName('html').item(0);
 	   			if (html) {
-	   				var element = document.getElementById(object_id);
-	   				element.parentNode.style.display = 'block';
-	   				element.parentNode.innerHTML = html.firstChild.data;
+	   				object.parent().css('display', 'block').html(html.firstChild.data);
 	   			}
 	   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
 	   			if (javascript) {
@@ -101,9 +100,9 @@ p4a_ajax_process_response = function (response)
 		}
 		
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
-	} catch (e) {
-		p4a_ajax_error();
-	}
+	//} catch (e) {
+	//	p4a_ajax_error();
+	//}
 }
 
 p4a_ajax_error = function ()
