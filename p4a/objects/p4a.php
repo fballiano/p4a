@@ -612,7 +612,7 @@ class P4A extends P4A_Object
 		}
 
 		$this->_popup = $mask_name;
-		$mask =& p4a_mask::singleton($mask_name);
+		$mask = p4a_mask::singleton($mask_name);
 		$mask->isPopup(true);
 
 		$this->_redesign_popup = true;
@@ -622,11 +622,9 @@ class P4A extends P4A_Object
 	public function closePopup($destroy = false)
 	{
 		if ($destroy) {
-			$mask =& p4a_mask::singleton($this->_popup);
-			$mask->destroy();
+			P4A_Mask::singleton($this->_popup)->destroy();
 		} else {
-			$mask =& p4a_mask::singleton($this->_popup);
-			$mask->isPopup(false);
+			P4A_Mask::singleton($this->_popup)->isPopup(false);
 		}
 		$this->_popup = null;
 		$this->_redesign_popup = true;
