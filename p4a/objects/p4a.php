@@ -136,23 +136,12 @@ class P4A extends P4A_Object
 	/**
 	 * @var boolean
 	 */
-	private $_redesign_popup = false;
-	
-	/**
-	 * @var boolean
-	 */
 	private $_ajax_enabled = P4A_AJAX_ENABLED;
 	
 	/**
 	 * @var boolean
 	 */
 	private $_in_ajax_call = false;
-
-	/**
-	 * The name of the popup mask
-	 * @var string
-	 */
-	private $_popup = null;
 
 	/**
 	 * forces an HTTP refresh event
@@ -257,10 +246,11 @@ class P4A extends P4A_Object
 
 	/**
 	 * @return boolean
+	 * @deprecated 
 	 */
 	public function isPopupOpened()
 	{
-		return ($this->_popup !== null);
+		return $this->active_mask->isPopup();
 	}
 
 	/**
@@ -477,7 +467,6 @@ class P4A extends P4A_Object
 		}
 
 		$this->_to_redesign = array();
-		$this->_redesign_popup = false;
 
 		session_write_close();
 		session_id(substr(session_id(), 0, -6));
@@ -494,10 +483,9 @@ class P4A extends P4A_Object
 		print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 		if ($this->_do_refresh) {
 			$this->_do_refresh = false;
-			$javascript = 'document.location="' . P4A_APPLICATION_PATH . '";';
-			print "<widget id='p4a_popup' display='inherit'>\n";
+			print "<widget id='body' display='inherit'>\n";
 			print "<html><![CDATA[]]></html>\n";
-			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+			print "<javascript><![CDATA[p4a_refresh()]]></javascript>\n";
 			print "</widget>";
 		} else {
 			foreach ($this->getRenderedMessages() as $message) {
@@ -521,26 +509,6 @@ class P4A extends P4A_Object
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";
 
-			}
-			if ($this->_redesign_popup) {
-				if ($this->_popup) {
-					$as_string = p4a_mask::singleton($this->_popup)->getAsString();
-					$javascript_codes = array();
-					$javascript = "p4a_popup_show();\n\n";
-					$html = preg_replace("/{$script_detector}/si", '', $as_string);
-					preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
-					$javascript_codes = $javascript_codes[1];
-					foreach ($javascript_codes as $code) {
-						$javascript .= "$code\n\n";
-					}
-				} else {
-					$html = '';
-					$javascript = 'p4a_popup_hide();';
-				}
-				print "<widget id='p4a_popup' display='inherit'>\n";
-				print "<html><![CDATA[<div id='p4a_popup' style='display:none'>{$html}</div>]]></html>\n";
-				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
-				print "</widget>";
 			}
 		}
 		print "</ajax-response>";
@@ -568,7 +536,7 @@ class P4A extends P4A_Object
 	 * Sets the desidered object as active.
 	 * @param P4A_Object
 	 */
-	private function setActiveObject(&$object)
+	private function setActiveObject($object)
 	{
 		unset($this->active_object);
 		$this->active_object =& $object;
@@ -581,7 +549,7 @@ class P4A extends P4A_Object
 		if ($this->isActionTriggered('onOpenMask')) {
 			if ($this->actionHandler('onOpenMask') == ABORT) return ABORT;
 		} else {
-			if ($this->isPopupOpened()) {
+			if ($this->active_mask and $this->active_mask->isPopup()) {
 				$this->closePopup();
 			}
 
@@ -606,73 +574,74 @@ class P4A extends P4A_Object
 
 	public function openPopup($mask_name)
 	{
-		//Close opened popup
-		if ($this->_popup) {
+		if ($this->active_mask->isPopup()) {
 			$this->closePopup();
 		}
-
-		$this->_popup = $mask_name;
-		$mask = p4a_mask::singleton($mask_name);
+		
+		$mask = $this->openMask($mask_name);
 		$mask->isPopup(true);
-
-		$this->_redesign_popup = true;
+		$this->_do_refresh = true;
+		
 		return $mask;
 	}
 
+	/**
+	 * Alias for showPrevMask()
+	 *
+	 * @param boolean $destroy completely destroy the mask object?
+	 */
 	public function closePopup($destroy = false)
 	{
-		if ($destroy) {
-			P4A_Mask::singleton($this->_popup)->destroy();
-		} else {
-			P4A_Mask::singleton($this->_popup)->isPopup(false);
-		}
-		$this->_popup = null;
-		$this->_redesign_popup = true;
+		$this->showPrevMask($destroy);
 	}
 
-     public function showPrevMask()
-     {
-		//Close opened popup
-		if ($this->_popup) {
-			$this->closePopup();
-			return;
+	/**
+	 * @param unknown_type $destroy completely destroy the current mask object?
+	 */
+	public function showPrevMask($destroy = false)
+	{
+		if ($destroy === true) {
+			$this->active_mask->destroy();
+	 	} elseif ($this->active_mask->isPopup()) {
+			$this->active_mask->isPopup(false);
+			$this->_do_refresh = true;
 		}
 
-     	if (sizeof($this->masks_history) > 0){
+	 	if (sizeof($this->masks_history) > 0) {
 			$mask_name = array_pop($this->masks_history);
 			$this->setActiveMask($mask_name);
-     	}
-     }
+		}
+	}
 
-     /**
-      * Gets an instance of the previous mask
-      * @return P4A_Mask
-      */
-     public function getPrevMask()
-     {
+	/**
+	 * Gets an instance of the previous mask
+	 * @return P4A_Mask
+	 */
+	public function getPrevMask()
+	{
 	 	$num_masks = sizeof($this->masks_history);
-     	if ($num_masks > 0){
+		if ($num_masks > 0){
 			$mask_name = $this->masks_history[$num_masks-1];
 			return $this->masks->$mask_name;
-     	}
-     }
-     
-     /**
-      * @return string
-      */
-     public function getPopupMaskName()
-     {
-     	return $this->_popup;
-     }
-     
-     /**
-      * @return P4A_Mask
-      */
-     public function getPopupMask()
-     {
-     	return p4a_mask::singleton($this->_popup);
-     }
-     
+		}
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPopupMaskName()
+	{
+		return $this->_popup;
+	}
+	
+	/**
+	 * @return P4A_Mask
+	 */
+	public function getPopupMask()
+	{
+		return p4a_mask::singleton($this->_popup);
+	}
+	
 	/**
 	 * @param string $mask_name
 	 * @return boolean
@@ -819,12 +788,10 @@ class P4A extends P4A_Object
 
 	/**
 	 * @return string
+	 * @deprecated 
 	 */
 	public function getFocusedObjectId()
 	{
-		if ($this->_popup) {
-			return p4a_mask::singleton($this->_popup)->getFocusedObjectId();
-		}
 		return $this->active_mask->getFocusedObjectId();
 	}
 	

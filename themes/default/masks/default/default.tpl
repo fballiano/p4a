@@ -81,9 +81,6 @@
 	<div id="footerContainer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?></div>
 </div>
 
-<!-- POPUP -->
-<div style="display:block"><div id="p4a_popup" style="display:none"><?php echo $_popup?></div></div>
-
 <?php echo $this->maskClose()?>
 </div>
 

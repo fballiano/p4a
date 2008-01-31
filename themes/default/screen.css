@@ -11,8 +11,8 @@ body {
 }
 
 #sheetContainer>* {
-	margin-left:auto;
-	margin-right:auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #topContainer {
@@ -27,8 +27,8 @@ body {
 }
 
 #top {
-	background-color: #FAFAFA;
-	border-bottom: 1px solid #CCC;
+	background-color: #fafafa;
+	border-bottom: 1px solid #ccc;
 	padding: 2px;
 	clear: both;
 }
@@ -47,7 +47,7 @@ body {
 * {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #4B718A;
+	color: #4b718a;
 }
 
 .radio {
@@ -428,9 +428,10 @@ legend {
 	text-decoration: underline;
 }
 
-/****************/
-/* DB NAVIGATOR */
-/****************/
+/********************/
+/* P4A_DB_Navigator */
+/********************/
+
 .p4a_db_navigator {
 	text-align: left;
 	font-weight: normal;
@@ -489,43 +490,23 @@ legend {
 /* POPUP */
 /*********/
 
-#p4a_popup {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin:auto;
-	padding: 0;
-	background:white;
-	z-index: 100;
-	text-align: center;
-	border: 2px solid #4B718A;
+body.p4a_popup {
+	background: #f6f6f6;
+	margin-top: 50px;
 }
 
-* html #p4a_popup {
-	position: absolute;
+body.p4a_popup #sheetContainer {
+	background: white;
+	border: 2px solid #4b718a;
+	padding-bottom: 20px;
 }
 
-#p4a_popup h2 {
-	background: #F4F7FA;
-	margin: 0;
+body.p4a_popup h2 {
+	background: #eee;
+	margin-top: 0;
+	margin-bottom: 20px;
 	line-height: 32px;
-}
-
-#p4a_popup #sheetContainerPopup {
-	margin: 20px;
-}
-
-.jqmOverlay {
-	background-color: #eee;
-}
-
-* iframe.jqm {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -1;
-	width: expression(this.parentNode.offsetWidth+'px');
-	height: expression(this.parentNode.offsetHeight+'px');
+	padding-left: 32px;
 }
 
 /****************/

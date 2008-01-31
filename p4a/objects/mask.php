@@ -159,7 +159,7 @@ class P4A_Mask extends P4A_Object
 		$this->build("P4A_Button", "close_popup_button");
 		$this->close_popup_button->addAjaxAction("onclick");
 		$this->close_popup_button->setIcon("exit");
-		P4A::singleton()->intercept($this->close_popup_button, "onclick", "closePopup");
+		$this->close_popup_button->implementMethod('onclick', P4A::singleton(), 'showPrevMask');
 
 		$this->title = ucwords(str_replace('_', ' ', $this->getName())) ;
 		$this->useTemplate('default');
@@ -346,11 +346,6 @@ class P4A_Mask extends P4A_Object
 		}
 
 		extract($this->_temp_vars);
-
-		$_popup = '';
-		if ($p4a->isPopupOpened() and !$this->isPopup()) {
-			$_popup = $p4a->getPopupMask()->getAsString();
-		}
 
 		ob_start();
 		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.tpl";

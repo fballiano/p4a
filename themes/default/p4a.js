@@ -107,6 +107,11 @@ p4a_ajax_process_response = function (response)
 
 p4a_ajax_error = function ()
 {
+	p4a_refresh();
+}
+
+p4a_refresh = function ()
+{
 	document.location = 'index.php';
 }
 
@@ -118,34 +123,6 @@ p4a_loading_show = function ()
 p4a_loading_hide = function ()
 {
 	$('#p4a_loading').hide();
-}
-
-p4a_popup_show = function ()
-{
-	p4a_popup_handler = $('#p4a_popup');
-	if (p4a_popup_handler.children().size() == 0) return;
-
-	p4a_popup_handler.css('left', 100000).show();
-	var width = p4a_popup_handler.width();
-	var height = p4a_popup_handler.outerHeight();
-	var top = $(window).scrollTop() + (($(window).height() - height - 100) / 2) + "px";
-	var left = (($(window).width() - p4a_popup_handler.width()) / 2) + "px";
-	
-	p4a_popup_handler
-		.hide()
-		.css('width', width)
-		.css('height', height)
-		.css('top', top)
-		.css('left', left);
-	$('#p4a_popup #p4a_popup_close_handler').css('float', 'right');
-	p4a_popup_handler
-		.jqm({modal:true, overlay:100})
-		.jqmShow();
-}
-
-p4a_popup_hide = function ()
-{
-	p4a_popup_handler.jqmHide();
 }
 
 p4a_tooltip_show = function (handler, text_id)
@@ -222,7 +199,6 @@ $(document).ajaxStop(p4a_loading_hide);
 $(document).ajaxError(p4a_ajax_error);
 
 $(function () {
-	p4a_popup_show();
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
 });
