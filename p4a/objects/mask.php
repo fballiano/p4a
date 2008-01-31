@@ -784,4 +784,69 @@ class P4A_Mask extends P4A_Object
 	{
 		return $this->focus_object_id;
 	}
+	
+	/**
+	 * Adds the "not empty" validator to the passed field
+	 *
+	 * @param string|P4A_Field $field_name
+	 */
+	public function setRequiredField($field)
+	{
+		if (is_string($field)) {
+			$field =& $this->fields->$field;
+		}
+		$field->addValidator(new Zend_Validate_NotEmpty, true);
+		$field->label->setStyleProperty('font-weight', 'bold');
+	}
+
+	/**
+	 * Calls the isValid() method for every field.
+	 * If a field does not pass validation sets its error message.
+	 * @return boolean
+	 */
+	public function validateFields()
+	{
+		$return = true;
+		while ($field = $this->fields->nextItem()) {
+			$validation_results = $field->isValid();
+			if ($validation_results !== true) {
+				foreach ($validation_results as &$message) {
+					$message = $message;
+				}
+				$field->setError(join('. ', $validation_results) . '.');
+				$return = false;
+			}
+		}
+		return $return;
+	}
+	
+	/**
+	 * Prints out a warning message (with a warning icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 */
+	public function warning($message)
+	{
+		P4A::singleton()->message($message, 'warning');
+	}
+	
+	/**
+	 * Prints out an error message (with an error icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 */
+	public function error($message)
+	{
+		P4A::singleton()->message($message, 'error');
+	}
+	
+	/**
+	 * Prints out an info message (with an info icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 */
+	public function info($message)
+	{
+		P4A::singleton()->message($message, 'info');
+	}
 }

@@ -52,38 +52,4 @@ class P4A_Base_Mask extends P4A_Mask
 		$this->frame->setWidth(730);
 		$this->display('main', $this->frame);
 	}
-
-	public function setRequiredField($field_name)
-	{
-		$this->fields->$field_name->addValidator(new Zend_Validate_NotEmpty, true);
-		$this->fields->$field_name->label->setStyleProperty('font-weight', 'bold');
-	}
-
-	public function validateFields()
-	{
-		while ($field = $this->fields->nextItem()) {
-			$validation_results = $field->isValid();
-			if ($validation_results !== true) {
-				foreach ($validation_results as &$message) {
-					$message = __($message);
-				}
-				$field->setError(join('. ', $validation_results) . '.');
-			}
-		}
-	}
-	
-	public function warning($message)
-	{
-		P4A::singleton()->message($message, 'warning');
-	}
-	
-	public function error($message)
-	{
-		P4A::singleton()->message($message, 'error');
-	}
-	
-	public function info($message)
-	{
-		P4A::singleton()->message($message, 'info');
-	}
 }

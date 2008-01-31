@@ -123,25 +123,30 @@ p4a_loading_hide = function ()
 
 p4a_popup_show = function ()
 {
-	p4a_popup = $('#p4a_popup');
-	if (p4a_popup.children().size() == 0) return;
+	p4a_popup_handler = $('#p4a_popup');
+	if (p4a_popup_handler.children().size() == 0) return;
 
-	p4a_popup.css('left', 100000).show();
-	var width = p4a_popup.width();
-	var top = $(window).scrollTop() + (($(window).height() - p4a_popup.outerHeight() - 100) / 2) + "px";
-	var left = (($(window).width() - p4a_popup.width()) / 2) + "px";
-	p4a_popup.hide();
-
-	p4a_popup.css('width', width);
-	p4a_popup.css('top', top);
-	p4a_popup.css('left', left);
-	$('#popupCloseHandler').css('float', 'right');
-	p4a_popup.jqm({modal:true}).jqmShow();
+	p4a_popup_handler.css('left', 100000).show();
+	var width = p4a_popup_handler.width();
+	var height = p4a_popup_handler.outerHeight();
+	var top = $(window).scrollTop() + (($(window).height() - height - 100) / 2) + "px";
+	var left = (($(window).width() - p4a_popup_handler.width()) / 2) + "px";
+	
+	p4a_popup_handler
+		.hide()
+		.css('width', width)
+		.css('height', height)
+		.css('top', top)
+		.css('left', left);
+	$('#p4a_popup #p4a_popup_close_handler').css('float', 'right');
+	p4a_popup_handler
+		.jqm({modal:true, overlay:100})
+		.jqmShow();
 }
 
 p4a_popup_hide = function ()
 {
-	p4a_popup.jqmHide();
+	p4a_popup_handler.jqmHide();
 }
 
 p4a_tooltip_show = function (handler, text_id)

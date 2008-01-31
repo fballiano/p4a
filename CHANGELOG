@@ -6,8 +6,8 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - redo the css
-- move setRequiredField, validateFields, warning, error, and info methods from p4a_base_mask to p4a_mask?
 - change field's error message and show it as a tooltip (with an error icon)
+- check ajax calls within popup
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -178,6 +178,8 @@
 - P4A_Base_Mask::setRequiredField() method now relies on Zend_Validator_NotEmpty
 - P4A_Base_Mask::checkRequiredFields() method was renamed to validateFields() and now checks all validators chains for all fields and not only required fields
 - all javascripts were refactored
+- javascript/css popup management was reworked
+- P4A_Base_Mask::setRequiredField(), validateFields(), warning(), error() and info() methods were moved to P4A_Mask
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
