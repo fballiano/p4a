@@ -493,7 +493,7 @@ abstract class P4A_Widget extends P4A_Object
 	 * @param boolean $check_enabled_state
 	 * @return string
 	 */
-	protected function composeStringActions($params = null, $check_enabled_state = true)
+	public function composeStringActions($params = null, $check_enabled_state = true)
 	{
 		$sParams = '';
 		$sActions = '';
