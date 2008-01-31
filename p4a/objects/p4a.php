@@ -829,7 +829,7 @@ class P4A extends P4A_Object
 	public function getFocusedObjectId()
 	{
 		if ($this->_popup) {
-			return p4a_mask::singleton($this->_popup)->focus_object_id;
+			return p4a_mask::singleton($this->_popup)->getFocusedObjectId();
 		}
 		return $this->active_mask->getFocusedObjectId();
 	}
