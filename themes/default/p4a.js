@@ -49,7 +49,7 @@ p4a_keypressed_get = function (event)
 	return (window.event) ? event.keyCode : event.which;
 }
 
-p4a_set_focus = function (id)
+p4a_focus_set = function (id)
 {
 	try {
 		document.forms['p4a'].elements[id].focus();
@@ -224,4 +224,5 @@ $(document).ajaxError(p4a_ajax_error);
 $(function () {
 	p4a_popup_show();
 	p4a_messages_show();
+	setTimeout(p4a_loading_hide, 1000);
 });

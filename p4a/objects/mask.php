@@ -772,7 +772,7 @@ class P4A_Mask extends P4A_Object
 		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
 		'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
 		'$.datepicker._defaults["firstDay"] = ' . $p4a_i18n->getFirstDayOfTheWeek() . ";\n" .
-		'p4a_set_focus("' . P4A::singleton()->getFocusedObjectId() . '");' . "\n" .
+		'p4a_focus_set("' . P4A::singleton()->getFocusedObjectId() . '");' . "\n" .
 		'});' . "\n" .
 		'</script>';
 	}
