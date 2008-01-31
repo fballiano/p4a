@@ -52,8 +52,7 @@ require_once "$dir/libraries/standard.php";
 require_once "$dir/libraries/check_configuration.php";
 require_once "$dir/libraries/p4a_db_select.php";
 require_once "$dir/libraries/p4a_db_table.php";
-require_once "$dir/libraries/Zend/Validate.php";
-require_once "$dir/libraries/Zend/Validate/NotEmpty.php";
+require_once "$dir/libraries/validate.php";
 
 //Core
 require_once "$dir/p4a_object.php";

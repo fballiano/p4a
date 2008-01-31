@@ -7,7 +7,6 @@
 - implement errors with exceptions
 - redo the css
 - fix field's error message that breaks its css
-- translate ZF_Validate error messages
 - check ajax calls within popup
 
 2.99.0
@@ -181,6 +180,9 @@
 - all javascripts were refactored
 - javascript/css popup management was reworked
 - P4A_Base_Mask::setRequiredField(), validateFields(), warning(), error() and info() methods were moved to P4A_Mask
+- P4A_Validate_Alnum, P4A_Validate_Alpha, P4A_Validate_Between, P4A_Validate_Ccnum, P4A_Validate_Date, P4A_Validate_Digits, P4A_Validate_EmailAddress, P4A_Validate_Float, P4A_Validate_GreaterThan, P4A_Validate_Hex, 
+  P4A_Validate_Hostname, P4A_Validate_InArray, P4A_Validate_Int, P4A_Validate_Ip, P4A_Validate_LessThan, P4A_Validate_NotEmpty, P4A_Validate_Regex and P4A_Validate_StringLength classes were added.
+  These classes rely on Zend_Validate_* classes but we need them to allow translation of error messages
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

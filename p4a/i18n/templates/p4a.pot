@@ -99,3 +99,114 @@ msgstr ""
 
 msgid "Go to the last page"
 msgstr ""
+
+msgid "'%value%' is less than %min% characters long"
+msgstr ""
+
+msgid "'%value%' is greater than %max% characters long"
+msgstr ""
+
+msgid "'%value%' does not match against pattern '%pattern%'"
+msgstr ""
+
+msgid "Value is empty, but a non-empty value is required"
+msgstr ""
+
+msgid "'%value%' is not less than '%max%'"
+msgstr ""
+
+msgid "'%value%' does not appear to be a valid IP address"
+msgstr ""
+
+msgid "'%value%' does not appear to be an integer"
+msgstr ""
+
+msgid "'%value%' was not found in the haystack"
+msgstr ""
+
+msgid "'%value%' appears to be an IP address, but IP addresses are not allowed"
+msgstr ""
+
+msgid "'%value%' appears to be a DNS hostname but cannot match TLD against known list"
+msgstr ""
+
+msgid "'%value%' appears to be a DNS hostname but contains a dash (-) in an invalid position"
+msgstr ""
+
+msgid "'%value%' appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr ""
+
+msgid "'%value%' appears to be a DNS hostname but cannot extract TLD part"
+msgstr ""
+
+msgid "'%value%' does not match the expected structure for a DNS hostname"
+msgstr ""
+
+msgid "'%value%' does not appear to be a valid local network name"
+msgstr ""
+
+msgid "'%value%' appears to be a local network name but local network names are not allowed"
+msgstr ""
+
+msgid "'%value%' has not only hexadecimal digit characters"
+msgstr ""
+
+msgid "'%value%' is not greater than '%min%'"
+msgstr ""
+
+msgid "'%value%' does not appear to be a float"
+msgstr ""
+
+msgid "'%value%' is not a valid email address in the basic format local-part@hostname"
+msgstr ""
+
+msgid "'%hostname%' is not a valid hostname for email address '%value%'"
+msgstr ""
+
+msgid "'%hostname%' does not appear to have a valid MX record for the email address '%value%'"
+msgstr ""
+
+msgid "'%localPart%' not matched against dot-atom format"
+msgstr ""
+
+msgid "'%localPart%' not matched against quoted-string format"
+msgstr ""
+
+msgid "'%localPart%' is not a valid local part for email address '%value%'"
+msgstr ""
+
+msgid "'%value%' contains not only digit characters"
+msgstr ""
+
+msgid "'%value%' is an empty string"
+msgstr ""
+
+msgid "'%value%' is not of the format YYYY-MM-DD"
+msgstr ""
+
+msgid "'%value%' does not appear to be a valid date"
+msgstr ""
+
+msgid "'%value%' must contain between 13 and 19 digits"
+msgstr ""
+
+msgid "Luhn algorithm (mod-10 checksum) failed on '%value%'"
+msgstr ""
+
+msgid "'%value%' is not between '%min%' and '%max%', inclusively"
+msgstr ""
+
+msgid "'%value%' is not strictly between '%min%' and '%max%'"
+msgstr ""
+
+msgid "'%value%' has not only alphabetic characters"
+msgstr ""
+
+msgid "'%value%' is an empty string"
+msgstr ""
+
+msgid "'%value%' has not only alphabetic and digit characters"
+msgstr ""
+
+msgid "'%value%' is an empty string"
+msgstr ""

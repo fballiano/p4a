@@ -795,7 +795,7 @@ class P4A_Mask extends P4A_Object
 		if (is_string($field)) {
 			$field =& $this->fields->$field;
 		}
-		$field->addValidator(new Zend_Validate_NotEmpty, true);
+		$field->addValidator(new P4A_Validate_NotEmpty, true);
 		$field->label->setStyleProperty('font-weight', 'bold');
 	}
 
