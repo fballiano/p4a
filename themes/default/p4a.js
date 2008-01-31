@@ -225,5 +225,4 @@ $(document).ajaxError(p4a_ajax_error);
 $(function () {
 	p4a_popup_show();
 	p4a_messages_show();
-	setTimeout(p4a_loading_hide, 1000);
 });

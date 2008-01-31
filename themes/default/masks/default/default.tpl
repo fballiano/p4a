@@ -27,7 +27,7 @@
 <?php echo $this->getP4AJavascript() ?>
 </head>
 
-<body>
+<body onload="p4a_loading_hide()">
 <div id='body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <div class='p4a_system_messages'>
