@@ -243,10 +243,7 @@ class P4A extends P4A_Object
 	 */
 	public function isHandheld()
 	{
-		if (P4A_FORCE_HANDHELD_RENDERING) {
-			return true;
-		}
-
+		if (P4A_FORCE_HANDHELD_RENDERING) return true;
 		return $this->handheld;
 	}
 
