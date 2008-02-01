@@ -7,6 +7,8 @@
 - implement errors with exceptions
 - redo the css
 - fix field's error message that breaks its css
+- validateFields could be put in the mask' saveRow?
+- rewrite ajax management to have every action done via ajax and redesign all the mask
 
 2.99.0
 - Zend Framework 1.0.3 was added
