@@ -1,14 +1,16 @@
 3.0.0 TODO
 - implement application level translations
 - port products_catalogue to the new translation system
-- change p4a_table_col image handling, we've to pass by index.php and not phpthumb.php
 - implement p4a_table::addCheckboxCol
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
-- redo the css
+- reorganize screen.css and remove color1 background1 and so on
+- add a css reset
 - fix field's error message that breaks its css
 - validateFields could be put in the mask' saveRow?
 - rewrite ajax management to have every action done via ajax and redesign all the mask
+- do the new logo
+- replace the "running applications" page with a "p4a is installed" page
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -186,6 +188,7 @@
   These classes rely on Zend_Validate_* classes but we need them to allow translation of error messages
 - P4A::isPopupOpened() and getFocusedObjectId() methods are now marked as deprecated
 - popup system was completely rewritten
+- when generating image thumbnails now we pass by the application's index file instead of directly linking phpthumb
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

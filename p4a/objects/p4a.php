@@ -429,6 +429,7 @@ class P4A extends P4A_Object
 			echo "</table>";
 		} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
 			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/connectors/php/connector.php';
+			die();
 		} elseif (isset($_REQUEST['_upload_path'])) {
 			$path = P4A_UPLOADS_PATH;
 			if (isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
@@ -437,7 +438,8 @@ class P4A extends P4A_Object
 					$path .= '/' . $object->getUploadSubpath();
 				}
 			}
-			print preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
+			echo preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
+			die();
 		} elseif (isset($_REQUEST['_p4a_autocomplete'])) {
 			if (isset($_REQUEST['_object']) and
 				isset($_REQUEST['q']) and
@@ -456,11 +458,25 @@ class P4A extends P4A_Object
 				$all = $data->getAll();
 				$data->setWhere($old_where);
 				foreach ($all as $row) {
-					print "{$row[$description_field]}\n";
+					echo "{$row[$description_field]}\n";
 				}
 			}
+			die();
 		} elseif (isset($_REQUEST['_p4a_date_format'])) {
-			print $this->i18n->format($_REQUEST['_p4a_date_format'], 'date');
+			echo $this->i18n->format($_REQUEST['_p4a_date_format'], 'date');
+			die();
+		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
+			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
+			require P4A_ROOT_DIR . '/p4a/libraries/phpthumb/phpthumb.class.php';
+			$phpThumb = new phpThumb();
+			$phpThumb->config_document_root = null;
+			$phpThumb->config_allow_src_above_docroot = true;
+			$phpThumb->setSourceFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]));
+			$phpThumb->w = $image_data[1];
+			$phpThumb->h = $image_data[2];
+			$phpThumb->generateThumbnail();
+			$phpThumb->outputThumbnail();
+			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 			$this->_action_history_id++;
 			$this->active_mask->main();
@@ -473,7 +489,7 @@ class P4A extends P4A_Object
 		flush();
 	}
 
-	public function raiseXMLResponse()
+	private function raiseXMLResponse()
 	{
 		ob_start();
 		$script_detector = '<script.*?>(.*?)<\/script>';

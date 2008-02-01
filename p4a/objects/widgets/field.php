@@ -1175,7 +1175,7 @@ class P4A_Field extends P4A_Widget
 		$mime_type = $mime_type[0];
 		if ($mime_type != 'image') return $this->getAsFile();
 
-		$src = P4A_UPLOADS_URL . $this->getNewValue(1);
+		$src = $this->getNewValue(1);
 		$width = $this->getNewValue(4);
 		$str_width = '';
 		$height = $this->getNewValue(5);
@@ -1195,9 +1195,9 @@ class P4A_Field extends P4A_Widget
 
 		$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
 		if (P4A_GD) {
-			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_ROOT_PATH . '/p4a/libraries/phpthumb/phpThumb.php?src=' . $src . '&amp;w=' . $width . '&amp;h=' . $height . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		} else {
-			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		}
 		$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 		$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
