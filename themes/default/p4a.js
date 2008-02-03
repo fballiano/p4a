@@ -34,6 +34,7 @@ p4a_rte_update_all_instances = function (form)
 p4a_event_execute = function (object_name, action_name, param1, param2, param3, param4)
 {
 	p4a_event_execute_prepare(object_name, action_name, 0, param1, param2, param3, param4);
+	document.getElementById('p4a').target = '';
 	document.getElementById('p4a')._ajax.value = 0;
 	document.getElementById('p4a').submit();
 }
