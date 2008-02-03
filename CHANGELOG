@@ -191,6 +191,7 @@
 - when generating image thumbnails now we pass by the application's index file instead of directly linking phpthumb
 - phpThumb was updated to 1.7.8
 - jQuery::form was updated to 2.0.3
+- ajax upload was enabled again
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

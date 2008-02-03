@@ -1048,11 +1048,8 @@ class P4A_Field extends P4A_Widget
 		$id = $this->getID();
 
 		if ($this->getNewValue() === null) {
-			//if ($p4a->isAjaxEnabled()) {
-			//	$action = 'p4a_event_execute_ajax';
-			//} else {
-				$action = 'p4a_event_execute';
-			//}
+			$action = 'p4a_event_execute';
+			if (P4A_AJAX_ENABLED and $p4a->isAjaxEnabled()) $action .= '_ajax';
 			$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
 			$this->intercept($this, 'onchange', 'redesign');
 			if (!$this->isEnabled()) {

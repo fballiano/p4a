@@ -348,7 +348,7 @@ class P4A extends P4A_Object
 
 			foreach ($_REQUEST as $key=>$value) {
 				if (substr($key, 0, 3) == 'fld') {
-					if (in_array($this->objects[$key]->getType(), array('file','image')) && strlen($value) == 0) {
+					if ($this->objects[$key]->getType() == 'file' and strlen($value) == 0) {
 						$this->objects[$key]->setNewValue(null);
 						continue;
 					}
