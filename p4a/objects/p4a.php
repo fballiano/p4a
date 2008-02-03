@@ -163,6 +163,7 @@ class P4A extends P4A_Object
 		$this->build("P4A_Collection", "masks");
 		$this->browser_identification = $this->detectClient();
 
+		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
@@ -174,25 +175,25 @@ class P4A extends P4A_Object
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/interface.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
 			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
-			$this->addCss(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
+			$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
 			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
 			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
 			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 
-		$this->addCss(P4A_THEME_PATH . "/screen.css", "all");
-		$this->addCss(P4A_THEME_PATH . "/screen.css", "print");
-		$this->addCss(P4A_THEME_PATH . "/print.css", "print");
-		$this->addCss(P4A_THEME_PATH . "/handheld.css", "handheld");
+		$this->addCSS(P4A_THEME_PATH . "/screen.css", "all");
+		$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
+		$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
+		$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
 
 		if ($this->isInternetExplorer()) {
-			$this->addCss(P4A_THEME_PATH . "/iehacks.css");
+			$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
 		}
 
 		if ($this->isHandheld()) {
 			$this->css = array();
-			$this->addCss(P4A_THEME_PATH . "/handheld.css");
+			$this->addCSS(P4A_THEME_PATH . "/handheld.css");
 		}
 
 		if ($this->isInternetExplorer() and !$this->browser_identification['ie7up'] and !$this->isHandheld()) {

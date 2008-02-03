@@ -5,7 +5,6 @@
 - p4a_table action col should also support html (for images)
 - implement errors with exceptions
 - reorganize screen.css and remove color1 background1 and so on
-- add a css reset
 - fix field's error message that breaks its css
 - validateFields could be put in the mask' saveRow?
 - rewrite ajax management to have every action done via ajax and redesign all the mask
@@ -193,6 +192,7 @@
 - jQuery::form was updated to 2.0.3
 - ajax upload was enabled again
 - a bug with getID3 was solved, now we catch the exception triggered when file is not recognized and simply go on
+- YAHOO YUI CSS reset was added
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
