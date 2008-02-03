@@ -1,6 +1,6 @@
 /*
  * jQuery Form Plugin
- * version: 2.01 (10/31/2007)
+ * version: 2.03 (01/20/2008)
  * @requires jQuery v1.1 or later
  *
  * Examples at: http://malsup.com/jquery/form/
@@ -291,13 +291,9 @@ $.fn.ajaxSubmit = function(options) {
 
         // take a breath so that pending repaints get some cpu time before the upload starts
         setTimeout(function() {
-            $io.appendTo('body');
-            // jQuery's event binding doesn't work for iframe events in IE
-            io.attachEvent ? io.attachEvent('onload', cb) : io.addEventListener('load', cb, false);
-
             // make sure form attrs are set
             var encAttr = form.encoding ? 'encoding' : 'enctype';
-            var t = $form.attr('target');
+            var t = $form.attr('target'), a = $form.attr('action');
             $form.attr({
                 target:   id,
                 method:  'POST',
@@ -309,8 +305,12 @@ $.fn.ajaxSubmit = function(options) {
             if (opts.timeout)
                 setTimeout(function() { timedOut = true; cb(); }, opts.timeout);
 
+            // add iframe to doc and submit the form
+            $io.appendTo('body');
+            io.attachEvent ? io.attachEvent('onload', cb) : io.addEventListener('load', cb, false);
             form.submit();
-            $form.attr('target', t); // reset target
+            // reset attrs
+            $form.attr({ action: a, target: t });
         }, 10);
 
         function cb() {
