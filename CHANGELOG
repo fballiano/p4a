@@ -192,6 +192,7 @@
 - phpThumb was updated to 1.7.8
 - jQuery::form was updated to 2.0.3
 - ajax upload was enabled again
+- a bug with getID3 was solved, now we catch the exception triggered when file is not recognized and simply go on
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
