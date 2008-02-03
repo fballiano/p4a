@@ -365,18 +365,21 @@ class P4A extends P4A_Object
 
 			foreach ($_FILES as $key=>$value) {
 				$extension = P4A_Get_File_Extension($value['name']);
-				if (P4A_Is_Extension_Allowed($extension)) {
+				if (P4A_Is_Extension_Allowed($extension) and in_array($value['error'], array(UPLOAD_ERR_OK, UPLOAD_ERR_NO_FILE))) {
+					if ($value['error'] == UPLOAD_ERR_NO_FILE) continue;
 					$value['name'] = str_replace( ',', ';', $value['name'] );
 					$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
 					move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'];
 
-					if ((substr($key, 0, 3) == 'fld') and ($value['error'] == 0)) {
+					if ((substr($key, 0, 3) == 'fld')) {
 						$width = $height = null;
 						require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3/getid3.php";
 						$old_error_reporting = error_reporting(P4A_DEFAULT_MINIMAL_REPORTING);
-						$getid3 = new getID3();
-						$data = $getid3->analyze(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+						try {
+							$getid3 = new getID3();
+							$data = $getid3->analyze(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+						} catch (Exception $e) {}
 						error_reporting($old_error_reporting);
 						if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
 							$width = $data['video']['resolution_x'];
@@ -385,13 +388,9 @@ class P4A extends P4A_Object
 						$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 						$this->objects[$key]->setNewValue('{' . $new_value . '}');
 						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
-					} elseif ($value['error'] != 4) {
-						$e = new P4A_Error("Error uploading files", $this);
-						if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
-							die();
-						}
 					}
 				} else {
+					print_r($value);die();
 					$e = new P4A_Error("Uploading $extension files is denied", $this);
 					if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
 						die();
