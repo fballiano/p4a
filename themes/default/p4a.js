@@ -158,9 +158,9 @@ p4a_calendar_open = function (id)
 {
 	var element = $('#'+id);
 	if(!element.hasClass($.datepicker.markerClassName)) {
-		element.datepicker();
+		element.attachDatepicker();
 	}
-	$.datepicker.showFor(element);
+	element.showDatepicker();
 	return false;
 }
 

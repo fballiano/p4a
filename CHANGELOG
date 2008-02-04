@@ -195,6 +195,7 @@
 - P4A_Mask::validateFields() method is now automatically called by P4A_Mask::saveRow()
 - P4A_Table::setTitle() and getTitle() methods were removed, use setLabel() and getLabel() instead
 - P4A_Field::setError() methods now fires a redesign event for the field
+- jQuery::UI::datepicker was updated to 3.3
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

@@ -10,12 +10,15 @@
 #datepicker_div {
 	display: none;
 	border: 1px solid #777;
-	z-index: 10; /*must have*/
+	z-index: 9999; /*must have*/
 }
 .datepicker_inline {
 	float: left;
 	display: block;
 	border: 0;
+}
+.datepicker_rtl {
+	direction: rtl;
 }
 .datepicker_dialog {
 	padding: 5px !important;
@@ -64,6 +67,10 @@ img.datepicker_trigger {
 	float: left;
 	width: 34%;
 }
+.datepicker_rtl .datepicker_clear, .datepicker_rtl .datepicker_prev {
+	float: right;
+	text-align: right;
+}
 .datepicker_current {
 	float: left;
 	width: 30%;
@@ -73,6 +80,10 @@ img.datepicker_trigger {
 	float: right;
 	width: 34%;
 	text-align: right;
+}
+.datepicker_rtl .datepicker_close, .datepicker_rtl .datepicker_next {
+	float: left;
+	text-align: left;
 }
 .datepicker_header {
 	padding: 1px 0 3px;
@@ -116,6 +127,9 @@ img.datepicker_trigger {
 }
 .datepicker_weekEndCell {
 	background: #ddd;
+}
+.datepicker_titleRow .datepicker_weekEndCell {
+	background: #777;
 }
 .datepicker_daysCellOver {
 	background: #fff;
