@@ -43,6 +43,6 @@ require_once 'Zend/Db/Table.php';
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
-class P4A_Db_Select extends Zend_Db_Select
+class P4A_DB_Select extends Zend_Db_Select
 {
 }
