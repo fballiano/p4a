@@ -485,12 +485,17 @@ class P4A_Mask extends P4A_Object
 	}
 
 	/**
-	 * Overwrites internal data with the data arriving from the submitted mask
+	 * Validate all fields and saves row to the data source
+	 * @return boolean
 	 */
 	public function saveRow()
 	{
-		$this->saveUploads();
-		$this->data->saveRow();
+		if ($this->validateFields()) {
+			$this->saveUploads();
+			$this->data->saveRow();
+			return true;
+		}
+		return false;
 	}
 
 	/**

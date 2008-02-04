@@ -6,7 +6,6 @@
 - implement errors with exceptions
 - reorganize screen.css and remove color1 background1 and so on
 - fix field's error message that breaks its css
-- validateFields could be put in the mask' saveRow?
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
@@ -193,6 +192,7 @@
 - ajax upload was enabled again
 - a bug with getID3 was solved, now we catch the exception triggered when file is not recognized and simply go on
 - YAHOO YUI CSS reset was added
+- P4A_Mask::validateFields() method is now automatically called by P4A_Mask::saveRow()
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
