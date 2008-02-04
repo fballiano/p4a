@@ -1,7 +1,7 @@
 <div class="border_box table_container" id="<?php echo $this->getId()?>" <?php echo $this->composeStringProperties()?>>
 	<table class="table" style="width: <?php echo $table_width?>" >
-		<?php if ($this->getTitle()): ?>
-		<caption><?php echo $this->getTitle()?></caption>
+		<?php if ($this->getLabel()): ?>
+		<caption><?php echo $this->getLabel()?></caption>
 		<?php endif; ?>
 
 		<col class="select" />

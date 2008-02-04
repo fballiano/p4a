@@ -161,15 +161,6 @@ class Products extends P4A_Base_Mask
 		$fields->description->enableUpload();
 	}
 
-	public function saveRow()
-	{
-		if (!$this->checkRequiredFields()) {
-			$this->warning("Please fill all required fields");
-		} else {
-			parent::saveRow();
-		}
-	}
-
 	public function search()
 	{
 		$value = $this->txt_search->getSQLNewValue();

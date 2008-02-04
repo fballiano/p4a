@@ -73,13 +73,4 @@ class Categories extends P4A_Base_Mask
 
 		$this->setFocus($this->fields->description);
 	}
-
-	public function saveRow()
-	{
-		if (!$this->checkMandatoryFields()) {
-			$this->warning("Please fill all required fields");
-		} else {
-			parent::saveRow();
-		}
-	}
 }

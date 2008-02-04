@@ -117,24 +117,6 @@ class P4A_Table extends P4A_Widget
 	}
 
 	/**
-	 * Sets the title for the table
-	 * @param string $title
-	 */
-	public function setTitle($title)
-	{
-		$this->_title = $title;
-	}
-
-	/**
-	 * Returns the title of the table
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->_title;
-	}
-
-	/**
 	 * Sets the data source that the table will navigate
 	 * @param P4A_Data_Source $data_source
 	 */
