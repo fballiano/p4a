@@ -197,6 +197,7 @@
 - P4A_Field::setError() methods now fires a redesign event for the field
 - jQuery::UI::datepicker was updated to 3.3
 - jQuery::interface was removed
+- jQuery::jqModal was removed
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

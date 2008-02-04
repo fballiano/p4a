@@ -118,7 +118,7 @@ p4a_refresh = function ()
 
 p4a_loading_show = function ()
 {
-	$('#p4a_loading').jqm({modal:true, overlay:0}).show();
+	$('#p4a_loading').show();
 }
 
 p4a_loading_hide = function ()
@@ -136,8 +136,8 @@ p4a_tooltip_show = function (handler, text_id)
 	tooltip.html('<div id="p4a_tooltip_inner_container">' + $('#' + text_id).html() + '</div>');
 	tooltip.css('top', handler.offset().top);
 	tooltip.css('left', handler.offset().left + handler.width() + 100);
-	tooltip.jqm({overlay:0}).jqmShow();
-	handler.mouseout(function() {tooltip.jqmHide()});
+	tooltip.show();
+	handler.mouseout(function() {tooltip.hide()});
 }
 
 p4a_colorpicker_toggle = function (id)

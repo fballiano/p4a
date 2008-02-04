@@ -171,7 +171,6 @@ class P4A extends P4A_Object
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
 		if (!$this->isHandheld()) {
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/jqmodal.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
 			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
 			$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
