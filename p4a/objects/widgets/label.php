@@ -95,7 +95,7 @@ class P4A_Label extends P4A_Widget
 		$tooltip_handler = '';
 		if ($tooltip_text) {
 			$tooltip_text = "<div id='{$id}_tt' class='hidden'>{$tooltip_text}</div>";
-			$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/warning.png' alt='' /> ";
+			$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/info.png' alt='' /> ";
 			$header .= " onmouseover='p4a_tooltip_show(this, \"{$id}_tt\")' ";
 		}
 
