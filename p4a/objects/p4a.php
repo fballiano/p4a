@@ -391,7 +391,6 @@ class P4A extends P4A_Object
 						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
 					}
 				} else {
-					print_r($value);die();
 					$e = new P4A_Error("Uploading $extension files is denied", $this);
 					if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
 						die();
@@ -427,6 +426,7 @@ class P4A extends P4A_Object
 				echo "<tr><td valign='top'>$k</td><td>$v</td></tr>";
 			}
 			echo "</table>";
+			die();
 		} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
 			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/connectors/php/connector.php';
 			die();
@@ -853,5 +853,10 @@ class P4A extends P4A_Object
 			$message = P4A_Generate_Widget_Layout_Table($icon, $text, 'p4a_message');
 		}
 		return $messages;
+	}
+	
+	public function __wakeup()
+	{
+		$this->messages = array();
 	}
 }
