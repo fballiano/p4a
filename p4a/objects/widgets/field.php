@@ -233,6 +233,7 @@ class P4A_Field extends P4A_Widget
 	public function setError($error = '')
 	{
 		$this->_error = $error;
+		$this->redesign();
 	}
 
 	/**
