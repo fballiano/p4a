@@ -837,6 +837,8 @@ class P4A_Table_Rows extends P4A_Widget
 						} else {
 							$aReturn[$i]['cells'][$j]['value'] = $value[0];
 						}
+					} else {
+						$aReturn[$i]['cells'][$j]['value'] = '';													
 					}
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				} elseif ($parent->cols->$col_name->getType() == "action") {
