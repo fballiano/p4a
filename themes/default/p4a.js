@@ -1,5 +1,9 @@
+p4a_working = true;
+
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
+	if (p4a_working) return;
+	p4a_working = true;
 	p4a_rte_update_all_instances(document.forms['p4a']);
 
 	if (!param1) param1 = "";
@@ -101,6 +105,7 @@ p4a_ajax_process_response = function (response)
 		}
 		
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
+		p4a_working = false;
 	} catch (e) {
 		p4a_ajax_error();
 	}
@@ -202,4 +207,5 @@ $(document).ajaxError(p4a_ajax_error);
 $(function () {
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
+	p4a_working = false;
 });

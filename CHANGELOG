@@ -198,6 +198,7 @@
 - jQuery::UI::datepicker was updated to 3.3
 - jQuery::interface was removed
 - jQuery::jqModal was removed
+- a simple javascript trick was implemented to avoid concurrent clicks on the interface
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
