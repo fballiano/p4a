@@ -117,12 +117,6 @@ class P4A extends P4A_Object
 	private $internet_explorer = false;
 
 	/**
-	 * Find wich browser is the user using
-	 * @var array
-	 */
-	private $browser_identification = array();
-
-	/**
 	 * Counter to avoid browser's back/forward
 	 * @var integer
 	 */
@@ -161,7 +155,7 @@ class P4A extends P4A_Object
 		$this->i18n =& new p4a_i18n(P4A_LOCALE);
 
 		$this->build("P4A_Collection", "masks");
-		$this->browser_identification = $this->detectClient();
+		$browser_identification = $this->detectClient();
 
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
@@ -194,7 +188,7 @@ class P4A extends P4A_Object
 			$this->addCSS(P4A_THEME_PATH . "/handheld.css");
 		}
 
-		if ($this->isInternetExplorer() and !$this->browser_identification['ie7up'] and !$this->isHandheld()) {
+		if ($this->isInternetExplorer() and !$browser_identification['ie7up'] and !$this->isHandheld()) {
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
 			$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
