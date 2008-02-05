@@ -4,29 +4,25 @@ p4a_event_execute_prepare = function (object_name, action_name, param1, param2, 
 {
 	if (p4a_working) return;
 	p4a_working = true;
-	p4a_rte_update_all_instances(document.forms['p4a']);
+	p4a_rte_update_all_instances();
 
 	if (!param1) param1 = "";
 	if (!param2) param2 = "";
 	if (!param3) param3 = "";
 	if (!param4) param4 = "";
 
-	var f = document.getElementById('p4a');
-
-	f._object.value = object_name;
-	f._action.value = action_name;
-	f.param1.value = param1;
-	f.param2.value = param2;
-	f.param3.value = param3;
-	f.param4.value = param4;
-
-	if (typeof f.onsubmit == "function") f.onsubmit();
+	p4a_form._object.value = object_name;
+	p4a_form._action.value = action_name;
+	p4a_form.param1.value = param1;
+	p4a_form.param2.value = param2;
+	p4a_form.param3.value = param3;
+	p4a_form.param4.value = param4;
 }
 
-p4a_rte_update_all_instances = function (form)
+p4a_rte_update_all_instances = function ()
 {
-	for (i=0; i<form.elements.length; i++) {
-		var e = form.elements[i];
+	for (var i=0; i<p4a_form.elements.length; i++) {
+		var e = p4a_form.elements[i];
 		if (e.type == 'textarea') {
 			try {
 				FCKeditorAPI.GetInstance(e.id).UpdateLinkedField();
@@ -38,9 +34,9 @@ p4a_rte_update_all_instances = function (form)
 p4a_event_execute = function (object_name, action_name, param1, param2, param3, param4)
 {
 	p4a_event_execute_prepare(object_name, action_name, 0, param1, param2, param3, param4);
-	document.getElementById('p4a').target = '';
-	document.getElementById('p4a')._ajax.value = 0;
-	document.getElementById('p4a').submit();
+	p4a_form.target = '';
+	p4a_form._ajax.value = 0;
+	p4a_form.submit();
 }
 
 p4a_keypressed_is_return = function (event)
@@ -76,7 +72,7 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 p4a_ajax_process_response = function (response)
 {
 	try {
-		document.forms['p4a']._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
+		p4a_form._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
 
 		var widgets = response.getElementsByTagName('widget');
 		for (i=0; i<widgets.length; i++) {
@@ -172,7 +168,7 @@ p4a_calendar_open = function (id)
 p4a_calendar_select = function (value_id, description_id)
 {
 	$.get(
-		$('#p4a').attr('action'),
+		p4a_form.action,
 		{_p4a_date_format: $('#'+value_id).attr('value')},
 		function (new_value) {
 			$('#'+description_id).attr('value', new_value);
@@ -205,6 +201,7 @@ $(document).ajaxStop(p4a_loading_hide);
 $(document).ajaxError(p4a_ajax_error);
 
 $(function () {
+	p4a_form = $('#p4a')[0];
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
 	p4a_working = false;
