@@ -196,12 +196,12 @@ p4a_messages_show = function ()
 		});
 }
 
-$(document).ajaxStart(p4a_loading_show);
-$(document).ajaxStop(p4a_loading_hide);
-$(document).ajaxError(p4a_ajax_error);
-
 $(function () {
 	p4a_form = $('#p4a')[0];
+	$(document)
+		.ajaxStart(p4a_loading_show)
+		.ajaxStop(p4a_loading_hide)
+		.ajaxError(p4a_ajax_error);
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
 	p4a_working = false;
