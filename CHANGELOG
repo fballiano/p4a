@@ -9,7 +9,8 @@
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
-- bgiframe for ie6 on system messages and tooltips 
+- bgiframe for ie6 on system messages and tooltips
+- table action cols should not use setValue to set labels!
 
 2.99.0
 - Zend Framework 1.0.3 was added
