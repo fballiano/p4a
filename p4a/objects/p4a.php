@@ -186,7 +186,6 @@ class P4A extends P4A_Object
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
 
 		if ($this->isInternetExplorer()) {
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
 			$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
 		}
 
@@ -196,6 +195,7 @@ class P4A extends P4A_Object
 		}
 
 		if ($this->isInternetExplorer() and !$this->browser_identification['ie7up'] and !$this->isHandheld()) {
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
 			$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
 		}
