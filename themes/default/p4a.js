@@ -137,6 +137,7 @@ p4a_tooltip_show = function (handler, text_id)
 	tooltip.html('<div id="p4a_tooltip_inner_container">' + $('#' + text_id).html() + '</div>');
 	tooltip.css('top', handler.offset().top);
 	tooltip.css('left', handler.offset().left + handler.width() + 100);
+	if (tooltip.bgiframe) tooltip.bgiframe();
 	tooltip.show();
 	handler.mouseout(function() {tooltip.hide()});
 }
@@ -188,12 +189,20 @@ p4a_messages_show = function ()
 	p4a_system_messages
 		.css('top', $(window).scrollTop() + 20)
 		.css('left', left)
-		.fadeIn('normal')
-		.animate({opacity: 1.0}, 2000)
-		.fadeOut('normal', function() {
+		.fadeIn('normal');
+	
+	if (p4a_system_messages.bgiframe) {
+		p4a_system_messages
+			.bgiframe()
+			.ifixpng();
+	}
+	
+	setTimeout(function () {
+		$('.p4a_system_messages:visible').fadeOut('normal', function() {
 			$(this).hide().remove();
 			p4a_messages_show();
 		});
+	}, 2000);
 }
 
 $(function () {

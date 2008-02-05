@@ -9,7 +9,6 @@
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
-- bgiframe for ie6 on system messages and tooltips
 - table action cols should not use setValue to set labels!
 
 2.99.0
@@ -201,6 +200,7 @@
 - jQuery::interface was removed
 - jQuery::jqModal was removed
 - a simple javascript trick was implemented to avoid concurrent clicks on the interface
+- jQuery::bgiframe plugin was added and implemented (only for ie6) for tooltips and system messages
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
