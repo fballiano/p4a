@@ -70,22 +70,22 @@ class P4A_Label extends P4A_Widget
 		if (!$this->isVisible()) {
 			return "<span id='$id' class='hidden'></span>";
 		}
+		
+		$css_classes = $this->getCSSClasses();
+		$actions = $this->composeStringActions();
 
-		$header	= "<label id='{$id}' class='label' ";
-		$close_header = ">";
-		$footer	= "</label>\n";
-
-		$tooltip_text = $this->_tooltip;
-		$tooltip_handler = '';
+		$tooltip_text = $this->getTooltip();
+		$tooltip_icon = '';
 		if ($tooltip_text) {
-			$tooltip_text = "<div id='{$id}_tt' class='hidden'>{$tooltip_text}</div>";
-			$tooltip_handler = "<img class='p4a_tooltip_handler' src='" . P4A_ICONS_PATH . "/16/info.png' alt='' /> ";
-			$header .= " onmouseover='p4a_tooltip_show(this, \"{$id}_tt\")' ";
+			$tooltip_icon = '<img src="' . P4A_ICONS_PATH . '/16/info.png" class="p4a_tooltip_icon" alt="" />';
+			$tooltip_text = "<div id='{$id}tooltip' class='p4a_tooltip'>{$tooltip_text}</div>";
+			$actions .= " onmouseover='p4a_tooltip_show(this)' ";
+			$css_classes[] = 'p4a_label_tooltip';
 		}
 
-		return $header . $this->composeStringProperties() .
-				$this->composeStringActions() .
-				$close_header . $tooltip_handler . __($this->getLabel()) . $footer . $tooltip_text;
+		$css_classes = join(' ', $css_classes);
+		return "<label id='{$id}' class='$css_classes' " . $this->composeStringProperties() . 
+				"$actions>$tooltip_icon" . __($this->getLabel()) . "$tooltip_text</label>\n";
 	}
 
 	/**

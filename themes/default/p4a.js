@@ -127,19 +127,15 @@ p4a_loading_hide = function ()
 	$('#p4a_loading').hide();
 }
 
-p4a_tooltip_show = function (handler, text_id)
+p4a_tooltip_show = function (widget)
 {
-	handler = $(handler);
-	var tooltip = $('#p4a_tooltip');
-	if (tooltip.length == 0) {
-		tooltip = $("<div id='p4a_tooltip'></div>").appendTo("body");
-	}
-	tooltip.html('<div id="p4a_tooltip_inner_container">' + $('#' + text_id).html() + '</div>');
-	tooltip.css('top', handler.offset().top);
-	tooltip.css('left', handler.offset().left + handler.width() + 100);
+	var widget = $(widget);
+	var id = widget.attr('id');
+	var tooltip = $('#'+id+'tooltip');
+	tooltip.css('margin-top', widget.outerHeight());
 	if (tooltip.bgiframe) tooltip.bgiframe();
 	tooltip.show();
-	handler.mouseout(function() {tooltip.hide()});
+	widget.mouseout(function() {tooltip.hide()});
 }
 
 p4a_colorpicker_toggle = function (id)

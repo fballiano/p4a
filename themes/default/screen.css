@@ -50,13 +50,7 @@ body {
 	color: #4b718a;
 }
 
-.radio {
-	border: none;
-}
-
-.button {
-}
-
+/*
 .border {
 	border: 1px solid;
 }
@@ -140,39 +134,26 @@ body {
 	font-size: 11px;
 	color:#4B718A;
 }
+*/
 
 .align_left {
-	text-align:left;
+	text-align: left;
 }
 
 .align_center {
-	text-align:center;
+	text-align: center;
 }
 
 .align_right {
-	text-align:right;
+	text-align: right;
 }
 
 .clickable {
-	cursor:pointer;
+	cursor: pointer;
 }
 
 .no_wrap {
 	white-space: nowrap;
-}
-
-.label {
-	overflow: visible;
-	display:block;
-	text-align: left;
-	padding:1px;
-	padding-left:6px;
-	background:#fcfcfc;
-	border:1px solid #fafafa;
-	cursor:pointer;
-	float: left;
-	padding-right: 1em;
-	width: 100px;
 }
 
 .table_cell, .table_cellclickable {
@@ -200,7 +181,7 @@ body {
 }
 
 .field_error label {
-	color:red;
+	color: red;
 }
 
 .field_error input,
@@ -208,12 +189,16 @@ body {
 .field_error select,
 .field_error iframe {
 	border:1px dashed red;
+	background: url(/p4a/icons/default/error.gif) no-repeat bottom right;
 }
 
 .field_error .field_error_msg {
-	clear:both;
-	text-align:right;
-	color:#777;
+	position: absolute;
+	color: #777;
+	display: none;
+	background: white;
+	padding: 10px;
+	border: 2px solid blue;
 }
 
 /*************/
@@ -466,26 +451,6 @@ legend {
 	font-weight: normal;
 }
 
-/***********/
-/* TOOLTIP */
-/***********/
-
-#p4a_tooltip {
-	display: none;
-	position: absolute;
-	background: #F4F7FA;
-	width: 250px;
-}
-
-#p4a_tooltip_inner_container {
-	border: 2px solid #4B718A;
-	padding: 10px;
-}
-
-.p4a_tooltip_handler {
-	float: right;
-}
-
 /*********/
 /* POPUP */
 /*********/
@@ -677,7 +642,6 @@ table.p4a_message td.c2 {
 	position: absolute;
 	display: none;
 	width: 300px;
-	apadding: 20px;
 }
 
 .p4a_system_messages table.p4a_message {
@@ -719,6 +683,42 @@ table.p4a_message td.c2 {
 
 .p4a_toolbar_48 button {
 	height: 53px;
+}
+
+/*************/
+/* P4A_Label */
+/*************/
+
+.p4a_label {
+	overflow: visible;
+	display: block;
+	text-align: left;
+	padding: 1px;
+	padding-left: 6px;
+	background: #fcfcfc;
+	border: 1px solid #fafafa;
+	cursor: pointer;
+	float: left;
+	padding-right: 1em;
+	width: 100px;
+}
+
+.p4a_label_required {
+	font-weight: bold;
+}
+
+.p4a_label .p4a_tooltip_icon {
+	float: right;
+}
+
+.p4a_tooltip {
+	display: none;
+	position: absolute;
+	background: #f4f7fa;
+	border: 2px solid #4b718a;
+	padding: 10px;
+	margin-left: 20px;
+	text-align: left;
 }
 
 /***********************************************************/

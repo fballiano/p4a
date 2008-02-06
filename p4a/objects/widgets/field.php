@@ -637,7 +637,7 @@ class P4A_Field extends P4A_Widget
 
 		if ($this->_error !== null) {
 			$container_class = 'class="field_error"';
-			$error = "<div class='field_error_msg' >{$this->_error}</div>";
+			$error = "<div class='field_error_msg'>{$this->_error}</div><script type='text/javascript'>\$('#{$id} iframe').mouseover(function () {\$('#{$id} .field_error_msg').show()}); \$('#{$id}input').mouseover(function () {\$('#{$id} .field_error_msg').show()}).mouseout(function () {\$('#{$id} .field_error_msg').hide()})</script>";
 			$this->_error = null;
 		} else {
 			$container_class = '';
