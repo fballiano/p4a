@@ -101,7 +101,7 @@ class P4A_Label extends P4A_Widget
 
 		return $header . $this->composeStringProperties() .
 				$this->composeStringActions() .
-				$close_header . $tooltip_handler . _($this->getLabel()) . $footer . $tooltip_text;
+				$close_header . $tooltip_handler . __($this->getLabel()) . $footer . $tooltip_text;
 	}
 
 	/**
