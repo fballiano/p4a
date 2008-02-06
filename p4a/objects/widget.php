@@ -107,6 +107,19 @@ abstract class P4A_Widget extends P4A_Object
 	 * @var array
 	 */
 	protected $_temp_vars = array();
+	
+	protected $_css_classes = array();
+	
+	/**
+	 * @param string Object identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name
+	 * @param string Prefix string for ID generation
+	 * @param string Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
+	 */
+	public function __construct($name = null, $prefix = 'obj', $id = null)
+	{
+		parent::__construct($name, $prefix, $id);
+		$this->addCSSClass(strtolower(get_class($this)));
+	}
 
 	/**
 	 * @param boolean $enabled
@@ -840,6 +853,22 @@ abstract class P4A_Widget extends P4A_Object
 	public function clearTempVars()
 	{
 		$this->_temp_vars = array();
+	}
+	
+	/**
+	 * @param string $class
+	 */
+	public function addCSSClass($class)
+	{
+		$this->_css_classes[] = $class;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getCSSClasses()
+	{
+		return $this->_css_classes;
 	}
 
 	public function redesign()
