@@ -59,22 +59,6 @@ class P4A_Label extends P4A_Widget
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getValue()
-	{
-		return $this->getLabel();
-	}
-
-	/**
-	 * @param string $value
-	 */
-	public function setValue($value = null)
-	{
-		$this->setLabel($value);
-	}
-
-	/**
 	 * Returns the HTML rendered label.
 	 * This is done by building a SPAN, because with a SPAN you
 	 * can trigger events such as onClick ect.
@@ -102,23 +86,6 @@ class P4A_Label extends P4A_Widget
 		return $header . $this->composeStringProperties() .
 				$this->composeStringActions() .
 				$close_header . $tooltip_handler . __($this->getLabel()) . $footer . $tooltip_text;
-	}
-
-	/**
-	 * Set the label type, normal or temporary
-	 * @param string $type (normal|temporary)
-	 */
-	public function setType($type = 'normal')
-	{
-		$this->type = $type;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getType()
-	{
-		return $this->type;
 	}
 
 	/**
