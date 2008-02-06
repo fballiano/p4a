@@ -4,12 +4,12 @@
  *
  * The code within this file is public domain.
  *
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
 
-function p4a_mask_useToolbar($obj, $params)
+function P4A_Mask_useToolbar($obj, $params)
 {
 	$toolbar = $params[0];
 	$obj->build("P4A_{$toolbar}_Toolbar", 'toolbar');

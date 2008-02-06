@@ -4,12 +4,12 @@
  *
  * The code within this file is public domain.
  *
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @package p4a
  */
 
-function p4a_field_loadSelectByTable($field, $params)
+function P4A_Field_loadSelectByTable($field, $params)
 {
 	list($table, $pk, $description_field) = $params;
 	if (!$description_field) {

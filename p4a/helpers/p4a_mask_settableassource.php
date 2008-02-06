@@ -9,7 +9,7 @@
  * @package p4a
  */
 
-function p4a_mask_setTableAsSource($mask, $params)
+function P4A_Mask_setTableAsSource($mask, $params)
 {
 	list($table, $pk) = $params;
 	$mask->build('P4A_DB_Source', 'source');
