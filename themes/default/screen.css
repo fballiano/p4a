@@ -165,17 +165,6 @@ body {
 	text-decoration: underline;
 }
 
-.sheet_cell {
-	padding-left: 0px;
-	padding-right: 5px;
-	padding-top: 0px;
-	padding-bottom: 5px;
-}
-
-.table_container a {
-	text-decoration: none;
-}
-
 .hidden {
 	display: none;
 }
@@ -324,17 +313,6 @@ div.frame {
 	clear: both;
 }
 
-fieldset.frame {
-	border: 1px solid #C6D3DE;
-	padding: 10px 10px 10px 0px;
-}
-
-legend {
-	font-weight: bold;
-	font-size: 12px;
-	margin-left: 10px;
-}
-
 .accesskey {
 	text-decoration: underline;
 }
@@ -360,6 +338,23 @@ body.p4a_popup h2 {
 	margin-bottom: 20px;
 	line-height: 32px;
 	padding-left: 32px;
+}
+
+/****************/
+/* P4A_Fieldset */
+/****************/
+
+.p4a_fieldset {
+	border: 1px solid #c6d3de;
+	padding: 10px 10px 10px 0px;
+}
+
+.p4a_fieldset legend {
+	font-weight: bold;
+	font-size: 12px;
+	margin-left: 10px;
+	color: #4b718a;
+	padding: 0 5px;
 }
 
 /****************************/
@@ -711,7 +706,7 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	display: block;
 }
 
-.p4a_table caption{
+.p4a_table caption {
 	font-size: 12px;
 	font-weight: bold;
 	margin: 5px;
@@ -721,9 +716,10 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	width: 19px;
 }
 
-.p4a_table td{
+.p4a_table td {
 	padding: 2px;
 	border: 2px solid white;
+	text-align: left;
 }
 
 .p4a_table td.action {
@@ -734,25 +730,27 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	display:block;
 	width:100%;
 }
+
 .p4a_table td.integer,
 .p4a_table td.decimal,
 .p4a_table td.float,
 .p4a_table td.date,
-.p4a_table td.time{
+.p4a_table td.time {
 	text-align: right;
 	white-space: nowrap;
 }
 
 .p4a_table_container {
-	font-size:8px; /* with &nbsp to solve bug on ie on margin-bottom of table */
+	font-size: 8px; /* with &nbsp to solve bug on ie on margin-bottom of table */
+	border: 1px solid #c6d3de;
 }
 
-.p4a_table_container .frame{
-	border-top: 1px solid #C6D3DE;
+.p4a_table_navigation_bar {
+	border-top: 1px solid #c6d3de;
 	background: #fafafa;
 }
 
-.p4a_table_container .row{
+.p4a_table_container .row {
 	background: #fafafa;
 }
 
