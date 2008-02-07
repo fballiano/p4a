@@ -106,8 +106,9 @@ class P4A_Frame extends P4A_Widget
 		$handheld = $p4a->isHandheld();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
+		$class = $this->composeStringClass();
 
-		$string  = "<div id='{$id}' class='frame' $properties $actions >";
+		$string  = "<div id='{$id}' $class $properties $actions>";
 		foreach($this->_map as $objs) {
 			$one_visible = false;
 			$row = "\n<div class='row'>";

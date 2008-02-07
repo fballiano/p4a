@@ -186,7 +186,9 @@ class P4A_Tab_Pane extends P4A_Widget
 		$height = $this->getHeight();
 		$this->setHeight(null);
 
-		$return  = "<div class='tab_pane' id='$id' " . $this->composeStringProperties() . ">";
+		$class = $this->composeStringClass();
+		$properties = $this->composeStringProperties();
+		$return  = "<div id='$id' $class $properties>";
 		$return .= "<ul class='tabs'>";
 
 		$this->pages->reset();
@@ -201,10 +203,10 @@ class P4A_Tab_Pane extends P4A_Widget
 				$page->setDefaultLabel();
 			}
 			$label = $page->getLabel();
-			$return .= "<li><a href='#' {$actions} {$active}>{$label}</a></li>";
+			$return .= "<li><a href='#' $actions $active>$label</a></li>";
 		}
 		$return .= "</ul>";
-		$return .= "<div class='tab_pane_page' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
+		$return .= "<div class='p4a_tab_pane_page' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
 		$return .= "</div>";
 
 		$this->setHeight($height);

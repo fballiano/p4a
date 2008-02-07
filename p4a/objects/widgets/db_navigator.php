@@ -243,10 +243,11 @@ class P4A_DB_Navigator extends P4A_Widget
 			$js .= "</script>\n";
 		}
 
+		$class = $this->composeStringClass();
 		if (strlen($js) and $this->allow_movement_to_root) {
-			$return = "<ul id='{$obj_id}' class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
+			$return = "<ul id='{$obj_id}' $class style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home." . P4A_ICONS_EXTENSION . "')\"><li>{$return}</li></ul>";
 		} else {
-			$return = "<div id='{$obj_id}'>{$return}</div>";
+			$return = "<div id='{$obj_id}' $class>{$return}</div>";
 		}
 
 		return $return . $js;

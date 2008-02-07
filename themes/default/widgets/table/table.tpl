@@ -1,5 +1,5 @@
-<div class="border_box table_container" id="<?php echo $this->getId()?>" <?php echo $this->composeStringProperties()?>>
-	<table class="table" style="width: <?php echo $table_width?>" >
+<div class="p4a_table_container" id="<?php echo $this->getId()?>" <?php echo $this->composeStringProperties()?>>
+	<table <?php echo $this->composeStringClass() ?> style="width: <?php echo $table_width?>" >
 		<?php if ($this->getLabel()): ?>
 		<caption><?php echo $this->getLabel()?></caption>
 		<?php endif; ?>
@@ -15,7 +15,7 @@
 				<th>&nbsp;</th>
 				<?php foreach ($headers as $header): ?>
 				<?php if ($header['action']): ?>
-					<th class="font3 align_center clickable">
+					<th class="clickable">
 						<?php if ($header['order']): ?>
 							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
 						<?php else: ?>
@@ -24,7 +24,7 @@
 						<a href="#" <?php echo $header['action']?>><?php echo $header['value']?></a>
 					</th>
 				<?php else: ?>
-					<th class="font3 align_center">
+					<th>
 						<?php if ($header['order']): ?>
 							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
 						<?php else: ?>
@@ -39,7 +39,7 @@
 		<?php endif; ?>
 
 		<?php if (!empty($table_rows)): ?>
-		<tbody <?php echo $this->rows->composeStringProperties()?> class="overflow">
+		<tbody <?php echo $this->rows->composeStringProperties()?> <?php echo $this->rows->composeStringClass()?>>
 			<?php $i = 0; ?>
 			<?php foreach ($table_rows as $row): ?>
 				<?php $i++; ?>
@@ -53,7 +53,7 @@
 				    </td>
 
 					<?php foreach ($row['cells'] as $cell): ?>
-						<td class="background<?php echo ($i%2)+1?> table_cell<?php echo $cell['clickable']?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
+						<td class="p4a_table_rows_background<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
 					<?php endforeach; ?>
 				</tr>
 			<?php endforeach; ?>

@@ -508,9 +508,10 @@ abstract class P4A_Widget extends P4A_Object
 	 */
 	public function composeStringActions($params = null, $check_enabled_state = true)
 	{
+		if ($check_enabled_state and !$this->isEnabled()) return '';
+		
 		$sParams = '';
 		$sActions = '';
-
 		if (is_string($params) or is_numeric($params)) {
 			$sParams .=  ", '{$params}'";
 		} elseif (is_array($params) and count($params)) {
@@ -522,10 +523,6 @@ abstract class P4A_Widget extends P4A_Object
 		}
 
 		foreach ($this->actions as $action=>$action_data) {
-			if ($check_enabled_state and !$this->isEnabled()) {
-				return '';
-			}
-
 			$browser_action = $action;
 			$return = 'false';
 			$prefix = '';

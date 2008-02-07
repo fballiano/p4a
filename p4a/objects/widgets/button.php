@@ -131,6 +131,9 @@ class P4A_Button extends P4A_Widget
 
 		$label = htmlspecialchars(__($this->getLabel()), ENT_QUOTES);
 		$title = $label;
+		$class = $this->composeStringClass();
+		$properties = $this->composeStringProperties();
+		$actions = $this->composeStringActions();
 		$accesskey = $this->getAccessKey();
 		if (strlen($accesskey) > 0) $title = "[$accesskey] $title";
 		if ($this->_label_visible or !$this->_icon) {
@@ -138,10 +141,6 @@ class P4A_Button extends P4A_Widget
 		} else {
 			$label = null;
 		}
-		
-		$header = "<button class='p4a_button' id='$id' title='$title' " . $this->composeStringProperties();
-		if ($this->isEnabled()) $header .= $this->composeStringActions();
-		$header .= ">";
 		
 		$icon = "";
 		if ($this->_icon != null and !P4A::singleton()->isHandheld()) {
@@ -160,6 +159,7 @@ class P4A_Button extends P4A_Widget
 			$icon = "<img src='$icon' alt=''>";
 		}
 		
-		return $header . P4A_Generate_Widget_Layout_Table($icon, $label) . '</button>';
+		return "<button id='$id' title='$title' $class $properties $actions>" . 
+				P4A_Generate_Widget_Layout_Table($icon, $label) . '</button>';
 	}
 }

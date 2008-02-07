@@ -63,18 +63,15 @@ class P4A_Link extends P4A_Widget
 		if (!$this->isVisible()) {
 			return "<span id='$id' class='hidden'></span>";
 		}
+		
+		$label = $this->getLabel();
+		$class = $this->composeStringClass();
+		$properties = $this->composeStringProperties();
+		$actions = $this->composeStringActions();
 
 		if ($this->isEnabled()) {
-			$header 		= '<a href="#" class="p4a_link" ';
-			$close_header 	= '>';
-			$footer			= '</a>';
-			$sReturn  = $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
-			$sReturn .= $this->getLabel();
-			$sReturn .= $footer;
-		} else {
-			$sReturn = $this->getLabel();
+			return "<a href='#' id='$id' $class $properties $actions>$label</a>";
 		}
-
-		return "<span id='$id'>$sReturn</span>";
+		return "<span id='$id'>$label</span>";
 	}
 }

@@ -68,8 +68,9 @@ class P4A_Line extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$header = '<hr ' . $id . 'noshade class="color2" ';
-		$close_header = '/>';
-		return $header . $this->composeStringProperties() . $this->composeStringActions() . $close_header;
+		$class = $this->composeStringClass();
+		$properties = $this->composeStringProperties();
+		$actions = $this->composeStringActions();
+		return "<hr id='$id' $class $properties $actions />";
 	}
 }

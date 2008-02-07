@@ -1,6 +1,6 @@
-/***************/
-/* P4A CLASSES */
-/***************/
+/*************************/
+/* Default mask template */
+/*************************/
 
 body {
 	height: 100%;
@@ -262,14 +262,6 @@ textarea:focus {
 	background-color: #F0F0F0;
 }
 
-.mceToolbarTop *, .mceToolbar * {
-	display:inline;
-}
-
-.mceToolbarTop select *, .mceToolbar select * {
-	display:block;
-}
-
 select {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -328,11 +320,7 @@ div.frame {
 	padding: 0px;
 }
 
-.row {
-	clear: both;
-}
-
-.br {
+.row, .br {
 	clear: both;
 }
 
@@ -347,113 +335,13 @@ legend {
 	margin-left: 10px;
 }
 
-/*********/
-/* TABLE */
-/*********/
-
-.table {
-	margin: 5px 20px 0px 2px;
-	border-collapse: collapse;
-	width: inherit;
-}
-
-.table th a {
-	margin: 5px;
-}
-
-.table th a, .table td a {
-	display: block;
-}
-
-.table caption{
-	font-size: 12px;
-	font-weight: bold;
-	margin: 5px;
-}
-
-.table .select {
-	width: 19px;
-}
-
-.table td{
-	padding: 2px;
-	border: 2px solid white;
-}
-
-.table td.action {
-	background:#fafafa;
-}
-.table td a {
-	display:block;
-	width:100%;
-}
-.table td.integer,
-.table td.decimal,
-.table td.float,
-.table td.date,
-.table td.time{
-	text-align: right;
-	white-space: nowrap;
-}
-
-.table_container {
-	font-size:8px; /* with &nbsp to solve bug on ie on margin-bottom of table */
-}
-
-.table_container .frame{
-	border-top: 1px solid #C6D3DE;
-	background: #fafafa;
-}
-
-.table_container .row{
-	background: #fafafa;
-}
-
 .accesskey {
 	text-decoration: underline;
 }
 
-/********************/
-/* P4A_DB_Navigator */
-/********************/
-
-.p4a_db_navigator {
-	text-align: left;
-	font-weight: normal;
-	margin: 0;
-	padding: 0;
-	list-style-position: inside;
-}
-
-.p4a_db_navigator ul {
-	padding-left: 15px;
-}
-
-.p4a_db_navigator a, .p4a_db_navigator {
-	text-decoration: none;
-}
-
-.p4a_db_navigator a:hover {
-	text-decoration: underline;
-}
-
-.p4a_db_navigator .active_node {
-	font-weight: bold;
-}
-
-.p4a_db_navigator .hoverclass a {
-	color: red;
-	font-weight: bold;
-}
-
-.p4a_db_navigator .hoverclass li a {
-	color: #4B718A;
-	font-weight: normal;
-}
-
-/*********/
-/* POPUP */
-/*********/
+/***********************/
+/* Popup mask template */
+/***********************/
 
 body.p4a_popup {
 	background: #f6f6f6;
@@ -474,11 +362,11 @@ body.p4a_popup h2 {
 	padding-left: 32px;
 }
 
-/****************/
-/* COLOR PICKER */
-/****************/
+/****************************/
+/* P4A_Field - color picker */
+/****************************/
 
-#colorpicker {
+#p4a_colorpicker {
 	position: absolute;
 	display: none;
 	background: white;
@@ -518,9 +406,9 @@ body.p4a_popup h2 {
   background: url(jquery/marker.png) no-repeat;
 }
 
-/****************/
-/* AUTOCOMPLETE */
-/****************/
+/****************************/
+/* P4A_Field - autocomplete */
+/****************************/
 
 .ac_results {
 	padding: 0px;
@@ -565,27 +453,9 @@ body.p4a_popup h2 {
 	color: HighlightText;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*************************/
-/* jQuery UI date picker */
-/*************************/
+/***************************/
+/* P4A_Field - date picker */
+/***************************/
 
 #datepicker_div {
 	border: 1px solid #588fa3;
@@ -602,6 +472,44 @@ body.p4a_popup h2 {
 select.datepicker_newMonth, select.datepicker_newYear {
 	background: white;
 	color: #4b718a;
+	font-weight: normal;
+}
+
+/********************/
+/* P4A_DB_Navigator */
+/********************/
+
+.p4a_db_navigator {
+	text-align: left;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	list-style-position: inside;
+}
+
+.p4a_db_navigator ul {
+	padding-left: 15px;
+}
+
+.p4a_db_navigator a, .p4a_db_navigator {
+	text-decoration: none;
+}
+
+.p4a_db_navigator a:hover {
+	text-decoration: underline;
+}
+
+.p4a_db_navigator .active_node {
+	font-weight: bold;
+}
+
+.p4a_db_navigator .hoverclass a {
+	color: red;
+	font-weight: bold;
+}
+
+.p4a_db_navigator .hoverclass li a {
+	color: #4B718A;
 	font-weight: normal;
 }
 
@@ -719,6 +627,133 @@ table.p4a_message td.c2 {
 	padding: 10px;
 	margin-left: 20px;
 	text-align: left;
+}
+
+/****************/
+/* P4A_Tab_Pane */
+/****************/
+
+.p4a_tab_pane ul.tabs {
+	border: 0px;
+	border-bottom: 1px solid #C6D3DE;
+	margin: 12px 0px 0px 0px;
+	padding: 0px 0px 2px 0px;
+	z-index: 10;
+	padding-left: 10px;
+	white-space: nowrap;
+	text-align: left;
+	cursor: default;
+}
+
+.p4a_tab_pane ul.tabs li {
+	display: inline;
+	overflow: hidden;
+	list-style-type: none;
+}
+
+.p4a_tab_pane ul.tabs a  {
+	background: #fafafa;
+	border: 1px solid #C6D3DE;
+	padding: 2px 5px 2px 5px;
+	margin: 0px;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.p4a_tab_pane ul.tabs a.active, .p4a_tab_pane ul.tabs a.active:link {
+	background: #ffffff;
+	border-bottom: 1px solid #ffffff;
+	font-weight: bold;
+	cursor: default;
+	letter-spacing: -0.07em;
+}
+
+.p4a_tab_pane ul.tabs a:hover {
+	background: #e2e7ed;
+}
+
+.p4a_tab_pane ul.tabs a.active:hover {
+	background: #ffffff;
+}
+
+.p4a_tab_pane div.p4a_tab_pane_page {
+	border: 1px solid #C6D3DE;
+	border-top: 0px;
+	padding: 10px 15px;
+	display: block;
+	position: relative;
+	overflow: auto;
+	width:auto !important;
+	width:100%;
+}
+
+div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
+	margin: 5px;
+	margin-top: 0px;
+}
+
+/*************/
+/* P4A_Table */
+/*************/
+
+.p4a_table {
+	margin: 5px 20px 0px 2px;
+	border-collapse: collapse;
+	width: inherit;
+}
+
+.p4a_table th a {
+	margin: 5px;
+}
+
+.p4a_table th a, .p4a_table td a {
+	display: block;
+}
+
+.p4a_table caption{
+	font-size: 12px;
+	font-weight: bold;
+	margin: 5px;
+}
+
+.p4a_table .select {
+	width: 19px;
+}
+
+.p4a_table td{
+	padding: 2px;
+	border: 2px solid white;
+}
+
+.p4a_table td.action {
+	background:#fafafa;
+}
+
+.p4a_table td a {
+	display:block;
+	width:100%;
+}
+.p4a_table td.integer,
+.p4a_table td.decimal,
+.p4a_table td.float,
+.p4a_table td.date,
+.p4a_table td.time{
+	text-align: right;
+	white-space: nowrap;
+}
+
+.p4a_table_container {
+	font-size:8px; /* with &nbsp to solve bug on ie on margin-bottom of table */
+}
+
+.p4a_table_container .frame{
+	border-top: 1px solid #C6D3DE;
+	background: #fafafa;
+}
+
+.p4a_table_container .row{
+	background: #fafafa;
 }
 
 /***********************************************************/

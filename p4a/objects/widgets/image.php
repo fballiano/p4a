@@ -112,6 +112,7 @@ class P4A_Image extends P4A_Widget
 			return "<span id='$id' class='hidden'></span>";
 		}
 
+		$class = $this->composeStringClass();
 		$actions = $this->composeStringActions();
 		$properties = $this->composeStringProperties();
 		$label = $this->getLabel();
@@ -124,6 +125,6 @@ class P4A_Image extends P4A_Widget
 			$icon .= '.' . P4A_ICONS_EXTENSION;
 		}
 		
-		return "<img class='p4a_image' id='$id' src='$icon' alt='$label' $properties $actions />\n";
+		return "<img id='$id' src='$icon' alt='$label' $properties $actions $class />\n";
 	}
 }

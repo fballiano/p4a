@@ -200,10 +200,27 @@ textarea {
 	display: none;
 }
 
-/*******************/
-/* EXTERNAL THINGS */
-/*******************/
+/****************/
+/* P4A_Tab_Pane */
+/****************/
 
-.mceToolbarTop, .mceStatusbarBottom {
-	display: none;
+.p4a_tab_pane ul.tabs {
+	border-bottom: 1px solid black;
+}
+
+.p4a_tab_pane ul.tabs a  {
+	color: black;
+	visibility: hidden;
+	background: red;
+}
+
+.p4a_tab_pane ul.tabs a.active, .p4a_tab_pane ul.tabs a.active:link {
+	visibility: visible;
+	border: 1px solid black;
+	border-bottom: 1px solid white;
+}
+
+.p4a_tab_pane div.p4a_tab_pane_page {
+	border: 1px solid black;
+	border-top: none;
 }

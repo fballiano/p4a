@@ -168,9 +168,6 @@ class P4A extends P4A_Object
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
 			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
 			$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
-			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'screen');
-			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/screen.css', 'print');
-			$this->addCSS(P4A_THEME_PATH . '/widgets/tab_pane/print.css', 'print');
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 

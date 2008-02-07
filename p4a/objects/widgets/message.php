@@ -78,6 +78,7 @@ class P4A_Message extends P4A_Widget
 		$id = $this->getId();
 		$return = '';
 		if ($this->isVisible() and strlen($this->getValue())) {
+			$classes = join(' ', $this->getCSSClasses());
 			$properties = $this->composeStringProperties();
 			$actions = $this->composeStringActions();
 			$value = $this->getValue();
@@ -90,8 +91,7 @@ class P4A_Message extends P4A_Widget
 				}
 				$icon = "<img src='$icon' alt='' />";
 			}
-			
-			$return = P4A_Generate_Widget_Layout_Table($icon, $value, "p4a_message", "id='$id' $properties $actions");
+			$return = P4A_Generate_Widget_Layout_Table($icon, $value, $classes, "id='$id' $properties $actions");
 		}
 
 		if ($this->auto_clear) {
