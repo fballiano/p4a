@@ -134,7 +134,6 @@ body {
 	font-size: 11px;
 	color:#4B718A;
 }
-*/
 
 .align_left {
 	text-align: left;
@@ -147,48 +146,7 @@ body {
 .align_right {
 	text-align: right;
 }
-
-.clickable {
-	cursor: pointer;
-}
-
-.no_wrap {
-	white-space: nowrap;
-}
-
-.table_cell, .table_cellclickable {
-	white-space: normal;
-	text-align: left;
-}
-
-.table_cellclickable:hover {
-	text-decoration: underline;
-}
-
-.hidden {
-	display: none;
-}
-
-.field_error label {
-	color: red;
-}
-
-.field_error input,
-.field_error textarea,
-.field_error select,
-.field_error iframe {
-	border:1px dashed red;
-	background: url(/p4a/icons/default/error.gif) no-repeat bottom right;
-}
-
-.field_error .field_error_msg {
-	position: absolute;
-	color: #777;
-	display: none;
-	background: white;
-	padding: 10px;
-	border: 2px solid #4b718a;
-}
+*/
 
 /*************/
 /* HTML TAGS */
@@ -313,10 +271,6 @@ div.frame {
 	clear: both;
 }
 
-.accesskey {
-	text-decoration: underline;
-}
-
 /***********************/
 /* Popup mask template */
 /***********************/
@@ -355,6 +309,31 @@ body.p4a_popup h2 {
 	margin-left: 10px;
 	color: #4b718a;
 	padding: 0 5px;
+}
+
+/*************/
+/* P4A_Field */
+/*************/
+
+.field_error label {
+	color: red;
+}
+
+.field_error input,
+.field_error textarea,
+.field_error select,
+.field_error iframe {
+	border: 1px dashed red;
+	background: url(/p4a/icons/default/error.gif) no-repeat bottom right;
+}
+
+.field_error .field_error_msg {
+	position: absolute;
+	color: #777;
+	display: none;
+	background: white;
+	padding: 10px;
+	border: 2px solid #4b718a;
 }
 
 /****************************/
@@ -723,12 +702,12 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 }
 
 .p4a_table td.action {
-	background:#fafafa;
+	background: #fafafa;
 }
 
 .p4a_table td a {
-	display:block;
-	width:100%;
+	display: block;
+	width: 100%;
 }
 
 .p4a_table td.integer,
@@ -747,10 +726,6 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 
 .p4a_table_navigation_bar {
 	border-top: 1px solid #c6d3de;
-	background: #fafafa;
-}
-
-.p4a_table_container .row {
 	background: #fafafa;
 }
 
@@ -840,4 +815,16 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 .p4a_menu ul ul ul li:hover ul,
 .p4a_menu ul ul ul ul li:hover ul{
 	display:block;
+}
+
+/***********/
+/* Various */
+/***********/
+
+.accesskey {
+	text-decoration: underline;
+}
+
+.hidden {
+	display: none;
 }
