@@ -274,14 +274,14 @@ abstract class P4A_Widget extends P4A_Object
 	/**
 	 * @param string $key
 	 */
-	function setAccessKey($key) {
+	public function setAccessKey($key) {
 		$this->setProperty("accesskey", $key);
 	}
 
 	/**
 	 * @return string
 	 */
-	function getAccessKey() {
+	public function getAccessKey() {
 		return $this->getProperty("accesskey");
 	}
 
