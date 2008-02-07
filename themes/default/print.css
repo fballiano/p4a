@@ -182,17 +182,7 @@ textarea {
 	border: 1px solid #cccccc;
 }
 
-.sheet {
-}
-
-.sheet_cell {
-	padding-left: 0px;
-	padding-right: 5px;
-	padding-top: 0px;
-	padding-bottom: 5px;
-}
-
-.message {
+.p4a_message {
 	display: none;
 }
 

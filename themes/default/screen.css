@@ -301,6 +301,7 @@ body.p4a_popup h2 {
 .p4a_fieldset {
 	border: 1px solid #c6d3de;
 	padding: 10px 10px 10px 0px;
+	float: left;
 }
 
 .p4a_fieldset legend {

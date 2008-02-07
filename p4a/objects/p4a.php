@@ -176,10 +176,6 @@ class P4A extends P4A_Object
 		$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
 
-		if ($this->isInternetExplorer()) {
-			$this->addCSS(P4A_THEME_PATH . "/iehacks.css");
-		}
-
 		if ($this->isHandheld()) {
 			$this->css = array();
 			$this->addCSS(P4A_THEME_PATH . "/handheld.css");
