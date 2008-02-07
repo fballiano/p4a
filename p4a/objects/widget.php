@@ -583,13 +583,15 @@ abstract class P4A_Widget extends P4A_Object
 
 	/**
 	 * Composes a string contaning the class property for the widget
-	 * @param array $classes
+	 * @param array $additional_classes
 	 * @return string
 	 */
-	protected function composeStringClass($classes = array())
+	protected function composeStringClass($additional_classes = array())
 	{
+		$classes = array_merge($this->getCSSClasses(), $additional_classes);
 		if (empty($classes)) return '';
-		return 'class="' . join(' ', $classes) . '" ';
+		$classes = join(' ', $classes);
+		return "class='$classes'";
 	}
 
 	/**
