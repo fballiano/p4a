@@ -55,8 +55,9 @@ class P4A_Fieldset extends P4A_Frame
 		$p4a = P4A::singleton();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
+		$class = $this->composeStringClass();
 
-		$string  = "<fieldset id='$id' class='frame' $properties $actions >";
+		$string  = "<fieldset id='$id' $class $properties $actions>";
 		if ($this->getLabel()) {
 			$string  .= "<legend>" . $this->getLabel() . "</legend>";
 		}
