@@ -628,7 +628,7 @@ class P4A_Field extends P4A_Widget
 		}
 		
 		$visualized_data_type = $this->getVisualizedDataType();
-		if ($visualized_data_type) $css_classes[] = "p4a_field_$visualized_data_type";
+		if ($visualized_data_type) $css_classes[] = "p4a_field_data_$visualized_data_type";
 		
 		$css_classes = join(' ', $css_classes);
 		return "<div id='{$id}' class='$css_classes'>{$return}{$error}</div>";
@@ -1062,14 +1062,14 @@ class P4A_Field extends P4A_Widget
 			$this->label->unsetProperty('for');
 
 			$sReturn  = '<table>';
-			$sReturn .= '<tr><td align="left">' . __('Name') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-			$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
-			$sReturn .= '<tr><td align="left">' . __('Type') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
+			$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
+			$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+			$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';
 
 			if (P4A_Is_Mime_Type_Embeddable($mime_type)) {
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 			} else {
-				$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+				$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 			}
 
 			$sReturn .= '</table>';
@@ -1180,14 +1180,14 @@ class P4A_Field extends P4A_Widget
 
 		$sReturn  = '<table id="' . $this->getId() . '">' ;
 		if (P4A_GD) {
-			$sReturn .= '<tr><td colspan="2" align="center"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		} else {
-			$sReturn .= '<tr><td colspan="2" align="center"><img alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		}
-		$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
-		$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
-		$sReturn .= '<tr><th align="left">' . __('Type') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(3) . '</td></tr>';
-		$sReturn .= '<tr><td colspan="2" align="center">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
+		$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
+		$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
+		$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';
+		$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 		$sReturn .= '</table>' ;
 
 		return $this->composeLabel() . $sReturn;
