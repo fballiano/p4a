@@ -1177,7 +1177,7 @@ class P4A_Field extends P4A_Widget
 			}
 		}
 
-		$sReturn  = '<tableid="' . $this->getId() . '">' ;
+		$sReturn  = '<table id="' . $this->getId() . '">' ;
 		if (P4A_GD) {
 			$sReturn .= '<tr><td colspan="2" align="center"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		} else {
