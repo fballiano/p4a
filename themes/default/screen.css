@@ -13,22 +13,21 @@
 	margin-right: auto;
 }
 
-#topContainer {
+#p4a_top_container {
 	width: 100%;
 	position: absolute;
 	top: 0px;
 	z-index: 2;
 }
 
-*>#topContainer {
+*>#p4a_top_container {
 	position: fixed;
 }
 
-#top {
+#p4a_top {
 	background-color: #fafafa;
 	border-bottom: 1px solid #ccc;
 	padding: 2px;
-	clear: both;
 }
 
 #mainContainer {
@@ -96,14 +95,6 @@ h2, h2 table td {
  	height: 100%;
 	padding: 10px;
  	z-index: 2;
-}
-
-div.frame {
-	padding: 0px;
-}
-
-.row, .br {
-	clear: both;
 }
 
 /***********************/
@@ -709,6 +700,10 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 
 .hidden {
 	display: none;
+}
+
+.row, .br {
+	clear: both;
 }
 
 .no_border {

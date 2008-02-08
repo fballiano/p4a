@@ -50,7 +50,7 @@
 <?php endif; ?>
 
 <!-- TOP -->
-<div id="topContainer">
+<div id="p4a_top_container">
 	<?php if (isset($menu)): ?>
 	<div id="p4a_menu">
 		<?php echo $menu?>
@@ -59,7 +59,7 @@
 	<?php endif; ?>
 
 	<?php if (isset($top)): ?>
-	<div id="top">
+	<div id="p4a_top">
 		<?php echo $top?>
 	</div>
 	<?php endif; ?>
@@ -77,7 +77,7 @@
 	</div>
 	<?php endif; ?>
 
-	<!-- The following line is a copyright note, you've to keep it as is, we think it's a small price for P4A. -->
+	<!-- The following line is a copyright note, you've to keep it as is, it's a small price for P4A -->
 	<div id="p4a_footer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?></div>
 </div>
 
