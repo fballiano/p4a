@@ -285,31 +285,31 @@ body.p4a_popup h2 {
 /* P4A_Field */
 /*************/
 
-.p4a_filed input {
+.p4a_field input {
 	border: none;
 	border: 1px solid;
 }
 
-.p4a_filed input:focus {
+.p4a_field input:focus {
  	border: 1px solid #000000;
 	color: #000000;
 	background-color: #F0F0F0;
 }
 
-.p4a_filed textarea {
+.p4a_field textarea {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color:#4B718A;
 }
 
-.p4a_filed textarea:focus {
+.p4a_field textarea:focus {
  	border: 1px solid #000000;
 	color: #000000;
 	background-color: #F0F0F0;
 }
 
-.p4a_filed select {
+.p4a_field select {
 	border: 1px solid #C6D3DE;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
