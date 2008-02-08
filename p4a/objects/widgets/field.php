@@ -904,7 +904,7 @@ class P4A_Field extends P4A_Widget
 			} else {
 				$checked = "";
 			}
-			$sReturn .= "<div><input type='checkbox' class='no_border' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
+			$sReturn .= "<div><input type='checkbox' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
 			$i++;
 		}
 
@@ -1014,7 +1014,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$id = $this->getId();
-		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' class='no_border' value='1' $checked ";
+		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' value='1' $checked ";
 		$close_header = "/>";
 
 		if( !$this->isEnabled() ) {
