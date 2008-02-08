@@ -195,7 +195,7 @@ class P4A_Field extends P4A_Widget
 		$visualization_data_type = null;
 		$source_description_field = $this->getSourceDescriptionField();
 
-		if (!is_null( $source_description_field ) and is_object($this->data)) {
+		if (!is_null($source_description_field) and is_object($this->data)) {
 			if (!isset($this->data->fields->$source_description_field)) {
 				P4A_Error("P4A_Field is missing: {$source_description_field}");
 			}
@@ -203,19 +203,8 @@ class P4A_Field extends P4A_Widget
 		} elseif (!is_null($this->data_field)) {
 			$visualization_data_type = $this->data_field->getType();
 		}
-
-		switch ($visualization_data_type) {
-			case 'integer':
-			case 'decimal':
-			case 'float':
-			case 'date':
-			case 'time':
-				$this->setStyleProperty('text-align', 'right');
-				break;
-			default:
-				$this->setStyleProperty('text-align', 'left');
-				break;
-		}
+		
+		$this->addCSSClass("p4a_field_$visualization_data_type");
 	}
 
 	/**
@@ -651,7 +640,7 @@ class P4A_Field extends P4A_Widget
 	public function getAsText()
 	{
 		$id = $this->getId();
-		$header 		= "<input id='{$id}input' type='text' class='border_color1 font_normal' ";
+		$header 		= "<input id='{$id}input' type='text' ";
 		$close_header 	= '/>';
 
 		if (!$this->isEnabled()) {
@@ -674,7 +663,7 @@ class P4A_Field extends P4A_Widget
 		$enabled = $this->isEnabled();
 		$disabled = $enabled ? "": " disabled='disabled' ";
 
-		$header = "<input id='{$id}input' type='text' class='p4a_date_calendar border_color1 font_normal' $disabled";
+		$header = "<input id='{$id}input' type='text' class='p4a_date_calendar' $disabled";
 		$close_header = "/>";
 
 		if (!P4A::singleton()->isHandheld()) {
@@ -694,7 +683,7 @@ class P4A_Field extends P4A_Widget
 	public function getAsPassword()
 	{
 		$id = $this->getId();
-		$header = "<input id='{$id}input' type='password' class='border_color1 font_normal' ";
+		$header = "<input id='{$id}input' type='password' ";
 		$close_header = '/>';
 
 		if (!$this->isEnabled()) {
@@ -718,7 +707,7 @@ class P4A_Field extends P4A_Widget
 		$id = $this->getId();
 		$cols = floor($this->getWidth() / 6) - 4;
 		$rows = floor($this->getHeight() / 13);
-		$header = "<textarea id='{$id}input' class='border_color1 font_normal' cols='$cols' rows='$rows' ";
+		$header = "<textarea id='{$id}input' cols='$cols' rows='$rows' ";
 		$close_header = '>';
 		$footer	= '</textarea>';
 
@@ -915,7 +904,7 @@ class P4A_Field extends P4A_Widget
 			} else {
 				$checked = "";
 			}
-			$sReturn .= "<div><input type='checkbox' class='border_none' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
+			$sReturn .= "<div><input type='checkbox' class='no_border' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
 			$i++;
 		}
 
@@ -1025,7 +1014,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$id = $this->getId();
-		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' class='border_none' value='1' $checked ";
+		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' class='no_border' value='1' $checked ";
 		$close_header = "/>";
 
 		if( !$this->isEnabled() ) {
@@ -1033,7 +1022,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-		return $this->composeLabel() . $header ;
+		return $this->composeLabel() . $header;
 	}
 
 	/**
