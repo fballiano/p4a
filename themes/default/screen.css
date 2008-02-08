@@ -316,10 +316,6 @@ body.p4a_popup h2 {
 	color:#4B718A;
 }
 
-.field_error label {
-	color: red;
-}
-
 .field_error input,
 .field_error textarea,
 .field_error select,
