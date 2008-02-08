@@ -669,7 +669,7 @@ class P4A_Field extends P4A_Widget
 		if (!P4A::singleton()->isHandheld()) {
 			$value = $this->data_field->getNewValue();
 			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
-			$close_header .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" />";
+			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" />";
 		}
 
 		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
@@ -748,7 +748,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getAsLabel()
 	{
-		$header         = '<div class="field_as_label" ';
+		$header         = '<div ';
 		$close_header   = '>';
 		$footer         = '</div>';
 		$value			= '';
@@ -781,7 +781,7 @@ class P4A_Field extends P4A_Widget
 	{
 		$id = $this->getId();
 
-		$header 			= "<select id='{$id}input' class='border_box font_normal' ";
+		$header 			= "<select id='{$id}input' ";
 		$close_header 		= '>';
 		$footer				= '</select>';
 		$header			   .= $this->composeStringActions() . $this->composeStringProperties();
@@ -837,7 +837,7 @@ class P4A_Field extends P4A_Widget
 		$actions = $this->composeStringActions();
 
 		$sReturn  = "<input type='hidden' name='{$id}' id='{$id}input' value='' />";
-		$sReturn .= "<select id='{$id}input' class='border_box font_normal' multiple='multiple' " . $this->composeStringStyle() . " ";
+		$sReturn .= "<select id='{$id}input' multiple='multiple' " . $this->composeStringStyle() . " ";
 		foreach($this->properties as $property_name=>$property_value){
 			if ($property_name == "name") {
 				$property_value .= '[]';
@@ -885,7 +885,7 @@ class P4A_Field extends P4A_Widget
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 
-		$sReturn  = "<div class='font_normal' style='float:left;text-align:left;'>";
+		$sReturn  = "<div>";
 		$sReturn .= "<input type='hidden' name='$id' id='{$id}input' value='' />";
 
 		$external_data		= $this->data->getAll();
@@ -980,7 +980,7 @@ class P4A_Field extends P4A_Widget
 				$checked = "";
 			}
 
-			$sContent .= "<div><input $enabled class='radio' name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
+			$sContent .= "<div><input $enabled name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 			$sContent .= "<label for='{$id}_{$key}input'>";
 			if ($this->isFormatted()) {
 				$sContent .= $this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals());
@@ -992,7 +992,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$this->label->unsetProperty('for');
-		$return = $this->composeLabel() . "<div class='font_normal' style='float:left;text-align:left;'>$sContent</div>";
+		$return = $this->composeLabel() . "<div>$sContent</div>";
 		$this->label->setProperty('for', "{$id}input");
 		return $return;
 	}
@@ -1037,13 +1037,13 @@ class P4A_Field extends P4A_Widget
 		if ($this->getNewValue() === null) {
 			$action = 'p4a_event_execute';
 			if (P4A_AJAX_ENABLED and $p4a->isAjaxEnabled()) $action .= '_ajax';
-			$sReturn = "<div style='float:left'><input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' class='border_box font_normal clickable' ";
+			$sReturn = "<input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' ";
 			$this->intercept($this, 'onchange', 'redesign');
 			if (!$this->isEnabled()) {
 				$sReturn .= 'disabled="disabled" ';
 			}
 
-			$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' /></div>';
+			$sReturn .= $this->composeStringActions() . $this->composeStringProperties() . ' />';
 		} else {
 			$this->buildDeletePreviewDownloadButtons();
 			if ($this->isEnabled()) {
@@ -1060,7 +1060,7 @@ class P4A_Field extends P4A_Widget
 			$mime_type = $this->getNewValue(3);
 			$this->label->unsetProperty('for');
 
-			$sReturn  = '<table class="border_box">';
+			$sReturn  = '<table>';
 			$sReturn .= '<tr><td align="left">' . __('Name') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 			$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 			$sReturn .= '<tr><td align="left">' . __('Type') . ':&nbsp;&nbsp;</td><td align="left">' . $this->getNewValue(3) . '</td></tr>';
@@ -1177,11 +1177,11 @@ class P4A_Field extends P4A_Widget
 			}
 		}
 
-		$sReturn  = '<table class="border_box" id="' . $this->getId() . '">' ;
+		$sReturn  = '<tableid="' . $this->getId() . '">' ;
 		if (P4A_GD) {
-			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2" align="center"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		} else {
-			$sReturn .= '<tr><td colspan="2" align="center"><img class="image" alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$sReturn .= '<tr><td colspan="2" align="center"><img alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
 		}
 		$sReturn .= '<tr><th align="left">' . __('Name') . ':&nbsp;&nbsp;</th><td align="left">' . $this->getNewValue(0) . '</td></tr>';
 		$sReturn .= '<tr><th align="left">' . __('Size') . ':&nbsp;&nbsp;</th><td align="left">' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
@@ -1245,7 +1245,7 @@ class P4A_Field extends P4A_Widget
 
 		$return  = $this->getAsText();
 		if (!P4A::singleton()->isHandheld()) {
-			$return .= "<input type='button' value='...' id='{$id}button' class='border_box font4 no_print' $enabled onclick='p4a_colorpicker_toggle(\"$id\")' />";
+			$return .= "<input type='button' value='...' id='{$id}button' $enabled onclick='p4a_colorpicker_toggle(\"$id\")' />";
 		}
 
 		return $return;
