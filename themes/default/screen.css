@@ -287,6 +287,7 @@ body.p4a_popup h2 {
 
 .p4a_field_file table {
 	margin-left: 1px;
+	text-align: center;
 }
 
 .p4a_field_date input,
