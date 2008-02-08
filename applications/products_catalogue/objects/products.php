@@ -77,7 +77,6 @@ class Products extends P4A_Base_Mask
 
 		// Table
 		$table = $this->build("p4a_table", "table");
- 		$table->setWidth(700);
 		$table->setSource($this->source);
 		$table->setVisibleCols(array("product_id","model","category",
 									 "brand"));
