@@ -148,10 +148,6 @@ body {
 }
 */
 
-/*************/
-/* HTML TAGS */
-/*************/
-
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -162,12 +158,8 @@ form {
 	display: inline;
 }
 
-h2 {
+h2, h2 table td {
 	text-align:center;
-	font-size: 16px;
-}
-
-h2 table td {
 	font-size: 16px;
 	font-weight: bold;
 }
