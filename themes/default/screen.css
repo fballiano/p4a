@@ -2,12 +2,10 @@
 /* Default mask template */
 /*************************/
 
-body {
-	height: 100%;
-	width:100%;
-	padding:0px;
-	margin:0px;
-	border:0px;
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #4b718a;
 }
 
 #sheetContainer>* {
@@ -38,120 +36,9 @@ body {
 	padding-top: 5px;
 }
 
-#footerContainer {
-	clear: both;
+#p4a_footer {
 	text-align: center;
 	margin-top: 10px;
-}
-
-* {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #4b718a;
-}
-
-/*
-.border {
-	border: 1px solid;
-}
-
-.border_none {
-	border: none;
-}
-
-.border_box {
-	border: 1px solid #C6D3DE;
-}
-
-.color1 {
-	color: #C6D3DE;
-}
-
-.color2 {
-	color: #B8C6D2;
-}
-
-.color3 {
-	color: #75C3E0;
-}
-
-.border_color1 {
-	border-color: #C6D3DE;
-}
-
-.border_color2 {
-	border-color: #B8C6D2;
-}
-
-.border_color3 {
-	border-color: #75C3E0;
-}
-
-.border_color4 {
-	border-color: #CCCCCC;
-}
-
-.border_color5 {
-	border-color: #4B718A;
-}
-
-.background_box {
-	background-color: #FAFAFA;
-}
-
-.background1 {
-	background-color: #F4F7FA;
-}
-
-.background2 {
-	background-color: #E2E7ED;
-}
-
-.background3 {
-	background-color: #FAFAFA;
-}
-
-.background4 {
-	background-color: #FcFcFc;
-}
-
-.font3 {
-	font-size: 11px;
-	font-family: Tahoma, Verdana, Arial, Helvetica,sans-serif;
-	font-weight:bolder;
-	color:#588FA3;
-}
-
-.font4 {
-	font-size: 11px;
-	font-family: Tahoma, Verdana, Arial, Helvetica,sans-serif;
-	font-weight:bolder;
-	color: #4B718A;
-}
-
-.font_normal {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color:#4B718A;
-}
-
-.align_left {
-	text-align: left;
-}
-
-.align_center {
-	text-align: center;
-}
-
-.align_right {
-	text-align: right;
-}
-*/
-
-body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #4B718A;
 }
 
 form {
@@ -252,7 +139,7 @@ body.p4a_popup h2 {
 }
 
 * html .p4a_fieldset {
-	afloat: left;
+	float: left;
 }
 
 .p4a_fieldset legend {
@@ -288,6 +175,7 @@ body.p4a_popup h2 {
 .p4a_field_file table {
 	margin-left: 1px;
 	text-align: center;
+	float: left;
 }
 
 .p4a_field_date input,
