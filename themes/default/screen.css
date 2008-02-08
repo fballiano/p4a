@@ -306,10 +306,10 @@ body.p4a_popup h2 {
 }
 
 .p4a_field_integer input,
-.p4a_field_integer decimal input,
-.p4a_field_integer float input,
-.p4a_field_integer date input,
-.p4a_field_integer time input {
+.p4a_field_decimal input,
+.p4a_field_float input,
+.p4a_field_date input,
+.p4a_field_time input {
 	text-align: right;
 }
 
