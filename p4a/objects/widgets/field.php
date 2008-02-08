@@ -187,10 +187,9 @@ class P4A_Field extends P4A_Widget
 		}
 		
 		$this->data_field =& $data_field;
-		$this->setDefaultVisualizationProperties();
 	}
 
-	protected function setDefaultVisualizationProperties()
+	protected function getVisualizedDataType()
 	{
 		$visualization_data_type = null;
 		$source_description_field = $this->getSourceDescriptionField();
@@ -204,7 +203,7 @@ class P4A_Field extends P4A_Widget
 			$visualization_data_type = $this->data_field->getType();
 		}
 		
-		$this->addCSSClass("p4a_field_$visualization_data_type");
+		return $visualization_data_type;
 	}
 
 	/**
@@ -468,8 +467,6 @@ class P4A_Field extends P4A_Widget
 		} elseif (is_null($pk)) {
 			P4A_Error("PLEASE DEFINE A PRIMARY KEY");
 		}
-
-		$this->setDefaultVisualizationProperties();
 	}
 
 	/**
@@ -488,7 +485,6 @@ class P4A_Field extends P4A_Widget
 	public function setSourceDescriptionField($name)
 	{
 		$this->data_description_field = $name ;
-		$this->setDefaultVisualizationProperties();
 	}
 
 	/**
@@ -629,6 +625,10 @@ class P4A_Field extends P4A_Widget
 			$error = "<div class='field_error_msg'>{$this->_error}</div><script type='text/javascript'>\$('#{$id} iframe').mouseover(function () {\$('#{$id} .field_error_msg').show()}); \$('#{$id}input').mouseover(function () {\$('#{$id} .field_error_msg').show()}).mouseout(function () {\$('#{$id} .field_error_msg').hide()})</script>";
 			$this->_error = null;
 		}
+		
+		$visualized_data_type = $this->getVisualizedDataType();
+		if ($visualized_data_type) $css_classes[] = "p4a_field_$visualized_data_type";
+		
 		$css_classes = join(' ', $css_classes);
 		return "<div id='{$id}' class='$css_classes'>{$return}{$error}</div>";
 	}
