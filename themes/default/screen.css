@@ -164,19 +164,6 @@ h2, h2 table td {
 	font-weight: bold;
 }
 
-hr {
- 	margin-top: 10px;
-	margin-bottom: 10px;
-	border-style:solid;
-	width:1px;
-	height:1px;
-}
-
-img {
-	display: block;
-	border: none;
-}
-
 #p4a_loading {
 	background: red;
 	color: white;
@@ -437,6 +424,18 @@ select.datepicker_newMonth, select.datepicker_newYear {
 	background: white;
 	color: #4b718a;
 	font-weight: normal;
+}
+
+/************/
+/* P4A_Line */
+/************/
+
+hr.p4a_line {
+ 	margin-top: 10px;
+	margin-bottom: 10px;
+	border-style: solid;
+	width: 1px;
+	height: 1px;
 }
 
 /********************/
