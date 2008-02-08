@@ -305,6 +305,10 @@ body.p4a_popup h2 {
 	background-color: #f0f0f0;
 }
 
+.p4a_field_checkbox input {
+	border: none;
+}
+
 .p4a_field_integer input,
 .p4a_field_decimal input,
 .p4a_field_float input,

@@ -604,8 +604,10 @@ class P4A_Field extends P4A_Widget
 			return "<span id='{$id}' class='hidden'></span>";
 		}
 
-		$type   = $this->type;
+		$type = $this->type;
 		$suffix = '';
+		$css_classes = $this->getCSSClasses();
+		$css_classes[] = "p4a_field_$type";
 
 		if ($type == 'rich_textarea') {
 			if (!$this->isEnabled()) {
@@ -618,7 +620,6 @@ class P4A_Field extends P4A_Widget
 
 		$new_method = 'getAs' . $type;
 		$return = $this->$new_method() . $suffix ;
-		$css_classes = $this->getCSSClasses();
 		$error = '';
 		if ($this->_error !== null) {
 			$css_classes[] = 'field_error';
