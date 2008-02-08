@@ -290,30 +290,19 @@ body.p4a_popup h2 {
 	border: 1px solid;
 }
 
-.p4a_field input:focus {
- 	border: 1px solid #000000;
-	color: #000000;
-	background-color: #F0F0F0;
-}
-
-.p4a_field textarea {
-	border: 1px solid #C6D3DE;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color:#4B718A;
-}
-
-.p4a_field textarea:focus {
- 	border: 1px solid #000000;
-	color: #000000;
-	background-color: #F0F0F0;
-}
-
+.p4a_field textarea,
 .p4a_field select {
-	border: 1px solid #C6D3DE;
+	border: 1px solid #c6d3de;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color:#4B718A;
+	color: #4b718a;
+}
+
+.p4a_field input:focus,
+.p4a_field textarea:focus {
+ 	border: 1px solid black;
+	color: black;
+	background-color: #f0f0f0;
 }
 
 .field_error input,
