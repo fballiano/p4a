@@ -170,16 +170,6 @@ class P4A_Table extends P4A_Widget
 		if (!$this->isVisible()) {
 			return '<div id="' . $this->getId() . '">';
 		}
-		
-		$width = $this->getStyleProperty("width");
-		if (substr($width,-2) == "px") {
-			$width = substr($width,0,-2);
-			$width = (integer)$width -20;
-			$width = "{$width}px";
-		} else {
-			$width = "95%";
-		}
-		$this->addTempVar('table_width', $width);
 
 		// if for some reason this page is empty we go back to page one
 		$num_page = $this->getCurrentPageNumber();

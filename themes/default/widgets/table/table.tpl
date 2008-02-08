@@ -1,64 +1,64 @@
-<div class="p4a_table_container" id="<?php echo $this->getId()?>" <?php echo $this->composeStringProperties()?>>
-	<table <?php echo $this->composeStringClass() ?> style="width: <?php echo $table_width?>" >
-		<?php if ($this->getLabel()): ?>
-		<caption><?php echo $this->getLabel()?></caption>
-		<?php endif; ?>
+<table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() . $this->composeStringProperties() ?> >
+	<?php if ($this->getLabel()): ?>
+	<caption><?php echo $this->getLabel() ?></caption>
+	<?php endif; ?>
 
-		<col class="select" />
-		<?php foreach ($table_cols as $col): ?>
-		<col <?php echo $col['properties']?> />
-		<?php endforeach; ?>
+	<col class="select" />
+	<?php foreach ($table_cols as $col): ?>
+	<col <?php echo $col['properties'] ?> />
+	<?php endforeach; ?>
 
-		<?php if (@$headers): ?>
-		<thead>
+	<?php if (@$headers): ?>
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<?php foreach ($headers as $header): ?>
+			<?php if ($header['action']): ?>
+				<th>
+					<?php if ($header['order']): ?>
+						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
+					<?php else: ?>
+						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
+					<?php endif; ?>
+					<a href="#" <?php echo $header['action']?>><?php echo $header['value']?></a>
+				</th>
+			<?php else: ?>
+				<th>
+					<?php if ($header['order']): ?>
+						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
+					<?php else: ?>
+						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
+					<?php endif; ?>
+					<?php echo $header['value']?>
+				</th>
+			<?php endif; ?>
+			<?php endforeach; ?>
+		</tr>
+	</thead>
+	<?php endif; ?>
+
+	<?php if (!empty($table_rows)): ?>
+	<tbody <?php echo $this->rows->composeStringProperties()?> <?php echo $this->rows->composeStringClass()?>>
+		<?php $i = 0; ?>
+		<?php foreach ($table_rows as $row): ?>
+			<?php $i++; ?>
 			<tr>
-				<th>&nbsp;</th>
-				<?php foreach ($headers as $header): ?>
-				<?php if ($header['action']): ?>
-					<th class="clickable">
-						<?php if ($header['order']): ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
-						<?php else: ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
-						<?php endif; ?>
-						<a href="#" <?php echo $header['action']?>><?php echo $header['value']?></a>
-					</th>
-				<?php else: ?>
-					<th>
-						<?php if ($header['order']): ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
-						<?php else: ?>
-							<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" alt="" />
-						<?php endif; ?>
-						<?php echo $header['value']?>
-					</th>
-				<?php endif; ?>
+			    <th width="19">
+			    	<?php if ($row['row']['active']): ?>
+						<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/select.gif" width="18" height="15" alt="<?php echo __('Selected')?>" />
+					<?php else: ?>
+						<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
+					<?php endif; ?>
+			    </th>
+
+				<?php foreach ($row['cells'] as $cell): ?>
+					<td><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?> class="p4a_table_rows<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
 				<?php endforeach; ?>
 			</tr>
-		</thead>
-		<?php endif; ?>
-
-		<?php if (!empty($table_rows)): ?>
-		<tbody <?php echo $this->rows->composeStringProperties()?> <?php echo $this->rows->composeStringClass()?>>
-			<?php $i = 0; ?>
-			<?php foreach ($table_rows as $row): ?>
-				<?php $i++; ?>
-				<tr>
-				    <td>
-				    	<?php if ($row['row']['active']): ?>
-							<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/select.gif" width="18" height="15" alt="<?php echo __('Selected')?>" />
-						<?php else: ?>
-							<img src="<?php echo P4A_THEME_PATH?>/widgets/table/images/spacer.gif" width="18" height="15" alt="" />
-						<?php endif; ?>
-				    </td>
-
-					<?php foreach ($row['cells'] as $cell): ?>
-						<td class="p4a_table_rows_background<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
-					<?php endforeach; ?>
-				</tr>
-			<?php endforeach; ?>
-		</tbody>
-		<?php endif; ?>
-	</table>&nbsp;
- 	<?php if (isset($navigation_bar)) echo $navigation_bar ?>
-</div>
+		<?php endforeach; ?>
+	</tbody>
+	<?php endif; ?>
+	<?php if (isset($navigation_bar)): ?>
+		<tr><th colspan='99'><?php echo $navigation_bar ?></th></tr>
+	<?php endif; ?>
+</table>
