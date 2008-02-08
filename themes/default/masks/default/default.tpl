@@ -28,7 +28,7 @@
 </head>
 
 <body>
-<div id='body'>
+<div id='p4a_body'>
 <div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH?>/loading.gif' alt='' /> Loading... </div>
 <div class='p4a_system_messages'>
 	<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
@@ -38,13 +38,13 @@
 <?php echo $this->maskOpen()?>
 
 <?php if (isset($sidebar_left)): $_sidebar_left_width='280';?>
-<div id="sidebar_left" class="border_color4 background_box" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_left_width?>px;">
+<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_left_width?>px;">
 	<?php echo $sidebar_left?>
 </div>
 <?php endif; ?>
 
 <?php if (isset($sidebar_right)):  $_sidebar_right_width='280';?>
-<div id="sidebar_right" class="border_color4 background_box" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width?>px;">
+<div id="sidebar_right" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width?>px;">
 	<?php echo $sidebar_right?>
 </div>
 <?php endif; ?>
@@ -66,13 +66,13 @@
 </div>
 
 <!-- MAIN  -->
-<div id="mainContainer" style="margin-top:<?php echo $_top_margin?>px; <?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width}px;"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width}px;"?>">
+<div id="p4a_main_container" style="margin-top:<?php echo $_top_margin?>px; <?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width}px;"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width}px;"?>">
 	<?php if (strlen($_title)): ?>
 	<h2><?php echo P4A_Generate_Widget_Layout_Table($_icon, $_title) ?></h2>
 	<?php endif; ?>
 
 	<?php if (isset($main)): ?>
-	<div id="sheetContainer">
+	<div id="p4a_main_inner_container">
 		<?php echo $main?>
 	</div>
 	<?php endif; ?>
