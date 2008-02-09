@@ -27,7 +27,8 @@
 /*************/
 
 .p4a_field input,
-.p4a_field select {
+.p4a_field select,
+.p4a_field textarea {
 	border-color: black;
 	background: white !important;
 }
@@ -37,6 +38,14 @@
 }
 
 .p4a_field_file table button {
+	display: none;
+}
+
+/****************************/
+/* P4A_Field - autocomplete */
+/****************************/
+
+.ac_results {
 	display: none;
 }
 
