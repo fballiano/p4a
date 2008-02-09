@@ -71,31 +71,27 @@
 	margin-right: 10px;
 }
 
+#p4a_sidebar_left,
 #p4a_sidebar_right {
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	position: fixed;
-	bottom: 10px;
- 	right: 0px;
- 	top: 0px;
- 	height: 6000px !important;
- 	height: 100%;
-	padding: 10px;
- 	z-index: 2;
-}
-
-#p4a_sidebar_left {
-	border-right: 1px solid #ccc;
+	background: #fafafa;
 	border-bottom: 1px solid #ccc;
 	position: fixed !important;
 	position: absolute;
 	bottom: 10px;
- 	left: 0px;
  	top: 0px;
- 	height: 6000px !important;
  	height: 100%;
 	padding: 10px;
- 	z-index: 2;
+	z-index: 2;
+}
+
+#p4a_sidebar_left {
+ 	left: 0px;
+ 	border-right: 1px solid #ccc;
+}
+
+#p4a_sidebar_right {
+	border-left: 1px solid #ccc;
+ 	right: 0px;
 }
 
 /***********************/
