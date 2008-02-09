@@ -14,6 +14,15 @@
 }
 
 /*************/
+/* P4A_Label */
+/*************/
+
+.p4a_label {
+	background: white;
+	border-color: white;
+}
+
+/*************/
 /* P4A_Field */
 /*************/
 
