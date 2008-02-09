@@ -662,7 +662,7 @@ abstract class P4A_Widget extends P4A_Object
 			}
 
 			ob_start();
-			require P4A_THEME_DIR . "/widgets/{$_template_dir}/{$_template_file}.tpl";
+			require P4A_THEME_DIR . "/widgets/{$_template_dir}/{$_template_file}.php";
 			$output = ob_get_contents();
 			ob_end_clean();
 

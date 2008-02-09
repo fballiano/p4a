@@ -348,7 +348,7 @@ class P4A_Mask extends P4A_Object
 		extract($this->_temp_vars);
 
 		ob_start();
-		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.tpl";
+		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.php";
 		$output = ob_get_contents();
 		ob_end_clean();
 
