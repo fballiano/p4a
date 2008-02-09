@@ -65,6 +65,11 @@
 	border-color: black;
 }
 
+.p4a_table caption {
+	border-color: black;
+	background: white;
+}
+
 .p4a_table .p4a_table_navigation_bar {
 	display: none;
 }

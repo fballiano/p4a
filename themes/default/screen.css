@@ -566,9 +566,15 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 /*************/
 
 .p4a_table {
-	margin: 5px 0 0 0;
 	border: 1px solid #c6d3de;
 	text-align: left;
+}
+
+.p4a_table caption {
+	background: #fafafa;
+	border: 1px solid #c6d3de;
+	padding: 5px;
+	font-weight: bold;
 }
 
 .p4a_table th a {
@@ -582,12 +588,6 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	text-decoration: none;
 	margin: 1px;
 	padding: 2px;
-}
-
-.p4a_table caption {
-	font-size: 12px;
-	font-weight: bold;
-	margin: 5px;
 }
 
 .p4a_table td a:hover {
