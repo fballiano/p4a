@@ -151,35 +151,29 @@ class P4A extends P4A_Object
 		$this->build("P4A_Collection", "masks");
 		$browser_identification = $this->detectClient();
 
-		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
-		$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
 		if (!$this->isHandheld()) {
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/farbtastic.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
 			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
-			$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
+			if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
+				$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
+				$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
+			}
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 
+		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
+		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css", "print");
 		$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
-		$this->addCSS(P4A_THEME_PATH . "/handheld.css", "handheld");
-
-		if ($this->isHandheld()) {
-			$this->css = array();
-			$this->addCSS(P4A_THEME_PATH . "/handheld.css");
-		}
-
-		if ($this->isInternetExplorer() and !$browser_identification['ie7up'] and !$this->isHandheld()) {
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
-			$this->addJavascript(P4A_THEME_PATH . "/iefixes.js");
-		}
+		$this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld" );
 	}
 
 	/**
