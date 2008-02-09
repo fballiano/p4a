@@ -13,6 +13,18 @@
 	display: none;
 }
 
+/*************/
+/* P4A_Field */
+/*************/
+
+.p4a_field_file table {
+	border: none;
+}
+
+.p4a_field_file table button {
+	display: none;
+}
+
 /***************/
 /* P4A_Message */
 /***************/
@@ -25,12 +37,24 @@
 /* P4A_Table */
 /*************/
 
+.p4a_table {
+	border-color: black;
+}
+
 .p4a_table .p4a_table_navigation_bar {
 	display: none;
 }
 
 .p4a_table_rows1, .p4a_table_rows2 {
 	background: white;
+}
+
+/****************/
+/* P4A_Fieldset */
+/****************/
+
+.p4a_fieldset {
+	border-color: black;
 }
 
 /****************/
