@@ -8,11 +8,6 @@
 	color: #4b718a;
 }
 
-#p4a_main_inner_container>* {
-	margin-left: auto;
-	margin-right: auto;
-}
-
 #p4a_top_container {
 	width: 100%;
 	position: absolute;
@@ -33,6 +28,11 @@
 #p4a_main_container {
 	text-align: center;
 	padding-top: 5px;
+}
+
+#p4a_main_inner_container>* {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #p4a_footer {
