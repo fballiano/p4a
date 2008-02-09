@@ -143,7 +143,7 @@ class P4A_Button extends P4A_Widget
 		}
 		
 		$icon = "";
-		if ($this->_icon != null and !P4A::singleton()->isHandheld()) {
+		if ($this->_icon != null) {
 			$size = $this->getSize();
 			if (strpos($size, 'x') !== false) {
 				list($width, $size) = explode('x', $size);
