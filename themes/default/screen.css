@@ -117,6 +117,10 @@ body.p4a_popup h2 {
 	margin-bottom: 20px;
 	line-height: 32px;
 	padding-left: 32px;
+
+}
+
+body.p4a_popup h2, body.p4a_popup h2 table td {
 	font-size: 16px;
 	font-weight: bold;
 }
