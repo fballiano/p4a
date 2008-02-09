@@ -54,7 +54,7 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 		$this->addDefaultButtons();
 	}
 	
-	private function addDefaultButtons()
+	protected function addDefaultButtons()
 	{
 		$new =& $this->addButton('new', 'new');
 		$new->setLabel("Insert a new element");
