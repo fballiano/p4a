@@ -111,12 +111,6 @@ class P4A extends P4A_Object
 	private $handheld = false;
 
 	/**
-	 * Is the browser Internet Explorer?
-	 * @var boolean
-	 */
-	private $internet_explorer = false;
-
-	/**
 	 * Counter to avoid browser's back/forward
 	 * @var integer
 	 */
@@ -191,14 +185,12 @@ class P4A extends P4A_Object
 	/**
 	 * @return array
 	 */
-	public function detectClient()
+	private function detectClient()
 	{
 		require_once dirname(dirname(__FILE__)) . '/libraries/pear_net_useragent_detect.php';
 		Net_UserAgent_Detect::detect();
 
-		$this->internet_explorer = Net_UserAgent_Detect::isIE();
 		$this->_ajax_enabled = (Net_UserAgent_Detect::hasFeature('ajax') and P4A_AJAX_ENABLED);
-
 		if (!Net_UserAgent_Detect::hasFeature('ajax') or P4A_FORCE_HANDHELD_RENDERING) {
 			$this->handheld = true;
 		}
@@ -211,7 +203,7 @@ class P4A extends P4A_Object
 	 */
 	public function isInternetExplorer()
 	{
-		return $this->internet_explorer;
+		return Net_UserAgent_Detect::isIE();
 	}
 
 	/**
