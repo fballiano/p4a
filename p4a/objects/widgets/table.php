@@ -873,48 +873,47 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$this->build("p4a_collection", "buttons");
 		$this->setStyleProperty("float", "none");
 
-		$this->addButton('button_go', 'apply', 'right');
-		$this->buttons->button_go->setLabel("Go");
-		$this->intercept($this->buttons->button_go, 'onClick', 'goOnClick');
+		$this->addButton('go', 'apply', 'right');
+		$this->buttons->go->setLabel("Go");
+		$this->buttons->go->implementMethod('onclick', $this, 'goOnClick');
 
-		$field_num_page =& $this->buttons->build(P4A_FIELD_CLASS, 'field_num_page');
-		$field_num_page->label->setStyleProperty("text-align", "right");
-		$field_num_page->label->setWidth(80);
-		$this->buttons->field_num_page->setWidth(30);
-		$this->buttons->field_num_page->addAjaxAction('onreturnpress');
-		$this->intercept($this->buttons->field_num_page, 'onreturnpress', 'goOnClick');
+		$this->buttons->build(P4A_FIELD_CLASS, 'page_number');
+		$this->buttons->page_number->label->setStyleProperty("text-align", "right");
+		$this->buttons->page_number->label->setWidth(80);
+		$this->buttons->page_number->setWidth(30);
+		$this->buttons->page_number->addAjaxAction('onreturnpress');
+		$this->buttons->page_number->implementMethod('onreturnpress', $this, 'goOnClick');
 		$this->anchorRight($field_num_page);
 
 		$this->buttons->build('p4a_label', 'current_page');
 		$this->anchorLeft($this->buttons->current_page);
 
 		if (P4A::singleton()->isHandheld()) {
-			$this->addButton('button_first');
-			$this->buttons->button_first->setLabel('<<');
-			$this->addButton('button_prev');
-			$this->buttons->button_prev->setLabel('<');
-			$this->addButton('button_next');
-			$this->buttons->button_next->setLabel('>');
-			$this->addButton('button_last');
-			$this->buttons->button_last->setLabel('>>');
-
-			$this->buttons->button_go->setVisible(false);
-			$this->buttons->field_num_page->setVisible(false);
+			$this->addButton('first');
+			$this->buttons->first->setLabel('<<');
+			$this->addButton('prev');
+			$this->buttons->prev->setLabel('<');
+			$this->addButton('next');
+			$this->buttons->next->setLabel('>');
+			$this->addButton('last');
+			$this->buttons->last->setLabel('>>');
+			$this->buttons->go->setVisible(false);
+			$this->buttons->page_number->setVisible(false);
 		} else {
-			$this->addButton('button_last', 'last', 'right');
-			$this->buttons->button_last->setLabel("Go to the last page");
-			$this->addButton('button_next', 'next', 'right');
-			$this->buttons->button_next->setLabel("Go to the next page");
-			$this->addButton('button_prev', 'prev', 'right');
-			$this->buttons->button_prev->setLabel("Go to the previous page");
-			$this->addButton('button_first', 'first', 'right');
-			$this->buttons->button_first->setLabel("Go to the first page");
+			$this->addButton('last', 'last', 'right');
+			$this->buttons->last->setLabel("Go to the last page");
+			$this->addButton('next', 'next', 'right');
+			$this->buttons->next->setLabel("Go to the next page");
+			$this->addButton('prev', 'prev', 'right');
+			$this->buttons->prev->setLabel("Go to the previous page");
+			$this->addButton('first', 'first', 'right');
+			$this->buttons->first->setLabel("Go to the first page");
 		}
-
-		$this->intercept($this->buttons->button_last, 'onclick', 'lastOnClick');
-		$this->intercept($this->buttons->button_next, 'onclick', 'nextOnClick');
-		$this->intercept($this->buttons->button_prev, 'onclick', 'prevOnClick');
-		$this->intercept($this->buttons->button_first, 'onclick', 'firstOnClick');
+		
+		$this->buttons->last->implementMethod('onclick', $this, 'lastOnClick');
+		$this->buttons->next->implementMethod('onclick', $this, 'nextOnClick');
+		$this->buttons->prev->implementMethod('onclick', $this, 'prevOnClick');
+		$this->buttons->first->implementMethod('onclick', $this, 'firstOnClick');
 	}
 
 	/**
@@ -945,8 +944,8 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
-		$this->buttons->field_num_page->setLabel('Go to page');
-		$this->buttons->field_num_page->setNewValue($parent->getCurrentPageNumber());
+		$this->buttons->page_number->setLabel('Go to page');
+		$this->buttons->page_number->setNewValue($parent->getCurrentPageNumber());
 
 		$num_pages = $parent->data->getNumPages();
 		if ($num_pages == 0) {
