@@ -106,7 +106,7 @@ body.p4a_popup {
 	margin-top: 50px;
 }
 
-body.p4a_popup #sheetContainer {
+body.p4a_popup #p4a_main_inner_container {
 	background: white;
 	border: 2px solid #4b718a;
 	padding-bottom: 20px;
@@ -114,10 +114,11 @@ body.p4a_popup #sheetContainer {
 
 body.p4a_popup h2 {
 	background: #eee;
-	margin-top: 0;
 	margin-bottom: 20px;
 	line-height: 32px;
 	padding-left: 32px;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 /****************/
