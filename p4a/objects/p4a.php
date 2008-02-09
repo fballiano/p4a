@@ -105,12 +105,6 @@ class P4A extends P4A_Object
 	private $_javascript = array();
 
 	/**
-	 * Is the browser a handheld?
-	 * @var boolean
-	 */
-	private $handheld = false;
-
-	/**
 	 * Counter to avoid browser's back/forward
 	 * @var integer
 	 */
@@ -120,11 +114,6 @@ class P4A extends P4A_Object
 	 * @var array
 	 */
 	private $_to_redesign = array();
-	
-	/**
-	 * @var boolean
-	 */
-	private $_ajax_enabled = P4A_AJAX_ENABLED;
 	
 	/**
 	 * @var boolean
@@ -141,6 +130,17 @@ class P4A extends P4A_Object
 	 * @var array
 	 */
 	private $messages = array();
+	
+	/**
+	 * @var string
+	 */
+	private $browser = null;
+	
+	const BROWSER_GECKO = 'gecko';
+	const BROWSER_HANDHELD = 'handheld';
+	const BROWSER_IE = 'ie';
+	const BROWSER_OPERA = 'opera';
+	const BROWSER_SAFARI = 'safari';
 
 	public function __construct()
 	{
@@ -189,10 +189,19 @@ class P4A extends P4A_Object
 	{
 		require_once dirname(dirname(__FILE__)) . '/libraries/pear_net_useragent_detect.php';
 		Net_UserAgent_Detect::detect();
-
-		$this->_ajax_enabled = (Net_UserAgent_Detect::hasFeature('ajax') and P4A_AJAX_ENABLED);
-		if (!Net_UserAgent_Detect::hasFeature('ajax') or P4A_FORCE_HANDHELD_RENDERING) {
-			$this->handheld = true;
+		
+		if (P4A_FORCE_HANDHELD_RENDERING) {
+			$this->browser = self::BROWSER_HANDHELD;
+		} elseif (Net_UserAgent_Detect::isIE()) {
+			$this->browser = self::BROWSER_IE;
+		} elseif (Net_UserAgent_Detect::isBrowser('gecko')) {
+			$this->browser = self::BROWSER_GECKO;
+		} elseif (Net_UserAgent_Detect::isBrowser('safari')) {
+			$this->browser = self::BROWSER_SAFARI;
+		} elseif (Net_UserAgent_Detect::isBrowser('opera')) {
+			$this->browser = self::BROWSER_OPERA;
+		} else {
+			$this->browser = self::BROWSER_HANDHELD;
 		}
 
 		return Net_UserAgent_Detect::_getStaticProperty('browser');
@@ -203,24 +212,47 @@ class P4A extends P4A_Object
 	 */
 	public function isInternetExplorer()
 	{
-		return Net_UserAgent_Detect::isIE();
+		return ($this->browser == self::BROWSER_IE);
 	}
-
+	
+	/**
+	 * @return boolean
+	 */
+	public function isGecko()
+	{
+		return ($this->browser == self::BROWSER_GECKO);
+	}
+	
 	/**
 	 * @return boolean
 	 */
 	public function isHandheld()
 	{
-		if (P4A_FORCE_HANDHELD_RENDERING) return true;
-		return $this->handheld;
+		return ($this->browser == self::BROWSER_HANDHELD);
 	}
-
+	
 	/**
 	 * @return boolean
 	 */
-	public function isAjaxEnabled()
+	public function isOpera()
 	{
-		return $this->_ajax_enabled;
+		return ($this->browser == self::BROWSER_OPERA);
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isSafari()
+	{
+		return ($this->browser == self::BROWSER_SAFARI);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBrowser()
+	{
+		return $this->browser;
 	}
 
 	/**

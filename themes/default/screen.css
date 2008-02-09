@@ -573,8 +573,13 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 .p4a_table caption {
 	background: #fafafa;
 	border: 1px solid #c6d3de;
+	border-bottom: none;
 	padding: 5px;
 	font-weight: bold;
+}
+
+.p4a_browser_gecko .p4a_table caption {
+	margin-left: -1px;
 }
 
 .p4a_table th a {
