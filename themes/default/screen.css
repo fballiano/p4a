@@ -44,7 +44,8 @@
 	display: inline;
 }
 
-#p4a_body h2, #p4a_body h2 table td {
+#p4a_body h2,
+#p4a_body h2 table td {
 	text-align:center;
 	font-size: 16px;
 	font-weight: bold;
@@ -128,7 +129,8 @@ body.p4a_popup h2 {
 
 }
 
-body.p4a_popup h2, body.p4a_popup h2 table td {
+body.p4a_popup h2,
+body.p4a_popup h2 table td {
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -228,12 +230,14 @@ body.p4a_popup h2, body.p4a_popup h2 table td {
   cursor: crosshair;
 }
 
-.farbtastic, .farbtastic .wheel {
+.farbtastic,
+.farbtastic .wheel {
   width: 195px;
   height: 195px;
 }
 
-.farbtastic .color, .farbtastic .overlay {
+.farbtastic .color,
+.farbtastic .overlay {
   top: 47px;
   left: 47px;
   width: 101px;
@@ -313,7 +317,8 @@ body.p4a_popup h2, body.p4a_popup h2 table td {
 	border: 1px solid #588fa3;
 }
 
-.datepicker_control, .datepicker_links {
+.datepicker_control,
+.datepicker_links {
 	display: none;
 }
 
@@ -321,7 +326,8 @@ body.p4a_popup h2, body.p4a_popup h2 table td {
 	background: #777;
 }
 
-select.datepicker_newMonth, select.datepicker_newYear {
+select.datepicker_newMonth,
+select.datepicker_newYear {
 	background: white;
 	color: #4b718a;
 	font-weight: normal;
@@ -355,7 +361,8 @@ hr.p4a_line {
 	padding-left: 15px;
 }
 
-.p4a_db_navigator a, .p4a_db_navigator {
+.p4a_db_navigator a,
+.p4a_db_navigator {
 	text-decoration: none;
 }
 
@@ -525,7 +532,8 @@ table.p4a_message td.c2 {
 	cursor: pointer;
 }
 
-.p4a_tab_pane ul.tabs a.active, .p4a_tab_pane ul.tabs a.active:link {
+.p4a_tab_pane ul.tabs a.active,
+.p4a_tab_pane ul.tabs a.active:link {
 	background: #ffffff;
 	border-bottom: 1px solid #ffffff;
 	font-weight: bold;
@@ -572,7 +580,8 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	font-weight: bold;
 }
 
-.p4a_table th a, .p4a_table td a {
+.p4a_table th a,
+.p4a_table td a {
 	display: block;
 	text-decoration: none;
 	margin: 1px;
@@ -669,7 +678,8 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	margin: 0;
 }
 
-.p4a_menu li a, .p4a_menu li div {
+.p4a_menu li a,
+.p4a_menu li div {
 	display: block;
 	text-decoration: none;
 	color: black;
@@ -677,7 +687,8 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	padding: 5px;
 }
 
-.p4a_menu a:hover, .p4a_menu li:hover {
+.p4a_menu a:hover,
+.p4a_menu li:hover {
 	display: block;
 	background-color: #e2e7ed;
 }
@@ -715,10 +726,7 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	display: none;
 }
 
-.row, .br {
+.row,
+.br {
 	clear: both;
-}
-
-.no_border {
-	border: none;
 }

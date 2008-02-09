@@ -17,6 +17,12 @@
 /* P4A_Field */
 /*************/
 
+.p4a_field input,
+.p4a_field select {
+	border-color: black;
+	background: white !important;
+}
+
 .p4a_field_file table {
 	border: none;
 }
@@ -45,7 +51,8 @@
 	display: none;
 }
 
-.p4a_table_rows1, .p4a_table_rows2 {
+.p4a_table_rows1,
+.p4a_table_rows2 {
 	background: white;
 }
 
@@ -71,7 +78,8 @@
 	background: red;
 }
 
-.p4a_tab_pane ul.tabs a.active, .p4a_tab_pane ul.tabs a.active:link {
+.p4a_tab_pane ul.tabs a.active,
+.p4a_tab_pane ul.tabs a.active:link {
 	visibility: visible;
 	border: 1px solid black;
 	border-bottom: 1px solid white;
