@@ -1037,7 +1037,7 @@ class P4A_Field extends P4A_Widget
 
 		if ($this->getNewValue() === null) {
 			$action = 'p4a_event_execute';
-			if (P4A_AJAX_ENABLED and $p4a->isAjaxEnabled()) $action .= '_ajax';
+			if (P4A_AJAX_ENABLED) $action .= '_ajax';
 			$sReturn = "<input type='file' id='{$id}input' onchange='$action(\"$id\", \"onchange\");' ";
 			$this->intercept($this, 'onchange', 'redesign');
 			if (!$this->isEnabled()) {
