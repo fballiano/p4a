@@ -640,7 +640,7 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Sets the type of the column (text|image)
+	 * Sets the type of the column (text|image|action)
 	 * @param string
 	 */
 	public function setType($type)
@@ -649,7 +649,7 @@ class P4A_Table_Col extends P4A_Widget
 	}
 
 	/**
-	 * Gets the type of the column (text|image)
+	 * Gets the type of the column (text|image|action)
 	 * @return string
 	 */
 	public function getType()
