@@ -883,7 +883,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$this->buttons->page_number->setWidth(30);
 		$this->buttons->page_number->addAjaxAction('onreturnpress');
 		$this->buttons->page_number->implementMethod('onreturnpress', $this, 'goOnClick');
-		$this->anchorRight($field_num_page);
+		$this->anchorRight($this->buttons->page_number);
 
 		$this->buttons->build('p4a_label', 'current_page');
 		$this->anchorLeft($this->buttons->current_page);

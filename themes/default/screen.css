@@ -630,6 +630,7 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 .p4a_table th.navigation_bar {
 	border-top: 1px solid #c6d3de;
 	background: #fafafa;
+	font-weight: normal;
 	padding: 0;
 }
 
