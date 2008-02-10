@@ -52,7 +52,7 @@
 			    </th>
 
 				<?php foreach ($row['cells'] as $cell): ?>
-					<td><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?> class="p4a_table_rows<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
+					<td class="p4a_table_rows<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
 				<?php endforeach; ?>
 			</tr>
 		<?php endforeach; ?>
