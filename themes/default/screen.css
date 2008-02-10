@@ -10,13 +10,13 @@
 
 #p4a_top_container {
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	z-index: 2;
 }
 
-*>#p4a_top_container {
-	position: fixed;
+* html #p4a_top_container {
+	position: absolute;
 }
 
 #p4a_top {
@@ -54,7 +54,7 @@
 #p4a_loading {
 	background: red;
 	color: white;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	right: 0px;
 	z-index: 100;
@@ -62,8 +62,8 @@
 	float: right;
 }
 
-*>#p4a_loading {
-	position: fixed;
+* html #p4a_loading {
+	position: absolute;
 }
 
 #p4a_loading img {
