@@ -794,11 +794,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 
 		if (is_string($pks)) {
-			return "$pks = '".addslashes($pk_values)."' ";
-		} elseif(is_array($pks)) {
+			return "$pks = '" . P4A_Quote_SQL_Value($pk_values) . "' ";
+		} elseif (is_array($pks)) {
 			$return = '';
-			foreach($pk_values as $key=>$value){
-				$return .= "$key = '".addslashes($value)."' AND ";
+			foreach($pk_values as $key=>$value) {
+				$return .= "$key = '" . P4A_Quote_SQL_Value($value) . "' AND ";
 			}
 			return substr($return, 0, -4);
 		} else {
