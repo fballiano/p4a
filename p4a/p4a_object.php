@@ -245,7 +245,7 @@ abstract class P4A_Object
 	 */
 	public function isActionTriggered($action)
 	{
-		if (array_key_exists($action, $this->_map_actions)) {
+		if (array_key_exists(strtolower($action), $this->_map_actions)) {
 			return true;
 		} else {
 			return false;
