@@ -264,7 +264,7 @@ body.p4a_popup h2 table td {
 
 .ac_results {
 	padding: 0px;
-	border: 1px solid WindowFrame;
+	border: 1px solid black;
 	background-color: Window;
 	overflow: hidden;
 }
