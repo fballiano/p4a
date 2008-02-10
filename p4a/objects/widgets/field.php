@@ -51,7 +51,7 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * @var P4A_Data_Source
 	 */
-	protected $data = null;
+	public $data = null;
 
 	/**
 	 * @var P4A_Data_Field
