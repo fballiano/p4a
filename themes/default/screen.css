@@ -627,10 +627,10 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	background-color: #e2e7ed;
 }
 
-.p4a_table_navigation_bar {
+.p4a_table th.navigation_bar {
 	border-top: 1px solid #c6d3de;
 	background: #fafafa;
-	margin: -5px;
+	padding: 0;
 }
 
 /***********************************************************/

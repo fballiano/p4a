@@ -59,6 +59,6 @@
 	</tbody>
 	<?php endif; ?>
 	<?php if (isset($navigation_bar)): ?>
-		<tr><th colspan='99'><?php echo $navigation_bar ?></th></tr>
+		<tr><th colspan='99' class="navigation_bar"><?php echo $navigation_bar ?></th></tr>
 	<?php endif; ?>
 </table>
