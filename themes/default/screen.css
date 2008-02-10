@@ -502,7 +502,7 @@ table.p4a_message td.c2 {
 
 .p4a_tab_pane ul.tabs {
 	border: 0px;
-	border-bottom: 1px solid #C6D3DE;
+	border-bottom: 1px solid #c6d3de;
 	margin: 12px 0px 0px 0px;
 	padding: 0px 0px 2px 0px;
 	z-index: 10;
@@ -520,9 +520,9 @@ table.p4a_message td.c2 {
 
 .p4a_tab_pane ul.tabs a  {
 	background: #fafafa;
-	border: 1px solid #C6D3DE;
+	border: 1px solid #c6d3de;
 	padding: 2px 5px 2px 5px;
-	margin: 0px;
+	margin: 0;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
@@ -552,8 +552,8 @@ table.p4a_message td.c2 {
 	display: block;
 	position: relative;
 	overflow: auto;
-	width:auto !important;
-	width:100%;
+	width: auto !important;
+	width: 100%;
 }
 
 div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
