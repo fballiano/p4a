@@ -90,10 +90,10 @@ class P4A_Array_Source extends P4A_Data_Source
 		}
 
 		if ($move_pointer) {
-			if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
+			if ($this->actionHandler('beforemoverow') == ABORT) return ABORT;
 
-			if ($this->isActionTriggered('onMoveRow')) {
-				if ($this->actionHandler('onMoveRow') == ABORT) return ABORT;
+			if ($this->isActionTriggered('onmoverow')) {
+				if ($this->actionHandler('onmoverow') == ABORT) return ABORT;
 			} else {
 				if (!empty($row)) {
 					$this->_pointer = $num_row;
@@ -106,7 +106,7 @@ class P4A_Array_Source extends P4A_Data_Source
 				}
 			}
 
-			$this->actionHandler('afterMoveRow');
+			$this->actionHandler('aftermoverow');
 		}
 
 		return $row;

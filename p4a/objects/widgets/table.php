@@ -663,8 +663,8 @@ class P4A_Table_Col extends P4A_Widget
 	 */
 	public function onClick($aParams)
 	{
-		if ($this->isActionTriggered('beforeClick')) {
-			if ($this->actionHandler('beforeClick', $aParams) == ABORT) return ABORT;
+		if ($this->isActionTriggered('beforeclick')) {
+			if ($this->actionHandler('beforeclick', $aParams) == ABORT) return ABORT;
 		}
 
 		if ($this->getType() == 'action') {
@@ -675,9 +675,9 @@ class P4A_Table_Col extends P4A_Widget
 		} else {
 			$this->order();
 		}
-
-		if ($this->isActionTriggered('afterClick')) {
-			if ($this->actionHandler('afterClick', $aParams) == ABORT) return ABORT;
+		
+		if ($this->isActionTriggered('afterclick')) {
+			if ($this->actionHandler('afterclick', $aParams) == ABORT) return ABORT;
 		}
 	}
 
@@ -758,8 +758,8 @@ class P4A_Table_Rows extends P4A_Widget
 		$enabled = $this->isEnabled();
 		$action = null;
 
-		if ($this->isActionTriggered('beforeDisplay')) {
-			$rows = $this->actionHandler('beforeDisplay', $rows);
+		if ($this->isActionTriggered('beforedisplay')) {
+			$rows = $this->actionHandler('beforedisplay', $rows);
 		}
 
 		$i = 0;

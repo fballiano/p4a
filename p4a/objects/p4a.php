@@ -564,10 +564,10 @@ class P4A extends P4A_Object
 
 	public function openMask($mask_name)
 	{
-		if ($this->actionHandler('beforeOpenMask') == ABORT) return ABORT;
+		if ($this->actionHandler('beforeopenmask') == ABORT) return ABORT;
 
-		if ($this->isActionTriggered('onOpenMask')) {
-			if ($this->actionHandler('onOpenMask') == ABORT) return ABORT;
+		if ($this->isActionTriggered('onopenmask')) {
+			if ($this->actionHandler('onopenmask') == ABORT) return ABORT;
 		} else {
 			if ($this->active_mask and $this->active_mask->isPopup()) {
 				$this->closePopup();
@@ -588,7 +588,7 @@ class P4A extends P4A_Object
 
 			$this->setActiveMask($mask_name);
 		}
-		$this->actionHandler('afterOpenMask');
+		$this->actionHandler('afteropenmask');
 		return $this->active_mask;
 	}
 
