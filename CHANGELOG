@@ -5,7 +5,6 @@
 - implement errors with exceptions
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
-- replace the "running applications" page with a "p4a is installed" page
 - write a p4a error handler o replace php's one
 - login mask
 - db navigator
