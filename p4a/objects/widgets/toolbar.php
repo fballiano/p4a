@@ -34,8 +34,9 @@
 /**
  * A toolbar is a buttons/images set.
  * Every button/image can have an action handler.
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Toolbar extends P4A_Widget

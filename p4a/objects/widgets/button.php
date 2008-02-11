@@ -36,6 +36,7 @@
  * It's useful to trigger actions in easy way (with/without graphics).
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Button extends P4A_Widget

@@ -38,6 +38,7 @@
  * organization of masks.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Menu extends P4A_Widget
@@ -142,6 +143,7 @@ class P4A_Menu extends P4A_Widget
  * Rapresents every menu item
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Menu_Item extends P4A_Widget

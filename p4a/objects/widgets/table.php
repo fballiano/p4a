@@ -37,6 +37,7 @@
  * data sources and than (for example) edit a record or view details etc...
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Table extends P4A_Widget
@@ -428,6 +429,7 @@ class P4A_Table extends P4A_Widget
  * Keeps the data for a single table column
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Table_Col extends P4A_Widget
@@ -711,6 +713,7 @@ class P4A_Table_Col extends P4A_Widget
  * Keeps all the data for all the rows.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Table_Rows extends P4A_Widget

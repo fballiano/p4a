@@ -35,6 +35,7 @@
  * The label is associated to an input field, do not use it otherwise
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Label extends P4A_Widget

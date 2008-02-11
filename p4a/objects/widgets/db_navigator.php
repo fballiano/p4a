@@ -33,7 +33,9 @@
 
 /**
  * This widget allows a tree navigation within a P4A_DB_Source.
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_DB_Navigator extends P4A_Widget

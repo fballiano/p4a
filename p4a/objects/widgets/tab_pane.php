@@ -38,6 +38,7 @@
  * The pages are switchable from a tabbed menu.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Tab_Pane extends P4A_Widget

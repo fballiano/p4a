@@ -35,6 +35,7 @@
  * A fields is a GUI element that shows its value, and this value can be changed.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Field extends P4A_Widget
