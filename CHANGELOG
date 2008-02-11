@@ -7,6 +7,7 @@
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
 - write a p4a error handler o replace php's one
+- base mask, frame mask?
 
 2.99.0
 - Zend Framework 1.0.3 was added
