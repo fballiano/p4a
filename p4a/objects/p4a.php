@@ -373,18 +373,7 @@ class P4A extends P4A_Object
 					$value['tmp_name'] = '/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name'];
 
 					if ((substr($key, 0, 3) == 'fld')) {
-						$width = $height = null;
-						require_once P4A_ROOT_DIR . "/p4a/libraries/getid3/getid3/getid3.php";
-						$old_error_reporting = error_reporting(P4A_DEFAULT_MINIMAL_REPORTING);
-						try {
-							$getid3 = new getID3();
-							$data = $getid3->analyze(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
-						} catch (Exception $e) {}
-						error_reporting($old_error_reporting);
-						if (isset($data['video']) and isset($data['video']['resolution_x']) and isset($data['video']['resolution_y'])) {
-							$width = $data['video']['resolution_x'];
-							$height = $data['video']['resolution_y'];
-						}
+						list($width, $height) = @getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 						$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 						$this->objects[$key]->setNewValue('{' . $new_value . '}');
 						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
