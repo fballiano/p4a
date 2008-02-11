@@ -38,6 +38,7 @@
  * It can be considered the same as a database table's field.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 class P4A_Data_Field extends P4A_Object

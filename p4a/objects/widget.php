@@ -36,8 +36,9 @@
  * Every P4A objects thats can be rendered should use WIDGET as base class.
  * This class have all the basic methods to build complex widgets that must
  * be P4A compatible.
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
  */
 abstract class P4A_Widget extends P4A_Object

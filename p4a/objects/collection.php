@@ -31,6 +31,12 @@
  * @package p4a
  */
 
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
+ * @package p4a
+ */
 class P4A_Collection extends P4A_Object
 {
 	protected $_pointer = 0;
