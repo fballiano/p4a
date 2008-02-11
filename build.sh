@@ -21,7 +21,7 @@ cp -r $SRCDIR p4a
 cd $PKGDIR
 mkdir code-reference
 cd $SRCDIR
-phpdoc -q on -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'phpthumb/,i18n/,getid3/,Zend/,pear_net_useragent_detect.php,pear_validate.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
+phpdoc -q on -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'phpthumb/,i18n/,Zend/,pear_net_useragent_detect.php,pear_validate.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
 
 ##########################
 # cleaning master source #
