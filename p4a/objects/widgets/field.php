@@ -382,10 +382,6 @@ class P4A_Field extends P4A_Widget
 			$this->setWidth(500);
 			$this->setHeight(300);
 			break;
-		case 'color':
-			$this->setWidth(60);
-			$this->setProperty('maxlength', 7);
-			break;
 		case 'multicheckbox':
 		case 'multiselect':
 			if ($multivalue_separator !== null) {
@@ -1228,27 +1224,6 @@ class P4A_Field extends P4A_Widget
 	}
 
 	/**
-	 * Renders the fields as a color picker
-	 * @return string
-	 */
-	public function getAsColor()
-	{
-		$id = $this->getId();
-		if ($this->isEnabled()) {
-			$enabled = "";
-		} else {
-			$enabled = " disabled='disabled' ";
-		}
-
-		$return  = $this->getAsText();
-		if (!P4A::singleton()->isHandheld()) {
-			$return .= "<input type='button' value='...' id='{$id}button' $enabled onclick='p4a_colorpicker_toggle(\"$id\")' />";
-		}
-
-		return $return;
-	}
-
-	/**
 	 * Sets the label for the field.
 	 * In rendering phase it will be added with ':  '.
 	 * @param string $value
@@ -1315,7 +1290,6 @@ class P4A_Field extends P4A_Widget
 		}
 
 		switch ($this->type) {
-			case 'color':
 			case 'text':
 			case 'hidden':
 			case 'date':

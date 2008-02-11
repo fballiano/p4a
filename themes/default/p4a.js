@@ -61,7 +61,6 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 {
 	p4a_event_execute_prepare(object_name, action_name, param1, param2, param3, param4);
 	document.getElementById('p4a')._ajax.value = 1;
-	$('#colorpicker').hide();
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
@@ -136,20 +135,6 @@ p4a_tooltip_show = function (widget)
 	if (tooltip.bgiframe) tooltip.bgiframe();
 	tooltip.show();
 	widget.mouseout(function() {tooltip.hide()});
-}
-
-p4a_colorpicker_toggle = function (id)
-{
-	var left = $('#' + id + 'button').offset().left + $('#' + id + 'button').width() + 10;
-	var top = $('#' + id + 'button').offset().top;
-	var colorpicker = $('#colorpicker');
-	if (colorpicker.length == 0) {
-		colorpicker = $('<div id="colorpicker"></div>').appendTo("body");
-	}
-	colorpicker.css('left', left);
-	colorpicker.css('top', top);
-	colorpicker.farbtastic('#' + id + 'input');
-	colorpicker.toggle();
 }
 
 p4a_calendar_open = function (id)

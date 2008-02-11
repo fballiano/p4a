@@ -207,58 +207,6 @@ body.p4a_popup h2 table td {
 }
 
 /****************************/
-/* P4A_Field - color picker */
-/****************************/
-
-#p4a_colorpicker {
-	position: absolute;
-	display: none;
-	background: white;
-	border: 1px solid #C6D3DE;
-}
-
-.farbtastic {
-  position: relative;
-}
-
-.farbtastic * {
-  position: absolute;
-  cursor: crosshair;
-}
-
-.farbtastic,
-.farbtastic .wheel {
-  width: 195px;
-  height: 195px;
-}
-
-.farbtastic .color,
-.farbtastic .overlay {
-  top: 47px;
-  left: 47px;
-  width: 101px;
-  height: 101px;
-}
-
-.farbtastic .wheel {
-  background: url(jquery/wheel.png) no-repeat;
-  width: 195px;
-  height: 195px;
-}
-
-.farbtastic .overlay {
-  background: url(jquery/mask.png) no-repeat;
-}
-
-.farbtastic .marker {
-  width: 17px;
-  height: 17px;
-  margin: -8px 0 0 -8px;
-  overflow: hidden;
-  background: url(jquery/marker.png) no-repeat;
-}
-
-/****************************/
 /* P4A_Field - autocomplete */
 /****************************/
 
