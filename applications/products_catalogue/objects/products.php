@@ -31,6 +31,12 @@
  * @package p4a
  */
 
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
+ * @package p4a
+ */
 class Products extends P4A_Base_Mask
 {
 	public function __construct()
