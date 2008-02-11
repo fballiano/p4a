@@ -21,7 +21,7 @@ cp -r $SRCDIR p4a
 cd $PKGDIR
 mkdir code-reference
 cd $SRCDIR
-phpdoc -q on -d 'p4a/,docs/phpdoc-tutorials/' -ti 'P4A - PHP For Applications - Code Reference' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'phpthumb/,i18n/,Zend/,pear_net_useragent_detect.php,pear_validate.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
+phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'phpthumb/,i18n/,Zend/,pear_net_useragent_detect.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
 
 ##########################
 # cleaning master source #
@@ -43,6 +43,8 @@ rm -f `find -name '.cvsignore'`
 
 cd $PKGDIR
 rm -r p4a/docs
+sed 's/blank.html/ric_README.html/' code-reference/index.html > index.html
+mv index.html code-reference/
 cp -r code-reference p4a/docs
 
 ##############################
@@ -51,12 +53,7 @@ cp -r code-reference p4a/docs
 
 cd $PKGDIR
 mv p4a p4a-$VERSION
-
-tar cf p4a-$VERSION.tar p4a-$VERSION
-gzip p4a-$VERSION.tar
-
 zip -r p4a-$VERSION.zip p4a-$VERSION
-
 rm -r p4a-$VERSION
 
 ###################################
