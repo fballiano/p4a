@@ -10,7 +10,6 @@
 - db navigator
 - sequence creation on postgres
 - check jmedia on video
-- remove phpthumb
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -229,6 +228,8 @@
 - P4A_DB::nextSequenceId now automatically creates sequences on oracle too
 - jQuery color picker was removed
 - getId3 was dropped, we went back to getimagesize() PHP function to extract images information but we can't retrieve video files information anymore
+- phpThumb was removed
+- P4A_Thumbnail_Generator was added
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

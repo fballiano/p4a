@@ -463,21 +463,14 @@ class P4A extends P4A_Object
 			die();
 		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
 			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
-			require P4A_ROOT_DIR . '/p4a/libraries/phpthumb/phpthumb.class.php';
-			$phpThumb = new phpThumb();
-			$phpThumb->config_document_root = null;
-			$phpThumb->config_allow_src_above_docroot = true;
-			$phpThumb->config_cache_directory = P4A_UPLOADS_TMP_DIR;
-			$phpThumb->config_cache_prefix = 'cache_';
-			$phpThumb->setSourceFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]));
-			$phpThumb->w = $image_data[1];
-			$phpThumb->h = $image_data[2];
-			$phpThumb->SetCacheFilename();
-			if (!file_exists($phpThumb->cache_filename)) {
-				$phpThumb->generateThumbnail();
-				$phpThumb->renderToFile($phpThumb->cache_filename);
-			}
-			header('Location: ' . P4A_UPLOADS_TMP_PATH . str_replace(P4A_UPLOADS_TMP_DIR, '', $phpThumb->cache_filename));
+			require P4A_ROOT_DIR . '/p4a/libraries/thumbnail_generator.php';
+			$thumb = new P4A_Thumbnail_Generator();
+			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
+				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
+				->setWidth($image_data[1])
+				->processFile()
+				->cacheThumbnail();
+			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
 			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 			$this->_action_history_id++;
