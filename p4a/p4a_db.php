@@ -111,34 +111,40 @@ class P4A_DB
 	{
 		switch ($this->db_type) {
 			case 'mysql':
-				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)";
 				try {
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				} catch (Exception $e) {
-					$this->adapter->query($create_sequence_sql);
+					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)");
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				}
 				return $id;
 			case 'sqlite':
-				$create_sequence_sql = "CREATE TABLE $sequence_name (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, p4a CHAR)";
 				try {
 					$this->adapter->insert($sequence_name, array('p4a'=>null));
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				} catch (Exception $e) {
-					$this->adapter->query($create_sequence_sql);
+					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, p4a CHAR)");
 					$this->adapter->insert($sequence_name, array('p4a'=>null));
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				}
 				return $id;
 			case 'pgsql':
-			case 'oci':
 				return $this->adapter->nextSequenceId($sequence_name);
+			case 'oci':
+				$sequence_name = strtoupper($sequence_name);
+				try {
+					$id = $this->adapter->nextSequenceId($sequence_name);
+				} catch (Exception $e) {
+					$this->adapter->query("CREATE SEQUENCE $sequence_name");
+					$id = $this->adapter->nextSequenceId($sequence_name);
+				}
+				return $id;
 		}
 	}
 	
