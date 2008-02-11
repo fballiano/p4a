@@ -34,10 +34,10 @@
 /**
  * Navigation toolbar for data source operations.
  * This toolbar has "first", "prev", "next", "last", "exit" buttons.
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
- * @see P4A_Toolbar
  */
 class P4A_Navigation_Toolbar extends P4A_Toolbar
 {

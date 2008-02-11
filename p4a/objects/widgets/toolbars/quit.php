@@ -34,10 +34,10 @@
 /**
  * Very simple toolbar.
  * This toolbar has only "print", "quit" buttons.
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
- * @see P4A_Toolbar
  */
 class P4A_Quit_Toolbar extends P4A_Toolbar
 {

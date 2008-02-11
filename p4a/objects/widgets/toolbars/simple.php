@@ -34,10 +34,10 @@
 /**
  * Simple toolbar.
  * This toolbar has "confirm", "cancel", "print", "exit" buttons.
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
  * @package p4a
- * @see P4A_Toolbar
  */
 class P4A_Simple_Toolbar extends P4A_Toolbar
 {
