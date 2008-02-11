@@ -7,8 +7,8 @@
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
 - write a p4a error handler o replace php's one
-- base mask, frame mask?
 - login mask
+- db navigator
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -223,6 +223,7 @@
 - P4A_APPLICATION_SOURCE_DOWNLOAD_URL constant was added, you've to set it for every project, it must point to somewhere users can download the source code of the application
 - default template now has a "download source code" link in the footer
 - if P4A_APPLICATION_SOURCE_DOWNLOAD_URL is not set, the "download source" link on the default template will take user to an error page showing the right to receive the source code
+- P4A_DB_Source::load() method now autodetect schema name
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

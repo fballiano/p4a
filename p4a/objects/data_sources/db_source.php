@@ -260,6 +260,15 @@ class P4A_DB_Source extends P4A_Data_Source
 			$this->_tables_metadata[$table] = $p4a_db_table->info();
 		}
 		
+		if (!$this->getSchema()) {
+			foreach ($this->_tables_metadata[$main_table]['metadata'] as $column_data) {
+				if (strlen($column_data['SCHEMA_NAME'])) {
+					$this->setSchema($column_data['SCHEMA_NAME']);
+				}
+				break;
+			}
+		}
+		
 		// creating data fields
 		foreach ($select->getPart('columns') as $column_data) {
 			$table_name = $column_data[0];
