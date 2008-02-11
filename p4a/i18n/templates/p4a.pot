@@ -217,3 +217,9 @@ msgstr ""
 
 msgid "'%value%' has not only alphabetic and digit characters"
 msgstr ""
+
+msgid "Download application's source code"
+msgstr ""
+
+msgid "You've the right to receive the source code of this application.<br />Please contact your software vendor, he has to give it to you.<br />If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, they'll help you getting your rights honored."
+msgstr ""

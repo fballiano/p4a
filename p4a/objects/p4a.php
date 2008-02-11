@@ -409,6 +409,13 @@ class P4A extends P4A_Object
 		if ($this->_in_ajax_call) {
 			$this->_action_history_id++;
 			$this->raiseXMLResponse();
+		} elseif (isset($_REQUEST['_p4a_application_download_missing_link'])) {
+			$text  = "You've the right to receive the source code of this application.<br />";
+			$text .= "Please contact your software vendor, he has to give it to you.<br />";
+			$text .= "If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, ";
+			$text .= "they'll help you getting your rights honored.";
+			echo __($text);
+			die();
 		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
 			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
 				$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];
@@ -475,11 +482,17 @@ class P4A extends P4A_Object
 			$phpThumb = new phpThumb();
 			$phpThumb->config_document_root = null;
 			$phpThumb->config_allow_src_above_docroot = true;
+			$phpThumb->config_cache_directory = P4A_UPLOADS_TMP_DIR;
+			$phpThumb->config_cache_prefix = 'cache_';
 			$phpThumb->setSourceFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]));
 			$phpThumb->w = $image_data[1];
 			$phpThumb->h = $image_data[2];
-			$phpThumb->generateThumbnail();
-			$phpThumb->outputThumbnail();
+			$phpThumb->SetCacheFilename();
+			if (!file_exists($phpThumb->cache_filename)) {
+				$phpThumb->generateThumbnail();
+				$phpThumb->renderToFile($phpThumb->cache_filename);
+			}
+			header('Location: ' . P4A_UPLOADS_TMP_PATH . str_replace(P4A_UPLOADS_TMP_DIR, '', $phpThumb->cache_filename));
 			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 			$this->_action_history_id++;
