@@ -431,7 +431,7 @@ class P4A_Mask extends P4A_Object
 
 				if ($old_value === null) {
 					if ($new_value !== null) {
-						$a_new_value[0] = P4A_Get_Unique_File_Name( $a_new_value[0], $target_dir );
+						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[0], $target_dir);
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 						if (!rename($old_path, $new_path)) {
@@ -440,7 +440,7 @@ class P4A_Mask extends P4A_Object
 								die();
 							}
 						}
-						$a_new_value[1] = str_replace(P4A_UPLOADS_DIR , '', $new_path);
+						$a_new_value[1] = P4A_Strip_Double_Slashes(str_replace(P4A_UPLOADS_DIR , '', $new_path));
 						$field->setNewValue('{' . join($a_new_value, ',') . '}');
 					} else {
 						$field->setNewValue(null);
