@@ -2,14 +2,11 @@
 - implement application level translations
 - port products_catalogue to the new translation system
 - implement p4a_table::addCheckboxCol
-- p4a_table action col should also support html (for images)
 - implement errors with exceptions
-- reorganize screen.css and remove color1 background1 and so on
-- fix field's error message that breaks its css
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - replace the "running applications" page with a "p4a is installed" page
-- table action cols should not use setValue to set labels!
+- write a p4a error handler o replace php's one
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -201,6 +198,26 @@
 - jQuery::jqModal was removed
 - a simple javascript trick was implemented to avoid concurrent clicks on the interface
 - jQuery::bgiframe plugin was added and implemented (only for ie6) for tooltips and system messages
+- P4A is now released under AFFERO GPL 3
+- P4A_Label::setType(), getType(), setValue() and getValue() methods were removed 'cause unused
+- P4A_Widget::addCSSClass() and getCSSClasses() methods were added
+- tooltip HTML/javascript was rewritten to be simpler
+- P4A_Box::setHTML() and getHTML() methods were added
+- P4A_Box::setValue() and getValue() methods were marked as deprecated
+- all widgets now use the composeStringClass() method, which now use the getCSSClasses() method
+- CSS hacks for internet explorer were removed cause not needed anymore
+- jQuery was updated to 1.2.3
+- P4A_Table has no more container div thus can be styled much more efficently
+- P4A_Field::setDefaultVisualizationProperties() method was removed
+- P4A_Field::getVisualizedDataType() method was added and called during getAsString(), used to generate the data_type CSS class
+- masks and widgets templates were renamed to ".php"
+- P4A::isAjaxEnabled() method was removed
+- P4A::isGecko(), isOpera, isSafari() and getBrowser() methods were added
+- masks templates now add a class to the body (p4a_browser_ie, p4a_browser_gecko, p4a_browser_opera, p4a_browser_safari, p4a_browser_handheld) depending on brower
+- P4A_Navigation_Bar buttons names were changed to be a bit better
+- handheld CSS/Javascript management was changed, now we outputs all CSS/Javascript plus a basic handheld CSS
+- P4A_Table's action cols CSS now handles images much better
+- thumbnails cache was enabled (stored in P4A_UPLOADS_TMP_DIR with "cache_" prefix)
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
