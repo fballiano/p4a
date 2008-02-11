@@ -219,6 +219,9 @@
 - handheld CSS/Javascript management was changed, now we outputs all CSS/Javascript plus a basic handheld CSS
 - P4A_Table's action cols CSS now handles images much better
 - thumbnails cache was enabled (stored in P4A_UPLOADS_TMP_DIR with "cache_" prefix)
+- P4A_APPLICATION_SOURCE_DOWNLOAD_URL constant was added, you've to set it for every project, it must point to somewhere users can download the source code of the application
+- default template now has a "download source code" link in the footer
+- if P4A_APPLICATION_SOURCE_DOWNLOAD_URL is not set, the "download source" link on the default template will take user to an error page showing the right to receive the source code
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
