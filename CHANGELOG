@@ -233,6 +233,7 @@
 - P4A_Field does not preview images if GD are not installed
 - P4A_Login_Mask was added, it should be used if your application needs a login system, it does not display the "download application source" link in the footer zone
 - products_catalogue sample now uses the P4A_Login_Mask to show how to use this new feature
+- P4A_Object::implementMethod() method was renamed to implement()
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

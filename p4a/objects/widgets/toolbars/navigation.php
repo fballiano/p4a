@@ -87,10 +87,10 @@ class P4A_Navigation_Toolbar extends P4A_Toolbar
 	{
 		$this->_mask_name = $mask->getName();
 
-		$this->buttons->first->implementMethod('onClick', $mask, 'firstRow');
-		$this->buttons->prev->implementMethod('onClick', $mask, 'prevRow');
-		$this->buttons->next->implementMethod('onClick', $mask, 'nextRow');
-		$this->buttons->last->implementMethod('onClick', $mask, 'lastRow');
-		$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
+		$this->buttons->first->implement('onClick', $mask, 'firstRow');
+		$this->buttons->prev->implement('onClick', $mask, 'prevRow');
+		$this->buttons->next->implement('onClick', $mask, 'nextRow');
+		$this->buttons->last->implement('onClick', $mask, 'lastRow');
+		$this->buttons->exit->implement('onClick', $mask, 'showPrevMask');
 	}
 }

@@ -67,16 +67,16 @@ final class P4A_Login_Mask extends P4A_Mask
 		$this->build('P4A_Field', 'username');
 		$this->username->addAction('onreturnpress');
 		$this->username->addAjaxAction('onreturnpress');
-		$this->username->implementMethod('onreturnpress', $this, 'login');
+		$this->username->implement('onreturnpress', $this, 'login');
 		
 		$this->build('P4A_Field', 'password');
 		$this->password->setType('password');
 		$this->password->addAjaxAction('onreturnpress');
-		$this->password->implementMethod('onreturnpress', $this, 'login');
+		$this->password->implement('onreturnpress', $this, 'login');
 		
 		$this->build('P4A_Button', 'go');
 		$this->go->addAjaxAction('onclick');
-		$this->go->implementMethod('onclick', $this, 'login');
+		$this->go->implement('onclick', $this, 'login');
 
 		$this->build('P4A_Frame', 'frame');
 		$this->frame->setWidth(300);

@@ -63,15 +63,15 @@ class Products_Catalogue extends P4A
 		$this->build("p4a_menu", "menu");
 		$this->menu->addItem("products");
 		$this->menu->items->products->setAccessKey("r");
-		$this->menu->items->products->implementMethod("onclick", $this, "menuClick");
+		$this->menu->items->products->implement("onclick", $this, "menuClick");
 
 		$this->menu->addItem("support_tables", "Support Tables");
 
 		$this->menu->items->support_tables->addItem("categories");
-		$this->menu->items->support_tables->items->categories->implementMethod("onclick", $this, "menuClick");
+		$this->menu->items->support_tables->items->categories->implement("onclick", $this, "menuClick");
 
 		$this->menu->items->support_tables->addItem("brands");
-		$this->menu->items->support_tables->items->brands->implementMethod("onclick", $this, "menuClick");
+		$this->menu->items->support_tables->items->brands->implement("onclick", $this, "menuClick");
 
 		// Data sources
 		$this->build("p4a_db_source", "brands");
@@ -86,7 +86,7 @@ class Products_Catalogue extends P4A
 
 		// Primary action
 		$this->openMask("P4A_Login_Mask");
-		$this->active_mask->implementMethod('onLogin', $this, 'login');
+		$this->active_mask->implement('onLogin', $this, 'login');
 		$this->loginInfo();
 	}
 

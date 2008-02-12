@@ -107,14 +107,14 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 	{
 		$this->_mask_name = $mask->getName();
 
-		$this->buttons->save->implementMethod('onclick', $mask, 'saveRow');
-		$this->buttons->cancel->implementMethod('onclick', $mask, 'reloadRow');
-		$this->buttons->first->implementMethod('onclick', $mask, 'firstRow');
-		$this->buttons->prev->implementMethod('onclick', $mask, 'prevRow');
-		$this->buttons->next->implementMethod('onclick', $mask, 'nextRow');
-		$this->buttons->last->implementMethod('onclick', $mask, 'lastRow');
-		$this->buttons->new->implementMethod('onclick', $mask, 'newRow');
-		$this->buttons->delete->implementMethod('onclick', $mask, 'deleteRow');
-		$this->buttons->exit->implementMethod('onclick', $mask, 'showPrevMask');
+		$this->buttons->save->implement('onclick', $mask, 'saveRow');
+		$this->buttons->cancel->implement('onclick', $mask, 'reloadRow');
+		$this->buttons->first->implement('onclick', $mask, 'firstRow');
+		$this->buttons->prev->implement('onclick', $mask, 'prevRow');
+		$this->buttons->next->implement('onclick', $mask, 'nextRow');
+		$this->buttons->last->implement('onclick', $mask, 'lastRow');
+		$this->buttons->new->implement('onclick', $mask, 'newRow');
+		$this->buttons->delete->implement('onclick', $mask, 'deleteRow');
+		$this->buttons->exit->implement('onclick', $mask, 'showPrevMask');
 	}
 }

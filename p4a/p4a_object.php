@@ -204,7 +204,7 @@ abstract class P4A_Object
 	 */
 	public function intercept($object, $action, $method = null)
 	{
-		$object->implementMethod($action, $this, $method);
+		$object->implement($action, $this, $method);
 	}
 
 	/**
@@ -213,7 +213,7 @@ abstract class P4A_Object
 	 * @param object $object The object that will intercept the action
 	 * @param string $method The method that will be called
 	 */
-	public function implementMethod($action, $object, $method = null)
+	public function implement($action, $object, $method = null)
 	{
 		$action = strtolower($action);
 		if ($method === null) $method = $action;

@@ -875,14 +875,14 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 
 		$this->addButton('go', 'apply', 'right');
 		$this->buttons->go->setLabel("Go");
-		$this->buttons->go->implementMethod('onclick', $this, 'goOnClick');
+		$this->buttons->go->implement('onclick', $this, 'goOnClick');
 
 		$this->buttons->build(P4A_FIELD_CLASS, 'page_number');
 		$this->buttons->page_number->label->setStyleProperty("text-align", "right");
 		$this->buttons->page_number->label->setWidth(80);
 		$this->buttons->page_number->setWidth(30);
 		$this->buttons->page_number->addAjaxAction('onreturnpress');
-		$this->buttons->page_number->implementMethod('onreturnpress', $this, 'goOnClick');
+		$this->buttons->page_number->implement('onreturnpress', $this, 'goOnClick');
 		$this->anchorRight($this->buttons->page_number);
 
 		$this->buttons->build('p4a_label', 'current_page');
@@ -910,10 +910,10 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 			$this->buttons->first->setLabel("Go to the first page");
 		}
 		
-		$this->buttons->last->implementMethod('onclick', $this, 'lastOnClick');
-		$this->buttons->next->implementMethod('onclick', $this, 'nextOnClick');
-		$this->buttons->prev->implementMethod('onclick', $this, 'prevOnClick');
-		$this->buttons->first->implementMethod('onclick', $this, 'firstOnClick');
+		$this->buttons->last->implement('onclick', $this, 'lastOnClick');
+		$this->buttons->next->implement('onclick', $this, 'nextOnClick');
+		$this->buttons->prev->implement('onclick', $this, 'prevOnClick');
+		$this->buttons->first->implement('onclick', $this, 'firstOnClick');
 	}
 
 	/**

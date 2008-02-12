@@ -77,8 +77,8 @@ class P4A_Actions_Toolbar extends P4A_Toolbar
 	 */
 	public function setMask(P4A_Mask $mask)
 	{
-		$this->buttons->save->implementMethod('onClick', $mask, 'saveRow');
-		$this->buttons->cancel->implementMethod('onClick', $mask, 'reloadRow');
-		$this->buttons->exit->implementMethod('onClick', $mask, 'showPrevMask');
+		$this->buttons->save->implement('onClick', $mask, 'saveRow');
+		$this->buttons->cancel->implement('onClick', $mask, 'reloadRow');
+		$this->buttons->exit->implement('onClick', $mask, 'showPrevMask');
 	}
 }

@@ -1192,17 +1192,17 @@ class P4A_Field extends P4A_Widget
 			$this->buttons->build("p4a_button", "button_file_delete");
 			$this->buttons->button_file_delete->setLabel('Delete');
 			$this->buttons->button_file_delete->addAjaxAction('onclick');
-			$this->buttons->button_file_delete->implementMethod('onclick', $this, 'fileDeleteOnClick');
+			$this->buttons->button_file_delete->implement('onclick', $this, 'fileDeleteOnClick');
 		}
 		if (!isset($this->buttons->button_file_preview)) {
 			$this->buttons->build("p4a_button", "button_file_preview");
 			$this->buttons->button_file_preview->setLabel('Preview');
-			$this->buttons->button_file_preview->implementMethod('onclick', $this, 'filePreviewOnClick');
+			$this->buttons->button_file_preview->implement('onclick', $this, 'filePreviewOnClick');
 		}
 		if (!isset($this->buttons->button_file_download)) {
 			$this->buttons->build("p4a_button", "button_file_download");
 			$this->buttons->button_file_download->setLabel('Download');
-			$this->buttons->button_file_download->implementMethod('onclick', $this, 'fileDownloadOnClick');
+			$this->buttons->button_file_download->implement('onclick', $this, 'fileDownloadOnClick');
 		}
 	}
 

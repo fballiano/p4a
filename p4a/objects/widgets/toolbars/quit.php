@@ -61,6 +61,6 @@ class P4A_Quit_Toolbar extends P4A_Toolbar
 		$this->buttons->exit->setLabel('Go back to the previous mask');
 		$this->buttons->exit->setAccessKey('X');
 		
-		$this->buttons->exit->implementMethod('onclick', P4A::singleton(), 'showPrevMask');
+		$this->buttons->exit->implement('onclick', P4A::singleton(), 'showPrevMask');
 	}
 }
