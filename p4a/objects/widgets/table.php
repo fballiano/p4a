@@ -797,12 +797,13 @@ class P4A_Table_Rows extends P4A_Widget
 						$value = explode(',', $value);
 						list($type) = explode('/',$value[3]);
 						if ($type == 'image') {  
-							$image_src = P4A_UPLOADS_PATH . "/{$value[1]}";
+							$image_src = $value[1];
 							$thumb_height = P4A_TABLE_THUMB_HEIGHT;
 							if (P4A_GD) {
-								$image_src = P4A_ROOT_PATH . "/p4a/libraries/phpthumb/phpThumb.php?src=$image_src&amp;h=$thumb_height";
-								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
+								$image_src = '.?_p4a_image_thumbnail=' . urlencode("$image_src&$thumb_height");
+								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' alt='' />";
 							} else {
+								$image_src = P4A_UPLOADS_PATH . $image_src;
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
 							}
 						} else {

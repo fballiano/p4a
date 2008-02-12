@@ -467,7 +467,8 @@ class P4A extends P4A_Object
 			$thumb = new P4A_Thumbnail_Generator();
 			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
 				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
-				->setWidth($image_data[1])
+				->setMaxWidth($image_data[1])
+				->setMaxHeight($image_data[1])
 				->processFile()
 				->cacheThumbnail();
 			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());

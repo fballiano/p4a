@@ -52,6 +52,16 @@ class P4A_Thumbnail_Generator
 	/**
 	 * @var integer
 	 */
+	protected $thumbnail_max_width = null;
+	
+	/**
+	 * @var integer
+	 */
+	protected $thumbnail_max_height = null;
+	
+	/**
+	 * @var integer
+	 */
 	protected $original_width = null;
 	
 	/**
@@ -90,7 +100,7 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setWidth($width)
 	{
-		$this->thumbnail_width = $width;
+		if ($width) $this->thumbnail_width = $width;
 		return $this;
 	}
 	
@@ -100,7 +110,27 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setHeight($height)
 	{
-		$this->thumbnail_height = $height;
+		if ($height) $this->thumbnail_height = $height;
+		return $this;
+	}
+	
+	/**
+	 * @param integer $width
+	 * @return P4A_Thumbnail_Generator
+	 */
+	public function setMaxWidth($width)
+	{
+		if ($width) $this->thumbnail_max_width = $width;
+		return $this;
+	}
+	
+	/**
+	 * @param integer $height
+	 * @return P4A_Thumbnail_Generator
+	 */
+	public function setMaxHeight($height)
+	{
+		if ($height) $this->thumbnail_max_height = $height;
 		return $this;
 	}
 	
@@ -110,7 +140,7 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setCacheDir($dir)
 	{
-		$this->cache_dir = $dir;
+		if ($dir) $this->cache_dir = $dir;
 		return $this;
 	}
 	
@@ -128,7 +158,7 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setCachedFilenamePrefix($prefix)
 	{
-		$this->cached_filename_prefix = $prefix;
+		if ($prefix) $this->cached_filename_prefix = $prefix;
 		return $this;
 	}
 	
@@ -138,7 +168,7 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setFilename($filename)
 	{
-		$this->filename = $filename;
+		if ($filename) $this->filename = $filename;
 		return $this;
 	}
 	
@@ -176,8 +206,8 @@ class P4A_Thumbnail_Generator
 	 */
 	public function processFile()
 	{
-		if ($this->thumbnail_width === null and $this->thumbnail_height === null) {
-			throw new P4A_Thumbnail_Generator_Exception("You must call setWidth() or setHeight() before calling processFile()");
+		if ($this->thumbnail_width === null and $this->thumbnail_height === null and $this->thumbnail_max_width === null and $this->thumbnail_max_height === null) {
+			throw new P4A_Thumbnail_Generator_Exception("You must call setWidth() or setHeight() or setMaxWidth() or setMaxHeight() before calling processFile()");
 		}
 		if (!file_exists($this->filename)) {
 			throw new P4A_Thumbnail_Generator_Exception("{$this->filename} does not exists");
@@ -211,12 +241,28 @@ class P4A_Thumbnail_Generator
 				throw new P4A_Thumbnail_Generator_Exception("This type of image is not supported");
 		}
 		
-		if ($this->thumbnail_width !== null or $this->thumbnail_height !== null) {
-			if ($this->thumbnail_width === null) {
-				$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
-			} else {
+		if ($this->thumbnail_width === null) {
+			$this->thumbnail_width = $this->thumbnail_max_width;
+			if ($this->thumbnail_height === null) {
 				$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
 			}
+		}
+		
+		if ($this->thumbnail_height === null) {
+			$this->thumbnail_height = $this->thumbnail_max_height;
+			if ($this->thumbnail_width === null) {
+				$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
+			}
+		}
+		
+		if ($this->thumbnail_width > $this->thumbnail_max_width) {
+			$this->thumbnail_width = $this->thumbnail_max_width;
+			$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
+		}
+		
+		if ($this->thumbnail_height > $this->thumbnail_max_height) {
+			$this->thumbnail_height = $this->thumbnail_max_height;
+			$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
 		}
 
 		$size = @filesize($this->filename);
@@ -225,7 +271,7 @@ class P4A_Thumbnail_Generator
 		}
 		
 		if ($this->isCacheEnabled()) {
-			$this->cached_filename = $this->cached_filename_prefix . md5("{$this->filename}|{$width}|{$height}|{$size}") . '.jpg';
+			$this->cached_filename = $this->cached_filename_prefix . md5("{$this->filename}|{$size}|{$this->thumbnail_width}|{$this->thumbnail_height}") . '.jpg';
 		}
 		
 		return $this;

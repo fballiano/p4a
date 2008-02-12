@@ -1153,29 +1153,10 @@ class P4A_Field extends P4A_Widget
 		$mime_type = $mime_type[0];
 		if ($mime_type != 'image') return $this->getAsFile();
 
-		$src = $this->getNewValue(1);
-		$width = $this->getNewValue(4);
-		$str_width = '';
-		$height = $this->getNewValue(5);
-		$str_height = '';
-
-		if ($width > $height) {
-			if ($this->max_thumbnail_size !== null and $width > $this->max_thumbnail_size) {
-				$width = $this->max_thumbnail_size ;
-				$str_width = "width=\"$width\"" ;
-			}
-		} else {
-			if ($this->max_thumbnail_size !== null and $height > $this->max_thumbnail_size) {
-				$height = $this->max_thumbnail_size ;
-				$str_height = "height=\"$height\"" ;
-			}
-		}
-
 		$sReturn  = '<table id="' . $this->getId() . '">' ;
 		if (P4A_GD) {
-			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&$width&$height") . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
-		} else {
-			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src="' . P4A_UPLOADS_URL . $src . '" ' . $str_width . ' ' . $str_height . ' /></td></tr>';
+			$src = $this->getNewValue(1);
+			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&{$this->max_thumbnail_size}") . '" /></td></tr>';
 		}
 		$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
 		$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
