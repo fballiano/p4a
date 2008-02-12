@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2008, CreaLabs SNC (http://www.crealabs.it)
+ * Code licensed under AGPL3 license:
+ * http://www.gnu.org/licenses/agpl.html
+ */
+
 /*************************/
 /* Default mask template */
 /*************************/
@@ -582,10 +588,9 @@ div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
 	padding: 0;
 }
 
-/***********************************************************/
-/* P4A_Menu                                                */
-/* original code by Justin Koivisto - http://www.koivi.com */
-/***********************************************************/
+/************/
+/* P4A_Menu */
+/************/
 
 #p4a_menu {
 	background: #fafafa;
