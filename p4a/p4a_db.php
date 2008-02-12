@@ -74,6 +74,12 @@ class P4A_DB
 				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
 					p4a_error("db not supported");
 				}
+				
+				switch ($dsn_data['scheme']) {
+					case 'pgsql':
+						$dsn_data['port'] = 5432;
+						break;
+				}
 		
 				$$dbconn->db_type = $dsn_data['scheme'];
 				$driver = 'Zend_Db_Adapter_Pdo_' . ucfirst($dsn_data['scheme']);
