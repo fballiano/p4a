@@ -398,6 +398,7 @@ class P4A_Field extends P4A_Widget
 		case 'file':
 		case 'multiselect':
 		case 'multicheckbox':
+		case 'password':
 			break;
 		default:
 			p4a_error("$type is not a supported P4A_Field type");
