@@ -142,7 +142,13 @@ class P4A_DB
 				}
 				return $id;
 			case 'pgsql':
-				return $this->adapter->nextSequenceId($sequence_name);
+				try {
+					$id = $this->adapter->nextSequenceId($sequence_name);
+				} catch (Exception $e) {
+					$this->adapter->query("CREATE SEQUENCE $sequence_name");
+					$id = $this->adapter->nextSequenceId($sequence_name);
+				}
+				return $id;
 			case 'oci':
 				$sequence_name = strtoupper($sequence_name);
 				try {
