@@ -33,7 +33,7 @@
 
 define("P4A_LOCALE", 'en_US');
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
-//define("P4A_DSN", 'pgsql://postgres:crealabs@localhost/p4a_products_catalogue');
+//define("P4A_DSN", 'pgsql://p4a:p4a@localhost/p4a_products_catalogue');
 //define("P4A_DSN", 'oci://p4a:p4a@localhost/xe');
 //define("P4A_DSN", 'sqlite:/p4a_products_catalogue');
 //define("P4A_EXTENDED_ERRORS", true);
