@@ -1,3 +1,7 @@
+/*
+ * Copyright © Dylan Verheul <dylan@dyve.net>
+ * Licensed like jQuery, see http://docs.jquery.com/License
+ */
 jQuery.autocomplete = function(input, options) {
 	// Create a link to self
 	var me = this;
