@@ -8,7 +8,6 @@
 - write a p4a error handler o replace php's one
 - login mask
 - db navigator
-- p4a table col with images
 
 2.99.0
 - Zend Framework 1.0.3 was added
