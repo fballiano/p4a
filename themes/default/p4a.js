@@ -66,7 +66,7 @@ p4a_focus_set = function (id)
 p4a_event_execute_ajax = function (object_name, action_name, param1, param2, param3, param4)
 {
 	p4a_event_execute_prepare(object_name, action_name, param1, param2, param3, param4);
-	document.getElementById('p4a')._ajax.value = 1;
+	p4a_form._ajax.value = 1;
 
 	$('#p4a').ajaxSubmit({
 		dataType: 'xml',
