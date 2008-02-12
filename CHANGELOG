@@ -6,8 +6,8 @@
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - write a p4a error handler o replace php's one
-- login mask
 - db navigator
+- load javascript/css on demand?
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -231,6 +231,8 @@
 - P4A_DB::nextSequenceId now automatically creates sequences on postgreSQL too
 - P4A_DB_Source compose count query was changed a bit to support PostgreSQL syntax
 - P4A_Field does not preview images if GD are not installed
+- P4A_Login_Mask was added, it should be used if your application needs a login system, it does not display the "download application source" link in the footer zone
+- products_catalogue sample now uses the P4A_Login_Mask to show how to use this new feature
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

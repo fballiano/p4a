@@ -63,15 +63,15 @@ class Products_Catalogue extends P4A
 		$this->build("p4a_menu", "menu");
 		$this->menu->addItem("products");
 		$this->menu->items->products->setAccessKey("r");
-		$this->intercept($this->menu->items->products, "onclick", "menuClick");
+		$this->menu->items->products->implementMethod("onclick", $this, "menuClick");
 
 		$this->menu->addItem("support_tables", "Support Tables");
 
 		$this->menu->items->support_tables->addItem("categories");
-		$this->intercept($this->menu->items->support_tables->items->categories, "onclick", "menuClick");
+		$this->menu->items->support_tables->items->categories->implementMethod("onclick", $this, "menuClick");
 
 		$this->menu->items->support_tables->addItem("brands");
-		$this->intercept($this->menu->items->support_tables->items->brands, "onclick", "menuClick");
+		$this->menu->items->support_tables->items->brands->implementMethod("onclick", $this, "menuClick");
 
 		// Data sources
 		$this->build("p4a_db_source", "brands");
@@ -85,11 +85,31 @@ class Products_Catalogue extends P4A
 		$this->categories->load();
 
 		// Primary action
-		$this->openMask("products");
+		$this->openMask("P4A_Login_Mask");
+		$this->active_mask->implementMethod('onLogin', $this, 'login');
+		$this->loginInfo();
 	}
 
 	public function menuClick()
 	{
 		$this->openMask($this->active_object->getName());
+	}
+	
+	public function login()
+	{
+		$username = $this->active_mask->username->getNewValue();
+		$password = $this->active_mask->password->getNewValue();
+		
+		if ($username == "p4a" and $password == md5("p4a")) {
+			$this->openMask("products");
+		} else {
+			$this->message("Login failed", "warning");
+			$this->loginInfo();
+		}
+	}
+	
+	protected function loginInfo()
+	{
+		$this->message('To login type:<br />username: p4a<br />password: p4a', 'info');
 	}
 }

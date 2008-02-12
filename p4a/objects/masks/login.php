@@ -37,7 +37,61 @@
  * @copyright CreaLabs SNC
  * @package p4a
  */
-class P4A_Login_Mask
+final class P4A_Login_Mask extends P4A_Mask
 {
+	/**
+	 * P4A_Frame
+	 */
+	public $frame = null;
 	
+	/**
+	 * @var P4A_Field
+	 */
+	public $username = null;
+
+	/**
+	 * @var P4A_Field
+	 */
+	public $password = null;
+	
+	/**
+	 * @var P4A_Button
+	 */
+	public $go = null;
+	
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setTitle('Login');
+		
+		$this->build('P4A_Field', 'username');
+		$this->username->addAction('onreturnpress');
+		$this->username->addAjaxAction('onreturnpress');
+		$this->username->implementMethod('onreturnpress', $this, 'login');
+		
+		$this->build('P4A_Field', 'password');
+		$this->password->setType('password');
+		$this->password->addAjaxAction('onreturnpress');
+		$this->password->implementMethod('onreturnpress', $this, 'login');
+		
+		$this->build('P4A_Button', 'go');
+		$this->go->addAjaxAction('onclick');
+		$this->go->implementMethod('onclick', $this, 'login');
+
+		$this->build('P4A_Frame', 'frame');
+		$this->frame->setWidth(300);
+		$this->frame->setStyleProperty('margin-top', '50px');
+		$this->frame->setStyleProperty('margin-bottom', '50px');
+		$this->frame->anchor($this->username);
+		$this->frame->anchor($this->password);
+		$this->frame->anchorCenter($this->go);
+		
+		$this->display('main', $this->frame);
+		$this->setFocus($this->username);
+	}
+	
+	public function login()
+	{
+		$this->actionHandler('onLogin');
+	}
 }

@@ -495,7 +495,7 @@ class P4A extends P4A_Object
 		print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 		if ($this->_do_refresh) {
 			$this->_do_refresh = false;
-			print "<widget id='body' display='inherit'>\n";
+			print "<widget id='p4a'>\n";
 			print "<html><![CDATA[]]></html>\n";
 			print "<javascript><![CDATA[p4a_refresh()]]></javascript>\n";
 			print "</widget>";
@@ -505,7 +505,6 @@ class P4A extends P4A_Object
 			}
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
-				$display = $object->isVisible() ? 'block' : 'none';
 				$as_string = $object->getAsString();
 				$javascript_codes = array();
 				$javascript = '';
@@ -516,7 +515,7 @@ class P4A extends P4A_Object
 					$javascript .= "$code\n\n";
 				}
 
-				print "\n<widget id='$id' display='$display'>\n";
+				print "\n<widget id='$id'>\n";
 				print "<html><![CDATA[{$html}]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";

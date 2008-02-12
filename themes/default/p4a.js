@@ -84,7 +84,6 @@ p4a_ajax_process_response = function (response)
 	   		var object_id = widgets[i].attributes[0].value;
 	   		var object = $('#'+object_id);
 			if (object.size() > 0) {
-	   			var display = widgets[i].attributes[1].value;
 	   			var html = widgets[i].getElementsByTagName('html').item(0);
 	   			if (html) {
 	   				object.parent().css('display', 'block').html(html.firstChild.data);

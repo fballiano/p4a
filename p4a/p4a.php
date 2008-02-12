@@ -70,6 +70,7 @@ require_once "$dir/objects/widget.php";
 //Masks
 require_once "$dir/objects/masks/base.php";
 require_once "$dir/objects/masks/error.php";
+require_once "$dir/objects/masks/login.php";
 require_once "$dir/objects/masks/preview.php";
 
 //Widget Extensions
