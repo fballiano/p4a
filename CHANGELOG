@@ -8,6 +8,7 @@
 - write a p4a error handler o replace php's one
 - login mask
 - db navigator
+- p4a table col with images
 
 2.99.0
 - Zend Framework 1.0.3 was added
@@ -229,6 +230,7 @@
 - phpThumb was removed
 - P4A_Thumbnail_Generator was added
 - P4A_DB::nextSequenceId now automatically creates sequences on postgreSQL too
+- P4A_DB_Source compose count query was changed a bit to support PostgreSQL syntax
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

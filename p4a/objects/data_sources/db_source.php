@@ -668,11 +668,11 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function _composeSelectCountQuery($query = null)
 	{
 		if ($query !== null) {
-			return "SELECT count(*) p4a_count FROM ($query) p4a_count";
+			return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 		}
 		
 		if ($this->getQuery()) {
-			return "SELECT count(*) p4a_count FROM (". $this->getQuery() . ") p4a_count";
+			return "SELECT count(*) AS p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
 		
 		$select = P4A_DB::singleton($this->getDSN())->select();
