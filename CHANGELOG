@@ -9,7 +9,6 @@
 - login mask
 - db navigator
 - sequence creation on postgres
-- check jmedia on video
 
 2.99.0
 - Zend Framework 1.0.3 was added
