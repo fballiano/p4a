@@ -456,64 +456,39 @@ table.p4a_message td.c2 {
 /****************/
 
 .p4a_tab_pane ul.tabs {
-	border: 0px;
 	border-bottom: 1px solid #c6d3de;
-	margin: 12px 0px 0px 0px;
-	padding: 0px 0px 2px 0px;
-	z-index: 10;
-	padding-left: 10px;
-	white-space: nowrap;
+	padding-left: 20px;
 	text-align: left;
-	cursor: default;
 }
 
 .p4a_tab_pane ul.tabs li {
 	display: inline;
-	overflow: hidden;
-	list-style-type: none;
 }
 
-.p4a_tab_pane ul.tabs a  {
-	background: #fafafa;
-	border: 1px solid #c6d3de;
-	padding: 2px 5px 2px 5px;
-	margin: 0;
+.p4a_tab_pane ul.tabs li a {
+	padding: 0 5px;
 	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
+	border: 1px solid #c6d3de;
+	background: #fafafa;
 }
 
 .p4a_tab_pane ul.tabs a.active,
-.p4a_tab_pane ul.tabs a.active:link {
-	background: #ffffff;
-	border-bottom: 1px solid #ffffff;
-	font-weight: bold;
+.p4a_tab_pane ul.tabs a.active:hover {
+	background: white;
+	border-bottom: 1px solid white;
 	cursor: default;
-	letter-spacing: -0.07em;
+	margin-right: -1px;
 }
 
 .p4a_tab_pane ul.tabs a:hover {
 	background: #e2e7ed;
 }
 
-.p4a_tab_pane ul.tabs a.active:hover {
-	background: #ffffff;
-}
-
 .p4a_tab_pane div.p4a_tab_pane_page {
-	border: 1px solid #C6D3DE;
-	border-top: 0px;
-	padding: 10px 15px;
-	display: block;
-	position: relative;
-	overflow: auto;
-	width: auto !important;
-	width: 100%;
-}
-
-div.p4a_tab_pane div.p4a_tab_pane_page div.p4a_tab_pane {
-	margin: 5px;
-	margin-top: 0px;
+	border: 1px solid #c6d3de;
+	border-top: none;
+	padding: 10px 0;
+	overflow: hidden;
 }
 
 /*************/
