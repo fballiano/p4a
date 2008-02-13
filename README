@@ -7,32 +7,17 @@
 ------------------
 
 Just extract the archive under your web server
-DOCUMENT_ROOT (es:/home/httpd/htdocs).
+DOCUMENT_ROOT (eg: /var/www).
 
 You should rename the directory
 "p4a-version" to "p4a".
 
-Open your web browser and go to:
+If you want to test drive a sample application built on P4A
+open your browser and type:
 
-	http://localhost/p4a/
+	http://localhost/p4a/applications/products_catalogue
 
-you will now see the list of sample applications
-distribuited with p4a.
-
-There are four samples included:
-	- sample_en
-	- sample_it
-	- sample_i18n
-	- products_catalogue
-
-sample_en and sample_it are the same application in english
-and italian, these applications are very simple and do not
-make use of databases.
-
-sample_i18n was created to make users understand P4A i18n
-subsystem and how to create multilanguage applications.
-
-products_catalogue is a very simple example of virtual catalogue
+products_catalogue is an example of a virtual catalogue
 for shops. To have this application runnning take a look at
 applications/products_catalogue/README
 
@@ -96,15 +81,6 @@ Tested browsers:
 - Internet Explorer 6.x, 7.x
 - Safari 3.x
 - Opera 9.x
-
-P4A should also work with all Javascript 1.2/CSS2 browsers.
-
-------------------------------------
--- P4A compatibility: Mobile Side --
-------------------------------------
-
-- Pocket Internet Explorer for Microsoft Windows Mobile 2003
-- Opera 6.x/7.x/Mini
 
 ------------------
 -- KNOWN ISSUES --

@@ -238,6 +238,7 @@
 - P4A::getBrowserOS() method was added
 - default and popup templates now add to #p4a_body a new CSS class containing the browser platform (windows, linux etc...)
 - P4A_Error was removed because outdated, it will be replaced by exception objects
+- README was updated
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
