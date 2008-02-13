@@ -8,7 +8,6 @@
 - write a p4a error handler o replace php's one
 - db navigator
 - load javascript/css on demand?
-- 1px on tab_pane
 
 2.99.0
 - Zend Framework 1.0.3 was added
