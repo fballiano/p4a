@@ -457,11 +457,12 @@ table.p4a_message td.c2 {
 
 .p4a_tab_pane ul.tabs {
 	border-bottom: 1px solid #c6d3de;
+	padding-top: 1px;
 	padding-left: 20px;
 	text-align: left;
 }
 
-#p4a_body.p4a_browser_linux .p4a_tab_pane ul.tabs {
+.p4a_browser_linux .p4a_tab_pane ul.tabs {
 	padding-bottom: 1px;
 }
 
