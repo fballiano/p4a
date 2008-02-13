@@ -129,6 +129,9 @@ class P4A_Tab_Pane extends P4A_Widget
 	 */
 	public function getActivePageName()
 	{
+		if (!$this->_active_page_name) {
+			$this->_active_page_name = $this->getActivePage()->getName();
+		}
 		return $this->_active_page_name;
 	}
 
@@ -189,11 +192,12 @@ class P4A_Tab_Pane extends P4A_Widget
 		$return .= "<ul class='tabs'>";
 
 		$this->pages->reset();
+		$active_page_name = $this->getActivePageName();
 		while ($page = $this->pages->nextItem()) {
 			if (!$page->isVisible()) continue;
 			$actions = $this->composeStringActions($page->getName());
 			$active = '';
-			if ($page->getName() == $this->_active_page_name) {
+			if ($page->getName() == $active_page_name) {
 				$active = "class='active'";
 			}
 			if (!strlen($page->getLabel())) {
