@@ -461,6 +461,10 @@ table.p4a_message td.c2 {
 	text-align: left;
 }
 
+#p4a_body.p4a_browser_linux .p4a_tab_pane ul.tabs {
+	padding-bottom: 1px;
+}
+
 .p4a_tab_pane ul.tabs li {
 	display: inline;
 }
