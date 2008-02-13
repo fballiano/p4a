@@ -6,7 +6,7 @@
 - rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - write a p4a error handler o replace php's one
-- db navigator
+- db navigator movements (wait for jQuery UI 1.5)
 - load javascript/css on demand?
 
 2.99.0
