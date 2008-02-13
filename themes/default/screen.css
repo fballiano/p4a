@@ -312,6 +312,10 @@ hr.p4a_line {
 	padding-left: 15px;
 }
 
+.p4a_db_navigator li {
+	list-style: inherit;
+}
+
 .p4a_db_navigator a,
 .p4a_db_navigator {
 	text-decoration: none;

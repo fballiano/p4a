@@ -204,7 +204,6 @@ class P4A_DB_Navigator extends P4A_Widget
 
 		$table = $this->source->getTable();
 		$pk = $this->source->getPk();
-		$order = $this->source->_composeOrderPart();
 		$current = $this->source->fields->{$pk}->getValue();
 		$rows = $this->source->getAll();
 		if (isset($this->source->fields->{$this->recursor})) {
@@ -213,7 +212,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		if ($current === null) {
 			$current = $recursor;
 		}
-
+		
 		$js = "";
 		$i = 0;
 		foreach ($rows as $row) {
@@ -227,7 +226,7 @@ class P4A_DB_Navigator extends P4A_Widget
 			$row['__position'] = ++$i;
 			$all[$id][] = $row;
 		}
-		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $order, $current);
+		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $current);
 
 		// movements are allowed ONLY IF AJAX IS ACTIVE!!
 		// that's because we use too complex javascript for old handhelds
@@ -251,7 +250,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		return $return . $js;
 	}
 
-	private function _getAsString($id, $all, $obj_id, $table, $pk, $order, $current, $recurse = true)
+	private function _getAsString($id, $all, $obj_id, $table, $pk, $current, $recurse = true)
 	{
 		if (!isset($all[$id])) {
 			return '';
@@ -290,12 +289,12 @@ class P4A_DB_Navigator extends P4A_Widget
 
 			if ($recurse) {
 				if ($this->expand_all) {
-					$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $order, $current);
+					$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $current);
 				} else {
 					$path = $this->getPath($current, $table, $pk);
 					for ($i=0; $i<sizeof($path); $i++) {
 						if ($section[$pk] == $path[$i][$pk]) {
-							$return .= $this->_getAsString($path[$i][$pk], $all, $obj_id, $table, $pk, $order, $current);
+							$return .= $this->_getAsString($path[$i][$pk], $all, $obj_id, $table, $pk, $current);
 							break;
 						}
 					}
