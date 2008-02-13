@@ -52,7 +52,6 @@ require_once "$dir/libraries/validate.php";
 
 //Core
 require_once "$dir/p4a_object.php";
-require_once "$dir/p4a_error.php";
 require_once "$dir/p4a_i18n.php";
 require_once "$dir/p4a_db.php";
 

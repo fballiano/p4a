@@ -8,7 +8,6 @@
 - write a p4a error handler o replace php's one
 - db navigator
 - load javascript/css on demand?
-- add class to p4a_body with platform (win - lin - mac)
 - 1px on tab_pane
 
 2.99.0
@@ -236,6 +235,9 @@
 - P4A_Login_Mask was added, it should be used if your application needs a login system, it does not display the "download application source" link in the footer zone
 - products_catalogue sample now uses the P4A_Login_Mask to show how to use this new feature
 - P4A_Object::implementMethod() method was renamed to implement()
+- P4A::getBrowserOS() method was added
+- default and popup templates now add to #p4a_body a new CSS class containing the browser platform (windows, linux etc...)
+- P4A_Error was removed because outdated, it will be replaced by exception objects
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

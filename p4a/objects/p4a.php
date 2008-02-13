@@ -133,11 +133,20 @@ class P4A extends P4A_Object
 	 */
 	private $browser = null;
 	
+	/**
+	 * @var string
+	 */
+	private $browser_os = self::BROWSER_LINUX;
+	
 	const BROWSER_GECKO = 'gecko';
 	const BROWSER_HANDHELD = 'handheld';
 	const BROWSER_IE = 'ie';
 	const BROWSER_OPERA = 'opera';
 	const BROWSER_SAFARI = 'safari';
+	
+	const BROWSER_LINUX = 'linux';
+	const BROWSER_MAC = 'mac';
+	const BROWSER_WINDOWS = 'windows';
 
 	public function __construct()
 	{
@@ -193,6 +202,17 @@ class P4A extends P4A_Object
 		} else {
 			$this->browser = self::BROWSER_HANDHELD;
 		}
+		
+		foreach (Net_UserAgent_Detect::_getStaticProperty('os') as $os=>$detected) {
+			if ($detected) {
+				if (preg_match("/^win.*$/", $os)) {
+					$this->browser_os = self::BROWSER_WINDOWS;
+				} elseif (preg_match("/^mac.*$/", $os)) {
+					$this->browser_os = self::BROWSER_MAC;
+				}
+				break;
+			}
+		}
 
 		return Net_UserAgent_Detect::_getStaticProperty('browser');
 	}
@@ -243,6 +263,14 @@ class P4A extends P4A_Object
 	public function getBrowser()
 	{
 		return $this->browser;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBrowserOS()
+	{
+		return $this->browser_os;
 	}
 
 	/**
