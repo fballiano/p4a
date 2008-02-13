@@ -191,8 +191,8 @@ class P4A_Tab_Pane extends P4A_Widget
 		$return  = "<div id='$id' $class $properties>";
 		$return .= "<ul class='tabs'>";
 
-		$this->pages->reset();
 		$active_page_name = $this->getActivePageName();
+		$this->pages->reset();
 		while ($page = $this->pages->nextItem()) {
 			if (!$page->isVisible()) continue;
 			$actions = $this->composeStringActions($page->getName());
