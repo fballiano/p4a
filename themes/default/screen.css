@@ -376,6 +376,7 @@ table.p4a_message td.c2 {
 	position: absolute;
 	display: none;
 	width: 300px;
+	overflow: hidden;
 }
 
 .p4a_system_messages table.p4a_message {
