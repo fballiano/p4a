@@ -108,6 +108,9 @@ abstract class P4A_Data_Source extends P4A_Object
 		return ;
 	}
 
+	/**
+	 * @return P4A_Data_Source
+	 */
 	public function newRow()
 	{
 		if ($this->actionHandler('beforeMoveRow') == ABORT) return ABORT;
@@ -119,67 +122,97 @@ abstract class P4A_Data_Source extends P4A_Object
 		}
 
 		$this->actionHandler('afterMoveRow');
+		
+		return $this;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function isNew()
 	{
-		if ($this->_pointer === 0) {
-			return true;
-		} else {
-			return false;
-		}
+		if ($this->_pointer === 0) return true;
+		return false;
 	}
 
-    public function isSortable($value = null)
-    {
-        if ($value !== null) {
-            $this->_is_sortable = $value;
-        }
-        return $this->_is_sortable;
-    }
+	/**
+	 * gets/sets sortable state
+	 * @param boolean $value
+	 * @return boolean
+	 */
+	public function isSortable($value = null)
+	{
+		if ($value === null) return $this->_is_sortable;
+		$this->_is_sortable = $value;
+		return $this;
+	}
 
-    public function addOrder($field, $direction = P4A_ORDER_ASCENDING)
-    {
+	/**
+	 * @param string $field
+	 * @param string $direction
+	 * @return P4A_Data_Source
+	 */
+	public function addOrder($field, $direction = P4A_ORDER_ASCENDING)
+	{
 		$this->_order[$field] = strtoupper($direction);
-    }
+		return $this;
+	}
 
-    public function setOrder($field, $direction = P4A_ORDER_ASCENDING)
-    {
-        $this->_order = array();
-        $this->addOrder($field, $direction);
-    }
+	/**
+	 * alias for addOrder()
+	 * @param string $field
+	 * @param string $direction
+	 * @return P4A_Data_Source
+	 */
+	public function setOrder($field, $direction = P4A_ORDER_ASCENDING)
+	{
+		$this->_order = array();
+		$this->addOrder($field, $direction);
+		return $this;
+	}
 
-    public function getOrder()
-    {
-        $pk = $this->getPk();
-        $order = $this->_order;
-        if (is_string($pk)) {
-        	if (!array_key_exists($pk,$order)) {
-        		$order[$pk] = P4A_ORDER_ASCENDING;
-        	}
-        } elseif (is_array($pk)) {
-        	foreach ($pk as $p) {
-        		if (!array_key_exists($p,$order)) {
-        			$order[$p] = P4A_ORDER_ASCENDING;
-        		}
-        	}
-        }
-        return $order;
-    }
+	/**
+	 * @return array
+	 */
+	public function getOrder()
+	{
+		$pk = $this->getPk();
+		$order = $this->_order;
+		if (is_string($pk)) {
+			if (!array_key_exists($pk,$order)) {
+				$order[$pk] = P4A_ORDER_ASCENDING;
+			}
+		} elseif (is_array($pk)) {
+			foreach ($pk as $p) {
+				if (!array_key_exists($p,$order)) {
+					$order[$p] = P4A_ORDER_ASCENDING;
+				}
+			}
+		}
+		return $order;
+	}
 
-    public function hasOrder()
-    {
-        return (sizeof($this->_order) > 0);
-    }
+	/**
+	 * @return boolean
+	 */
+	public function hasOrder()
+	{
+		return (sizeof($this->_order) > 0);
+	}
 
-    public function dropOrder($field = null)
-    {
-        if ($field === null) {
-            $this->_order = array();
-        } else {
-            unset($this->_order[$field]);
-        }
-    }
+	/**
+	 * @param string $field
+	 * @return P4A_Data_Source
+	 */
+	public function dropOrder($field = null)
+	{
+		if ($field === null) {
+			$this->_order = array();
+		} else {
+			unset($this->_order[$field]);
+		}
+		return $this;
+	}
 
 	public function getAll($from = 0, $count = 0) {
 		return;
@@ -195,10 +228,10 @@ abstract class P4A_Data_Source extends P4A_Object
 		return $this->_pointer;
 	}
 
-    public function updateRowPosition()
-    {
-       return;
-    }
+	public function updateRowPosition()
+	{
+	   return;
+	}
 
 	public function firstRow()
 	{
@@ -210,7 +243,6 @@ abstract class P4A_Data_Source extends P4A_Object
 		} elseif( $this->_pointer !== $num_rows) {
 			$this->newRow();
 		}
-		return;
 	}
 
 	public function prevRow()
@@ -223,7 +255,6 @@ abstract class P4A_Data_Source extends P4A_Object
 		} elseif ($this->_pointer !== $num_rows) {
 			$this->firstRow();
 		}
-		return;
 	}
 
 	public function nextRow()
@@ -236,7 +267,6 @@ abstract class P4A_Data_Source extends P4A_Object
 		} elseif (($num_rows == 0) and (!$this->isNew())) {
 			return $this->newRow();
 		}
-		return;
 	}
 
 	public function lastRow()
@@ -249,20 +279,30 @@ abstract class P4A_Data_Source extends P4A_Object
 		} elseif ($this->_pointer !== $num_rows) {
 			$this->newRow();
 		}
-		return;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getOffset()
 	{
 		$limit = $this->getPageLimit();
 		return ($this->getNumPage() * $limit) - $limit;
 	}
 
+	/**
+	 * @param integer $page_limit
+	 * @return P4A_Data_Source
+	 */
 	public function setPageLimit($page_limit)
 	{
 		$this->_page_limit = $page_limit;
+		return $this;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getPageLimit()
 	{
 		return $this->_page_limit;
@@ -279,13 +319,11 @@ abstract class P4A_Data_Source extends P4A_Object
 
 		if ($num_rows == 0) {
 			return 0;
-		} else {
-			if ($page_limit)  {
-				return intval(($num_rows - 1) / $page_limit) + 1;
-			} else {
-				return 1;
-			}
 		}
+		if ($page_limit)  {
+			return intval(($num_rows - 1) / $page_limit) + 1;
+		}
+		return 1;
 	}
 
 	/**
@@ -299,9 +337,8 @@ abstract class P4A_Data_Source extends P4A_Object
 
 		if ($page_limit)  {
 			return intval(($row_number - 1) / $page_limit) + 1;
-		} else {
-			return 1;
 		}
+		return 1;
 	}
 
 	/**
@@ -363,11 +400,19 @@ abstract class P4A_Data_Source extends P4A_Object
 		return $this->page($num_pages, $move_pointer);
 	}
 
+	/**
+	 * @param string $pk
+	 * @return P4A_Data_Source
+	 */
 	public function setPk($pk)
 	{
 		$this->_pk = $pk;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getPk()
 	{
 		return $this->_pk;
