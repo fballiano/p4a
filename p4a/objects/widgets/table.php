@@ -116,16 +116,19 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets the data source that the table will navigate
 	 * @param P4A_Data_Source $data_source
+	 * @return P4A_Table
 	 */
 	public function setSource(P4A_Data_Source $data_source)
 	{
 		$this->data = $data_source;
 		$this->setDataStructure($this->data->fields->getNames());
+		return $this;
 	}
 
 	/**
 	 * Sets the table's structure (fields)
 	 * @param array $array_fields
+	 * @return P4A_Table
 	 */
 	public function setDataStructure(array $array_fields)
 	{
@@ -133,11 +136,13 @@ class P4A_Table extends P4A_Widget
 		foreach($array_fields as $field) {
 			$this->addCol($field);
 		}
+		return $this;
 	}
 
 	/**
 	 * Adds a column to the data structure
 	 * @param string $column_name
+	 * @return P4A_Table
 	 */
 	protected function addCol($column_name)
 	{
@@ -145,17 +150,20 @@ class P4A_Table extends P4A_Widget
 		if (!empty($this->_cols_order)) {
 			$this->_cols_order[] = $column_name;
 		}
+		return $this;
 	}
 
 	/**
 	 * Adds a special clickable column
 	 * @param string $column_name
+	 * @return P4A_Table
 	 */
 	public function addActionCol($column_name)
 	{
 		$this->addCol($column_name);
 		$this->cols->$column_name->setType('action');
 		$this->cols->$column_name->addAction('onclick');
+		return $this;
 	}
 
 	/**
@@ -258,50 +266,74 @@ class P4A_Table extends P4A_Widget
 		return $return;
 	}
 
+	/**
+	 * @return P4A_Table
+	 */
 	public function showToolbar()
 	{
 		$this->toolbar->setVisible();
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Table
+	 */
 	public function hideToolbar()
 	{
 		$this->toolbar->setVisible(false);
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Table
+	 */
 	public function showNavigationBar()
 	{
 		$this->navigation_bar->setVisible();
 		$this->_auto_navigation_bar = false;
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Table
+	 */
 	public function hideNavigationBar()
 	{
 		$this->navigation_bar->setVisible(false);
 		$this->_auto_navigation_bar = false;
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Table
+	 */
 	public function showTitleBar()
 	{
 		if ($this->title_bar !== null) {
 			$this->setTitle($this->getName());
 		}
 		$this->title_bar->setVisible();
+		return $this;
 	}
 
 	/**
 	 * Shows the bar with column names
+	 * @return P4A_Table
 	 */
 	public function showHeaders()
 	{
 		$this->_show_headers = true;
+		return $this;
 	}
 
 	/**
 	 * Hides the bar with column names
+	 * @return P4A_Table
 	 */
 	public function hideHeaders()
 	{
 		$this->_show_headers = false;
+		return $this;
 	}
 
 	/**
@@ -358,7 +390,8 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets all passed columns visible.
 	 * If no array is given, than sets all columns visible.
-	 * @params array 
+	 * @param array $cols
+	 * @return P4A_Table
 	 */
 	public function setVisibleCols(array $cols = array())
 	{
@@ -376,12 +409,14 @@ class P4A_Table extends P4A_Widget
 		}
 
 		$this->_cols_order = $cols;
+		return $this;
 	}
 
 	/**
 	 * Sets all passed columns invisible.
 	 * If no array is given, than sets all columns invisible.
-	 * @params array $cols Columns names in indexed array
+	 * @param array $cols Columns names in indexed array
+	 * @return P4A_Table
 	 */
 	public function setInvisibleCols(array $cols = array())
 	{
@@ -396,6 +431,8 @@ class P4A_Table extends P4A_Widget
 				P4A_Error("Unknow column $col");
 			}
 		}
+		
+		return $this;
 	}
 
 	/**
@@ -410,18 +447,22 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets the current page number
 	 * @params integer $page
+	 * @return P4A_Table
 	 */
 	public function setCurrentPageNumber($page)
 	{
 		$this->_current_page_number = $page;
+		return $this;
 	}
 
 	/**
 	 * Sets the page number reading it from the data source
+	 * @return P4A_Table
 	 */
 	public function syncPageWithSource()
 	{
 		$this->setCurrentPageNumber($this->data->getNumPage());
+		return $this;
 	}
 }
 
