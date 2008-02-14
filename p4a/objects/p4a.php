@@ -304,7 +304,7 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * Destroys P4A data
+	 * Destroys P4A
 	 */
 	public function close()
 	{

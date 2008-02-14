@@ -121,18 +121,22 @@ abstract class P4A_Widget extends P4A_Object
 	/**
 	 * @param boolean $enabled
 	 * @see $enabled
+	 * @return P4A_Widget
 	 */
 	public function enable($enabled = true)
 	{
 		$this->enabled = $enabled;
+		return $this;
 	}
 
 	/**
 	 * @see $enabled
+	 * @return P4A_Widget
 	 */
 	public function disable()
 	{
 		$this->enabled = false;
+		return $this;
 	}
 
 	/**
@@ -146,18 +150,22 @@ abstract class P4A_Widget extends P4A_Object
 
 	/**
 	 * @param boolean $visible
+	 * @return P4A_Widget
 	 */
 	public function setVisible($visible = true)
 	{
 		$this->visible = $visible;
+		return $this;
 	}
 
 	/**
 	 * Sets the widget invisible
+	 * @return P4A_Widget
 	 */
 	public function setInvisible()
 	{
 		$this->visible = false;
+		return $this;
 	}
 
 	/**
@@ -174,22 +182,26 @@ abstract class P4A_Widget extends P4A_Object
 	 * In rendering phase it will be added with ':  '.
 	 * @param string $label
 	 * @see $label
+	 * @return P4A_Widget
 	 */
 	public function setLabel($label)
 	{
 		// Used for sheets group->sheets labels
 		$this->actionHandler('set_label', $label);
 		$this->label = $label;
+		return $this;
 	}
 
 	/**
 	 * Create from name a default label for the widget
 	 * In rendering phase it will be added with ':  '.
 	 * @see $label
+	 * @return P4A_Widget
 	 */
 	public function setDefaultLabel()
 	{
 		$this->setLabel(P4A_Generate_Default_Label($this->getName()));
+		return $this;
 	}
 
 	/**
@@ -205,19 +217,23 @@ abstract class P4A_Widget extends P4A_Object
 	 * Sets an HTML property for the widget
 	 * @param string $property
 	 * @param string $value
+	 * @return P4A_Widget
 	 */
 	public function setProperty($property, $value)
 	{
 		$this->properties[strtolower($property)] = $value;
+		return $this;
 	}
 
 	/**
 	 * Unsets an HTML property for the widget
 	 * @param string $property
+	 * @return P4A_Widget
 	 */
 	public function unsetProperty($property)
 	{
 		unset($this->properties[strtolower($property)]);
+		return $this;
 	}
 
 	/**
@@ -230,28 +246,31 @@ abstract class P4A_Widget extends P4A_Object
 		$property = strtolower($property);
 		if (array_key_exists($property, $this->properties)) {
 			return $this->properties[$property];
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
 	 * Sets a CSS property for the widget
 	 * @param string $property
 	 * @param string $value
+	 * @return P4A_Widget
 	 */
 	public function setStyleProperty($property, $value)
 	{
 		$this->style[$property] = $value;
+		return $this;
 	}
 
 	/**
 	 * Unset a CSS property for the widget
 	 * @param string $property
+	 * @return P4A_Widget
 	 */
 	public function unsetStyleProperty($property)
 	{
 		unset($this->style[$property]);
+		return $this;
 	}
 	
 	/**
@@ -263,16 +282,17 @@ abstract class P4A_Widget extends P4A_Object
 	{
 		if (array_key_exists($property, $this->style)) {
 			return $this->style[$property];
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
 	 * @param string $key
+	 * @return P4A_Widget
 	 */
 	public function setAccessKey($key) {
 		$this->setProperty("accesskey", $key);
+		return $this;
 	}
 
 	/**
@@ -288,6 +308,7 @@ abstract class P4A_Widget extends P4A_Object
 	 * @param integer $value The value to be used as width
 	 * @param string $unit The measure unit (px|pt|%) etc...
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setWidth($value = null, $unit = 'px')
 	{
@@ -295,10 +316,9 @@ abstract class P4A_Widget extends P4A_Object
 			$value = $value . $unit;
 		}
 		if ($value === null) {
-			$this->unsetStyleProperty('width');
-		} else {
-			$this->setStyleProperty('width', $value);
+			return $this->unsetStyleProperty('width');
 		}
+		return $this->setStyleProperty('width', $value);
 	}
 
 	/**
@@ -318,6 +338,7 @@ abstract class P4A_Widget extends P4A_Object
 	 * @param integer $value The value to be used as height.
 	 * @param string $unit The measure unit (px|pt|%) etc...
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setHeight($value = null, $unit = 'px')
 	{
@@ -325,10 +346,9 @@ abstract class P4A_Widget extends P4A_Object
 			$value = $value . $unit;
 		}
 		if ($value === null) {
-			$this->unsetStyleProperty('height');
-		} else {
-			$this->setStyleProperty('height', $value);
+			return $this->unsetStyleProperty('height');
 		}
+		return $this->setStyleProperty('height', $value);
 	}
 
 	/**
@@ -346,10 +366,12 @@ abstract class P4A_Widget extends P4A_Object
 	 * It's a wrapper for setStyleProperty().
 	 * @param string $value The value to be used as color
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setBgcolor($value)
 	{
-		$this->setStyleProperty('background-color', $value) ;
+		$this->setStyleProperty('background-color', $value);
+		return $this;
 	}
 
 	/**
@@ -357,10 +379,12 @@ abstract class P4A_Widget extends P4A_Object
 	 * It's a wrapper for setStyleProperty().
 	 * @param string $value The url of the image
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setBgimage($value)
 	{
 		$this->setStyleProperty('background-image', "url('" . $value . "')");
+		return $this;
 	}
 
 	/**
@@ -368,10 +392,12 @@ abstract class P4A_Widget extends P4A_Object
 	 * It's a wrapper for setStyleProperty().
 	 * @param string $value The url of the image
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setFontWeight($value)
 	{
 		$this->setStyleProperty('font-weight', $value);
+		return $this;
 	}
 
 	/**
@@ -379,10 +405,12 @@ abstract class P4A_Widget extends P4A_Object
 	 * It's a wrapper for setStyleProperty().
 	 * @param string $value The url of the image
 	 * @see setStyleProperty()
+	 * @return P4A_Widget
 	 */
 	public function setFontColor($value)
 	{
 		$this->setStyleProperty('color', $value);
+		return $this;
 	}
 
 	/**
@@ -391,6 +419,7 @@ abstract class P4A_Widget extends P4A_Object
 	 * @param string $event The JavaScript event that triggers
 	 * @param string|boolean $confirmation_text If the action requires user confirmation, type here the confirmation message (use boolean true for a general message)
 	 * @param boolean $ajax is an ajax action?
+	 * @return P4A_Widget
 	 */
 	public function addAction($action, $event = null, $confirmation_text = null, $ajax = false)
 	{
@@ -411,6 +440,8 @@ abstract class P4A_Widget extends P4A_Object
 		$this->actions[$action] = $tmp_action;
 		$this->actions[$action]['confirm'] = $confirmation_text;
 		$this->actions[$action]['ajax'] = $ajax;
+		
+		return $this;
 	}
 
 	/**
@@ -418,16 +449,18 @@ abstract class P4A_Widget extends P4A_Object
 	 * @param string $action
 	 * @param string $event The JavaScript event that triggers
 	 * @param string|boolean $confirmation_text If the action requires user confirmation, type here the confirmation message (use boolean true for a general message)
+	 * @return P4A_Widget
 	 */
 	public function addAjaxAction($action, $event = null, $confirmation_text = null)
 	{
-		$this->addAction($action, $event, $confirmation_text, P4A_AJAX_ENABLED);
+		return $this->addAction($action, $event, $confirmation_text, P4A_AJAX_ENABLED);
 	}
 
 	/**
 	 * Requires confirmation for an action
 	 * @param string $action
 	 * @param string|boolean $confirmation_text The confirmation message (default is boolean true for a general message)
+	 * @return P4A_Widget
 	 */
 	public function requireConfirmation($action = 'onclick', $confirmation_text = true)
 	{
@@ -436,16 +469,19 @@ abstract class P4A_Widget extends P4A_Object
 			$confirmation_text = 'Are you sure?';
 		}
 		$this->actions[$action]['confirm'] = $confirmation_text;
+		return $this;
 	}
 
 	/**
 	 * Removes confirmation for an action
 	 * @param string $action
+	 * @return P4A_Widget
 	 */
 	public function unrequireConfirmation($action)
 	{
 		$action = strtolower($action);
 		$this->actions[$action]['confirm'] = null;
+		return $this;
 	}
 
 	/**
@@ -454,6 +490,7 @@ abstract class P4A_Widget extends P4A_Object
 	 *
 	 * @param string $action
 	 * @param string $event The JavaScript event that triggers
+	 * @return P4A_Widget
 	 */
 	public function changeEvent($action, $event = null)
 	{
@@ -468,16 +505,19 @@ abstract class P4A_Widget extends P4A_Object
 		if (array_key_exists($action, $this->actions)) {
 			$this->actions[$action]['event'] = $event;
 		}
+		return $this;
 	}
 
 	/**
 	 * Removes an action from the implemented actions stack for the widget
 	 * @param string $action
+	 * @return P4A_Widget
 	 */
 	public function dropAction($action)
 	{
 		$action = strtolower($action);
 		unset($this->actions[$action]);
+		return $this;
 	}
 
 	/**
@@ -591,6 +631,7 @@ abstract class P4A_Widget extends P4A_Object
 	/**
 	 * Defines the template used by the widget
 	 * @param string $template_name
+	 * @return P4A_Widget
 	 */
 	public function useTemplate($template_name)
 	{
@@ -601,12 +642,14 @@ abstract class P4A_Widget extends P4A_Object
 			$this->use_template = true;
 			$this->template_name = $template_name;
 		}
+		return $this;
 	}
 
 	/**
 	 * Adds this variable (name and value) to the template engine variables' stack.
 	 * @param string $var_name
 	 * @param string $var_value
+	 * @return P4A_Widget
 	 */
 	public function display($var_name, $var_value)
 	{
@@ -622,14 +665,17 @@ abstract class P4A_Widget extends P4A_Object
 		} else {
 			p4a_error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
 		}
+		return $this;
 	}
 
 	/**
 	 * Empties the template engine variables' stack
+	 * @return P4A_Widget
 	 */
 	public function clearTemplateVars()
 	{
 		$this->_tpl_vars = array();
+		return $this;
 	}
 
 	/**
@@ -826,37 +872,45 @@ abstract class P4A_Widget extends P4A_Object
 	 * Add a temporary variable
 	 * @param string $name
 	 * @param string $value
+	 * @return P4A_Widget
 	 */
 	public function addTempVar($name, $value)
 	{
 		$this->_temp_vars[$name] = $value;
+		return $this;
 	}
 
 	/**
 	 * Drop a temporary variable
 	 * @param string $name
+	 * @return P4A_Widget
 	 */
 	public function dropTempVar($name)
 	{
 		if (isset($this->_temp_vars[$name])) {
 			unset($this->_temp_vars[$name]);
 		}
+		return $this;
 	}
 
 	/**
 	 * Clear temporary vars list
+	 * @return P4A_Widget
 	 */
 	public function clearTempVars()
 	{
 		$this->_temp_vars = array();
+		return $this;
 	}
 	
 	/**
 	 * @param string $class
+	 * @return P4A_Widget
 	 */
 	public function addCSSClass($class)
 	{
 		$this->_css_classes[] = $class;
+		return $this;
 	}
 	
 	/**
@@ -867,8 +921,12 @@ abstract class P4A_Widget extends P4A_Object
 		return $this->_css_classes;
 	}
 
+	/**
+	 * @return P4A_Widget
+	 */
 	public function redesign()
 	{
 		P4A::singleton()->redesign($this->getId());
+		return $this;
 	}
 }
