@@ -88,38 +88,40 @@ class Products extends P4A_Base_Mask
 		}
 		$table->showNavigationBar();
 
-		$this->build("p4a_fieldset", "fs_details");
-		$this->fs_details->setLabel("Product details");
- 		$this->fs_details->anchor($this->fields->product_id);
-		$this->fs_details->anchor($this->fields->category_id);
-		$this->fs_details->anchorLeft($this->fields->brand_id);
-		$this->fs_details->anchor($this->fields->model);
-		$this->fs_details->anchor($this->fields->purchasing_price);
- 		$this->fs_details->anchor($this->fields->selling_price);
-		$this->fs_details->anchorLeft($this->fields->discount);
- 		$this->fs_details->anchor($this->fields->little_photo);
- 		$this->fs_details->anchorLeft($this->fields->big_photo);
-		$this->fs_details->anchor($this->fields->is_new);
-		$this->fs_details->anchorLeft($this->fields->visible);
-		$this->fs_details->anchor($this->fields->description);
+		$this->build("p4a_fieldset", "fs_details")
+			->setLabel("Product details")
+ 			->anchor($this->fields->product_id)
+			->anchor($this->fields->category_id)
+			->anchorLeft($this->fields->brand_id)
+			->anchor($this->fields->model)
+			->anchor($this->fields->purchasing_price)
+ 			->anchor($this->fields->selling_price)
+			->anchorLeft($this->fields->discount)
+ 			->anchor($this->fields->little_photo)
+ 			->anchorLeft($this->fields->big_photo)
+			->anchor($this->fields->is_new)
+			->anchorLeft($this->fields->visible)
+			->anchor($this->fields->description);
 
-		$this->frame->anchor($fs_search);
-		$this->frame->newRow();
-		$this->frame->anchor($table);
-  		$this->frame->anchor($this->fs_details);
+		$this->frame
+			->anchor($fs_search)
+			->anchor($table)
+  			->anchor($this->fs_details);
   		
-  		$this->setRequiredField("product_id");
-  		$this->setRequiredField("category_id");
-  		$this->setRequiredField("brand_id");
-  		$this->setRequiredField("model");
-  		$this->setRequiredField("purchasing_price");
-  		$this->setRequiredField("selling_price");
-  		$this->setRequiredField("description");
-  		$this->setRequiredField("discount");
+  		$this
+  			->setRequiredField("product_id")
+  			->setRequiredField("category_id")
+  			->setRequiredField("brand_id")
+  			->setRequiredField("model")
+  			->setRequiredField("purchasing_price")
+  			->setRequiredField("selling_price")
+  			->setRequiredField("description")
+  			->setRequiredField("discount");
 
 		// Display
-		$this->display("menu", P4A::singleton()->menu);
-		$this->display("top", $this->toolbar);
+		$this
+			->display("menu", P4A::singleton()->menu)
+			->display("top", $this->toolbar);
 	}
 
 	private function setFieldsProperties()
