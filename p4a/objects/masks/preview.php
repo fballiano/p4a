@@ -37,7 +37,7 @@
  * @copyright CreaLabs SNC
  * @package p4a
  */
-class P4A_Mask_Preview extends P4A_Mask
+class P4A_Preview_Mask extends P4A_Mask
 {
 	/**
 	 * @var string
@@ -64,9 +64,11 @@ class P4A_Mask_Preview extends P4A_Mask
 
 	/**
 	 * @param string $html
+	 * @return P4A_Preview_Mask
 	 */
 	function setRawHTML($html)
 	{
 		$this->raw_html = $html;
+		return $this;
 	}
 }
