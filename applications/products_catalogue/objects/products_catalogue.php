@@ -75,15 +75,15 @@ class Products_Catalogue extends P4A
 			->implement("onclick", $this, "menuClick");
 
 		// Data sources
-		$this->build("p4a_db_source", "brands");
-		$this->brands->setTable("brands");
-		$this->brands->addOrder("description");
-		$this->brands->load();
+		$this->build("p4a_db_source", "brands")
+			->setTable("brands")
+			->addOrder("description")
+			->load();
 
-		$this->build("p4a_db_source", "categories");
-		$this->categories->setTable("categories");
-		$this->categories->addOrder("description");
-		$this->categories->load();
+		$this->build("p4a_db_source", "categories")
+			->setTable("categories")
+			->addOrder("description")
+			->load();
 
 		// Primary action
 		$this->openMask("P4A_Login_Mask");
