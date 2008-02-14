@@ -533,6 +533,10 @@ table.p4a_message td.c2 {
 	text-align: left;
 }
 
+.p4a_browser_gecko .p4a_table {
+	margin-left: 1px;
+}
+
 .p4a_table caption {
 	background: #fafafa;
 	border: 1px solid #c6d3de;
@@ -545,17 +549,20 @@ table.p4a_message td.c2 {
 	margin-left: -1px;
 }
 
-/* border-fix */
 .p4a_table td,
 .p4a_table th {
-	border-right:1px solid #c6d3de;
-	border-left:hidden;
+	border-right: 1px solid #c6d3de;
+	border-left: hidden;
 }
 
 .p4a_table th:first-child {
-	border-left:1px solid #c6d3de;
+	border-left: 1px solid #c6d3de;
 }
-/* end border-fix */
+
+.p4a_browser_ie .p4a_table th,
+.p4a_browser_ie .p4a_table td {
+	border: none;
+}
 
 .p4a_table th {
 	padding: 5px;
