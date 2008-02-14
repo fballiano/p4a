@@ -84,27 +84,6 @@ class P4A_Image extends P4A_Widget
 	{
 		return $this->_icon;
 	}
-	
-	/**
-	 * alias for setIcon()
-	 * @param string $image
-	 * @return P4A_Image
-	 * @deprecated 
-	 */
-	public function setSource($source)
-	{
-		return $this->setIcon($source);
-	}
-	
-	/**
-	 * alias for getIcon()
-	 * @return string
-	 * @deprecated 
-	 */
-	public function getSource()
-	{
-		return $this->getIcon();
-	}
 
 	/**
 	 * @return string
