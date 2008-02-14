@@ -118,10 +118,12 @@ abstract class P4A_Object
 
 	/**
 	 * @param string $object_id
+	 * @return P4A_Object
 	 */
 	protected function setParentID($object_id)
 	{
 		$this->_parent_id = $object_id;
+		return $this;
 	}
 
 	/**
@@ -164,10 +166,12 @@ abstract class P4A_Object
 
 	/**
 	 * @param string $name
+	 * @return P4A_Object
 	 */
 	protected function setName($name)
 	{
 		$this->_name = $name;
+		return $this;
 	}
 
 	/**
@@ -201,10 +205,12 @@ abstract class P4A_Object
 	 * @param object $object
 	 * @param string $action The action triggered by an event
 	 * @param string $method The method that will be executed
+	 * @return P4A_Object
 	 */
 	public function intercept($object, $action, $method = null)
 	{
 		$object->implement($action, $this, $method);
+		return $this;
 	}
 
 	/**
@@ -212,6 +218,7 @@ abstract class P4A_Object
 	 * @param string $action The action's name
 	 * @param object $object The object that will intercept the action
 	 * @param string $method The method that will be called
+	 * @return P4A_Object
 	 */
 	public function implement($action, $object, $method = null)
 	{
@@ -223,17 +230,20 @@ abstract class P4A_Object
 		$this->_map_actions[$action] = array();
 		$this->_map_actions[$action]['object'] = $object;
 		$this->_map_actions[$action]['method'] = $method;
+		return $this;
 	}
 	
 	/**
 	 * Removes handling an action
 	 * @param string $action
+	 * @return P4A_Object
 	 */
 	public function dropMethod($action)
 	{
 		if (isset($this->_map_actions[$action])) {
 			unset($this->_map_actions[$action]);
 		}
+		return $this;
 	}
 
 	/**
@@ -244,9 +254,8 @@ abstract class P4A_Object
 	{
 		if (array_key_exists(strtolower($action), $this->_map_actions)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
