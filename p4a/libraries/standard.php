@@ -424,3 +424,35 @@ function P4A_Mkdir_Recursive($dir)
 {
 	return @mkdir($dir, 0777, true);
 }
+
+/**
+ * @param integer $error_number
+ * @param string $error_string
+ * @param string $error_file
+ * @param integer $error_line
+ * @return boolean
+ */
+function P4A_Error_Handler($error_number, $error_string, $error_file, $error_line)
+{
+	$error_file = basename($error_file);
+	switch ($error_number) {
+		case E_USER_ERROR:
+		case E_RECOVERABLE_ERROR:
+			P4A::singleton()
+				->openMask("P4A_Error_Mask")
+				->setMessage("<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>");
+			return true;
+		case E_WARNING:
+		case E_USER_WARNING:
+			P4A::singleton()
+				->message("<strong>WARNING: </strong>$error_string<br /><em>$error_file line $error_line</em>", "warning");
+			return true;
+		case E_STRICT:
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			P4A::singleton()
+				->message("<strong>NOTICE: </strong>$error_string<br /><em>$error_file line $error_line</em>", "warning");
+			return true;
+	}
+	return false;
+}
