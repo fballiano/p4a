@@ -55,10 +55,12 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * @param string $DSN
+	 * @return P4A_DB_Source
 	 */
 	public function setDSN($DSN)
 	{
 		$this->_DSN = $DSN;
+		return $this;
 	}
 
 	/**
@@ -71,10 +73,12 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * @param string $table
+	 * @return P4A_DB_Source
 	 */
 	public function setTable($table)
 	{
 		$this->_table = $table;
+		return $this;
 	}
 
 	/**
@@ -87,10 +91,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * @param string $schema
+	 * @return P4A_DB_Source
 	 */
 	public function setSchema($schema)
 	{
 		$this->_schema = $schema;
+		return $this;
 	}
 
 	/**
@@ -101,9 +107,14 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_schema;
 	}
 
-	public function setFields($fields)
+	/**
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
+	public function setFields(array $fields)
 	{
 		$this->_fields = $fields;
+		return $this;
 	}
 
 	public function getFields()
@@ -111,50 +122,107 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_fields;
 	}
 
-	public function addJoin($table, $clausole, $fields)
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
+	public function addJoin($table, $clausole, array $fields)
 	{
 		$this->_join[] = array('INNER', $table, $clausole, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinInner($table, $clausole, $fields)
 	{
 		$this->addJoin($table, $clausole, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinLeft($table, $clausole, $fields)
 	{
 		$this->_join[] = array('LEFT', $table, $clausole, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinRight($table, $clausole, $fields)
 	{
 		$this->_join[] = array('RIGHT', $table, $clausole, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinFull($table, $clausole, $fields)
 	{
 		$this->_join[] = array('FULL', $table, $clausole, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinCross($table, $fields)
 	{
 		$this->_join[] = array('CROSS', $table, null, $fields);
+		return $this;
 	}
 	
+	/**
+	 * @param string $table
+	 * @param string $clausole
+	 * @param array $fields
+	 * @return P4A_DB_Source
+	 */
 	public function addJoinNatural($table, $fields)
 	{
 		$this->_join[] = array('NATURAL', $table, null, $fields);
+		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getJoin()
 	{
 		return $this->_join;
 	}
 
+	/**
+	 * @param string $where
+	 * @return P4A_DB_Source
+	 */
 	public function setWhere($where)
 	{
 		$this->resetNumRows();
 		$this->_where = $where;
+		return $this;
 	}
 
 	public function getWhere()
@@ -162,11 +230,20 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_where;
 	}
 
+	/**
+	 * @param string $group
+	 * @return P4A_DB_Source
+	 */
 	public function addGroup($group)
 	{
 		$this->_group[] = $group;
+		return $this;
 	}
 
+	/**
+	 * @param string|array $group
+	 * @return P4A_DB_Source
+	 */
 	public function setGroup($group)
 	{
 		$this->_group = array();
@@ -177,37 +254,61 @@ class P4A_DB_Source extends P4A_Data_Source
 		foreach($group as $g) {
 			$this->addGroup($g);
 		}
+		
+		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getGroup()
 	{
 		return $this->_group;
 	}
 
+	/**
+	 * @param string $query
+	 * @return P4A_DB_Source
+	 */
 	public function setQuery($query)
 	{
 		$this->_query = $query;
 		$this->isReadOnly(true);
 		$this->isSortable(false);
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getQuery()
 	{
 		return $this->_query;
 	}
 
-	public function addFilter($filter, &$obj)
+	/**
+	 * @param string $filter
+	 * @param P4A_Object $obj
+	 * @return P4A_DB_Source
+	 */
+	public function addFilter($filter, $obj)
 	{
 		$this->_filters[$filter] =& $obj;
 		$this->resetNumRows();
+		return $this;
 	}
 
+	/**
+	 * @param string $filter
+	 * @return P4A_DB_Source
+	 */
 	public function dropFilter($filter)
 	{
 		if (array_key_exists($filter,$this->_filters)) {
 			$this->resetNumRows();
 			unset($this->_filters[$filter]);
 		}
+		return $this;
 	}
 
 	public function getFilters()
@@ -363,17 +464,16 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
-	public function isReadOnly($value=null)
+	/**
+	 * gets/sets read only state
+	 * @param booleab $value
+	 * @return boolean|P4A_DB_Source
+	 */
+	public function isReadOnly($value = null)
 	{
-		if ($value !== null) {
-			$this->_is_read_only = $value;
-		}
-
-		if ($this->_is_read_only or !$this->getPk()){
-			return true;
-		} else {
-			return false;
-		}
+		if ($value === null) return ($this->_is_read_only or !$this->getPk());
+		$this->_is_read_only = $value;
+		return $this;
 	}
 
 	public function getPkRow($pk)
@@ -506,11 +606,13 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 	
-	
-
+	/**
+	 * @return P4A_DB_Source
+	 */
 	public function updateRowPosition()
 	{
 		$this->_pointer = $this->getRowPosition();
+		return $this;
 	}
 
 	public function saveRow($fields_values = array(), $pk_values = array())
@@ -812,11 +914,22 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
+	/**
+	 * @return P4A_DB_Source
+	 */
 	public function resetNumRows()
 	{
 		$this->_num_rows = null;
+		return $this;
 	}
 
+	/**
+	 * @param string $fieldname
+	 * @param string $table
+	 * @param string $fk
+	 * @param string $fk_field
+	 * @return P4A_DB_Source
+	 */
 	public function addMultivalueField($fieldname, $table = null, $fk = null, $fk_field = null)
 	{
 		$db = P4A_DB::singleton($this->getDSN());
@@ -849,6 +962,8 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$this->fields->build("P4A_Data_Field", $fieldname);
 		$this->fields->$fieldname->setDSN($this->getDSN());
+		
+		return $this;
 	}
 
 	public function __wakeup()

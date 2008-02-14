@@ -51,16 +51,16 @@ class Products extends P4A_Base_Mask
 		parent::__construct();
 
 		// DB Source
-		$this->build("p4a_db_source", "source");
-		$this->source->setTable("products");
-		$this->source->addJoin("categories",
-							   "products.category_id = categories.category_id",
-							   array('description'=>'category'));
-		$this->source->addJoin("brands", "products.brand_id = brands.brand_id",
-							   array('description'=>'brand'));
-		$this->source->addOrder("product_id");
-		$this->source->setPageLimit(10);
-		$this->source->load();
+		$this->build("p4a_db_source", "source")
+			->setTable("products")
+			->addJoin("categories",
+					  "products.category_id = categories.category_id",
+					  array('description'=>'category'))
+			->addJoin("brands", "products.brand_id = brands.brand_id",
+					  array('description'=>'brand'))
+			->addOrder("product_id")
+			->setPageLimit(10)
+			->load();
 
 		$this->setSource($this->source);
 		$this->firstRow();
@@ -178,11 +178,11 @@ class Products extends P4A_Base_Mask
 	public function search()
 	{
 		$value = $this->txt_search->getSQLNewValue();
-		$this->source->setWhere(P4A_DB::singleton()->getCaseInsensitiveLikeSQL('model', "%{$value}%"));
-		$this->source->firstRow();
-		$num_rows = $this->source->getNumRows();
+		$this->source
+			->setWhere(P4A_DB::singleton()->getCaseInsensitiveLikeSQL('model', "%{$value}%"))
+			->firstRow();
 
-		if (!$num_rows) {
+		if (!$this->source->getNumRows()) {
 			$this->warning("No results were found");
 			$this->source->setWhere(null);
 			$this->source->firstRow();

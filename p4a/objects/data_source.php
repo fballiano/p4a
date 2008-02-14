@@ -228,9 +228,12 @@ abstract class P4A_Data_Source extends P4A_Object
 		return $this->_pointer;
 	}
 
+	/**
+	 * @return P4A_Data_Source
+	 */
 	public function updateRowPosition()
 	{
-	   return;
+	   return $this;
 	}
 
 	public function firstRow()
