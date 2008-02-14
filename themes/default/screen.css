@@ -138,6 +138,22 @@ body.p4a_popup h2 table td {
 	font-weight: bold;
 }
 
+/***********/
+/* P4A_Box */
+/***********/
+
+.p4a_box {
+	text-align: left;
+}
+
+.p4a_box strong {
+	font-weight: bold;
+}
+
+.p4a_box em {
+	font-style: italic;
+}
+
 /****************/
 /* P4A_Fieldset */
 /****************/
@@ -385,6 +401,10 @@ table.p4a_message td.c2 {
 
 .p4a_system_messages table.p4a_message td.c2 {
 	font-weight: normal;
+}
+
+.p4a_system_messages em {
+	font-style: italic;
 }
 
 /**************/
