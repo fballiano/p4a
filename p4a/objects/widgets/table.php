@@ -530,6 +530,7 @@ class P4A_Table_Col extends P4A_Widget
 	/**
 	 * Sets the column visible (and add it as the last in the coloumn display order)
 	 * @param boolean $visible
+	 * @return P4A_Table_Col
 	 */
 	public function setVisible($visible = true)
 	{
@@ -543,15 +544,19 @@ class P4A_Table_Col extends P4A_Widget
 		if ($visible and !empty($parent->_cols_order) and !in_array($this->getName(), $parent->_cols_order)) {
 			$parent->_cols_order[] = $this->getName();
 		}
+		
+		return $this;
 	}
 
 	/**
 	 * Sets the header for the column
 	 * @param string $header
+	 * @return P4A_Table_Col
 	 */
 	public function setHeader($header)
 	{
 		$this->setLabel($header);
+		return $this;
 	}
 
 	/**
@@ -569,6 +574,7 @@ class P4A_Table_Col extends P4A_Widget
 	 * By default we'll take the data source primary key as value field
 	 * and the first fiels (not pk) as description.
 	 * @param P4A_Data_Source $data_source
+	 * @return P4A_Table_Col
 	 */
 	public function setSource(P4A_Data_Source $data_source)
 	{
@@ -595,24 +601,30 @@ class P4A_Table_Col extends P4A_Widget
 				}
 			}
 		}
+		
+		return $this;
 	}
 
 	/**
 	 * Sets what data source member is the keeper of the field's value
 	 * @param string $name The name of the data source member
+	 * @return P4A_Table_Col
 	 */
 	public function setSourceValueField($name)
 	{
 		$this->data_value_field = $name;
+		return $this;
 	}
 
 	/**
 	 * Sets what data source member is the keeper of the field's description
 	 * @param string $name The name of the data source member
+	 * @return P4A_Table_Col
 	 */
 	public function setSourceDescriptionField($name)
 	{
 		$this->data_description_field = $name;
+		return $this;
 	}
 
 	/**
@@ -660,31 +672,36 @@ class P4A_Table_Col extends P4A_Widget
 	 * Sets/returns if the column should be formatted
 	 *
 	 * @param boolean $formatted
-	 * @return boolean
+	 * @return boolean|P4A_Table_Col
 	 */
 	public function isFormatted($formatted = null)
 	{
 		if ($formatted === null) return $this->formatted;
 		$this->formatted = $formatted;
+		return $this;
 	}
 
 	/**
 	 * Tell if the column is sortable or not
-	 * @access public
+	 * @param boolean $sortable
+	 * @return P4A_Table_Col
 	 */
 	public function isSortable($sortable = null)
 	{
 		if ($sortable === null) return $this->sortable;
 		$this->sortable = $sortable;
+		return $this;
 	}
 
 	/**
 	 * Sets the type of the column (text|image|action)
-	 * @param string
+	 * @param string $type
+	 * @return P4A_Table_Col
 	 */
 	public function setType($type)
 	{
 		$this->_type = $type;
+		return $this;
 	}
 
 	/**
@@ -775,10 +792,12 @@ class P4A_Table_Rows extends P4A_Widget
 	 * This is done adding a scrollbar to the table body.
 	 * @param integer $height
 	 * @param string $unit (px|pt|em)
+	 * @return P4A_Table_Rows
 	 */
 	public function setMaxHeight($height, $unit = 'px')
 	{
 		$this->setStyleProperty('max-height', $height . $unit);
+		return $this;
 	}
 
 	/**
