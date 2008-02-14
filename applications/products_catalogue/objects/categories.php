@@ -39,6 +39,10 @@
  */
 class Categories extends P4A_Base_Mask
 {
+	public $toolbar = null;
+	public $table = null;
+	public $fs_details = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -47,32 +51,33 @@ class Categories extends P4A_Base_Mask
 		$this->setSource($p4a->categories);
 		$this->firstRow();
 
+		$this->build("p4a_full_toolbar", "toolbar")
+			->setMask($this);
+
+		$this->build("p4a_table", "table")
+			->setSource($p4a->categories)
+			->setWidth(500)
+			->showNavigationBar();
+
 		$this->setRequiredField("description");
-		$this->fields->category_id->disable();
-
-		$this->build("p4a_full_toolbar", "toolbar");
-		$this->toolbar->setMask($this);
-
-		$this->build("p4a_table", "table");
-		$this->table->setSource($p4a->categories);
-		$this->table->showNavigationBar();
-		$this->table->setWidth(500);
-		$this->frame->anchor($this->table);
-
-		$this->fields->category_id->setLabel("Category ID");
 		$this->table->cols->category_id->setLabel("Category ID");
-		$this->table->showNavigationBar();
+		$this->fields->category_id
+			->disable()
+			->setLabel("Category ID");
 
-		$this->build("p4a_fieldset", "fs_details");
-		$this->fs_details->setLabel("Category detail");
-		$this->fs_details->anchor($this->fields->brand_id);
-		$this->fs_details->anchor($this->fields->description);
-		$this->fs_details->anchor($this->fields->visible);
- 		$this->frame->anchor($this->fs_details);
+		$this->build("p4a_fieldset", "fs_details")
+			->setLabel("Category detail")
+			->anchor($this->fields->category_id)
+			->anchor($this->fields->description)
+			->anchor($this->fields->visible);
+ 		
+		$this->frame
+			->anchor($this->table)
+			->anchor($this->fs_details);
 
-		$this->display("menu", $p4a->menu);
-		$this->display("top", $this->toolbar);
-
-		$this->setFocus($this->fields->description);
+		$this
+			->display("menu", $p4a->menu)
+			->display("top", $this->toolbar)
+			->setFocus($this->fields->description);
 	}
 }

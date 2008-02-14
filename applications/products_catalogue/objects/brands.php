@@ -39,6 +39,10 @@
  */
 class Brands extends P4A_Base_Mask
 {
+	public $toolbar = null;
+	public $table = null;
+	public $fs_details = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -47,20 +51,19 @@ class Brands extends P4A_Base_Mask
 		$this->setSource($p4a->brands);
 		$this->firstRow();
 
-		$this->setRequiredField("description");
-		$this->fields->brand_id->disable();
-
 		$this->build("p4a_full_toolbar", "toolbar")
 			->setMask($this);
 
 		$this->build("p4a_table", "table")
 			->setSource($p4a->brands)
-			->showNavigationBar()
 			->setWidth(500)
 			->showNavigationBar();
 
-		$this->fields->brand_id->setLabel("Brand ID");
+		$this->setRequiredField("description");
 		$this->table->cols->brand_id->setLabel("Brand ID");
+		$this->fields->brand_id
+			->disable()
+			->setLabel("Brand ID");
 
 		$this->build("p4a_fieldset", "fs_details")
 			->setLabel("Brand detail")
@@ -72,9 +75,9 @@ class Brands extends P4A_Base_Mask
 			->anchor($this->table)
  			->anchor($this->fs_details);
 
-		$this->display("menu", $p4a->menu);
-		$this->display("top", $this->toolbar);
-
-		$this->setFocus($this->fields->description);
+		$this
+			->display("menu", $p4a->menu)
+			->display("top", $this->toolbar)
+			->setFocus($this->fields->description);
 	}
 }

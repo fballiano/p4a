@@ -43,6 +43,7 @@ class Products extends P4A_Base_Mask
 	public $txt_search = null;
 	public $cmd_search = null;
 	
+	public $toolbar = null;
 	public $table = null;
 	public $fs_details = null;
 	
