@@ -49,6 +49,10 @@ class P4A_Array_Source extends P4A_Data_Source
 	 */
 	public $fields = null;
 
+	/**
+	 * @param array $array
+	 * @return P4A_Array_Source
+	 */
 	public function load(array $array)
 	{
 		$this->_array = array();
@@ -75,6 +79,8 @@ class P4A_Array_Source extends P4A_Data_Source
 			}
 			$this->_array[-1][$field_name] = '';
 		}
+		
+		return $this;
 	}
 
 	public function row($num_row = null, $move_pointer = true)

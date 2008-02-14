@@ -53,6 +53,10 @@ class P4A_Dir_Source extends P4A_Data_Source
 		$this->setPk('filename');
 	}
 
+	/**
+	 * @param string $dir
+	 * @return P4A_Dir_Source
+	 */
 	public function load($dir = null)
 	{
 		if ($dir !== null) {
@@ -67,41 +71,72 @@ class P4A_Dir_Source extends P4A_Data_Source
 		}
 
 		$this->_is_loaded = true;
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Dir_Source
+	 */
 	public function reload()
 	{
 		$this->load();
+		return $this;
 	}
 
+	/**
+	 * @param string $dir
+	 * @return P4A_Dir_Source
+	 */
 	public function setDir($dir)
 	{
 		$this->_dir = $dir;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDir()
 	{
 		return $this->_dir;
 	}
 
+	/**
+	 * @param boolean $scan_subdirs
+	 * @return P4A_Dir_Source
+	 */
 	public function scanSubDirs($scan_subdirs = true)
 	{
 		$this->_scan_subdirs = $scan_subdirs;
+		return $this;
 	}
 
+	/**
+	 * @param boolean $listing_subdirs
+	 * @return P4A_Dir_Source
+	 */
 	public function listingSubDirs($listing_subdirs = true)
 	{
 		$this->_listing_subdirs = $listing_subdirs;
+		return $this;
 	}
 
+	/**
+	 * @param boolean $cache_enabled
+	 * @return P4A_Dir_Source
+	 */
 	public function enableCache($cache_enabled = true)
 	{
 		$this->_cache_enabled = $cache_enabled;
 		if ($this->_is_loaded) {
 			$this->reload();
 		}
+		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAll()
 	{
 		if ($this->_cache_enabled) {
