@@ -39,6 +39,13 @@
  */
 class Products extends P4A_Base_Mask
 {
+	public $fs_search = null;
+	public $txt_search = null;
+	public $cmd_search = null;
+	
+	public $table = null;
+	public $fs_details = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -62,31 +69,30 @@ class Products extends P4A_Base_Mask
 		$this->setFieldsProperties();
 
 		// Search Fieldset
-		$fs_search = $this->build("p4a_fieldset", "fs_search");
-		$fs_search->setLabel("Search");
-		$txt_search = $this->build("p4a_field", "txt_search");
-		$this->intercept($txt_search, "onreturnpress", "search");
-		$txt_search->setLabel("Model");
-		$cmd_search = $this->build("p4a_button", "cmd_search");
-		$cmd_search->setLabel("Go");
-		$this->intercept($cmd_search, "onclick", "search");
-		$fs_search->anchor($txt_search);
-		$fs_search->anchorLeft($cmd_search);
+		$this->build("p4a_field", "txt_search")
+			->setLabel("Model")
+			->implement("onreturnpress", $this, "search");
+		$this->build("p4a_button", "cmd_search")
+			->setLabel("Go")
+			->implement("onclick", $this, "seach");
+		$this->build("p4a_fieldset", "fs_search")
+			->setLabel("Search")
+			->anchor($this->txt_search)
+			->anchorLeft($this->cmd_search);
 
 		// Toolbar
-		$this->build("p4a_full_toolbar", "toolbar");
-		$this->toolbar->setMask($this);
+		$this->build("p4a_full_toolbar", "toolbar")
+			->setMask($this);
 
 		// Table
-		$table = $this->build("p4a_table", "table");
-		$table->setSource($this->source);
-		$table->setVisibleCols(array("product_id","model","category",
-									 "brand"));
-		$table->cols->product_id->setLabel("Cod. Product");
-		while ($col = $table->cols->nextItem()) {
+		$this->build("p4a_table", "table")
+			->setSource($this->source)
+			->setVisibleCols(array("product_id","model","category", "brand"))
+			->showNavigationBar();
+		$this->table->cols->product_id->setLabel("Cod. Product");
+		while ($col = $this->table->cols->nextItem()) {
 			$col->setWidth(150);
 		}
-		$table->showNavigationBar();
 
 		$this->build("p4a_fieldset", "fs_details")
 			->setLabel("Product details")
@@ -104,8 +110,8 @@ class Products extends P4A_Base_Mask
 			->anchor($this->fields->description);
 
 		$this->frame
-			->anchor($fs_search)
-			->anchor($table)
+			->anchor($this->fs_search)
+			->anchor($this->table)
   			->anchor($this->fs_details);
   		
   		$this
@@ -126,42 +132,47 @@ class Products extends P4A_Base_Mask
 
 	private function setFieldsProperties()
 	{
-		$p4a = p4a::singleton();
-		$fields = $this->fields;
+		$this->fields->product_id
+			->setLabel("Product ID")
+			->setWidth(200)
+			->enable(false);
 
-		$fields->product_id->setLabel("Product ID");
-		$fields->product_id->setWidth(200);
-		$fields->product_id->enable(false);
+		$this->fields->category_id
+			->setType("select")
+			->setSource(P4A::singleton()->categories)
+			->setSourceDescriptionField("description");
 
-		$fields->category_id->setType("select");
-		$fields->category_id->setSource($p4a->categories);
-		$fields->category_id->setSourceDescriptionField("description");
+		$this->fields->category_id
+			->setLabel("Category")
+			->setWidth(200);
 
-		$fields->category_id->setLabel("Category");
-		$fields->category_id->setWidth(200);
+		$this->fields->brand_id
+			->setLabel("Brand")
+			->setWidth(200)
+			->setType("select")
+			->setSource(P4A::singleton()->brands)
+			->setSourceDescriptionField("description");
 
-		$fields->brand_id->setLabel("Brand");
-		$fields->brand_id->setWidth(200);
-		$fields->brand_id->setType("select");
-		$fields->brand_id->setSource($p4a->brands);
-		$fields->brand_id->setSourceDescriptionField("description");
+		$this->fields->model->setWidth(200);
 
-		$fields->model->setWidth(200);
+		$this->fields->purchasing_price
+			->setLabel("Purchasing price $")
+			->setWidth("40");
 
-		$fields->purchasing_price->setLabel("Purchasing price $");
-		$fields->purchasing_price->setWidth("40");
+		$this->fields->discount
+			->setLabel("Discount %")
+			->setWidth("40");
 
-		$fields->discount->setLabel("Discount %");
-		$fields->discount->setWidth("40");
+		$this->fields->selling_price
+			->setLabel("Price $")
+			->setWidth("40");
 
-		$fields->selling_price->setLabel("Price $");
-		$fields->selling_price->setWidth("40");
+		$this->fields->little_photo->setType("file");
+		$this->fields->big_photo->setType("file");
 
-		$fields->little_photo->setType("file");
-		$fields->big_photo->setType("file");
-
-		$fields->description->setType("rich_textarea");
-		$fields->description->enableUpload();
+		$this->fields->description
+			->setType("rich_textarea")
+			->enableUpload();
 	}
 
 	public function search()
