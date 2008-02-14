@@ -50,25 +50,27 @@ class Brands extends P4A_Base_Mask
 		$this->setRequiredField("description");
 		$this->fields->brand_id->disable();
 
-		$this->build("p4a_full_toolbar", "toolbar");
-		$this->toolbar->setMask($this);
+		$this->build("p4a_full_toolbar", "toolbar")
+			->setMask($this);
 
-		$this->build("p4a_table", "table");
-		$this->table->setSource($p4a->brands);
-		$this->table->showNavigationBar();
-		$this->table->setWidth(500);
-		$this->frame->anchor($this->table);
+		$this->build("p4a_table", "table")
+			->setSource($p4a->brands)
+			->showNavigationBar()
+			->setWidth(500)
+			->showNavigationBar();
 
 		$this->fields->brand_id->setLabel("Brand ID");
 		$this->table->cols->brand_id->setLabel("Brand ID");
-		$this->table->showNavigationBar();
 
-		$this->build("p4a_fieldset", "fs_details");
-		$this->fs_details->setLabel("Brand detail");
-		$this->fs_details->anchor($this->fields->brand_id);
-		$this->fs_details->anchor($this->fields->description);
-		$this->fs_details->anchor($this->fields->visible);
- 		$this->frame->anchor($this->fs_details);
+		$this->build("p4a_fieldset", "fs_details")
+			->setLabel("Brand detail")
+			->anchor($this->fields->brand_id)
+			->anchor($this->fields->description)
+			->anchor($this->fields->visible);
+		
+		$this->frame
+			->anchor($this->table)
+ 			->anchor($this->fs_details);
 
 		$this->display("menu", $p4a->menu);
 		$this->display("top", $this->toolbar);
