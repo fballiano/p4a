@@ -64,30 +64,31 @@ final class P4A_Login_Mask extends P4A_Mask
 		parent::__construct();
 		$this->setTitle('Login');
 		
-		$this->build('P4A_Field', 'username');
-		$this->username->addAction('onreturnpress');
-		$this->username->addAjaxAction('onreturnpress');
-		$this->username->implement('onreturnpress', $this, 'login');
+		$this->build('P4A_Field', 'username')
+			->addAction('onreturnpress')
+			->addAjaxAction('onreturnpress')
+			->implement('onreturnpress', $this, 'login');
 		
-		$this->build('P4A_Field', 'password');
-		$this->password->setType('password');
-		$this->password->addAjaxAction('onreturnpress');
-		$this->password->implement('onreturnpress', $this, 'login');
+		$this->build('P4A_Field', 'password')
+			->setType('password')
+			->addAjaxAction('onreturnpress')
+			->implement('onreturnpress', $this, 'login');
 		
-		$this->build('P4A_Button', 'go');
-		$this->go->addAjaxAction('onclick');
-		$this->go->implement('onclick', $this, 'login');
+		$this->build('P4A_Button', 'go')
+			->addAjaxAction('onclick')
+			->implement('onclick', $this, 'login');
 
-		$this->build('P4A_Frame', 'frame');
-		$this->frame->setWidth(300);
-		$this->frame->setStyleProperty('margin-top', '50px');
-		$this->frame->setStyleProperty('margin-bottom', '50px');
-		$this->frame->anchor($this->username);
-		$this->frame->anchor($this->password);
-		$this->frame->anchorCenter($this->go);
+		$this->build('P4A_Frame', 'frame')
+			->setWidth(300)
+			->setStyleProperty('margin-top', '50px')
+			->setStyleProperty('margin-bottom', '50px')
+			->anchor($this->username)
+			->anchor($this->password)
+			->anchorCenter($this->go);
 		
-		$this->display('main', $this->frame);
-		$this->setFocus($this->username);
+		$this
+			->display('main', $this->frame)
+			->setFocus($this->username);
 	}
 	
 	public function login()

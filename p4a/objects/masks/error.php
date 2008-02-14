@@ -67,13 +67,15 @@ final class P4A_Error_Mask extends P4A_Mask
 			->setWidth(400)
 			->setStyleProperty("border", "1px solid #c6d3de")
 			->setStyleProperty("padding", "10px");
-		$this->frame->anchor($this->box);
 		
 		$this->build("P4A_Button", "restart_button")
 			->setLabel("restart application")
 			->addAction("onclick");
-		$this->frame->newRow();
-		$this->frame->anchorCenter($this->restart_button);
+		
+		$this->frame
+			->anchor($this->box)
+			->newRow()
+			->anchorCenter($this->restart_button);
 		
 		$this->display("main", $this->frame);
 	}
