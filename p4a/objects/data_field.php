@@ -102,11 +102,13 @@ class P4A_Data_Field extends P4A_Object
 	/**
 	 * Sets value and new_value
 	 * @param string $value
+	 * @return P4A_Data_Field
 	 */
 	public function setValue($value)
 	{
 		$this->value = $value;
 		$this->setNewValue($value);
+		return $this;
 	}
 
 	/**
@@ -128,10 +130,12 @@ class P4A_Data_Field extends P4A_Object
 
 	/**
 	 * @param string $value
+	 * @return P4A_Data_Field
 	 */
 	public function setNewValue($value)
 	{
 		$this->new_value = $value;
+		return $this;
 	}
 
 	/**
@@ -153,10 +157,12 @@ class P4A_Data_Field extends P4A_Object
 
 	/**
 	 * @param string $type
+	 * @return P4A_Data_Field
 	 */
 	public function setType($type)
 	{
 		$this->type = $type;
+		return $this;
 	}
 
 	/**
@@ -169,25 +175,38 @@ class P4A_Data_Field extends P4A_Object
 
 	/**
 	 * Gets/sets read only state
-	 * @param boolean $read_only
+	 * @param boolean|P4A_Data_Field $read_only
 	 * @return boolean
 	 */
 	public function isReadOnly($read_only = null)
 	{
 		if ($read_only === null) return $this->is_read_only;
 		$this->is_read_only = $read_only;
+		return $this;
 	}
 
+	/**
+	 * @param string $DSN
+	 * @return P4A_Data_Field
+	 */
 	public function setDSN($DSN)
 	{
 		$this->_DSN = $DSN;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDSN()
 	{
 		return $this->_DSN;
 	}
 
+	/**
+	 * @param string $value
+	 * @return P4A_Data_Field
+	 */
 	public function setDefaultValue($value = null)
 	{
 		if ($value === null) {
@@ -195,8 +214,13 @@ class P4A_Data_Field extends P4A_Object
 		} else {
 			$this->default_value = $value;
 		}
+		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @return P4A_Data_Field
+	 */
 	public function setSequence($name = null)
 	{
 		if ($name === null) {
@@ -204,8 +228,12 @@ class P4A_Data_Field extends P4A_Object
 		} else {
 			$this->sequence = "{$name}_seq";
 		}
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDefaultValue()
 	{
 		if ($this->sequence === null) {
@@ -215,51 +243,90 @@ class P4A_Data_Field extends P4A_Object
 		}
 	}
 	
+	/**
+	 * @param string $schema
+	 * @return P4A_Data_Field
+	 */
 	public function setSchema($schema)
 	{
 		$this->schema = $schema;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSchema()
 	{
 		return $this->schema;
 	}
 
+	/**
+	 * @param string $table
+	 * @return P4A_Data_Field
+	 */
 	public function setTable($table)
 	{
 		$this->table = $table;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTable()
 	{
 		return $this->table;
 	}
 
+	/**
+	 * @param string $column
+	 * @return P4A_Data_Field
+	 */
 	public function setAliasOf($column)
 	{
 		$this->alias_of = $column;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getAliasOf()
 	{
 		return $this->alias_of;
 	}
 
+	/**
+	 * @param integer $length
+	 */
 	public function setLength($length)
 	{
 		$this->length = $length;
+		return $this;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getLength()
 	{
 		return $this->length;
 	}
 	
+	/**
+	 * @param integer $num_of_decimals
+	 * @return P4A_Data_Field
+	 */
 	public function setNumOfDecimals($num_of_decimals)
 	{
 		$this->num_of_decimals = $num_of_decimals;
+		return $this;
 	}
 	
+	/**
+	 * @return integer
+	 */
 	public function getNumOfDecimals()
 	{
 		return $this->num_of_decimals;

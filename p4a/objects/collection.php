@@ -71,9 +71,13 @@ class P4A_Collection extends P4A_Object
 		return count($this->_objects);
 	}
 
+	/**
+	 * @return P4A_Collection
+	 */
 	public function reset()
 	{
 		$this->_pointer = 0;
+		return $this;
 	}
 
 	/**
