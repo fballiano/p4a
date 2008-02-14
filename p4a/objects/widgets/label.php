@@ -87,10 +87,12 @@ class P4A_Label extends P4A_Widget
 
 	/**
 	 * @param string $text
+	 * @return P4A_Label
 	 */
 	public function setTooltip($text)
 	{
 		$this->_tooltip = $text;
+		return $this;
 	}
 
 	/**

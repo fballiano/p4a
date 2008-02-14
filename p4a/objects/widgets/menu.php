@@ -68,6 +68,7 @@ class P4A_Menu extends P4A_Widget
 	 * Adds an element to the menu
 	 * @param string $name Mnemonic identifier for the element
 	 * @param string $label
+	 * @return P4A_Menu_Item
 	 */
 	public function addItem($name, $label = null)
 	{
@@ -79,6 +80,7 @@ class P4A_Menu extends P4A_Widget
 	/**
 	 * Removes an element from the menu
 	 * @param string $name
+	 * @return P4A_Menu
 	 */
 	public function dropItem($name)
 	{
@@ -86,6 +88,7 @@ class P4A_Menu extends P4A_Widget
 			$this->items->$name->destroy();
 			unset($this->items->$name);
 		}
+		return $this;
 	}
 
 	/**
@@ -101,10 +104,12 @@ class P4A_Menu extends P4A_Widget
 
 	/**
 	 * @param string $name
+	 * @return P4A_Menu_Item
 	 */
 	protected function setActiveItem($name)
 	{
 		$this->_active_item = $name;
+		return $this;
 	}
 
 	/**
@@ -194,6 +199,7 @@ class P4A_Menu_Item extends P4A_Widget
 	/**
 	 * Removes an element from the current element
 	 * @param string $name Mnemonic identifier for the element
+	 * @return P4A_Menu_Item
 	 */
 	public function dropItem($name)
 	{
@@ -201,6 +207,7 @@ class P4A_Menu_Item extends P4A_Widget
 			$this->items->$name->destroy();
 			unset($this->items->$name);
 		}
+		return $this;
 	}
 
 	/**
@@ -217,11 +224,13 @@ class P4A_Menu_Item extends P4A_Widget
 	/**
 	 * Sets the desidered subelement as active
 	 * @param string $name
+	 * @return P4A_Menu_Item
 	 */
 	protected function setActiveItem($name)
 	{
 		$this->_active_item = $name;
 		$this->setActive();
+		return $this;
 	}
 
 	/**
@@ -235,10 +244,12 @@ class P4A_Menu_Item extends P4A_Widget
 
 	/**
 	 * @param string $icon
+	 * @return P4A_Menu_Item
 	 */
 	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
+		return $this;
 	}
 
 	/**

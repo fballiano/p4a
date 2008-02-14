@@ -107,95 +107,119 @@ class P4A_DB_Navigator extends P4A_Widget
 	/**
 	 * Sets the source of the tree, it must be a P4A_DB_Source
 	 * @param P4A_DB_Source $source	The DB source to navigate
+	 * @return P4A_DB_Navigator
 	 */
 	public function setSource(P4A_DB_Source $source)
 	{
 		$this->source =& $source;
+		return $this;
 	}
 
 	/**
 	 * Sets the field name used to recursively navigate the P4A_DB_Source
 	 * @param string $field_name
+	 * @return P4A_DB_Navigator
 	 */
 	public function setRecursor($field_name)
 	{
 		$this->recursor = $field_name;
+		return $this;
 	}
 
 	/**
 	 * Sets the field name used to print out the description in the tree
 	 * @param string $field_name
+	 * @return P4A_DB_Navigator
 	 */
 	public function setDescription($field_name)
 	{
 		$this->description = $field_name;
+		return $this;
 	}
 
 	/**
 	 * Trims description after x chars (0 = disabled)
 	 * @param integer $chars Num of chars
+	 * @return P4A_DB_Navigator
 	 */
 	public function setTrim($chars)
 	{
 		$this->trim = $chars;
+		return $this;
 	}
 
 	/**
 	 * Sets if the tree is expanded or not
 	 * @param boolean $value
+	 * @return P4A_DB_Navigator
 	 */
 	public function expandAll($value = true)
 	{
 		$this->expand_all = $value;
+		return $this;
 	}
 
 	/**
 	 * Sets if the tree is collapsed or not
 	 * @param boolean $value
+	 * @return P4A_DB_Navigator
 	 */
 	public function collapse($value = true)
 	{
 		$this->expand_all = !$value;
+		return $this;
 	}
 
 	/**
 	 * Enable/disable movement of setions (only if AJAX is enabled)
 	 * @param mixed (false|parent_id field on your mask)
+	 * @return P4A_DB_Navigator
 	 */
 	public function allowMovement($field)
 	{
 		$this->field_to_update_on_movement = $field->getId();
 		$this->intercept($field, 'onchange', 'onMovement');
+		return $this;
 	}
 
 	/**
 	 * Enable/disable movement of root sections (parent_id = null)
 	 * @param boolean
+	 * @return P4A_DB_Navigator
 	 */
 	public function allowRootsMovement($allow = true)
 	{
 		$this->allow_roots_movement = $allow;
+		return $this;
 	}
 
 	/**
 	 * Enable/disable movement of sections to root (parent_id = null)
 	 * @param boolean
+	 * @return P4A_DB_Navigator
 	 */
 	public function allowMovementToRoot($allow = true)
 	{
 		$this->allow_movement_to_root = $allow;
+		return $this;
 	}
 
 	/**
 	 * Is selected element clickable?
 	 * @param boolean
+	 * @return P4A_DB_Navigator
 	 */
 	public function enableSelectedElement($enable = true)
 	{
 		$this->enable_selected_element = $enable;
+		return $this;
 	}
 
-	public function getAsString($id = null)
+	/**
+	 * @param unknown_type $id
+	 * @return string
+	 */
+	public function getAsString()
 	{
 		$obj_id = $this->getId();
 		if (!$this->isVisible()) {
@@ -315,9 +339,8 @@ class P4A_DB_Navigator extends P4A_Widget
 
 		if (empty($section[$this->recursor])) {
 			return $return;
-		} else {
-			return array_merge($this->getPath($section[$this->recursor], $table, $pk), $return);
 		}
+		return array_merge($this->getPath($section[$this->recursor], $table, $pk), $return);
 	}
 
 	/**

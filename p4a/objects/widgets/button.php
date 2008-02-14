@@ -71,10 +71,12 @@ class P4A_Button extends P4A_Widget
 
 	/**
 	 * @param string $icon The icon taken from icon set (file name without extension) or path to an external image
+	 * @return P4A_Button
 	 */
 	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
+		return $this;
 	}
 
 	/**
@@ -87,10 +89,12 @@ class P4A_Button extends P4A_Widget
 
 	/**
 	 * @param integer $size
+	 * @return P4A_Button
 	 */
 	public function setSize($size)
 	{
 		$this->_size = strtolower($size);
+		return $this;
 	}
 
 	/**
@@ -108,11 +112,12 @@ class P4A_Button extends P4A_Widget
 	 *
 	 * @param string $label
 	 * @param boolean $visible
+	 * @return P4A_Button
 	 */
 	public function setLabel($label, $visible = false)
 	{
-		parent::setLabel($label);
 		$this->_label_visible = $visible;
+		return parent::setLabel($label);
 	}
 
 	/**

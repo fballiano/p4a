@@ -59,17 +59,26 @@ class P4A_Box extends P4A_Widget
 	 * alias of setHTML()
 	 * @param string $value
 	 * @deprecated 
+	 * @return P4A_Box
 	 */
 	public function setValue($value = null)
 	{
-		$this->setHTML($value);
+		return $this->setHTML($value);
 	}
 	
+	/**
+	 * @param string $html
+	 * @return P4A_Box
+	 */
 	public function setHTML($html)
 	{
 		$this->_html = $html;
+		return $this;
 	}
 	
+	/**
+	 * @return string
+	 */
 	public function getHTML()
 	{
 		return $this->_html;
@@ -90,6 +99,6 @@ class P4A_Box extends P4A_Widget
 		$actions = $this->composeStringActions();
 		$class = $this->composeStringClass();
 		$content = $this->getHTML();
-		return "<div id='$id' $class $properties $actions>$value</div>";
+		return "<div id='$id' $class $properties $actions>$content</div>";
 	}
 }

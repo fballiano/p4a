@@ -52,46 +52,85 @@ class P4A_Frame extends P4A_Widget
 	 */
 	protected $_row = 1;
 
-	protected function _anchor(&$object, $margin = "20px", $float = "left")
+	/**
+	 * @param P4A_Widget $object
+	 * @param string $margin
+	 * @param string $float
+	 * @return P4A_Frame
+	 */
+	protected function _anchor($object, $margin = "20px", $float = "left")
 	{
 		if (is_object($object)) {
 			$to_add = array("id"=>$object->getId(), "margin" => $margin, "float" => $float);
 			$this->_map[$this->_row][]  = $to_add;
 		}
+		return $this;
 	}
 
-	public function anchor(&$object, $margin = "10px", $float="left")
+	/**
+	 * @param P4A_Widget $object
+	 * @param string $margin
+	 * @param string $float
+	 * @return P4A_Frame
+	 */
+	public function anchor($object, $margin = "10px", $float="left")
 	{
 		$this->newRow();
-		$this->_anchor($object, $margin, $float);
+		return $this->_anchor($object, $margin, $float);
 	}
 
-	public function anchorRight(&$object, $margin = "10px")
+	/**
+	 * @param P4A_Widget $object
+	 * @param string $margin
+	 * @return P4A_Frame
+	 */
+	public function anchorRight($object, $margin = "10px")
 	{
-		$this->_anchor($object, $margin, "right");
+		return $this->_anchor($object, $margin, "right");
 	}
 
-	public function anchorLeft(&$object, $margin = "10px")
+	/**
+	 * @param P4A_Widget $object
+	 * @param string $margin
+	 * @return P4A_Frame
+	 */
+	public function anchorLeft($object, $margin = "10px")
 	{
-		$this->_anchor($object, $margin, "left");
+		return $this->_anchor($object, $margin, "left");
 	}
 
+	/**
+	 * @param P4A_Widget $object
+	 * @param string $margin
+	 * @return P4A_Frame
+	 */
 	public function anchorCenter(&$object, $margin = "auto")
 	{
 		$this->newRow();
-		$this->_anchor($object, $margin, "none");
+		return $this->_anchor($object, $margin, "none");
 	}
 
+	/**
+	 * @return P4A_Frame
+	 */
 	public function clean()
 	{
 		$this->_map = array();
+		return $this;
 	}
 
+	/**
+	 * @return P4A_Frame
+	 */
 	public function newRow()
 	{
 		$this->_row++;
+		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getAsString()
 	{
 		$id = $this->getId();

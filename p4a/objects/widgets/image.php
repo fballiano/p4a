@@ -51,10 +51,12 @@ class P4A_Image extends P4A_Widget
 
 	/**
 	 * @param integer $size
+	 * @return P4A_Image
 	 */
 	public function setSize($size)
 	{
 		$this->_size = $size;
+		return $this;
 	}
 
 	/**
@@ -67,10 +69,12 @@ class P4A_Image extends P4A_Widget
 
 	/**
 	 * @param string $icon
+	 * @return P4A_Image
 	 */
 	public function setIcon($icon)
 	{
 		$this->_icon = $icon;
+		return $this;
 	}
 
 	/**
@@ -84,19 +88,22 @@ class P4A_Image extends P4A_Widget
 	/**
 	 * alias for setIcon()
 	 * @param string $image
+	 * @return P4A_Image
+	 * @deprecated 
 	 */
 	public function setSource($source)
 	{
-		$this->_icon = $source;
+		return $this->setIcon($source);
 	}
 	
 	/**
 	 * alias for getIcon()
 	 * @return string
+	 * @deprecated 
 	 */
 	public function getSource()
 	{
-		return $this->_icon;
+		return $this->getIcon();
 	}
 
 	/**

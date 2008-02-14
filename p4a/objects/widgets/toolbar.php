@@ -134,26 +134,31 @@ class P4A_Toolbar extends P4A_Widget
 
 	/**
 	 * Disables all buttons
+	 * @return P4A_Toolbar
 	 */
 	public function disable()
 	{
 		while ($button = $this->buttons->nextItem()) {
 			$button->disable();
 		}
+		return $this;
 	}
 
 	/**
 	 * Enables all buttons
+	 * @return P4A_Toolbar
 	 */
 	public function enable()
 	{
 		while ($button = $this->buttons->nextItem()) {
 			$button->enable();
 		}
+		return $this;
 	}
 
 	/**
 	 * @param integer $size
+	 * @return P4A_Toolbar
 	 */
 	public function setSize($size)
 	{
@@ -162,6 +167,7 @@ class P4A_Toolbar extends P4A_Widget
 		while ($button = $this->buttons->nextItem()) {
 			$button->setSize($size);
 		}
+		return $this;
 	}
 
 	/**

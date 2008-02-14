@@ -76,32 +76,38 @@ class P4A_Canvas extends P4A_Widget
 	 * @param P4A_Object $object
 	 * @param integer $top
 	 * @param integer $left
+	 * @return P4A_Canvas
 	 */
 	public function anchor(&$object, $top, $left=0)
 	{
 		$this->objects[] = array($object, $top, $left);
+		return $this;
 	}
 
 	/**
 	 * @param integer $top
 	 * @param integer $left
+	 * @return P4A_Canvas
 	 */
 	public function setOffset($top, $left)
 	{
 		$this->offset_top += $top;
 		$this->offset_left += $left;
+		return $this;
 	}
 
 	/**
 	 * @param integer $top
 	 * @param integer $left
 	 * @param string $unit
+	 * @return P4A_Canvas
 	 */
 	public function defineGrid($top = 10, $left = 10, $unit = 'px')
 	{
 		$this->top = $top;
 		$this->left = $top;
 		$this->unit = $unit;
+		return $this;
 	}
 
 	/**
@@ -114,7 +120,10 @@ class P4A_Canvas extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 		
-		$string  = "";
+		$class = $this->composeStringClass();
+		$actions = $this->composeStringActions();
+		$properties = $this->composeStringProperties();
+		$string  = "<div id='$id' $properties $actions $class>";
 		foreach (array_keys($this->objects) as $key) {
 			if (is_object($this->objects[$key][0])) {
 				$top = ($this->objects[$key][1] * $this->top) + $this->offset_top;
@@ -127,6 +136,6 @@ class P4A_Canvas extends P4A_Widget
 				unset($object);
 			}
 		}
-		return $string;
+		return "$string</div>";
 	}
 }
