@@ -167,6 +167,7 @@ class P4A_Field extends P4A_Widget
 	 * integer, decimal, float, date, time to right.
 	 * 
 	 * @param P4A_Data_Field $data_field
+	 * @return P4A_Field
 	 */
 	public function setDataField($data_field)
 	{
@@ -184,6 +185,7 @@ class P4A_Field extends P4A_Widget
 		}
 		
 		$this->data_field =& $data_field;
+		return $this;
 	}
 
 	protected function getVisualizedDataType()
@@ -205,20 +207,24 @@ class P4A_Field extends P4A_Widget
 
 	/**
 	 * @param mixed $value
+	 * @return P4A_Field
 	 */
 	public function setValue($value)
 	{
 		$this->data_field->setValue($value);
+		return $this;
 	}
 
 	/**
 	 * Sets the error message
 	 * @param string $error
+	 * @return P4A_Field
 	 */
 	public function setError($error = '')
 	{
 		$this->_error = $error;
 		$this->redesign();
+		return $this;
 	}
 
 	/**
@@ -232,10 +238,12 @@ class P4A_Field extends P4A_Widget
 
 	/**
 	 * @param string $text
+	 * @return P4A_Field
 	 */
 	public function setTooltip($text)
 	{
 		$this->label->setTooltip($text);
+		return $this;
 	}
 
 	/**
@@ -266,6 +274,7 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Examines the value passed by the web form and set the new value.
 	 * @param mixed $new_value
+	 * @return P4A_Field
 	 */
 	public function setNewValue($new_value)
 	{
@@ -296,6 +305,8 @@ class P4A_Field extends P4A_Widget
 		if ($set) {
 			$this->data_field->setNewValue($new_value);
 		}
+		
+		return $this;
 	}
 
 	/**
@@ -361,6 +372,7 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * @param unknown_type $type (text|password|textarea|rich_textarea|date|hidden|label|select|radio|checkbox|file|multiselect|multicheckbox)
 	 * @param unknown_type $multivalue_separator
+	 * @return P4A_Field
 	 */
 	public function setType($type, $multivalue_separator = null)
 	{
@@ -404,11 +416,13 @@ class P4A_Field extends P4A_Widget
 			p4a_error("$type is not a supported P4A_Field type");
 		}
 		$this->type = $type;
+		return $this;
 	}
 	
 	/**
 	 * Set type of encryption to use for password fields
 	 * @param string $type (md5|none)
+	 * @return P4A_Field
 	 */
 	public function setEncryptionType($type) {
 		switch ($type) {
@@ -419,6 +433,7 @@ class P4A_Field extends P4A_Widget
 			default:
 				P4A_Error('unknown encryption type:' . $type);
 		}
+		return $this;
 	}
 
 	/**
@@ -426,8 +441,9 @@ class P4A_Field extends P4A_Widget
 	 * By default we'll take the data source primary key as value field
 	 * and the first fiels (not pk) as description.
 	 * @param P4A_Data_Source $data_source
+	 * @return P4A_Field
 	 */
-	public function setSource(&$data_source)
+	public function setSource($data_source)
 	{
 		unset($this->data);
 		$this->data =& $data_source;
@@ -461,24 +477,29 @@ class P4A_Field extends P4A_Widget
 		} elseif (is_null($pk)) {
 			P4A_Error("PLEASE DEFINE A PRIMARY KEY");
 		}
+		return $this;
 	}
 
 	/**
 	 * When the field has a source, this is used to know which source's field keeps the value to be used in this field
 	 * @param string $name
+	 * @return P4A_Field
 	 */
 	public function setSourceValueField($name)
 	{
-		$this->data_value_field = $name ;
+		$this->data_value_field = $name;
+		return $this;
 	}
 
 	/**
 	 * When the field has a source, this is used to know which source's field keeps the description to be displayed by this field
 	 * @param string $name
+	 * @return P4A_Field
 	 */
 	public function setSourceDescriptionField($name)
 	{
-		$this->data_description_field = $name ;
+		$this->data_description_field = $name;
+		return $this;
 	}
 
 	/**
@@ -536,13 +557,13 @@ class P4A_Field extends P4A_Widget
 	 * Tells you if the field is formatted or not, also sets formatting on/off
 	 *
 	 * @param boolean $enable_formatting
-	 * @return boolean
+	 * @return P4A_Field
 	 */
 	public function isFormatted($enable_formatting = null)
 	{
 		if ($enable_formatting === null) return $this->formatted;
 		$this->formatted = $enable_formatting;
-		return $enable_formatting;
+		return $this;
 	}
 
 	/**
@@ -910,15 +931,18 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Use this method when you're creating a multivalue field which rely on a single db field instead of an external table
 	 * @param string $string
+	 * @return P4A_Field
 	 */
 	function setMultivalueSeparator($string)
 	{
 		$this->multivalue_separator = $string;
+		return $this;
 	}
 
 	/**
 	 * Used ony for select, sets the select to allow a "none selected" record
 	 * @param string|boolean $message If false disable the feature, otherwise enable it
+	 * @return P4A_Field
 	 */
 	public function allowNull($message = null)
 	{
@@ -929,6 +953,7 @@ class P4A_Field extends P4A_Widget
 			$this->allow_null = true;
 			$this->null_message = $message;
 		}
+		return $this;
 	}
 
 	/**
@@ -1128,10 +1153,12 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen
 	 * @param string The subdir (can be "test", "test/", "test/test", "test/test/test/")
+	 * @return P4A_Field
 	 */
 	public function setUploadSubpath($subpath = null)
 	{
 		$this->upload_subpath = $subpath;
+		return $this;
 	}
 
 	/**
@@ -1171,10 +1198,12 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Sets the maximum size for image thumbnails
 	 * @param integer
+	 * @return P4A_Field
 	 */
 	public function setMaxThumbnailSize($size = null)
 	{
 		$this->max_thumbnail_size = $size;
+		return $this;
 	}
 
 	/**
@@ -1186,6 +1215,9 @@ class P4A_Field extends P4A_Widget
 		return $this->max_thumbnail_size;
 	}
 	
+	/**
+	 * @return P4A_Field
+	 */
 	protected function buildDeletePreviewDownloadButtons()
 	{
 		if (!isset($this->buttons->button_file_delete)) {
@@ -1204,16 +1236,19 @@ class P4A_Field extends P4A_Widget
 			$this->buttons->button_file_download->setLabel('Download');
 			$this->buttons->button_file_download->implement('onclick', $this, 'fileDownloadOnClick');
 		}
+		return $this;
 	}
 
 	/**
 	 * Sets the label for the field.
 	 * In rendering phase it will be added with ':  '.
 	 * @param string $value
+	 * @return P4A_Field
 	 */
 	public function setLabel($value)
 	{
 		$this->label->setLabel($value);
+		return $this;
 	}
 
 	/**
@@ -1237,10 +1272,12 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Sets the alignment property for the field.
 	 * @param string $align
+	 * @return P4A_Field
 	 */
 	public function setAlign($align)
 	{
 		$this->align = $align;
+		return $this;
 	}
 
 	/**
@@ -1291,10 +1328,12 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * Enables upload for rich_textarea fields
 	 * @param boolean $enable
+	 * @return P4A_Field
 	 */
 	public function enableUpload($enable = true)
 	{
 		$this->upload = $enable;
+		return $this;
 	}
 
 	/**
@@ -1307,10 +1346,12 @@ class P4A_Field extends P4A_Widget
 
 	/**
 	 * sets the rich textarea theme (Basic|Default|Full)
+	 * @return P4A_Field
 	 */
 	public function setRichTextareaTheme($theme)
 	{
 		$this->rich_textarea_theme = $theme;
+		return $this;
 	}
 
 	/**
@@ -1324,6 +1365,7 @@ class P4A_Field extends P4A_Widget
 	/**
 	 * @param Zend_Validate_Abstract $validator
 	 * @param boolean $break_chain_on_failure
+	 * @return P4A_Field
 	 */
 	public function addValidator(Zend_Validate_Interface $validator, $break_chain_on_failure = false)
 	{
@@ -1332,6 +1374,7 @@ class P4A_Field extends P4A_Widget
 		}
 		
 		$this->_validator_chain->addValidator($validator, $break_chain_on_failure);
+		return $this;
 	}
 	
 	/**
