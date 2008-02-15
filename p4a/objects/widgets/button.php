@@ -133,7 +133,6 @@ class P4A_Button extends P4A_Widget
 
 		$label = htmlspecialchars(__($this->getLabel()), ENT_QUOTES);
 		$title = $label;
-		$class = $this->composeStringClass();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 		$accesskey = $this->getAccessKey();
@@ -159,6 +158,11 @@ class P4A_Button extends P4A_Widget
 				$icon .= '.' . P4A_ICONS_EXTENSION;
 			}
 			$icon = "<img src='$icon' alt=''>";
+		}
+		if ($icon) {
+			$class = $this->composeStringClass(array('p4a_button_image'));
+		} else {
+			$class = $this->composeStringClass();
 		}
 		
 		return "<button id='$id' title='$title' $class $properties $actions>" . 
