@@ -414,8 +414,13 @@ table.p4a_message td.c2 {
 .p4a_button {
 	border: 1px solid #e2e7ed;
 	cursor: pointer;
-	padding: 0;
+	background:#fafafa; 
 	overflow: visible; /* used to fix the IE stretched buttons bug */
+}
+
+.p4a_button_image {
+	border:1px solid #fafafa;
+	padding:0;
 }
 
 .p4a_button:hover {
