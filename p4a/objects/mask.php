@@ -355,14 +355,13 @@ class P4A_Mask extends P4A_Object
 		extract($this->_temp_vars);
 
 		ob_start();
+		require P4A_THEME_DIR . "/p4a_header.php";
 		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.php";
+		require P4A_THEME_DIR . "/p4a_footer.php";
 		$output = ob_get_contents();
 		ob_end_clean();
 
-		$this->clearTempCSS();
-		$this->clearTempJavascript();
 		$this->clearTempVars();
-
 		return $output;
 	}
 
@@ -576,7 +575,6 @@ class P4A_Mask extends P4A_Object
 	protected function maskOpen()
 	{
 		$return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
-		$return .= "<div>\n";
 		$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 		$return .= "<input type='hidden' name='_action' value='none' />\n";
 		$return .= "<input type='hidden' name='_ajax' value='0' />\n";
@@ -585,7 +583,7 @@ class P4A_Mask extends P4A_Object
 		$return .= "<input type='hidden' name='param2' />\n";
 		$return .= "<input type='hidden' name='param3' />\n";
 		$return .= "<input type='hidden' name='param4' />\n";
-
+		$return .= "<div id='p4a_inner_body'>\n";
 		return $return;
 	}
 
@@ -634,108 +632,6 @@ class P4A_Mask extends P4A_Object
 				unset($this->_css);
 			}
 		}
-		return $this;
-	}
-
-	/**
-	 * Include a CSS file that will be removed after rendering
-	 * @param string $uri The URI of CSS
-	 * @param string $media The CSS media
-	 * @return P4A_Mask
-	 */
-	public function addTempCss($uri, $media = "screen")
-	{
-		if (!isset($this->_temp_css[$uri])) {
-			$this->_temp_css[$uri] = array();
-		}
-		$this->_temp_css[$uri][$media] = null;
-		return $this;
-	}
-
-	/**
-	 * Drop inclusion of temp CSS file
-	 * @param string $uri The URI of CSS
-	 * @param string $media The CSS media
-	 * @return P4A_Mask
-	 */
-	public function dropTempCss($uri, $media = "screen")
-	{
-		if(isset($this->_temp_css[$uri]) and isset($this->_temp_css[$uri][$media])) {
-			unset($this->_temp_css[$uri][$media]);
-			if (empty($this->_temp_css[$uri])) {
-				unset($this->_temp_css);
-			}
-		}
-		return $this;
-	}
-
-	/**
-	 * Clear temporary CSS list
-	 * @return P4A_Mask
-	 */
-	public function clearTempCss()
-	{
-		$this->_temp_css = array();
-		return $this;
-	}
-
-	/**
-	 * Include a javascript file
-	 * @param string $uri
-	 * @return P4A_Mask
-	 */
-	public function addJavascript($uri)
-	{
-		$this->_javascript[$uri] = null;
-		return $this;
-	}
-
-	/**
-	 * Drop inclusion of javascript file
-	 * @param string $uri
-	 * @return P4A_Mask
-	 */
-	public function dropJavascript($uri)
-	{
-		if(isset($this->_javascript[$uri])){
-			unset($this->_javascript[$uri]);
-		}
-		return $this;
-	}
-
-	/**
-	 * Include a javascript file
-	 * These javascripts are removed after rendering
-	 * @param string $uri
-	 * @return P4A_Mask
-	 */
-	public function addTempJavascript($uri)
-	{
-		$this->_temp_javascript[$uri] = null;
-		return $this;
-	}
-
-	/**
-	 * Drop inclusion of javascript file
-	 * These javascripts are removed after rendering
-	 * @param string $uri
-	 * @return P4A_Mask
-	 */
-	public function dropTempJavascript($uri)
-	{
-		if(isset($this->_temp_javascript[$uri])){
-			unset($this->_temp_javascript[$uri]);
-		}
-		return $this;
-	}
-
-	/**
-	 * Clear temporary javascript list
-	 * @return P4A_Mask
-	 */
-	public function clearTempJavascript()
-	{
-		$this->_temp_javascript = array();
 		return $this;
 	}
 
