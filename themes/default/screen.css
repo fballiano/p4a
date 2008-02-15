@@ -412,9 +412,9 @@ table.p4a_message td.c2 {
 /**************/
 
 .p4a_button {
+	background: #fafafa;
 	border: 1px solid #e2e7ed;
 	cursor: pointer;
-	background:#fafafa; 
 	overflow: visible; /* used to fix the IE stretched buttons bug */
 }
 
@@ -431,6 +431,15 @@ table.p4a_message td.c2 {
 /***************/
 /* P4A_Toolbar */
 /***************/
+
+.p4a_toolbar .p4a_button {
+	background: #fafafa;
+	border: 1px solid #fafafa;
+}
+
+.p4a_toolbar .p4a_button:hover {
+	border: 1px solid #c6d3de;
+}
 
 .p4a_toolbar_16 button {
 	height: 21px;
@@ -618,6 +627,15 @@ table.p4a_message td.c2 {
 	background: #fafafa;
 	font-weight: normal;
 	padding: 0;
+}
+
+.p4a_table_navigation_bar .p4a_button {
+	background: #fafafa;
+	border: 1px solid #fafafa;
+}
+
+.p4a_table_navigation_bar .p4a_button:hover {
+	border: 1px solid #c6d3de;
 }
 
 /************/
