@@ -35,7 +35,7 @@
 	<div class='p4a_system_message'><?php echo $message ?></div>
 	<?php endforeach; ?>
 </div>
-<?php echo $this->maskOpen()?>
+<?php echo $this->maskOpen() ?>
 
 <?php if (isset($sidebar_left)): $_sidebar_left_width='280';?>
 <div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_left_width?>px;">

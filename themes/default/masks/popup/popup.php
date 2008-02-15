@@ -23,7 +23,7 @@
 	<div class='p4a_system_message'><?php echo $message ?></div>
 	<?php endforeach; ?>
 </div>
-<?php echo $this->maskOpen()?>
+<?php echo $this->maskOpen() ?>
 
 <!-- MAIN  -->
 <div id="p4a_main_container">
