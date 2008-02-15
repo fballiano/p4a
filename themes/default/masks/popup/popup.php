@@ -40,7 +40,7 @@
 	<div id="p4a_footer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?></div>
 </div>
 
-<?php echo $this->maskClose()?>
+<?php echo $this->maskClose() ?>
 </div>
 
 </body>

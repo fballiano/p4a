@@ -87,7 +87,7 @@
 	</div>
 </div>
 
-<?php echo $this->maskClose()?>
+<?php echo $this->maskClose() ?>
 </div>
 
 </body>
