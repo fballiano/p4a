@@ -749,7 +749,6 @@ class P4A extends P4A_Object
 		}
 		$this->_css[$uri][$media] = null;
 	}
-	
 
 	/**
 	 * Drops inclusion of a CSS file

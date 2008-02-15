@@ -82,37 +82,11 @@ class P4A_Mask extends P4A_Object
 	private $template_name = null;
 
 	/**
-	 * CSS files to be added to the mask's HTML
-	 * @var array
-	 */
-	private $_css = array();
-
-	/**
-	 * Temporary javascript container.
-	 * These javascripts are rendered and removed.
-	 * @var array
-	 */
-	private $_temp_javascript = array();
-
-	/**
-	 * Temporary CSS container.
-	 * These CSS are rendered and removed.
-	 * @var array
-	 */
-	private $_temp_css = array();
-
-	/**
 	 * Temporary variables container.
 	 * These vars are usally in the templates, removed after main.
 	 * @var array
 	 */
 	private $_temp_vars = array();
-
-	/**
-	 * javascript container
-	 * @var array
-	 */
-	private $_javascript = array();
 
 	/**
 	 * variables used for templates
@@ -335,10 +309,6 @@ class P4A_Mask extends P4A_Object
 			}
 		}
 
-		$_xml_header = '<?xml version="1.0" encoding="UTF-8"?>';
-		$_javascript = array_merge($p4a->getJavascript(), $this->_javascript, $this->_temp_javascript);
-		$_css = array_merge_recursive($p4a->getCSS(), $this->_css, $this->_temp_css);
-
 		$_icon = '';
 		$_title = $this->getTitle();
 		if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
@@ -355,6 +325,7 @@ class P4A_Mask extends P4A_Object
 		extract($this->_temp_vars);
 
 		ob_start();
+		$_xml_header = '<?xml version="1.0" encoding="UTF-8"?>';
 		require P4A_THEME_DIR . "/p4a_header.php";
 		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.php";
 		require P4A_THEME_DIR . "/p4a_footer.php";
@@ -601,38 +572,6 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function none()
 	{
-	}
-
-	/**
-	 * Include a CSS file in the mask
-	 * @param string $uri The URI of CSS
-	 * @param string $media The CSS media
-	 * @return P4A_Mask
-	 */
-	public function addCss($uri, $media = "screen")
-	{
-		if (!isset($this->_css[$uri])) {
-			$this->_css[$uri] = array();
-		}
-		$this->_css[$uri][$media] = null;
-		return $this;
-	}
-
-	/**
-	 * Drop inclusion of CSS file
-	 * @param string $uri The URI of CSS
-	 * @param string $media The CSS media
-	 * @return P4A_Mask
-	 */
-	public function dropCss($uri, $media = "screen")
-	{
-		if(isset($this->_css[$uri]) and isset($this->_css[$uri][$media])) {
-			unset($this->_css[$uri][$media]);
-			if (empty($this->_css[$uri])) {
-				unset($this->_css);
-			}
-		}
-		return $this;
 	}
 
 	/**

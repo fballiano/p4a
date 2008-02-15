@@ -4,11 +4,11 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title><?php echo P4A::singleton()->getTitle() ?></title>
 
-<?php foreach ($_javascript as $_k=>$_v): ?>
+<?php foreach (P4A::singleton()->getJavascript() as $_k=>$_v): ?>
 <script type="text/javascript" src="<?php echo $_k ?>"></script>
 <?php endforeach; ?>
 
-<?php foreach ($_css as $_url=>$_media): ?>
+<?php foreach (P4A::singleton()->getCSS() as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>"></link>
 <?php endforeach; ?>
 
