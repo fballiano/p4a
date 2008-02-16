@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008, CreaLabs SNC (http://www.crealabs.it)
+ * Copyright (c) CreaLabs SNC (http://www.crealabs.it)
  * Code licensed under AGPL3 license:
  * http://www.gnu.org/licenses/agpl.html
  */
