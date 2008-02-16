@@ -246,6 +246,7 @@
 - all P4A objects now support chainability
 - P4A_Image::setSource() and getSource() methods were removed
 - P4A_Mask::addTempCss(), dropTempCss(), clearTempCss(), addJavascript(), dropJavascript(), addTempJavascript(), dropTempJavascript(), clearTempJavascript(), addCSS(), dropCSS() were removed
+- default and popup mask templates were broken in 3 files, now header and footer and manager by P4A and templates have only the body part
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed
