@@ -666,22 +666,6 @@ class P4A extends P4A_Object
 	}
 	
 	/**
-	 * @return string
-	 */
-	public function getPopupMaskName()
-	{
-		return $this->_popup;
-	}
-	
-	/**
-	 * @return P4A_Mask
-	 */
-	public function getPopupMask()
-	{
-		return p4a_mask::singleton($this->_popup);
-	}
-	
-	/**
 	 * @param string $mask_name
 	 * @return boolean
 	 */
