@@ -646,27 +646,6 @@ class P4A_Mask extends P4A_Object
 	}
 	
 	/**
-	 * Returns the Javascript code neede for P4A initialization
-	 * @return string
-	 */
-	protected function getP4AJavascript()
-	{
-		$p4a_i18n =& p4a::singleton()->i18n;
-		$locale_engine = $p4a_i18n->getLocaleEngine();
-		
-		return '<script type="text/javascript">' . "\n" .
-		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
-		'$(function() {' . "\n" .
-		'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
-		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
-		'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
-		'$.datepicker._defaults["firstDay"] = ' . $p4a_i18n->getFirstDayOfTheWeek() . ";\n" .
-		'p4a_focus_set("' . P4A::singleton()->getFocusedObjectId() . '");' . "\n" .
-		'});' . "\n" .
-		'</script>';
-	}
-	
-	/**
 	 * @return string
 	 */
 	public function getFocusedObjectId()

@@ -781,6 +781,26 @@ class P4A extends P4A_Object
 	{
 		return $this->_javascript;
 	}
+	
+	/**
+	 * Returns the Javascript code neede for P4A initialization
+	 * @return string
+	 */
+	public function getJavascriptInitializations()
+	{
+		$locale_engine = $this->i18n->getLocaleEngine();
+		
+		return '<script type="text/javascript">' . "\n" .
+		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
+		'$(function() {' . "\n" .
+		'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
+		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
+		'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
+		'$.datepicker._defaults["firstDay"] = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
+		'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
+		'});' . "\n" .
+		'</script>';
+	}
 
 	/**
 	 * Action history ID is used to avoid browser's back/forward

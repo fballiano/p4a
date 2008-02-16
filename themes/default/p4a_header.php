@@ -12,7 +12,7 @@
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>"></link>
 <?php endforeach; ?>
 
-<?php echo $this->getP4AJavascript() ?>
+<?php echo P4A::singleton()->getJavascriptInitializations() ?>
 </head>
 
 <body class="p4a_browser_<?php echo P4A::singleton()->getBrowser() ?>">
