@@ -41,8 +41,17 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 {
 	p4a_event_execute_prepare(object_name, action_name, 0, param1, param2, param3, param4);
 	p4a_form.target = '';
-	p4a_form._ajax.value = 0;
-	p4a_form.submit();
+	
+	if (p4a_ajax_enabled) {
+		p4a_form._ajax.value = 2;
+		$('#p4a').ajaxSubmit({
+			dataType: 'xml',
+			success: p4a_ajax_process_response
+		});
+	} else {
+		p4a_form._ajax.value = 0;
+		p4a_form.submit();
+	}
 }
 
 p4a_keypressed_is_return = function (event)
@@ -84,9 +93,13 @@ p4a_ajax_process_response = function (response)
 	   		var object_id = widgets[i].attributes[0].value;
 	   		var object = $('#'+object_id);
 			if (object.size() > 0) {
-	   			var html = widgets[i].getElementsByTagName('html').item(0);
+				var html = widgets[i].getElementsByTagName('html').item(0);
 	   			if (html) {
-	   				object.parent().css('display', 'block').html(html.firstChild.data);
+	   				if (object_id == 'p4a_inner_body') {
+	   					object.html(html.firstChild.data);
+	   				} else {
+		   				object.parent().css('display', 'block').html(html.firstChild.data);
+		   			}
 	   			}
 	   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
 	   			if (javascript) {
@@ -104,7 +117,9 @@ p4a_ajax_process_response = function (response)
 			p4a_messages_show();
 		}
 		
+		p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
+		if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
 		p4a_working = false;
 	} catch (e) {
 		p4a_ajax_error();

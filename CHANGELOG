@@ -3,7 +3,6 @@
 - port products_catalogue to the new translation system
 - implement p4a_table::addCheckboxCol
 - implement errors with exceptions and tie them to p4a_error_handler
-- rewrite ajax management to have every action done via ajax and redesign all the mask
 - do the new logo
 - db navigator movements (wait for jQuery UI 1.5)
 - load javascript/css on demand?
@@ -249,6 +248,7 @@
 - default and popup mask templates were broken in 3 files, now header and footer and manager by P4A and templates have only the body part
 - P4A::getPopupMaskName() and getPopupMask() methods were removed
 - P4A_Mask::getP4AJavascript() method was moved to P4A::getJavascriptInitializations()
+- ajax manager was completely reworked and now, if you have ajax enabled, you won't see no refreshes at all, every action will be managed by ajax call with automatic redesign
 
 2.2.4
 - rules to generate P4A_THEME_DIR and P4A_ICONS_DIR were changed

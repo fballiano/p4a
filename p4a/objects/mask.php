@@ -326,9 +326,9 @@ class P4A_Mask extends P4A_Object
 
 		ob_start();
 		$_xml_header = '<?xml version="1.0" encoding="UTF-8"?>';
-		require P4A_THEME_DIR . "/p4a_header.php";
+		if (!$p4a->inAjaxCall()) require P4A_THEME_DIR . "/p4a_header.php";
 		require P4A_THEME_DIR . "/masks/{$_template}/{$_template}.php";
-		require P4A_THEME_DIR . "/p4a_footer.php";
+		if (!$p4a->inAjaxCall()) require P4A_THEME_DIR . "/p4a_footer.php";
 		$output = ob_get_contents();
 		ob_end_clean();
 

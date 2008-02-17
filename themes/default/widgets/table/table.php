@@ -1,4 +1,4 @@
-<table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() . $this->composeStringProperties() ?> >
+<table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() ?> <?php echo $this->composeStringProperties() ?>>
 	<?php if ($this->getLabel()): ?>
 	<caption><?php echo $this->getLabel() ?></caption>
 	<?php endif; ?>

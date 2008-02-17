@@ -115,13 +115,12 @@ class P4A extends P4A_Object
 	/**
 	 * @var boolean
 	 */
-	private $_in_ajax_call = false;
-
+	private $_redesign_whole_mask = false;
+	
 	/**
-	 * forces an HTTP refresh event
 	 * @var boolean
 	 */
-	private $_do_refresh = false;
+	private $_in_ajax_call = false;
 
 	/**
 	 * @var array
@@ -507,6 +506,7 @@ class P4A extends P4A_Object
 		}
 
 		$this->_to_redesign = array();
+		$this->_redesign_whole_mask = false;
 
 		session_write_close();
 		session_id(substr(session_id(), 0, -6));
@@ -521,16 +521,25 @@ class P4A extends P4A_Object
 		header('Content-Type: text/xml');
 		print '<?xml version="1.0" encoding="utf-8" ?>';
 		print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
-		if ($this->_do_refresh) {
-			$this->_do_refresh = false;
-			print "<widget id='p4a'>\n";
-			print "<html><![CDATA[]]></html>\n";
-			print "<javascript><![CDATA[p4a_refresh()]]></javascript>\n";
+		foreach ($this->getRenderedMessages() as $message) {
+			print "\n<message><![CDATA[$message]]></message>";
+		}
+		
+		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
+			$as_string = $this->active_mask->getAsString(false);
+			$javascript_codes = array();
+			$javascript = '';
+			$html = preg_replace("/{$script_detector}/si", '', $as_string);
+			preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
+			$javascript_codes = $javascript_codes[1];
+			foreach ($javascript_codes as $code) {
+				$javascript .= "$code\n\n";
+			}
+			print "<widget id='p4a_inner_body'>\n";
+			print "<html><![CDATA[{$html}]]></html>\n";
+			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 			print "</widget>";
 		} else {
-			foreach ($this->getRenderedMessages() as $message) {
-				print "\n<message><![CDATA[$message]]></message>";
-			}
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
 				$as_string = $object->getAsString();
@@ -547,7 +556,6 @@ class P4A extends P4A_Object
 				print "<html><![CDATA[{$html}]]></html>\n";
 				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
 				print "</widget>\n";
-
 			}
 		}
 		print "</ajax-response>";
@@ -593,7 +601,7 @@ class P4A extends P4A_Object
 			}
 
 			if ($this->inAjaxCall()) {
-				$this->_do_refresh = true;
+				$this->_redesign_whole_mask = true;
 			}
 
 			P4A_Mask::singleton($mask_name);
@@ -619,7 +627,7 @@ class P4A extends P4A_Object
 		
 		$mask = $this->openMask($mask_name);
 		$mask->isPopup(true);
-		$this->_do_refresh = true;
+		$this->_redesign_whole_mask = true;
 		
 		return $mask;
 	}
@@ -643,7 +651,7 @@ class P4A extends P4A_Object
 			$this->active_mask->destroy();
 	 	} elseif ($this->active_mask->isPopup()) {
 			$this->active_mask->isPopup(false);
-			$this->_do_refresh = true;
+			$this->_redesign_whole_mask = true;
 		}
 
 	 	if (sizeof($this->masks_history) > 0) {
@@ -789,9 +797,11 @@ class P4A extends P4A_Object
 	public function getJavascriptInitializations()
 	{
 		$locale_engine = $this->i18n->getLocaleEngine();
+		$ajax_enabled = P4A_AJAX_ENABLED ? 'true' : 'false';
 		
 		return '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
+		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
 		'$(function() {' . "\n" .
 		'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
 		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
