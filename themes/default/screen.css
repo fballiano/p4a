@@ -131,6 +131,10 @@
 	padding-left: 32px;
 }
 
+* html #p4a_popup h2 {
+	margin-right: -100px;
+}
+
 /***********/
 /* P4A_Box */
 /***********/
