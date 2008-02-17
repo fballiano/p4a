@@ -105,26 +105,26 @@
 /* Popup mask template */
 /***********************/
 
-body.p4a_popup {
+#p4a_popup {
 	background: #fafafa;
 	position: absolute;
+	top: 0;
 	width: 100%;
 	height: 100%;
 }
 
-body.p4a_popup #p4a_body {
-	padding-top: 50px;
-	aheight: 100%;
+#p4a_popup #p4a_main_container {
+	margin-top: 50px;
 }
 
-body.p4a_popup #p4a_main_inner_container {
+#p4a_popup #p4a_main_inner_container {
 	background: white;
 	border: 2px solid #4b718a;
 	padding-bottom: 20px;
 	margin: auto;
 }
 
-body.p4a_popup h2 {
+#p4a_popup h2 {
 	background: #eee;
 	margin-bottom: 20px;
 	line-height: 32px;
@@ -132,8 +132,8 @@ body.p4a_popup h2 {
 
 }
 
-body.p4a_popup h2,
-body.p4a_popup h2 table td {
+#p4a_popup h2,
+#p4a_popup h2 table td {
 	font-size: 16px;
 	font-weight: bold;
 }
