@@ -7,7 +7,4 @@
 	
 		<?php if (isset($main)) echo $main ?>
 	</div>
-
-	<!-- The following line is a copyright note, you've to keep it as is, it's a small price for P4A -->
-	<div id="p4a_footer">Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?></div>
 </div>
