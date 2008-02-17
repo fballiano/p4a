@@ -426,8 +426,10 @@ class P4A extends P4A_Object
 			$text .= "Please contact your software vendor, he has to give it to you.<br />";
 			$text .= "If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, ";
 			$text .= "they'll help you getting your rights honored.";
-			echo __($text);
-			die();
+			P4A_Mask::singleton("P4A_Error_Mask")
+				->setTitle(__("Possible license violation"))
+				->setMessage(__($text))
+				->main();
 		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
 			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
 				$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];

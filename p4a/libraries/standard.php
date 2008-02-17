@@ -438,10 +438,10 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 	switch ($error_number) {
 		case E_USER_ERROR:
 		case E_RECOVERABLE_ERROR:
-			P4A::singleton()
-				->openMask("P4A_Error_Mask")
-				->setMessage("<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>");
-			return true;
+			P4A_Mask::singleton("P4A_Error_Mask")
+				->setMessage("<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>")
+				->main();
+			die();
 		case E_WARNING:
 		case E_USER_WARNING:
 			P4A::singleton()
