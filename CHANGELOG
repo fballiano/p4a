@@ -8,6 +8,9 @@
 - load javascript/css on demand?
 - do some strict validation
 
+2.99.1
+- 
+
 2.99.0
 - Zend Framework 1.0.3 was added
 - Database connection now relies on Zend_DB PDO adapters
