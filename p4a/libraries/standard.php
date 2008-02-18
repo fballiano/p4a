@@ -457,6 +457,9 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 	return false;
 }
 
+/**
+ * @param string $file
+ */
 function P4A_Redirect_To_File($file) {
 	$p4a = P4A::singleton();
 	$file = urlencode($file);
