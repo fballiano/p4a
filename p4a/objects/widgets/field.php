@@ -1113,16 +1113,15 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function filePreviewOnClick()
 	{
-		$p4a = p4a::singleton();
-		$p4a->openMask("P4A_Mask_Preview");
-		$p4a->active_mask->setTitle($this->getNewValue(0));
-
 		if (P4A_Is_Mime_Type_Embeddable($this->getNewValue(3))) {
 			$raw_html = P4A_Embedded_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3), $this->getNewValue(4), $this->getNewValue(5));
 		} else {
 			$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
 		}
-		$p4a->active_mask->setRawHTML($raw_html);
+		
+		P4a::singleton()->openMask("P4A_Preview_Mask")
+			->setTitle($this->getNewValue(0))
+			->setRawHTML($raw_html);
 	}
 
 	/**
@@ -1221,20 +1220,20 @@ class P4A_Field extends P4A_Widget
 	protected function buildDeletePreviewDownloadButtons()
 	{
 		if (!isset($this->buttons->button_file_delete)) {
-			$this->buttons->build("p4a_button", "button_file_delete");
-			$this->buttons->button_file_delete->setLabel('Delete');
-			$this->buttons->button_file_delete->addAjaxAction('onclick');
-			$this->buttons->button_file_delete->implement('onclick', $this, 'fileDeleteOnClick');
+			$this->buttons->build("p4a_button", "button_file_delete")
+				->setLabel('Delete')
+				->addAjaxAction('onclick')
+				->implement('onclick', $this, 'fileDeleteOnClick');
 		}
 		if (!isset($this->buttons->button_file_preview)) {
-			$this->buttons->build("p4a_button", "button_file_preview");
-			$this->buttons->button_file_preview->setLabel('Preview');
-			$this->buttons->button_file_preview->implement('onclick', $this, 'filePreviewOnClick');
+			$this->buttons->build("p4a_button", "button_file_preview")
+				->setLabel('Preview')
+				->implement('onclick', $this, 'filePreviewOnClick');
 		}
 		if (!isset($this->buttons->button_file_download)) {
-			$this->buttons->build("p4a_button", "button_file_download");
-			$this->buttons->button_file_download->setLabel('Download');
-			$this->buttons->button_file_download->implement('onclick', $this, 'fileDownloadOnClick');
+			$this->buttons->build("p4a_button", "button_file_download")
+				->setLabel('Download')
+				->implement('onclick', $this, 'fileDownloadOnClick');
 		}
 		return $this;
 	}

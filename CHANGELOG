@@ -9,7 +9,7 @@
 - do some strict validation
 
 2.99.1
-- 
+- a bug with "preview" button within P4A_Field file upload was solved
 
 2.99.0
 - Zend Framework 1.0.3 was added
