@@ -118,11 +118,6 @@ class P4A extends P4A_Object
 	private $_redesign_whole_mask = false;
 	
 	/**
-	 * @var boolean
-	 */
-	private $_in_ajax_call = false;
-
-	/**
 	 * @var array
 	 */
 	private $messages = array();
@@ -286,7 +281,7 @@ class P4A extends P4A_Object
 	 */
 	public function inAjaxCall()
 	{
-		return $this->_in_ajax_call;
+		return (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']);
 	}
 
 	public static function singleton($class_name = "p4a")
@@ -352,8 +347,6 @@ class P4A extends P4A_Object
 
 	public function main()
 	{
-		$this->_in_ajax_call = (isset($_REQUEST['_ajax']) and $_REQUEST['_ajax']);
-
 		// Processing get and post.
 		if (array_key_exists('_object', $_REQUEST) and
 			array_key_exists('_action', $_REQUEST) and
@@ -418,7 +411,7 @@ class P4A extends P4A_Object
 			$action_return = $this->objects[$object]->$action($aParams);
 		}
 
-		if ($this->_in_ajax_call) {
+		if ($this->inAjaxCall()) {
 			$this->_action_history_id++;
 			$this->raiseXMLResponse();
 		} elseif (isset($_REQUEST['_p4a_application_download_missing_link'])) {
@@ -501,6 +494,19 @@ class P4A extends P4A_Object
 				->processFile()
 				->cacheThumbnail();
 			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
+			die();
+		} elseif (isset($_REQUEST['_p4a_download_file'])) {
+			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);
+			if ($file !== false and strpos($file, P4A_UPLOADS_DIR) === 0 and file_exists($file)) {
+				$name = preg_replace("~^.*/~", '', $file);
+				header("Cache-control: private");
+				header("Content-type: application/octet-stream");
+				header("Content-Disposition: attachment; filename=\"$name\"");
+				header("Content-Length: " . filesize($file));
+				$fp = fopen($file, "rb");
+				fpassthru($fp);
+				fclose($fp);
+			}
 			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 			$this->_action_history_id++;

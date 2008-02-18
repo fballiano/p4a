@@ -7,9 +7,13 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - load javascript/css on demand?
 - do some strict validation
+- on ie/opera preview mask doesn't work (within ajax full stack)
 
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved
+- a bug with file download was fixed
+- P4A::inAjaxCall() method was rewritten
+- P4A_Redirect_To_File() global function was added
 
 2.99.0
 - Zend Framework 1.0.3 was added

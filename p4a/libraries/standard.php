@@ -456,3 +456,49 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 	}
 	return false;
 }
+
+function P4A_Redirect_To_File($file) {
+	$p4a = P4A::singleton();
+	$file = urlencode($file);
+	$file = ".?_p4a_download_file=$file";
+	
+	if ($p4a->inAjaxCall()) {
+		header('Content-Type: text/xml');
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
+		echo "<widget id='p4a'>\n";
+		echo "<javascript><![CDATA[window.location='$file']]></javascript>\n";
+		echo "</widget>\n";
+		echo "</ajax-response>";
+		die(); 
+	}
+	
+	header("Location: $file");
+	die();
+}
+
+/**
+ * creates a temp file and outputs it to the browser (script will die)
+ * @param string|array $file_content
+ * @param string $file_name
+ */
+function P4A_Output_File($file_content, $file_name = null)
+{
+	$name = P4A_UPLOADS_TMP_DIR . '/' . uniqid() . '_' . $file_name;
+	while (file_exists($name)) {
+		$name = P4A_UPLOADS_TMP_DIR . '/' . uniqid() . '_' . $file_name;
+	}
+	
+	$fp = fopen($name, 'w');
+	if (is_array($file_content)) {
+		foreach ($file_content as $line) {
+			fwrite($fp, $line);
+		}
+	} else {
+		fwrite($fp, $file_content);
+	}
+	fclose($fp);
+	
+	
+	die();
+}
