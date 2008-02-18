@@ -1113,10 +1113,12 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function filePreviewOnClick()
 	{
+		$file = P4A_Strip_Double_Slashes(P4A_UPLOADS_URL . $this->getNewValue(1));
+		
 		if (P4A_Is_Mime_Type_Embeddable($this->getNewValue(3))) {
-			$raw_html = P4A_Embedded_Player(P4A_UPLOADS_URL . $this->getNewValue(1), $this->getNewValue(3), $this->getNewValue(4), $this->getNewValue(5));
+			$raw_html = P4A_Embedded_Player($file, $this->getNewValue(3), $this->getNewValue(4), $this->getNewValue(5));
 		} else {
-			$raw_html = '<img alt="" src="' . P4A_UPLOADS_URL . $this->getNewValue(1) . '" />';
+			$raw_html = "<img alt='' src='$file' />";
 		}
 		
 		P4a::singleton()->openMask("P4A_Preview_Mask")
