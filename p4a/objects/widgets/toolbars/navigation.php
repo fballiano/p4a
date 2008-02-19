@@ -82,6 +82,7 @@ class P4A_Navigation_Toolbar extends P4A_Toolbar
 
 	/**
 	 * @param P4A_Mask $mask
+	 * @return P4A_Navigation_Toolbar
 	 */
 	public function setMask(P4A_Mask $mask)
 	{
@@ -92,5 +93,6 @@ class P4A_Navigation_Toolbar extends P4A_Toolbar
 		$this->buttons->next->implement('onClick', $mask, 'nextRow');
 		$this->buttons->last->implement('onClick', $mask, 'lastRow');
 		$this->buttons->exit->implement('onClick', $mask, 'showPrevMask');
+		return $this;
 	}
 }

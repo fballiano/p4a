@@ -102,6 +102,7 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 
 	/**
 	 * @param P4A_Mask $mask
+	 * @return P4A_Full_Toolbar
 	 */
 	public function setMask(P4A_Mask $mask)
 	{
@@ -116,5 +117,6 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 		$this->buttons->new->implement('onclick', $mask, 'newRow');
 		$this->buttons->delete->implement('onclick', $mask, 'deleteRow');
 		$this->buttons->exit->implement('onclick', $mask, 'showPrevMask');
+		return $this;
 	}
 }
