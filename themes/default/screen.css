@@ -530,7 +530,7 @@ table.p4a_message td.c2 {
 .p4a_tab_pane div.p4a_tab_pane_page {
 	border: 1px solid #c6d3de;
 	border-top: none;
-	padding: 10px 0;
+	padding: 10px 10px 10px 0;
 	overflow: hidden;
 }
 
