@@ -7,6 +7,7 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - load javascript/css on demand?
 - do some strict validation
+- file preview or whatever should raise some visible errors when file does not exists
 
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved
