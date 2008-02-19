@@ -499,13 +499,19 @@ class P4A extends P4A_Object
 			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);
 			if ($file !== false and strpos($file, P4A_UPLOADS_DIR) === 0 and file_exists($file)) {
 				$name = preg_replace("~^.*/~", '', $file);
-				header("Cache-control: private");
+				header("Pragma: public");
+				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+				header("Cache-Control: private", false);
 				header("Content-type: application/octet-stream");
 				header("Content-Disposition: attachment; filename=\"$name\"");
 				header("Content-Length: " . filesize($file));
 				$fp = fopen($file, "rb");
 				fpassthru($fp);
 				fclose($fp);
+				
+				if (strpos($file, P4A_UPLOADS_TMP_DIR . '/_p4a_') === 0) {
+					unlink($file);
+				}
 			}
 			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {

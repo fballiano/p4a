@@ -481,18 +481,19 @@ function P4A_Redirect_To_File($file) {
 }
 
 /**
- * creates a temp file and outputs it to the browser (script will die)
+ * creates a temp file and outputs it to the browser (script will die).
+ * if the filename starts with "_p4a_" it will be deleted after being transfered to the client.
  * @param string|array $file_content
- * @param string $file_name
+ * @param string $file_name file name with extension
  */
-function P4A_Output_File($file_content, $file_name = null)
+function P4A_Output_File($file_content, $file_name)
 {
-	$name = P4A_UPLOADS_TMP_DIR . '/' . uniqid() . '_' . $file_name;
-	while (file_exists($name)) {
-		$name = P4A_UPLOADS_TMP_DIR . '/' . uniqid() . '_' . $file_name;
+	$name = '_p4a_' . uniqid() . '_' . $file_name;
+	while (file_exists(P4A_UPLOADS_TMP_DIR . "/$name")) {
+		$name = '_p4a_' . uniqid() . '_' . $file_name;
 	}
 	
-	$fp = fopen($name, 'w');
+	$fp = fopen(P4A_UPLOADS_TMP_DIR . "/$name", 'w');
 	if (is_array($file_content)) {
 		foreach ($file_content as $line) {
 			fwrite($fp, $line);
@@ -502,6 +503,5 @@ function P4A_Output_File($file_content, $file_name = null)
 	}
 	fclose($fp);
 	
-	
-	die();
+	P4A_Redirect_To_File(P4A_UPLOADS_TMP_NAME . "/$name");
 }

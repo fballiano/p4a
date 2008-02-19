@@ -487,21 +487,11 @@ abstract class P4A_Data_Source extends P4A_Object
 
 	public function exportAsCSV($filename = '', $separator = ',', $fields_names = null)
 	{
-		$output = $this->getAsCSV($separator, $fields_names);
-
 		if (!strlen($filename)) {
 			$filename = $this->getName() . ".csv";
 		}
-
-		header("Pragma: public");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Cache-Control: private", false);
-		header("Content-Type: text/comma-separated-value; charset=UTF-8");
-		header("Content-Disposition: attachment; filename={$filename}");
-		header("Content-Length: " . strlen($output));
-
-		echo $output;
-		die();
+		
+		P4A_Output_File($this->getAsCSV($separator, $fields_names), $filename);
 	}
 
 	public function deleteRow()

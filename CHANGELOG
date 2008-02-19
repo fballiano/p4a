@@ -14,6 +14,8 @@
 - P4A::inAjaxCall() method was rewritten
 - P4A_Redirect_To_File() global function was added
 - a bug with images preview on ie/opera was solved
+- README was updated
+- P4A_Output_File() global function was added, it has to be used when you want to creare a file at run-time and make users download it
 
 2.99.0
 - Zend Framework 1.0.3 was added
