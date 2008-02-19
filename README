@@ -72,15 +72,23 @@ The default theme instead uses CSS2 and some
 more complex Javascript, so here you have the
 tested browsers:
 
------------------------------------------
--- P4A compatibility: Workstation Side --
------------------------------------------
-
-Tested browsers:
 - Mozilla Firefox 2.x
 - Internet Explorer 6.x, 7.x
 - Safari 3.x
 - Opera 9.x
+
+-----------------------------------------
+-- P4A compatibility: Database engines --
+-----------------------------------------
+
+P4A works with:
+- MySQL
+- PostgreSQL
+- Oracle
+- SQLite
+
+To make P4A connect to a database you need PDO extensions
+(pdo_mysql, pdo_pgsql, pdo_oci or pdo_sqlite).
 
 ------------------
 -- KNOWN ISSUES --
