@@ -18,6 +18,7 @@
 - P4A_Output_File() global function was added, it has to be used when you want to creare a file at run-time and make users download it
 - Chainability support was added for P4A_Simple_Toolbar, P4A_Navigation_Toolbar, P4A_Full_Toolbar and P4A_Actions_Toolbar
 - P4A_Tab_Pane padding was changed a bit
+- P4A_Sheet was re-created
 
 2.99.0
 - Zend Framework 1.0.3 was added

@@ -72,7 +72,7 @@ require_once "$dir/objects/masks/error.php";
 require_once "$dir/objects/masks/login.php";
 require_once "$dir/objects/masks/preview.php";
 
-//Widget Extensions
+//Widgets
 require_once "$dir/objects/widgets/box.php";
 require_once "$dir/objects/widgets/button.php";
 require_once "$dir/objects/widgets/canvas.php";
@@ -85,12 +85,13 @@ require_once "$dir/objects/widgets/line.php";
 require_once "$dir/objects/widgets/link.php";
 require_once "$dir/objects/widgets/menu.php";
 require_once "$dir/objects/widgets/message.php";
-require_once "$dir/objects/widgets/toolbar.php";
-require_once "$dir/objects/widgets/table.php";
+require_once "$dir/objects/widgets/sheet.php";
 require_once "$dir/objects/widgets/tab_pane.php";
+require_once "$dir/objects/widgets/table.php";
+require_once "$dir/objects/widgets/toolbar.php";
 require_once "$dir/objects/widgets/frames/fieldset.php";
 
-//Toolbar Extensions
+//Toolbars
 require_once "$dir/objects/widgets/toolbars/actions.php";
 require_once "$dir/objects/widgets/toolbars/navigation.php";
 require_once "$dir/objects/widgets/toolbars/simple.php";
