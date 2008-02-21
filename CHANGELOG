@@ -10,6 +10,7 @@
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
+- a bug with search function within products_catalogue sample was fixed
 
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved
