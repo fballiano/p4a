@@ -75,7 +75,7 @@ class Products extends P4A_Base_Mask
 			->implement("onreturnpress", $this, "search");
 		$this->build("p4a_button", "cmd_search")
 			->setLabel("Go")
-			->implement("onclick", $this, "seach");
+			->implement("onclick", $this, "search");
 		$this->build("p4a_fieldset", "fs_search")
 			->setLabel("Search")
 			->anchor($this->txt_search)
