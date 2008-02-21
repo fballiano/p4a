@@ -703,6 +703,7 @@ class P4A extends P4A_Object
 	/**
 	 * Adds an object to the objects collection
 	 * @param P4A_Object
+	 * @return P4A
 	 */
 	public function store(&$object)
 	{
@@ -712,6 +713,7 @@ class P4A extends P4A_Object
 		} else {
 			$this->objects[$object_id] = &$object;
 		}
+		return $this;
 	}
 
 	/**
@@ -729,10 +731,12 @@ class P4A extends P4A_Object
 	/**
 	 * Sets the title for the application
 	 * @param string $title
+	 * @return P4A
 	 */
 	public function setTitle($title)
 	{
 		$this->title = $title;
+		return $this;
 	}
 
 	/**
@@ -748,6 +752,7 @@ class P4A extends P4A_Object
 	 * Include a CSS file
 	 * @param string $uri
 	 * @param string $media
+	 * @return P4A
 	 */
 	public function addCss($uri, $media = "screen")
 	{
@@ -755,12 +760,14 @@ class P4A extends P4A_Object
 			$this->_css[$uri] = array();
 		}
 		$this->_css[$uri][$media] = null;
+		return $this;
 	}
 
 	/**
 	 * Drops inclusion of a CSS file
 	 * @param string $uri
 	 * @param string $media
+	 * @return P4A
 	 */
 	public function dropCss($uri, $media = "screen")
 	{
@@ -770,6 +777,7 @@ class P4A extends P4A_Object
 				unset($this->_css);
 			}
 		}
+		return $this;
 	}
 	
 	public function getCss()
@@ -780,21 +788,25 @@ class P4A extends P4A_Object
 	/**
 	 * Includes a javascript file
 	 * @param string $uri
+	 * @return P4A
 	 */
 	public function addJavascript($uri)
 	{
 		$this->_javascript[$uri] = null;
+		return $this;
 	}
 
 	/**
 	 * Drops inclusion of a javascript file
 	 * @param string $uri
+	 * @return P4A
 	 */
 	public function dropJavascript($uri)
 	{
 		if(isset($this->_javascript[$uri])){
 			unset($this->_javascript[$uri]);
 		}
+		return $this;
 	}
 	
 	/**
@@ -839,10 +851,12 @@ class P4A extends P4A_Object
 
 	/**
 	 * @param string $id the id of the object to be redesigned
+	 * @return P4A
 	 */
 	public function redesign($id)
 	{
 		$this->_to_redesign[] = $id;
+		return $this;
 	}
 
 	/**
@@ -867,10 +881,12 @@ class P4A extends P4A_Object
 	 * @param string $text
 	 * @param string $icon
 	 * @param integer $icon_size
+	 * @return P4A
 	 */
 	public function message($text, $icon = null, $icon_size = 32)
 	{
 		$this->messages[] = array($text, $icon, $icon_size);
+		return $this;
 	}
 	
 	/**
