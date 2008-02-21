@@ -413,6 +413,7 @@ class P4A extends P4A_Object
 
 		if ($this->inAjaxCall()) {
 			$this->_action_history_id++;
+			if ($_REQUEST['_ajax'] == 2) $this->active_mask->main();
 			$this->raiseXMLResponse();
 		} elseif (isset($_REQUEST['_p4a_application_download_missing_link'])) {
 			$text  = "You've the right to receive the source code of this application.<br />";

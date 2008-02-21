@@ -285,8 +285,10 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function main()
 	{
-		header("Content-Type: text/html; charset=UTF-8");
-		echo $this->getAsString();
+		if (!P4A::singleton()->inAjaxCall()) {
+			header("Content-Type: text/html; charset=UTF-8");
+			echo $this->getAsString();
+		}
 	}
 
 	/**
