@@ -8,6 +8,9 @@
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
 
+2.99.2
+- 
+
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved
 - a bug with file download was fixed
