@@ -11,6 +11,7 @@
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
 - a bug with search function within products_catalogue sample was fixed
 - more chainability was added to the P4A main class
+- a bug with P4A_DB_Source::createDataField() method was solved
 
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved
