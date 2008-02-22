@@ -3,7 +3,6 @@
 - port products_catalogue to the new translation system
 - implement p4a_table::addCheckboxCol
 - implement errors with exceptions and tie them to p4a_error_handler
-- do the new logo
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
