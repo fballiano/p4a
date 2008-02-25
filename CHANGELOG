@@ -6,10 +6,12 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
+- check multivalue delete
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
 - a bug with P4A_Full_Toolbar and P4A_Simple_Toolbar about delete was solved
+- a bug with P4A_DB_Source::deleteRow was solved
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required

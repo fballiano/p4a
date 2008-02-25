@@ -717,19 +717,12 @@ class P4A_DB_Source extends P4A_Data_Source
 				$fk_table = $aField["table"];
 				$fk = $aField["fk"];
 
-				$res = $db->adapter->execute("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
-				if ($db->adapter->metaError()) {
-					P4A_Error($db->adapter->metaErrorMsg($db->adapter->metaError()));
-				}
+				$res = $db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
+				//TODO: check error
 			}
 
 			$res = $db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
-			if ($db->adapter->metaError()) {
-				$e = new P4A_Error('A query has returned an error', $this, $db->getNativeError());
-				if ($this->errorHandler('onQueryError', $e) !== PROCEED) {
-					die();
-				}
-			}
+			//TODO: check error
 
 			$this->resetNumRows();
 		}
