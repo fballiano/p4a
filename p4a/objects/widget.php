@@ -465,6 +465,9 @@ abstract class P4A_Widget extends P4A_Object
 	public function requireConfirmation($action = 'onclick', $confirmation_text = true)
 	{
 		$action = strtolower($action);
+		if (!$this->actions[$action]) {
+			p4a_error("you've to call addaction before requireConfirmation");
+		}
 		if ($confirmation_text === true) {
 			$confirmation_text = 'Are you sure?';
 		}
