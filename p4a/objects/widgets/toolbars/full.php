@@ -68,6 +68,7 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 		
 		$this->addButton('delete', 'delete')
 			->setLabel("Delete current element")
+			->addAction("onclick")
 			->requireConfirmation();
 		
 		$this->addSeparator();

@@ -9,6 +9,7 @@
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
+- a bug with P4A_Full_Toolbar and P4A_Simple_Toolbar about delete was solved
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
