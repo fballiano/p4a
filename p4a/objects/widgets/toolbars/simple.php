@@ -52,34 +52,34 @@ class P4A_Simple_Toolbar extends P4A_Toolbar
 	
 	private function addDefaultButtons()
 	{
-		$this->addButton('new', 'new');
-		$this->buttons->new->setLabel("Insert a new element");
-		$this->buttons->new->setProperty("accesskey", "N");
+		$this->addButton('new', 'new')
+			->setLabel("Insert a new element")
+			->setProperty("accesskey", "N");
 		
-		$this->addButton('save', 'save');
-		$this->buttons->save->setLabel("Confirm and save");
-		$this->buttons->save->setAccessKey("S");
+		$this->addButton('save', 'save')
+			->setLabel("Confirm and save")
+			->setAccessKey("S");
 
-		$this->addButton('cancel', 'cancel');
-		$this->buttons->cancel->setLabel("Cancel current operation");
-		$this->buttons->cancel->setAccessKey("Z");
-
-		$this->addSeparator();
-
-		$this->addButton('delete', 'delete');
-		$this->buttons->delete->setLabel("Delete current element");
-		$this->buttons->delete->requireConfirmation();
+		$this->addButton('cancel', 'cancel')
+			->setLabel("Cancel current operation")
+			->setAccessKey("Z");
 
 		$this->addSeparator();
 
-		$this->addButton('print', 'print');
-		$this->buttons->print->dropAction('onclick');
-		$this->buttons->print->setProperty('onclick', 'window.print(); return false;');
-		$this->buttons->print->setAccessKey("P");
+		$this->addButton('delete', 'delete')
+			->setLabel("Delete current element")
+			->requireConfirmation();
 
-		$this->addButton('exit', 'exit', 'right');
-		$this->buttons->exit->setLabel("Go back to the previous mask");
-		$this->buttons->exit->setAccessKey("X");
+		$this->addSeparator();
+
+		$this->addButton('print', 'print')
+			->dropAction('onclick')
+			->setProperty('onclick', 'window.print(); return false;')
+			->setAccessKey("P");
+
+		$this->addButton('exit', 'exit', 'right')
+			->setLabel("Go back to the previous mask")
+			->setAccessKey("X");
 	}
 
 	/**
@@ -88,8 +88,6 @@ class P4A_Simple_Toolbar extends P4A_Toolbar
 	 */
 	public function setMask(P4A_Mask $mask)
 	{
-		$this->_mask_name = $mask->getName();
-
 		$this->buttons->save->implement('onClick', $mask, 'saveRow');
 		$this->buttons->cancel->implement('onClick', $mask, 'reloadRow');
 		$this->buttons->new->implement('onClick', $mask, 'newRow');

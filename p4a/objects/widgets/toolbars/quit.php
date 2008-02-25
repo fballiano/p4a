@@ -52,15 +52,14 @@ class P4A_Quit_Toolbar extends P4A_Toolbar
 	
 	private function addDefaultButtons()
 	{
-		$this->addButton('print', 'print');
-		$this->buttons->print->dropAction('onclick');
-		$this->buttons->print->setProperty('onclick', 'window.print(); return false;');
-		$this->buttons->print->setAccessKey('P');
+		$this->addButton('print', 'print')
+			->dropAction('onclick')
+			->setProperty('onclick', 'window.print(); return false;')
+			->setAccessKey("P");
 
-		$this->addButton('exit', 'exit', 'right');
-		$this->buttons->exit->setLabel('Go back to the previous mask');
-		$this->buttons->exit->setAccessKey('X');
-		
-		$this->buttons->exit->implement('onclick', P4A::singleton(), 'showPrevMask');
+		$this->addButton('exit', 'exit', 'right')
+			->setLabel("Go back to the previous mask")
+			->setAccessKey("X")
+			->implement('onclick', P4A::singleton(), 'showPrevMask');
 	}
 }

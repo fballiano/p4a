@@ -52,52 +52,52 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 	
 	protected function addDefaultButtons()
 	{
-		$new =& $this->addButton('new', 'new');
-		$new->setLabel("Insert a new element");
-		$new->setProperty("accesskey", "N");
+		$this->addButton('new', 'new')
+			->setLabel("Insert a new element")
+			->setProperty("accesskey", "N");
 		
-		$save =& $this->addButton('save', 'save');
-		$save->setLabel("Confirm and save");
-		$save->setAccessKey("S");
+		$this->addButton('save', 'save')
+			->setLabel("Confirm and save")
+			->setAccessKey("S");
 
-		$cancel =& $this->addButton('cancel', 'cancel');
-		$cancel->setLabel("Cancel current operation");
-		$cancel->setAccessKey("Z");
-		
-		$this->addSeparator();
-		
-		$this->addButton('delete', 'delete');
-		$this->buttons->delete->setLabel("Delete current element");
-		$this->buttons->delete->requireConfirmation();
+		$this->addButton('cancel', 'cancel')
+			->setLabel("Cancel current operation")
+			->setAccessKey("Z");
 		
 		$this->addSeparator();
+		
+		$this->addButton('delete', 'delete')
+			->setLabel("Delete current element")
+			->requireConfirmation();
+		
+		$this->addSeparator();
 
-		$first =& $this->addButton('first', 'first');
-		$first->setLabel("Go to the first element");
-		$first->setAccessKey(8);
+		$this->addButton('first', 'first')
+			->setLabel("Go to the first element")
+			->setAccessKey(8);
 
-		$prev =& $this->addButton('prev', 'prev');
-		$prev->setLabel("Go to the previous element");
-		$prev->setAccessKey(4);
+		$this->addButton('prev', 'prev')
+			->setLabel("Go to the previous element")
+			->setAccessKey(4);
 
-		$next =& $this->addButton('next', 'next');
-		$next->setLabel("Go to the next element");
-		$next->setAccessKey(6);
+		$this->addButton('next', 'next')
+			->setLabel("Go to the next element")
+			->setAccessKey(6);
 
-		$last =& $this->addButton('last', 'last');
-		$last->setLabel("Go to the last element");
-		$last->setAccessKey(2);
+		$this->addButton('last', 'last')
+			->setLabel("Go to the last element")
+			->setAccessKey(2);
 
 		$this->addSeparator();
 
-		$print =& $this->addButton('print', 'print');
-		$print->dropAction('onclick');
-		$print->setProperty('onclick', 'window.print(); return false;');
-		$print->setAccessKey("P");
+		$this->addButton('print', 'print')
+			->dropAction('onclick')
+			->setProperty('onclick', 'window.print(); return false;')
+			->setAccessKey("P");
 
-		$exit =& $this->addButton('exit', 'exit', 'right');
-		$exit->setLabel("Go back to the previous mask");
-		$exit->setAccessKey("X");
+		$this->addButton('exit', 'exit', 'right')
+			->setLabel("Go back to the previous mask")
+			->setAccessKey("X");
 	}
 
 	/**
@@ -106,8 +106,6 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 	 */
 	public function setMask(P4A_Mask $mask)
 	{
-		$this->_mask_name = $mask->getName();
-
 		$this->buttons->save->implement('onclick', $mask, 'saveRow');
 		$this->buttons->cancel->implement('onclick', $mask, 'reloadRow');
 		$this->buttons->first->implement('onclick', $mask, 'firstRow');

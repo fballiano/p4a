@@ -52,24 +52,24 @@ class P4A_Actions_Toolbar extends P4A_Toolbar
 	
 	private function addDefaultButtons()
 	{
-		$save =& $this->addButton('save', 'save');
-		$save->setLabel("Confirm and save");
-		$save->setAccessKey("S");
+		$this->addButton('save', 'save')
+			->setLabel("Confirm and save")
+			->setAccessKey("S");
 
-		$cancel =& $this->addButton('cancel', 'cancel');
-		$cancel->setLabel("Cancel current operation");
-		$cancel->setAccessKey("Z");
+		$this->addButton('cancel', 'cancel')
+			->setLabel("Cancel current operation")
+			->setAccessKey("Z");
 
 		$this->addSeparator();
 
-		$print =& $this->addButton('print', 'print');
-		$print->dropAction('onclick');
-		$print->setProperty('onclick', 'window.print(); return false;');
-		$print->setAccessKey("P");
+		$this->addButton('print', 'print')
+			->dropAction('onclick')
+			->setProperty('onclick', 'window.print(); return false;')
+			->setAccessKey("P");
 
-		$exit =& $this->addButton('exit', 'exit', 'right');
-		$exit->setLabel("Go back to the previous mask");
-		$exit->setAccessKey("X");
+		$this->addButton('exit', 'exit', 'right')
+			->setLabel("Go back to the previous mask")
+			->setAccessKey("X");
 	}
 
 	/**
