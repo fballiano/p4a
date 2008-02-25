@@ -128,7 +128,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoin($table, $clausole, array $fields)
+	public function addJoin($table, $clausole, array $fields = null)
 	{
 		$this->_join[] = array('INNER', $table, $clausole, $fields);
 		return $this;
@@ -140,7 +140,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinInner($table, $clausole, $fields)
+	public function addJoinInner($table, $clausole, array $fields = null)
 	{
 		$this->addJoin($table, $clausole, $fields);
 		return $this;
@@ -152,7 +152,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinLeft($table, $clausole, $fields)
+	public function addJoinLeft($table, $clausole, array $fields = null)
 	{
 		$this->_join[] = array('LEFT', $table, $clausole, $fields);
 		return $this;
@@ -164,7 +164,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinRight($table, $clausole, $fields)
+	public function addJoinRight($table, $clausole, array $fields = null)
 	{
 		$this->_join[] = array('RIGHT', $table, $clausole, $fields);
 		return $this;
@@ -176,7 +176,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinFull($table, $clausole, $fields)
+	public function addJoinFull($table, $clausole, array $fields = null)
 	{
 		$this->_join[] = array('FULL', $table, $clausole, $fields);
 		return $this;
@@ -188,7 +188,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinCross($table, $fields)
+	public function addJoinCross($table, array $fields = null)
 	{
 		$this->_join[] = array('CROSS', $table, null, $fields);
 		return $this;
@@ -200,7 +200,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinNatural($table, $fields)
+	public function addJoinNatural($table, array $fields = null)
 	{
 		$this->_join[] = array('NATURAL', $table, null, $fields);
 		return $this;
@@ -849,7 +849,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
-			$select->$method($join[1], $join[2], array_flip($join[3]));
+			if (empty($join[3])) {
+				$select->$method($join[1], $join[2]);
+			} else {
+				$select->$method($join[1], $join[2], array_flip($join[3]));
+			}
 		}
 	}
 
