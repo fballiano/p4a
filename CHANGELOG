@@ -15,6 +15,10 @@
 - P4A_DB_Source::addJoin*() methods now supports null 3rd parameter (fields list)
 - a bug with P4A_DB_Source::setFields() and aliases was solved
 - README updated because P4A can't handle db tables with numeric column names
+- P4A_Validate class was added, it subclasses Zend_Validate and we need it to remove validators from a validator chain (ZF does not support that feature)
+- P4A_Field::removeValidator() method was added
+- P4A_Mask::unsetRequiredField() method was added
+- P4A_Widget::removeCSSClass() method was added
 
 2.99.1
 - a bug with "preview" button within P4A_Field file upload was solved

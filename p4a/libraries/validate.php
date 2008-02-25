@@ -57,6 +57,28 @@ require_once 'Zend/Validate/StringLength.php';
  * @copyright CreaLabs SNC
  * @package p4a
  */
+class P4A_Validate extends Zend_Validate
+{
+	/**
+	 * @param string $validator_class
+	 */
+	public function removeValidator($validator_class)
+	{
+		foreach ($this->_validators as $k=>$validator) {
+			if ($validator['instance'] instanceof $validator_class) {
+				unset($this->_validators[$k]);
+				return;
+			}
+		}
+	}
+}
+
+/**
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
+ * @package p4a
+ */
 class P4A_Validate_Alnum extends Zend_Validate_Alnum
 {
     /**

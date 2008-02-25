@@ -914,6 +914,19 @@ abstract class P4A_Widget extends P4A_Object
 	}
 	
 	/**
+	 * @param string $class
+	 * @return P4A_Widget
+	 */
+	public function removeCSSClass($class)
+	{
+		$key = array_search($class, $this->_css_classes);
+		if ($key !== false) {
+			unset($this->_css_classes[$key]);
+		}
+		return $this;
+	}
+	
+	/**
 	 * @return array
 	 */
 	public function getCSSClasses()

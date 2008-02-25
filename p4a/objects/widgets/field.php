@@ -1354,10 +1354,18 @@ class P4A_Field extends P4A_Widget
 	public function addValidator(Zend_Validate_Interface $validator, $break_chain_on_failure = false)
 	{
 		if ($this->_validator_chain === null) {
-			$this->_validator_chain = new Zend_Validate();
+			$this->_validator_chain = new P4A_Validate();
 		}
 		
 		$this->_validator_chain->addValidator($validator, $break_chain_on_failure);
+		return $this;
+	}
+	
+	public function removeValidator($validator_class)
+	{
+		if ($this->_validator_chain !== null) {
+			$this->_validator_chain->removeValidator($validator_class);
+		}
 		return $this;
 	}
 	

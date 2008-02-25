@@ -670,6 +670,22 @@ class P4A_Mask extends P4A_Object
 		$field->label->addCSSClass('p4a_label_required');
 		return $this;
 	}
+	
+	/**
+	 * Removes the "not empty" validator from the passed field
+	 *
+	 * @param string|P4A_Field $field
+	 * @return P4A_Mask
+	 */
+	public function unsetRequiredField($field)
+	{
+		if (is_string($field)) {
+			$field =& $this->fields->$field;
+		}
+		$field->removeValidator('P4A_Validate_NotEmpty');
+		$field->label->removeCSSClass('p4a_label_required');
+		return $this;
+	}
 
 	/**
 	 * Calls the isValid() method for every field.
