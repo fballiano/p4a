@@ -100,6 +100,10 @@ without closing the browser.
 
 P4A can't handle database tables with numeric column names.
 
+If you want to add calculated fields coming from a DB query
+(such as DISTICT(example_field)) always use parenthesis and never
+use the "DISTINCT example_field" syntax.
+
 -------------
 -- Authors --
 -------------
