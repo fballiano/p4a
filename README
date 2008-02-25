@@ -98,6 +98,8 @@ You can't switch between two application with the same
 P4A_APPLICATION_NAME under the same virtual host
 without closing the browser.
 
+P4A can't handle database tables with numeric column names.
+
 -------------
 -- Authors --
 -------------

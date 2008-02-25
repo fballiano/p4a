@@ -844,7 +844,15 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (empty($this->_fields)) {
 			$select->from($this->getTable(), '*', $this->getSchema());
 		} else {
-			$select->from($this->getTable(), array_flip($this->_fields), $this->getSchema());
+			$fields = $this->_fields;
+			$new_fields = array();
+			foreach ($fields as $k=>$v) {
+				if (is_numeric($k)) {
+					$k = $v;
+				}
+				$new_fields[$v] = $k;
+			}
+			$select->from($this->getTable(), $new_fields, $this->getSchema());
 		}
 		
 		foreach ($this->_join as $join) {
