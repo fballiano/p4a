@@ -19,6 +19,7 @@
 - Zend Framework was updated to 1.0.4
 - P4A_DB_Source::load() now returns $this thus is chainable now
 - P4A_DB_Source::_composeSelectCountQuery() now always encapsulate the complete select query (without order clause) in a second count query
+- translations were synched with launchpad
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
