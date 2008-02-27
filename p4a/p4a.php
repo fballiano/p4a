@@ -51,6 +51,7 @@ require_once "$dir/libraries/p4a_db_table.php";
 require_once "$dir/libraries/validate.php";
 
 //Core
+require_once "$dir/p4a_exception.php";
 require_once "$dir/p4a_object.php";
 require_once "$dir/p4a_i18n.php";
 require_once "$dir/p4a_db.php";
@@ -114,6 +115,7 @@ if (P4A_ENABLE_AUTO_INCLUSION) {
 }
 
 //Setting PHP error reporting
+set_exception_handler('P4A_Exception_Handler');
 if (P4A_EXTENDED_ERRORS) {
 	error_reporting(P4A_EXTENDED_ERROR_REPORTING);
 	set_error_handler('P4A_Error_Handler', P4A_EXTENDED_ERROR_REPORTING);

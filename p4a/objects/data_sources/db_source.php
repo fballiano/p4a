@@ -322,7 +322,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				} elseif (method_exists($obj, 'getNewValue')) {
 					$value = $obj->getNewValue();
 				} else {
-					P4A_Error('FILTERS CAN ONLY BE APPLIED TO P4A_Field OR P4A_Data_Field');
+					trigger_error('Filters can be applied only to P4A_Field or P4A_Data_Field', E_USER_ERROR);
 				}
 
 				if ((is_string($value) or is_numeric($value)) and strlen($value) > 0) {
@@ -340,7 +340,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function load()
 	{
 		if (!$this->getQuery() and !$this->getTable()){
-			p4a_error("PLEASE DEFINE A QUERY OR A TABLE");
+			trigger_error('Please define a query of a table', E_USER_ERROR);
 		}
 		
 		$db = P4A_DB::singleton($this->getDSN());
@@ -717,13 +717,10 @@ class P4A_DB_Source extends P4A_Data_Source
 				$fk_table = $aField["table"];
 				$fk = $aField["fk"];
 
-				$res = $db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
-				//TODO: check error
+				$db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
 			}
 
-			$res = $db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
-			//TODO: check error
-
+			$db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
 			$this->resetNumRows();
 		}
 

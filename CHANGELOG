@@ -6,7 +6,6 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
-- check multivalue delete
 - if db-source is filtered, on new row use filter value as default value 
 
 2.99.3
@@ -14,6 +13,9 @@
 - a bug with P4A_Full_Toolbar and P4A_Simple_Toolbar about delete was solved
 - a bug with P4A_DB_Source::deleteRow was solved
 - P4A_Widget::requireConfirmation() now trigger an error if addAction wasn't called before
+- P4A_Exception class was added
+- P4A_Exception_Handler now replaces PHP's default exception handler
+- a part of P4A_DB_Source error management was ported to the new error handlers
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required

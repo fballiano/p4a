@@ -458,6 +458,14 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 }
 
 /**
+ * @param Exception $exception
+ */
+function P4A_Exception_Handler(Exception $exception)
+{
+	die("exception handler not yet implemented");
+}
+
+/**
  * @param string $file
  */
 function P4A_Redirect_To_File($file) {
