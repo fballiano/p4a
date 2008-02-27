@@ -16,6 +16,7 @@
 - P4A_Exception class was added
 - P4A_Exception_Handler now replaces PHP's default exception handler
 - a part of P4A_DB_Source error management was ported to the new error handlers
+- Zend Framework was updated to 1.0.4
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required

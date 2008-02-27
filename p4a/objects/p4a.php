@@ -826,12 +826,15 @@ class P4A extends P4A_Object
 		$locale_engine = $this->i18n->getLocaleEngine();
 		$ajax_enabled = P4A_AJAX_ENABLED ? 'true' : 'false';
 		
+		$days = $locale_engine->getTranslationList('days');
+		$days = $days['format']['abbreviated'];
+		
 		return '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
 		'$(function() {' . "\n" .
 		'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
-		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $locale_engine->getTranslationList('day_short')) . '"];' . "\n" .
+		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $days) . '"];' . "\n" .
 		'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
 		'$.datepicker._defaults["firstDay"] = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
 		'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
