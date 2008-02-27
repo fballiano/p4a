@@ -411,6 +411,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
 			}
 		}
+		return $this;
 	}
 	
 	protected function createDataField($name, $meta = null)
