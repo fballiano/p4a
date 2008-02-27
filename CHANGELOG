@@ -7,6 +7,7 @@
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
 - check multivalue delete
+- if db-source is filtered, on new row use filter value as default value 
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
