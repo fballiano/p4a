@@ -768,11 +768,8 @@ class P4A_DB_Source extends P4A_Data_Source
 			return "SELECT count(*) AS p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
 		
-		$select = P4A_DB::singleton($this->getDSN())->select();
-		$this->_composeSelectCountPart($select);
-		$this->_composeWherePart($select);
-		$this->_composeGroupPart($select);
-		return $select;
+		$query = $this->_composeSelectQuery(false);
+		return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 	}
 	
 	protected function _composeSelectStructureQuery()
@@ -788,7 +785,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
-	protected function _composeSelectQuery()
+	protected function _composeSelectQuery($add_order_clause = true)
 	{
 		if ($this->getQuery()) {
 			return "SELECT * FROM (". $this->getQuery() . ") p4a_select";
@@ -798,7 +795,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_composeSelectPart($select);
 		$this->_composeWherePart($select);
 		$this->_composeGroupPart($select);
-		$this->_composeOrderPart($select);
+		if ($add_order_clause) $this->_composeOrderPart($select);
 		return $select;
 	}
 
@@ -835,9 +832,8 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (empty($this->_fields)) {
 			$select->from($this->getTable(), '*', $this->getSchema());
 		} else {
-			$fields = $this->_fields;
 			$new_fields = array();
-			foreach ($fields as $k=>$v) {
+			foreach ($this->_fields as $k=>$v) {
 				if (is_numeric($k)) {
 					$k = $v;
 				}
@@ -851,7 +847,14 @@ class P4A_DB_Source extends P4A_Data_Source
 			if (empty($join[3])) {
 				$select->$method($join[1], $join[2]);
 			} else {
-				$select->$method($join[1], $join[2], array_flip($join[3]));
+				$new_fields = array();
+				foreach ($join[3] as $k=>$v) {
+					if (is_numeric($k)) {
+						$k = $v;
+					}
+					$new_fields[$v] = $k;
+				}
+				$select->$method($join[1], $join[2], $new_fields);
 			}
 		}
 	}
@@ -859,6 +862,22 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function _composeSelectCountPart($select)
 	{
 		$select->from($this->getTable(), 'count(*)', $this->getSchema());
+		
+		foreach ($this->_join as $join) {
+			$method = "join{$join[0]}";
+			if (empty($join[3])) {
+				$select->$method($join[1], $join[2]);
+			} else {
+				$new_fields = array();
+				foreach ($join[3] as $k=>$v) {
+					if (is_numeric($k)) {
+						$k = $v;
+					}
+					$new_fields[$v] = $k;
+				}
+				$select->$method($join[1], $join[2], $new_fields);
+			}
+		}
 	}
 
 	protected function _composeWherePart($select)
@@ -867,8 +886,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($where = $this->getWhere()){
 			$query .= "($where) AND ";
 		}
-		$filters = $this->getFilters();
-		foreach ($filters as $filter) {
+		foreach ($this->getFilters() as $filter) {
 			$query .= "($filter) AND ";
 		}
 		if (strlen($query) > 0) {
