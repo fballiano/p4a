@@ -28,7 +28,7 @@
  * @link http://www.crealabs.it
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
- * @package p4a
+ * @package p4a_validate
  */
 
 require_once 'Zend/Validate.php';
@@ -55,7 +55,6 @@ require_once 'Zend/Validate/StringLength.php';
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate extends Zend_Validate
 {
@@ -77,7 +76,6 @@ class P4A_Validate extends Zend_Validate
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Alnum extends Zend_Validate_Alnum
 {
@@ -97,7 +95,6 @@ class P4A_Validate_Alnum extends Zend_Validate_Alnum
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Alpha extends Zend_Validate_Alpha
 {
@@ -117,7 +114,6 @@ class P4A_Validate_Alpha extends Zend_Validate_Alpha
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Between extends Zend_Validate_Between
 {
@@ -140,7 +136,6 @@ class P4A_Validate_Between extends Zend_Validate_Between
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Ccnum extends Zend_Validate_Ccnum
 {
@@ -156,7 +151,6 @@ class P4A_Validate_Ccnum extends Zend_Validate_Ccnum
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Date extends Zend_Validate_Date
 {
@@ -172,7 +166,6 @@ class P4A_Validate_Date extends Zend_Validate_Date
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Digits extends Zend_Validate_Digits
 {
@@ -188,7 +181,6 @@ class P4A_Validate_Digits extends Zend_Validate_Digits
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_EmailAddress extends Zend_Validate_EmailAddress
 {
@@ -211,7 +203,6 @@ class P4A_Validate_EmailAddress extends Zend_Validate_EmailAddress
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Float extends Zend_Validate_Float
 {
@@ -227,7 +218,6 @@ class P4A_Validate_Float extends Zend_Validate_Float
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_GreaterThan extends Zend_Validate_GreaterThan
 {
@@ -247,7 +237,6 @@ class P4A_Validate_GreaterThan extends Zend_Validate_GreaterThan
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Hex extends Zend_Validate_Hex
 {
@@ -263,7 +252,6 @@ class P4A_Validate_Hex extends Zend_Validate_Hex
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Hostname extends Zend_Validate_Hostname
 {
@@ -286,7 +274,6 @@ class P4A_Validate_Hostname extends Zend_Validate_Hostname
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_InArray extends Zend_Validate_InArray
 {
@@ -307,7 +294,6 @@ class P4A_Validate_InArray extends Zend_Validate_InArray
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Int extends Zend_Validate_Int
 {
@@ -323,7 +309,6 @@ class P4A_Validate_Int extends Zend_Validate_Int
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Ip extends Zend_Validate_Ip
 {
@@ -339,7 +324,6 @@ class P4A_Validate_Ip extends Zend_Validate_Ip
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_LessThan extends Zend_Validate_LessThan
 {
@@ -359,7 +343,6 @@ class P4A_Validate_LessThan extends Zend_Validate_LessThan
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_NotEmpty extends Zend_Validate_NotEmpty
 {
@@ -375,7 +358,6 @@ class P4A_Validate_NotEmpty extends Zend_Validate_NotEmpty
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_Regex extends Zend_Validate_Regex
 {
@@ -395,7 +377,6 @@ class P4A_Validate_Regex extends Zend_Validate_Regex
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Validate_StringLength extends Zend_Validate_StringLength
 {

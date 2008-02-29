@@ -28,14 +28,13 @@
  * @link http://www.crealabs.it
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
- * @package p4a
+ * @package p4a_thumbnail_generator
  */
 
 /**
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Thumbnail_Generator
 {
@@ -326,7 +325,6 @@ class P4A_Thumbnail_Generator
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
- * @package p4a
  */
 class P4A_Thumbnail_Generator_Exception extends Exception
 {

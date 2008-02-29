@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo -n "Please, enter P4A version: "
-read VERSION
 
+VERSION=`cat p4a/constants.php | grep P4A_VERSION | cut -d \' -f4`
 SRCDIR=`pwd`
 TMPDIR='/tmp'
 
