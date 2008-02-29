@@ -301,6 +301,15 @@ class P4A_DB
 	}
 	
 	/**
+	 * @param string $query
+	 * @return unknown
+	 */
+	public function query($query)
+	{
+		return $this->adapter->query($query);
+	}
+	
+	/**
 	 * @param string $column_name
 	 * @param string $search_pattern
 	 * @return string
