@@ -460,9 +460,18 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 /**
  * @param Exception $exception
  */
-function P4A_Exception_Handler(Exception $exception)
+function P4A_Exception_Handler(Exception $e)
 {
-	die("exception handler not yet implemented");
+	$message = $e->getMessage();
+	if (P4A_EXTENDED_ERRORS) {
+		$message .= "<br /><em>File: {$e->getFile()}, Line: {$e->getLine()}</em>";
+	}
+	
+	ob_end_clean();
+	$error_mask = new P4A_Error_Mask();
+	$error_mask->setMessage($message);
+	$error_mask->main();
+	die();
 }
 
 /**

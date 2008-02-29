@@ -21,6 +21,8 @@
 - P4A_DB_Source::_composeSelectCountQuery() now always encapsulate the complete select query (without order clause) in a second count query
 - translations were synched with launchpad
 - P4A_DB::query() method was added
+- P4A_Mask error management was ported to exceptions
+- p4a/libraries/standard.php was renamed p4a/functions.php
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required

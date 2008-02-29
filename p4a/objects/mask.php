@@ -391,7 +391,7 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Manages file uploads when arriving from HTTP POST
-	 * @throws onFileSystemError
+	 * @throws P4A_Exception
 	 */
 	protected function saveUploads()
 	{
@@ -404,10 +404,7 @@ class P4A_Mask extends P4A_Object
 
 				if (!is_dir($target_dir)) {
 					if (!P4A_Mkdir_Recursive($target_dir)) {
-						$e = new P4A_ERROR("Cannot create directory \"$target_dir\"", $this);
-						if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
-							die();
-						}
+						throw new P4A_Exception("Cannot create directory \"$target_dir\"", P4A_FILESYSTEM_ERROR);
 					}
 				}
 
@@ -420,10 +417,7 @@ class P4A_Mask extends P4A_Object
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 						if (!rename($old_path, $new_path)) {
-							$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this);
-							if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
-								die();
-							}
+							throw new P4A_Exception("Cannot rename file \"$old_path\" to \"$new_path\"", P4A_FILESYSTEM_ERROR);
 						}
 						$a_new_value[1] = P4A_Strip_Double_Slashes(str_replace(P4A_UPLOADS_DIR , '', $new_path));
 						$field->setNewValue('{' . join($a_new_value, ',') . '}');
@@ -434,28 +428,19 @@ class P4A_Mask extends P4A_Object
 					if ($new_value === null) {
 						$path = $target_dir . '/' . $a_old_value[0];
 						if (!@unlink($path) and @file_exists($path)) {
-							$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
-							if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
-								die();
-							}
+							throw new P4A_Exception("Cannot delete file \"$path\"", P4A_FILESYSTEM_ERROR);
 						}
 						$field->setNewValue(null);
 					} elseif ($new_value!=$old_value) {
 						$path = $target_dir . '/' . $a_old_value[0];
 						if (!@unlink($path) and @file_exists($path)) {
-							$e = new P4A_ERROR("Cannot delete file \"$path\"", $this);
-							if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
-								die();
-							}
+							throw new P4A_Exception("Cannot delete file \"$path\"", P4A_FILESYSTEM_ERROR);
 						}
 						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[0], $target_dir);
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 						if (!@rename($old_path, $new_path)) {
-							$e = new P4A_ERROR("Cannot rename file \"$old_path\" to \"$new_path\"", $this);
-							if ($this->errorHandler('onFileSystemError', $e) !== PROCEED) {
-								die();
-							}
+							throw new P4A_Exception("Cannot rename file \"$old_path\" to \"$new_path\"", P4A_FILESYSTEM_ERROR);
 						}
 						$a_new_value[1] = str_replace(P4A_UPLOADS_DIR , '', $new_path);
 						$field->setNewValue('{' . join($a_new_value, ',') . '}');

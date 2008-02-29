@@ -270,6 +270,7 @@ define('P4A_DATETIME', '%Y-%m-%d %H:%M:%S');
 define('P4A_DEFAULT_ERROR_REPORTING', E_ALL ^ E_NOTICE);
 define('P4A_EXTENDED_ERROR_REPORTING', E_ALL);
 define('P4A_DEFAULT_MINIMAL_REPORTING', P4A_DEFAULT_ERROR_REPORTING ^ E_WARNING);
+define('P4A_FILESYSTEM_ERROR', 1);
 
 if (!defined('P4A_GD') and function_exists('ImageJPEG') and
 	function_exists('ImagePNG') and function_exists('ImageGIF')) {

@@ -35,6 +35,7 @@ $dir = dirname(__FILE__);
 
 //Configuration container
 require_once "$dir/constants.php";
+require_once "$dir/functions.php";
 
 // Changing inclusion path
 $include_path = explode(_SSS_, ini_get('include_path'));
@@ -44,7 +45,6 @@ $new_include_path = '.' . _SSS_ . P4A_APPLICATION_LIBRARIES_DIR . _SSS_ . P4A_LI
 ini_set('include_path', $new_include_path);
 
 //Libraries
-require_once "$dir/libraries/standard.php";
 require_once "$dir/libraries/check_configuration.php";
 require_once "$dir/libraries/p4a_db_select.php";
 require_once "$dir/libraries/p4a_db_table.php";
@@ -115,7 +115,7 @@ if (P4A_ENABLE_AUTO_INCLUSION) {
 }
 
 //Setting PHP error reporting
-set_exception_handler('P4A_Exception_Handler');
+//set_exception_handler('P4A_Exception_Handler');
 if (P4A_EXTENDED_ERRORS) {
 	error_reporting(P4A_EXTENDED_ERROR_REPORTING);
 	set_error_handler('P4A_Error_Handler', P4A_EXTENDED_ERROR_REPORTING);
