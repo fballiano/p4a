@@ -46,7 +46,6 @@ ini_set('include_path', $new_include_path);
 
 //Libraries
 require_once "$dir/libraries/check_configuration.php";
-require_once "$dir/libraries/p4a_db_select.php";
 require_once "$dir/libraries/p4a_db_table.php";
 require_once "$dir/libraries/validate.php";
 

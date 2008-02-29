@@ -21,7 +21,7 @@ cp -r $SRCDIR p4a
 cd $PKGDIR
 mkdir code-reference
 cd $SRCDIR
-phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'phpthumb/,i18n/,Zend/,pear_net_useragent_detect.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
+phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For Applications' -pp on -dh off -t $PKGDIR/code-reference -i 'Zend/,pear_net_useragent_detect.php' -o 'HTML:frames:earthli' -ric 'CHANGELOG,README,COPYING'
 
 ##########################
 # cleaning master source #
@@ -53,11 +53,5 @@ cp -r code-reference p4a/docs
 
 cd $PKGDIR
 mv p4a p4a-$VERSION
-zip -r p4a-$VERSION.zip p4a-$VERSION
+zip -r9 p4a-$VERSION.zip p4a-$VERSION
 rm -r p4a-$VERSION
-
-###################################
-# creating documentation zip file #
-###################################
-
-zip -r code-reference.zip code-reference
