@@ -6,7 +6,7 @@
  *
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @package p4a
+ * @package p4a_helpers
  */
 
 function P4A_Field_loadSelectByArray($field, $params)

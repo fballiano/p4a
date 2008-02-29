@@ -6,7 +6,7 @@
  *
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @package p4a
+ * @package p4a_helpers
  */
 
 function P4A_Mask_setTableAsSource($mask, $params)
