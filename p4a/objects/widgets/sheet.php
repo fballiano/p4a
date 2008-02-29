@@ -87,27 +87,31 @@ class P4A_Sheet extends P4A_Widget
 	}
 
 	/**
-	 * @param P4A_Widget $object
+	 * @param P4A_Widget|string $object
 	 * @param integer $row
 	 * @param integer $column
 	 * @param integer $rowspan
 	 * @param integer $colspan
 	 * @return P4A_Sheet
 	 */
-	public function anchor(P4A_Widget $widget, $row, $col, $rowspan = 1, $colspan = 1)
+	public function anchor($widget, $row, $col, $rowspan = 1, $colspan = 1)
 	{
+		if (!($widget instanceof P4A_Widget) and !is_string($widget)) {
+			trigger_error("P4A_Sheet accepts only P4A_Widgets or strings", E_USER_ERROR);
+		}
+		
 		if ($row + $rowspan - 1 > $this->_rows) {
-			p4a_error("cell margins are out of the grid");
+			trigger_error("P4A_Sheet accepts only P4A_Widgets or strings", E_USER_ERROR);
 		}
 		
 		if ($col + $colspan - 1 > $this->_cols) {
-			p4a_error("cell margins are out of the grid");
+			trigger_error("cell margins are out of the grid", E_USER_ERROR);
 		}
 		
 		for ($i = $row; $i < $row+$rowspan; $i++) {
 			for ($j = $col; $j < $col+$colspan; $j++) {
 				if ($this->_map[$i][$j] !== null) {
-					p4a_error("cell is occupied");
+					trigger_error("cell is occupied", E_USER_ERROR);
 				}
 				$this->_map[$i][$j] = '-';
 			}

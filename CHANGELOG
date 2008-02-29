@@ -25,6 +25,7 @@
 - p4a/libraries/standard.php was renamed p4a/functions.php
 - P4A_DB_Select class was removed 'cause unused
 - code reference was organized in packages
+- P4A_Sheet was ported to the new error handling
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
