@@ -116,8 +116,32 @@ class P4A_Sheet extends P4A_Widget
 				$this->_map[$i][$j] = '-';
 			}
 		}
+
+		if ($widget instanceof P4A_Widget) {
+			$widget = $widget->getId();
+		}
 		
-		$this->_map[$row][$col] = array($widget->getId(), $rowspan, $colspan);
+		$this->_map[$row][$col] = array($widget, $rowspan, $colspan);
+		return $this;
+	}
+	
+	/**
+	 * @param integer $row
+	 * @param integer $col
+	 * @return P4A_Sheet
+	 */
+	public function setFree($row, $col)
+	{
+		if (isset($this->_map[$row]) and isset($this->_map[$row][$col]) and is_array($this->_map[$row][$col])) {
+			$rowspan = $this->_map[$row][$col][1];
+			$colspan = $this->_map[$row][$col][2];
+			
+			for ($i = $row; $i < $row+$rowspan; $i++) {
+				for ($j = $col; $j < $col+$colspan; $j++) {
+					$this->_map[$i][$j] = null;
+				}
+			}
+		}
 		return $this;
 	}
 
@@ -159,7 +183,12 @@ class P4A_Sheet extends P4A_Widget
 				$obj_as_string = "&nbsp;";
 				if (is_array($this->_map[$i][$j])) {
 					$cell = $this->_map[$i][$j];
-					$obj_as_string = $p4a->getObject($cell[0])->getAsString();
+					$obj = $p4a->getObject($cell[0]);
+					if ($obj === null) {
+						$obj_as_string = $cell[0];
+					} else {
+						$obj_as_string = $obj->getAsString();
+					}
 					$rowspan = $cell[1];
 					$colspan = $cell[2];
 				}
