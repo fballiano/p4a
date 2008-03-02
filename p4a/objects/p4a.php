@@ -876,7 +876,10 @@ class P4A extends P4A_Object
 	 */
 	public function getFocusedObjectId()
 	{
-		return $this->active_mask->getFocusedObjectId();
+		if (is_object($this->active_mask)) {
+			$this->active_mask->getFocusedObjectId();
+		}
+		return null;
 	}
 	
 	/**
