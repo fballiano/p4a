@@ -9,6 +9,9 @@
 - if db-source is filtered, on new row use filter value as default value 
 - check postgresql serial
 
+2.99.4
+- 
+
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
 - a bug with P4A_Full_Toolbar and P4A_Simple_Toolbar about delete was solved
