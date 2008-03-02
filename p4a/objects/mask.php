@@ -171,10 +171,8 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function setFocus($object = null)
 	{
-		if (is_object($object)) {
+		if ($object instanceof P4A_Object) {
 			$this->focus_object_id = $object->getId();
-		} else {
-			$this->focus_object_id = null;
 		}
 		return $this;
 	}

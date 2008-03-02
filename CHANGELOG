@@ -7,6 +7,8 @@
 - do some strict validation
 - file preview or whatever should raise some visible errors when file does not exists
 - if db-source is filtered, on new row use filter value as default value 
+- p4a_sheet::anchor must work with strings, create p4a_sheet::setFree
+- check postgresql serial
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
@@ -26,6 +28,7 @@
 - P4A_DB_Select class was removed 'cause unused
 - code reference was organized in packages
 - P4A_Sheet was ported to the new error handling
+- P4A_Mask::setFocus() method now checks if the passed object is an instance of P4A_Object, otherwise does nothing
 
 2.99.2
 - P4A_Mask::main() method is now called also within an AJAX call, if a full redesign is required
