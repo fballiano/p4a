@@ -16,6 +16,9 @@
   so we can pass the error file/line and have a readable resulting error message
 - a few modifications were done on P4A_DB_Source so now you can add joins without selecting
   any column from the joined table
+- P4A_DB::getDBType() method was added
+- P4A_DB_Source::getRowPosition() mystical bug with MySQL (same query called 2 times returns 2 different results)
+  was found again and patched again
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability

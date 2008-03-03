@@ -111,6 +111,14 @@ class P4A_DB
 	}
 	
 	/**
+	 * @return string
+	 */
+	public function getDBType()
+	{
+		return $this->db_type;
+	}
+	
+	/**
 	 * @param string $sequence_name
 	 * @return integer
 	 */
