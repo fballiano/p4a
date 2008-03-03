@@ -11,6 +11,7 @@
 
 2.99.4
 - a bug with P4A::getFocusedObjectId() method was solved
+- P4A_Object::__call() method now uses trigger_error() instead of p4a_error() when a method is not found
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability

@@ -345,7 +345,7 @@ abstract class P4A_Object
 			}
 		}
 
-		if (!$func) p4a_error("Method $name not found");
+		if (!$func) trigger_error("Method $name not found", E_USER_ERROR);
 		$this->_helpers[$name] = array($file, $func);
 	}
 
