@@ -19,6 +19,7 @@
 - P4A_DB::getDBType() method was added
 - P4A_DB_Source::getRowPosition() mystical bug with MySQL (same query called 2 times returns 2 different results)
   was found again and patched again
+- a bug with P4A_ERROR_Handler() was solved
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability

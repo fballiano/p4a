@@ -434,6 +434,8 @@ function P4A_Mkdir_Recursive($dir)
  */
 function P4A_Error_Handler($error_number, $error_string, $error_file, $error_line)
 {
+	if (!($error_number & error_reporting())) return true; 
+	
 	$error_file = basename($error_file);
 	switch ($error_number) {
 		case E_USER_ERROR:
