@@ -14,6 +14,8 @@
 - P4A_Object::__call() method now uses trigger_error() instead of p4a_error() when a method is not found
 - P4A_Object::_loadHelper() method now direcly call P4A_Error_Handler() instead of trigger_error,
   so we can pass the error file/line and have a readable resulting error message
+- a few modifications were done on P4A_DB_Source so now you can add joins without selecting
+  any column from the joined table
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability

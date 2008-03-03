@@ -128,7 +128,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoin($table, $clausole, array $fields = null)
+	public function addJoin($table, $clausole, $fields = '*')
 	{
 		$this->_join[] = array('INNER', $table, $clausole, $fields);
 		return $this;
@@ -140,7 +140,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinInner($table, $clausole, array $fields = null)
+	public function addJoinInner($table, $clausole, $fields = '*')
 	{
 		$this->addJoin($table, $clausole, $fields);
 		return $this;
@@ -152,7 +152,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinLeft($table, $clausole, array $fields = null)
+	public function addJoinLeft($table, $clausole, $fields = '*')
 	{
 		$this->_join[] = array('LEFT', $table, $clausole, $fields);
 		return $this;
@@ -164,7 +164,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinRight($table, $clausole, array $fields = null)
+	public function addJoinRight($table, $clausole, $fields = '*')
 	{
 		$this->_join[] = array('RIGHT', $table, $clausole, $fields);
 		return $this;
@@ -176,7 +176,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinFull($table, $clausole, array $fields = null)
+	public function addJoinFull($table, $clausole, $fields = '*')
 	{
 		$this->_join[] = array('FULL', $table, $clausole, $fields);
 		return $this;
@@ -188,7 +188,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinCross($table, array $fields = null)
+	public function addJoinCross($table, $fields = '*')
 	{
 		$this->_join[] = array('CROSS', $table, null, $fields);
 		return $this;
@@ -200,7 +200,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param array $fields
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinNatural($table, array $fields = null)
+	public function addJoinNatural($table, $fields = '*')
 	{
 		$this->_join[] = array('NATURAL', $table, null, $fields);
 		return $this;
@@ -381,7 +381,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				foreach ($this->_tables_metadata[$table_name]['metadata'] as $field_name=>$meta) {
 					$this->createDataField($field_name, $meta);
 				}
-			} else {
+			} elseif (!empty($column_alias)) {
 				$field_name = strlen($column_alias) ? $column_alias : $column_name;
 				if (in_array($column_name, array_keys($this->_tables_metadata[$table_name]['metadata']))) {
 					$this->createDataField($field_name, $this->_tables_metadata[$table_name]['metadata'][$column_name]);
@@ -844,9 +844,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
-			if (empty($join[3])) {
-				$select->$method($join[1], $join[2]);
-			} else {
+			$new_fields = $join[3];
+			
+			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
 				foreach ($join[3] as $k=>$v) {
 					if (is_numeric($k)) {
@@ -854,20 +854,20 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 					$new_fields[$v] = $k;
 				}
-				$select->$method($join[1], $join[2], $new_fields);
 			}
+			
+			$select->$method($join[1], $join[2], $new_fields);
 		}
 	}
 
 	protected function _composeSelectCountPart($select)
 	{
 		$select->from($this->getTable(), 'count(*)', $this->getSchema());
-		
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
-			if (empty($join[3])) {
-				$select->$method($join[1], $join[2]);
-			} else {
+			$new_fields = $join[3];
+			
+			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
 				foreach ($join[3] as $k=>$v) {
 					if (is_numeric($k)) {
@@ -875,8 +875,11 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 					$new_fields[$v] = $k;
 				}
-				$select->$method($join[1], $join[2], $new_fields);
+			} else {
+				var_dump($join[3]);
 			}
+			
+			$select->$method($join[1], $join[2], $new_fields);
 		}
 	}
 
