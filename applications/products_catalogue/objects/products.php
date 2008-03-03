@@ -141,9 +141,7 @@ class Products extends P4A_Base_Mask
 		$this->fields->category_id
 			->setType("select")
 			->setSource(P4A::singleton()->categories)
-			->setSourceDescriptionField("description");
-
-		$this->fields->category_id
+			->setSourceDescriptionField("description")
 			->setLabel("Category")
 			->setWidth(200);
 
