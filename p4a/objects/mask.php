@@ -166,13 +166,15 @@ class P4A_Mask extends P4A_Object
 
 	/**
 	 * Sets the focus on object
-	 * @param object $object
+	 * @param P4A_Object $object
 	 * @return P4A_Mask
 	 */
-	public function setFocus($object = null)
+	public function setFocus(P4A_Object $object = null)
 	{
 		if ($object instanceof P4A_Object) {
 			$this->focus_object_id = $object->getId();
+		} elseif ($object === null) {
+			$this->focus_object_id = null;
 		}
 		return $this;
 	}
@@ -180,6 +182,7 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * Removes focus property
 	 * @return P4A_Mask
+	 * @deprecated 
 	 */
 	public function unsetFocus()
 	{
