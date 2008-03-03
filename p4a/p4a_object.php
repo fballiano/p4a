@@ -345,7 +345,11 @@ abstract class P4A_Object
 			}
 		}
 
-		if (!$func) trigger_error("Method $name not found", E_USER_ERROR);
+		if (!$func) {
+			$backtrace = debug_backtrace();
+			$backtrace = $backtrace[2];
+			P4A_Error_Handler(E_USER_ERROR, "Method $name not found", $backtrace['file'], $backtrace['line']);
+		}
 		$this->_helpers[$name] = array($file, $func);
 	}
 
