@@ -448,6 +448,7 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 			} else {
 				$error_mask->main();
 			}
+			$p4a->close();
 			die();
 		case E_WARNING:
 		case E_USER_WARNING:
@@ -482,6 +483,7 @@ function P4A_Exception_Handler(Exception $e)
 	} else {
 		$error_mask->main();
 	}
+	$p4a->close();
 	die();
 }
 
