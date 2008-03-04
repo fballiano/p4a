@@ -528,7 +528,7 @@ class P4A extends P4A_Object
 		flush();
 	}
 
-	private function raiseXMLResponse()
+	public function raiseXMLResponse()
 	{
 		ob_start();
 		$script_detector = '<script.*?>(.*?)<\/script>';

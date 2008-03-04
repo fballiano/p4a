@@ -440,9 +440,14 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 	switch ($error_number) {
 		case E_USER_ERROR:
 		case E_RECOVERABLE_ERROR:
-			P4A_Mask::singleton("P4A_Error_Mask")
-				->setMessage("<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>")
-				->main();
+			$message = "<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>";
+			$p4a = P4A::singleton();
+			$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
+			if ($p4a->inAjaxCall()) {
+				$p4a->raiseXMLResponse();
+			} else {
+				$error_mask->main();
+			}
 			die();
 		case E_WARNING:
 		case E_USER_WARNING:
@@ -470,9 +475,13 @@ function P4A_Exception_Handler(Exception $e)
 	}
 	
 	ob_end_clean();
-	$error_mask = new P4A_Error_Mask();
-	$error_mask->setMessage($message);
-	$error_mask->main();
+	$p4a = P4A::singleton();
+	$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
+	if ($p4a->inAjaxCall()) {
+		$p4a->raiseXMLResponse();
+	} else {
+		$error_mask->main();
+	}
 	die();
 }
 
