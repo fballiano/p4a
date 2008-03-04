@@ -195,7 +195,7 @@ class P4A_Field extends P4A_Widget
 
 		if (!is_null($source_description_field) and is_object($this->data)) {
 			if (!isset($this->data->fields->$source_description_field)) {
-				P4A_Error("P4A_Field is missing: {$source_description_field}");
+				trigger_error("P4A_Field is missing: {$source_description_field}", E_USER_ERROR);
 			}
 			$visualization_data_type = $this->data->fields->$source_description_field->getType();
 		} elseif (!is_null($this->data_field)) {
@@ -296,7 +296,7 @@ class P4A_Field extends P4A_Widget
 				case 'none':
 					break;
 				default:
-					P4A_Error('unknown encryption type:' . $this->getEncryptionType());
+					trigger_error('unknown encryption type:' . $this->getEncryptionType(), E_USER_ERROR);
 			}
 		} elseif (($this->type == 'password') and ($new_value == P4A_PASSWORD_OBFUSCATOR)) {
 			$set = false;
@@ -413,7 +413,7 @@ class P4A_Field extends P4A_Widget
 		case 'password':
 			break;
 		default:
-			p4a_error("$type is not a supported P4A_Field type");
+			trigger_error("$type is not a supported P4A_Field type", E_USER_ERROR);
 		}
 		$this->type = $type;
 		return $this;
@@ -431,7 +431,7 @@ class P4A_Field extends P4A_Widget
 				$this->encryption_type = $type;
 				break;
 			default:
-				P4A_Error('unknown encryption type:' . $type);
+				trigger_error("unknown encryption type: $type", E_USER_ERROR);
 		}
 		return $this;
 	}
@@ -473,9 +473,9 @@ class P4A_Field extends P4A_Widget
 				$this->setSourceDescriptionField($description_field);
 			}
 		} elseif (is_array($pk)) {
-			P4A_Error("ONLY ONE PK IN THIS CASE");
+			trigger_error("Only single primary key is allowed", E_USER_ERROR);
 		} elseif (is_null($pk)) {
-			P4A_Error("PLEASE DEFINE A PRIMARY KEY");
+			trigger_error("Please define a primary key", E_USER_ERROR);
 		}
 		return $this;
 	}

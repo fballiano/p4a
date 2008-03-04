@@ -20,6 +20,7 @@
 - P4A_DB_Source::getRowPosition() mystical bug with MySQL (same query called 2 times returns 2 different results)
   was found again and patched again
 - a bug with P4A_ERROR_Handler() was solved
+- P4A_Field was ported to trigger_error() instead of p4a_error
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability
