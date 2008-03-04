@@ -829,7 +829,7 @@ class P4A_Field extends P4A_Widget
 				$selected = "";
 			}
 
-			$sContent  = "<option $selected value='" . htmlspecialchars($current[$value_field]) ."'>";
+			$sContent  = "<option $selected value=\"" . htmlspecialchars($current[$value_field]) ."\">";
 			if ($this->isFormatted()) {
 				$sContent .= htmlspecialchars($this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals()));
 			} else {
