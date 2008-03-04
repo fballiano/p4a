@@ -24,6 +24,7 @@
 - P4A_Field was ported to trigger_error() instead of p4a_error
 - P4A::raiseXMLresponse() method is now public
 - P4A_Error_Handler was rewritten to be used in ajax calls too
+- check_configuration library now also checks for PHP version
 
 2.99.3
 - P4A_Toolbars code was refactored using P4A chainability

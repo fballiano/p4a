@@ -51,6 +51,19 @@ function p4a_check_configuration($additionalDir = null)
     	$error .= "P4A is configured as running on <b>Windows</b>, if your server operating system is different, than correct P4A_OS and _DS_ definition.";
     }
     $error .= "</div>\n";
+    
+    // PHP VERSION
+    $error .= "<div class='box'>Checking PHP VERSION: ";
+    $phpversion = explode('-', PHP_VERSION);
+    $phpversion = explode('.', $phpversion[0]);
+    
+    if ($phpversion[0] < 5 or ($phpversion[0] == 5 and $phpversion[1] < 2)) {
+    	$error .= "<span class='red'>{$phpversion[0]}.{$phpversion[1]}.{$phpversion[2]}</span><br />PHP 5.2.0 (or higher) is required in order to run P4A";
+    	$correct = false;
+    } else {
+    	$error .= "<span class='green'>{$phpversion[0]}.{$phpversion[1]}.{$phpversion[2]}</span>";
+    }
+    $error .= "</div>\n";
 
     // DOCUMENT ROOT
     $error .= "<div class='box'>Checking DOCUMENT_ROOT: ";
