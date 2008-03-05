@@ -9,6 +9,9 @@
 - if db-source is filtered, on new row use filter value as default value 
 - check postgresql serial
 
+2.99.5
+- a bug with invisible P4A_Table was solved
+
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved
 - a bug with P4A::getFocusedObjectId() method was solved

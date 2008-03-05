@@ -172,8 +172,9 @@ class P4A_Table extends P4A_Widget
 	 */
 	public function getAsString()
 	{
+		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return '<div id="' . $this->getId() . '">';
+			return "<div id='$id' class='hidden'></div>";
 		}
 
 		// if for some reason this page is empty we go back to page one
