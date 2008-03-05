@@ -607,7 +607,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
 			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
 			if (!empty($this->_join) and $db->getDBType() == 'mysql') {
-				$db->adapter->fetchOne($query);
+				$db->adapter->fetchOne($select);
 			}
 			return $db->adapter->fetchOne($select) + 1;
 		}
