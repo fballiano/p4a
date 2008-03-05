@@ -113,8 +113,18 @@ if (P4A_ENABLE_AUTO_INCLUSION) {
 	P4A_Include_Objects(P4A_APPLICATION_DIR . '/objects');
 }
 
+//Starting session
+session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
+session_start();
+
+//Running external commands (disabling error reporting)
+error_reporting(0);
+if (isset($_SESSION['p4a'])) {
+	$_SESSION['p4a']->executeExternalCommands();
+}
+
 //Setting PHP error reporting
-//set_exception_handler('P4A_Exception_Handler');
+set_exception_handler('P4A_Exception_Handler');
 if (P4A_EXTENDED_ERRORS) {
 	error_reporting(P4A_EXTENDED_ERROR_REPORTING);
 	set_error_handler('P4A_Error_Handler', P4A_EXTENDED_ERROR_REPORTING);

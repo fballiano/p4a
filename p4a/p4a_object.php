@@ -156,7 +156,9 @@ abstract class P4A_Object
 		$this_name = $this->getName();
 
 		foreach($this->_objects as $key=>$object_id) {
-			$p4a->objects[$object_id]->destroy();
+			if (isset($p4a->objects[$object_id]) and $p4a->objects[$object_id] instanceof P4A_Object) {
+				$p4a->objects[$object_id]->destroy();
+			}
 			unset($this->_objects[$key]);
 		}
 		

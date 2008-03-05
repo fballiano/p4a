@@ -286,11 +286,6 @@ class P4A extends P4A_Object
 
 	public static function singleton($class_name = "p4a")
 	{
-		if (!isset($_SESSION)) {
-			session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
-			session_start();
-		}
-
 		if (isset($_SESSION["p4a"])) {
 			return $_SESSION["p4a"];
 		}
@@ -342,6 +337,115 @@ class P4A extends P4A_Object
 	{
 		foreach($this->timer as $time){
 			print $time['diff'] .':' . $time['description'] . "\n";
+		}
+	}
+	
+	/**
+	 * Never call this method if you don't know what you're doing
+	 */
+	public function executeExternalCommands()
+	{
+		if (isset($_REQUEST['_p4a_application_download_missing_link'])) {
+			$text  = "You've the right to receive the source code of this application.<br />";
+			$text .= "Please contact your software vendor, he has to give it to you.<br />";
+			$text .= "If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, ";
+			$text .= "they'll help you getting your rights honored.";
+			P4A_Mask::singleton("P4A_Error_Mask")
+				->setTitle(__("Possible license violation"))
+				->setMessage(__($text))
+				->main();
+			die();
+		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
+			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
+				$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];
+			} else {
+				$obj =& $this;
+			}
+
+			$vars = get_object_vars($obj);
+			ksort($vars);
+			$name = $obj->getName();
+			if (empty($name)) $name = "P4A main object";
+			$name .= ' (' . get_class($obj) .  ')';
+
+			echo "<h1>$name</h1>";
+			echo "<table border='1'>";
+			echo "<tr><th>key</th><th>value</th></tr>";
+			foreach ($vars as $k=>$v) {
+				$v = _P4A_Debug_Print_Variable($v);
+				echo "<tr><td valign='top'>$k</td><td>$v</td></tr>";
+			}
+			echo "</table>";
+			die();
+		} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
+			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/connectors/php/connector.php';
+			die();
+		} elseif (isset($_REQUEST['_upload_path'])) {
+			$path = P4A_UPLOADS_PATH;
+			if (isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
+				$object =& $this->objects[$_REQUEST['_object_id']];
+				if ($object instanceof P4A_Field) {
+					$path .= '/' . $object->getUploadSubpath();
+				}
+			}
+			echo preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
+			die();
+		} elseif (isset($_REQUEST['_p4a_autocomplete'])) {
+			if (isset($_REQUEST['_object']) and
+				isset($_REQUEST['q']) and
+				isset($this->objects[$_REQUEST['_object']])) {
+				$object =& $this->objects[$_REQUEST['_object']];
+				$db = p4a_db::singleton($object->data_field->getDSN());
+				$data =& $object->data;
+				$description_field = $object->getSourceDescriptionField();
+				$q = P4A_Quote_SQL_Value($_REQUEST['q']);					
+				$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
+				$old_where = $data->getWhere();
+				if ($old_where) {
+					$where = "({$old_where}) AND ($where)";
+				}
+				$data->setWhere($where);
+				$all = $data->getAll();
+				$data->setWhere($old_where);
+				foreach ($all as $row) {
+					echo "{$row[$description_field]}\n";
+				}
+			}
+			die();
+		} elseif (isset($_REQUEST['_p4a_date_format'])) {
+			echo $this->i18n->format($_REQUEST['_p4a_date_format'], 'date');
+			die();
+		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
+			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
+			require P4A_ROOT_DIR . '/p4a/libraries/thumbnail_generator.php';
+			$thumb = new P4A_Thumbnail_Generator();
+			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
+				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
+				->setMaxWidth($image_data[1])
+				->setMaxHeight($image_data[1])
+				->processFile()
+				->cacheThumbnail();
+			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
+			die();
+		} elseif (isset($_REQUEST['_p4a_download_file'])) {
+			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);
+			if ($file !== false and strpos($file, P4A_UPLOADS_DIR) === 0 and file_exists($file)) {
+				$name = preg_replace("~^.*/~", '', $file);
+				header("Pragma: public");
+				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+				header("Cache-Control: private", false);
+				header("Content-type: application/octet-stream");
+				header("Content-Disposition: attachment; filename=\"$name\"");
+				header("Content-Length: " . filesize($file));
+				$fp = fopen($file, "rb");
+				fpassthru($fp);
+				fclose($fp);
+				
+				if (strpos($file, P4A_UPLOADS_TMP_DIR . '/_p4a_') === 0) {
+					unlink($file);
+				}
+			}
+			die();
 		}
 	}
 
@@ -415,106 +519,6 @@ class P4A extends P4A_Object
 			$this->_action_history_id++;
 			if ($_REQUEST['_ajax'] == 2) $this->active_mask->main();
 			$this->raiseXMLResponse();
-		} elseif (isset($_REQUEST['_p4a_application_download_missing_link'])) {
-			$text  = "You've the right to receive the source code of this application.<br />";
-			$text .= "Please contact your software vendor, he has to give it to you.<br />";
-			$text .= "If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, ";
-			$text .= "they'll help you getting your rights honored.";
-			P4A_Mask::singleton("P4A_Error_Mask")
-				->setTitle(__("Possible license violation"))
-				->setMessage(__($text))
-				->main();
-		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
-			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
-				$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];
-			} else {
-				$obj =& $this;
-			}
-
-			$vars = get_object_vars($obj);
-			ksort($vars);
-			$name = $obj->getName();
-			if (empty($name)) $name = "P4A main object";
-			$name .= ' (' . get_class($obj) .  ')';
-
-			echo "<h1>$name</h1>";
-			echo "<table border='1'>";
-			echo "<tr><th>key</th><th>value</th></tr>";
-			foreach ($vars as $k=>$v) {
-				$v = _P4A_Debug_Print_Variable($v);
-				echo "<tr><td valign='top'>$k</td><td>$v</td></tr>";
-			}
-			echo "</table>";
-			die();
-		} elseif (isset($_REQUEST['_rte_file_manager']) and isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
-			require P4A_THEME_DIR . '/widgets/rich_textarea/editor/filemanager/connectors/php/connector.php';
-			die();
-		} elseif (isset($_REQUEST['_upload_path'])) {
-			$path = P4A_UPLOADS_PATH;
-			if (isset($_REQUEST['_object_id']) and isset($this->objects[$_REQUEST['_object_id']])) {
-				$object =& $this->objects[$_REQUEST['_object_id']];
-				if (is_object($object) and method_exists($object, 'getUploadSubpath')) {
-					$path .= '/' . $object->getUploadSubpath();
-				}
-			}
-			echo preg_replace(array("~/+~", "~/$~"), array('/', ''), $path);
-			die();
-		} elseif (isset($_REQUEST['_p4a_autocomplete'])) {
-			if (isset($_REQUEST['_object']) and
-				isset($_REQUEST['q']) and
-				isset($this->objects[$_REQUEST['_object']])) {
-				$object =& $this->objects[$_REQUEST['_object']];
-				$db = p4a_db::singleton($object->data_field->getDSN());
-				$data =& $object->data;
-				$description_field = $object->getSourceDescriptionField();
-				$q = P4A_Quote_SQL_Value($_REQUEST['q']);					
-				$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
-				$old_where = $data->getWhere();
-				if ($old_where) {
-					$where = "({$old_where}) AND ($where)";
-				}
-				$data->setWhere($where);
-				$all = $data->getAll();
-				$data->setWhere($old_where);
-				foreach ($all as $row) {
-					echo "{$row[$description_field]}\n";
-				}
-			}
-			die();
-		} elseif (isset($_REQUEST['_p4a_date_format'])) {
-			echo $this->i18n->format($_REQUEST['_p4a_date_format'], 'date');
-			die();
-		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
-			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
-			require P4A_ROOT_DIR . '/p4a/libraries/thumbnail_generator.php';
-			$thumb = new P4A_Thumbnail_Generator();
-			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
-				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
-				->setMaxWidth($image_data[1])
-				->setMaxHeight($image_data[1])
-				->processFile()
-				->cacheThumbnail();
-			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
-			die();
-		} elseif (isset($_REQUEST['_p4a_download_file'])) {
-			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);
-			if ($file !== false and strpos($file, P4A_UPLOADS_DIR) === 0 and file_exists($file)) {
-				$name = preg_replace("~^.*/~", '', $file);
-				header("Pragma: public");
-				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-				header("Cache-Control: private", false);
-				header("Content-type: application/octet-stream");
-				header("Content-Disposition: attachment; filename=\"$name\"");
-				header("Content-Length: " . filesize($file));
-				$fp = fopen($file, "rb");
-				fpassthru($fp);
-				fclose($fp);
-				
-				if (strpos($file, P4A_UPLOADS_TMP_DIR . '/_p4a_') === 0) {
-					unlink($file);
-				}
-			}
-			die();
 		} elseif (P4A_ENABLE_RENDERING and is_object($this->active_mask)) {
 			$this->_action_history_id++;
 			$this->active_mask->main();
@@ -528,6 +532,9 @@ class P4A extends P4A_Object
 		flush();
 	}
 
+	/**
+	 * Never call this method if you don't know what you're doing
+	 */
 	public function raiseXMLResponse()
 	{
 		ob_start();

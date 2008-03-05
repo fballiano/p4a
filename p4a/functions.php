@@ -470,13 +470,10 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
  */
 function P4A_Exception_Handler(Exception $e)
 {
-	$message = $e->getMessage();
-	if (P4A_EXTENDED_ERRORS) {
-		$message .= "<br /><em>File: {$e->getFile()}, Line: {$e->getLine()}</em>";
-	}
-	
-	ob_end_clean();
 	$p4a = P4A::singleton();
+	$error_file = basename($e->getFile());
+	$message = $e->getMessage() . "<br /><em>File: {$error_file}, Line: {$e->getLine()}</em>";
+	
 	$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
 	if ($p4a->inAjaxCall()) {
 		$p4a->raiseXMLResponse();
@@ -484,7 +481,6 @@ function P4A_Exception_Handler(Exception $e)
 		$error_mask->main();
 	}
 	$p4a->close();
-	die();
 }
 
 /**
