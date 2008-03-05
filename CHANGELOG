@@ -5,7 +5,6 @@
 - implement errors with exceptions and tie them to p4a_error_handler
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
-- file preview or whatever should raise some visible errors when file does not exists
 - if db-source is filtered, on new row use filter value as default value 
 - check postgresql serial
 
