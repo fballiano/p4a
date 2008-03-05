@@ -27,8 +27,7 @@
 - check_configuration library now also checks for PHP version
 - P4A::executeExternalCommands() method was added
 - all tasks dealing with external systems where moved from P4A::main() to P4A::executeExternalCommands()
-- session_start() instruction was moved from P4A::singleton() method to p4a.php main inclusion file
-- P4A::executeExternalCommands() is executed just after the session_start(), in the p4a.php main inclusion file
+- P4A::executeExternalCommands() is executed just after the session_start(), in the P4A::singleton() method
 - P4A_Object::destroy() now checks if every object to destroy is a P4A_Object before calling destroy() recursively on it
 
 2.99.3

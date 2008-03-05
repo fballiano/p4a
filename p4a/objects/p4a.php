@@ -146,7 +146,7 @@ class P4A extends P4A_Object
 	{
 		//do not call parent constructor
 		$_SESSION["p4a"] =& $this;
-		$this->i18n =& new p4a_i18n(P4A_LOCALE);
+		$this->i18n = new p4a_i18n(P4A_LOCALE);
 
 		$this->build("P4A_Collection", "masks");
 		$browser_identification = $this->detectClient();
@@ -286,6 +286,24 @@ class P4A extends P4A_Object
 
 	public static function singleton($class_name = "p4a")
 	{
+		if (!isset($_SESSION)) {
+			session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
+			session_start();
+			if (isset($_SESSION['p4a'])) {
+				error_reporting(0);
+				$_SESSION['p4a']->executeExternalCommands();
+			}
+			
+			set_exception_handler('P4A_Exception_Handler');
+			if (P4A_EXTENDED_ERRORS) {
+				error_reporting(P4A_EXTENDED_ERROR_REPORTING);
+				set_error_handler('P4A_Error_Handler', P4A_EXTENDED_ERROR_REPORTING);
+			} else {
+				error_reporting(P4A_DEFAULT_ERROR_REPORTING);
+				set_error_handler('P4A_Error_Handler', P4A_DEFAULT_ERROR_REPORTING);
+			}
+		}
+		
 		if (isset($_SESSION["p4a"])) {
 			return $_SESSION["p4a"];
 		}

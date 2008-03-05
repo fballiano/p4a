@@ -208,11 +208,11 @@ function P4A_Include_Objects($dir)
 		}
 		closedir($dh);
 
-		for ($i=0;$i<count($files);$i++) {
-			if(is_dir($dir .'/' . $files[$i])) {
-				$dirs[]	= $dir .'/' . $files[$i];
-			} elseif (is_file($dir .'/' . $files[$i]) and (substr($files[$i], -4) == '.php')) {
-				require_once $dir .'/' .$files[$i];
+		for ($i=0; $i<count($files); $i++) {
+			if(is_dir("$dir/{$files[$i]}")) {
+				$dirs[]	= "$dir/{$files[$i]}";
+			} elseif (is_file("$dir/{$files[$i]}") and (substr($files[$i], -4) == '.php')) {
+				require_once "$dir/{$files[$i]}";
 			}
 		}
 
