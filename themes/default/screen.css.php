@@ -1,8 +1,37 @@
+<?php
 /**
- * Copyright (c) CreaLabs SNC (http://www.crealabs.it)
- * Code licensed under AGPL3 license:
- * http://www.gnu.org/licenses/agpl.html
+ * This file is part of P4A - PHP For Applications.
+ *
+ * P4A is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * P4A is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/agpl.html>.
+ * 
+ * To contact the authors write to:									<br />
+ * CreaLabs SNC														<br />
+ * Via Medail, 32													<br />
+ * 10144 Torino (Italy)												<br />
+ * Website: {@link http://www.crealabs.it}							<br />
+ * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
+ *
+ * @author Andrea Giardina <andrea.giardina@crealabs.it>
+ * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright CreaLabs SNC
+ * @link http://www.crealabs.it
+ * @link http://p4a.sourceforge.net
+ * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
+ * @package p4a
  */
+header('Content-type: text/css');
+?>
 
 /*************************/
 /* Default mask template */
@@ -214,7 +243,7 @@
 .field_error select,
 .field_error iframe {
 	border: 1px dashed red;
-	background: url(/p4a/icons/default/error.gif) no-repeat bottom right;
+	background: url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/field/error.gif) no-repeat bottom right;
 }
 
 .field_error .field_error_msg {
@@ -640,7 +669,7 @@ table.p4a_message td.c2 {
 /************/
 
 #p4a_menu {
-	background: #fafafa;
+	background-color: #fafafa;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -666,9 +695,7 @@ table.p4a_message td.c2 {
 
 .p4a_menu li {
 	float: left;
-	background: #fafafa;
 	display: block;
-	color: black;
 }
 
 .p4a_menu ul {
@@ -697,7 +724,6 @@ table.p4a_message td.c2 {
 	padding: 5px;
 }
 
-.p4a_menu a:hover,
 .p4a_menu li:hover {
 	display: block;
 	background-color: #e2e7ed;
@@ -722,6 +748,14 @@ table.p4a_message td.c2 {
 .p4a_menu ul ul ul li:hover ul,
 .p4a_menu ul ul ul ul li:hover ul{
 	display:block;
+}
+
+.p4a_menu li li.p4a_menu_has_items {
+	background: #fafafa url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/menu/has_items.gif) no-repeat center right;
+}
+
+.p4a_menu li li.p4a_menu_has_items:hover {
+	background: #e2e7ed url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/menu/has_items.gif) no-repeat center right;
 }
 
 /***********/

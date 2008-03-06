@@ -12,6 +12,9 @@
 - a bug with invisible P4A_Table was solved
 - P4A_Quote_Javascript_String() global function was added
 - P4A_Widget::requireConfirmation() method now uses P4A_Quote_Javascript_String()
+- screen.css was renamed screen.css.php
+- some of the images used for P4A_Table and P4A_Field were moved in a better directory organization
+- P4A_Menu has a submenu indicator (a small arrow that make users aware that a submenu is present)
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved

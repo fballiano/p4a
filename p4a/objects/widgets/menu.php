@@ -282,6 +282,7 @@ class P4A_Menu_Item extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
+		$has_items = $this->hasItems() ? "class='p4a_menu_has_items'" : '';
 		$properties = $this->composeStringProperties();
 		if (P4A::singleton()->isHandheld()) {
 			$icon = '';
@@ -300,13 +301,13 @@ class P4A_Menu_Item extends P4A_Widget
 		}
 
 		if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
-			$sReturn = "<li>" . P4A_Generate_Widget_Layout_Table($icon, "<div $properties>" . $this->getLabel() . "</div>");
+			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<div $properties>" . $this->getLabel() . "</div>");
 		} else {
 			$actions = $this->composeStringActions();
-			$sReturn = "<li>" . P4A_Generate_Widget_Layout_Table($icon, "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>");
+			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>");
 		}
 
-		if ($this->hasItems()) {
+		if ($has_items) {
 			$sReturn .= "<ul>";
 			while ($item = $this->items->nextItem()) {
 				$sReturn .= $item->getAsString();
