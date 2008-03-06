@@ -580,7 +580,7 @@ abstract class P4A_Widget extends P4A_Object
 			}
 
 			if ($action_data['confirm'] !== null) {
-				$prefix .= 'if(confirm(\''. str_replace('\'', '\\\'', __($action_data['confirm'])) .'\')){';
+				$prefix .= 'if(confirm(\''. P4A_Quote_Javascript_String(__($action_data['confirm'])) .'\')){';
 				$suffix .= '}';
 			}
 

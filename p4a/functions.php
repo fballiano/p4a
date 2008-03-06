@@ -417,6 +417,15 @@ function P4A_Quote_SQL_Value($value)
 }
 
 /**
+ * @param string $string
+ * @return string
+ */
+function P4A_Quote_Javascript_String($string)
+{
+	return str_replace(array("'", '"', "\n"), array('\\x27', '\\x22', '\n'), $string);
+}
+
+/**
  * @param string $dir
  * @return boolean
  */

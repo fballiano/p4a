@@ -10,6 +10,8 @@
 
 2.99.5
 - a bug with invisible P4A_Table was solved
+- P4A_Quote_Javascript_String() global function was added
+- P4A_Widget::requireConfirmation() method now uses P4A_Quote_Javascript_String()
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved
