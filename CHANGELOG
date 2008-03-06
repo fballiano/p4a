@@ -6,7 +6,7 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - if db-source is filtered, on new row use filter value as default value 
-- check postgresql serial
+- check postgresql serial and boolean
 
 2.99.5
 - a bug with invisible P4A_Table was solved
