@@ -160,10 +160,10 @@ p4a_tooltip_show = function (widget)
 p4a_calendar_open = function (id)
 {
 	var element = $('#'+id);
-	if(!element.hasClass($.datepicker.markerClassName)) {
-		element.attachDatepicker();
+	if(!element.is($.datepicker.markerClassName)) {
+		element.datepicker();
 	}
-	element.showDatepicker();
+	element.datepicker('show');
 	return false;
 }
 
