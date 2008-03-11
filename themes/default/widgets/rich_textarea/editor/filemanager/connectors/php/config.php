@@ -37,7 +37,7 @@ $Config['UserFilesPath'] = P4A_UPLOADS_PATH . '/' . $this->objects[$_REQUEST['_o
 // user files directory. Useful if you are using a virtual directory, symbolic
 // link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
 // Attention: The above 'UserFilesPath' must point to the same directory.
-$Config['UserFilesAbsolutePath'] = '' ;
+$Config['UserFilesAbsolutePath'] = P4A_UPLOADS_DIR . '/' . $this->objects[$_REQUEST['_object_id']]->getUploadSubpath(); ;
 
 // Due to security issues with Apache modules, it is recommended to leave the
 // following setting enabled.
