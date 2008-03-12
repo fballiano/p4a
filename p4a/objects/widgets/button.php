@@ -160,9 +160,17 @@ class P4A_Button extends P4A_Widget
 			$icon = "<img src='$icon' alt=''>";
 		}
 		if ($icon) {
-			$class = $this->composeStringClass(array('p4a_button_image'));
+			$class = array('p4a_button_image');
+			if (!$this->isEnabled()) $class[] = 'p4a_button_image_disabled';
+			$class = $this->composeStringClass($class);
 		} else {
-			$class = $this->composeStringClass();
+			$class = array();
+			if (!$this->isEnabled()) $class[] = 'p4a_button_disabled';
+			$class = $this->composeStringClass($class);
+		}
+		
+		if (!$this->isEnabled()) {
+			$properties = " disabled='disabled' ";
 		}
 		
 		return "<button id='$id' title='$title' $class $properties $actions>" . 
