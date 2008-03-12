@@ -139,7 +139,7 @@ class Products extends P4A_Base_Mask
 			->enable(false);
 
 		$this->fields->category_id
-			//->setType("select")
+			->setType("select")
 			->setSource(P4A::singleton()->categories)
 			->setSourceDescriptionField("description")
 			->setLabel("Category")
