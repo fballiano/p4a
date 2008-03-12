@@ -664,7 +664,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
-		if ($this->isEnabled() and is_object($this->data)) {
+		if ($this->isEnabled() and is_object($this->data) and $this->data instanceof P4A_DB_Source) {
 			$sReturn .= "<script type='text/javascript'>\$(function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true});});</script>";
 		}
 		return $sReturn;
