@@ -373,12 +373,10 @@ hr.p4a_line {
 
 .p4a_db_navigator .hoverclass a {
 	color: red;
-	font-weight: bold;
 }
 
 .p4a_db_navigator .hoverclass li a {
-	color: #4B718A;
-	font-weight: normal;
+	color: #4b718a;
 }
 
 /***************************/

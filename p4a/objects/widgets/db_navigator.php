@@ -178,7 +178,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	public function allowMovement($field)
 	{
 		$this->field_to_update_on_movement = $field->getId();
-		$this->intercept($field, 'onchange', 'onMovement');
+		$field->implement('onchange', $this, 'onMovement');
 		return $this;
 	}
 
@@ -256,10 +256,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		// that's because we use too complex javascript for old handhelds
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
 			$js .= "<script type='text/javascript'>\n";
-			$js .= "\$('#{$obj_id}_{$current}').Draggable({revert:true,fx:200,ghosting:true});\n";
-			$js .= "\$('#{$obj_id} li a').Droppable({accept:'active_node',hoverclass:'hoverclass',ondrop:function(){\$('#{$this->field_to_update_on_movement}input').val(\$(this).parent().attr('id').split('_')[1]); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onChange');}});\n";
+			$js .= "\$('#{$obj_id}_{$current}').draggable({helper:'clone'});\n";
+			$js .= "\$('#{$obj_id} li a').droppable({accept:'.active_node',hoverClass:'hoverclass',tolerance:'pointer',drop:function(){\$('#{$this->field_to_update_on_movement}input').val(\$(this).parent().attr('id').split('_')[1]); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onchange');}});\n";
 			if ($this->allow_movement_to_root) {
-				$js .= "\$('#{$obj_id}').Droppable({accept:'active_node',hoverclass:'hoverclass',ondrop:function(){\$('#{$this->field_to_update_on_movement}input').val(''); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onChange');}});\n";
+				$js .= "\$('#{$obj_id}').droppable({accept:'.active_node',hoverClass:'hoverclass',tolerance:'pointer',drop:function(){\$('#{$this->field_to_update_on_movement}input').val(''); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onChange');}});\n";
 			}
 			$js .= "</script>\n";
 		}
