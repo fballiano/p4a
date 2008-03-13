@@ -22,6 +22,8 @@
 - P4A_DB_Source was completely ported to the new error handlers
 - multicheckbox CSS was fixed
 - P4A_Field::getAsMultiselect() method now added a "size" property if none was specified
+- index.php file was reworked and the new logo was added
+- index.php file was renamed index.html
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved
