@@ -5,7 +5,6 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - check postgresql serial and boolean
-- test multicheckbox
 
 2.99.5
 - a bug with invisible P4A_Table was solved
