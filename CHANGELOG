@@ -6,6 +6,9 @@
 - do some strict validation
 - check postgresql serial and boolean
 
+2.99.6
+- 
+
 2.99.5
 - a bug with invisible P4A_Table was solved
 - P4A_Quote_Javascript_String() global function was added
