@@ -20,6 +20,7 @@
 - P4A_Button now addes 'p4a_button_disabled' or 'p4a_button_image_disabled' class if disabled
 - a bug with P4A_Field autocomplete was solved 
 - P4A_DB_Source was completely ported to the new error handlers
+- multicheckbox CSS was fixed
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved

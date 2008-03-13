@@ -901,7 +901,7 @@ class P4A_Field extends P4A_Widget
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 
-		$sReturn  = "<div>";
+		$sReturn  = "<div class='p4a_field_multicheckbox_values'>";
 		$sReturn .= "<input type='hidden' name='$id' id='{$id}input' value='' />";
 
 		$external_data		= $this->data->getAll();

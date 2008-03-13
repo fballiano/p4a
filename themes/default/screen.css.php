@@ -255,6 +255,15 @@ header('Content-type: text/css');
 	border: 2px solid #4b718a;
 }
 
+.p4a_field_multicheckbox_values {
+	text-align: left;
+	float: left;
+}
+
+.p4a_field_multicheckbox_values input {
+	border: none;
+}
+
 /****************************/
 /* P4A_Field - autocomplete */
 /****************************/
