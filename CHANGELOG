@@ -7,7 +7,7 @@
 - check postgresql serial and boolean
 
 2.99.6
-- 
+- a bug with P4A_Navigation_Bar was solved
 
 2.99.5
 - a bug with invisible P4A_Table was solved

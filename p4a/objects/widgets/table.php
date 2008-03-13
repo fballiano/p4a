@@ -932,7 +932,6 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	{
 		parent::__construct("table_navigation_bar");
 		$this->build("p4a_collection", "buttons");
-		$this->setStyleProperty("float", "none");
 
 		$this->addButton('go', 'apply', 'right');
 		$this->buttons->go->setLabel("Go");
@@ -1086,7 +1085,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	{
 		$parent = P4A::singleton()->getObject($this->getParentID());
 
-		$num_page = (int)$this->buttons->field_num_page->getNewValue();
+		$num_page = (int)$this->buttons->page_number->getNewValue();
 		$num_pages = $parent->data->getNumPages();
 
 		if ($num_page < 1) {
