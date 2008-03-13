@@ -940,7 +940,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 			return substr($return, 0, -4);
 		} else {
-			p4a_error("NO PK");
+			trigger_error("NO PK", E_USER_ERROR);
 		}
 	}
 
@@ -969,9 +969,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (!$fk) {
 			$pk = $this->getPk();
 			if (!$pk) {
-				P4A_Error("Set PK before calling \"addMultivalueField\"");
+				trigger_error("Set PK before calling \"addMultivalueField\"", E_USER_ERROR);
 			} elseif (is_array($pk)) {
-				P4A_Error("Multivalue not usable with multiple pk");
+				trigger_error("Multivalue not usable with multiple pk", E_USER_ERROR);
 			} else {
 				$fk = $pk;
 			}

@@ -8,7 +8,6 @@
 - test multicheckbox
 
 2.99.5
-- a bug with P4A_Field autocomplete was solved 
 - a bug with invisible P4A_Table was solved
 - P4A_Quote_Javascript_String() global function was added
 - P4A_Widget::requireConfirmation() method now uses P4A_Quote_Javascript_String()
@@ -19,6 +18,8 @@
 - a bug with FCKEditor's filemanager was solved
 - P4A_Button now render the "disabled='disabled'" property if disabled
 - P4A_Button now addes 'p4a_button_disabled' or 'p4a_button_image_disabled' class if disabled
+- a bug with P4A_Field autocomplete was solved 
+- P4A_DB_Source was completely ported to the new error handlers
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved
