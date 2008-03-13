@@ -21,6 +21,7 @@
 - a bug with P4A_Field autocomplete was solved 
 - P4A_DB_Source was completely ported to the new error handlers
 - multicheckbox CSS was fixed
+- P4A_Field::getAsMultiselect() method now added a "size" property if none was specified
 
 2.99.4
 - a bug with quoted strings in P4A_Field::getAsSelect was solved

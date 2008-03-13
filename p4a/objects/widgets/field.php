@@ -851,6 +851,10 @@ class P4A_Field extends P4A_Widget
 		$id = $this->getID();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
+		$external_data = $this->data->getAll();
+		$value_field = $this->getSourceValueField();
+		$description_field = $this->getSourceDescriptionField();
+		$new_value = $this->getNewValue();
 
 		$sReturn  = "<input type='hidden' name='{$id}' id='{$id}input' value='' />";
 		$sReturn .= "<select id='{$id}input' multiple='multiple' " . $this->composeStringStyle() . " ";
@@ -860,15 +864,12 @@ class P4A_Field extends P4A_Widget
 			}
 			$sReturn .= $property_name . '="' . $property_value . '" ' ;
 		}
+		if (!isset($this->properties['size']) and sizeof($external_data)) {
+			$sReturn .= 'size="' . sizeof($external_data) . '" ' ;
+		}
 		$sReturn .= "$actions>";
 
-		$external_data		= $this->data->getAll();
-		$value_field		= $this->getSourceValueField();
-		$description_field	= $this->getSourceDescriptionField();
-		$new_value			= $this->getNewValue();
-
-		foreach ($external_data as $key=>$current)
-		{
+		foreach ($external_data as $key=>$current) {
 			if (!$new_value) {
 				$new_value = array();
 			}
@@ -888,7 +889,6 @@ class P4A_Field extends P4A_Widget
 
 		}
 		$sReturn .= "</select>";
-
 		return $this->composeLabel() . $sReturn;
 	}
 
