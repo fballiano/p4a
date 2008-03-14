@@ -368,11 +368,6 @@ hr.p4a_line {
 	list-style: inherit;
 }
 
-.p4a_browser_opera .p4a_db_navigator,
-.p4a_browser_ie .p4a_db_navigator ul {
-	margin-left: 0;
-}
-
 .p4a_browser_opera .p4a_db_navigator li,
 .p4a_browser_ie .p4a_db_navigator li {
 	margin-top: 5px;
@@ -380,6 +375,10 @@ hr.p4a_line {
 
 * html .p4a_browser_ie .p4a_db_navigator ul {
 	margin-left: -10px;
+}
+
+* html .p4a_browser_ie .p4a_db_navigator ul ul {
+	margin-left: 0;
 }
 
 * html .p4a_browser_ie .p4a_db_navigator li {
