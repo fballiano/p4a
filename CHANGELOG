@@ -14,6 +14,7 @@
 - a bug on Internet Explorer 6 and sidebars was solved
 - jQuery::iFixPNG was updated to 2.0
 - "folder" and "folder_open" icons were also added in the GIF format (due the ie bug and our usage in list-style-image)
+- P4A_DB_Navigator's CSS was reworked for browser compatibility
 
 2.99.5
 - a bug with invisible P4A_Table was solved
