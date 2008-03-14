@@ -482,8 +482,10 @@ table.p4a_message td.c2 {
 	border: 1px solid #c6d3de;
 }
 
-.p4a_toolbar .p4a_button_disabled:hover {
+.p4a_toolbar .p4a_button_disabled:hover,
+.p4a_toolbar .p4a_button_image_disabled:hover {
 	border: 1px solid #fafafa;
+	cursor: default;
 }
 
 .p4a_toolbar_16 button {

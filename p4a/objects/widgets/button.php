@@ -169,10 +169,6 @@ class P4A_Button extends P4A_Widget
 			$class = $this->composeStringClass($class);
 		}
 		
-		if (!$this->isEnabled()) {
-			$properties = " disabled='disabled' ";
-		}
-		
 		return "<button id='$id' title='$title' $class $properties $actions>" . 
 				P4A_Generate_Widget_Layout_Table($icon, $label) . '</button>';
 	}
