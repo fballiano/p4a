@@ -192,6 +192,10 @@ header('Content-type: text/css');
 	margin: 10px 10px 10px 0px;
 }
 
+* html .p4a_fieldset .row {
+	margin-left: -10px;
+}
+
 * html .p4a_fieldset {
 	float: left;
 }
@@ -371,10 +375,6 @@ hr.p4a_line {
 .p4a_browser_opera .p4a_db_navigator li,
 .p4a_browser_ie .p4a_db_navigator li {
 	margin-top: 5px;
-}
-
-* html .p4a_browser_ie .p4a_db_navigator ul {
-	margin-left: -10px;
 }
 
 * html .p4a_browser_ie .p4a_db_navigator ul ul {
