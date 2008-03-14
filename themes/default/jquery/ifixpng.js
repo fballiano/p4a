@@ -1,8 +1,7 @@
 /*
  * jQuery ifixpng plugin
- * renamed from pngfix to ifixpng due to naming conflict 
- * with another plugin
- * Version 1.7  (18/09/2007)
+ * (previously known as pngfix)
+ * Version 2.0  (04/11/2007)
  * @requires jQuery v1.1.3 or above
  *
  * Examples at: http://jquery.khurshid.com
@@ -31,7 +30,7 @@
   */
  
 (function($) {
-	
+
 	/**
 	 * helper variables and function
 	 */
@@ -44,7 +43,7 @@
 	};
 	
 	var hack = {
-		ltie7  : $.browser.msie && /MSIE\s(5\.5|6\.)/.test(navigator.userAgent),
+		ltie7  : $.browser.msie && $.browser.version < 7,
 		filter : function(src) {
 			return "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=crop,src='"+src+"')";
 		}
@@ -67,20 +66,22 @@
 			var $$ = $(this);
 			var base = $('base').attr('href'); // need to use this in case you are using rewriting urls
 			if ($$.is('img') || $$.is('input')) { // hack image tags present in dom
-				if ($$.attr('src').match(/.*\.png([?].*)?$/i)) { // make sure it is png image
-					// use source tag value if set 
-					var source = (base && $$.attr('src').substring(0,1)!='/') ? base + $$.attr('src') : $$.attr('src');
-					// apply filter
-					$$.css({filter:hack.filter(source), width:$$.width(), height:$$.height()})
-					  .attr({src:$.ifixpng.getPixel()})
-					  .positionFix();
+				if ($$.attr('src')) {
+					if ($$.attr('src').match(/.*\.png([?].*)?$/i)) { // make sure it is png image
+						// use source tag value if set 
+						var source = (base && $$.attr('src').substring(0,1)!='/') ? base + $$.attr('src') : $$.attr('src');
+						// apply filter
+						$$.css({filter:hack.filter(source), width:$$.width(), height:$$.height()})
+						  .attr({src:$.ifixpng.getPixel()})
+						  .positionFix();
+					}
 				}
 			} else { // hack png css properties present inside css
 				var image = $$.css('backgroundImage');
 				if (image.match(/^url\(["']?(.*\.png([?].*)?)["']?\)$/i)) {
 					image = RegExp.$1;
 					$$.css({backgroundImage:'none', filter:hack.filter(image)})
-					  .positionFix();
+					  .children().children().positionFix();
 				}
 			}
 		});
