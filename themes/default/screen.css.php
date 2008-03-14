@@ -46,7 +46,8 @@ header('Content-type: text/css');
 #p4a_top_container {
 	width: 100%;
 	position: fixed;
-	top: 0px;
+	top: 0;
+	left: 0;
 	z-index: 2;
 }
 
