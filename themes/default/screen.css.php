@@ -377,10 +377,6 @@ hr.p4a_line {
 	margin-top: 5px;
 }
 
-* html .p4a_browser_ie .p4a_db_navigator ul ul {
-	margin-left: 0;
-}
-
 * html .p4a_browser_ie .p4a_db_navigator li {
 	margin-top: 0;
 }
