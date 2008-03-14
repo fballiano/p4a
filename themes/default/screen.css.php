@@ -357,13 +357,11 @@ hr.p4a_line {
 .p4a_db_navigator {
 	text-align: left;
 	font-weight: normal;
-	margin: 0;
-	padding: 0;
-	list-style-position: inside;
 }
 
 .p4a_db_navigator ul {
 	padding-left: 15px;
+	margin-left: 5px;
 }
 
 .p4a_db_navigator li {
