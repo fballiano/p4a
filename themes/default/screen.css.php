@@ -113,21 +113,20 @@ header('Content-type: text/css');
 	border-bottom: 1px solid #ccc;
 	position: fixed !important;
 	position: absolute;
-	bottom: 10px;
- 	top: 0px;
+ 	top: 0;
  	height: 100%;
 	padding: 10px;
 	z-index: 2;
 }
 
 #p4a_sidebar_left {
- 	left: 0px;
+ 	left: 0;
  	border-right: 1px solid #ccc;
 }
 
 #p4a_sidebar_right {
 	border-left: 1px solid #ccc;
- 	right: 0px;
+ 	right: 0;
 }
 
 /***********************/
