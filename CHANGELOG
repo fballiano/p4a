@@ -8,6 +8,7 @@
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved
+- P4A_Fieldset's CSS was changed a bit so it should have the exact width set by setWidth
 
 2.99.5
 - a bug with invisible P4A_Table was solved

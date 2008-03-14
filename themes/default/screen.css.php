@@ -186,7 +186,10 @@ header('Content-type: text/css');
 
 .p4a_fieldset {
 	border: 1px solid #c6d3de;
-	padding: 10px 10px 10px 0px;
+}
+
+.p4a_fieldset .row {
+	margin: 10px 10px 10px 0px;
 }
 
 * html .p4a_fieldset {
