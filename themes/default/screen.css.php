@@ -370,6 +370,15 @@ hr.p4a_line {
 	list-style: inherit;
 }
 
+.p4a_browser_opera .p4a_db_navigator li,
+.p4a_browser_ie .p4a_db_navigator li {
+	margin-bottom: 5px;
+}
+
+* html .p4a_browser_ie .p4a_db_navigator li {
+	margin-bottom: 0;
+}
+
 .p4a_db_navigator a,
 .p4a_db_navigator {
 	text-decoration: none;
