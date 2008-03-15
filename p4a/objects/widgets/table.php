@@ -405,7 +405,7 @@ class P4A_Table extends P4A_Widget
 			if (isset($this->cols->$col)) {
 				$this->cols->$col->setVisible();
 			} else {
-				P4A_Error("Unknow column $col");
+				trigger_error("P4A_Table::setVisibleCol(): Unknow column $col", E_USER_ERROR);
 			}
 		}
 
@@ -429,7 +429,7 @@ class P4A_Table extends P4A_Widget
 			if (isset($this->cols->$col)) {
 				$this->cols->$col->setVisible(false);
 			} else {
-				P4A_Error("Unknow column $col");
+				trigger_error("P4A_Table::setInvisibleCols(): Unknow column $col", E_USER_ERROR);
 			}
 		}
 		
@@ -585,7 +585,7 @@ class P4A_Table_Col extends P4A_Widget
 		if ($pk !== null) {
 			if ($this->getSourceValueField() === null) {
 				if (is_array($pk)) {
-					P4A_Error("FEATURE NOT IMPLEMENTED: Multiple pk on table col.");
+					trigger_error("P4A_Table::setSource(): Columns support only one primary key");
 				} else {
 					$this->setSourceValueField($pk);
 				}
