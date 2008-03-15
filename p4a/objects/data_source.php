@@ -434,7 +434,7 @@ abstract class P4A_Data_Source extends P4A_Object
 			}
 			return $return;
 		} else {
-			P4A_Error("NO PK");
+			trigger_error("P4A_Data_Source::getPkValues(): no primary key defined");
 		}
 	}
 

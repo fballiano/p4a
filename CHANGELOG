@@ -19,7 +19,7 @@
 - P4A_Thumbnail_Generator::isMimeTypeSupported() method was added
 - P4A_Field::getAsFile() method now calls P4A_Thumbnail_Generator::isMimeTypeSupported() before rendering the image preview
 - P4A_Field::getAsFile() method now always render the "preview" button, but it will be disabled if no preview is available
-- P4A_DB, P4A_Tab_Pane, P4A_Table were ported to the new error_handlers
+- P4A_DB, P4A_Tab_Pane, P4A_Table, P4A_Data_Source were ported to the new error_handlers
 
 2.99.5
 - a bug with invisible P4A_Table was solved
