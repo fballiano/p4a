@@ -186,6 +186,7 @@ header('Content-type: text/css');
 
 .p4a_fieldset {
 	border: 1px solid #c6d3de;
+	padding-bottom: 10px;
 }
 
 .p4a_fieldset .row {
