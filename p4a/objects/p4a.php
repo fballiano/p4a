@@ -315,7 +315,7 @@ class P4A extends P4A_Object
 	 */
 	public function close()
 	{
-		session_destroy();
+		@session_destroy();
 	}
 
 	/**
