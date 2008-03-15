@@ -72,7 +72,7 @@ class P4A_DB
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
-					p4a_error("db not supported");
+					trigger_error("{$dsn_data['scheme']} is not a supported DB engine", E_USER_ERROR);
 				}
 				
 				switch ($dsn_data['scheme']) {
