@@ -521,10 +521,7 @@ class P4A extends P4A_Object
 						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
 					}
 				} else {
-					$e = new P4A_Error("Uploading $extension files is denied", $this);
-					if ($this->errorHandler('onUploadDeniedExtension', $e) !== PROCEED) {
-						die();
-					}
+					throw new P4A_Exception("Uploading $extension files is denied", P4A_FILESYSTEM_ERROR);
 				}
 			}
 
