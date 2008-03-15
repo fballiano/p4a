@@ -94,7 +94,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				$this->_active_page_name = $page->getName();
 				break;
 			default:
-				P4A_Error('P4A_Tab_pane "' . $this->getName() . '": unable to set "' . gettype($page) . '" as active page, reason: unsopported type');
+				trigger_error('P4A_Tab_pane "' . $this->getName() . '": unable to set "' . gettype($page) . '" as active page, reason: unsopported type', E_USER_ERROR);
 				break;
 		}
 

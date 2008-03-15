@@ -4,6 +4,7 @@
 - implement errors with exceptions and tie them to p4a_error_handler
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
+- do the extended_errors
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved
@@ -18,6 +19,7 @@
 - P4A_Thumbnail_Generator::isMimeTypeSupported() method was added
 - P4A_Field::getAsFile() method now calls P4A_Thumbnail_Generator::isMimeTypeSupported() before rendering the image preview
 - P4A_Field::getAsFile() method now always render the "preview" button, but it will be disabled if no preview is available
+- P4A_Tab_Pane was ported to the new error_handlers
 
 2.99.5
 - a bug with invisible P4A_Table was solved
