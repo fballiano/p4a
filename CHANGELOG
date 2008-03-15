@@ -1,7 +1,6 @@
 3.0.0 TODO
 - implement application level translations
 - port products_catalogue to the new translation system
-- implement errors with exceptions and tie them to p4a_error_handler
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 - do the extended_errors
