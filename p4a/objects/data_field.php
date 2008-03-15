@@ -77,6 +77,11 @@ class P4A_Data_Field extends P4A_Object
 	/**
 	 * @var string
 	 */
+	protected $_DSN = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $schema = null;
 	
 	/**
@@ -225,6 +230,8 @@ class P4A_Data_Field extends P4A_Object
 	{
 		if ($name === null) {
 			$this->sequence = null;
+		} elseif (P4A_DB::singleton($this->getDSN())->getDBType() == 'pgsql') {
+			$this->sequence = $name;
 		} else {
 			$this->sequence = "{$name}_seq";
 		}

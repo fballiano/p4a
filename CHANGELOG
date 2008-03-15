@@ -4,7 +4,6 @@
 - implement errors with exceptions and tie them to p4a_error_handler
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
-- check postgresql serial and boolean
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved
@@ -15,6 +14,7 @@
 - jQuery::iFixPNG was updated to 2.0
 - "folder" and "folder_open" icons were also added in the GIF format (due the ie bug and our usage in list-style-image)
 - P4A_DB_Navigator's CSS was reworked for browser compatibility
+- a bug with PostgreSQL and automatic sequence name creation was fixed
 
 2.99.5
 - a bug with invisible P4A_Table was solved
