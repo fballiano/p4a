@@ -32,19 +32,6 @@
  */
 
 /**
- * Stops program execution with an error
- * @param string $error Error identifier
- * @param string $message Error description or other message
- */
-function P4A_Error($error, $message = '')
-{
-	if (strlen($message)) {
-		$error .= ": $message";
-	}
-	die($error);
-}
-
-/**
  * Converts a "file" value into an array
  * @param string $file
  * @return array
@@ -250,7 +237,7 @@ function P4A_Is_Extension_Allowed($extension)
  */
 function __($string)
 {
-	return p4a::singleton()->i18n->translate($string);
+	return P4A::singleton()->i18n->translate($string);
 }
 
 /**
