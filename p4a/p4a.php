@@ -48,6 +48,7 @@ ini_set('include_path', $new_include_path);
 require_once "$dir/libraries/check_configuration.php";
 require_once "$dir/libraries/p4a_db_table.php";
 require_once "$dir/libraries/validate.php";
+require_once "$dir/libraries/thumbnail_generator.php";
 
 //Core
 require_once "$dir/p4a_exception.php";

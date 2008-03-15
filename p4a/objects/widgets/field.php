@@ -1072,9 +1072,9 @@ class P4A_Field extends P4A_Widget
 				$this->buttons->button_file_delete->disable();
 			}
 			
-			$mime_type = explode('/', $this->getNewValue(3));
-			$mime_type = $mime_type[0];
-			if ($mime_type == 'image') return $this->getAsImage();
+			if (P4A_Thumbnail_Generator::isMimeTypeSupported($this->getNewValue(3))) {
+				return $this->getAsImage();
+			}
 
 			$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 			$mime_type = $this->getNewValue(3);
@@ -1084,13 +1084,8 @@ class P4A_Field extends P4A_Widget
 			$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
 			$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 			$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';
-
-			if (P4A_Is_Mime_Type_Embeddable($mime_type)) {
-				$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
-			} else {
-				$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
-			}
-
+			$this->buttons->button_file_preview->enable(P4A_Is_Mime_Type_Embeddable($mime_type));
+			$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';
 			$sReturn .= '</table>';
 		}
 
@@ -1165,11 +1160,12 @@ class P4A_Field extends P4A_Widget
 		$mime_type = $mime_type[0];
 		if ($mime_type != 'image') return $this->getAsFile();
 
-		$sReturn  = '<table id="' . $this->getId() . '">' ;
+		$sReturn  = '<table>' ;
 		if (P4A_GD) {
 			$src = $this->getNewValue(1);
 			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&{$this->max_thumbnail_size}") . '" /></td></tr>';
 		}
+		$this->buttons->button_file_preview->enable();
 		$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
 		$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 		$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';

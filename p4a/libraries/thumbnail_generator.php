@@ -94,6 +94,24 @@ class P4A_Thumbnail_Generator
 	private $cached_filename = null;
 	
 	/**
+	 * @param string $mime
+	 */
+	public function isMimeTypeSupported($mime_type)
+	{
+		if (substr($mime_type, 0, 5) != 'image') return false;
+		
+		$type = substr($mime_type, 6);
+		switch ($type) {
+			case 'gif':
+			case 'jpeg':
+			case 'png':
+				return function_exists("imagecreatefrom$type");
+			default:
+				return false;
+		}
+	}
+	
+	/**
 	 * @param integer $width
 	 * @return P4A_Thumbnail_Generator
 	 */

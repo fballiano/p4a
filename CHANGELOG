@@ -15,6 +15,9 @@
 - "folder" and "folder_open" icons were also added in the GIF format (due the ie bug and our usage in list-style-image)
 - P4A_DB_Navigator's CSS was reworked for browser compatibility
 - a bug with PostgreSQL and automatic sequence name creation was fixed
+- P4A_Thumbnail_Generator::isMimeTypeSupported() method was added
+- P4A_Field::getAsFile() method now calls P4A_Thumbnail_Generator::isMimeTypeSupported() before rendering the image preview
+- P4A_Field::getAsFile() method now always render the "preview" button, but it will be disabled if no preview is available
 
 2.99.5
 - a bug with invisible P4A_Table was solved

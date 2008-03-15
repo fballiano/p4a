@@ -435,7 +435,6 @@ class P4A extends P4A_Object
 			die();
 		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
 			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
-			require P4A_ROOT_DIR . '/p4a/libraries/thumbnail_generator.php';
 			$thumb = new P4A_Thumbnail_Generator();
 			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
 				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
