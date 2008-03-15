@@ -666,7 +666,7 @@ abstract class P4A_Widget extends P4A_Object
 		if ($this->use_template) {
 			$this->_tpl_vars[$var_name] = $sDisplay;
 		} else {
-			p4a_error("FETCH TEMPLATE IMPOSSIBLE. Call first use_template.");
+			trigger_error("P4A_Widget::display(): Unable to fetch template, call useTemplate() before display()");
 		}
 		return $this;
 	}
@@ -716,7 +716,7 @@ abstract class P4A_Widget extends P4A_Object
 
 			return $output;
 		} else {
-			p4a_error("ERROR: Unable to fetch template, first call \"use_template\".");
+			trigger_error("P4A_Widget::display(): Unable to fetch template, call useTemplate() before display()");
 		}
 	}
 
