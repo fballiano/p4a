@@ -441,7 +441,6 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 			if (P4A_EXTENDED_ERRORS) {
 				$message .= "<br /><br /><strong>BACKTRACE:</strong><br /><ol class='p4a_backtrace'>";
 				foreach (debug_backtrace() as $k=>$backtrace) {
-					if ($k == 0) continue;
 					$args = array();
 					if (isset($backtrace['args'])) {
 						foreach ($backtrace['args'] as $arg) {
@@ -517,6 +516,52 @@ function P4A_Exception_Handler(Exception $e)
 	$p4a = P4A::singleton();
 	$error_file = basename($e->getFile());
 	$message = $e->getMessage() . "<br /><em>File: {$error_file}, Line: {$e->getLine()}</em>";
+	
+	if (P4A_EXTENDED_ERRORS) {
+		$message .= "<br /><br /><strong>BACKTRACE:</strong><br /><ol class='p4a_backtrace'>";
+		foreach ($e->getTrace() as $k=>$backtrace) {
+			$args = array();
+			if (isset($backtrace['args'])) {
+				foreach ($backtrace['args'] as $arg) {
+					if (is_object($arg)) {
+						$args[] = get_class($arg);
+						continue;
+					}
+					if (is_array($arg)) {
+						$args[] = 'Array(' . sizeof($arg) . ')';
+						continue;
+					}
+					if (is_resource($arg)) {
+						$args[] = 'Resource';
+						continue;
+					}
+					if (is_string($arg)) {
+						$args[] = "'$arg'";
+						continue;
+					}
+					$args[] = $arg;
+				}
+			}
+			$args = join(', ', $args);
+			if (isset($backtrace['line'])) {
+				$backtrace['line'] = " line {$backtrace['line']}";
+			} else {
+				$backtrace['line'] = '';
+			}
+			if (isset($backtrace['file'])) {
+				$backtrace['file'] = basename($backtrace['file']);
+			} else {
+				$backtrace['file'] = '';
+			}
+			
+			if ($backtrace['file'] and $backtrace['line']) {
+				$backtrace['file'] = "<em>{$backtrace['file']}{$backtrace['line']}:</em> ";
+			}
+			
+			$message .= "<li>{$backtrace['file']}{$backtrace['function']}({$args})</li>\n";
+		}
+		$message .= "</ol>";
+	}
 	
 	$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
 	if ($p4a->inAjaxCall()) {
