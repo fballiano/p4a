@@ -486,7 +486,7 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 			}
 			
 			$p4a = P4A::singleton();
-			$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage("<strong>ERROR: </strong>$message");
+			$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
 			if ($p4a->inAjaxCall()) {
 				$p4a->raiseXMLResponse();
 			} else {
