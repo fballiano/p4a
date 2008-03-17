@@ -130,6 +130,14 @@ header('Content-type: text/css');
  	right: 0;
 }
 
+ol.p4a_backtrace {
+	margin-left: 20px;
+}
+
+ol.p4a_backtrace li {
+	list-style: decimal outside;
+}
+
 /***********************/
 /* Popup mask template */
 /***********************/

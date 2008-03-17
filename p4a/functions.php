@@ -433,12 +433,60 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 	if (!($error_number & error_reporting())) return true; 
 	
 	$error_file = basename($error_file);
+	$message = "$error_string<br /><em>$error_file line $error_line</em>";
+	
 	switch ($error_number) {
 		case E_USER_ERROR:
 		case E_RECOVERABLE_ERROR:
-			$message = "<strong>ERROR: </strong>$error_string<br /><em>$error_file line $error_line</em>";
+			if (P4A_EXTENDED_ERRORS) {
+				$message .= "<br /><br /><strong>BACKTRACE:</strong><br /><ol class='p4a_backtrace'>";
+				foreach (debug_backtrace() as $k=>$backtrace) {
+					if ($k == 0) continue;
+					$args = array();
+					if (isset($backtrace['args'])) {
+						foreach ($backtrace['args'] as $arg) {
+							if (is_object($arg)) {
+								$args[] = get_class($arg);
+								continue;
+							}
+							if (is_array($arg)) {
+								$args[] = 'Array(' . sizeof($arg) . ')';
+								continue;
+							}
+							if (is_resource($arg)) {
+								$args[] = 'Resource';
+								continue;
+							}
+							if (is_string($arg)) {
+								$args[] = "'$arg'";
+								continue;
+							}
+							$args[] = $arg;
+						}
+					}
+					$args = join(', ', $args);
+					if (isset($backtrace['line'])) {
+						$backtrace['line'] = " line {$backtrace['line']}";
+					} else {
+						$backtrace['line'] = '';
+					}
+					if (isset($backtrace['file'])) {
+						$backtrace['file'] = basename($backtrace['file']);
+					} else {
+						$backtrace['file'] = '';
+					}
+					
+					if ($backtrace['file'] and $backtrace['line']) {
+						$backtrace['file'] = "<em>{$backtrace['file']}{$backtrace['line']}:</em> ";
+					}
+					
+					$message .= "<li>{$backtrace['file']}{$backtrace['function']}({$args})</li>\n";
+				}
+				$message .= "</ol>";
+			}
+			
 			$p4a = P4A::singleton();
-			$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage($message);
+			$error_mask = $p4a->openMask("P4A_Error_Mask")->setMessage("<strong>ERROR: </strong>$message");
 			if ($p4a->inAjaxCall()) {
 				$p4a->raiseXMLResponse();
 			} else {
@@ -449,13 +497,13 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 		case E_WARNING:
 		case E_USER_WARNING:
 			P4A::singleton()
-				->message("<strong>WARNING: </strong>$error_string<br /><em>$error_file line $error_line</em>", "warning");
+				->message("<strong>WARNING: </strong>$message", "warning");
 			return true;
 		case E_STRICT:
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			P4A::singleton()
-				->message("<strong>NOTICE: </strong>$error_string<br /><em>$error_file line $error_line</em>", "warning");
+				->message("<strong>NOTICE: </strong>$message", "warning");
 			return true;
 	}
 	return false;
