@@ -231,20 +231,8 @@ class P4A_I18N
 	
 	private function setFirstDayOfTheWeek()
 	{
-		$supplemental_data = simplexml_load_file(dirname(__FILE__) . '/libraries/Zend/Locale/Data/supplementalData.xml');
-		
-		$dayname = 'mon';
-		foreach ($supplemental_data->xpath("//firstDay") as $data) {
-			list($tmp_dayname, $territories) = $data->attributes();
-			foreach (explode(' ', $territories) as $territory) {
-				if ($territory == $this->region) {
-					$dayname = $tmp_dayname;
-					break 2;
-				}
-			}
-		}
-		
-		switch ($dayname) {
+		$week_data = Zend_Locale_Data::getList($this->locale, 'week');
+		switch ($week_data['firstDay']) {
 			case 'mon':
 				$daynumber = 1;
 				break;

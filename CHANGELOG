@@ -24,6 +24,7 @@
 - P4A_EXTENDED_ERRORS was implemented for PHP errors
 - P4A_EXTENDED_ERRORS was implemented for exceptions
 - Zend Framework was updated to 1.5
+- P4A_I18N::setFirstDayOfTheWeek() method was ported to ZF 1.5's Zend_Locale_Data::getList()
 
 2.99.5
 - a bug with invisible P4A_Table was solved
