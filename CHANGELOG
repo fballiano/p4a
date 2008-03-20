@@ -1,6 +1,4 @@
 3.0.0 TODO
-- implement application level translations
-- port products_catalogue to the new translation system
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 
@@ -12,6 +10,9 @@
 - P4A_Mask's title is now auto translated on getAsString()
 - P4A_Table's headers names are now auto translated on getAsString()
 - P4A_Mask's title is now automatically generated using ucfirst() function instead of ucwords()
+- P4A_I18N::mergeTranslation() method was added
+- products catalogue sample application was changed for simplicity (SQL structure also)
+- products catalogue sample application multilanguage support was added
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved

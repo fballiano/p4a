@@ -21,10 +21,6 @@ products_catalogue is an example of a virtual catalogue
 for shops. To have this application runnning take a look at
 applications/products_catalogue/README
 
-We've also included a schema model image (db_schema.png) and the
-DBDesigner source for that (db_schema.xml), so you can better
-understand what that db does.
-
 --------------------------
 - ADVANCED INSTALLATION --
 --------------------------

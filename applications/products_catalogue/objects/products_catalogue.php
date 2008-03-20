@@ -73,6 +73,9 @@ class Products_Catalogue extends P4A
 
 		$this->menu->items->support_tables->addItem("brands")
 			->implement("onclick", $this, "menuClick");
+			
+		$this->menu->addItem("change_language")
+			->implement("onclick", $this, "openLanguagesPopup");
 
 		// Data sources
 		$this->build("p4a_db_source", "brands")
@@ -86,7 +89,7 @@ class Products_Catalogue extends P4A
 			->load();
 
 		// Primary action
-		$this->openMask("P4A_Login_Mask");
+		$this->openMask("products");
 		$this->active_mask->implement('onLogin', $this, 'login');
 		$this->loginInfo();
 	}
@@ -94,6 +97,11 @@ class Products_Catalogue extends P4A
 	public function menuClick()
 	{
 		$this->openMask($this->active_object->getName());
+	}
+	
+	public function openLanguagesPopup()
+	{
+		$this->openPopup('change_language');
 	}
 	
 	public function login()

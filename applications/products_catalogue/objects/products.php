@@ -87,25 +87,21 @@ class Products extends P4A_Base_Mask
 
 		// Table
 		$this->build("p4a_table", "table")
+			->setWidth(500)
 			->setSource($this->source)
 			->setVisibleCols(array("product_id","model","category", "brand"))
 			->showNavigationBar();
-		$this->table->cols->product_id->setLabel("Cod. Product");
-		while ($col = $this->table->cols->nextItem()) {
-			$col->setWidth(150);
-		}
+		$this->table->cols->product_id->setLabel("Product ID");
 
 		$this->build("p4a_fieldset", "fs_details")
 			->setLabel("Product details")
  			->anchor($this->fields->product_id)
+ 			->anchorLeft($this->fields->model)
 			->anchor($this->fields->category_id)
 			->anchorLeft($this->fields->brand_id)
-			->anchor($this->fields->model)
-			->anchor($this->fields->purchasing_price)
- 			->anchor($this->fields->selling_price)
+ 			->anchor($this->fields->price)
 			->anchorLeft($this->fields->discount)
- 			->anchor($this->fields->little_photo)
- 			->anchorLeft($this->fields->big_photo)
+ 			->anchor($this->fields->picture)
 			->anchor($this->fields->is_new)
 			->anchorLeft($this->fields->visible)
 			->anchor($this->fields->description);
@@ -120,15 +116,15 @@ class Products extends P4A_Base_Mask
   			->setRequiredField("category_id")
   			->setRequiredField("brand_id")
   			->setRequiredField("model")
-  			->setRequiredField("purchasing_price")
-  			->setRequiredField("selling_price")
+  			->setRequiredField("price")
   			->setRequiredField("description")
   			->setRequiredField("discount");
 
 		// Display
 		$this
 			->display("menu", P4A::singleton()->menu)
-			->display("top", $this->toolbar);
+			->display("top", $this->toolbar)
+			->setFocus($this->fields->model);
 	}
 
 	private function setFieldsProperties()
@@ -154,20 +150,15 @@ class Products extends P4A_Base_Mask
 
 		$this->fields->model->setWidth(200);
 
-		$this->fields->purchasing_price
-			->setLabel("Purchasing price $")
-			->setWidth("40");
-
 		$this->fields->discount
 			->setLabel("Discount %")
 			->setWidth("40");
 
-		$this->fields->selling_price
+		$this->fields->price
 			->setLabel("Price $")
 			->setWidth("40");
 
-		$this->fields->little_photo->setType("file");
-		$this->fields->big_photo->setType("file");
+		$this->fields->picture->setType("file");
 
 		$this->fields->description
 			->setType("rich_textarea")
