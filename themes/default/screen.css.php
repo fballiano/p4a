@@ -271,6 +271,7 @@ ol.p4a_backtrace li {
 	border: 2px solid #4b718a;
 }
 
+.p4a_field_radio_values,
 .p4a_field_multicheckbox_values {
 	text-align: left;
 	float: left;

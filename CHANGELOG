@@ -6,6 +6,7 @@
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
+- P4A_Field::getAsRadio()'s CSS was modified a bit
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved

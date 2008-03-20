@@ -1012,7 +1012,7 @@ class P4A_Field extends P4A_Widget
 		}
 
 		$this->label->unsetProperty('for');
-		$return = $this->composeLabel() . "<div>$sContent</div>";
+		$return = $this->composeLabel() . "<div class='p4a_field_radio_values'>$sContent</div>";
 		$this->label->setProperty('for', "{$id}input");
 		return $return;
 	}
