@@ -46,6 +46,7 @@ $msg = array(
 	// products mask
 	"Search" => "Cerca",
 	"Model" => "Modello",
+	"Product detail" => "Dettaglio prodotto",
 	"Product ID" => "ID prodotto",
 	"Category" => "Categoria",
 	"Brand" => "Marca",
@@ -56,6 +57,7 @@ $msg = array(
 
 	// categories mask
 	"Category ID" => "ID categoria",
+	"Category detail" => "Dettaglio categoria",
 
 	// brands mask
 	"Brand detail" => "Dettaglio marca",

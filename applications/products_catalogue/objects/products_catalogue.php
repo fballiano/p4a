@@ -89,7 +89,7 @@ class Products_Catalogue extends P4A
 			->load();
 
 		// Primary action
-		$this->openMask("products");
+		$this->openMask("P4A_Login_Mask");
 		$this->active_mask->implement('onLogin', $this, 'login');
 		$this->loginInfo();
 	}

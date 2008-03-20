@@ -94,7 +94,7 @@ class Products extends P4A_Base_Mask
 		$this->table->cols->product_id->setLabel("Product ID");
 
 		$this->build("p4a_fieldset", "fs_details")
-			->setLabel("Product details")
+			->setLabel("Product detail")
  			->anchor($this->fields->product_id)
  			->anchorLeft($this->fields->model)
 			->anchor($this->fields->category_id)

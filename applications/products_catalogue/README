@@ -4,7 +4,7 @@ database schema into your local MySQL.
 To do this simply write:
 
 # mysqladmin create p4a_products_catalogue
-# mysql p4a_products_catalogue < db_schema.sql
+# mysql p4a_products_catalogue < db_dump.sql
 
 Now you can open your browser to:
 
