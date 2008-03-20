@@ -1029,12 +1029,14 @@ class P4A_Field extends P4A_Widget
 		// For all the others we assume "1" or "0"
 		if ($new_value == 1 or $new_value === 't') {
 			$checked = "checked='checked'" ;
+			$new_value = 1;
 		} else {
 			$checked = '' ;
+			$new_value = 0;
 		}
 
 		$id = $this->getId();
-		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' value='1' $checked ";
+		$header = "<input type='hidden' name='{$id}' value='{$new_value}' /><input type='checkbox' id='{$id}input' value='1' $checked ";
 		$close_header = "/>";
 
 		if( !$this->isEnabled() ) {

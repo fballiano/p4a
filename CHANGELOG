@@ -5,7 +5,7 @@
 - do some strict validation
 
 2.99.7
-- 
+- a bug with disabled P4A_Field::getAsCheckbox() was solved
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved
