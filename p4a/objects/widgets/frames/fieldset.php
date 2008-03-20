@@ -56,7 +56,7 @@ class P4A_Fieldset extends P4A_Frame
 
 		$string  = "<fieldset id='$id' $class $properties $actions>";
 		if ($this->getLabel()) {
-			$string  .= "<legend>" . $this->getLabel() . "</legend>";
+			$string  .= "<legend>" . __($this->getLabel()) . "</legend>";
 		}
 		foreach($this->_map as $i=>$row){
 			$row_html = "\n<div class='row'>";
