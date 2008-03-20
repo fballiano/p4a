@@ -99,7 +99,6 @@ class P4A_I18N
 		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->locale}/LC_MESSAGES/p4a.mo", $messages);
 		
 		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale);
-		//TODO: load application level translation
 	}
 	
 	/**
@@ -117,6 +116,17 @@ class P4A_I18N
 				$messages = array_merge($messages, $new_messages);
 			}
 		}
+	}
+	
+	/**
+	 * Adds translation messages to the translation pool
+	 * @param array $messages
+	 * @return P4A_I18N
+	 */
+	public function mergeTranslation(array $messages)
+	{
+		$this->_translation_engine->addTranslation($messages);
+		return $this;
 	}
 
 	/**
