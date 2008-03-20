@@ -11,6 +11,7 @@
 - P4A_Menu's items are now auto translated on getAsString()
 - P4A_Mask's title is now auto translated on getAsString()
 - P4A_Table's headers names are now auto translated on getAsString()
+- P4A_Mask's title is now automatically generated using ucfirst() function instead of ucwords()
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved
