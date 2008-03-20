@@ -9,6 +9,7 @@
 - P4A_Field::getAsRadio()'s CSS was modified a bit
 - P4A_Fieldset's legend is now auto translated on getAsString()
 - P4A_Menu's items are now auto translated on getAsString()
+- P4A_Mask's title is now auto translated on getAsString()
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved

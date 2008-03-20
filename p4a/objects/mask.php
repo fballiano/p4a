@@ -313,7 +313,7 @@ class P4A_Mask extends P4A_Object
 		}
 
 		$_icon = '';
-		$_title = $this->getTitle();
+		$_title = __($this->getTitle());
 		if ($this->getTitle() and $this->getIcon() and !$p4a->isHandheld()) {
 			$_icon = $this->getIcon();
 			if (strpos($_icon, '.') !== false) {
