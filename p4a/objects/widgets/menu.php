@@ -301,10 +301,10 @@ class P4A_Menu_Item extends P4A_Widget
 		}
 
 		if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
-			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<div $properties>" . $this->getLabel() . "</div>");
+			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<div $properties>" . __($this->getLabel()) . "</div>");
 		} else {
 			$actions = $this->composeStringActions();
-			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey($this->getLabel(), $this->getAccessKey()) . "</a>");
+			$sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table($icon, "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey(__($this->getLabel()), $this->getAccessKey()) . "</a>");
 		}
 
 		if ($has_items) {
