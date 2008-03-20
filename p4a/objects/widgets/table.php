@@ -227,7 +227,7 @@ class P4A_Table extends P4A_Widget
 					$headers[$i]['order']  = '';
 					$headers[$i]['action'] = '';
 				} else {
-					$headers[$i]['value'] = $col->getLabel();
+					$headers[$i]['value'] = __($col->getLabel());
 					$headers[$i]['order'] = null;
 
 					if ($is_sortable and $col->isSortable()) {
