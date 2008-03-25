@@ -883,7 +883,7 @@ class P4A_Table_Rows extends P4A_Widget
 						if ($parent->cols->$col_name->isActionTriggered('onformat')) {
 							$aReturn[$i]['cells'][$j]['value'] = $parent->cols->$col_name->actionHandler('onformat', $row[$col_name], $parent->data->fields->$col_name->getType(), $parent->data->fields->$col_name->getNumOfDecimals());
 						} else {
-							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType(), $parent->data->fields->$col_name->getNumOfDecimals());
+							$aReturn[$i]['cells'][$j]['value'] = $p4a->i18n->format($row[$col_name], $parent->data->fields->$col_name->getType(), $parent->data->fields->$col_name->getNumOfDecimals(), false);
 						}
 					} else {
 						$aReturn[$i]['cells'][$j]['value'] = $row[$col_name];

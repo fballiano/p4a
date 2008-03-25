@@ -13,6 +13,10 @@
 - P4A_I18N::mergeTranslation() method was added
 - products catalogue sample application was changed for simplicity (SQL structure also)
 - products catalogue sample application multilanguage support was added
+- P4A:I18N::format() and normalize() methods now have a new parameter that allows coder to control
+  if the method should throw an exception or now (default is true)
+- P4A_Fields now turns off the exception throwing parameter when calling P4A:I18N::format() or
+  P4A:I18N::normalize(), to avoid application break due to a wrong input
 
 2.99.6
 - a bug with P4A_Navigation_Bar was solved

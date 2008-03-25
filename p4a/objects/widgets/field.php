@@ -585,7 +585,7 @@ class P4A_Field extends P4A_Widget
 		} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
 			return $value;
 		} else {
-			return p4a::singleton()->i18n->format($value, $type, $num_of_decimals);
+			return p4a::singleton()->i18n->format($value, $type, $num_of_decimals, false);
 		}
 	}
 
@@ -604,7 +604,7 @@ class P4A_Field extends P4A_Widget
 		} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
 			return $value;
 		} else {
-			return p4a::singleton()->i18n->normalize($value, $type);
+			return p4a::singleton()->i18n->normalize($value, $type, false);
 		}
 	}
 

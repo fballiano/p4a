@@ -167,9 +167,30 @@ class P4A_I18N
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @param integer $num_of_decimals used only if type is float or decimal
+	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
 	 */
-	public function format($value, $type, $num_of_decimals = null)
+	public function format($value, $type, $num_of_decimals = null, $throw_exception = true)
+	{
+		if ($throw_exception) {
+			return $this->_format($value, $type, $num_of_decimals);
+		}
+		
+		try {
+			return $this->_format($value, $type, $num_of_decimals);
+		} catch (Exception $e) {
+			return $value;
+		}
+	}
+	
+	/**
+	 * Reads a normalized value, localizes and returns it
+	 * @param mixed $value
+	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param integer $num_of_decimals used only if type is float or decimal
+	 * @return mixed
+	 */
+	private function _format($value, $type, $num_of_decimals)
 	{
 		switch($type) {
 			case 'boolean':
@@ -199,9 +220,29 @@ class P4A_I18N
 	 * Reads a localized value, normalizes and returns it
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
 	 */
-	public function normalize($value, $type)
+	public function normalize($value, $type, $throw_exception = true)
+	{
+		if ($throw_exception) {
+			return $this->_normalize($value, $type);
+		}
+		
+		try {
+			return $this->_normalize($value, $type);
+		} catch (Exception $e) {
+			return $value;
+		}
+	}
+	
+	/**
+	 * Reads a localized value, normalizes and returns it
+	 * @param mixed $value
+	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @return mixed
+	 */
+	private function _normalize($value, $type)
 	{
 		switch($type) {
 			case 'boolean':
