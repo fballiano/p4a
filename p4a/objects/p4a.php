@@ -612,7 +612,7 @@ class P4A extends P4A_Object
 	 */
 	private function setActiveMask($mask_name)
 	{
-		$this->active_mask =& P4A_Mask::singleton($mask_name);
+		$this->active_mask = P4A_Mask::singleton($mask_name);
 	}
 
 	/**

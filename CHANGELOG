@@ -1,6 +1,5 @@
 3.0.0 TODO
 - db navigator movements (wait for jQuery UI 1.5)
-- do some strict validation
 
 2.99.8
 - some minor changes were done after strict validation checks
