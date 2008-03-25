@@ -2,6 +2,9 @@
 - db navigator movements (wait for jQuery UI 1.5)
 - do some strict validation
 
+2.99.8
+- 
+
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
 - P4A_Field::getAsRadio()'s CSS was modified a bit
