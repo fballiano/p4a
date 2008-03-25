@@ -730,7 +730,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnBlur action
+	 * Wrapper used to add the handling of onBlur action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
@@ -740,7 +740,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnClick action
+	 * Wrapper used to add the handling of onClick action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
@@ -750,7 +750,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnChange action
+	 * Wrapper used to add the handling of onChange action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
@@ -820,7 +820,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyPress action
+	 * Wrapper used to add the handling of onKeyPress action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
@@ -830,7 +830,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyUp action
+	 * Wrapper used to add the handling of onKeyUp action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
@@ -840,7 +840,7 @@ abstract class P4A_Widget extends P4A_Object
 	}
 
 	/**
-	 * Wrapper used to add the handling of OnKeyDown action
+	 * Wrapper used to add the handling of onKeyDown action
 	 * @return unknown
 	 * @see actionHandler()
 	 */
