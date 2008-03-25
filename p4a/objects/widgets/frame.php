@@ -149,7 +149,7 @@ class P4A_Frame extends P4A_Widget
 			$one_visible = false;
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
-				$object =& $p4a->getObject($obj["id"]);
+				$object = $p4a->getObject($obj["id"]);
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
 				} else {

@@ -145,13 +145,14 @@ class P4A_Toolbar extends P4A_Widget
 	}
 
 	/**
-	 * Enables all buttons
+	 * Enable/disable all buttons
+	 * @param boolean $enabled
 	 * @return P4A_Toolbar
 	 */
-	public function enable()
+	public function enable($enabled = true)
 	{
 		while ($button = $this->buttons->nextItem()) {
-			$button->enable();
+			$button->enable($enabled);
 		}
 		return $this;
 	}

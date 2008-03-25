@@ -3,7 +3,7 @@
 - do some strict validation
 
 2.99.8
-- 
+- some minor changes were done after strict validation checks
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved

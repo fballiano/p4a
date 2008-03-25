@@ -140,7 +140,7 @@ class P4A_Mask extends P4A_Object
 	 * @param string $name
 	 * @return P4A_Mask
 	 */
-	public function singleton($name)
+	public static function singleton($name)
 	{
 		$name = strtolower($name);
 		$p4a = P4A::singleton();
