@@ -87,7 +87,7 @@ class Products extends P4A_Base_Mask
 
 		// Table
 		$this->build("p4a_table", "table")
-			->setWidth(500)
+			->setWidth(600)
 			->setSource($this->source)
 			->setVisibleCols(array("product_id", "model", "date_arrival", "category", "brand"))
 			->showNavigationBar();
