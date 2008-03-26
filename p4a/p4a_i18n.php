@@ -159,6 +159,7 @@ class P4A_I18N
 	 */
 	public function translate($string)
 	{
+		if (strlen($string) == 0) return '';
 		return $this->_translation_engine->translate($string, $this->locale);
 	}
 
