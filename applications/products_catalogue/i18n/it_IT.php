@@ -46,6 +46,7 @@ $msg = array(
 	// products mask
 	"Search" => "Cerca",
 	"Model" => "Modello",
+	"Date arrival" => "Data arrivo",
 	"Product detail" => "Dettaglio prodotto",
 	"Product ID" => "ID prodotto",
 	"Category" => "Categoria",

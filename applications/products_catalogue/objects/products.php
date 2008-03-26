@@ -89,7 +89,7 @@ class Products extends P4A_Base_Mask
 		$this->build("p4a_table", "table")
 			->setWidth(500)
 			->setSource($this->source)
-			->setVisibleCols(array("product_id","model","category", "brand"))
+			->setVisibleCols(array("product_id", "model", "date_arrival", "category", "brand"))
 			->showNavigationBar();
 		$this->table->cols->product_id->setLabel("Product ID");
 
@@ -99,7 +99,8 @@ class Products extends P4A_Base_Mask
  			->anchorLeft($this->fields->model)
 			->anchor($this->fields->category_id)
 			->anchorLeft($this->fields->brand_id)
- 			->anchor($this->fields->price)
+			->anchor($this->fields->date_arrival)
+ 			->anchorLeft($this->fields->price)
 			->anchorLeft($this->fields->discount)
  			->anchor($this->fields->picture)
 			->anchor($this->fields->is_new)
@@ -149,6 +150,8 @@ class Products extends P4A_Base_Mask
 			->setSourceDescriptionField("description");
 
 		$this->fields->model->setWidth(200);
+		
+		$this->fields->date_arrival->setWidth(178);
 
 		$this->fields->discount
 			->setLabel("Discount %")

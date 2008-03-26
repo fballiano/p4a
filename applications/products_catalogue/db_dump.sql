@@ -76,6 +76,7 @@ CREATE TABLE `products` (
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `model` text NOT NULL,
+  `date_arrival` date NULL,
   `price` decimal(10,2) NOT NULL,
   `discount` int(11) NOT NULL,
   `picture` text,
@@ -89,7 +90,7 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` VALUES ('1',1,1,'P4A sample model 1','10.00',2,'{p4a.png,/p4a.png,21299,image/png,550,204}',0,1,'<p>This is a description</p>'),('2',2,2,'P4A sample model 2','20.00',4,NULL,0,1,'<p>This is another description</p>');
+INSERT INTO `products` VALUES ('1',1,1,'P4A sample model 1','2008-03-10','10.00',2,'{p4a.png,/p4a.png,21299,image/png,550,204}',0,1,'<p>This is a description</p>'),('2',2,2,'P4A sample model 2',NULL,'20.00',4,NULL,0,1,'<p>This is another description</p>');
 
 --
 -- Table structure for table `products_product_id_seq`

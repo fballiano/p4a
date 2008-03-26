@@ -3,6 +3,7 @@
 
 2.99.8
 - some minor changes were done after strict validation checks
+- products_catalogue sample now has a "date" field to play with
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
