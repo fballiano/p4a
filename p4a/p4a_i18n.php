@@ -163,7 +163,8 @@ class P4A_I18N
 	}
 
 	/**
-	 * Reads a normalized value, localizes and returns it
+	 * Reads a normalized value, localizes and returns it.
+	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @param integer $num_of_decimals used only if type is float or decimal
@@ -184,7 +185,8 @@ class P4A_I18N
 	}
 	
 	/**
-	 * Reads a normalized value, localizes and returns it
+	 * Reads a normalized value, localizes and returns it.
+	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @param integer $num_of_decimals used only if type is float or decimal
@@ -192,6 +194,8 @@ class P4A_I18N
 	 */
 	private function _format($value, $type, $num_of_decimals)
 	{
+		if (strlen($value) == 0) return '';
+		
 		switch($type) {
 			case 'boolean':
 				$value = ($value == 1) ? 'yes' : 'no';
@@ -215,6 +219,15 @@ class P4A_I18N
 
 		return $value;
 	}
+	
+	/**
+	 * Reads a localized value, normalizes and returns it.
+	 * Returns an empty string if no value is passed.
+	 * @param mixed $value
+	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param boolean $throw_exception do you want this function to throw an exception on error?
+	 * @return mixed
+	 */
 
 	/**
 	 * Reads a localized value, normalizes and returns it
@@ -237,13 +250,16 @@ class P4A_I18N
 	}
 	
 	/**
-	 * Reads a localized value, normalizes and returns it
+	 * Reads a localized value, normalizes and returns it.
+	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @return mixed
 	 */
 	private function _normalize($value, $type)
 	{
+		if (strlen($value) == 0) return '';
+		
 		switch($type) {
 			case 'boolean':
 				$yes_no = Zend_Locale_Data::getContent($this->_locale_engine, 'questionstrings');

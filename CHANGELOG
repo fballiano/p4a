@@ -5,6 +5,8 @@
 - some minor changes were done after strict validation checks
 - products_catalogue sample now has a "date" field to play with
 - a bug with empty values in P4A_Tables (passed to formatters) was solved
+- P4A_I18N::format() and normalize() methods now returns an empty string if
+  no value is passed
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
