@@ -32,6 +32,11 @@
  */
 
 /**
+ * Reads data from a database.
+ * 
+ * Note: views are supported only within setQuery(eg: "SELECT * FROM view_name"),
+ * using a view within the setTable("view_name") will cause an error.
+ * 
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
@@ -72,6 +77,8 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	/**
+	 * Sets the main table for this data source.
+	 * Views are not supported here.
 	 * @param string $table
 	 * @return P4A_DB_Source
 	 */
@@ -117,6 +124,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getFields()
 	{
 		return $this->_fields;
