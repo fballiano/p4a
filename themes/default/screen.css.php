@@ -277,8 +277,15 @@ ol.p4a_backtrace li {
 	float: left;
 }
 
+.p4a_field_radio_values input,
 .p4a_field_multicheckbox_values input {
 	border: none;
+}
+
+.p4a_field table.p4a_widget_layout_table {
+	display: block;
+	float: left;
+	clear: both;
 }
 
 /****************************/

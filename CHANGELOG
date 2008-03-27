@@ -12,6 +12,8 @@
 - P4A_I18N::translate() methods returns an empty string if nothing is passed
 - minor documentation updates were done on P4A_DB_Source
 - Zend Framework was updated to 1.5.1
+- P4A_Field::getAsMulticheckbox() and getAsRadio() methods now use 
+  P4A_Generate_Widget_Layout_Table() global function to render labels and inputs
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved

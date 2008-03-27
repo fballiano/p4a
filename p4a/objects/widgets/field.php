@@ -899,9 +899,8 @@ class P4A_Field extends P4A_Widget
 	{
 		$id = $this->getID();
 		$properties = $this->composeStringProperties();
-		$actions = $this->composeStringActions();
 
-		$sReturn  = "<div class='p4a_field_multicheckbox_values'>";
+		$sReturn  = "<div class='p4a_field_multicheckbox_values' $properties>";
 		$sReturn .= "<input type='hidden' name='$id' id='{$id}input' value='' />";
 
 		$external_data		= $this->data->getAll();
@@ -920,7 +919,7 @@ class P4A_Field extends P4A_Widget
 			} else {
 				$checked = "";
 			}
-			$sReturn .= "<div><input type='checkbox' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked /><label for='{$id}_{$i}input'>{$current[$description_field]}</label></div>\n";
+			$sReturn .= P4A_Generate_Widget_Layout_Table("<input type='checkbox' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked />", "<label for='{$id}_{$i}input'>{$current[$description_field]}</label>");
 			$i++;
 		}
 
@@ -972,6 +971,7 @@ class P4A_Field extends P4A_Widget
 	public function getAsRadio()
 	{
 		$id = $this->getId();
+		$properties = $this->composeStringProperties();
 		$external_data		= $this->data->getAll() ;
 		$value_field		= $this->getSourceValueField() ;
 		$description_field	= $this->getSourceDescriptionField() ;
@@ -1000,19 +1000,17 @@ class P4A_Field extends P4A_Widget
 				$checked = "";
 			}
 
-			$sContent .= "<div><input $enabled name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
-			$sContent .= "<label for='{$id}_{$key}input'>";
+			$input = "<input $enabled name='{$id}' id='{$id}_{$key}input' type='radio' " . $this->composeStringActions() . " $checked value='" . htmlspecialchars($current[$value_field]) ."'/>";
 			if ($this->isFormatted()) {
-				$sContent .= $this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals());
+				$label = $this->format($current[$description_field], $this->data->fields->$description_field->getType(), $this->data->fields->$description_field->getNumOfDecimals());
 			} else {
-				$sContent .= $current[$description_field];
+				$label = $current[$description_field];
 			}
-			$sContent .= "</label>";
-			$sContent .= '</div>';
+			$sContent .= P4A_Generate_Widget_Layout_Table($input, $label);
 		}
 
 		$this->label->unsetProperty('for');
-		$return = $this->composeLabel() . "<div class='p4a_field_radio_values'>$sContent</div>";
+		$return = $this->composeLabel() . "<div class='p4a_field_radio_values' $properties>$sContent</div>";
 		$this->label->setProperty('for', "{$id}input");
 		return $return;
 	}
