@@ -11,6 +11,7 @@
   (which is a Zend Framework bug but we create a workaround for it)
 - P4A_I18N::translate() methods returns an empty string if nothing is passed
 - minor documentation updates were done on P4A_DB_Source
+- Zend Framework was updated to 1.5.1
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
