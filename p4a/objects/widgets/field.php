@@ -679,7 +679,7 @@ class P4A_Field extends P4A_Widget
 		$enabled = $this->isEnabled();
 		$disabled = $enabled ? "": " disabled='disabled' ";
 
-		$header = "<input id='{$id}input' type='text' class='p4a_date_calendar' $disabled";
+		$header = "<input id='{$id}input' type='text' class='p4a_date_calendar' readonly='readonly' $disabled";
 		$close_header = "/>";
 
 		if (!P4A::singleton()->isHandheld()) {

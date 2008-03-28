@@ -14,6 +14,9 @@
 - Zend Framework was updated to 1.5.1
 - P4A_Field::getAsMulticheckbox() and getAsRadio() methods now use 
   P4A_Generate_Widget_Layout_Table() global function to render labels and inputs
+- P4A_Field::getAsDate()'s input is now "readonly"
+- a bug with P4A_I18N::format() method managing dates was solved
+  (forcing format to YYYY-MM-dd)
 
 2.99.7
 - a bug with disabled P4A_Field::getAsCheckbox() was solved
