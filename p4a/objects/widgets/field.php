@@ -1006,7 +1006,7 @@ class P4A_Field extends P4A_Widget
 			} else {
 				$label = $current[$description_field];
 			}
-			$sContent .= P4A_Generate_Widget_Layout_Table($input, $label);
+			$sContent .= P4A_Generate_Widget_Layout_Table($input, "<label for='{$id}_{$key}input'>$label</label>");
 		}
 
 		$this->label->unsetProperty('for');
