@@ -126,6 +126,7 @@ class P4A_DB
 	{
 		switch ($this->db_type) {
 			case 'mysql':
+				$sequence_name .= '_seq';
 				try {
 					$this->adapter->insert($sequence_name, array());
 					$id = $this->adapter->lastInsertId();
@@ -138,6 +139,7 @@ class P4A_DB
 				}
 				return $id;
 			case 'sqlite':
+				$sequence_name .= '_seq';
 				try {
 					$this->adapter->insert($sequence_name, array('p4a'=>null));
 					$id = $this->adapter->lastInsertId();

@@ -1,8 +1,12 @@
 3.0.0 TODO
 - db navigator movements (wait for jQuery UI 1.5)
+- default width for fields?
 
 2.99.8
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
+- P4A_Rmdir_Recursive() global function was added
+- P4A_Data_Field::setSequence() method does not add the "_seq" postfix anymore
+- P4A_DB::nextSequenceId() method adds the "_seq" postfix depending on the db you're using
 
 2.99.8
 - some minor changes were done after strict validation checks

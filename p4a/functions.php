@@ -422,6 +422,27 @@ function P4A_Mkdir_Recursive($dir)
 }
 
 /**
+ * @param string $dir
+ * @return boolean
+ */
+function P4A_Rmdir_Recursive($dir)
+{
+	if (is_dir($dir)) {
+		foreach (scandir($dir) as $entry) {
+			if ($entry == '.' or $entry == '..') continue;
+			$entry = $dir . DIRECTORY_SEPARATOR . $entry;
+			if (is_dir($entry) and !is_link($entry)) {
+				if (!P4A_Rmdir_Recursive($entry)) return false;
+			} else {
+				if (!@unlink($entry)) return false;
+			}
+		}
+		return @rmdir($dir);
+	}
+	return false;
+}
+
+/**
  * @param integer $error_number
  * @param string $error_string
  * @param string $error_file
