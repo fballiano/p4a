@@ -3,7 +3,7 @@
 - default width for fields?
 - p4a_quote_sql_value should take care of the current db engine
 
-2.99.8
+2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
 - P4A_Rmdir_Recursive() global function was added
 - P4A_Data_Field::setSequence() method does not add the "_seq" postfix anymore
