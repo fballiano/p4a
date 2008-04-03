@@ -160,7 +160,7 @@ class P4A_DB
 				}
 				return $id;
 			case 'oci':
-				$sequence_name = strtoupper($sequence_name);
+				$sequence_name = strtoupper($sequence_name) . '_SEQ';
 				try {
 					$id = $this->adapter->nextSequenceId($sequence_name);
 				} catch (Exception $e) {
