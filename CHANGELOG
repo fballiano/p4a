@@ -7,6 +7,8 @@
 - P4A_Rmdir_Recursive() global function was added
 - P4A_Data_Field::setSequence() method does not add the "_seq" postfix anymore
 - P4A_DB::nextSequenceId() method adds the "_seq" postfix depending on the db you're using
+- SQL dump for PostgreSQL was added to products_catalogue sample
+- products_catalogue' SQL dump for MySQL was renamed to db_dump_mysql.sql
 
 2.99.8
 - some minor changes were done after strict validation checks
