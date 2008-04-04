@@ -332,8 +332,7 @@ class P4A_DB_Navigator extends P4A_Widget
 
 	public function getPath($id, $table, $pk)
 	{
-		$id = P4A_Quote_SQL_Value($id);
-		$section = p4a_db::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk='$id'");
+		$section = P4A_DB::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk='?'", array($id));
 		$return = array();
 		$return[] = $section;
 
@@ -393,12 +392,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		if ($this->actionHandler('beforeMovement') == ABORT) return ABORT;
 
 		if ($new_value != $current) {
-			$current = P4A_Quote_SQL_Value($current);
 			if (strlen($new_value)) {
-				$new_value = P4A_Quote_SQL_Value($new_value);
-				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor}='$new_value' WHERE $pk='$current'");
+				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor} = ? WHERE $pk = ?", array($new_value, $current));
 			} else {
-				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor}=NULL WHERE $pk='$current'");
+				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor} = NULL WHERE $pk = ?", array($current));
 			}
 		}
 

@@ -599,7 +599,7 @@ class P4A_DB_Source extends P4A_Data_Source
 						$null_case = '';
 					}
 					if (is_array($row)) {
-						$value = P4A_Quote_SQL_Value($row[$field]);
+						$value = $db->quote($row[$field]);
 					} else {
 						$value = $this->fields->$field->getSQLValue();
 					}
@@ -942,11 +942,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 
 		if (is_string($pks)) {
-			return "$pks = '" . P4A_Quote_SQL_Value($pk_values) . "' ";
+			return "$pks = '" . P4A_DB::singleton($this->getDSN())->quote($pk_values) . "' ";
 		} elseif (is_array($pks)) {
 			$return = '';
 			foreach($pk_values as $key=>$value) {
-				$return .= "$key = '" . P4A_Quote_SQL_Value($value) . "' AND ";
+				$return .= "$key = '" . P4A_DB::singleton($this->getDSN())->quote($value) . "' AND ";
 			}
 			return substr($return, 0, -4);
 		} else {

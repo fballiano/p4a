@@ -395,15 +395,6 @@ function P4A_Generate_Widget_Layout_Table($column1 = null, $column2 = null, $add
 }
 
 /**
- * @param string $value
- * @return string
- */
-function P4A_Quote_SQL_Value($value)
-{
-	return str_replace("'", "''", $value);
-}
-
-/**
  * @param string $string
  * @return string
  */

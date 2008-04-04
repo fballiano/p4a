@@ -130,7 +130,7 @@ class P4A_Data_Field extends P4A_Object
 	 */
 	public function getSQLValue()
 	{
-		return P4A_Quote_SQL_Value($this->value);
+		return P4A_DB::singleton($this->getDSN())->quote($this->value);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class P4A_Data_Field extends P4A_Object
 	 */
 	public function getSQLNewValue()
 	{
-		return P4A_Quote_SQL_Value($this->new_value);
+		return P4A_DB::singleton($this->getDSN())->quote($this->new_value);
 	}
 
 	/**

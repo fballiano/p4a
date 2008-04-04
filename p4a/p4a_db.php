@@ -336,4 +336,19 @@ class P4A_DB
 				return "UPPER($column_name) LIKE UPPER('$search_pattern')";
 		}
 	}
+	
+    /**
+     * Quotes a value for an SQL statement.
+     *
+     * If an array is passed as the value, all values are quoted
+     * and returned as a comma-separated string.
+     *
+     * @param mixed $value
+     * @param mixed $type
+     * @return mixed
+     */
+	public function quote($value, $type = null)
+	{
+		return $this->adapter->quote($value, $type);
+	}
 }
