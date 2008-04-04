@@ -416,7 +416,7 @@ class P4A extends P4A_Object
 				$db = P4A_DB::singleton($object->data_field->getDSN());
 				$data =& $object->data;
 				$description_field = $object->getSourceDescriptionField();
-				$q = $db->quote($_REQUEST['q']);					
+				$q = $db->quote($_REQUEST['q'], false);					
 				$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
 				$old_where = $data->getWhere();
 				if ($old_where) {
