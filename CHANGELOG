@@ -1,7 +1,6 @@
 3.0.0 TODO
 - db navigator movements (wait for jQuery UI 1.5)
 - default width for fields?
-- p4a_table sort on joined fields
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
