@@ -12,6 +12,7 @@
 - products_catalogue' SQL dump for MySQL was renamed to db_dump_mysql.sql
 - P4A_Quote_SQL_Value() global function was removed
 - P4A_DB::quote() method was added (it's a wrapper for Zend_DB quote method)
+- P4A_DB::get*(), fetch*(), query*() methods now support the binding params array
 
 2.99.8
 - some minor changes were done after strict validation checks
