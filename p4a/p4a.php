@@ -33,9 +33,8 @@
 
 $dir = dirname(__FILE__);
 
-//Configuration container
-require_once "$dir/constants.php";
 require_once "$dir/functions.php";
+require_once "$dir/constants.php";
 
 // Changing inclusion path
 $include_path = explode(_SSS_, ini_get('include_path'));

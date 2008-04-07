@@ -77,7 +77,10 @@ if (!defined('P4A_ROOT_PATH')) {
 	if (strpos(P4A_ROOT_DIR, P4A_SERVER_DIR) === false) {
 		define('P4A_ROOT_PATH', '/p4a');
 	} else {
-		define('P4A_ROOT_PATH', str_replace('\\', '/', str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR)));
+		$tmp_path = str_replace(P4A_SERVER_DIR, '', P4A_ROOT_DIR);
+		$tmp_path = str_replace('\\', '/', $tmp_path);
+		$tmp_path = P4A_Strip_Double_Slashes("/$tmp_path");
+		define('P4A_ROOT_PATH', $tmp_path);
 	}
 }
 
