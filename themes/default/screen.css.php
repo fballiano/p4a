@@ -198,7 +198,7 @@ ol.p4a_backtrace li {
 }
 
 .p4a_fieldset .row {
-	margin: 10px 10px 10px 0px;
+	margin-right: 10px;
 }
 
 * html .p4a_fieldset .row {
