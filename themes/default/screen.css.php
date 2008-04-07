@@ -215,6 +215,7 @@ ol.p4a_backtrace li {
 	margin-left: 10px;
 	color: #4b718a;
 	padding: 0 5px;
+	text-align: left;
 }
 
 /*************/
@@ -228,8 +229,13 @@ ol.p4a_backtrace li {
 	border: 1px solid #c6d3de;
 }
 
+.p4a_field input {
+	width: 150px;
+}
+
 .p4a_field_checkbox input {
 	border: none;
+	width: auto;
 }
 
 .p4a_field input:focus,
@@ -286,6 +292,12 @@ ol.p4a_backtrace li {
 	display: block;
 	float: left;
 	clear: both;
+}
+
+.p4a_field .p4a_field_date_trigger {
+	width: 20px;
+	background: #fafafa;
+	text-align: center;
 }
 
 /****************************/
@@ -540,14 +552,14 @@ table.p4a_message td.c2 {
 	overflow: visible;
 	display: block;
 	text-align: left;
-	padding: 1px;
-	padding-left: 6px;
 	background: #fcfcfc;
-	border: 1px solid #fafafa;
 	cursor: pointer;
 	float: left;
-	padding-right: 1em;
 	width: 100px;
+}
+
+.p4a_label span {
+	margin-left: 6px;
 }
 
 .p4a_label_required {

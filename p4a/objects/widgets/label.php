@@ -82,7 +82,7 @@ class P4A_Label extends P4A_Widget
 
 		$css_classes = join(' ', $css_classes);
 		return "<label id='{$id}' class='$css_classes' " . $this->composeStringProperties() . 
-				"$actions>$tooltip_icon" . __($this->getLabel()) . "$tooltip_text</label>\n";
+				"$actions>$tooltip_icon<span>" . __($this->getLabel()) . "</span>$tooltip_text</label>\n";
 	}
 
 	/**

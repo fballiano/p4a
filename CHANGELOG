@@ -1,6 +1,5 @@
 3.0.0 TODO
 - db navigator movements (wait for jQuery UI 1.5)
-- default width for fields?
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
@@ -15,6 +14,9 @@
 - P4A_ROOT_PATH autodetection rules were changed a bit for Windows server compatibility
 - P4A_Strip_Double_Backslashes() global function was added
 - P4A_UPLOADS_DIR autodetection rules were changed a bit for Windows server compatibility
+- P4A_Fieldset's label's CSS was changed for Safari 3.1 compatibility
+- P4A_Label's CSS was changes a bit for cross-browser compatibility
+- P4A_Field::getasText()'s CSS now has a default width (150px)
 
 2.99.8
 - some minor changes were done after strict validation checks

@@ -132,7 +132,7 @@ class Products extends P4A_Base_Mask
 	{
 		$this->fields->product_id
 			->setLabel("Product ID")
-			->setWidth(200)
+			->setWidth(198)
 			->enable(false);
 
 		$this->fields->category_id
@@ -149,17 +149,16 @@ class Products extends P4A_Base_Mask
 			->setSource(P4A::singleton()->brands)
 			->setSourceDescriptionField("description");
 
-		$this->fields->model->setWidth(200);
-		
+		$this->fields->model->setWidth(198);
 		$this->fields->date_arrival->setWidth(178);
 
 		$this->fields->discount
 			->setLabel("Discount %")
-			->setWidth("40");
+			->setWidth(40);
 
 		$this->fields->price
 			->setLabel("Price $")
-			->setWidth("40");
+			->setWidth(40);
 
 		$this->fields->picture->setType("file");
 
