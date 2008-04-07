@@ -341,6 +341,19 @@ function P4A_Strip_Double_Slashes($string)
 	}
 	return $string;
 }
+
+/*
+ * @param string $string
+ * @return string
+ */
+function P4A_Strip_Double_Backslashes($string)
+{
+	$string = str_replace('\\\\', '\\', $string);
+	if (strpos($string, '\\\\') !== false) {
+		$string = P4A_Strip_Double_Slashes($string);
+	}
+	return $string;
+}
 	
 /**
  * Can the event be managed by the browser?

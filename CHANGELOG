@@ -13,6 +13,8 @@
 - P4A_DB::quote() method was added (it's a wrapper for Zend_DB quote method)
 - P4A_DB::get*(), fetch*(), query*() methods now support the binding params array
 - P4A_ROOT_PATH autodetection rules were changed a bit for Windows server compatibility
+- P4A_Strip_Double_Backslashes() global function was added
+- P4A_UPLOADS_DIR autodetection rules were changed a bit for Windows server compatibility
 
 2.99.8
 - some minor changes were done after strict validation checks

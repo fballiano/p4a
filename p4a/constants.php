@@ -150,7 +150,11 @@ if (!defined('P4A_UPLOADS_PATH')) {
 }
 
 if (!defined('P4A_UPLOADS_DIR')) {
-	define('P4A_UPLOADS_DIR', P4A_SERVER_DIR . P4A_UPLOADS_PATH);
+	if (P4A_OS == 'windows') {
+		define('P4A_UPLOADS_DIR', P4A_Strip_Double_Backslashes(P4A_SERVER_DIR . str_replace('/', '\\', P4A_UPLOADS_PATH)));
+	} else {
+		define('P4A_UPLOADS_DIR', P4A_Strip_Double_Slashes(P4A_SERVER_DIR . P4A_UPLOADS_PATH));
+	}
 }
 
 if (!defined('P4A_UPLOADS_URL')) {
