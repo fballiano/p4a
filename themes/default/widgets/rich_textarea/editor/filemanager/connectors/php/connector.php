@@ -24,12 +24,13 @@
 
 ob_start() ;
 
-require('./config.php') ;
-require('./util.php') ;
-require('./io.php') ;
-require('./basexml.php') ;
-require('./commands.php') ;
-require('./phpcompat.php') ;
+require dirname(__FILE__) . '/config.php' ;
+require dirname(__FILE__) . '/util.php' ;
+require dirname(__FILE__) . '/io.php' ;
+require dirname(__FILE__) . '/basexml.php' ;
+require dirname(__FILE__) . '/commands.php' ;
+require dirname(__FILE__) . '/phpcompat.php' ;
+
 
 if ( !$Config['Enabled'] )
 	SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/connectors/php/config.php" file' ) ;
