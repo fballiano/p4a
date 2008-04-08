@@ -233,6 +233,7 @@ ol.p4a_backtrace li {
 	width: 150px;
 }
 
+.p4a_field_radio input,
 .p4a_field_checkbox input {
 	border: none;
 	width: auto;
