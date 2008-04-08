@@ -5,6 +5,7 @@ FCKConfig.ImageUpload = false;
 FCKConfig.FlashUpload = false;
 FCKConfig.CleanWordKeepsStructure = true;
 FCKConfig.FontFormats = 'p;pre;address;h1;h2;h3;h4;h5;h6';
+FCKConfig.BackgroundBlockerOpacity = 0;
 
 FCKConfig.Plugins.Add('simplecommands');
 FCKConfig.Plugins.Add('tablecommands');
@@ -34,7 +35,5 @@ FCKConfig.ToolbarSets["Full"] = [
 	['Style','FontFormat','FontName','-','About'],
 ];
 
-FCKConfig.CoreStyles['Bold'] = {Element: 'strong'};
-FCKConfig.CoreStyles['Italic'] = {Element: 'em'};
 FCKConfig.CoreStyles['Underline'] = {Element: 'span', Styles: {'text-decoration': 'underline'}};
 FCKConfig.CoreStyles['StrikeThrough'] = {Element: 'span', Styles: {'text-decoration': 'line-through'}};
