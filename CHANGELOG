@@ -17,6 +17,7 @@
 - P4A_Fieldset's label's CSS was changed for Safari 3.1 compatibility
 - P4A_Label's CSS was changes a bit for cross-browser compatibility
 - P4A_Field::getasText()'s CSS now has a default width (150px)
+- a bug with P4A_I18N::mergeTranslation() method was solved
 
 2.99.8
 - some minor changes were done after strict validation checks

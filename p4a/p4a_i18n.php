@@ -125,7 +125,7 @@ class P4A_I18N
 	 */
 	public function mergeTranslation(array $messages)
 	{
-		$this->_translation_engine->addTranslation($messages);
+		$this->_translation_engine->addTranslation($messages, $this->locale);
 		return $this;
 	}
 
