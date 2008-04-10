@@ -23,6 +23,7 @@
 - javascript/css lazy loading was implemented, all widget depending js/css area loaded
   only when loosing a lot of KB on first run
 - print CSS was removed
+- translations were synched
 
 2.99.8
 - some minor changes were done after strict validation checks
