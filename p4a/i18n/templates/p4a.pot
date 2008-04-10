@@ -234,3 +234,6 @@ msgstr ""
 
 msgid "restart application"
 msgstr ""
+
+msgid "Loading..."
+msgstr ""
