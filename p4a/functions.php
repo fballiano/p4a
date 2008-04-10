@@ -287,7 +287,7 @@ function P4A_Embedded_Player($src, $mime_type, $width=300, $height=200)
 			$player_type = 'wmedia';
 	}
 
-	return "<a id='p4a_media_player' href='$src'>$src</a><script type='text/javascript'>$('#p4a_media_player').jmedia({},{type:'$player_type'});</script>";
+	return "<a id='p4a_media_player' href='$src'>$src</a><script type='text/javascript'>p4a_load_js('" . P4A_THEME_PATH . "/jquery/jmedia.js',function(){\$('#p4a_media_player').jmedia({},{type:'$player_type'})})</script>";
 }
 
 /**

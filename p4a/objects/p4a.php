@@ -154,21 +154,14 @@ class P4A extends P4A_Object
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
-		$this->addJavascript(P4A_THEME_PATH . "/jquery/autocomplete.js");
-		if (!$this->isHandheld()) {
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/jmedia.js");
-			$this->addJavascript(P4A_THEME_PATH . "/jquery/ui.datepicker.js");
-			$this->addJavascript(P4A_THEME_PATH . "/widgets/rich_textarea/fckeditor.js");
-			if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
-				$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
-				$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
-				$this->addJavascript(P4A_THEME_PATH . "/ie6fixes.js");
-			}
+		if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
+			$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
+			$this->addJavascript(P4A_THEME_PATH . "/ie6fixes.js");
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
-		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.datepicker.css", "screen");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH), "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH), "print");
 		$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
@@ -853,11 +846,10 @@ class P4A extends P4A_Object
 		return '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
+		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
+		'p4a_calendar_monthnames = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
+		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
 		'$(function() {' . "\n" .
-		'$.datepicker._defaults["dateFormat"] = "yy-mm-dd";' . "\n" .
-		'$.datepicker._defaults["dayNamesMin"] = ["'. join('","', $days) . '"];' . "\n" .
-		'$.datepicker._defaults["monthNames"] = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
-		'$.datepicker._defaults["firstDay"] = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
 		'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
 		'});' . "\n" .
 		'</script>';

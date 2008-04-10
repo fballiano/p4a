@@ -1427,13 +1427,13 @@ $.fn.datepicker = function(options){
 			$.datepicker._attachDatepicker(this, options);
 	});
 };
+
+$.datepicker = new Datepicker();
 	
 /* Initialise the date picker. */
 $(document).ready(function() {
 	$(document.body).append($.datepicker._datepickerDiv)
 		.mousedown($.datepicker._checkExternalClick);
 });
-
-$.datepicker = new Datepicker(); // singleton instance
 
 })(jQuery);

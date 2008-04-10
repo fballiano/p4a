@@ -157,6 +157,20 @@ p4a_tooltip_show = function (widget)
 	widget.mouseout(function() {tooltip.hide()});
 }
 
+p4a_calendar_load = function ()
+{
+	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
+	p4a_load_js(p4a_theme_path + '/jquery/ui.datepicker.js', p4a_calendar_init_defaults);
+}
+
+p4a_calendar_init_defaults = function ()
+{
+	$.datepicker._defaults["dateFormat"] = "yy-mm-dd";
+	$.datepicker._defaults["dayNamesMin"] = p4a_calendar_daynamesmin;
+	$.datepicker._defaults["monthNames"] = p4a_calendar_monthnames;
+	$.datepicker._defaults["firstDay"] = p4a_calendar_firstday;
+}
+
 p4a_calendar_open = function (id)
 {
 	var element = $('#'+id);
@@ -204,6 +218,32 @@ p4a_messages_show = function ()
 			p4a_messages_show();
 		});
 	}, 2000);
+}
+
+p4a_load_js = function (url, callback)
+{
+	var tag = document.createElement('script');
+	tag.type = "text/javascript";
+	tag.src = url;
+	$(tag).bind('load', callback);
+	tag.onreadystatechange = function() {
+		if (this.readyState == 'loaded' || this.readyState == 'complete') callback();
+	}
+	$('head').get(0).appendChild(tag);
+}
+
+p4a_load_css = function (url, callback)
+{
+	if(document.createStyleSheet) {
+		document.createStyleSheet(url);
+	} else {
+		var tag = document.createElement('link');
+		tag.type = "text/css";
+		tag.rel = "stylesheet";
+		tag.media = "all";
+		tag.href = url;
+		$('head').get(0).appendChild(tag);
+	}
 }
 
 $(function () {

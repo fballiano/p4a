@@ -352,21 +352,17 @@ ol.p4a_backtrace li {
 /* P4A_Field - date picker */
 /***************************/
 
-#datepicker_div {
-	border: 1px solid #588fa3;
-}
-
-.datepicker_control,
-.datepicker_links {
+div.datepicker_control,
+div.datepicker_links {
 	display: none;
 }
 
-.datepicker_header {
+div.datepicker_header {
 	background: #777;
 }
 
-select.datepicker_newMonth,
-select.datepicker_newYear {
+.datepicker_header select.datepicker_newMonth,
+.datepicker_header select.datepicker_newYear {
 	background: white;
 	color: #4b718a;
 	font-weight: normal;

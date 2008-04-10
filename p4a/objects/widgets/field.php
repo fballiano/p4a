@@ -665,7 +665,7 @@ class P4A_Field extends P4A_Widget
 
 		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 		if ($this->isEnabled() and is_object($this->data) and $this->data instanceof P4A_DB_Source) {
-			$sReturn .= "<script type='text/javascript'>\$(function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true});});</script>";
+			$sReturn .= "<script type='text/javascript'>\$(function(){p4a_load_js('" . P4A_THEME_PATH . "/jquery/autocomplete.js',function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true})});});</script>";
 		}
 		return $sReturn;
 	}
@@ -686,6 +686,7 @@ class P4A_Field extends P4A_Widget
 			$value = $this->data_field->getNewValue();
 			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
 			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" class=\"p4a_field_date_trigger\" />";
+			$close_header .= "<script type='text/javascript'>p4a_calendar_load()</script>";
 		}
 
 		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
