@@ -163,8 +163,6 @@ class P4A extends P4A_Object
 
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH), "all");
-		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH), "print");
-		$this->addCSS(P4A_THEME_PATH . "/print.css", "print");
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld" );
 	}
 
