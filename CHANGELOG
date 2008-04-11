@@ -2,7 +2,8 @@
 - db navigator movements (wait for jQuery UI 1.5)
 
 2.99.10
-- 
+- P4A_DB::quote() method's 2nd param "autoquote" is now false by default,
+  solving some problems with P4A_Data_Field::getSQLValue() and getSQLNewValue()
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
