@@ -357,14 +357,10 @@ class P4A_DB
      * and returned as a comma-separated string.
      *
      * @param mixed $value
-     * @param boolean $autoquote Ecloses the returned string single in quotes if the value need to be enclosed
      * @return mixed
      */
-	public function quote($value, $autoquote = true)
+	public function quote($value)
 	{
-		$value = $this->adapter->quote($value);
-		if ($autoquote) return $value;
-		if (substr($value, 0, 1) == "'") return substr($value, 1, -1);
-		return $value;
+		return $this->adapter->quote($value);
 	}
 }
