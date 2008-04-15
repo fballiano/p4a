@@ -360,7 +360,7 @@ class P4A_DB
      * @param boolean $autoquote Ecloses the returned string single in quotes if the value need to be enclosed
      * @return mixed
      */
-	public function quote($value, $autoquote = false)
+	public function quote($value, $autoquote = true)
 	{
 		$value = $this->adapter->quote($value);
 		if ($autoquote) return $value;
