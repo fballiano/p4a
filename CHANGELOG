@@ -4,6 +4,10 @@
 2.99.10
 - P4A_DB::quote() method's 2nd param "autoquote" is now false by default,
   solving some problems with P4A_Data_Field::getSQLValue() and getSQLNewValue()
+- when P4A_DB_Source needs a quoted value now it uses P4A_DB->quote() with
+  autoquote turned on
+- P4A_DB::quote() method, if autoquote param is on, always encloses the value
+  within single quotes
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
