@@ -636,6 +636,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function saveRow($fields_values = array(), $pk_values = array())
 	{
 		if(!$this->isReadOnly()) {
+			$this->saveUploads();
 			$db = P4A_DB::singleton($this->getDSN());
 			$table = $this->getTable();
 			$schema = $this->getSchema();
