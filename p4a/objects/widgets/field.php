@@ -103,12 +103,6 @@ class P4A_Field extends P4A_Widget
 	protected $formatted = true;
 
 	/**
-	 * Path under P4A_UPLOADS_PATH where uploads will be stored
-	 * @var string
-	 */
-	protected $upload_subpath = null;
-
-	/**
 	 * Type of encryption to use for password fields
 	 * @var string
 	 */
@@ -407,10 +401,12 @@ class P4A_Field extends P4A_Widget
 		case 'select':
 		case 'radio':
 		case 'checkbox':
-		case 'file':
 		case 'multiselect':
 		case 'multicheckbox':
 		case 'password':
+			break;
+		case 'file':
+			$this->data_field->setType('file');
 			break;
 		default:
 			trigger_error("$type is not a supported P4A_Field type", E_USER_ERROR);
@@ -1137,7 +1133,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function setUploadSubpath($subpath = null)
 	{
-		$this->upload_subpath = $subpath;
+		$this->data_field->setUploadsSubpath($subpath);
 		return $this;
 	}
 
@@ -1146,7 +1142,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function getUploadSubpath()
 	{
-		return $this->upload_subpath;
+		return $this->data_field->getUploadSubpath();
 	}
 
 	/**
