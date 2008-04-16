@@ -1133,7 +1133,7 @@ class P4A_Field extends P4A_Widget
 	 */
 	public function setUploadSubpath($subpath = null)
 	{
-		$this->data_field->setUploadsSubpath($subpath);
+		$this->data_field->setUploadSubpath($subpath);
 		return $this;
 	}
 
