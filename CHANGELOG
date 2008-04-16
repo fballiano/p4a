@@ -2,6 +2,7 @@
 - db navigator movements (wait for jQuery UI 1.5)
 
 2.99.10
+- saveUploads() method was moved from P4A_Mask to P4A_Data_Source
 - P4A_DB::quote() method's 2nd param "autoquote" is now false by default,
   solving some problems with P4A_Data_Field::getSQLValue() and getSQLNewValue()
 - when P4A_DB_Source needs a quoted value now it uses P4A_DB->quote() with
