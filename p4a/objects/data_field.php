@@ -103,6 +103,12 @@ class P4A_Data_Field extends P4A_Object
 	 * @var integer
 	 */
 	protected $num_of_decimals = null;
+	
+	/**
+	 * Path under P4A_UPLOADS_PATH where uploads will be stored
+	 * @var string
+	 */
+	protected $upload_subpath = null;	
 
 	/**
 	 * Sets value and new_value
@@ -349,4 +355,23 @@ class P4A_Data_Field extends P4A_Object
 
 		return $schema . $table . $alias_of;
 	}
+	
+	/**
+	 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen
+	 * @param string The subdir (can be "test", "test/", "test/test", "test/test/test/")
+	 * @return P4A_Field
+	 */
+	public function setUploadSubpath($subpath = null)
+	{
+		$this->upload_subpath = $subpath;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUploadSubpath()
+	{
+		return $this->upload_subpath;
+	}	
 }
