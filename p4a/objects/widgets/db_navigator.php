@@ -274,7 +274,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		return $return . $js;
 	}
 
-	private function _getAsString($id, $all, $obj_id, $table, $pk, $current, $recurse = true)
+	private function _getAsString($id, $all, $obj_id, $table, $pk, $current)
 	{
 		if (!isset($all[$id])) {
 			return '';
@@ -311,16 +311,14 @@ class P4A_DB_Navigator extends P4A_Widget
 
 			$return .= "<li {$selected} id='{$obj_id}_{$section[$pk]}'>{$link_prefix}{$description}{$link_suffix}\n";
 
-			if ($recurse) {
-				if ($this->expand_all) {
-					$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $current);
-				} else {
-					$path = $this->getPath($current, $table, $pk);
-					for ($i=0; $i<sizeof($path); $i++) {
-						if ($section[$pk] == $path[$i][$pk]) {
-							$return .= $this->_getAsString($path[$i][$pk], $all, $obj_id, $table, $pk, $current);
-							break;
-						}
+			if ($this->expand_all) {
+				$return .= $this->_getAsString($section[$pk], $all, $obj_id, $table, $pk, $current);
+			} else {
+				$path = $this->getPath($current, $table, $pk);
+				for ($i=0; $i<sizeof($path); $i++) {
+					if ($section[$pk] == $path[$i][$pk]) {
+						$return .= $this->_getAsString($path[$i][$pk], $all, $obj_id, $table, $pk, $current);
+						break;
 					}
 				}
 			}
@@ -332,7 +330,7 @@ class P4A_DB_Navigator extends P4A_Widget
 
 	public function getPath($id, $table, $pk)
 	{
-		$section = P4A_DB::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk='?'", array($id));
+		$section = P4A_DB::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk=?", array($id));
 		$return = array();
 		$return[] = $section;
 
