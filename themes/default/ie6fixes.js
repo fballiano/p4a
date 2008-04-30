@@ -7,11 +7,14 @@
 p4a_menu_activate = function ()
 {
 	$('#p4a_menu li').each(function () {
-		$(this).mouseover(function () {
-			$(this).children().show();
-		}).mouseout(function () {
-			$(this).find('ul').hide();
-		});
+		$(this).hover(
+			function () {
+				$(this).children().show();
+			},
+			function () {
+				$(this).find('ul').hide();
+			}
+		);
 	});
 }
 

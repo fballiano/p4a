@@ -772,6 +772,10 @@ table.p4a_message td.c2 {
 	width: 120px;
 }
 
+* html .p4a_menu ul {
+	margin-top: -5px;
+}
+
 .p4a_menu ul li {
 	width: 120px;
 	margin: 0;
@@ -791,7 +795,7 @@ table.p4a_message td.c2 {
 	background-color: #e2e7ed;
 }
 
-.p4a_menu ul ul{
+.p4a_menu ul ul {
 	display: none;
 	margin-top: -2em;
 	margin-left: 120px;
@@ -800,16 +804,16 @@ table.p4a_message td.c2 {
 .p4a_menu li:hover ul ul,
 .p4a_menu li:hover ul ul ul,
 .p4a_menu li:hover ul ul ul ul,
-.p4a_menu li:hover ul ul ul ul ul{
-	display:none;
+.p4a_menu li:hover ul ul ul ul ul {
+	display: none;
 }
 
 .p4a_menu li:hover ul,
 .p4a_menu ul li:hover ul,
 .p4a_menu ul ul li:hover ul,
 .p4a_menu ul ul ul li:hover ul,
-.p4a_menu ul ul ul ul li:hover ul{
-	display:block;
+.p4a_menu ul ul ul ul li:hover ul {
+	display: block;
 }
 
 .p4a_menu li li.p4a_menu_has_items {

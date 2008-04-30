@@ -11,6 +11,7 @@
   within single quotes
 - jQuery::form was updated to 2.0.8
 - jQuery::iFixPNG was updated to 2.1
+- P4A_Menu's CSS were changed a bit solving a bug with IE6 (too fast hide)
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
