@@ -9,6 +9,7 @@
   autoquote turned on
 - P4A_DB::quote() method, if autoquote param is on, always encloses the value
   within single quotes
+- jQuery::form was updated to 2.0.8
 
 2.99.9
 - a bug with P4A_Field::getAsRadio() was solved (labels can be clicked now)
