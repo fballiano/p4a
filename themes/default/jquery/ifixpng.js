@@ -1,7 +1,7 @@
 /*
  * jQuery ifixpng plugin
  * (previously known as pngfix)
- * Version 2.0  (04/11/2007)
+ * Version 2.1  (23/04/2008)
  * @requires jQuery v1.1.3 or above
  *
  * Examples at: http://jquery.khurshid.com
@@ -64,12 +64,17 @@
 	$.fn.ifixpng = hack.ltie7 ? function() {
     	return this.each(function() {
 			var $$ = $(this);
-			var base = $('base').attr('href'); // need to use this in case you are using rewriting urls
+			// in case rewriting urls
+			var base = $('base').attr('href');
+			if (base) {
+				// remove anything after the last '/'
+				base = base.replace(/\/[^\/]+$/,'/');
+			}
 			if ($$.is('img') || $$.is('input')) { // hack image tags present in dom
 				if ($$.attr('src')) {
 					if ($$.attr('src').match(/.*\.png([?].*)?$/i)) { // make sure it is png image
 						// use source tag value if set 
-						var source = (base && $$.attr('src').substring(0,1)!='/') ? base + $$.attr('src') : $$.attr('src');
+						var source = (base && $$.attr('src').search(/^(\/|http:)/i)) ? base + $$.attr('src') : $$.attr('src');
 						// apply filter
 						$$.css({filter:hack.filter(source), width:$$.width(), height:$$.height()})
 						  .attr({src:$.ifixpng.getPixel()})
@@ -80,6 +85,7 @@
 				var image = $$.css('backgroundImage');
 				if (image.match(/^url\(["']?(.*\.png([?].*)?)["']?\)$/i)) {
 					image = RegExp.$1;
+					image = (base && image.substring(0,1)!='/') ? base + image : image;
 					$$.css({backgroundImage:'none', filter:hack.filter(image)})
 					  .children().children().positionFix();
 				}
