@@ -285,10 +285,10 @@ abstract class P4A_Data_Source extends P4A_Object
 	}
 	
 	/**
-	 * Manages file uploads when arriving from HTTP POST
+	 * Moves uploaded files from P4A_UPLOADS_TMP_DIR to P4A_UPLOADS_DIR
 	 * @throws P4A_Exception
 	 */
-	protected function saveUploads()
+	public function saveUploads()
 	{
 		while ($field = $this->fields->nextItem()) {
 			$field_type = $field->getType();
