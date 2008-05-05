@@ -177,6 +177,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowMovement($field)
 	{
+		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->field_to_update_on_movement = $field->getId();
 		$field->implement('onchange', $this, 'onMovement');
 		return $this;
@@ -189,6 +190,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowRootsMovement($allow = true)
 	{
+		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->allow_roots_movement = $allow;
 		return $this;
 	}
@@ -200,6 +202,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowMovementToRoot($allow = true)
 	{
+		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->allow_movement_to_root = $allow;
 		return $this;
 	}
