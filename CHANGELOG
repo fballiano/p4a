@@ -1,3 +1,6 @@
+3.0.0-rc2
+- a bug with P4A_Field::getAsCheckbox() method was solved
+
 3.0.0-rc1
 - saveUploads() method was moved from P4A_Mask to P4A_Data_Source
 - P4A_DB::quote() method's 2nd param "autoquote" is now false by default,
