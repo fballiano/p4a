@@ -480,7 +480,7 @@ class P4A extends P4A_Object
 			}
 
 			foreach ($_REQUEST as $key=>$value) {
-				if (substr($key, 0, 3) == 'fld') {
+				if (substr($key, 0, 3) == 'fld' and $this->objects[$key]->isEnabled()) {
 					if ($this->objects[$key]->getType() == 'file' and strlen($value) == 0) {
 						$this->objects[$key]->setNewValue(null);
 						continue;

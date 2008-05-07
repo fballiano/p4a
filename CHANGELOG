@@ -1,5 +1,7 @@
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved
+- when a P4A_Field's value is coming from a POST,
+  P4A::main() now checks if the field is enabled
 
 3.0.0-rc1
 - saveUploads() method was moved from P4A_Mask to P4A_Data_Source

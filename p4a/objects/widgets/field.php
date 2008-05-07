@@ -1022,19 +1022,19 @@ class P4A_Field extends P4A_Widget
 
 		// PostgreSQL uses "t" and "f" to return boolen values
 		// For all the others we assume "1" or "0"
+		$checked = '';
 		if ($new_value == 1 or $new_value === 't') {
-			$checked = "checked='checked'" ;
-		} else {
-			$checked = '' ;
+			$checked = 'checked="checked"' ;
+		}
+		
+		$disabled = '';
+		if (!$this->isEnabled()) {
+			$disabled = 'disabled="disabled"';
 		}
 
 		$id = $this->getId();
-		$header = "<input type='hidden' name='{$id}' value='0' /><input type='checkbox' id='{$id}input' value='1' $checked ";
+		$header = "<input type='hidden' name='{$id}' value='0' $disabled /><input type='checkbox' id='{$id}input' value='1' $checked $disabled ";
 		$close_header = "/>";
-
-		if( !$this->isEnabled() ) {
-			$header .= 'disabled="disabled" ';
-		}
 
 		$header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
 		return $this->composeLabel() . $header;
