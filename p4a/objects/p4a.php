@@ -498,21 +498,27 @@ class P4A extends P4A_Object
 
 			foreach ($_FILES as $key=>$value) {
 				$extension = P4A_Get_File_Extension($value['name']);
-				if (P4A_Is_Extension_Allowed($extension) and in_array($value['error'], array(UPLOAD_ERR_OK, UPLOAD_ERR_NO_FILE))) {
-					if ($value['error'] == UPLOAD_ERR_NO_FILE) continue;
-					$value['name'] = str_replace( ',', ';', $value['name'] );
-					$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
-					move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
-					$value['tmp_name'] = P4A_Strip_Double_Slashes('/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name']);
-
-					if ((substr($key, 0, 3) == 'fld')) {
-						list($width, $height) = @getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
-						$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
-						$this->objects[$key]->setNewValue('{' . $new_value . '}');
-						if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
-					}
-				} else {
+				
+				if (!P4A_Is_Extension_Allowed($extension)) {
 					throw new P4A_Exception("Uploading $extension files is denied", P4A_FILESYSTEM_ERROR);
+				}
+				
+				if (!in_array($value['error'], array(UPLOAD_ERR_OK, UPLOAD_ERR_NO_FILE))) {
+					throw new P4A_Exception("There was an error trying to upload file(s) (error code: " . $value['error'] . ")", P4A_FILESYSTEM_ERROR);
+				}
+					
+				if ($value['error'] == UPLOAD_ERR_NO_FILE) continue;
+				
+				$value['name'] = str_replace( ',', ';', $value['name'] );
+				$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
+				move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+				$value['tmp_name'] = P4A_Strip_Double_Slashes('/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name']);
+
+				if ((substr($key, 0, 3) == 'fld')) {
+					list($width, $height) = @getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+					$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
+					$this->objects[$key]->setNewValue('{' . $new_value . '}');
+					if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
 				}
 			}
 
