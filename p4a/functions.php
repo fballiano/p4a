@@ -600,7 +600,8 @@ function P4A_Exception_Handler(Exception $e)
 /**
  * @param string $file
  */
-function P4A_Redirect_To_File($file) {
+function P4A_Redirect_To_File($file)
+{
 	$p4a = P4A::singleton();
 	$file = urlencode($file);
 	$file = ".?_p4a_download_file=$file";
