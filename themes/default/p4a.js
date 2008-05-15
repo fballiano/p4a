@@ -8,7 +8,6 @@ p4a_working = true;
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
-	if (p4a_working) return;
 	p4a_working = true;
 	p4a_rte_update_all_instances();
 
@@ -39,6 +38,7 @@ p4a_rte_update_all_instances = function ()
 
 p4a_event_execute = function (object_name, action_name, param1, param2, param3, param4)
 {
+	if (p4a_working) return false;
 	p4a_event_execute_prepare(object_name, action_name, 0, param1, param2, param3, param4);
 	p4a_form.target = '';
 	
@@ -51,6 +51,7 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	} else {
 		p4a_form._ajax.value = 0;
 		p4a_form.submit();
+		p4a_working = false;
 	}
 }
 
@@ -74,6 +75,7 @@ p4a_focus_set = function (id)
 
 p4a_event_execute_ajax = function (object_name, action_name, param1, param2, param3, param4)
 {
+	if (p4a_working) return false;
 	p4a_event_execute_prepare(object_name, action_name, param1, param2, param3, param4);
 	p4a_form._ajax.value = 1;
 
