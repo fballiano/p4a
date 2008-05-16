@@ -1,6 +1,7 @@
 3.0.0-rc3
 - file upload check and error reporting was enhanced
 - a bug with file download within a non-ajax environment was solved
+- Zend Framework was updated to 1.5.2
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved
