@@ -599,9 +599,14 @@ function P4A_Exception_Handler(Exception $e)
 
 /**
  * @param string $file
+ * @throws P4A_Exception if the file does not exists in P4A_UPLOADS_DIR
  */
 function P4A_Redirect_To_File($file)
 {
+	if (!@file_exists(@realpath(P4A_UPLOADS_DIR . "/$file"))) {
+		throw new P4A_Exception("The requested file does not exists within P4A_UPLOADS_DIR", P4A_FILESYSTEM_ERROR);
+	}
+	
 	$p4a = P4A::singleton();
 	$file = urlencode($file);
 	$file = ".?_p4a_download_file=$file";
