@@ -5,6 +5,8 @@
 - P4A_Redirect_To_File() global function now checks if the file really
   exists within P4A_UPLOADS_DIR, otherwise throws a P4A_Exception
 - P4A_Tab_Pane's pages' labels are now auto translated on getAsString()
+- P4A_Field::getAsDate() does not set the field "readonly" anymore thus
+  now dates can you written by hand too
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved

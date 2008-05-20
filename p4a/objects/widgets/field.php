@@ -675,7 +675,7 @@ class P4A_Field extends P4A_Widget
 		$enabled = $this->isEnabled();
 		$disabled = $enabled ? "": " disabled='disabled' ";
 
-		$header = "<input id='{$id}input' type='text' readonly='readonly' $disabled";
+		$header = "<input id='{$id}input' type='text' onkeypress='if(p4a_keypressed_is_return(event)) return false;' $disabled";
 		$close_header = "/>";
 
 		if (!P4A::singleton()->isHandheld()) {
