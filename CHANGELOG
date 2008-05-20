@@ -12,6 +12,9 @@
   which is only 20kb instead of 60kb
 - folder_home icon was changed with a new one that degrades to GIF in a
   better way
+- jQuery::UI::core, draggable and droppable 1.5b4 were added
+- README file was updated with a bit more of info about opera
+- P4A_DB_Navigator's drag&drop movements were implemented
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved

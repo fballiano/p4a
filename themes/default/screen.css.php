@@ -420,7 +420,7 @@ hr.p4a_line {
 	font-weight: bold;
 }
 
-.p4a_db_navigator .hoverclass a {
+.p4a_db_navigator .hoverclass {
 	color: red;
 }
 

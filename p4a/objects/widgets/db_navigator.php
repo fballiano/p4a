@@ -180,7 +180,6 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowMovement($field)
 	{
-		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->field_to_update_on_movement = $field->getId();
 		$field->implement('onchange', $this, 'onMovement');
 		return $this;
@@ -196,7 +195,6 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowRootsMovement($allow = true)
 	{
-		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->allow_roots_movement = $allow;
 		return $this;
 	}
@@ -211,7 +209,6 @@ class P4A_DB_Navigator extends P4A_Widget
 	 */
 	public function allowMovementToRoot($allow = true)
 	{
-		trigger_error("P4A_DB_Navigator movements not implemented", E_USER_ERROR);
 		$this->allow_movement_to_root = $allow;
 		return $this;
 	}
@@ -265,18 +262,15 @@ class P4A_DB_Navigator extends P4A_Widget
 		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $current);
 
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
-			$js .= "<script type='text/javascript'>\n";
-			$js .= "\$('#{$obj_id}_{$current}').draggable({helper:'clone'});\n";
-			$js .= "\$('#{$obj_id} li a').droppable({accept:'.active_node',hoverClass:'hoverclass',tolerance:'pointer',drop:function(){\$('#{$this->field_to_update_on_movement}input').val(\$(this).parent().attr('id').split('_')[1]); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onchange');}});\n";
-			if ($this->allow_movement_to_root) {
-				$js .= "\$('#{$obj_id}').droppable({accept:'.active_node',hoverClass:'hoverclass',tolerance:'pointer',drop:function(){\$('#{$this->field_to_update_on_movement}input').val(''); p4a_event_execute_ajax('{$this->field_to_update_on_movement}', 'onChange');}});\n";
-			}
-			$js .= "</script>\n";
+			$allow_movement_to_root = $this->allow_movement_to_root ? 'true' : 'false';
+			$js .= "<script type='text/javascript'>p4a_db_navigator_load(";
+			$js .= "'{$obj_id}','{$current}','{$this->field_to_update_on_movement}',{$allow_movement_to_root}";
+			$js .= ")</script>\n";
 		}
 
 		$class = $this->composeStringClass();
 		if (strlen($js) and $this->allow_movement_to_root) {
-			$return = "<ul id='{$obj_id}' $class style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home.gif')\"><li>{$return}</li></ul>";
+			$return = "<ul id='{$obj_id}' $class style=\"list-style-position:inside;list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home.gif')\"><li>&nbsp;{$return}</li></ul>";
 		} else {
 			$return = "<div id='{$obj_id}' $class>{$return}</div>";
 		}
