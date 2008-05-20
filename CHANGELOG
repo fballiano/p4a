@@ -10,6 +10,8 @@
 - jQuery was updated to 1.2.4
 - jQuery::UI::datepicker javascript file was replaced with the packed one
   which is only 20kb instead of 60kb
+- folder_home icon was changed with a new one that degrades to GIF in a
+  better way
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved
