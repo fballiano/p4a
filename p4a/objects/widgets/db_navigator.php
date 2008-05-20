@@ -171,7 +171,10 @@ class P4A_DB_Navigator extends P4A_Widget
 	}
 
 	/**
-	 * Enable/disable movement of setions (only if AJAX is enabled)
+	 * Enable/disable movement of setions.
+	 * 
+	 * Note: Movements will work only if P4A_AJAX_ENABLED is true.
+	 * 
 	 * @param mixed (false|parent_id field on your mask)
 	 * @return P4A_DB_Navigator
 	 */
@@ -184,7 +187,10 @@ class P4A_DB_Navigator extends P4A_Widget
 	}
 
 	/**
-	 * Enable/disable movement of root sections (parent_id = null)
+	 * Enable/disable movement of root sections (parent_id = null).
+	 * 
+	 * Note: Movements will work only if P4A_AJAX_ENABLED is true.
+	 * 
 	 * @param boolean
 	 * @return P4A_DB_Navigator
 	 */
@@ -197,6 +203,9 @@ class P4A_DB_Navigator extends P4A_Widget
 
 	/**
 	 * Enable/disable movement of sections to root (parent_id = null)
+	 * 
+	 * Note: Movements will work only if P4A_AJAX_ENABLED is true.
+	 * 
 	 * @param boolean
 	 * @return P4A_DB_Navigator
 	 */
@@ -255,8 +264,6 @@ class P4A_DB_Navigator extends P4A_Widget
 		}
 		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $current);
 
-		// movements are allowed ONLY IF AJAX IS ACTIVE!!
-		// that's because we use too complex javascript for old handhelds
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
 			$js .= "<script type='text/javascript'>\n";
 			$js .= "\$('#{$obj_id}_{$current}').draggable({helper:'clone'});\n";
