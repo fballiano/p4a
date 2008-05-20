@@ -203,7 +203,7 @@ class P4A_Tab_Pane extends P4A_Widget
 			if (!strlen($page->getLabel())) {
 				$page->setDefaultLabel();
 			}
-			$label = $page->getLabel();
+			$label = __($page->getLabel());
 			$return .= "<li><a href='#' $actions $active>$label</a></li>";
 		}
 		$return .= "</ul>";
