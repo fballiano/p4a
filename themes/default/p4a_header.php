@@ -37,12 +37,12 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title><?php echo P4A::singleton()->getTitle() ?></title>
 
-<?php foreach (P4A::singleton()->getJavascript() as $_k=>$_v): ?>
-<script type="text/javascript" src="<?php echo $_k ?>"></script>
-<?php endforeach; ?>
-
 <?php foreach (P4A::singleton()->getCSS() as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>"></link>
+<?php endforeach; ?>
+
+<?php foreach (P4A::singleton()->getJavascript() as $_k=>$_v): ?>
+<script type="text/javascript" src="<?php echo $_k ?>"></script>
 <?php endforeach; ?>
 
 <?php echo P4A::singleton()->getJavascriptInitializations() ?>
