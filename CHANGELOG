@@ -13,7 +13,6 @@
 - folder_home icon was changed with a new one that degrades to GIF in a
   better way
 - jQuery::UI::core, draggable and droppable 1.5b4 were added
-- README file was updated with a bit more of info about opera
 - P4A_DB_Navigator's drag&drop movements were implemented
 - P4A_DB_Table::_setupPrimaryKey() method was added, it just calls
   the parent::_setupPrimaryKey() avoiding exceptions (used when the
