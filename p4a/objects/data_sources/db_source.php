@@ -75,7 +75,10 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * Sets the main table for this data source.
-	 * Views are not supported here.
+	 * If you pass a database view here, remember that
+	 * you have to call setPk() on this P4A_DB_Source
+	 * and setSequence() on the P4A_Data_Fields (if needed)
+	 * because those data won't be autodetected.
 	 * @param string $table
 	 * @return P4A_DB_Source
 	 */
