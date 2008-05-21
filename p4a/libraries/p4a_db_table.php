@@ -41,4 +41,10 @@ require_once 'Zend/Db/Table.php';
  */
 class P4A_DB_Table extends Zend_Db_Table
 {
+	protected function _setupPrimaryKey()
+	{
+		try {
+			parent::_setupPrimaryKey();
+		} catch (Zend_Db_Table_Exception $e) {}
+	}
 }

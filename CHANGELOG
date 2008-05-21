@@ -15,6 +15,9 @@
 - jQuery::UI::core, draggable and droppable 1.5b4 were added
 - README file was updated with a bit more of info about opera
 - P4A_DB_Navigator's drag&drop movements were implemented
+- P4A_DB_Table::_setupPrimaryKey() method was added, it just calls
+  the parent::_setupPrimaryKey() avoiding exceptions (used when the
+  table has no primary keys)
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved
