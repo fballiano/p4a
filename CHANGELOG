@@ -7,7 +7,7 @@
 - P4A_Tab_Pane's pages' labels are now auto translated on getAsString()
 - P4A_Field::getAsDate() does not set the field "readonly" anymore thus
   now dates can you written by hand too
-- jQuery was updated to 1.2.4
+- jQuery was updated to 1.2.5
 - jQuery::UI::datepicker javascript file was replaced with the packed one
   which is only 20kb instead of 60kb
 - folder_home icon was changed with a new one that degrades to GIF in a
