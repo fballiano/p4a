@@ -20,6 +20,8 @@
 - P4A_DB_Source now supports database views within the setTable() method
 - P4A_DB_Source::load() now does not set pk if P4A_DB_Table does not
   return one or more pk(s)
+- jQuery::dimensions plugin was removed because it has been bundled to
+  the jQuery core
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved

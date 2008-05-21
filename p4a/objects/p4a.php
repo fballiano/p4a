@@ -153,7 +153,6 @@ class P4A extends P4A_Object
 
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
-		$this->addJavascript(P4A_THEME_PATH . "/jquery/dimensions.js");
 		if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
