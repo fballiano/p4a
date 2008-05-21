@@ -71,7 +71,7 @@ tested browsers:
 - Mozilla Firefox 2.x
 - Internet Explorer 6.x, 7.x
 - Safari 3.x
-- Opera 9.25+ (with some jQuery related issues)
+- Opera 9.25+ (with some jQuery related issues about drag&drop)
 
 -----------------------------------------
 -- P4A compatibility: Database engines --
