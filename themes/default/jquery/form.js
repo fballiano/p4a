@@ -1,9 +1,9 @@
 /*
  * jQuery Form Plugin
- * version: 2.08 (04/29/2008)
+ * version: 2.10 (05/08/2008)
  * @requires jQuery v1.2.2 or later
  *
- * Examples at: http://malsup.com/jquery/form/
+ * Examples and documentation at: http://malsup.com/jquery/form/
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
@@ -12,170 +12,38 @@
  */
 (function($) {
 
+/*
+    Usage Note:  
+    -----------
+    Do not use both ajaxSubmit and ajaxForm on the same form.  These
+    functions are intended to be exclusive.  Use ajaxSubmit if you want
+    to bind your own submit handler to the form.  For example,
+
+    $(document).ready(function() {
+        $('#myForm').bind('submit', function() {
+            $(this).ajaxSubmit({
+                target: '#output'
+            });
+            return false; // <-- important!
+        });
+    });
+
+    Use ajaxForm when you want the plugin to manage all the event binding
+    for you.  For example,
+
+    $(document).ready(function() {
+        $('#myForm').ajaxForm({
+            target: '#output'
+        });
+    });
+        
+    When using ajaxForm, the ajaxSubmit function will be invoked for you
+    at the appropriate time.  
+*/
+
 /**
- * ajaxSubmit() provides a mechanism for submitting an HTML form using AJAX.
- *
- * ajaxSubmit accepts a single argument which can be either a success callback function
- * or an options Object.  If a function is provided it will be invoked upon successful
- * completion of the submit and will be passed the response from the server.
- * If an options Object is provided, the following attributes are supported:
- *
- *  target:   Identifies the element(s) in the page to be updated with the server response.
- *            This value may be specified as a jQuery selection string, a jQuery object,
- *            or a DOM element.
- *            default value: null
- *
- *  url:      URL to which the form data will be submitted.
- *            default value: value of form's 'action' attribute
- *
- *  type:     The method in which the form data should be submitted, 'GET' or 'POST'.
- *            default value: value of form's 'method' attribute (or 'GET' if none found)
- *
- *  data:     Additional data to add to the request, specified as key/value pairs (see $.ajax).
- *
- *  beforeSubmit:  Callback method to be invoked before the form is submitted.
- *            default value: null
- *
- *  success:  Callback method to be invoked after the form has been successfully submitted
- *            and the response has been returned from the server
- *            default value: null
- *
- *  dataType: Expected dataType of the response.  One of: null, 'xml', 'script', or 'json'
- *            default value: null
- *
- *  semantic: Boolean flag indicating whether data must be submitted in semantic order (slower).
- *            default value: false
- *
- *  resetForm: Boolean flag indicating whether the form should be reset if the submit is successful
- *
- *  clearForm: Boolean flag indicating whether the form should be cleared if the submit is successful
- *
- *
- * The 'beforeSubmit' callback can be provided as a hook for running pre-submit logic or for
- * validating the form data.  If the 'beforeSubmit' callback returns false then the form will
- * not be submitted. The 'beforeSubmit' callback is invoked with three arguments: the form data
- * in array format, the jQuery object, and the options object passed into ajaxSubmit.
- * The form data array takes the following form:
- *
- *     [ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]
- *
- * If a 'success' callback method is provided it is invoked after the response has been returned
- * from the server.  It is passed the responseText or responseXML value (depending on dataType).
- * See jQuery.ajax for further details.
- *
- *
- * The dataType option provides a means for specifying how the server response should be handled.
- * This maps directly to the jQuery.httpData method.  The following values are supported:
- *
- *      'xml':    if dataType == 'xml' the server response is treated as XML and the 'success'
- *                   callback method, if specified, will be passed the responseXML value
- *      'json':   if dataType == 'json' the server response will be evaluted and passed to
- *                   the 'success' callback, if specified
- *      'script': if dataType == 'script' the server response is evaluated in the global context
- *
- *
- * Note that it does not make sense to use both the 'target' and 'dataType' options.  If both
- * are provided the target will be ignored.
- *
- * The semantic argument can be used to force form serialization in semantic order.
- * This is normally true anyway, unless the form contains input elements of type='image'.
- * If your form must be submitted with name/value pairs in semantic order and your form
- * contains an input of type='image" then pass true for this arg, otherwise pass false
- * (or nothing) to avoid the overhead for this logic.
- *
- *
- * When used on its own, ajaxSubmit() is typically bound to a form's submit event like this:
- *
- * $("#form-id").submit(function() {
- *     $(this).ajaxSubmit(options);
- *     return false; // cancel conventional submit
- * });
- *
- * When using ajaxForm(), however, this is done for you.
- *
- * @example
- * $('#myForm').ajaxSubmit(function(data) {
- *     alert('Form submit succeeded! Server returned: ' + data);
- * });
- * @desc Submit form and alert server response
- *
- *
- * @example
- * var options = {
- *     target: '#myTargetDiv'
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc Submit form and update page element with server response
- *
- *
- * @example
- * var options = {
- *     success: function(responseText) {
- *         alert(responseText);
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc Submit form and alert the server response
- *
- *
- * @example
- * var options = {
- *     beforeSubmit: function(formArray, jqForm) {
- *         if (formArray.length == 0) {
- *             alert('Please enter data.');
- *             return false;
- *         }
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc Pre-submit validation which aborts the submit operation if form data is empty
- *
- *
- * @example
- * var options = {
- *     url: myJsonUrl.php,
- *     dataType: 'json',
- *     success: function(data) {
- *        // 'data' is an object representing the the evaluated json data
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc json data returned and evaluated
- *
- *
- * @example
- * var options = {
- *     url: myXmlUrl.php,
- *     dataType: 'xml',
- *     success: function(responseXML) {
- *        // responseXML is XML document object
- *        var data = $('myElement', responseXML).text();
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc XML data returned from server
- *
- *
- * @example
- * var options = {
- *     resetForm: true
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc submit form and reset it if successful
- *
- * @example
- * $('#myForm).submit(function() {
- *    $(this).ajaxSubmit();
- *    return false;
- * });
- * @desc Bind form's submit event to use ajaxSubmit
- *
- *
- * @name ajaxSubmit
- * @type jQuery
- * @param options  object literal containing options which control the form submission process
- * @cat Plugins/Form
- * @return jQuery
+ * ajaxSubmit() provides a mechanism for immediately submitting 
+ * an HTML form using AJAX.
  */
 $.fn.ajaxSubmit = function(options) {
     // fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
@@ -281,8 +149,9 @@ $.fn.ajaxSubmit = function(options) {
         var id = 'jqFormIO' + (new Date().getTime());
         var $io = $('<iframe id="' + id + '" name="' + id + '" />');
         var io = $io[0];
-        var op8 = $.browser.opera && window.opera.version() < 9;
-        if ($.browser.msie || op8) io.src = 'javascript:false;document.write("");';
+
+        if ($.browser.msie || $.browser.opera) 
+            io.src = 'javascript:false;document.write("");';
         $io.css({ position: 'absolute', top: '-1000px', left: '-1000px' });
 
         var xhr = { // mock object
@@ -343,15 +212,27 @@ $.fn.ajaxSubmit = function(options) {
 
         function cb() {
             if (cbInvoked++) return;
-
+            
             io.detachEvent ? io.detachEvent('onload', cb) : io.removeEventListener('load', cb, false);
 
+            var operaHack = 0;
             var ok = true;
             try {
                 if (timedOut) throw 'timeout';
                 // extract the server response from the iframe
                 var data, doc;
+
                 doc = io.contentWindow ? io.contentWindow.document : io.contentDocument ? io.contentDocument : io.document;
+                
+                if (doc.body == null && !operaHack && $.browser.opera) {
+                    // In Opera 9.2.x the iframe DOM is not always traversable when
+                    // the onload callback fires so we give Opera 100ms to right itself
+                    operaHack = 1;
+                    cbInvoked--;
+                    setTimeout(cb, 100);
+                    return;
+                }
+                
                 xhr.responseText = doc.body ? doc.body.innerHTML : null;
                 xhr.responseXML = doc.XMLDocument ? doc.XMLDocument : doc;
                 xhr.getResponseHeader = function(header){
@@ -413,53 +294,10 @@ $.fn.ajaxSubmit = function(options) {
  *    used to submit the form).
  * 3. This method binds the submit() method to the form for you.
  *
- * Note that for accurate x/y coordinates of image submit elements in all browsers
- * you need to also use the "dimensions" plugin (this method will auto-detect its presence).
- *
  * The options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely
  * passes the options argument along after properly binding events for submit elements and
- * the form itself.  See ajaxSubmit for a full description of the options argument.
- *
- *
- * @example
- * var options = {
- *     target: '#myTargetDiv'
- * };
- * $('#myForm').ajaxSForm(options);
- * @desc Bind form's submit event so that 'myTargetDiv' is updated with the server response
- *       when the form is submitted.
- *
- *
- * @example
- * var options = {
- *     success: function(responseText) {
- *         alert(responseText);
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc Bind form's submit event so that server response is alerted after the form is submitted.
- *
- *
- * @example
- * var options = {
- *     beforeSubmit: function(formArray, jqForm) {
- *         if (formArray.length == 0) {
- *             alert('Please enter data.');
- *             return false;
- *         }
- *     }
- * };
- * $('#myForm').ajaxSubmit(options);
- * @desc Bind form's submit event so that pre-submit callback is invoked before the form
- *       is submitted.
- *
- *
- * @name   ajaxForm
- * @param  options  object literal containing options which control the form submission process
- * @return jQuery
- * @cat    Plugins/Form
- * @type   jQuery
- */
+ * the form itself.
+ */ 
 $.fn.ajaxForm = function(options) {
     return this.ajaxFormUnbind().bind('submit.form-plugin',function() {
         $(this).ajaxSubmit(options);
@@ -488,15 +326,7 @@ $.fn.ajaxForm = function(options) {
     });
 };
 
-
-/**
- * ajaxFormUnbind unbinds the event handlers that were bound by ajaxForm
- *
- * @name   ajaxFormUnbind
- * @return jQuery
- * @cat    Plugins/Form
- * @type   jQuery
- */
+// ajaxFormUnbind unbinds the event handlers that were bound by ajaxForm
 $.fn.ajaxFormUnbind = function() {
     this.unbind('submit.form-plugin');
     return this.each(function() {
@@ -515,21 +345,6 @@ $.fn.ajaxFormUnbind = function() {
  *
  * It is this array that is passed to pre-submit callback functions provided to the
  * ajaxSubmit() and ajaxForm() methods.
- *
- * The semantic argument can be used to force form serialization in semantic order.
- * This is normally true anyway, unless the form contains input elements of type='image'.
- * If your form must be submitted with name/value pairs in semantic order and your form
- * contains an input of type='image" then pass true for this arg, otherwise pass false
- * (or nothing) to avoid the overhead for this logic.
- *
- * @example var data = $("#myForm").formToArray();
- * $.post( "myscript.cgi", data );
- * @desc Collect all the data from a form and submit it to the server.
- *
- * @name formToArray
- * @param semantic true if serialization must maintain strict semantic ordering of elements (slower)
- * @type Array<Object>
- * @cat Plugins/Form
  */
 $.fn.formToArray = function(semantic) {
     var a = [];
@@ -572,58 +387,18 @@ $.fn.formToArray = function(semantic) {
     return a;
 };
 
-
 /**
  * Serializes form data into a 'submittable' string. This method will return a string
  * in the format: name1=value1&amp;name2=value2
- *
- * The semantic argument can be used to force form serialization in semantic order.
- * If your form must be submitted with name/value pairs in semantic order then pass
- * true for this arg, otherwise pass false (or nothing) to avoid the overhead for
- * this logic (which can be significant for very large forms).
- *
- * @example var data = $("#myForm").formSerialize();
- * $.ajax('POST', "myscript.cgi", data);
- * @desc Collect all the data from a form into a single string
- *
- * @name formSerialize
- * @param semantic true if serialization must maintain strict semantic ordering of elements (slower)
- * @type String
- * @cat Plugins/Form
  */
 $.fn.formSerialize = function(semantic) {
     //hand off to jQuery.param for proper encoding
     return $.param(this.formToArray(semantic));
 };
 
-
 /**
  * Serializes all field elements in the jQuery object into a query string.
  * This method will return a string in the format: name1=value1&amp;name2=value2
- *
- * The successful argument controls whether or not serialization is limited to
- * 'successful' controls (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
- * The default value of the successful argument is true.
- *
- * @example var data = $("input").fieldSerialize();
- * @desc Collect the data from all successful input elements into a query string
- *
- * @example var data = $(":radio").fieldSerialize();
- * @desc Collect the data from all successful radio input elements into a query string
- *
- * @example var data = $("#myForm :checkbox").fieldSerialize();
- * @desc Collect the data from all successful checkbox input elements in myForm into a query string
- *
- * @example var data = $("#myForm :checkbox").fieldSerialize(false);
- * @desc Collect the data from all checkbox elements in myForm (even the unchecked ones) into a query string
- *
- * @example var data = $(":input").fieldSerialize();
- * @desc Collect the data from all successful input, select, textarea and button elements into a query string
- *
- * @name fieldSerialize
- * @param successful true if only successful controls should be serialized (default is true)
- * @type String
- * @cat Plugins/Form
  */
 $.fn.fieldSerialize = function(successful) {
     var a = [];
@@ -641,7 +416,6 @@ $.fn.fieldSerialize = function(successful) {
     //hand off to jQuery.param for proper encoding
     return $.param(a);
 };
-
 
 /**
  * Returns the value(s) of the element in the matched set.  For example, consider the following form:
@@ -680,30 +454,6 @@ $.fn.fieldSerialize = function(successful) {
  *
  * Note: This method *always* returns an array.  If no valid value can be determined the
  *       array will be empty, otherwise it will contain one or more values.
- *
- * @example var data = $("#myPasswordElement").fieldValue();
- * alert(data[0]);
- * @desc Alerts the current value of the myPasswordElement element
- *
- * @example var data = $("#myForm :input").fieldValue();
- * @desc Get the value(s) of the form elements in myForm
- *
- * @example var data = $("#myForm :checkbox").fieldValue();
- * @desc Get the value(s) for the successful checkbox element(s) in the jQuery object.
- *
- * @example var data = $("#mySingleSelect").fieldValue();
- * @desc Get the value(s) of the select control
- *
- * @example var data = $(':text').fieldValue();
- * @desc Get the value(s) of the text input or textarea elements
- *
- * @example var data = $("#myMultiSelect").fieldValue();
- * @desc Get the values for the select-multiple control
- *
- * @name fieldValue
- * @param Boolean successful true if only the values for successful controls should be returned (default is true)
- * @type Array<String>
- * @cat Plugins/Form
  */
 $.fn.fieldValue = function(successful) {
     for (var val=[], i=0, max=this.length; i < max; i++) {
@@ -718,24 +468,6 @@ $.fn.fieldValue = function(successful) {
 
 /**
  * Returns the value of the field element.
- *
- * The successful argument controls whether or not the field element must be 'successful'
- * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
- * The default value of the successful argument is true.  If the given element is not
- * successful and the successful arg is not false then the returned value will be null.
- *
- * Note: If the successful flag is true (default) but the element is not successful, the return will be null
- * Note: The value returned for a successful select-multiple element will always be an array.
- * Note: If the element has no value the return value will be undefined.
- *
- * @example var data = jQuery.fieldValue($("#myPasswordElement")[0]);
- * @desc Gets the current value of the myPasswordElement element
- *
- * @name fieldValue
- * @param Element el The DOM element for which the value will be returned
- * @param Boolean successful true if value returned must be for a successful controls (default is true)
- * @type String or Array<String> or null or undefined
- * @cat Plugins/Form
  */
 $.fieldValue = function(el, successful) {
     var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
@@ -767,7 +499,6 @@ $.fieldValue = function(el, successful) {
     return el.value;
 };
 
-
 /**
  * Clears the form data.  Takes the following actions on the form's input fields:
  *  - input text fields will have their 'value' property set to the empty string
@@ -775,13 +506,6 @@ $.fieldValue = function(el, successful) {
  *  - checkbox and radio inputs will have their 'checked' property set to false
  *  - inputs of type submit, button, reset, and hidden will *not* be effected
  *  - button elements will *not* be effected
- *
- * @example $('form').clearForm();
- * @desc Clears all forms on the page.
- *
- * @name clearForm
- * @type jQuery
- * @cat Plugins/Form
  */
 $.fn.clearForm = function() {
     return this.each(function() {
@@ -790,19 +514,7 @@ $.fn.clearForm = function() {
 };
 
 /**
- * Clears the selected form elements.  Takes the following actions on the matched elements:
- *  - input text fields will have their 'value' property set to the empty string
- *  - select elements will have their 'selectedIndex' property set to -1
- *  - checkbox and radio inputs will have their 'checked' property set to false
- *  - inputs of type submit, button, reset, and hidden will *not* be effected
- *  - button elements will *not* be effected
- *
- * @example $('.myInputs').clearFields();
- * @desc Clears all inputs with class myInputs
- *
- * @name clearFields
- * @type jQuery
- * @cat Plugins/Form
+ * Clears the selected form elements.
  */
 $.fn.clearFields = $.fn.clearInputs = function() {
     return this.each(function() {
@@ -816,16 +528,8 @@ $.fn.clearFields = $.fn.clearInputs = function() {
     });
 };
 
-
 /**
  * Resets the form data.  Causes all form elements to be reset to their original value.
- *
- * @example $('form').resetForm();
- * @desc Resets all forms on the page.
- *
- * @name resetForm
- * @type jQuery
- * @cat Plugins/Form
  */
 $.fn.resetForm = function() {
     return this.each(function() {
@@ -836,16 +540,8 @@ $.fn.resetForm = function() {
     });
 };
 
-
 /**
  * Enables or disables any matching elements.
- *
- * @example $(':radio').enabled(false);
- * @desc Disables all radio buttons
- *
- * @name select
- * @type jQuery
- * @cat Plugins/Form
  */
 $.fn.enable = function(b) { 
     if (b == undefined) b = true;
@@ -857,13 +553,6 @@ $.fn.enable = function(b) {
 /**
  * Checks/unchecks any matching checkboxes or radio buttons and
  * selects/deselects and matching option elements.
- *
- * @example $(':checkbox').select();
- * @desc Checks all checkboxes
- *
- * @name select
- * @type jQuery
- * @cat Plugins/Form
  */
 $.fn.select = function(select) {
     if (select == undefined) select = true;
