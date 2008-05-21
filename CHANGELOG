@@ -24,6 +24,7 @@
   the jQuery core
 - P4A_Mask's default template now includes CSS first and then JS, solving
   some jQuery related issues (on safari/opera)
+- fix_date option was added to P4A_I18N::_normalize() method
 
 3.0.0-rc2
 - a bug with P4A_Field::getAsCheckbox() method was solved

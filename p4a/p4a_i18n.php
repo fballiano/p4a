@@ -268,7 +268,7 @@ class P4A_I18N
 				if (preg_match($yes_regexp, $value)) return 1;
 				return 0;
 			case 'date':
-				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine));
+				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine, 'fix_date'=>true));
 				return "{$date['year']}-{$date['month']}-{$date['day']}";
 			case 'time':
 				$date_format = Zend_Locale_Format::getTimeFormat($this->_locale_engine);
