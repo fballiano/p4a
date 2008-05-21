@@ -34,9 +34,6 @@
 /**
  * Reads data from a database.
  * 
- * Note: views are supported only within setQuery(eg: "SELECT * FROM view_name"),
- * using a view within the setTable("view_name") will cause an error.
- * 
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
@@ -403,7 +400,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		// setting primary keys
 		$primary_keys = array_values($this->_tables_metadata[$main_table]['primary']);
-		if (P4A_AUTO_DB_PRIMARY_KEYS) {
+		if (P4A_AUTO_DB_PRIMARY_KEYS and !empty($primary_keys)) {
 			if (sizeof($primary_keys) == 1) {
 				$this->setPk($primary_keys[0]);
 			} else {
