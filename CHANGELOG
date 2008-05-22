@@ -1,3 +1,6 @@
+3.0.0-rc4
+- 
+
 3.0.0-rc3
 - file upload check and error reporting was enhanced
 - a bug with file download within a non-ajax environment was solved
