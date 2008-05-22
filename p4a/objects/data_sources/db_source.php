@@ -786,8 +786,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			return "SELECT count(*) AS p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
 		
-		$query = $this->_composeSelectQuery(false);
-		$query = $query->__toString();
+		$query = $this->_composeSelectQuery(false)->__toString();
 		return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 	}
 	
