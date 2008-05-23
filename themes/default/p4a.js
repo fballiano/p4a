@@ -5,6 +5,7 @@
  */
 
 p4a_working = true;
+p4a_system_messages_timeout = null;
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
@@ -257,12 +258,21 @@ p4a_messages_show = function ()
 			.ifixpng();
 	}
 	
-	setTimeout(function () {
+	p4a_messages_start_timer(2000);
+	$('.p4a_system_messages:visible').mouseover(function () {
+		clearTimeout(p4a_system_messages_timeout);
+	}).mouseout(p4a_messages_start_timer);
+}
+
+p4a_messages_start_timer = function (milliseconds)
+{
+	if (typeof milliseconds != "number") milliseconds = 0;
+	p4a_system_messages_timeout = setTimeout(function () {
 		$('.p4a_system_messages:visible').fadeOut('normal', function() {
 			$(this).hide().remove();
 			p4a_messages_show();
 		});
-	}, 2000);
+	}, milliseconds);
 }
 
 p4a_load_js = function (url, callback)

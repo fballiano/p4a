@@ -2,6 +2,8 @@
 - a default submit button was added to P4A default HTML form
   (hidden and without events) to solve the
   enter key bug (propagating event to the first button)
+- mouseover on system messages pause the fadeOut timer giving
+  more time to read the messages
 
 3.0.0-rc3
 - file upload check and error reporting was enhanced
