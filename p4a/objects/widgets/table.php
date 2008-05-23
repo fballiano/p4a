@@ -553,6 +553,7 @@ class P4A_Table_Col extends P4A_Widget
 	 * Sets the header for the column
 	 * @param string $header
 	 * @return P4A_Table_Col
+	 * @deprecated 
 	 */
 	public function setHeader($header)
 	{

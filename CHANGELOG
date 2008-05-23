@@ -4,6 +4,7 @@
   enter key bug (propagating event to the first button)
 - mouseover on system messages pause the fadeOut timer giving
   more time to read the messages
+- P4A_Table_Col::setHeader() method was marked deprecated
 
 3.0.0-rc3
 - file upload check and error reporting was enhanced
