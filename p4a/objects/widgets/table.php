@@ -205,7 +205,7 @@ class P4A_Table extends P4A_Widget
 
 		$visible_cols = $this->getVisibleCols();
 
-		if($this->_show_headers) {
+		if ($this->_show_headers) {
 			$headers = array();
 			$i = 0;
 			$is_sortable	= false;
@@ -220,7 +220,7 @@ class P4A_Table extends P4A_Widget
 				}
 			}
 
-			foreach($visible_cols as $col_name) {
+			foreach ($visible_cols as $col_name) {
 				$col =& $this->cols->$col_name;
 				if ($col->getType() == 'action') {
 					$headers[$i]['value']  = '&nbsp;';
