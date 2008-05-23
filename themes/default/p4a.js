@@ -66,11 +66,6 @@ p4a_keypressed_get = function (event)
 	return (window.event) ? event.keyCode : event.which;
 }
 
-p4a_keypressed_reset = function()
-{
-	$("input[type!='button']").keypress(function(event){return !p4a_keypressed_is_return(event);});
-}
-
 p4a_focus_set = function (id)
 {
 	try {
@@ -127,7 +122,6 @@ p4a_ajax_process_response = function (response)
 		p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 		if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
-		p4a_keypressed_reset();
 		p4a_working = false;
 	} catch (e) {
 		p4a_ajax_error();
@@ -305,6 +299,5 @@ $(function () {
 		.ajaxError(p4a_ajax_error);
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
-	p4a_keypressed_reset();
 	p4a_working = false;
 });

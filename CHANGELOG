@@ -1,5 +1,6 @@
 3.0.0-rc4
-- p4a_keypressed_reset javascript function was added to solve the
+- a default submit button was added to P4A default HTML form
+  (hidden and without events) to solve the
   enter key bug (propagating event to the first button)
 
 3.0.0-rc3

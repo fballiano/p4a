@@ -473,6 +473,7 @@ class P4A_Mask extends P4A_Object
 	protected function maskOpen()
 	{
 		$return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
+		$return .= "<input type='submit' onclick='return false' style='display:none' />\n";
 		$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
 		$return .= "<input type='hidden' name='_action' value='none' />\n";
 		$return .= "<input type='hidden' name='_ajax' value='0' />\n";
