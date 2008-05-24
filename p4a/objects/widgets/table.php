@@ -812,11 +812,7 @@ class P4A_Table_Rows extends P4A_Widget
 		$i = 0;
 		foreach ($rows as $row_number=>$row) {
 			$j = 0;
-			if ($i%2 == 0) {
-				$aReturn[$i]['row']['even'] = true;
-			} else {
-				$aReturn[$i]['row']['even'] = false;
-			}
+			$aReturn[$i]['row']['even'] = ($i%2 == 0);
 
 			if (($num_page == $num_page_from_data_source) and ($row_number + $offset + 1 == $parent->data->getRowNumber())) {
 				$aReturn[$i]['row']['active'] = true;
@@ -877,12 +873,10 @@ class P4A_Table_Rows extends P4A_Widget
 					}
 					$aReturn[$i]['cells'][$j]['type'] = $parent->data->fields->$col_name->getType();
 				}
-
 				$j++;
 			}
 			$i++;
 		}
-
 		return $aReturn;
 	}
 
