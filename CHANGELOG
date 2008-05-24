@@ -5,6 +5,9 @@
 - mouseover on system messages pause the fadeOut timer giving
   more time to read the messages
 - P4A_Table_Col::setHeader() method was marked deprecated
+- P4A_Table_Rows and P4A_Table_Col now trigger the onclick event 
+  (in addition to beforeclick and afterclick) useful if you don't
+  want the table to move your linked P4A_Data_Source
 
 3.0.0-rc3
 - file upload check and error reporting was enhanced

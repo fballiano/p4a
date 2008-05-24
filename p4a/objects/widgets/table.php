@@ -725,13 +725,17 @@ class P4A_Table_Col extends P4A_Widget
 			if ($this->actionHandler('beforeclick', $aParams) == ABORT) return ABORT;
 		}
 
-		if ($this->getType() == 'action') {
-			$p4a = P4A::singleton();
-			$cols = $p4a->getObject($this->getParentID());
-			$table = $p4a->getObject($cols->getParentID());
-			if ($table->data->row($aParams[0] + (($table->getCurrentPageNumber() - 1) * $table->data->getPageLimit()) + 1) == ABORT) return ABORT;
+		if ($this->isActionTriggered('onclick')) {
+			if ($this->actionHandler('onclick', $aParams) == ABORT) return ABORT;
 		} else {
-			$this->order();
+			if ($this->getType() == 'action') {
+				$p4a = P4A::singleton();
+				$cols = $p4a->getObject($this->getParentID());
+				$table = $p4a->getObject($cols->getParentID());
+				if ($table->data->row($aParams[0] + (($table->getCurrentPageNumber() - 1) * $table->data->getPageLimit()) + 1) == ABORT) return ABORT;
+			} else {
+				$this->order();
+			}
 		}
 		
 		if ($this->isActionTriggered('afterclick')) {
@@ -909,8 +913,12 @@ class P4A_Table_Rows extends P4A_Widget
 	{
 		if ($this->actionHandler('beforeclick', $aParams) == ABORT) return ABORT;
 
-		$parent = P4A::singleton()->getObject($this->getParentID());
-		if ($parent->data->row($aParams[0] + (($parent->getCurrentPageNumber() - 1) * $parent->data->getPageLimit()) + 1) == ABORT) return ABORT;
+		if ($this->isActionTriggered('onclick')) {
+			if ($this->actionHandler('onclick', $aParams) == ABORT) return ABORT;
+		} else {
+			$parent = P4A::singleton()->getObject($this->getParentID());
+			if ($parent->data->row($aParams[0] + (($parent->getCurrentPageNumber() - 1) * $parent->data->getPageLimit()) + 1) == ABORT) return ABORT;
+		}
 
 		if ($this->actionHandler('afterclick', $aParams) == ABORT) return ABORT;
 	}
