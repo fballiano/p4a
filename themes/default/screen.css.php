@@ -650,6 +650,10 @@ table.p4a_message td.c2 {
 	margin-left: -1px;
 }
 
+.p4a_browser_safari .p4a_table caption {
+	margin-right: -1px;
+}
+
 .p4a_table td,
 .p4a_table th {
 	border-right: 1px solid #c6d3de;
