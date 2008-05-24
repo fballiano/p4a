@@ -860,7 +860,12 @@ class P4A_Table_Rows extends P4A_Widget
 				} elseif ($parent->cols->$col_name->getType() == "action") {
 					$aReturn[$i]['cells'][$j]['value'] = __($parent->cols->$col_name->getLabel());
 					$aReturn[$i]['cells'][$j]['type'] = 'action';
-					$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
+					if ($row_enabled and $col_enabled) {
+						$aReturn[$i]['cells'][$j]['clickable'] = 'clickable';
+						$aReturn[$i]['cells'][$j]['action'] = $parent->cols->$col_name->composeStringActions(array($row_number, $col_name));
+					} else {
+						$aReturn[$i]['cells'][$j]['action'] = $enabled ? $parent->cols->$col_name->composeStringActions(array($row_number, $col_name)) : '';
+					}
 				} else {
 					if ($parent->cols->$col_name->isFormatted()) {
 						if ($parent->cols->$col_name->isActionTriggered('onformat')) {
