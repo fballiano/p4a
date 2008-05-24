@@ -85,12 +85,6 @@ class P4A_Table extends P4A_Widget
 	protected $_cols_order = array();
 
 	/**
-	 * A title (caption) for the table
-	 * @var string
-	 */
-	protected $_title = "";
-
-	/**
 	 * Automatically add the navigation bar?
 	 * @var boolean
 	 */
@@ -302,18 +296,6 @@ class P4A_Table extends P4A_Widget
 	{
 		$this->navigation_bar->setVisible(false);
 		$this->_auto_navigation_bar = false;
-		return $this;
-	}
-
-	/**
-	 * @return P4A_Table
-	 */
-	public function showTitleBar()
-	{
-		if ($this->title_bar !== null) {
-			$this->setTitle($this->getName());
-		}
-		$this->title_bar->setVisible();
 		return $this;
 	}
 
