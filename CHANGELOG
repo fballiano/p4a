@@ -12,6 +12,7 @@
 - P4A_Table_Rows::disable() won't disable table's "action cols"
 - A P4A_Table's caption small rendering bug with safari was solved
 - P4A_Table's CSS was modified for a better readability
+- jQuery was updated to 1.2.6
 
 3.0.0-rc3
 - file upload check and error reporting was enhanced
