@@ -634,14 +634,9 @@ table.p4a_message td.c2 {
 	text-align: left;
 }
 
-.p4a_browser_gecko .p4a_table {
-	margin-left: 1px;
-}
-
 .p4a_table caption {
 	background: #fafafa;
 	border: 1px solid #c6d3de;
-	border-bottom: none;
 	padding: 5px;
 	font-weight: bold;
 }
@@ -652,21 +647,16 @@ table.p4a_message td.c2 {
 
 .p4a_browser_safari .p4a_table caption {
 	margin-right: -1px;
+	border-bottom: none;
+}
+
+.p4a_browser_opera .p4a_table caption {
+	border-bottom: none;
 }
 
 .p4a_table td,
 .p4a_table th {
 	border-right: 1px solid #c6d3de;
-	border-left: hidden;
-}
-
-.p4a_table th:first-child {
-	border-left: 1px solid #c6d3de;
-}
-
-.p4a_browser_ie .p4a_table th,
-.p4a_browser_ie .p4a_table td {
-	border: none;
 }
 
 .p4a_table th {
