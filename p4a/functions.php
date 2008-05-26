@@ -598,6 +598,27 @@ function P4A_Exception_Handler(Exception $e)
 }
 
 /**
+ * @param string $url
+ */
+function P4A_Redirect_To_Url($url)
+{
+	$p4a = P4A::singleton();
+	if ($p4a->inAjaxCall()) {
+		header('Content-Type: text/xml');
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
+		echo "<widget id='p4a'>\n";
+		echo "<javascript><![CDATA[window.location='$url']]></javascript>\n";
+		echo "</widget>\n";
+		echo "</ajax-response>";
+		die();
+	}
+	
+	header("Location: $url");
+	die();
+}
+
+/**
  * @param string $file
  * @throws P4A_Exception if the file does not exists in P4A_UPLOADS_DIR
  */
@@ -619,7 +640,7 @@ function P4A_Redirect_To_File($file)
 		echo "<javascript><![CDATA[window.location='$file']]></javascript>\n";
 		echo "</widget>\n";
 		echo "</ajax-response>";
-		die(); 
+		die();
 	}
 	
 	header("Location: $file");
