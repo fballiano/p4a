@@ -11,7 +11,7 @@
 	<?php if (@$headers): ?>
 	<thead>
 		<tr>
-			<th>&nbsp;</th>
+			<th class="p4a_row_indicator">&nbsp;</th>
 			<?php foreach ($headers as $header): ?>
 			<?php if ($header['action']): ?>
 				<th>
@@ -43,7 +43,7 @@
 		<?php foreach ($table_rows as $row): ?>
 			<?php $i++; ?>
 			<tr>
-			    <th width="19">
+			    <th width="19" class="p4a_row_indicator">
 			    	<?php if ($row['row']['active']): ?>
 						<img src="<?php echo P4A_THEME_PATH?>/widgets/table/select.gif" width="18" height="15" alt="<?php echo __('Selected')?>" />
 					<?php else: ?>
