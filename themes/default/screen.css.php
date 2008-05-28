@@ -663,6 +663,11 @@ table.p4a_message td.c2 {
 	padding: 5px;
 	font-weight: bold;
 	background: white;
+	border-bottom: 1px solid #c6d3de;
+}
+
+.p4a_table th.p4a_row_indicator {
+	border-bottom: none;
 }
 
 .p4a_table td {
