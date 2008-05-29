@@ -40,7 +40,7 @@ header('Content-type: text/css');
 * {
 	font-family: "Bitstream Vera Sans", sans-serif;
 	font-size: 11px;
-	color: #4b718a;
+	color: <?php echo $_GET['fg'] ?>;
 }
 
 #p4a_top_container {
@@ -56,8 +56,8 @@ header('Content-type: text/css');
 }
 
 #p4a_top {
-	background-color: #fafafa;
-	border-bottom: 1px solid #ccc;
+	background-color: <?php echo $_GET['bg'] ?>;
+	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
 	padding: 2px;
 }
 
@@ -110,8 +110,8 @@ header('Content-type: text/css');
 
 #p4a_sidebar_left,
 #p4a_sidebar_right {
-	background: #fafafa;
-	border-bottom: 1px solid #ccc;
+	background: <?php echo $_GET['bg'] ?>;
+	border-bottom: <?php echo $_GET['border'] ?>;
 	position: fixed !important;
 	position: absolute;
  	top: 0;
@@ -122,11 +122,11 @@ header('Content-type: text/css');
 
 #p4a_sidebar_left {
  	left: 0;
- 	border-right: 1px solid #ccc;
+ 	border-right: 1px solid <?php echo $_GET['border'] ?>;
 }
 
 #p4a_sidebar_right {
-	border-left: 1px solid #ccc;
+	border-left: 1px solid <?php echo $_GET['border'] ?>;
  	right: 0;
 }
 
@@ -143,7 +143,7 @@ ol.p4a_backtrace li {
 /***********************/
 
 #p4a_popup {
-	background: #fafafa;
+	background: <?php echo $_GET['bg'] ?>;
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -156,13 +156,12 @@ ol.p4a_backtrace li {
 
 #p4a_popup #p4a_main_inner_container {
 	background: white;
-	border: 2px solid #4b718a;
+	border: 2px solid <?php echo $_GET['selected_bg'] ?>;
 	padding-bottom: 20px;
 	margin: auto;
 }
 
 #p4a_popup h2 {
-	background: #eee;
 	margin-bottom: 20px;
 	line-height: 32px;
 	padding-left: 32px;
@@ -193,7 +192,7 @@ ol.p4a_backtrace li {
 /****************/
 
 .p4a_fieldset {
-	border: 1px solid #c6d3de;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	padding-bottom: 10px;
 }
 
@@ -213,7 +212,7 @@ ol.p4a_backtrace li {
 	font-weight: bold;
 	font-size: 12px;
 	margin-left: 10px;
-	color: #4b718a;
+	color: <?php echo $_GET['fg'] ?>;
 	padding: 0 5px;
 	text-align: left;
 }
@@ -226,7 +225,7 @@ ol.p4a_backtrace li {
 .p4a_field textarea,
 .p4a_field select,
 .p4a_field_file table {
-	border: 1px solid #c6d3de;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 .p4a_field input {
@@ -241,9 +240,7 @@ ol.p4a_backtrace li {
 
 .p4a_field input:focus,
 .p4a_field textarea:focus {
- 	border: 1px solid black;
-	color: black;
-	background-color: #f0f0f0;
+ 	border: 1px solid <?php echo $_GET['selected_border'] ?>;
 }
 
 .p4a_field_file table {
@@ -266,16 +263,16 @@ ol.p4a_backtrace li {
 .field_error select,
 .field_error iframe {
 	border: 1px dashed red;
-	background: url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/field/error.gif) no-repeat bottom right;
+	background: url(<?php echo $_GET['p4a_theme_path'] ?>/widgets/field/error.gif) no-repeat bottom right;
 }
 
 .field_error .field_error_msg {
 	position: absolute;
-	color: #777;
+	color: <?php echo $_GET['tooltip_fg'] ?>;
 	display: none;
-	background: white;
+	background: <?php echo $_GET['tooltip_bg'] ?>;
 	padding: 10px;
-	border: 2px solid #4b718a;
+	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 }
 
 .p4a_field_radio_values,
@@ -297,7 +294,7 @@ ol.p4a_backtrace li {
 
 .p4a_field .p4a_field_date_trigger {
 	width: 20px;
-	background: #fafafa;
+	background: <?php echo $_GET['bg'] ?>;
 	text-align: center;
 }
 
@@ -307,7 +304,7 @@ ol.p4a_backtrace li {
 
 .ac_results {
 	padding: 0px;
-	border: 1px solid black;
+	border: 1px solid <?php echo $_GET['selected_border'] ?>;
 	background-color: Window;
 	overflow: hidden;
 }
@@ -364,7 +361,7 @@ div.datepicker_header {
 .datepicker_header select.datepicker_newMonth,
 .datepicker_header select.datepicker_newYear {
 	background: white;
-	color: #4b718a;
+	color: <?php echo $_GET['fg'] ?>;
 	font-weight: normal;
 }
 
@@ -421,11 +418,12 @@ hr.p4a_line {
 }
 
 .p4a_db_navigator .hoverclass {
-	color: red;
+	color: <?php echo $_GET['selected_fg'] ?>;
+	background: <?php echo $_GET['selected_bg'] ?>;
 }
 
 .p4a_db_navigator .hoverclass li a {
-	color: #4b718a;
+	color: <?php echo $_GET['fg'] ?>;
 }
 
 /***************************/
@@ -454,9 +452,10 @@ table.p4a_widget_layout_table td.c1 {
 /***********************************/
 
 .p4a_system_messages {
-	border: 2px solid #588fa3;
+	color: <?php echo $_GET['tooltip_fg'] ?>;
+	background: <?php echo $_GET['tooltip_bg'] ?>;
+	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 	z-index: 10000;
-	background: white;
 	position: absolute;
 	display: none;
 	width: 300px;
@@ -476,20 +475,19 @@ table.p4a_widget_layout_table td.c1 {
 /**************/
 
 .p4a_button {
-	background: #fafafa;
-	border: 1px solid #e2e7ed;
+	background: <?php echo $_GET['bg'] ?>;
+	border: 1px solid <?php echo $_GET['border'] ?>;
 	cursor: pointer;
 	overflow: visible; /* used to fix the IE stretched buttons bug */
 }
 
 .p4a_button_image {
-	border:1px solid #fafafa;
-	padding:0;
+	border: 1px solid <?php echo $_GET['bg'] ?>;
+	padding: 0;
 }
 
 .p4a_button:hover {
-	background: white;
-	border: 1px solid #c6d3de;
+	border: 1px solid <?php echo $_GET['selected_bg'] ?>;
 }
 
 .p4a_button_disabled,
@@ -497,11 +495,13 @@ table.p4a_widget_layout_table td.c1 {
 	opacity: 0.2;
 	-moz-opacity: 0.2;
 	filter: alpha(opacity=20);
+	cursor: default;
 }
 
 .p4a_button_disabled:hover {
-	background: #fafafa;
-	border: 1px solid #e2e7ed;
+	color: <?php echo $_GET['fg'] ?>;
+	background: <?php echo $_GET['bg'] ?>;
+	border: 1px solid <?php echo $_GET['border'] ?>;
 }
 
 /***************/
@@ -509,18 +509,8 @@ table.p4a_widget_layout_table td.c1 {
 /***************/
 
 .p4a_toolbar .p4a_button {
-	background: #fafafa;
-	border: 1px solid #fafafa;
-}
-
-.p4a_toolbar .p4a_button:hover {
-	border: 1px solid #c6d3de;
-}
-
-.p4a_toolbar .p4a_button_disabled:hover,
-.p4a_toolbar .p4a_button_image_disabled:hover {
-	border: 1px solid #fafafa;
-	cursor: default;
+	background: background: <?php echo $_GET['bg'] ?>;
+	border: 1px solid background: <?php echo $_GET['border'] ?>;
 }
 
 .p4a_toolbar_16 button {
@@ -543,7 +533,6 @@ table.p4a_widget_layout_table td.c1 {
 	overflow: visible;
 	display: block;
 	text-align: left;
-	background: #fcfcfc;
 	cursor: pointer;
 	float: left;
 	width: 100px;
@@ -562,10 +551,11 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_tooltip {
+	color: <?php echo $_GET['tooltip_fg'] ?>;
+	background: <?php echo $_GET['tooltip_bg'] ?>;
+	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 	display: none;
 	position: absolute;
-	background: white;
-	border: 2px solid #4b718a;
 	padding: 10px;
 	margin-left: 20px;
 	text-align: left;
@@ -624,13 +614,13 @@ table.p4a_widget_layout_table td.c1 {
 /*************/
 
 .p4a_table {
-	border: 1px solid #c6d3de;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	text-align: left;
 }
 
 .p4a_table caption {
-	background: #fafafa;
-	border: 1px solid #c6d3de;
+	background: <?php echo $_GET['bg'] ?>;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	padding: 5px;
 	font-weight: bold;
 }
@@ -650,14 +640,14 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_table td,
 .p4a_table th {
-	border-right: 1px solid #c6d3de;
+	border-right: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 .p4a_table th {
 	padding: 5px;
 	font-weight: bold;
-	background: #fafafa;
-	border-bottom: 1px solid #c6d3de;
+	background: <?php echo $_GET['bg'] ?>;
+	border-bottom: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 .p4a_table th.p4a_row_indicator {
@@ -690,7 +680,7 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_table td.action {
-	background: #fafafa;
+	background: <?php echo $_GET['bg'] ?>;
 }
 
 .p4a_table td.action a img {
@@ -706,19 +696,19 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_table th.navigation_bar {
-	border-top: 1px solid #c6d3de;
-	background: #fafafa;
+	border-top: 1px solid <?php echo $_GET['input_border'] ?>;
+	background: <?php echo $_GET['bg'] ?>;
 	font-weight: normal;
 	padding: 0;
 }
 
 .p4a_table_navigation_bar .p4a_button {
-	background: #fafafa;
-	border: 1px solid #fafafa;
+	background: <?php echo $_GET['bg'] ?>;
+	border: 1px solid <?php echo $_GET['bg'] ?>;
 }
 
 .p4a_table_navigation_bar .p4a_button:hover {
-	border: 1px solid #c6d3de;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 /************/
@@ -726,8 +716,8 @@ table.p4a_widget_layout_table td.c1 {
 /************/
 
 #p4a_menu {
-	background-color: #fafafa;
-	border-bottom: 1px solid #ccc;
+	background-color: <?php echo $_GET['bg'] ?>;
+	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
 }
 
 .p4a_menu {
@@ -746,10 +736,6 @@ table.p4a_widget_layout_table td.c1 {
 	margin-left: 5px;
 }
 
-.p4a_menu .accesskey {
-	color: black;
-}
-
 .p4a_menu li {
 	float: left;
 	display: block;
@@ -761,7 +747,7 @@ table.p4a_widget_layout_table td.c1 {
 	padding: 0;
 	list-style-type: none;
 	display: none;
-	background-color: #fafafa;
+	background-color: <?php echo $_GET['bg'] ?>;
 	z-index: 40;
 	border: 1px solid #ccc;
 	width: 120px;
@@ -780,14 +766,19 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_menu li div {
 	display: block;
 	text-decoration: none;
-	color: black;
+	color: <?php echo $_GET['fg'] ?>;
 	margin: 0;
 	padding: 5px;
 }
 
 .p4a_menu li:hover {
 	display: block;
-	background-color: #e2e7ed;
+	background-color: <?php echo $_GET['selected_bg'] ?>;
+}
+
+.p4a_menu li:hover>a,
+.p4a_menu li:hover>div {
+	color: <?php echo $_GET['selected_fg'] ?>;
 }
 
 .p4a_menu ul ul {
