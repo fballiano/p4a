@@ -453,11 +453,6 @@ table.p4a_widget_layout_table td.c1 {
 /* P4A_Message and system messages */
 /***********************************/
 
-table.p4a_message td.c2 {
-	color: black;
-	font-weight: bold;
-}
-
 .p4a_system_messages {
 	border: 2px solid #588fa3;
 	z-index: 10000;
@@ -470,10 +465,6 @@ table.p4a_message td.c2 {
 
 .p4a_system_messages table.p4a_message {
 	margin: 10px 20px;
-}
-
-.p4a_system_messages table.p4a_message td.c2 {
-	font-weight: normal;
 }
 
 .p4a_system_messages em {

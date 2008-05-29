@@ -2,6 +2,8 @@
 - P4A_Table's CSS was beautified a bit
 - _disabled icons were removed, opacity: 0.2 filter is added to buttons
   to simulate the disabled effect
+- P4A_Message's CSS was changed due to the variation of its usage, 
+  now it's not black/bold anymore
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
