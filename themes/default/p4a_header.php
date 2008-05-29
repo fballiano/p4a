@@ -50,7 +50,7 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 
 <body class="p4a_browser_<?php echo P4A::singleton()->getBrowser() ?>">
 <div id='p4a_body' class='p4a_browser_<?php echo P4A::singleton()->getBrowserOS() ?>'>
-<div id='p4a_loading'><img src='<?php echo P4A_ICONS_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?></div>
+<div id='p4a_loading'><img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?></div>
 <div class='p4a_system_messages'>
 	<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
 	<div class='p4a_system_message'><?php echo $message ?></div>

@@ -11,6 +11,8 @@
 - P4A_Menu' submenu indicator icon was replaced with an HTML entity
   which is applied by a javascript function because the indicator
   has no reason to be in the HTML
+- spacer.png image was removed 'cause unused
+- loading.gif was moved from icons directory to theme directory
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
