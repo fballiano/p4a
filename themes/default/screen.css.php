@@ -501,8 +501,11 @@ table.p4a_message td.c2 {
 	border: 1px solid #c6d3de;
 }
 
-.p4a_button_disabled {
-	color: #ccc;
+.p4a_button_disabled,
+.p4a_button_image_disabled {
+	opacity: 0.2;
+	-moz-opacity: 0.2;
+	filter: alpha(opacity=20);
 }
 
 .p4a_button_disabled:hover {
