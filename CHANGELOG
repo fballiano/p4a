@@ -4,6 +4,13 @@
   to simulate the disabled effect
 - P4A_Message's CSS was changed due to the variation of its usage, 
   now it's not black/bold anymore
+- P4A_Table's order/row indicators were replaced with HTML entities
+  removing the need for icons
+- default fonts in CSS were changed because of the lack of some UTF-8
+  characters in IE6
+- P4A_Menu' submenu indicator icon was replaced with an HTML entity
+  which is applied by a javascript function because the indicator
+  has no reason to be in the HTML
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form

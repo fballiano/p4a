@@ -120,6 +120,7 @@ p4a_ajax_process_response = function (response)
 			p4a_messages_show();
 		}
 		
+		p4a_menu_add_submenu_indicator();
 		p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 		if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
@@ -238,6 +239,17 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, root_move
 	}
 }
 
+p4a_menu_add_submenu_indicator = function ()
+{
+	var submenu_indicator_html = "<span style='float:right' class='AAA'>&#x25BA;</span>";
+	$('.p4a_menu_has_items .p4a_menu_has_items>a:not(.p4a_processed)')
+		.addClass('p4a_processed')
+		.prepend(submenu_indicator_html);
+	$('.p4a_menu_has_items .p4a_menu_has_items>div:not(.p4a_processed)')
+		.addClass('p4a_processed')
+		.prepend(submenu_indicator_html);
+}
+
 p4a_messages_show = function ()
 {
 	if ($('.p4a_system_messages:visible').size() > 0) return false;
@@ -307,6 +319,7 @@ $(function () {
 		.ajaxStart(p4a_loading_show)
 		.ajaxStop(p4a_loading_hide)
 		.ajaxError(p4a_ajax_error);
+	p4a_menu_add_submenu_indicator();
 	p4a_messages_show();
 	setTimeout(p4a_loading_hide, 1000);
 	p4a_working = false;

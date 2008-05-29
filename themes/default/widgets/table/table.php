@@ -15,19 +15,19 @@
 			<?php foreach ($headers as $header): ?>
 			<?php if ($header['action']): ?>
 				<th>
-					<?php if ($header['order']): ?>
-						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
-					<?php else: ?>
-						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/spacer.gif" alt="" />
+					<?php if ($header['order'] == 'asc'): ?>
+						<div style="float:right">&#x25BC;</div>
+					<?php elseif ($header['order'] == 'desc'): ?>
+						<div style="float:right">&#x25B2;</div>
 					<?php endif; ?>
 					<a href="#" <?php echo $header['action']?>><?php echo $header['value']?></a>
 				</th>
 			<?php else: ?>
 				<th>
-					<?php if ($header['order']): ?>
-						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/<?php echo $header['order']?>.gif" alt="<?php echo __(ucfirst($header['order']).'ending')?>" />
-					<?php else: ?>
-						<img style="float:right;padding:2px;" src="<?php echo P4A_THEME_PATH?>/widgets/table/spacer.gif" alt="" />
+					<?php if ($header['order'] == 'asc'): ?>
+						<div style="float:right">&#x25BC;</div>
+					<?php elseif ($header['order'] == 'desc'): ?>
+						<div style="float:right">&#x25B2;</div>
 					<?php endif; ?>
 					<?php echo $header['value']?>
 				</th>
@@ -43,11 +43,11 @@
 		<?php foreach ($table_rows as $row): ?>
 			<?php $i++; ?>
 			<tr>
-			    <th width="19" class="p4a_row_indicator">
+			    <th class="p4a_row_indicator">
 			    	<?php if ($row['row']['active']): ?>
-						<img src="<?php echo P4A_THEME_PATH?>/widgets/table/select.gif" width="18" height="15" alt="<?php echo __('Selected')?>" />
+						&#x25BA;
 					<?php else: ?>
-						<img src="<?php echo P4A_THEME_PATH?>/widgets/table/spacer.gif" width="18" height="15" alt="" />
+						&nbsp;
 					<?php endif; ?>
 			    </th>
 

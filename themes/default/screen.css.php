@@ -38,7 +38,7 @@ header('Content-type: text/css');
 /*************************/
 
 * {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: "Bitstream Vera Sans", sans-serif;
 	font-size: 11px;
 	color: #4b718a;
 }
@@ -663,6 +663,7 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_table th.p4a_row_indicator {
 	border-bottom: none;
 	background: white;
+	width: 15px;
 }
 
 .p4a_table td {
@@ -808,14 +809,6 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_menu ul ul ul li:hover ul,
 .p4a_menu ul ul ul ul li:hover ul {
 	display: block;
-}
-
-.p4a_menu li li.p4a_menu_has_items {
-	background: #fafafa url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/menu/has_items.gif) no-repeat center right;
-}
-
-.p4a_menu li li.p4a_menu_has_items:hover {
-	background: #e2e7ed url(<?php echo $_REQUEST['p4a_theme_path'] ?>/widgets/menu/has_items.gif) no-repeat center right;
 }
 
 /***********/
