@@ -182,7 +182,7 @@ if (!defined('P4A_THEME_INPUT_BORDER')) define('P4A_THEME_INPUT_BORDER', '#c6d3d
 
 if (!defined('P4A_THEME_SELECTED_FG')) define('P4A_THEME_SELECTED_FG', '#000');
 if (!defined('P4A_THEME_SELECTED_BG')) define('P4A_THEME_SELECTED_BG', '#e2e7ed');
-if (!defined('P4A_THEME_SELECTED_BORDER')) define('P4A_THEME_SELECTED_BORDER', 'black');
+if (!defined('P4A_THEME_SELECTED_BORDER')) define('P4A_THEME_SELECTED_BORDER', '#c6d3de');
 
 if (!defined('P4A_THEME_TOOLTIP_FG')) define('P4A_THEME_TOOLTIP_FG', '#777');
 if (!defined('P4A_THEME_TOOLTIP_BG')) define('P4A_THEME_TOOLTIP_BG', '#fff');
