@@ -241,6 +241,7 @@ ol.p4a_backtrace li {
 .p4a_field input:focus,
 .p4a_field textarea:focus {
  	border: 1px solid <?php echo $_GET['selected_border'] ?>;
+ 	outline: 1px solid <?php echo $_GET['selected_border'] ?>;
 }
 
 .p4a_field_file table {
@@ -488,6 +489,7 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_button:hover {
 	border: 1px solid <?php echo $_GET['selected_bg'] ?>;
+	outline: 1px solid <?php echo $_GET['selected_bg'] ?>;
 }
 
 .p4a_button_disabled,
@@ -514,6 +516,7 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_toolbar .p4a_button_image:hover {
 	border: 1px solid <?php echo $_GET['border'] ?>;
+	outline: none;
 }
 
 .p4a_toolbar_16 button {
@@ -712,6 +715,7 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_table_navigation_bar .p4a_button:hover {
 	border: 1px solid <?php echo $_GET['border'] ?>;
+	outline: none;
 }
 
 /************/
