@@ -31,18 +31,68 @@
  * @package p4a
  */
 
-if (@$argv[1]) {
-	$file = $argv[1];
-	$gtkrc = file_get_contents($file);
-	
-	preg_match("/gtk[_-]color[_-]scheme = \"(.*)\"/",$gtkrc,$results);
-	$a = explode('\n',$results[1]);
-
-	echo "<?php\n";
-	foreach ($a as $row) {
-		list($var,$value) = explode(':',$row);
-		$var = 'P4A_THEMES_' . strtoupper($var);
-		echo "define('$var', '$value');\n";
+function darken($color, $multiply_factor = 0.9)
+{
+	if (substr($color, 0, 1) != '#') {
+		die("Color must be provided in the #aaa or #aabbcc form\n");
 	}
-	echo "?>\n";
+	
+	if (strlen($color) == 4) {
+		$r = substr($color, 1, 1);
+		$g = substr($color, 2, 1);
+		$b = substr($color, 3, 1);
+		$color = "#{$r}{$r}{$g}{$g}{$b}{$b}";
+	}
+	
+	if (strlen($color) != 7) {
+		die("Color must be provided in the #aaa or #aabbcc form\n");
+	}
+	
+	$r = base_convert(substr($color, 1, 2), 16, 10);
+	$g = base_convert(substr($color, 3, 2), 16, 10);
+	$b = base_convert(substr($color, 5, 2), 16, 10);
+	
+	$r = intval($r * $multiply_factor);
+	$g = intval($g * $multiply_factor);
+	$b = intval($b * $multiply_factor);
+	
+	return '#' . base_convert($r, 10, 16) . base_convert($g, 10, 16) . base_convert($b, 10, 16);
 }
+
+if (empty($argv[1])) {
+	die("Missing argument: gtkrc filename\n");
+}
+
+if (!file_exists($argv[1])) {
+	die("gtkrc file does not exists\n");
+}
+
+$gtkrc = file_get_contents($argv[1]);
+preg_match("/gtk[_-]color[_-]scheme = \"(.*)\"/", $gtkrc, $results);
+$results = explode('\n',$results[1]);
+
+foreach ($results as $row_index=>$row_data) {
+	list($k, $v) = explode(':', $row_data);
+	unset($results[$row_index]);
+	$results[trim($k)] = trim($v);
+}
+
+if (sizeof($results) < 6) {
+	die("gtkrc does not contain a valid color set\n");
+}
+
+print_r($results);
+
+echo "<?php\n";
+if (isset($results['fg_color'])) echo "define('P4A_THEME_FG', '{$results['fg_color']}');\n";
+if (isset($results['bg_color'])) echo "define('P4A_THEME_BG', '{$results['bg_color']}');\n";
+if (isset($results['bg_color'])) echo "define('P4A_THEME_BORDER', '" . darken($results['bg_color']) . "');\n";
+if (isset($results['text_color'])) echo "define('P4A_THEME_INPUT_FG', '{$results['text_color']}');\n";
+if (isset($results['base_color'])) echo "define('P4A_THEME_INPUT_BG', '{$results['base_color']}');\n";
+if (isset($results['base_color'])) echo "define('P4A_THEME_INPUT_BORDER', '" . darken($results['base_color']) . "');\n";
+if (isset($results['selected_fg_color'])) echo "define('P4A_THEME_SELECTED_FG', '{$results['selected_fg_color']}');\n";
+if (isset($results['selected_bg_color'])) echo "define('P4A_THEME_SELECTED_BG', '{$results['selected_bg_color']}');\n";
+if (isset($results['selected_bg_color'])) echo "define('P4A_THEME_SELECTED_BORDER', '" . darken($results['selected_bg_color']) . "');\n";
+if (isset($results['tooltip_fg_color'])) echo "define('P4A_THEME_TOOLTIP_FG', '{$results['tooltip_fg_color']}');\n";
+if (isset($results['tooltip_bg_color'])) echo "define('P4A_THEME_TOOLTIP_BG', '{$results['tooltip_bg_color']}');\n";
+if (isset($results['tooltip_bg_color'])) echo "define('P4A_THEME_TOOLTIP_BORDER', '" . darken($results['tooltip_bg_color']) . "');\n";
