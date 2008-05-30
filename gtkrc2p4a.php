@@ -73,8 +73,8 @@ if (empty($argv[2])) {
 
 $gtkrc = file_get_contents($argv[1]);
 preg_match("/gtk[_-]color[_-]scheme = \"(.*)\"/", $gtkrc, $results);
-$results = explode('\n',$results[1]);
-
+$results = split('\\\n|;',$results[1]);
+print_r($results);
 foreach ($results as $row_index=>$row_data) {
 	list($k, $v) = explode(':', $row_data);
 	unset($results[$row_index]);
