@@ -31,7 +31,7 @@
  * @package p4a
  */
 
-function darken($color, $multiply_factor = 0.9)
+function modify_color($color, $multiply_factor)
 {
 	if (substr($color, 0, 1) != '#') {
 		die("Color must be provided in the #aaa or #aabbcc form\n");
@@ -67,6 +67,10 @@ if (!file_exists($argv[1])) {
 	die("gtkrc file does not exists\n");
 }
 
+if (empty($argv[2])) {
+	$argv[2] = 0.9;
+}
+
 $gtkrc = file_get_contents($argv[1]);
 preg_match("/gtk[_-]color[_-]scheme = \"(.*)\"/", $gtkrc, $results);
 $results = explode('\n',$results[1]);
@@ -81,18 +85,18 @@ if (sizeof($results) < 6) {
 	die("gtkrc does not contain a valid color set\n");
 }
 
-print_r($results);
-
 echo "<?php\n";
 if (isset($results['fg_color'])) echo "define('P4A_THEME_FG', '{$results['fg_color']}');\n";
 if (isset($results['bg_color'])) echo "define('P4A_THEME_BG', '{$results['bg_color']}');\n";
-if (isset($results['bg_color'])) echo "define('P4A_THEME_BORDER', '" . darken($results['bg_color']) . "');\n";
+if (isset($results['bg_color'])) echo "define('P4A_THEME_BORDER', '" . modify_color($results['bg_color'], $argv[2]) . "');\n";
 if (isset($results['text_color'])) echo "define('P4A_THEME_INPUT_FG', '{$results['text_color']}');\n";
 if (isset($results['base_color'])) echo "define('P4A_THEME_INPUT_BG', '{$results['base_color']}');\n";
-if (isset($results['base_color'])) echo "define('P4A_THEME_INPUT_BORDER', '" . darken($results['base_color']) . "');\n";
+if (isset($results['base_color'])) echo "define('P4A_THEME_INPUT_BORDER', '" . modify_color($results['base_color'], $argv[2]) . "');\n";
 if (isset($results['selected_fg_color'])) echo "define('P4A_THEME_SELECTED_FG', '{$results['selected_fg_color']}');\n";
 if (isset($results['selected_bg_color'])) echo "define('P4A_THEME_SELECTED_BG', '{$results['selected_bg_color']}');\n";
-if (isset($results['selected_bg_color'])) echo "define('P4A_THEME_SELECTED_BORDER', '" . darken($results['selected_bg_color']) . "');\n";
+if (isset($results['selected_bg_color'])) echo "define('P4A_THEME_SELECTED_BORDER', '" . modify_color($results['selected_bg_color'], $argv[2]) . "');\n";
 if (isset($results['tooltip_fg_color'])) echo "define('P4A_THEME_TOOLTIP_FG', '{$results['tooltip_fg_color']}');\n";
 if (isset($results['tooltip_bg_color'])) echo "define('P4A_THEME_TOOLTIP_BG', '{$results['tooltip_bg_color']}');\n";
-if (isset($results['tooltip_bg_color'])) echo "define('P4A_THEME_TOOLTIP_BORDER', '" . darken($results['tooltip_bg_color']) . "');\n";
+if (isset($results['tooltip_bg_color'])) echo "define('P4A_THEME_TOOLTIP_BORDER', '" . modify_color($results['tooltip_bg_color'], $argv[2]) . "');\n";
+echo "define('P4A_THEME_EVEN_ROW', '#eee');\n";
+echo "define('P4A_THEME_ODD_ROW', '#fff');\n";

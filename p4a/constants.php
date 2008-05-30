@@ -188,6 +188,9 @@ if (!defined('P4A_THEME_TOOLTIP_FG')) define('P4A_THEME_TOOLTIP_FG', '#777');
 if (!defined('P4A_THEME_TOOLTIP_BG')) define('P4A_THEME_TOOLTIP_BG', '#fff');
 if (!defined('P4A_THEME_TOOLTIP_BORDER')) define('P4A_THEME_TOOLTIP_BORDER', '#c6d3de');
 
+if (!defined('P4A_THEME_EVEN_ROW')) define('P4A_THEME_EVEN_ROW', '#f4f7fa');
+if (!defined('P4A_THEME_ODD_ROW')) define('P4A_THEME_ODD_ROW', '#e2e7ed');
+
 //Image configuration
 if (!defined('P4A_TABLE_THUMB_HEIGHT')) define('P4A_TABLE_THUMB_HEIGHT', 40);
 

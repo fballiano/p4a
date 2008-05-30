@@ -510,7 +510,10 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_toolbar .p4a_button {
 	background: background: <?php echo $_GET['bg'] ?>;
-	border: 1px solid background: <?php echo $_GET['border'] ?>;
+}
+
+.p4a_toolbar .p4a_button_image:hover {
+	border: 1px solid <?php echo $_GET['border'] ?>;
 }
 
 .p4a_toolbar_16 button {
@@ -688,11 +691,11 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_table_rows1 {
-	background-color: #f4f7fa;
+	background-color: <?php echo $_GET['even_row'] ?>;
 }
 
 .p4a_table_rows2 {
-	background-color: #e2e7ed;
+	background-color: <?php echo $_GET['odd_row'] ?>;
 }
 
 .p4a_table th.navigation_bar {
@@ -708,7 +711,7 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_table_navigation_bar .p4a_button:hover {
-	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	border: 1px solid <?php echo $_GET['border'] ?>;
 }
 
 /************/
@@ -777,7 +780,9 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_menu li:hover>a,
-.p4a_menu li:hover>div {
+.p4a_menu li:hover>a>span,
+.p4a_menu li:hover>div,
+.p4a_menu li:hover>div>span {
 	color: <?php echo $_GET['selected_fg'] ?>;
 }
 

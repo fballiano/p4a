@@ -172,6 +172,8 @@ class P4A extends P4A_Object
 		$theme_colors .= '&tooltip_fg=' . urlencode(P4A_THEME_TOOLTIP_FG);
 		$theme_colors .= '&tooltip_bg=' . urlencode(P4A_THEME_TOOLTIP_BG);
 		$theme_colors .= '&tooltip_border=' . urlencode(P4A_THEME_TOOLTIP_BORDER);
+		$theme_colors .= '&even_row=' . urlencode(P4A_THEME_EVEN_ROW);
+		$theme_colors .= '&odd_row=' . urlencode(P4A_THEME_ODD_ROW);
 
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH) . $theme_colors, "all");
