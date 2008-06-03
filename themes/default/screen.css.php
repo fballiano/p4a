@@ -511,7 +511,7 @@ table.p4a_widget_layout_table td.c1 {
 /***************/
 
 .p4a_toolbar .p4a_button {
-	background: background: <?php echo $_GET['bg'] ?>;
+	background: <?php echo $_GET['bg'] ?>;
 }
 
 .p4a_toolbar .p4a_button_image:hover {
