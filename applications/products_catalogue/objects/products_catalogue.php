@@ -110,16 +110,16 @@ class Products_Catalogue extends P4A
 		$password = $this->active_mask->password->getNewValue();
 		
 		if ($username == "p4a" and $password == md5("p4a")) {
-			$this->message("Login successful", "info");
+			$this->messageInfo("Login successful");
 			$this->openMask("products");
 		} else {
-			$this->message("Login failed", "warning");
+			$this->messageError("Login failed");
 			$this->loginInfo();
 		}
 	}
 	
 	protected function loginInfo()
 	{
-		$this->message('To login type:<br />username: p4a<br />password: p4a', 'info');
+		$this->messageInfo('To login type:<br />username: p4a<br />password: p4a', 'info');
 	}
 }
