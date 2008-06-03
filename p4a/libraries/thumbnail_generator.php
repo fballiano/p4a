@@ -106,6 +106,8 @@ class P4A_Thumbnail_Generator
 			case 'jpeg':
 			case 'png':
 				return function_exists("imagecreatefrom$type");
+			case 'x-png':
+				return function_exists("imagecreatefrompng");
 			default:
 				return false;
 		}
