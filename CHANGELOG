@@ -22,6 +22,7 @@
 - P4A_Toolbar::setSize() method now checks if buttons have the setSize
   method to propagate it, otherwise tries the setHeight method, otherwise
   throws a warning
+- P4A_Message default size was changed to 32
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form

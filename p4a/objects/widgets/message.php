@@ -47,7 +47,7 @@ class P4A_Message extends P4A_Widget
 	/**
 	 * @var integer
 	 */
-	protected $size = 48;
+	protected $size = 32;
 	
 	/**
 	 * @var boolean
