@@ -23,6 +23,7 @@
   method to propagate it, otherwise tries the setHeight method, otherwise
   throws a warning
 - P4A_Message default size was changed to 32
+- 48 pixels icons were removed
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
