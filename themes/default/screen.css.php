@@ -531,6 +531,11 @@ table.p4a_widget_layout_table td.c1 {
 	height: 53px;
 }
 
+.p4a_toolbar_separator {
+	border-left: 1px solid <?php echo $_GET['border'] ?>;
+	margin: 3px 5px 0 5px;
+}
+
 /*************/
 /* P4A_Label */
 /*************/

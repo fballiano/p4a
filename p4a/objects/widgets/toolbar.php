@@ -93,10 +93,9 @@ class P4A_Toolbar extends P4A_Widget
 	public function addSeparator($position = "left")
 	{
 		$name = 's' . $this->separators_counter++;
-		$this->buttons->build("p4a_image", $name);
-		$this->buttons->$name->setIcon("separator");
-		$this->buttons->$name->setStyleProperty("float", $position);
-		return $this->buttons->$name;
+		return $this->addBox($name, '', $position)
+			->addCSSClass("p4a_toolbar_separator")
+			->setHeight($this->getSize());
 	}
 
 	/**
@@ -166,7 +165,13 @@ class P4A_Toolbar extends P4A_Widget
 		$this->_size = $size;
 
 		while ($button = $this->buttons->nextItem()) {
-			$button->setSize($size);
+			if (method_exists($button, "setSize")) {
+				$button->setSize($size);
+			} elseif (method_exists($button, "setHeight")) {
+				$button->setHeight($size);
+			} else {
+				trigger_error(get_class($button) . " object in P4A_Toolbar does not have setSize or setHeight methods", E_USER_WARNING);
+			}
 		}
 		return $this;
 	}

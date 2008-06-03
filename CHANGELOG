@@ -15,6 +15,13 @@
 - loading.gif was moved from icons directory to theme directory
 - some new constants were added to customize theme colors
 - a bug with PNG uploads under IE was fixed
+- separator.png icon was removed
+- P4A_Toolbar' separators are now rendered as empty divs instead of
+  an image
+- P4A_Toolbar' were switched from P4A_Image to P4A_Box
+- P4A_Toolbar::setSize() method now checks if buttons have the setSize
+  method to propagate it, otherwise tries the setHeight method, otherwise
+  throws a warning
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
