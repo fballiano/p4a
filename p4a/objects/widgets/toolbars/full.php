@@ -52,51 +52,51 @@ class P4A_Full_Toolbar extends P4A_Toolbar
 	
 	protected function addDefaultButtons()
 	{
-		$this->addButton('new', 'new')
+		$this->addButton('new', 'actions/document-new')
 			->setLabel("Insert a new element")
 			->setProperty("accesskey", "N");
 		
-		$this->addButton('save', 'save')
+		$this->addButton('save', 'actions/document-save')
 			->setLabel("Confirm and save")
 			->setAccessKey("S");
 
-		$this->addButton('cancel', 'cancel')
+		$this->addButton('cancel', 'actions/edit-undo')
 			->setLabel("Cancel current operation")
 			->setAccessKey("Z");
 		
 		$this->addSeparator();
 		
-		$this->addButton('delete', 'delete')
+		$this->addButton('delete', 'actions/edit-delete')
 			->setLabel("Delete current element")
 			->addAction("onclick")
 			->requireConfirmation();
 		
 		$this->addSeparator();
 
-		$this->addButton('first', 'first')
+		$this->addButton('first', 'actions/go-first')
 			->setLabel("Go to the first element")
 			->setAccessKey(8);
 
-		$this->addButton('prev', 'prev')
+		$this->addButton('prev', 'actions/go-previous')
 			->setLabel("Go to the previous element")
 			->setAccessKey(4);
 
-		$this->addButton('next', 'next')
+		$this->addButton('next', 'actions/go-next')
 			->setLabel("Go to the next element")
 			->setAccessKey(6);
 
-		$this->addButton('last', 'last')
+		$this->addButton('last', 'actions/go-last')
 			->setLabel("Go to the last element")
 			->setAccessKey(2);
 
 		$this->addSeparator();
 
-		$this->addButton('print', 'print')
+		$this->addButton('print', 'actions/document-print')
 			->dropAction('onclick')
 			->setProperty('onclick', 'window.print(); return false;')
 			->setAccessKey("P");
 
-		$this->addButton('exit', 'exit', 'right')
+		$this->addButton('exit', 'actions/window-close', 'right')
 			->setLabel("Go back to the previous mask")
 			->setAccessKey("X");
 	}

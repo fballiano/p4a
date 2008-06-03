@@ -270,7 +270,7 @@ class P4A_DB_Navigator extends P4A_Widget
 
 		$class = $this->composeStringClass();
 		if (strlen($js) and $this->allow_movement_to_root) {
-			$return = "<ul id='{$obj_id}' $class style=\"list-style-position:inside;list-style-image:url('" . P4A_ICONS_PATH . "/16/folder_home.gif')\"><li>&nbsp;{$return}</li></ul>";
+			$return = "<ul id='{$obj_id}' $class style=\"list-style-position:inside;list-style-image:url('" . P4A_ICONS_PATH . "/16/actions/go-home." . P4A_ICONS_EXTENSION . "')\"><li>&nbsp;{$return}</li></ul>";
 		} else {
 			$return = "<div id='{$obj_id}' $class>{$return}</div>";
 		}
@@ -289,7 +289,7 @@ class P4A_DB_Navigator extends P4A_Widget
 			$html_id = "id='$obj_id'";
 		}
 
-		$return = "<ul class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/folder.gif')\">";
+		$return = "<ul class='p4a_db_navigator' style=\"list-style-image:url('" . P4A_ICONS_PATH . "/16/places/folder." . P4A_ICONS_EXTENSION . "')\">";
 		$roots = $all[$id];
 		foreach ($roots as $section) {
 			if ($this->actionHandler('beforeRenderElement', $section) == ABORT) continue;
@@ -299,7 +299,7 @@ class P4A_DB_Navigator extends P4A_Widget
 			$description = $this->_trim($section[$this->description]);
 
 			if ($section[$pk] == $current) {
-				$selected = "class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/folder_open.gif)'";
+				$selected = "class='active_node' style='list-style-image:url(" . P4A_ICONS_PATH . "/16/status/folder-open." . P4A_ICONS_EXTENSION . ")'";
 				if ($this->enable_selected_element) {
 					$link_prefix = "<a href='#' {$actions}>";
 					$link_suffix = "</a>";

@@ -923,7 +923,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		parent::__construct("table_navigation_bar");
 		$this->build("p4a_collection", "buttons");
 
-		$this->addButton('go', 'apply', 'right');
+		$this->addButton('go', 'actions/go-jump', 'right');
 		$this->buttons->go->setLabel("Go");
 		$this->buttons->go->implement('onclick', $this, 'goOnClick');
 
@@ -950,13 +950,13 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 			$this->buttons->go->setVisible(false);
 			$this->buttons->page_number->setVisible(false);
 		} else {
-			$this->addButton('last', 'last', 'right');
+			$this->addButton('last', 'actions/go-last', 'right');
 			$this->buttons->last->setLabel("Go to the last page");
-			$this->addButton('next', 'next', 'right');
+			$this->addButton('next', 'actions/go-next', 'right');
 			$this->buttons->next->setLabel("Go to the next page");
-			$this->addButton('prev', 'prev', 'right');
+			$this->addButton('prev', 'actions/go-previous', 'right');
 			$this->buttons->prev->setLabel("Go to the previous page");
-			$this->addButton('first', 'first', 'right');
+			$this->addButton('first', 'actions/go-first', 'right');
 			$this->buttons->first->setLabel("Go to the first page");
 		}
 		

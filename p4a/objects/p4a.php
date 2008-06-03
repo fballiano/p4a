@@ -928,6 +928,42 @@ class P4A extends P4A_Object
 	}
 	
 	/**
+	 * Prints out a warning message (with a warning icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 * @return P4A
+	 */
+	public function messageWarning($message)
+	{
+		$this->message($message, 'status/dialog-warning');
+		return $this;
+	}
+	
+	/**
+	 * Prints out an error message (with an error icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 * @return P4A
+	 */
+	public function messageError($message)
+	{
+		$this->message($message, 'status/dialog-error');
+		return $this;
+	}
+	
+	/**
+	 * Prints out an info message (with an info icon).
+	 * It's a wrapper for P4A::message()
+	 * @param string $message
+	 * @return P4A
+	 */
+	public function messageInfo($message)
+	{
+		$this->message($message, 'status/dialog-information');
+		return $this;
+	}
+	
+	/**
 	 * Returns all the messages and clean the queue
 	 * @return array
 	 */

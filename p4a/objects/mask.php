@@ -642,7 +642,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function warning($message)
 	{
-		P4A::singleton()->message($message, 'warning');
+		P4A::singleton()->messageWarning($message);
 		return $this;
 	}
 	
@@ -654,7 +654,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function error($message)
 	{
-		P4A::singleton()->message($message, 'error');
+		P4A::singleton()->messageError($message);
 		return $this;
 	}
 	
@@ -666,7 +666,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function info($message)
 	{
-		P4A::singleton()->message($message, 'info');
+		P4A::singleton()->messageInfo($message);
 		return $this;
 	}
 }
