@@ -14,6 +14,7 @@
 - spacer.png image was removed 'cause unused
 - loading.gif was moved from icons directory to theme directory
 - some new constants were added to customize theme colors
+- a bug with PNG uploads under IE was fixed
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
