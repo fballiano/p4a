@@ -31,6 +31,7 @@
   compliant to the most known desktop environments
 - P4A icons now implements the freedesktop icon naming specifications:
   http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
+- P4A_Mask's default icon size was changed from 48 to 32
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form

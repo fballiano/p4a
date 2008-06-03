@@ -107,7 +107,7 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * @var integer
 	 */
-	private $_icon_size = 48;
+	private $_icon_size = 32;
 
 	/**
 	 * @var P4A_Button
