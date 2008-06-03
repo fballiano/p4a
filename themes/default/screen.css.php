@@ -55,12 +55,6 @@ header('Content-type: text/css');
 	position: absolute;
 }
 
-#p4a_top {
-	background-color: <?php echo $_GET['bg'] ?>;
-	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
-	padding: 2px;
-}
-
 #p4a_main_container {
 	text-align: center;
 	padding-top: 5px;
@@ -242,6 +236,9 @@ ol.p4a_backtrace li {
 .p4a_field textarea:focus {
  	border: 1px solid <?php echo $_GET['selected_border'] ?>;
  	outline: 1px solid <?php echo $_GET['selected_border'] ?>;
+ 	background-image: url(gradient.png);
+ 	background-position: bottom;
+ 	background-repeat: repeat-x;
 }
 
 .p4a_field_file table {
@@ -510,8 +507,23 @@ table.p4a_widget_layout_table td.c1 {
 /* P4A_Toolbar */
 /***************/
 
+.p4a_toolbar {
+	background: <?php echo $_GET['bg'] ?> url(gradient.png) bottom repeat-x;
+	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
+	padding: 2px;
+}
+
+* html .p4a_toolbar {
+	background-image: none;
+}
+
 .p4a_toolbar .p4a_button {
-	background: <?php echo $_GET['bg'] ?>;
+	background: none;
+	border: 1px solid transparent;
+}
+
+* html .p4a_toolbar .p4a_button {
+	border: 1px solid <?php echo $_GET['bg'] ?>;
 }
 
 .p4a_toolbar .p4a_button_image:hover {
@@ -657,8 +669,12 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_table th {
 	padding: 5px;
 	font-weight: bold;
-	background: <?php echo $_GET['bg'] ?>;
+	background: <?php echo $_GET['bg'] ?> url(gradient.png) bottom repeat-x;
 	border-bottom: 1px solid <?php echo $_GET['input_border'] ?>;
+}
+
+* html .p4a_table th {
+	background-image: none;
 }
 
 .p4a_table th.p4a_row_indicator {
@@ -706,21 +722,10 @@ table.p4a_widget_layout_table td.c1 {
 	background-color: <?php echo $_GET['odd_row'] ?>;
 }
 
-.p4a_table th.navigation_bar {
-	border-top: 1px solid <?php echo $_GET['input_border'] ?>;
-	background: <?php echo $_GET['bg'] ?>;
+.p4a_table th.p4a_toolbar {
 	font-weight: normal;
+	border-top: 1px solid <?php echo $_GET['input_border'] ?>;
 	padding: 0;
-}
-
-.p4a_table_navigation_bar .p4a_button {
-	background: <?php echo $_GET['bg'] ?>;
-	border: 1px solid <?php echo $_GET['bg'] ?>;
-}
-
-.p4a_table_navigation_bar .p4a_button:hover {
-	border: 1px solid <?php echo $_GET['border'] ?>;
-	outline: none;
 }
 
 /************/
@@ -728,8 +733,12 @@ table.p4a_widget_layout_table td.c1 {
 /************/
 
 #p4a_menu {
-	background-color: <?php echo $_GET['bg'] ?>;
+	background: <?php echo $_GET['bg'] ?> url(gradient.png) bottom repeat-x;
 	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
+}
+
+* html #p4a_menu {
+	background-image: none;
 }
 
 .p4a_menu {
@@ -785,7 +794,7 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_menu li:hover {
 	display: block;
-	background-color: <?php echo $_GET['selected_bg'] ?>;
+	background: <?php echo $_GET['selected_bg'] ?> url(gradient.png) bottom repeat-x;
 }
 
 .p4a_menu li:hover>a,
