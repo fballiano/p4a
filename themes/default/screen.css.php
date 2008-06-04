@@ -642,7 +642,7 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_table caption {
-	background: <?php echo $_GET['bg'] ?>;
+	background: <?php echo $_GET['bg'] ?> url(gradient.png) bottom repeat-x;
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	padding: 5px;
 	font-weight: bold;
