@@ -582,6 +582,7 @@ table.p4a_widget_layout_table td.c1 {
 	padding: 10px;
 	margin-left: 20px;
 	text-align: left;
+	font-weight: normal;
 }
 
 /****************/
