@@ -728,6 +728,11 @@ table.p4a_widget_layout_table td.c1 {
 	padding: 0;
 }
 
+.p4a_table th.p4a_toolbar .p4a_box,
+.p4a_table th.p4a_toolbar .p4a_field {
+	margin-top: 3px;
+}
+
 /************/
 /* P4A_Menu */
 /************/

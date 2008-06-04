@@ -935,7 +935,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$this->buttons->page_number->implement('onreturnpress', $this, 'goOnClick');
 		$this->anchorRight($this->buttons->page_number);
 
-		$this->buttons->build('p4a_label', 'current_page');
+		$this->buttons->build('p4a_box', 'current_page');
 		$this->anchorLeft($this->buttons->current_page);
 
 		if (P4A::singleton()->isHandheld()) {
@@ -1010,7 +1010,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$current_page .= ' ';
 		$current_page .= $num_pages;
 		$current_page .= ' ';
-		$this->buttons->current_page->setLabel($current_page);
+		$this->buttons->current_page->setValue($current_page);
 		return parent::getAsString();
 	}
 
