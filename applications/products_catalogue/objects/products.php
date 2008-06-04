@@ -133,6 +133,7 @@ class Products extends P4A_Base_Mask
 		$this->fields->product_id
 			->setLabel("Product ID")
 			->setWidth(198)
+			->setTooltip("This ID is automatically generated and you cannot modify it")
 			->enable(false);
 
 		$this->fields->category_id
@@ -140,11 +141,13 @@ class Products extends P4A_Base_Mask
 			->setSource(P4A::singleton()->categories)
 			->setSourceDescriptionField("description")
 			->setLabel("Category")
+			->setTooltip("Choose a category from the list")
 			->setWidth(200);
 
 		$this->fields->brand_id
 			->setLabel("Brand")
 			->setWidth(200)
+			->setTooltip("Choose a brand from the list")
 			->setType("select")
 			->setSource(P4A::singleton()->brands)
 			->setSourceDescriptionField("description");

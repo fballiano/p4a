@@ -91,6 +91,8 @@ class Products_Catalogue extends P4A
 		// Primary action
 		$this->openMask("P4A_Login_Mask");
 		$this->active_mask->implement('onLogin', $this, 'login');
+		$this->active_mask->username->setTooltip("Simply type p4a");
+		$this->active_mask->password->setTooltip("Type p4a here too");
 		$this->loginInfo();
 	}
 
