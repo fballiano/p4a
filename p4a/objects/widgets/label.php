@@ -74,7 +74,7 @@ class P4A_Label extends P4A_Widget
 		$tooltip_text = $this->getTooltip();
 		$tooltip_icon = '';
 		if ($tooltip_text) {
-			$tooltip_icon = '<img src="' . P4A_ICONS_PATH . '/16/info.png" class="p4a_tooltip_icon" alt="" />';
+			$tooltip_icon = '<img src="' . P4A_ICONS_PATH . '/16/status/dialog-information.png" class="p4a_tooltip_icon" alt="" />';
 			$tooltip_text = "<div id='{$id}tooltip' class='p4a_tooltip'>{$tooltip_text}</div>";
 			$actions .= " onmouseover='p4a_tooltip_show(this)' ";
 			$css_classes[] = 'p4a_label_tooltip';
