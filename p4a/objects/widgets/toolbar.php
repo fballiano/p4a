@@ -50,7 +50,7 @@ class P4A_Toolbar extends P4A_Widget
 	/**
 	 * @var integer
 	 */
-	protected $_size = 22;
+	protected $_size = 32;
 
 	/**
 	 * Buttons collection

@@ -157,8 +157,9 @@ ol.p4a_backtrace li {
 
 #p4a_popup h2 {
 	margin-bottom: 20px;
-	line-height: 22px;
-	padding-left: 22px;
+	line-height: 32px;
+	padding-left: 32px;
+	background: url(gradient.png) bottom repeat-x;
 }
 
 * html #p4a_popup h2 {

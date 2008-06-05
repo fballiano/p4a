@@ -27,8 +27,6 @@
 - a gradient was added to some elements in the default theme
 - P4A::messageInfo(), messageWarning() and messageError() methods
   were added wrapping P4A::message() method
-- P4A_Toolbar default size was changed from 32 to 22 pixels, now it's
-  compliant to the most known desktop environments
 - P4A icons now implements the freedesktop icon naming specifications:
   http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
 - P4A_Mask's default icon size was changed from 48 to 32
