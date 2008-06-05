@@ -33,6 +33,8 @@
 - P4A_Table_Navigation_Bar's current page indicator was switched from a
   P4A_Label to a P4A_Box because the P4A_Label has to be bundled with a
   P4A_Field
+- a nice shadow effect was added to system messages and tooltips if
+  not on handheld or internet explorer browsers
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form

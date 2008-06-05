@@ -861,10 +861,12 @@ class P4A extends P4A_Object
 		
 		$days = $locale_engine->getTranslationList('days');
 		$days = $days['format']['abbreviated'];
+		$p4a_shadows_enabled = ($this->isHandheld() or $this->isInternetExplorer()) ? 'false' : 'true';
 		
 		return '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
+		'p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
 		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
 		'p4a_calendar_monthnames = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
 		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .

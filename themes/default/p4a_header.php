@@ -52,8 +52,10 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 <div id='p4a_body' class='p4a_browser_<?php echo P4A::singleton()->getBrowserOS() ?>'>
 <div id='p4a_loading'><img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?></div>
 <div class='p4a_system_messages'>
-	<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
-	<div class='p4a_system_message'><?php echo $message ?></div>
-	<?php endforeach; ?>
+	<div class='p4a_system_messages_inner'>
+		<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
+		<div class='p4a_system_message'><?php echo $message ?></div>
+		<?php endforeach; ?>
+	</div>
 </div>
 <?php echo $this->maskOpen() ?>

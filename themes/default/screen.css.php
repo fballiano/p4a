@@ -451,14 +451,17 @@ table.p4a_widget_layout_table td.c1 {
 /***********************************/
 
 .p4a_system_messages {
-	color: <?php echo $_GET['tooltip_fg'] ?>;
-	background: <?php echo $_GET['tooltip_bg'] ?>;
-	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 	z-index: 10000;
 	position: absolute;
 	display: none;
 	width: 300px;
 	overflow: hidden;
+}
+
+.p4a_system_messages_inner {
+	color: <?php echo $_GET['tooltip_fg'] ?>;
+	background: <?php echo $_GET['tooltip_bg'] ?>;
+	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 }
 
 .p4a_system_messages table.p4a_message {
@@ -575,15 +578,19 @@ table.p4a_widget_layout_table td.c1 {
 }
 
 .p4a_tooltip {
+	display: none;
+	position: absolute;
+	margin-left: 20px;
+	z-index: 10000;
+}
+
+.p4a_tooltip_inner {
+	padding: 10px;
+	text-align: left;
+	font-weight: normal;
 	color: <?php echo $_GET['tooltip_fg'] ?>;
 	background: <?php echo $_GET['tooltip_bg'] ?>;
 	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
-	display: none;
-	position: absolute;
-	padding: 10px;
-	margin-left: 20px;
-	text-align: left;
-	font-weight: normal;
 }
 
 /****************/
@@ -847,4 +854,36 @@ table.p4a_widget_layout_table td.c1 {
 .row,
 .br {
 	clear: both;
+}
+
+.p4a_shadow {
+	padding: 0 6px 6px 0;
+	background: url(shadow.png) no-repeat bottom right;
+}
+
+.p4a_shadow_r {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 6px;
+	width: 6px;
+	background: url(shadow-r.png) top;
+}
+
+.p4a_shadow_b {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 6px;
+	height: 6px;
+	background: url(shadow-b.png) left;
+}
+
+.p4a_shadow_br {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 6px;
+	height: 6px;
+	background: url(shadow-br.png);
 }

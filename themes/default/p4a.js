@@ -113,7 +113,7 @@ p4a_ajax_process_response = function (response)
 		
 		var messages = response.getElementsByTagName('message');
 		if (messages.length > 0) {
-			var new_messages_container = $('<div class="p4a_system_messages"></div>').appendTo(document.body);
+			var new_messages_container = $('<div class="p4a_system_messages"><div class="p4a_system_messages_inner"></div></div>').appendTo(document.body).find('div');
 			for (i=0; i<messages.length; i++) {
 				$('<div class="p4a_system_message">'+messages[i].firstChild.data+'</div>').appendTo(new_messages_container);
 			}
@@ -157,6 +157,14 @@ p4a_tooltip_show = function (widget)
 	var tooltip = $('#'+id+'tooltip');
 	tooltip.css('margin-top', widget.outerHeight());
 	if (tooltip.bgiframe) tooltip.bgiframe();
+	
+	if (p4a_shadows_enabled && !tooltip.hasClass("p4a_shadow")) {
+		tooltip
+			.addClass("p4a_shadow")
+			.append("<div class='p4a_shadow_b'></div><div class='p4a_shadow_r'></div><div class='p4a_shadow_br'></div>");
+	}
+	
+	
 	tooltip.show();
 	widget.mouseout(function() {tooltip.hide()});
 }
@@ -254,11 +262,18 @@ p4a_messages_show = function ()
 {
 	if ($('.p4a_system_messages:visible').size() > 0) return false;
 	var p4a_system_messages = $('.p4a_system_messages:hidden:first');
-	if (p4a_system_messages.children().size() == 0) {
+	if (p4a_system_messages.children().children().size() == 0) {
 		p4a_system_messages.remove();
 		return false;
 	}
 	var left = ($(window).width() - p4a_system_messages.outerWidth()) / 2;
+	
+	if (p4a_shadows_enabled) {
+		p4a_system_messages
+			.addClass("p4a_shadow")
+			.append("<div class='p4a_shadow_b'></div><div class='p4a_shadow_r'></div><div class='p4a_shadow_br'></div>");
+	}
+
 	p4a_system_messages
 		.css('top', $(window).scrollTop() + 20)
 		.css('left', left)
