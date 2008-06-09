@@ -223,7 +223,7 @@ p4a_db_navigator_load = function (obj_id, current_id, field_to_update, root_move
 
 p4a_db_navigator_init = function (obj_id, current_id, field_to_update, root_movement)
 {
-	$('#' + obj_id + '_' + current_id).draggable({revert:true});
+	$('#' + obj_id + '_' + current_id).draggable({revert: true, handle: 'span'});
 	$('#' + obj_id + ' li a').droppable({
 		accept: '.active_node',
 		hoverClass: 'hoverclass',

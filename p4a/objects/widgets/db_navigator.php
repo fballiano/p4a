@@ -304,8 +304,8 @@ class P4A_DB_Navigator extends P4A_Widget
 					$link_prefix = "<a href='#' {$actions}>";
 					$link_suffix = "</a>";
 				} else {
-					$link_prefix = "";
-					$link_suffix = "";
+					$link_prefix = "<span>";
+					$link_suffix = "</span>";
 				}
 			} else {
 				$selected = "";
