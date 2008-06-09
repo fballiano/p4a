@@ -21,7 +21,7 @@ p4a_menu_activate = function ()
 p4a_png_fix = function ()
 {
 	$.ifixpng(p4a_theme_path + '/jquery/pixel.gif');
-	
+	$('.p4a_db_navigator li').ifixpng();
 	$("img[@src$=.png]").each(function () {
 		var parents = jQuery.makeArray($(this).parents());
 		var found = false;

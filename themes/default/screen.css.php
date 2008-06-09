@@ -385,22 +385,29 @@ hr.p4a_line {
 	font-weight: normal;
 }
 
-.p4a_db_navigator ul {
-	padding-left: 15px;
-	margin-left: 5px;
+.p4a_db_navigator li {
+	padding: 2px 0 2px 18px;
+	background: url(<?php echo $_GET['p4a_icons_path'] ?>/16/places/folder.png) no-repeat;
 }
 
-.p4a_db_navigator li {
-	list-style: inherit;
+.p4a_db_navigator li.active_node {
+	background-image: url(<?php echo $_GET['p4a_icons_path'] ?>/16/status/folder-open.png);
+}
+
+.p4a_db_navigator li.home_node {
+	background: url(<?php echo $_GET['p4a_icons_path'] ?>/16/actions/go-home.png) no-repeat;
 }
 
 .p4a_browser_opera .p4a_db_navigator li,
 .p4a_browser_ie .p4a_db_navigator li {
 	margin-top: 5px;
+	padding-top: 0;
 }
 
 * html .p4a_browser_ie .p4a_db_navigator li {
+	padding: top: 2px;
 	margin-top: 0;
+	width: 100%;
 }
 
 .p4a_db_navigator a,

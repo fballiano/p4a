@@ -36,6 +36,8 @@
 - a nice shadow effect was added to system messages and tooltips if
   not on handheld or internet explorer browsers
 - jQuery::UI was updated to 1.5
+- P4A_DB_Navigator's HTML was reworked to work on ie6 without GIF images
+  and removign inline CSSes
 
 3.0.0-rc4
 - a default submit button was added to P4A default HTML form
