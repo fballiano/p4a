@@ -32,9 +32,9 @@
  */
 
 /**
- * The frame widget
- * A frame is a panel where we anchor widgets.
- * It generates tableless HTML and is used for relative positioning.
+ * A frame is a panel where you anchor widgets.
+ * It generates tableless HTML and is used for relative positioning, this means
+ * that every anchored widget is floating next to the previous one.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
