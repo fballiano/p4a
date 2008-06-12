@@ -1,3 +1,7 @@
+3.0.0-rc6
+- P4A_DB_Source::addJoin*() methods now support the schema name as the last
+  param
+
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit
 - _disabled icons were removed, opacity: 0.2 filter is added to buttons

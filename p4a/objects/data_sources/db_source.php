@@ -136,11 +136,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoin($table, $clausole, $fields = '*')
+	public function addJoin($table, $clausole, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('INNER', $table, $clausole, $fields);
+		$this->_join[] = array('INNER', $table, $clausole, $fields, $schema);
 		return $this;
 	}
 	
@@ -148,11 +149,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinInner($table, $clausole, $fields = '*')
+	public function addJoinInner($table, $clausole, $fields = '*', $schema = null)
 	{
-		$this->addJoin($table, $clausole, $fields);
+		$this->addJoin($table, $clausole, $fields, $schema);
 		return $this;
 	}
 	
@@ -160,11 +162,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinLeft($table, $clausole, $fields = '*')
+	public function addJoinLeft($table, $clausole, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('LEFT', $table, $clausole, $fields);
+		$this->_join[] = array('LEFT', $table, $clausole, $fields, $schema);
 		return $this;
 	}
 	
@@ -172,11 +175,12 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinRight($table, $clausole, $fields = '*')
+	public function addJoinRight($table, $clausole, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('RIGHT', $table, $clausole, $fields);
+		$this->_join[] = array('RIGHT', $table, $clausole, $fields, $schema);
 		return $this;
 	}
 	
@@ -184,35 +188,36 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinFull($table, $clausole, $fields = '*')
+	public function addJoinFull($table, $clausole, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('FULL', $table, $clausole, $fields);
+		$this->_join[] = array('FULL', $table, $clausole, $fields, $schema);
 		return $this;
 	}
 	
 	/**
 	 * @param string $table
-	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinCross($table, $fields = '*')
+	public function addJoinCross($table, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('CROSS', $table, null, $fields);
+		$this->_join[] = array('CROSS', $table, null, $fields, $schema);
 		return $this;
 	}
 	
 	/**
 	 * @param string $table
-	 * @param string $clausole
 	 * @param array $fields
+	 * @param string $schema
 	 * @return P4A_DB_Source
 	 */
-	public function addJoinNatural($table, $fields = '*')
+	public function addJoinNatural($table, $fields = '*', $schema = null)
 	{
-		$this->_join[] = array('NATURAL', $table, null, $fields);
+		$this->_join[] = array('NATURAL', $table, null, $fields, $schema);
 		return $this;
 	}
 
@@ -874,7 +879,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 			
-			$select->$method($join[1], $join[2], $new_fields);
+			$select->$method($join[1], $join[2], $new_fields, $join[4]);
 		}
 	}
 
@@ -897,7 +902,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				var_dump($join[3]);
 			}
 			
-			$select->$method($join[1], $join[2], $new_fields);
+			$select->$method($join[1], $join[2], $new_fields, $join[4]);
 		}
 	}
 
