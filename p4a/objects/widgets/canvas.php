@@ -32,9 +32,7 @@
  */
 
 /**
- * The canvas widget
- * A cancas is a panel where we anchor widgets.
- * It generates tableless HTML and is used for absolute positioning.
+ * A canvas is a panel where you anchor widgets with absolute positions
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
