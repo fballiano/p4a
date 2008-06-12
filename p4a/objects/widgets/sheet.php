@@ -33,7 +33,9 @@
 
 /**
  * The sheet widget
- * A sheet is an HTML table
+ * A canvas is a panel where you anchor widgets in a grid way.
+ * It generates an HTML table with all widgets in cells, it
+ * supports row/col spanning.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
