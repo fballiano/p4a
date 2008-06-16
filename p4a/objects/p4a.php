@@ -299,13 +299,13 @@ class P4A extends P4A_Object
 				$_SESSION['p4a']->executeExternalCommands();
 			}
 			
-			set_exception_handler('P4A_Exception_Handler');
+			set_exception_handler(P4A_EXCEPTION_HANDLER);
 			if (P4A_EXTENDED_ERRORS) {
 				error_reporting(P4A_EXTENDED_ERROR_REPORTING);
-				set_error_handler('P4A_Error_Handler', P4A_EXTENDED_ERROR_REPORTING);
+				set_error_handler(P4A_ERROR_HANDLER, P4A_EXTENDED_ERROR_REPORTING);
 			} else {
 				error_reporting(P4A_DEFAULT_ERROR_REPORTING);
-				set_error_handler('P4A_Error_Handler', P4A_DEFAULT_ERROR_REPORTING);
+				set_error_handler(P4A_ERROR_HANDLER, P4A_DEFAULT_ERROR_REPORTING);
 			}
 		}
 		
