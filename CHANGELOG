@@ -4,6 +4,7 @@
 - FCKEditor was updated to 2.6.1
 - P4A_EXCEPTION_HANDLER and P4A_ERROR_HANDLER constants were added so now
   you can set your own error/exception handlers
+- a few comments where added to P4A_DB_Source
 
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit
