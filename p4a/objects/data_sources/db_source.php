@@ -307,7 +307,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	/**
-	 * Get the where clausole  (in SQL syntax)
+	 * Get the where clausole (in SQL syntax)
 	 * @return string
 	 */
 	public function getWhere()
