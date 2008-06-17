@@ -39,11 +39,34 @@
  */
 class P4A_Dir_Source extends P4A_Data_Source
 {
+	/**
+	 * @var string
+	 */
 	protected $_dir = null;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_cache_enabled = false;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_scan_subdirs = false;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_listing_subdirs = false;
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_files = array();
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_is_loaded = false;
 
 	public function __construct($name)

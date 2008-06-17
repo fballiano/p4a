@@ -41,18 +41,69 @@
  */
 class P4A_DB_Source extends P4A_Data_Source
 {
+	/**
+	 * @var string
+	 */
 	protected $_DSN = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $_pk = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $_table = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $_schema = null;
+	
+	/**
+	 * @var array
+	 */
 	protected $_fields = array();
+	
+	/**
+	 * @var array
+	 */
 	protected $_join = array();
+	
+	/**
+	 * @var string
+	 */
 	protected $_where = null;
+	
+	/**
+	 * @var array
+	 */
 	protected $_group = array();
+	
+	/**
+	 * @var boolean
+	 */
 	protected $_is_sortable = true;
+	
+	/**
+	 * @var string
+	 */
 	protected $_query = null;
+	
+	/**
+	 * @var array
+	 */
 	protected $_multivalue_fields = array();
+	
+	/**
+	 * @var array
+	 */
 	protected $_filters = array();
+	
+	/**
+	 * @var array
+	 */
 	protected $_tables_metadata = array();
 
 	/**
