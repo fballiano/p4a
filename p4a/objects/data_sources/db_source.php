@@ -32,7 +32,13 @@
  */
 
 /**
- * Reads data from a database.
+ * Read/write data from/to a database.
+ * 
+ * Note that P4A_DB_Source is case sensitive when handling
+ * schemas/tables/columns names, thus if your table name
+ * is "products" (lowercase) then type it lowercase in P4A too,
+ * if it is "PRODUCTS" (uppercase) then type it uppercase
+ * in P4A too and so on...
  * 
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
@@ -184,6 +190,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	/**
+	 * Add a join (default join type is INNER)
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -197,6 +204,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add an inner join
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -210,6 +218,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add a left join
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -223,6 +232,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add a right join
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -236,6 +246,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add a full join
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -249,6 +260,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add a cross join
 	 * @param string $table
 	 * @param array $fields
 	 * @param string $schema
@@ -261,6 +273,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 	
 	/**
+	 * Add a natural join
 	 * @param string $table
 	 * @param array $fields
 	 * @param string $schema
@@ -273,6 +286,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	/**
+	 * Get all joins
 	 * @return array
 	 */
 	public function getJoin()
@@ -281,6 +295,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	}
 
 	/**
+	 * set the where clausole (in SQL syntax)
 	 * @param string $where
 	 * @return P4A_DB_Source
 	 */
@@ -291,6 +306,10 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this;
 	}
 
+	/**
+	 * Get the where clausole  (in SQL syntax)
+	 * @return string
+	 */
 	public function getWhere()
 	{
 		return $this->_where;
