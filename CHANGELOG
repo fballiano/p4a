@@ -1,4 +1,4 @@
-3.0.0-rc6
+3.0.0
 - P4A_DB_Source::addJoin*() methods now support the schema name as the last
   param
 - FCKEditor was updated to 2.6.1
