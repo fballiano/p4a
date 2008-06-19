@@ -10,6 +10,8 @@
 - a small bug with file download button (within file P4A_Field) on
   windows server was solved (generated file name is now correct)
 - README file was updated with IIS compatibility
+- P4A_DB_Navigator::allowMovement(false) is now supported
+- P4A_Message default icon was ported to the new icons structure
 
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit
