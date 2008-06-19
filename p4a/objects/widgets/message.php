@@ -42,7 +42,7 @@ class P4A_Message extends P4A_Widget
 	/**
 	 * @var string
 	 */
-	protected $icon = 'warning';
+	protected $icon = 'status/dialog-warning';
 	
 	/**
 	 * @var integer
@@ -110,7 +110,7 @@ class P4A_Message extends P4A_Widget
 	 * @param string $type
 	 * @return P4A_Message
 	 */
-	public function setIcon($type = 'warning')
+	public function setIcon($type = 'status/dialog-warning')
 	{
 		$this->icon = $type;
 		return $this;
