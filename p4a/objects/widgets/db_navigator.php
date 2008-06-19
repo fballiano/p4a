@@ -272,9 +272,9 @@ class P4A_DB_Navigator extends P4A_Widget
 		$return = $this->_getAsString(0, $all, $obj_id, $table, $pk, $current);
 
 		if (P4A_AJAX_ENABLED and $this->field_to_update_on_movement) {
-			$allow_movement_to_root = $this->allow_movement_to_root ? 'true' : 'false';
+			$allow_roots_movement = $this->allow_roots_movement ? 'true' : 'false';
 			$js .= "<script type='text/javascript'>p4a_db_navigator_load(";
-			$js .= "'{$obj_id}','{$current}','{$this->field_to_update_on_movement}',{$allow_movement_to_root}";
+			$js .= "'{$obj_id}','{$current}','{$this->field_to_update_on_movement}',{$allow_roots_movement}";
 			$js .= ")</script>\n";
 		}
 

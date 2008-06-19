@@ -12,6 +12,7 @@
 - README file was updated with IIS compatibility
 - P4A_DB_Navigator::allowMovement(false) is now supported
 - P4A_Message default icon was ported to the new icons structure
+- a bug on P4A_DB_Navigator drag&drop javascript was solved
 
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit

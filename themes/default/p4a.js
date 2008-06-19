@@ -204,7 +204,7 @@ p4a_calendar_select = function (value_id, description_id)
 	);
 }
 
-p4a_db_navigator_load = function (obj_id, current_id, field_to_update, root_movement)
+p4a_db_navigator_load = function (obj_id, current_id, field_to_update, roots_movement)
 {
 	p4a_load_js(p4a_theme_path + '/jquery/ui.core.js',
 		function () {
@@ -212,7 +212,7 @@ p4a_db_navigator_load = function (obj_id, current_id, field_to_update, root_move
 				function () {
 					p4a_load_js(p4a_theme_path + '/jquery/ui.droppable.js',
 						function () {
-							p4a_db_navigator_init(obj_id, current_id, field_to_update, root_movement);
+							p4a_db_navigator_init(obj_id, current_id, field_to_update, roots_movement);
 						}   
 					);
 				}
@@ -221,8 +221,16 @@ p4a_db_navigator_load = function (obj_id, current_id, field_to_update, root_move
 	);
 }
 
-p4a_db_navigator_init = function (obj_id, current_id, field_to_update, root_movement)
+p4a_db_navigator_init = function (obj_id, current_id, field_to_update, roots_movement)
 {
+	if ($('#' + obj_id + ' li.home_node').length) {
+		var is_root = $('#' + obj_id + ' li.home_node li #' + obj_id + '_' + current_id).length ? false : true;
+	} else {
+		var is_root = $('#' + obj_id + ' li #' + obj_id + '_' + current_id).length ? false : true;
+	}
+	
+	if (is_root && !roots_movement) return;
+	
 	$('#' + obj_id + '_' + current_id).draggable({revert: true, handle: 'span'});
 	$('#' + obj_id + ' li a').droppable({
 		accept: '.active_node',
@@ -234,7 +242,7 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, root_move
 		}
 	});
 	
-	if (root_movement) {
+	if ($('#' + obj_id + ' li.home_node').length) {
 		$('#' + obj_id).droppable({
 			accept: '.active_node',
 			hoverClass: 'hoverclass',
