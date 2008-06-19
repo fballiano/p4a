@@ -630,7 +630,7 @@ function P4A_Redirect_To_File($file)
 	
 	$p4a = P4A::singleton();
 	$file = urlencode($file);
-	$file = ".?_p4a_download_file=$file";
+	$file = "index.php?_p4a_download_file=$file";
 	
 	if ($p4a->inAjaxCall()) {
 		header('Content-Type: text/xml');
