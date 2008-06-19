@@ -175,11 +175,21 @@ class P4A_DB_Navigator extends P4A_Widget
 	 * 
 	 * Note: Movements will work only if P4A_AJAX_ENABLED is true.
 	 * 
-	 * @param mixed (false|parent_id field on your mask)
+	 * @param mixed (false|P4A_Field parent_id field on your mask)
 	 * @return P4A_DB_Navigator
 	 */
 	public function allowMovement($field)
 	{
+		if ($field === false) {
+			if ($this->field_to_update_on_movement) {
+				P4A::getObject($this->field_to_update_on_movement)
+					->dropAction('onchange')
+					->dropImplement('onchange');
+			}
+			$this->field_to_update_on_movement = null;
+			return $this;
+		}
+		
 		$this->field_to_update_on_movement = $field->getId();
 		$field->implement('onchange', $this, 'onMovement');
 		return $this;
