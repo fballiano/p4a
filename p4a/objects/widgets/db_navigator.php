@@ -33,6 +33,8 @@
 
 /**
  * This widget allows a tree navigation within a P4A_DB_Source.
+ * Note that on Opera the drag&drop feature has serious performance issues,
+ * while it's working smoothly on all other certified browsers.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC

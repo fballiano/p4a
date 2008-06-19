@@ -70,7 +70,7 @@ tested browsers:
 - Mozilla Firefox 2.x
 - Internet Explorer 6.x, 7.x
 - Safari 3.x
-- Opera 9.25+
+- Opera 9.25+ (has issues with P4A_DB_Navigator drag&drop)
 
 -----------------------------------------
 -- P4A compatibility: Database engines --
