@@ -53,9 +53,8 @@ http://p4a.sourceforge.net
 
 Linux/Windows
 Apache >= 1.3.0
+IIS >= 6.0
 php/mod_php >= 5.2.0
-
-P4A does not work with MS IIS.
 
 ------------------------------------
 -- P4A compatibility: Client Side --

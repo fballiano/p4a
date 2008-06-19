@@ -7,6 +7,9 @@
 - a few comments where added to P4A_DB_Source
 - a small change was done in P4A_Redirect_To_File() global function
   (index.php link was forced)
+- a small bug with file download button (within file P4A_Field) on
+  windows server was solved (generated file name is now correct)
+- README file was updated with IIS compatibility
 
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit
