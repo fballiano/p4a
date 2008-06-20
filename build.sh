@@ -52,6 +52,6 @@ cp -r code-reference p4a/docs
 
 cd $PKGDIR
 mv p4a p4a-$VERSION
-zip -r9 p4a-$VERSION.zip p4a-$VERSION
+zip -qr9 p4a-$VERSION.zip p4a-$VERSION
 tar zcf  p4a-$VERSION.tgz p4a-$VERSION
 rm -r p4a-$VERSION
