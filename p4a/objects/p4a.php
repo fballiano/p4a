@@ -453,6 +453,7 @@ class P4A extends P4A_Object
 			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);
 			if ($file !== false and strpos($file, P4A_UPLOADS_DIR) === 0 and file_exists($file)) {
 				$name = basename($file);
+				$name = preg_replace("/^_p4a_.*?_/", "", $name);
 				header("Pragma: public");
 				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 				header("Cache-Control: private", false);

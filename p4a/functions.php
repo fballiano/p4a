@@ -649,7 +649,7 @@ function P4A_Redirect_To_File($file)
 
 /**
  * creates a temp file and outputs it to the browser (script will die).
- * if the filename starts with "_p4a_" it will be deleted after being transfered to the client.
+ * The file will be deleted after being transfered to the client.
  * @param string|array $file_content
  * @param string $file_name file name with extension
  */
