@@ -463,8 +463,7 @@ class P4A extends P4A_Object
 				$fp = fopen($file, "rb");
 				fpassthru($fp);
 				fclose($fp);
-				
-				if (strpos($file, P4A_UPLOADS_TMP_DIR . '/_p4a_') === 0) {
+				if (strpos($file, realpath(P4A_UPLOADS_TMP_DIR) . DIRECTORY_SEPARATOR . '_p4a_') === 0) {
 					unlink($file);
 				}
 			}
