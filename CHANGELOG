@@ -17,6 +17,7 @@
   function was solved
 - a bug with P4A_Output_File() global function automatic file delete
   on Windows servers was solved
+- translations were synchronized
 
 3.0.0-rc5
 - P4A_Table's CSS was beautified a bit
