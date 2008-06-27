@@ -521,13 +521,13 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
 		case E_WARNING:
 		case E_USER_WARNING:
 			P4A::singleton()
-				->message("<strong>WARNING: </strong>$message", "warning");
+				->messageWarning("<strong>WARNING: </strong>$message");
 			return true;
 		case E_STRICT:
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			P4A::singleton()
-				->message("<strong>NOTICE: </strong>$message", "warning");
+				->messageWarning("<strong>NOTICE: </strong>$message");
 			return true;
 	}
 	return false;

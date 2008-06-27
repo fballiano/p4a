@@ -2,6 +2,9 @@
 - FCKEditor was updated to 2.6.2
 - a bug with shadows CSS was solved (unused shadow.png file is not linked
   by screen.css anymore so we've no "file not found" in web server's logs)
+- P4A_Error_Handler() global function now uses the P4A::messageWarning()
+  wrapper for P4A::message() solving a bug with the warning icon name
+  that was changed in 3.0.0-rc5
 
 3.0.0
 - P4A_DB_Source::addJoin*() methods now support the schema name as the last
