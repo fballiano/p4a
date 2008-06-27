@@ -865,7 +865,6 @@ table.p4a_widget_layout_table td.c1 {
 
 .p4a_shadow {
 	padding: 0 6px 6px 0;
-	background: url(shadow.png) no-repeat bottom right;
 }
 
 .p4a_shadow_r {
