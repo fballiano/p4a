@@ -292,7 +292,7 @@ class P4A extends P4A_Object
 	public static function singleton($class_name = "p4a")
 	{
 		if (!isset($_SESSION)) {
-			session_name(preg_replace('~\W~', '_', P4A_APPLICATION_NAME));
+			session_name(preg_replace('~\W~', '_', P4A_APPLICATION_DIR));
 			session_start();
 			if (isset($_SESSION['p4a'])) {
 				error_reporting(0);
