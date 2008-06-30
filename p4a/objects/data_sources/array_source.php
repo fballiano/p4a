@@ -86,11 +86,13 @@ class P4A_Array_Source extends P4A_Data_Source
 	public function row($num_row = null, $move_pointer = true)
 	{
 		if ($num_row !== null) {
-			$row = $this->_array[$num_row-1];
+			$row = @$this->_array[$num_row-1];
 		} else {
 			$num_row = $this->_pointer;
-			$row = $this->_array[$num_row-1];
+			$row = @$this->_array[$num_row-1];
 		}
+		
+		if ($row === null) $row = array();
 
 		if ($move_pointer) {
 			if ($this->actionHandler('beforemoverow') == ABORT) return ABORT;

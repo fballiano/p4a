@@ -1,3 +1,7 @@
+3.0.2
+- a small change was done on P4A_Array_Source to enable the usage of empty
+  array_sources without warnings
+
 3.0.1
 - a bug about session name was solved
 - FCKEditor was updated to 2.6.2
