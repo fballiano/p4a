@@ -28,7 +28,6 @@ phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For A
 
 cd $PKGDIR
 rm p4a/.project
-rm p4a/.buildpath
 rm p4a/build.sh
 rm -rf p4a/.cache
 rm -rf p4a/.settings
@@ -41,7 +40,6 @@ rm -f `find -name '.cvsignore'`
 ##############################################
 
 cd $PKGDIR
-rm -r p4a/docs
 sed 's/blank.html/ric_README.html/' code-reference/index.html > index.html
 mv index.html code-reference/
 cp -r code-reference p4a/docs
