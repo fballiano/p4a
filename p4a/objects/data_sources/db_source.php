@@ -708,6 +708,20 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this;
 	}
 
+	/**
+	 * Inserts/update the row to the database.
+	 * 
+	 * If you've multivalue fields be sure that the user can't
+	 * change the value of primary keys or the record will
+	 * be broken.
+	 * 
+	 * You can pass $fields_values and $pk_values if you want
+	 * to save a row you created in a custom way bypassing
+	 * internal data_fields.
+	 * 
+	 * @param array $fields_values
+	 * @param array $pk_values
+	 */
 	public function saveRow($fields_values = array(), $pk_values = array())
 	{
 		if(!$this->isReadOnly()) {
@@ -808,6 +822,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 	}
 
+	/**
+	 * Removes the row from the database
+	 */
 	public function deleteRow()
 	{
 		if (!$this->isReadOnly()) {
@@ -831,6 +848,16 @@ class P4A_DB_Source extends P4A_Data_Source
 		parent::deleteRow();
 	}
 
+	/**
+	 * Returns all rows as an associative array.
+	 * 
+	 * You can get only a subset of all rows using
+	 * $from and $count parameters.
+	 *
+	 * @param integer $from
+	 * @param integer $count
+	 * @return array
+	 */
 	public function getAll($from = 0, $count = 0)
 	{
 		$db = P4A_DB::singleton($this->getDSN());
@@ -861,6 +888,10 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $rows;
 	}
 
+	/**
+	 * @param string $query
+	 * @return string
+	 */
 	protected function _composeSelectCountQuery($query = null)
 	{
 		if ($query !== null) {
@@ -875,6 +906,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 	}
 	
+	/**
+	 * @return Zend_Db_Select|string
+	 */
 	protected function _composeSelectStructureQuery()
 	{
 		if ($this->getQuery()) {
@@ -888,6 +922,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
+	/**
+	 * @return Zend_Db_Select|string
+	 */
 	protected function _composeSelectQuery($add_order_clause = true)
 	{
 		if ($this->getQuery()) {
@@ -902,6 +939,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $select;
 	}
 
+	/**
+	 * @return Zend_Db_Select|string
+	 */
 	protected function _composeSelectPkQuery($pk_value)
 	{
 		$db = P4A_Db::singleton($this->getDSN());
