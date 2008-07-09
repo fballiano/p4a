@@ -2,6 +2,9 @@
 - a small change was done on P4A_Array_Source to enable the usage of empty
   array_sources without warnings
 - tooltips are now automatically translated at rendering time
+- P4A_DB_Source::saveRow() now reads pk values back from
+  Zend_DB_Table::insert() gaining better functionality with
+  auto increment primary keys
 
 3.0.1
 - a bug about session name was solved

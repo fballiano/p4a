@@ -737,14 +737,24 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 
+			$pks = $this->getPk();
 			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'schema'=>$schema, 'db'=>$db->adapter));
 			if ($this->isNew()) {
-				$p4a_db_table->insert($fields_values);
+				$pk_values = $p4a_db_table->insert($fields_values);
+				if ($pk_values !== null) {
+					if (is_array($pk_values)) {
+						foreach ($pk_values as $field=>$value) {
+							if (isset($this->fields->$field)) {
+								$this->fields->$field->setValue($value);
+							}
+						}
+					} elseif (is_string($pks)) {
+						$this->fields->$pks->setValue((string)$pk_values);
+					}
+				}
 			} else {
 				$p4a_db_table->update($fields_values, $this->_composePkString($pk_values));
 			}
-
-			$pks = $this->getPk();
 			
 			if (is_string($pks)) {
 				$pk_value = $this->fields->$pks->getNewValue();  
