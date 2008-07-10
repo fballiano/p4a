@@ -959,7 +959,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$pk_string = substr($pk_string,0,-4);
 		} else {
 			if (is_array($pk_value)) {
-				$pk_value = $pk_value[0];
+				list($key,$pk_value) = each($pk_value);
 			}
 			$pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
 		}
