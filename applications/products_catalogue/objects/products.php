@@ -169,7 +169,7 @@ class Products extends P4A_Base_Mask
 			->setType("rich_textarea")
 			->enableUpload();
 	}
-
+	
 	public function search()
 	{
 		$value = $this->txt_search->getSQLNewValue();
