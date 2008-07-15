@@ -269,6 +269,8 @@ class P4A_I18N
 				return 0;
 			case 'date':
 				$date =  Zend_Locale_Format::getDate($value, array('locale'=>$this->_locale_engine, 'fix_date'=>true));
+				$date['month'] = str_pad($date['month'], 2, 0, STR_PAD_LEFT);
+				$date['day'] = str_pad($date['day'], 2, 0, STR_PAD_LEFT);
 				return "{$date['year']}-{$date['month']}-{$date['day']}";
 			case 'time':
 				$date_format = Zend_Locale_Format::getTimeFormat($this->_locale_engine);
