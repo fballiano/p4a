@@ -5,6 +5,7 @@
 - P4A_DB_Source::saveRow() now reads pk values back from
   Zend_DB_Table::insert() gaining better functionality with
   auto increment primary keys
+- jQuery UI was updated to 1.5.2
 
 3.0.1
 - a bug about session name was solved
