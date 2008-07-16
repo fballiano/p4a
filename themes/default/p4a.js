@@ -69,9 +69,8 @@ p4a_keypressed_get = function (event)
 
 p4a_focus_set = function (id)
 {
-	try {
-		document.forms['p4a'].elements[id].focus();
-	} catch (e) {}
+	if (id.length == 0) return;
+	$('#'+id+' input').focus();
 }
 
 p4a_event_execute_ajax = function (object_name, action_name, param1, param2, param3, param4)
