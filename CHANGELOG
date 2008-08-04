@@ -9,6 +9,10 @@
 - a small bug with P4A_I18N::_normalize() method was solved
 - p4a_focus_set() javascript function was reworked to avoid a
   javascript warning in firebug
+- loading a P4A_Array_Source with a simple array of data now
+  does not create the "0" field anymore, it's been renamed to "f0"
+  to avoid problems with some PHP configurations with numerical
+  object properties
 
 3.0.1
 - a bug about session name was solved
