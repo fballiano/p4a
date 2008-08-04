@@ -55,32 +55,32 @@ class P4A_Array_Source extends P4A_Data_Source
 	 */
 	public function load(array $array)
 	{
-			$this->_array = array();
-			$this->_array[-1] = array();
-	
-			if (empty($array)) return;
-	
-			$first_row = $array[0];
-			if (!is_array($first_row)) {
-					foreach($array as $value) {
-							$this->_array[] = array('f0'=>$value);
-					}
-					$this->setPK('f0');
-					$first_row = array('f0'=>$first_row);
-			} else {
-					foreach($array as $value) {
-							$this->_array[] = $value;
-					}
+		$this->_array = array();
+		$this->_array[-1] = array();
+
+		if (empty($array)) return;
+
+		$first_row = $array[0];
+		if (!is_array($first_row)) {
+			foreach($array as $value) {
+				$this->_array[] = array('f0'=>$value);
 			}
-	
-			foreach ($first_row as $field_name=>$value) {
-					if (!isset($this->fields->$field_name)) {
-							$this->fields->build('P4A_Data_Field', $field_name);
-					}
-					$this->_array[-1][$field_name] = '';
+			$this->setPK('f0');
+			$first_row = array('f0'=>$first_row);
+		} else {
+			foreach($array as $value) {
+				$this->_array[] = $value;
 			}
-	
-			return $this;
+		}
+
+		foreach ($first_row as $field_name=>$value) {
+			if (!isset($this->fields->$field_name)) {
+				$this->fields->build('P4A_Data_Field', $field_name);
+			}
+			$this->_array[-1][$field_name] = '';
+		}
+
+		return $this;
 	}
 	
 
