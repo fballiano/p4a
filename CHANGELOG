@@ -1,3 +1,6 @@
+3.0.3
+- P4A_Thumbnail_Generator now supports ie's pjpeg extension
+
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty
   array_sources without warnings

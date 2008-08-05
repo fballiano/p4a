@@ -103,9 +103,11 @@ class P4A_Thumbnail_Generator
 		$type = substr($mime_type, 6);
 		switch ($type) {
 			case 'gif':
+				return function_exists("imagecreatefromgif");
 			case 'jpeg':
+			case 'pjpeg':
+				return function_exists("imagecreatefromjpeg");
 			case 'png':
-				return function_exists("imagecreatefrom$type");
 			case 'x-png':
 				return function_exists("imagecreatefrompng");
 			default:
