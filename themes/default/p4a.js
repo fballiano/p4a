@@ -182,11 +182,11 @@ p4a_calendar_init_defaults = function ()
 	$.datepicker._defaults["firstDay"] = p4a_calendar_firstday;
 }
 
-p4a_calendar_open = function (id)
+p4a_calendar_open = function (id, options)
 {
 	var element = $('#'+id);
 	if(!element.is($.datepicker.markerClassName)) {
-		element.datepicker();
+		element.datepicker(options);
 	}
 	element.datepicker('show');
 	return false;

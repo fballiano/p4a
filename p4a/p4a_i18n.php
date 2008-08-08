@@ -203,7 +203,7 @@ class P4A_I18N
 				$yes_no = $this->_locale_engine->getQuestion();
 				return $yes_no[$value];
 			case 'date':
-				$date = new Zend_Date($value, "YYYY-MM-dd", $this->_locale_engine);
+				$date = new Zend_Date($value, "yyyy-MM-dd", $this->_locale_engine);
 				return $date->get(Zend_Date::DATES, $this->_locale_engine);
 			case 'time':
 				$date = new Zend_Date($value, Zend_Date::TIME_SHORT, $this->_locale_engine);

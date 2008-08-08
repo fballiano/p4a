@@ -135,7 +135,12 @@ class P4A_Field extends P4A_Widget
 	 * @var Zend_Validate
 	 */
 	protected $_validator_chain = null;
-
+	
+	/**
+	 * @var string
+	 */
+	protected $_year_range = null;
+	
 	/**
 	 * @param string $name Mnemonic identifier for the object.
 	 * @param string $add_default_data_field If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
@@ -681,11 +686,38 @@ class P4A_Field extends P4A_Widget
 		if (!P4A::singleton()->isHandheld()) {
 			$value = $this->data_field->getNewValue();
 			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
-			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}');\" class=\"p4a_field_date_trigger\" />";
+			$options = '{';
+			$years = array();
+			if ($this->_year_range) {
+				$options .= "yearRange:'{$this->_year_range}',";
+			}
+			$options .= '}';
+			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}',$options);\" class=\"p4a_field_date_trigger\" />";
 			$close_header .= "<script type='text/javascript'>p4a_calendar_load()</script>";
 		}
 
 		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+	}
+	
+	/**
+	 * Sets the range of years that can be selected with the datepicker
+	 * @param integer $start_year
+	 * @param integer $end_year
+	 * @return P4A_Field
+	 */
+	public function setYearRange($start_year, $end_year)
+	{
+		$this->_year_range = "$start_year:$end_year";
+		return $this;
+	}
+	
+	/**
+	 * Retrieve the range of years that can be selected with the datepicker
+	 * @return array
+	 */
+	public function getYearRange()
+	{
+		return explode(':', $this->_year_range);
 	}
 
 	/**

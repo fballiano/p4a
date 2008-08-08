@@ -1,5 +1,9 @@
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
+- a bug with P4A_I18N::_format() method was solved
+  (YYYY was changed to yyyy)
+- P4A_Field::setYearRange() method was added to be able to
+  manage the year range in the datepicker
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty
