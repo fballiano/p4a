@@ -188,6 +188,7 @@ ol.p4a_backtrace li {
 
 .p4a_fieldset {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	padding-top: 10px;
 	padding-bottom: 10px;
 }
 

@@ -4,6 +4,7 @@
   (YYYY was changed to yyyy)
 - P4A_Field::setYearRange() method was added to be able to
   manage the year range in the datepicker
+- 10px top padding was added to P4A_Fieldset
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty
