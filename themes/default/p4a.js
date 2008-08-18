@@ -203,6 +203,11 @@ p4a_calendar_select = function (value_id, description_id)
 	);
 }
 
+p4a_maskedinput = function (id, mask)
+{
+	p4a_load_js(p4a_theme_path + '/jquery/maskedinput.js', function () {$('#'+id+'input').mask(mask)});
+}
+
 p4a_db_navigator_load = function (obj_id, current_id, field_to_update, roots_movement)
 {
 	p4a_load_js(p4a_theme_path + '/jquery/ui.core.js',

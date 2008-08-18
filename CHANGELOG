@@ -5,6 +5,9 @@
 - P4A_Field::setYearRange() method was added to be able to
   manage the year range in the datepicker
 - 10px top padding was added to P4A_Fieldset
+- jQuery::maskedinput 1.1.4 plugin was added
+- P4A_Field::setInputMask() and getInputMask() methods were added,
+  check the code reference for usage
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty

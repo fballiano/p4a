@@ -142,6 +142,11 @@ class P4A_Field extends P4A_Widget
 	protected $_year_range = null;
 	
 	/**
+	 * @var string
+	 */
+	protected $input_mask = null;
+	
+	/**
 	 * @param string $name Mnemonic identifier for the object.
 	 * @param string $add_default_data_field If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 	 */
@@ -657,16 +662,20 @@ class P4A_Field extends P4A_Widget
 	public function getAsText()
 	{
 		$id = $this->getId();
-		$header 		= "<input id='{$id}input' type='text' ";
-		$close_header 	= '/>';
+		$header = "<input id='{$id}input' type='text' ";
+		$close_header = '/>';
 
 		if (!$this->isEnabled()) {
 			$header .= 'disabled="disabled" ';
 		}
 
 		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
-		if ($this->isEnabled() and is_object($this->data) and $this->data instanceof P4A_DB_Source) {
-			$sReturn .= "<script type='text/javascript'>\$(function(){p4a_load_js('" . P4A_THEME_PATH . "/jquery/autocomplete.js',function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true})});});</script>";
+		if ($this->isEnabled()) {
+			if (is_object($this->data) and $this->data instanceof P4A_DB_Source) {
+				$sReturn .= "<script type='text/javascript'>\$(function(){p4a_load_js('" . P4A_THEME_PATH . "/jquery/autocomplete.js',function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true})});});</script>";
+			} elseif ($this->input_mask !== null) {
+				$sReturn .= "<script type='text/javascript'>\$(function(){p4a_maskedinput('{$id}','" . P4A_Quote_Javascript_String($this->input_mask) . "')});</script>";
+			}
 		}
 		return $sReturn;
 	}
@@ -1404,5 +1413,34 @@ class P4A_Field extends P4A_Widget
 		if ($this->_validator_chain === null) return true;
 		if ($this->_validator_chain->isValid($this->getNormalizedNewValue())) return true;
 		return $this->_validator_chain->getMessages();
+	}
+	
+	/**
+	 * Sets the input mask for the field.
+	 * The mask is used to guide users typing data in the right format.
+	 * When using this feature users will be able to type only letters and numbers
+	 * while the mask can contain special charset too.
+	 * <code>
+	 * $field->setInputMask("(aaa)-999-***");
+	 * </code>
+	 * The mask in the above sample means that user can type 3 alphabetic
+	 * chars, 3 numeric chars and 3 alphanumerical chars.
+	 * Only a/9/* are recognized, other chars will be used as the mask itself.
+	 * @see http://digitalbush.com/projects/masked-input-plugin/
+	 * @param string $mask
+	 * @return P4A_Mask
+	 */
+	public function setInputMask($mask = null)
+	{
+		$this->input_mask = $mask;
+		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getInputMask()
+	{
+		return $this->input_mask;
 	}
 }
