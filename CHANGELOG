@@ -9,6 +9,7 @@
 - P4A_Field::setInputMask() and getInputMask() methods were added,
   check the code reference for usage
 - popup template support for "top" zone was added
+- P4A_Table's caption (label) is now automatically traslated at run time
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty

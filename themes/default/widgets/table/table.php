@@ -32,7 +32,7 @@
  */
 ?><table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() ?> <?php echo $this->composeStringProperties() ?>>
 	<?php if ($this->getLabel()): ?>
-	<caption><?php echo $this->getLabel() ?></caption>
+	<caption><?php echo __($this->getLabel()) ?></caption>
 	<?php endif; ?>
 
 	<col class="select" />
