@@ -8,6 +8,7 @@
 - jQuery::maskedinput 1.1.4 plugin was added
 - P4A_Field::setInputMask() and getInputMask() methods were added,
   check the code reference for usage
+- popup template support for "top" zone was added
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty

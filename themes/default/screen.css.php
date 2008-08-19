@@ -156,7 +156,7 @@ ol.p4a_backtrace li {
 }
 
 #p4a_popup h2 {
-	margin-bottom: 20px;
+	margin: 0;
 	line-height: 32px;
 	padding-left: 32px;
 	background: url(gradient.png) bottom repeat-x;
@@ -164,6 +164,11 @@ ol.p4a_backtrace li {
 
 * html #p4a_popup h2 {
 	margin-right: -100px;
+}
+
+#p4a_popup #p4a_popup_top_container {
+	margin: 0;
+	margin-bottom: 20px;
 }
 
 /***********/
@@ -523,6 +528,10 @@ table.p4a_widget_layout_table td.c1 {
 	background: <?php echo $_GET['bg'] ?> url(gradient.png) bottom repeat-x;
 	border-bottom: 1px solid <?php echo $_GET['border'] ?>;
 	padding: 2px;
+}
+
+#p4a_popup .p4a_toolbar {
+	border: none;
 }
 
 * html .p4a_toolbar {
