@@ -1416,7 +1416,7 @@ class P4A_Field extends P4A_Widget
 	}
 	
 	/**
-	 * Sets the input mask for the field.
+	 * Sets the input mask for the field (only if field type is "text").
 	 * The mask is used to guide users typing data in the right format.
 	 * When using this feature users will be able to type only letters and numbers
 	 * while the mask can contain special charset too.
