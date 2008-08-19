@@ -10,6 +10,9 @@
   check the code reference for usage
 - popup template support for "top" zone was added
 - P4A_Table's caption (label) is now automatically traslated at run time
+- P4A now triggers the "ontranslate" event, you can intercept it
+  (getting string/translation/istranslated parameters) to track
+  translations while developing your application
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty
