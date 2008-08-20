@@ -13,6 +13,9 @@
 - P4A now triggers the "ontranslate" event, you can intercept it
   (getting string/translation/istranslated parameters) to track
   translations while developing your application
+- a bug with P4A_Table's label with IE6 was fixed
+- P4A_Table's navigation bar's "go to page" label's CSS was changed
+  so now it will remain on a single line
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty

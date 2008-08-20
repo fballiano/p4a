@@ -674,6 +674,10 @@ table.p4a_widget_layout_table td.c1 {
 	font-weight: bold;
 }
 
+* html .p4a_table caption {
+	background-image: none;
+}
+
 .p4a_browser_gecko .p4a_table caption {
 	margin-left: -1px;
 }
@@ -757,6 +761,11 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_table th.p4a_toolbar .p4a_box,
 .p4a_table th.p4a_toolbar .p4a_field {
 	margin-top: 3px;
+}
+
+.p4a_table_navigation_bar .p4a_label {
+	width: auto;
+	margin-right: 5px;
 }
 
 /************/
