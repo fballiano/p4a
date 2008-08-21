@@ -411,8 +411,6 @@ class P4A_Field extends P4A_Widget
 		case 'select':
 		case 'radio':
 		case 'checkbox':
-		case 'multiselect':
-		case 'multicheckbox':
 		case 'password':
 			break;
 		case 'file':
