@@ -31,14 +31,29 @@
  * @package p4a
  */
 
+// Provide an URL where users can download the whole application source
+// code package, you can avoid this step only if you have a valid
+// P4A Commercial License: http://p4a.crealabsfoundation.org/wiki/Commercial_license
+define("P4A_APPLICATION_SOURCE_DOWNLOAD_URL", "http://tinyurl.com/6hbec2");
+
+// Select application's locale
 define("P4A_LOCALE", 'en_US');
+
+// Connect to the database
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
-//define("P4A_DSN", 'pgsql://p4a:p4a@localhost/p4a_products_catalogue');
-//define("P4A_DSN", 'oci://p4a:p4a@localhost/xe');
-//define("P4A_DSN", 'sqlite:/p4a_products_catalogue');
-//define("P4A_EXTENDED_ERRORS", true);
-//define("P4A_AJAX_ENABLED", false);
-//define("P4A_AJAX_DEBUG", "/tmp/p4a_ajax_debug.txt");
+// define("P4A_DSN", 'pgsql://p4a:p4a@localhost/p4a_products_catalogue');
+// define("P4A_DSN", 'oci://p4a:p4a@localhost/xe');
+// define("P4A_DSN", 'sqlite:/p4a_products_catalogue');
+
+// Enable more error details
+// define("P4A_EXTENDED_ERRORS", true);
+
+// Disable AJAX during the development phase, it will allows you
+// a faster debug, enable it on the production server
+// define("P4A_AJAX_ENABLED", false);
+
+// Path (on server) where P4A will write all code transferred via AJAX
+// define("P4A_AJAX_DEBUG", "/tmp/p4a_ajax_debug.txt");
 
 require_once dirname(__FILE__) . '/../../p4a.php';
 
