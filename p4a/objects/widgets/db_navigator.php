@@ -260,6 +260,7 @@ class P4A_DB_Navigator extends P4A_Widget
 		
 		$js = "";
 		$i = 0;
+		$all = array();
 		foreach ($rows as $row) {
 			if (!isset($row[$this->recursor])) {
 				$row[$this->recursor] = null;

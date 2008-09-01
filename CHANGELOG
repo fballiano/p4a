@@ -17,6 +17,7 @@
 - P4A_Table's navigation bar's "go to page" label's CSS was changed
   so now it will remain on a single line
 - a typo in P4A_DB_Source documentation was fixed
+- a PHP warning was fixed in P4A_DB_Navigator 
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty
