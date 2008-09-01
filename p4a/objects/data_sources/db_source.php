@@ -552,7 +552,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * gets/sets read only state
-	 * @param booleab $value
+	 * @param boolean $value
 	 * @return boolean|P4A_DB_Source
 	 */
 	public function isReadOnly($value = null)
