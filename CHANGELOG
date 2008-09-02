@@ -19,6 +19,9 @@
 - a typo in P4A_DB_Source documentation was fixed
 - a PHP warning was fixed in P4A_DB_Navigator
 - more info were added in products_catalogue's index.php file
+- P4A_Mask::setRequiredField() and unsetRequiredField() methods
+  now check if the field exists before calling the addValidator()
+  otherwise show an error message
 
 3.0.2
 - a small change was done on P4A_Array_Source to enable the usage of empty

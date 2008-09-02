@@ -590,6 +590,9 @@ class P4A_Mask extends P4A_Object
 	public function setRequiredField($field)
 	{
 		if (is_string($field)) {
+			if (!isset($this->fields->$field)) {
+				trigger_error("P4A_Field \"$field\" does not exist", E_USER_ERROR);
+			}
 			$field =& $this->fields->$field;
 		}
 		$field->addValidator(new P4A_Validate_NotEmpty, true);
@@ -606,6 +609,9 @@ class P4A_Mask extends P4A_Object
 	public function unsetRequiredField($field)
 	{
 		if (is_string($field)) {
+			if (!isset($this->fields->$field)) {
+				trigger_error("P4A_Field \"$field\" does not exist", E_USER_ERROR);
+			}
 			$field =& $this->fields->$field;
 		}
 		$field->removeValidator('P4A_Validate_NotEmpty');
