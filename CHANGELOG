@@ -1,3 +1,6 @@
+3.0.4
+- 
+
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
 - a bug with P4A_I18N::_format() method was solved
