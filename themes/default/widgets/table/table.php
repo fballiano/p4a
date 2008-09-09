@@ -35,7 +35,9 @@
 	<caption><?php echo __($this->getLabel()) ?></caption>
 	<?php endif; ?>
 
+	<?php if ($this->_show_row_indicator): ?>
 	<col class="select" />
+	<?php endif; ?>
 	<?php foreach ($table_cols as $col): ?>
 	<col <?php echo $col['properties'] ?> />
 	<?php endforeach; ?>
