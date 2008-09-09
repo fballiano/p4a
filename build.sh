@@ -27,12 +27,11 @@ phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For A
 ##########################
 
 cd $PKGDIR
-rm p4a/debian
 rm p4a/.project
 rm p4a/build.sh
+rm -rf p4a/debian
 rm -rf p4a/.cache
 rm -rf p4a/.settings
-rm -rf p4a/themes/default/widgets/calendar
 rm -rf `find -type d -name '.svn'`
 rm -f `find -name '.cvsignore'`
 
