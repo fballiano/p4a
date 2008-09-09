@@ -1,5 +1,6 @@
 3.0.4
-- 
+- P4A_Table::showRowIndicator() and hideRowIndicator() methods
+  were added
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

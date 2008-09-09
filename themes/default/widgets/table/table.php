@@ -43,7 +43,9 @@
 	<?php if (@$headers): ?>
 	<thead>
 		<tr>
+			<?php if ($this->_show_row_indicator): ?>
 			<th class="p4a_row_indicator">&nbsp;</th>
+			<?php endif; ?>
 			<?php foreach ($headers as $header): ?>
 			<?php if ($header['action']): ?>
 				<th>
@@ -75,6 +77,7 @@
 		<?php foreach ($table_rows as $row): ?>
 			<?php $i++; ?>
 			<tr>
+				<?php if ($this->_show_row_indicator): ?>
 			    <th class="p4a_row_indicator">
 			    	<?php if ($row['row']['active']): ?>
 						&#x25BA;
@@ -82,6 +85,7 @@
 						&nbsp;
 					<?php endif; ?>
 			    </th>
+			    <?php endif; ?>
 
 				<?php foreach ($row['cells'] as $cell): ?>
 					<td class="p4a_table_rows<?php echo ($i%2)+1?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>

@@ -71,6 +71,11 @@ class P4A_Table extends P4A_Widget
 	 * @var boolean
 	 */
 	protected $_show_headers = true;
+	
+	/**
+	 * @var boolean
+	 */
+	protected $_show_row_indicator = true;
 
 	/**
 	 * Stores the table's structure (table_cols)
@@ -316,6 +321,26 @@ class P4A_Table extends P4A_Widget
 	public function hideHeaders()
 	{
 		$this->_show_headers = false;
+		return $this;
+	}
+	
+	/**
+	 * 
+	 * @return P4A_Table
+	 */
+	public function showRowIndicator($visible = true)
+	{
+		$this->_show_row_indicator = $visible;
+		return $this;
+	}
+	
+	/**
+	 * 
+	 * @return P4A_Table
+	 */
+	public function hideRowIndicator()
+	{
+		$this->_show_row_indicator = false;
 		return $this;
 	}
 
