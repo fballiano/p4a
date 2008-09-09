@@ -27,6 +27,7 @@ phpdoc -q on -d 'p4a/' -ti 'P4A - PHP For Applications' -dn 'p4a' -dc 'PHP For A
 ##########################
 
 cd $PKGDIR
+rm p4a/debian
 rm p4a/.project
 rm p4a/build.sh
 rm -rf p4a/.cache
