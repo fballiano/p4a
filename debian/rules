@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build:
+	dh_testdir
+
+clean:
+	dh_testdir
+	dh_testroot
+	
+	[ ! -e Makefile ] || rm -f Makefile
+
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	# Add here commands to install the package into debian/p4a.
+	cp debian/Makefile .
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/p4a
+
+# Build architecture-independent files here.
+binary-arch: install
+
+binary-indep: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs README
+	dh_install
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep  binary-arch
+.PHONY: build clean binary-indep binary-arch binary install 

@@ -1,0 +1,14 @@
+Source: p4a
+Section: web 
+Priority: optional
+Maintainer: Andrea Giardina <andrea.giardina@crealabs.it>
+Build-Depends: debhelper (>= 6)
+Standards-Version: 3.8.0
+Homepage: http://p4a.crealabsfoundation.org
+
+Package: p4a 
+Architecture: all 
+Depends: libapache2-mod-php5
+Description: a PHP5 framework for building stateful web applications 
+ P4A is a PHP5 RAD and object oriented PHP framework for building 
+ event-driven stateful web applications. 
