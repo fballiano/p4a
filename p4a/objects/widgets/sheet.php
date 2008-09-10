@@ -103,17 +103,17 @@ class P4A_Sheet extends P4A_Widget
 		}
 		
 		if ($row + $rowspan - 1 > $this->_rows) {
-			trigger_error("P4A_Sheet accepts only P4A_Widgets or strings", E_USER_ERROR);
+			trigger_error("cell margins are out of the grid (row: $row, rowspan: $rowspan, rows: {$this->_rows})", E_USER_ERROR);
 		}
 		
 		if ($col + $colspan - 1 > $this->_cols) {
-			trigger_error("cell margins are out of the grid", E_USER_ERROR);
+			trigger_error("cell margins are out of the grid (col: $col, colspan: $colspan, cols: {$this->_cols})", E_USER_ERROR);
 		}
 		
 		for ($i = $row; $i < $row+$rowspan; $i++) {
 			for ($j = $col; $j < $col+$colspan; $j++) {
 				if ($this->_map[$i][$j] !== null) {
-					trigger_error("cell is occupied", E_USER_ERROR);
+					trigger_error("cell is occupied (row: $i, col: $j)", E_USER_ERROR);
 				}
 				$this->_map[$i][$j] = '-';
 			}
