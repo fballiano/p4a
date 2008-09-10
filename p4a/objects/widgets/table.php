@@ -398,6 +398,7 @@ class P4A_Table extends P4A_Widget
 	/**
 	 * Sets all passed columns visible.
 	 * If no array is given, than sets all columns visible.
+	 * It's also used to set the display order of columns.
 	 * @param array $cols
 	 * @return P4A_Table
 	 */
