@@ -840,8 +840,9 @@ class P4A_DB_Source extends P4A_Data_Source
 
 				$db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
 			}
-
-			$db->adapter->query("DELETE FROM $table WHERE " . $this->_composePkString());
+			
+			$table = new P4A_Db_Table(array('name'=>$this->getTable(), 'schema'=>$this->getSchema(), 'db'=>$db->adapter));
+			$table->delete($this->_composePkString());
 			$this->resetNumRows();
 		}
 
