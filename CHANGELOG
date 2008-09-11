@@ -3,6 +3,13 @@
   were added
 - P4A_DB_Source::delete() method now supports schemas
 - P4A_Sheet's error messages were beautified
+- P4A_Thumbnail_Generator now supports transparent GIF/PNG
+- P4A_Thumbnail_Generator now outputs a PNG cache file if a PNG
+  original file was provided
+- P4A_Thumbnail_Generator now outputs a GIF cache file if a GIF
+  original file was provided
+- P4A_Thumbnail_Generator now resamples JPG/PNG instead of just
+  resizing them
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

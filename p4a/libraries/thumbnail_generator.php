@@ -292,7 +292,18 @@ class P4A_Thumbnail_Generator
 		}
 		
 		if ($this->isCacheEnabled()) {
-			$this->cached_filename = $this->cached_filename_prefix . md5("{$this->filename}|{$size}|{$this->thumbnail_width}|{$this->thumbnail_height}") . '.jpg';
+			$this->cached_filename = $this->cached_filename_prefix . md5("{$this->filename}|{$size}|{$this->thumbnail_width}|{$this->thumbnail_height}");
+			switch ($this->filetype) {
+				case IMAGETYPE_GIF:
+					$this->cached_filename .= '.gif';
+					break;
+				case IMAGETYPE_JPEG:
+					$this->cached_filename .= '.jpg';
+					break;
+				case IMAGETYPE_PNG:
+					$this->cached_filename .= '.png';
+					break;
+			}
 		}
 		
 		return $this;
@@ -308,38 +319,71 @@ class P4A_Thumbnail_Generator
 			throw new P4A_Thumbnail_Generator_Exception("You must call processFile() before calling generateThumbnail()");
 		}
 		
-		switch ($this->filetype)
-		{
+		$thumb = imagecreatetruecolor($this->thumbnail_width, $this->thumbnail_height);
+		switch ($this->filetype) {
 			case IMAGETYPE_GIF:
 				$original = imagecreatefromgif($this->filename);
+				$transparent = imagecolorsforindex($original, imagecolortransparent($original));
+				$transparent_index = imagecolorallocate($thumb, $transparent['red'], $transparent['green'], $transparent['blue']);
+				imagefill($thumb, 0, 0, $transparent_index);
+				imagecolortransparent($thumb, $transparent_index);
+				if (!imagecopyresized($thumb, $original, 0, 0, 0, 0, $this->thumbnail_width, $this->thumbnail_height, $this->original_width, $this->original_height)) {
+					throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
+				}
 				break;
 			case IMAGETYPE_JPEG:
 				$original = imagecreatefromjpeg($this->filename);
+				if (!imagecopyresampled($thumb, $original, 0, 0, 0, 0, $this->thumbnail_width, $this->thumbnail_height, $this->original_width, $this->original_height)) {
+					throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
+				}
 				break;
 			case IMAGETYPE_PNG:
 				$original = imagecreatefrompng($this->filename);
+				imagealphablending($thumb, false);
+				imagesavealpha($thumb, true);
+				if (!imagecopyresampled($thumb, $original, 0, 0, 0, 0, $this->thumbnail_width, $this->thumbnail_height, $this->original_width, $this->original_height)) {
+					throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
+				}
 				break;
 		}
 		
-		$thumb = imagecreatetruecolor($this->thumbnail_width, $this->thumbnail_height);
-		if (!imagecopyresized($thumb, $original, 0, 0, 0, 0, $this->thumbnail_width, $this->thumbnail_height, $this->original_width, $this->original_height)) {
-			throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
-		}
 		return $thumb;
 	}
 	
 	public function cacheThumbnail()
 	{
 		if ($this->isCacheEnabled() and !$this->isCached()) {
-			imagejpeg($this->generateThumbnail(), $this->cache_dir . '/' . $this->getCachedFilename());
+			$target_filename = $this->cache_dir . '/' . $this->getCachedFilename();
+			switch ($this->filetype) {
+				case IMAGETYPE_GIF:
+					imagegif($this->generateThumbnail(), $target_filename);
+					break;
+				case IMAGETYPE_JPEG:
+					imagejpeg($this->generateThumbnail(), $target_filename);
+					break;
+				case IMAGETYPE_PNG:
+					imagepng($this->generateThumbnail(), $target_filename);
+					break;
+			}
 		}
 	}
 	
 	public function outputThumbnail()
 	{
-		header("Content-type: image/jpeg");
-		imagejpeg($this->generateThumbnail());
-		die();
+		switch ($this->filetype) {
+			case IMAGETYPE_GIF:
+				header("Content-type: image/gif");
+				imagegif($this->generateThumbnail());
+				die();
+			case IMAGETYPE_JPEG:
+				header("Content-type: image/jpeg");
+				imagejpeg($this->generateThumbnail());
+				die();
+			case IMAGETYPE_PNG:
+				header("Content-type: image/png");
+				imagepng($this->generateThumbnail());
+				die();
+		}
 	}
 }
 
