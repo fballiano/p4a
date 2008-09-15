@@ -229,6 +229,12 @@ ol.p4a_backtrace li {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
+.p4a_field_label div {
+	text-align: left;
+	margin-left: 5px;
+	clear: both;
+}
+
 .p4a_field input {
 	width: 150px;
 }
