@@ -38,7 +38,7 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 <title><?php echo P4A::singleton()->getTitle() ?></title>
 
 <?php foreach (P4A::singleton()->getCSS() as $_url=>$_media): ?>
-<link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>"></link>
+<link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>" />
 <?php endforeach; ?>
 
 <?php foreach (P4A::singleton()->getJavascript() as $_k=>$_v): ?>
