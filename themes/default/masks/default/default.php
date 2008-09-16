@@ -49,7 +49,7 @@ if (isset($menu) and isset($top)) {
 <?php endif; ?>
 
 <?php if (isset($sidebar_right)):  $_sidebar_right_width='280';?>
-<div id="sidebar_right" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width?>px;">
+<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width?>px;">
 	<?php echo $sidebar_right?>
 </div>
 <?php endif; ?>
@@ -78,7 +78,8 @@ if (isset($menu) and isset($top)) {
 
 	<?php if (isset($main)): ?>
 	<div id="p4a_main_inner_container">
-		<?php echo $main?>
+		<div id="p4a_main"><?php echo $main?></div>
+		<div class="br"></div>
 	</div>
 	<?php endif; ?>
 </div>

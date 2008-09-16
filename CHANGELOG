@@ -21,6 +21,10 @@
   because it was unused and unuseful
 - P4A_Frame::anchorCenter() was reworked with some javascript
   code and now correctly supports P4A_Field many other widgets
+- some XHTML validation errors were fixed
+- default mask/popup templates were changed a bit, fixing a typo
+  on #p4a_sidebar_right div and adding #p4a_main div wrapping
+  the main zone
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

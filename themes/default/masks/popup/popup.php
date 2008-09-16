@@ -45,7 +45,8 @@
 				<?php endif; ?>
 			</div>
 		
-			<?php if (isset($main)) echo $main ?>
+			<?php if (isset($main)) echo "<div id='p4a_main'>$main</div>" ?>
+			<div class="br"></div>
 		</div>
 	</div>
 	
