@@ -11,6 +11,7 @@
 - P4A_Thumbnail_Generator now resamples JPG/PNG instead of just
   resizing them
 - a rendering bug with P4A_Field (when set as label) was fixed
+- translations were updated
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
