@@ -222,6 +222,10 @@ ol.p4a_backtrace li {
 /* P4A_Field */
 /*************/
 
+.p4a_field {
+	white-space: nowrap;
+}
+
 .p4a_field input,
 .p4a_field textarea,
 .p4a_field select,
@@ -258,6 +262,7 @@ ol.p4a_backtrace li {
 	margin-left: 1px;
 	text-align: center;
 	float: left;
+	white-space: nowrap;
 }
 
 .p4a_field_date input,

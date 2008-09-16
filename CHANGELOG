@@ -12,6 +12,15 @@
   resizing them
 - a rendering bug with P4A_Field (when set as label) was fixed
 - translations were updated
+- white-space: nowrap was added to P4A_Field's CSS for a better
+  webkit/safari/chrome rendering
+- P4A_Frame::getChildrenAsString() protected method was added
+  to avoid code replication between P4A_Frame and all classes
+  inheriting from it
+- P4A_Frame::anchorCenter() method' second parameter was removed
+  because it was unused and unuseful
+- P4A_Frame::anchorCenter() was reworked with some javascript
+  code and now correctly supports P4A_Field many other widgets
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

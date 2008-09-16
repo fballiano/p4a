@@ -109,6 +109,7 @@ p4a_ajax_process_response = function (response)
 	   			}
 	   		}
 		}
+		p4a_center_elements();
 		
 		var messages = response.getElementsByTagName('message');
 		if (messages.length > 0) {
@@ -147,6 +148,17 @@ p4a_loading_show = function ()
 p4a_loading_hide = function ()
 {
 	$('#p4a_loading').hide();
+}
+
+p4a_center_elements = function () {
+	$('.p4a_frame_anchor_center:visible').each(function() {
+		$(this)
+			.css({
+				width: $(this).filter(':first-child').outerWidth(),
+				float: 'none',
+				margin: 'auto'
+			});
+	});
 }
 
 p4a_tooltip_show = function (widget)
@@ -341,6 +353,7 @@ p4a_load_css = function (url, callback)
 }
 
 $(function () {
+	p4a_center_elements();
 	p4a_form = $('#p4a')[0];
 	$(document)
 		.ajaxStart(p4a_loading_show)

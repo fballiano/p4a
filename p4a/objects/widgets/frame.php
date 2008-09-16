@@ -101,13 +101,12 @@ class P4A_Frame extends P4A_Widget
 
 	/**
 	 * @param P4A_Widget $object
-	 * @param string $margin
 	 * @return P4A_Frame
 	 */
-	public function anchorCenter(&$object, $margin = "auto")
+	public function anchorCenter($object)
 	{
 		$this->newRow();
-		return $this->_anchor($object, $margin, "none");
+		return $this->_anchor($object, "auto", "none");
 	}
 
 	/**
@@ -138,17 +137,27 @@ class P4A_Frame extends P4A_Widget
 			return "<div id='$id' class='hidden'></div>";
 		}
 
-		$p4a = P4A::singleton();
-		$handheld = $p4a->isHandheld();
+		$handheld = p4a::singleton()->isHandheld();
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
 		$class = $this->composeStringClass();
 
 		$string  = "<div id='{$id}' $class $properties $actions>";
+		$string .= $this->getChildrenAsString();
+		$string .= "<div class='br'></div>";
+		$string .= "</div>\n\n";
+		return $string;
+	}
+	
+	protected function getChildrenAsString()
+	{
+		$string = "";
+		$p4a = P4A::singleton();
 		foreach($this->_map as $objs) {
 			$one_visible = false;
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
+				$classes = array();
 				$object = $p4a->getObject($obj["id"]);
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
@@ -159,13 +168,15 @@ class P4A_Frame extends P4A_Widget
 					$as_string = '';
 				}
 				if (strlen($as_string) > 0) {
+					if ($obj["float"] == "none") {
+						$obj["float"] = "left";
+						$obj["margin"] = 0;
+						$classes[] = "p4a_frame_anchor_center";
+					}
+
 					$one_visible = true;
 					$float = $obj["float"];
-					if ($obj["float"] != "none") {
-						$margin = "margin-" . $obj["float"];
-					} else {
-						$margin = "margin";
-					}
+					$margin = "margin-" . $obj["float"];
 					$margin_value = $obj["margin"];
 					$as_string = "\n\t\t$as_string" ;
 
@@ -173,7 +184,8 @@ class P4A_Frame extends P4A_Widget
 						$row .= $as_string;
 					} else {
 						$display = $object->isVisible() ? 'block' : 'none';
-						$row .= "\n\t<div style='padding:2px 0px;display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
+						$class = empty($classes) ? '' : 'class="' . implode(',', $classes) . '"';
+						$row .= "\n\t<div $class style='padding:2px 0;display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
 					}
 				}
 			}
@@ -184,8 +196,6 @@ class P4A_Frame extends P4A_Widget
 				$string .= $row;
 			}
 		}
-		$string .= "<div class='br'></div>";
-		$string .= "</div>\n\n";
 		return $string;
 	}
 }
