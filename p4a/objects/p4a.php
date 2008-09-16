@@ -160,23 +160,23 @@ class P4A extends P4A_Object
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 		
-		$theme_colors  = '&fg=' . urlencode(P4A_THEME_FG);
-		$theme_colors .= '&bg=' . urlencode(P4A_THEME_BG);
-		$theme_colors .= '&border=' . urlencode(P4A_THEME_BORDER);
-		$theme_colors .= '&input_fg=' . urlencode(P4A_THEME_INPUT_FG);
-		$theme_colors .= '&input_bg=' . urlencode(P4A_THEME_INPUT_BG);
-		$theme_colors .= '&input_border=' . urlencode(P4A_THEME_INPUT_BORDER);
-		$theme_colors .= '&selected_fg=' . urlencode(P4A_THEME_SELECTED_FG);
-		$theme_colors .= '&selected_bg=' . urlencode(P4A_THEME_SELECTED_BG);
-		$theme_colors .= '&selected_border=' . urlencode(P4A_THEME_SELECTED_BORDER);
-		$theme_colors .= '&tooltip_fg=' . urlencode(P4A_THEME_TOOLTIP_FG);
-		$theme_colors .= '&tooltip_bg=' . urlencode(P4A_THEME_TOOLTIP_BG);
-		$theme_colors .= '&tooltip_border=' . urlencode(P4A_THEME_TOOLTIP_BORDER);
-		$theme_colors .= '&even_row=' . urlencode(P4A_THEME_EVEN_ROW);
-		$theme_colors .= '&odd_row=' . urlencode(P4A_THEME_ODD_ROW);
+		$theme_colors  = '&amp;fg=' . urlencode(P4A_THEME_FG);
+		$theme_colors .= '&amp;bg=' . urlencode(P4A_THEME_BG);
+		$theme_colors .= '&amp;border=' . urlencode(P4A_THEME_BORDER);
+		$theme_colors .= '&amp;input_fg=' . urlencode(P4A_THEME_INPUT_FG);
+		$theme_colors .= '&amp;input_bg=' . urlencode(P4A_THEME_INPUT_BG);
+		$theme_colors .= '&amp;input_border=' . urlencode(P4A_THEME_INPUT_BORDER);
+		$theme_colors .= '&amp;selected_fg=' . urlencode(P4A_THEME_SELECTED_FG);
+		$theme_colors .= '&amp;selected_bg=' . urlencode(P4A_THEME_SELECTED_BG);
+		$theme_colors .= '&amp;selected_border=' . urlencode(P4A_THEME_SELECTED_BORDER);
+		$theme_colors .= '&amp;tooltip_fg=' . urlencode(P4A_THEME_TOOLTIP_FG);
+		$theme_colors .= '&amp;tooltip_bg=' . urlencode(P4A_THEME_TOOLTIP_BG);
+		$theme_colors .= '&amp;tooltip_border=' . urlencode(P4A_THEME_TOOLTIP_BORDER);
+		$theme_colors .= '&amp;even_row=' . urlencode(P4A_THEME_EVEN_ROW);
+		$theme_colors .= '&amp;odd_row=' . urlencode(P4A_THEME_ODD_ROW);
 
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
-		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&p4a_theme_path=" . urlencode(P4A_THEME_PATH) . $theme_colors, "all");
+		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&amp;p4a_theme_path=" . urlencode(P4A_THEME_PATH) . $theme_colors, "all");
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld" );
 	}
 
