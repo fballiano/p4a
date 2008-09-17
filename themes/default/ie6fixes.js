@@ -36,8 +36,3 @@ p4a_png_fix = function ()
 		}
 	});
 }
-
-$(function () {
-	p4a_png_fix();
-	p4a_menu_activate();
-});
