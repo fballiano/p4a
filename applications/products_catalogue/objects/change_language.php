@@ -68,6 +68,7 @@ class Change_Language extends P4A_Base_Mask
 			->setType("radio")
 			->setValue($current_locale)
 			->setSource($this->languages);
+		$this->choose_language->label->setWidth(120);
 			
 		$this->build("P4A_Button", "apply")
 			->implement("onclick", $this, "apply");
