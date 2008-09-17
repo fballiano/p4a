@@ -30,7 +30,10 @@
  * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
  * @package p4a
  */
-?><script type="text/javascript">
+?>
+
+<?php if (!p4a::singleton()->isOpera()): ?>
+<script type="text/javascript">
 
 p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/fckeditor.js', function () {
 	var rte = new FCKeditor('<?php echo $this->getId() ?>input', '<?php echo $this->getWidth() ?>', '<?php echo $this->getHeight() ?>', '<?php echo $this->getRichTextareaTheme() ?>');
@@ -54,3 +57,4 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/fckeditor.js', f
 });
 
 </script>
+<?php endif; ?>
