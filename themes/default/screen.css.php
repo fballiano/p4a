@@ -164,6 +164,7 @@ ol.p4a_backtrace li {
 
 * html #p4a_popup h2 {
 	margin-right: -100px;
+	background-image: none;
 }
 
 #p4a_popup #p4a_popup_top_container {
@@ -187,6 +188,14 @@ ol.p4a_backtrace li {
 	font-style: italic;
 }
 
+/*************/
+/* P4A_Frame */
+/*************/
+
+.p4a_frame {
+	float: left;
+}
+
 /****************/
 /* P4A_Fieldset */
 /****************/
@@ -195,6 +204,7 @@ ol.p4a_backtrace li {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	float: left;
 }
 
 .p4a_fieldset .row {
@@ -203,10 +213,6 @@ ol.p4a_backtrace li {
 
 * html .p4a_fieldset .row {
 	margin-left: -10px;
-}
-
-* html .p4a_fieldset {
-	float: left;
 }
 
 .p4a_fieldset legend {

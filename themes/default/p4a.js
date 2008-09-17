@@ -89,7 +89,6 @@ p4a_ajax_process_response = function (response)
 {
 	try {
 		p4a_form._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
-
 		var widgets = response.getElementsByTagName('widget');
 		for (i=0; i<widgets.length; i++) {
 	   		var object_id = widgets[i].attributes[0].value;
@@ -103,13 +102,13 @@ p4a_ajax_process_response = function (response)
 		   				object.parent().css('display', 'block').html(html.firstChild.data);
 		   			}
 	   			}
-	   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
-	   			if (javascript) {
-	   				eval(javascript.firstChild.data);
-	   			}
+	   			
+	   			try {
+		   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
+		   			eval(javascript.firstChild.data);
+	   			} catch (e) {}
 	   		}
 		}
-		p4a_center_elements();
 		
 		var messages = response.getElementsByTagName('message');
 		if (messages.length > 0) {
@@ -120,6 +119,7 @@ p4a_ajax_process_response = function (response)
 			p4a_messages_show();
 		}
 		
+		p4a_center_elements();
 		p4a_menu_add_submenu_indicator();
 		p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
@@ -151,13 +151,23 @@ p4a_loading_hide = function ()
 }
 
 p4a_center_elements = function () {
+	var main = $('#p4a_main');
+	main.css({
+		float: 'left',
+		width: 'auto'
+	});
+	main.css({
+		width: main.outerWidth(),
+		float: 'none'
+	});
+	
 	$('.p4a_frame_anchor_center:visible').each(function() {
-		$(this)
-			.css({
-				width: $(this).filter(':first-child').outerWidth(),
-				float: 'none',
-				margin: 'auto'
-			});
+		$(this).css({
+			width: $(this).filter(':first-child').outerWidth(),
+			float: 'none',
+			marginLeft: 'auto',
+			marginRight: 'auto'
+		});
 	});
 }
 
@@ -361,6 +371,8 @@ $(function () {
 		.ajaxError(p4a_ajax_error);
 	p4a_menu_add_submenu_indicator();
 	p4a_messages_show();
+	if (typeof p4a_png_fix == 'function') p4a_png_fix();
+	if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
 	setTimeout(p4a_loading_hide, 1000);
 	p4a_working = false;
 });

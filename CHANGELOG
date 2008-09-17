@@ -1,4 +1,4 @@
-3.0.4
+3.2.0
 - P4A_Table::showRowIndicator() and hideRowIndicator() methods
   were added
 - P4A_DB_Source::delete() method now supports schemas
@@ -25,6 +25,21 @@
 - default mask/popup templates were changed a bit, fixing a typo
   on #p4a_sidebar_right div and adding #p4a_main div wrapping
   the main zone
+- FCKEditor was disabled on Opera because of a bug (user would
+  get 2 editors instead of one)
+- P4A_Base_Mask::frame does not have a default width anymore
+- IE6 PNG Fix is not bound to window's onload event but in our
+  DOMready function
+- a bug with IE6 and popup template's title was solved
+- a bug with WebKit/Safari/Chrome about javascript evaluation
+  after an AJAX call was solved
+- P4A_Frame and P4A_Fieldset can now be anchored with "center"
+  alignment
+- P4A_Frame and P4A_Fieldset do no need a default with anymore,
+  width is calculated automatically using some javascript code
+- when displaying a P4A_Frame o P4A_Fieldset in the "main" region
+  of the mask's template you'll get it automatically centered
+  also if you did not set its width
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
