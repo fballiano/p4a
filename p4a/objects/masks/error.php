@@ -60,11 +60,9 @@ final class P4A_Error_Mask extends P4A_Mask
 		parent::__construct();
 		$this->setTitle("Error");
 		
-		$this->build("P4A_Frame", "frame")
-			->setWidth(400);
+		$this->build("P4A_Frame", "frame");
 		
 		$this->build("P4A_Box", "box")
-			->setWidth(400)
 			->setStyleProperty("border", "1px solid #c6d3de")
 			->setStyleProperty("padding", "10px");
 		
