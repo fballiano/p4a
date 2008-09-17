@@ -79,7 +79,6 @@ final class P4A_Login_Mask extends P4A_Mask
 			->implement('onclick', $this, 'login');
 
 		$this->build('P4A_Frame', 'frame')
-			->setWidth(300)
 			->setStyleProperty('margin-top', '50px')
 			->setStyleProperty('margin-bottom', '50px')
 			->anchor($this->username)
