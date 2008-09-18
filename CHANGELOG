@@ -41,6 +41,7 @@
   of the mask's template you'll get it automatically centered
   also if you did not set its width
 - P4A_Error_Mask and P4A_Login_Mask do not have default widths anymore
+- Zend Framework was updated to 1.6.1
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
