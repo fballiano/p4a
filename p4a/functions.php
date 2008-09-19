@@ -141,8 +141,8 @@ function P4A_Get_Unique_File_Name($filename, $directory)
 	$ext = '' ;
 
 	if (sizeof($aParts) > 1) {
-		$ext = '.' . array_pop( $aParts );
-		$base = join( $aParts, '.' );
+		$ext = '.' . array_pop($aParts);
+		$base = join($aParts, '.');
 	} else {
 		$base = $filename;
 	}
@@ -163,8 +163,8 @@ function P4A_Get_Unique_File_Name($filename, $directory)
  */
 function P4A_Get_Valid_File_Name($filename)
 {
-	$filename = str_replace(" ","_",$filename);
-	$filename = preg_replace("/[^A-Za-z0-9_\-\.]/","",$filename);
+	$filename = str_replace(" ", "_", $filename);
+	$filename = preg_replace("/[^A-Za-z0-9_\-\.]/", "", $filename);
 	return $filename;
 }
 
