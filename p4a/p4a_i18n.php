@@ -229,6 +229,7 @@ class P4A_I18N
 	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param integer $num_of_decimals used only if type is float or decimal
 	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
 	 */
@@ -237,17 +238,18 @@ class P4A_I18N
 	 * Reads a localized value, normalizes and returns it
 	 * @param mixed $value
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param integer $num_of_decimals used only if type is float or decimal
 	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
 	 */
-	public function normalize($value, $type, $throw_exception = true)
+	public function normalize($value, $type, $num_of_decimals, $throw_exception = true)
 	{
 		if ($throw_exception) {
-			return $this->_normalize($value, $type);
+			return $this->_normalize($value, $type, $num_of_decimals);
 		}
 		
 		try {
-			return $this->_normalize($value, $type);
+			return $this->_normalize($value, $type, $num_of_decimals);
 		} catch (Exception $e) {
 			return $value;
 		}
@@ -260,7 +262,7 @@ class P4A_I18N
 	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
 	 * @return mixed
 	 */
-	private function _normalize($value, $type)
+	private function _normalize($value, $type, $num_of_decimals)
 	{
 		if (strlen($value) == 0) return '';
 		
@@ -285,9 +287,11 @@ class P4A_I18N
 			case 'integer':
 				return Zend_Locale_Format::getInteger($value, array('locale'=>$this->_locale_engine));
 			case 'float':
-				return Zend_Locale_Format::getFloat($value, array('precision'=>3, 'locale'=>$this->_locale_engine));
+				if ($num_of_decimals === null) $num_of_decimals = 3;
+				return Zend_Locale_Format::getFloat($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine));
 			case 'decimal':
-				return Zend_Locale_Format::getFloat($value, array('precision'=>2, 'locale'=>$this->_locale_engine));
+				if ($num_of_decimals === null) $num_of_decimals = 2;
+				return Zend_Locale_Format::getFloat($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine));
 		}
 
 		return $value;

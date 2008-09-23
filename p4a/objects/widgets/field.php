@@ -608,7 +608,7 @@ class P4A_Field extends P4A_Widget
 		} elseif (is_array($value) or is_object($value) or $value === null or strlen($value) == 0) {
 			return $value;
 		} else {
-			return p4a::singleton()->i18n->normalize($value, $type, false);
+			return p4a::singleton()->i18n->normalize($value, $type, $this->data_field->getNumOfDecimals(), false);
 		}
 	}
 
