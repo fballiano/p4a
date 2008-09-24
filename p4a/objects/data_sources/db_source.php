@@ -475,6 +475,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					$this->createDataField($field_name, $this->_tables_metadata[$table_name]['metadata'][$column_name]);
 				} else {
 					$this->createDataField($field_name);
+					$this->fields->$field_name->setAliasOf($column_name);
 				}
 			}
 		}
@@ -652,14 +653,14 @@ class P4A_DB_Source extends P4A_Data_Source
 			$this->_composeSelectPart($select);
 			$this->_composeWherePart($select);
 
-			$new_order_array = array();
 			$new_order_array_values = array();
 			if ($order = $this->getOrder()) {
 				$where_order = "";
 				foreach($order as $field=>$direction) {
 					$long_fld = $this->fields->$field->getSchemaTableField();
 					$p_order = '';
-					foreach ($new_order_array_values as $p_long_fld=>$p_value) {
+					foreach ($new_order_array_values as $new_order_array_value) {
+						list ($p_long_fld,$p_value) = $new_order_array_value;
 						$p_order .= "$p_long_fld = $p_value AND ";
 					}
 					
@@ -683,11 +684,10 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 					$value = $db->quote($value, true);
 					$where_order .= " ($p_order ($long_fld $operator $value $null_case)) OR ";
-					$new_order_array[$long_fld] = $direction;
-					$new_order_array_values[$long_fld] = $value;
+					$new_order_array_values[] = array($long_fld,$value);
 				}
 
-				$select->having(substr($where_order, 0, -4));
+				$select->where(substr($where_order, 0, -4));
 			}
 
 			$this->_composeGroupPart($select);
