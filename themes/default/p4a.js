@@ -220,7 +220,7 @@ p4a_calendar_select = function (value_id, description_id)
 		p4a_form.action,
 		{_p4a_date_format: $('#'+value_id).attr('value')},
 		function (new_value) {
-			$('#'+description_id).attr('value', new_value);
+			$('#'+description_id).attr('value', new_value).change();
 		}
 	);
 }
