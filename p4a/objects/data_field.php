@@ -357,6 +357,25 @@ class P4A_Data_Field extends P4A_Object
 	}
 	
 	/**
+	 * @return string
+	 */
+	public function getWhereFit()
+	{
+		if (strlen($this->getAliasOf())) {
+			return $this->getAliasOf();
+		} else {
+			$schema = $this->getSchema();
+			if (strlen($schema)) $schema = "{$schema}.";
+
+			$table = $this->getTable();
+			if (strlen($table)) $table = "{$table}.";		
+
+			$name = $this->getName();
+			return $schema . $table . $name;
+		}
+	}
+	
+	/**
 	 * Sets the subpath of P4A_UPLOADS_PATH where the upload will happen
 	 * @param string The subdir (can be "test", "test/", "test/test", "test/test/test/")
 	 * @return P4A_Field
