@@ -44,6 +44,8 @@
 - Zend Framework was updated to 1.6.1
 - P4A_I18N::normalize() now has a new parameter "num_of_decimals"
 - P4A_Field::normalize() support for num_of_decimals was added
+- a bug with P4A_DB_Source ordering on calculated fields with
+  alias was solved
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
