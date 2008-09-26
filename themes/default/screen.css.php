@@ -172,6 +172,16 @@ ol.p4a_backtrace li {
 	margin-bottom: 20px;
 }
 
+#p4a_popup #p4a_main {
+	padding: 0 10px;
+	padding-right: 5px;
+}
+
+* html #p4a_popup #p4a_main {
+	padding-left: 0;
+	padding-right: 20px;
+}
+
 /***********/
 /* P4A_Box */
 /***********/

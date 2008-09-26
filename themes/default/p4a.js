@@ -160,7 +160,9 @@ p4a_center_elements = function () {
 		width: main.outerWidth(),
 		float: 'none'
 	});
-	
+	$('#p4a_popup #p4a_main_inner_container').css({
+		width: main.outerWidth()
+	});
 	$('.p4a_frame_anchor_center:visible').each(function() {
 		$(this).css({
 			width: $(this).filter(':first-child').outerWidth(),
