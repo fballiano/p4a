@@ -44,7 +44,6 @@ class Change_Language extends P4A_Base_Mask
 	public function __construct()
 	{
 		parent::__construct();
-		$this->frame->setWidth(300);
 		
 		$this->i18n_dir = dirname(dirname(__FILE__)) . "/i18n";
 		$current_locale = P4A::singleton()->i18n->getLocale();
