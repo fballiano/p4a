@@ -48,6 +48,8 @@
   alias was solved
 - a bug with jQuery::UI::datepicker not throwing the onchange event
   was fixed
+- a popup mask can now open another popup mask without closing itself
+- P4A_Preview_Mask now generates width/height for images
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
