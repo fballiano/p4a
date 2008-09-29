@@ -211,6 +211,9 @@ class P4A_I18N
 			case 'time':
 				$date = new Zend_Date($value, Zend_Date::TIME_SHORT, $this->_locale_engine);
 				return $date->get(Zend_Date::TIME_SHORT, $this->_locale_engine);
+			case 'datetime':
+				$date = new Zend_Date($value, "yyyy-MM-dd HH:mm:ss", $this->_locale_engine);
+				return $date->get(Zend_Date::DATES, $this->_locale_engine) . ' ' . $date->get(Zend_Date::TIME_MEDIUM, $this->_locale_engine);
 			case 'integer':
 				return Zend_Locale_Format::toNumber($value, array('precision'=>0, 'locale'=>$this->_locale_engine));
 			case 'float':

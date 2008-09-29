@@ -50,6 +50,7 @@
   was fixed
 - a popup mask can now open another popup mask without closing itself
 - P4A_Preview_Mask now generates width/height for images
+- P4A_I18N::format() method can now handle datetime
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
