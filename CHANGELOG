@@ -54,7 +54,8 @@
 - cache support was added to P4A_Thumbnail_Generator::outputThumbnail() method
 - a bug with image thumbnails cache on Internet Explorer was solved
   (thanks to pbond81)
-- schema support for multivalue fields was added 
+- schema support for multivalue fields was added
+- schema support for P4A_DB::nextSequenceId() was added
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

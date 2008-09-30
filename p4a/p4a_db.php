@@ -120,10 +120,12 @@ class P4A_DB
 	
 	/**
 	 * @param string $sequence_name
+	 * @param string $schema
 	 * @return integer
 	 */
-	public function nextSequenceId($sequence_name)
+	public function nextSequenceId($sequence_name, $schema = null)
 	{
+		if (strlen($schema)) $sequence_name = "$schema.$sequence_name";
 		switch ($this->db_type) {
 			case 'mysql':
 				$sequence_name .= '_seq';
