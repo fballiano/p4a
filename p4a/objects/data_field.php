@@ -246,7 +246,7 @@ class P4A_Data_Field extends P4A_Object
 		if ($this->sequence === null) {
 			return $this->default_value;
 		} else {
-			return P4A_DB::singleton($this->getDSN())->nextSequenceId($this->sequence);
+			return P4A_DB::singleton($this->getDSN())->nextSequenceId($this->sequence, $this->schema);
 		}
 	}
 	
