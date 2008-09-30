@@ -467,12 +467,15 @@ class P4A_DB_Source extends P4A_Data_Source
 			
 			if ($column_name == '*') {
 				foreach ($this->_tables_metadata[$table_name]['metadata'] as $field_name=>$meta) {
+					if (!$meta['SCHEMA_NAME']) $meta['SCHEMA_NAME'] = $this->_tables_metadata[$table_name]['schema'];
 					$this->createDataField($field_name, $meta);
 				}
 			} elseif (!empty($column_alias)) {
 				$field_name = strlen($column_alias) ? $column_alias : $column_name;
 				if (in_array($column_name, array_keys($this->_tables_metadata[$table_name]['metadata']))) {
-					$this->createDataField($field_name, $this->_tables_metadata[$table_name]['metadata'][$column_name]);
+					$meta = $this->_tables_metadata[$table_name]['metadata'][$column_name];
+					if (!$meta['SCHEMA_NAME']) $meta['SCHEMA_NAME'] = $this->_tables_metadata[$table_name]['schema'];
+					$this->createDataField($field_name, $meta);
 				} else {
 					$this->createDataField($field_name);
 					$this->fields->$field_name->setAliasOf($column_name);
