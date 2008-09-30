@@ -441,13 +441,18 @@ class P4A extends P4A_Object
 		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
 			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
 			$thumb = new P4A_Thumbnail_Generator();
-			$thumb->setCacheDir(P4A_UPLOADS_TMP_DIR)
+			$thumb
+				->setCacheDir(P4A_UPLOADS_TMP_DIR)
 				->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $image_data[0]))
 				->setMaxWidth($image_data[1])
 				->setMaxHeight($image_data[1])
 				->processFile()
 				->cacheThumbnail();
-			header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
+			if ($this->isInternetExplorer()) {
+				$thumb->outputThumbnail();
+			} else {
+				header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
+			}
 			die();
 		} elseif (isset($_REQUEST['_p4a_download_file'])) {
 			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);

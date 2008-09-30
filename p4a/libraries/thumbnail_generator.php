@@ -370,19 +370,46 @@ class P4A_Thumbnail_Generator
 	
 	public function outputThumbnail()
 	{
+		if ($this->isCacheEnabled()) {
+			if (!$this->isCached()) $this->cacheThumbnail();
+			header("Expires: " . gmdate("D, d M Y H:i:s", time()+24*60*60) . " GMT");
+			header("Pragma: cache");
+			header("Cache-Control: public");
+			$this->sendContentTypeHeaders();
+			$fp = fopen("{$this->cache_dir}/" . $this->getCachedFilename(), "rb");
+			fpassthru($fp);
+			fclose($fp);
+			return;
+		}
+		
 		switch ($this->filetype) {
 			case IMAGETYPE_GIF:
-				header("Content-type: image/gif");
+				$this->sendContentTypeHeaders();
 				imagegif($this->generateThumbnail());
 				die();
 			case IMAGETYPE_JPEG:
-				header("Content-type: image/jpeg");
+				$this->sendContentTypeHeaders();
 				imagejpeg($this->generateThumbnail());
 				die();
 			case IMAGETYPE_PNG:
-				header("Content-type: image/png");
+				$this->sendContentTypeHeaders();
 				imagepng($this->generateThumbnail());
 				die();
+		}
+	}
+	
+	protected function sendContentTypeHeaders()
+	{
+		switch ($this->filetype) {
+			case IMAGETYPE_GIF:
+				header("Content-type: image/gif");
+				break;
+			case IMAGETYPE_JPEG:
+				header("Content-type: image/jpeg");
+				break;
+			case IMAGETYPE_PNG:
+				header("Content-type: image/png");
+				break;
 		}
 	}
 }
