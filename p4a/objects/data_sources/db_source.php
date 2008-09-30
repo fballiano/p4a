@@ -576,6 +576,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function row($num_row = null, $move_pointer = true)
 	{
 		$db = P4A_DB::singleton($this->getDSN());
+		$schema = $this->getSchema();
 
 		if ($num_row === null) {
 			$num_row = $this->_pointer;
@@ -617,7 +618,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		foreach ($this->_multivalue_fields as $fieldname=>$mv) {
 			$fk = $mv["fk"];
 			$fk_field = $mv["fk_field"];
-			$table = $mv["table"];
+			$table = ($schema ? "$schema." : "") . $mv["table"];
 
 			$pk = $this->getPk();
 			$pk_value = $this->fields->$pk->getNewValue();
@@ -777,6 +778,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				$pk_value = $this->fields->$pks->getNewValue();  
 				foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 					$fk_table = $aField["table"];
+					$fk_table = ($schema ? "$schema." : "") . $fk_table;
 					$fk_field = $aField["fk_field"];
 					$fk = $aField["fk"];
 					$old_fk_values = $db->adapter->fetchCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
@@ -833,12 +835,13 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (!$this->isReadOnly()) {
 			$db = P4A_DB::singleton($this->getDSN());
 			$table = $this->getTable();
+			$schema = $this->getSchema();
 
 			$pks = $this->getPK();
 			foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 				$pk_value = $this->fields->$pks->getNewValue();
 
-				$fk_table = $aField["table"];
+				$fk_table = ($schema ? "$schema." : "") . $aField["table"];
 				$fk = $aField["fk"];
 
 				$db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
