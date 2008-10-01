@@ -245,6 +245,8 @@ if (!defined('P4A_AJAX_DEBUG')) define('P4A_AJAX_DEBUG', false);
 if (!defined('P4A_EXCEPTION_HANDLER')) define('P4A_EXCEPTION_HANDLER', 'P4A_Exception_Handler');
 if (!defined('P4A_ERROR_HANDLER')) define('P4A_ERROR_HANDLER', 'P4A_Error_Handler');
 if (!defined('P4A_PASSWORD_OBFUSCATOR')) define('P4A_PASSWORD_OBFUSCATOR', '**********');
+if (!defined('P4A_DATEPICKER_START_YEAR')) define('P4A_DATEPICKER_START_YEAR', date("Y")-10);
+if (!defined('P4A_DATEPICKER_END_YEAR')) define('P4A_DATEPICKER_END_YEAR', date("Y")+10);
 if (!defined('P4A_DENIED_EXTENSIONS')) {
 	define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
 }

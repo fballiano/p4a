@@ -405,8 +405,10 @@ class P4A_Field extends P4A_Widget
 				$this->setMultivalueSeparator($multivalue_separator);
 			}
 			break;
-		case 'text':
 		case 'date':
+			$this->setYearRange(P4A_DATEPICKER_START_YEAR, P4A_DATEPICKER_END_YEAR);
+			break;
+		case 'text':
 		case 'hidden':
 		case 'select':
 		case 'radio':

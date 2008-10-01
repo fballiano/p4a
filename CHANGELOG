@@ -98,6 +98,9 @@
   does not create the "0" field anymore, it's been renamed to "f0"
   to avoid problems with some PHP configurations with numerical
   object properties
+- P4A_DATEPICKER_START_YEAR and P4A_DATEPICKER_END_YEAR constants
+  were added to automatically configure all datepickers in your
+  application with a single constant definition
 
 3.0.1
 - a bug about session name was solved
