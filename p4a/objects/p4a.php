@@ -447,12 +447,7 @@ class P4A extends P4A_Object
 				->setMaxWidth($image_data[1])
 				->setMaxHeight($image_data[1])
 				->processFile()
-				->cacheThumbnail();
-			if ($this->isInternetExplorer()) {
-				$thumb->outputThumbnail();
-			} else {
-				header('Location: ' . P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename());
-			}
+				->outputThumbnail();
 			die();
 		} elseif (isset($_REQUEST['_p4a_download_file'])) {
 			$file = realpath(P4A_UPLOADS_DIR . '/' . $_REQUEST['_p4a_download_file']);

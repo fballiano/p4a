@@ -416,6 +416,22 @@ class P4A_Thumbnail_Generator
 	/**
 	 * @return integer
 	 */
+	public function getOriginalWidth()
+	{
+		return $this->original_width;
+	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getOriginalHeight()
+	{
+		return $this->original_height;
+	}
+	
+	/**
+	 * @return integer
+	 */
 	public function getThumbnailWidth()
 	{
 		return $this->thumbnail_width;

@@ -52,13 +52,12 @@
 - P4A_Preview_Mask now generates width/height for images
 - P4A_I18N::format() method can now handle datetime
 - cache support was added to P4A_Thumbnail_Generator::outputThumbnail() method
-- a bug with image thumbnails cache on Internet Explorer was solved
-  (thanks to pbond81)
+- a bug with image thumbnails cache was solved (thanks to pbond81)
 - schema support for multivalue fields was added
 - schema support for P4A_DB::nextSequenceId() was added
 - sequences are now created in the same schema where the table is stored
-- P4A_Thumbnail_Generator getThumbnailWidth() and getThumbnailHeight()
-  methods were added
+- P4A_Thumbnail_Generator getThumbnailWidth(), getThumbnailHeight(),
+  getOriginalWidth() and getOriginalHeight() methods were added
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
