@@ -58,6 +58,8 @@
 - sequences are now created in the same schema where the table is stored
 - P4A_Thumbnail_Generator getThumbnailWidth(), getThumbnailHeight(),
   getOriginalWidth() and getOriginalHeight() methods were added
+- P4A_Thumbnail_Generator::setFileName() method now resets previously detected
+  (or computed) widths and heights (thanks to pbond81)
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

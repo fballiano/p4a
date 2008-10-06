@@ -189,7 +189,13 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setFilename($filename)
 	{
-		if ($filename) $this->filename = $filename;
+		if ($filename) {
+			$this->filename = $filename;
+			$this->original_width = null;
+			$this->original_height = null;
+			$this->thumbnail_width = null;
+			$this->thumbnail_height = null;
+		}
 		return $this;
 	}
 	
