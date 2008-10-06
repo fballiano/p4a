@@ -412,6 +412,22 @@ class P4A_Thumbnail_Generator
 				break;
 		}
 	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getThumbnailWidth()
+	{
+		return $this->thumbnail_width;
+	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getThumbnailHeight()
+	{
+		return $this->thumbnail_height;
+	}
 }
 
 /**
