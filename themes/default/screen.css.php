@@ -607,10 +607,7 @@ table.p4a_widget_layout_table td.c1 {
 	cursor: pointer;
 	float: left;
 	width: 100px;
-}
-
-.p4a_label span {
-	margin-left: 6px;
+	white-space: normal;
 }
 
 .p4a_label_required {
