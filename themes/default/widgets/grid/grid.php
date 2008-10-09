@@ -56,7 +56,7 @@ function upgrade_grid(obj) {
 }
 
 $(document).ready(function() {
-	$("td").each(function() {
+	$("td.p4a_grid_td_enabled").each(function() {
 		$(this).click(function(){
 			if (!$(this).find('textarea').length) {
 				upgrade_grid($(this));
