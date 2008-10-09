@@ -512,13 +512,17 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->fields->$name->setDSN($this->getDSN());
 		
 		if ($meta === null) {
-			$this->fields->$name->isReadOnly(false);
+			$this->fields->$name->isReadOnly(true);
 		} else {
 			$this->fields->$name->setLength($meta['LENGTH']);
 			if ($meta['SCHEMA_NAME']) $this->fields->$name->setSchema($meta['SCHEMA_NAME']);
 			$this->fields->$name->setTable($meta['TABLE_NAME']);
 			if ($name != $meta['COLUMN_NAME']) {
 				$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
+			}
+			
+			if ($this->fields->$name->getTable()!=$this->getTable()) {
+				$this->fields->$name->isReadOnly(true);
 			}
 		}
 		

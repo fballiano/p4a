@@ -802,10 +802,15 @@ table.p4a_widget_layout_table td.c1 {
 /* P4A_Grid */
 /************/
 
+.p4a_grid_td_disabled {
+	background: <?php echo $_GET['bg'] ?>;
+}
+
 .p4a_grid_td {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	border-collapse: collapse;
 	margin: 0;
+	height:25px;
 }
 
 .p4a_grid_text {
@@ -813,11 +818,13 @@ table.p4a_widget_layout_table td.c1 {
 	margin: 0;
 	padding: 0;
 }
+
 .p4a_grid_text:focus {
  	background-image: url(gradient.png);
  	background-position: bottom;
  	background-repeat: repeat-x;
- }
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
+}
 
 /************/
 /* P4A_Menu */

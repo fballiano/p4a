@@ -11,12 +11,10 @@ class P4A_Grid extends P4A_Table
 	public function preChange($params = null)
 	{
 		$p4a = p4a::singleton();
-	
 		$params[0] = base64_decode($params[0]);
-		$params[1] = base64_decode($params[1]);
-		
+
 		$col_name = $params[1]; 
-		$value = $params[2];
+		$value = @$params[2];
 		
 		if ($this->cols->$col_name->isFormatted()) {
 			if ($this->cols->$col_name->isActionTriggered('normalize')) {
@@ -66,17 +64,19 @@ class P4A_Grid extends P4A_Table
 			$pk_value_64 = base64_encode($pk_value);
 			
 			foreach($aCols as $col_name) {
-				$col_name_64 = base64_encode($col_name);
-				if ($this->cols->$col_name->isEnabled() and 
-					!$this->data->fields->$col_name->isReadOnly()) {
+				if ($this->cols->$col_name->isEnabled() and !$this->data->fields->$col_name->isReadOnly()) {
 					$col_enabled = TRUE;
+					$cell_id = $obj_id . '_' . $pk_value_64 . '_' . $z;
+					$z++;
 				} else {
+					$cell_id = "";
 					$col_enabled = FALSE;
 				}
 				
 				$aReturn[$i]['cells'][$j]['class'] = ($enabled and $col_enabled) ? 'p4a_grid_td p4a_grid_td_enabled': 'p4a_grid_td p4a_grid_td_disabled';
 				$aReturn[$i]['cells'][$j]['clickable'] = ($enabled and $col_enabled) ? 'clickable' : '';
-				$aReturn[$i]['cells'][$j]['id'] = $obj_id . '_' . $pk_value_64 . '_' . $z . '_' . $col_name_64;
+				$aReturn[$i]['cells'][$j]['id'] = $cell_id;
+				$aReturn[$i]['cells'][$j]['title'] =  $col_name;				
 				
 				if ($this->cols->$col_name->isFormatted()) {
 					if ($this->cols->$col_name->isActionTriggered('onformat')) {
@@ -90,7 +90,6 @@ class P4A_Grid extends P4A_Table
 				
 				$aReturn[$i]['cells'][$j]['type'] = $this->data->fields->$col_name->getType();
 				$j++;
-				$z++;
 			}
 			$i++;
 		}

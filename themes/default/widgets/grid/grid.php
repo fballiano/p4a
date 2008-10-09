@@ -21,38 +21,47 @@ function upgrade_grid(obj) {
 	value = obj.text();
 	height = obj.height();
 	width = obj.width();
+	title = obj.attr('title');
 	obj.text("");
 	
-	input = $("<textarea class='p4a_grid_text' id='"+id+"_text' type='text' ></textarea>");				
+	input = $("<textarea title='"+title+"' class='p4a_grid_text' id='"+id+"_text' type='text' ></textarea>");				
 	input.val(value);
-	input.height(height);
-	input.width(width);
+	input.height(height-2);
+	input.width(width-2);
 	
 	input.focus (function(){
-		id = $(this).attr('id');
-		a_id = id.split('_');
-	
-		next_id = a_id[0] + '_' + a_id[1] + '_' + (Number(a_id[2])+1);
-		prev_id = a_id[0] + '_' + a_id[1] + '_' + (Number(a_id[2])-1);
-	
-		upgrade_grid($(prev_id));
+		if (!$(this).parent().prevAll(".p4a_grid_td_enabled").length) {
+			prev = $(this).parent().parent().prev().children(".p4a_grid_td_enabled:last");
+		} else {
+			prev = $(this).parent().prev(".p4a_grid_td_enabled");
+		}
 		
-		//TODO:Fix this
-		upgrade_grid($("td:eq("+(Number(a_id[2])+1)+")"));
-		upgrade_grid($("td:eq("+(Number(a_id[2])-1)+")"));
+		if (!$(this).parent().nextAll(".p4a_grid_td_enabled").length) {
+			next = $(this).parent().parent().next().children(".p4a_grid_td_enabled:first");
+		} else {
+			next = $(this).parent().next(".p4a_grid_td_enabled");
+		}
+		
+		upgrade_grid(prev);
+		upgrade_grid(next);
+		
 	});
 	
 	input.change(function(){
 		id = $(this).attr('id');
 		a_id = id.split('_');
 		pk_value = a_id[1];
-		field_name = a_id[3];
+		field_name = $(this).attr('title');
 		p4a_event_execute(a_id[0],'prechange',pk_value,field_name,input.val());
 	});
 	
 	obj.append(input);
 	obj.width(width);
 	obj.height(height);
+}
+
+function jq(myid) { 
+	return '#'+myid.replace(/:/g,"\\:").replace(/\./g,"\\.").replace(/=/g,"\\=");
 }
 
 $(document).ready(function() {
@@ -112,7 +121,7 @@ $(document).ready(function() {
 			<?php $i++; ?>
 			<tr>
 				<?php foreach ($row['cells'] as $cell): ?>
-					<td id="<?php echo $cell['id'] ?>" class="<?php echo $cell['class'] ?> <?php echo $cell['type']?>"><?php echo $cell['value']?></td>
+					<td title="<?php echo $cell['title'] ?>" id="<?php echo $cell['id'] ?>" class="<?php echo $cell['class'] ?> <?php echo $cell['type']?>"><?php echo $cell['value']?></td>
 				<?php endforeach; ?>
 			</tr>
 		<?php endforeach; ?>
