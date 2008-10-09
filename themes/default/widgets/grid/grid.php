@@ -21,7 +21,6 @@ function upgrade_grid(obj) {
 	value = obj.text();
 	height = obj.height();
 	width = obj.width();
-	
 	obj.text("");
 	
 	input = $("<textarea class='p4a_grid_text' id='"+id+"_text' type='text' ></textarea>");				
@@ -52,6 +51,8 @@ function upgrade_grid(obj) {
 	});
 	
 	obj.append(input);
+	obj.width(width);
+	obj.height(height);
 }
 
 $(document).ready(function() {
@@ -72,9 +73,6 @@ $(document).ready(function() {
 	<caption><?php echo __($this->getLabel()) ?></caption>
 	<?php endif; ?>
 
-	<?php if ($this->_show_row_indicator): ?>
-	<col class="select" />
-	<?php endif; ?>
 	<?php foreach ($table_cols as $col): ?>
 	<col <?php echo $col['properties'] ?> />
 	<?php endforeach; ?>

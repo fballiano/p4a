@@ -286,7 +286,8 @@ ol.p4a_backtrace li {
 .p4a_field_data_decimal input,
 .p4a_field_data_float input,
 .p4a_field_data_date input,
-.p4a_field_data_time input {
+.p4a_field_data_time input
+ {
 	text-align: right;
 }
 
@@ -755,7 +756,12 @@ table.p4a_widget_layout_table td.c1 {
 .p4a_table td.decimal,
 .p4a_table td.float,
 .p4a_table td.date,
-.p4a_table td.time {
+.p4a_table td.time,
+.p4a_table td.integer textarea,
+.p4a_table td.decimal textarea,
+.p4a_table td.float textarea,
+.p4a_table td.date textarea,
+.p4a_table td.time textarea {
 	text-align: right;
 	white-space: nowrap;
 }
@@ -937,10 +943,12 @@ table.p4a_widget_layout_table td.c1 {
 	background: url(shadow-br.png);
 }
 
+/************/
+/* P4A_Grid */
+/************/
 .p4a_grid_td {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	border-collapse:collapse;
-	padding:0;
 	margin:0;
 }
 
@@ -949,3 +957,6 @@ table.p4a_widget_layout_table td.c1 {
 	margin:0;
 	padding:0;
 }
+.p4a_grid_text:focus {
+	background: #dadada; /* TODO: FIXME wiht a theme color */
+ }
