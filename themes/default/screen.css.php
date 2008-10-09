@@ -936,3 +936,16 @@ table.p4a_widget_layout_table td.c1 {
 	height: 6px;
 	background: url(shadow-br.png);
 }
+
+.p4a_grid_td {
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	border-collapse:collapse;
+	padding:0;
+	margin:0;
+}
+
+.p4a_grid_text {
+	border:none;
+	margin:0;
+	padding:0;
+}

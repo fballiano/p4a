@@ -257,13 +257,18 @@ class P4A_Table extends P4A_Widget
 		$this->addTempVar('table_cols', $table_cols);
 
 		if ($this->data->getNumRows() > 0) {
-			$this->addTempVar('table_rows', $this->rows->getRows($num_page, $rows));
+			$this->addTempVar('table_rows', $this->getRows($num_page, $rows));
 		} else {
 			$this->addTempVar('table_rows', null);
 		}
 		$return = $this->fetchTemplate();
 		$this->clearTempVars();
 		return $return;
+	}
+	
+	public function getRows($num_page, $rows)
+	{
+		return $this->rows->getRows($num_page, $rows);
 	}
 
 	/**
