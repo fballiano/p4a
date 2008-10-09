@@ -52,7 +52,7 @@ function upgrade_grid(obj) {
 		a_id = id.split('_');
 		pk_value = a_id[1];
 		field_name = $(this).attr('title');
-		p4a_event_execute(a_id[0],'prechange',pk_value,field_name,input.val());
+		p4a_event_execute_ajax(a_id[0],'prechange',pk_value,field_name,input.val());
 	});
 	
 	obj.append(input);
