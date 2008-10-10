@@ -61,6 +61,7 @@
   getOriginalWidth() and getOriginalHeight() methods were added
 - P4A_Thumbnail_Generator::setFileName() method now resets previously detected
   (or computed) widths and heights (thanks to pbond81)
+- a bug with setFocus and AJAX calls was fixed
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
