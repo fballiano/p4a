@@ -113,6 +113,11 @@ class P4A_Mask extends P4A_Object
 	 * @var P4A_Button
 	 */
 	public $close_popup_button = null;
+	
+	/**
+	 * @var boolean
+	 */
+	private $_redesign_focus = FALSE;
 
 	/**
 	 * @param string $name Object name (identifier)
@@ -173,10 +178,28 @@ class P4A_Mask extends P4A_Object
 	{
 		if ($object instanceof P4A_Object) {
 			$this->focus_object_id = $object->getId();
+			$this->_redesign_focus = TRUE;
 		} elseif ($object === null) {
 			$this->focus_object_id = null;
 		}
 		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getFocusedObjectId()
+	{
+		$this->_redesign_focus = FALSE;
+		return $this->focus_object_id;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isFocusToRedesign()
+	{
+		return $this->_redesign_focus;
 	}
 
 	/**
@@ -189,7 +212,7 @@ class P4A_Mask extends P4A_Object
 		$this->focus_object_id = null;
 		return $this;
 	}
-
+	
 	/**
 	 * Shows the previous mask
 	 */
@@ -571,14 +594,6 @@ class P4A_Mask extends P4A_Object
 	public function getIconSize()
 	{
 		return $this->_icon_size;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getFocusedObjectId()
-	{
-		return $this->focus_object_id;
 	}
 	
 	/**

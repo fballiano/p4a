@@ -571,7 +571,7 @@ class P4A extends P4A_Object
 		if ($this->_redesign_whole_mask) {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 		} else {
-			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" >';
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId(TRUE) . '">';
 		}
 		foreach ($this->getRenderedMessages() as $message) {
 			print "\n<message><![CDATA[$message]]></message>";
@@ -901,13 +901,18 @@ class P4A extends P4A_Object
 
 	/**
 	 * @return string
-	 * @deprecated 
 	 */
-	public function getFocusedObjectId()
+	public function getFocusedObjectId($to_redesign=FALSE)
 	{
 		if (is_object($this->active_mask)) {
-			return $this->active_mask->getFocusedObjectId();
-		}
+			if ($to_redesign and $this->active_mask->isFocusToRedesign()) {
+				return $this->active_mask->getFocusedObjectId();
+			} elseif ($to_redesign===FALSE) {
+				return $this->active_mask->getFocusedObjectId();
+			} else {
+				return null;
+			}
+		} 
 		return null;
 	}
 	
