@@ -823,7 +823,8 @@ table.p4a_widget_layout_table td.c1 {
  	background-image: url(gradient.png);
  	background-position: bottom;
  	background-repeat: repeat-x;
-	border: 1px solid <?php echo $_GET['input_border'] ?>;
+ 	border: 1px solid <?php echo $_GET['selected_border'] ?>;
+ 	outline: 1px solid <?php echo $_GET['selected_border'] ?>;
 }
 
 /************/
