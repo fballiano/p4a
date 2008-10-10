@@ -568,7 +568,11 @@ class P4A extends P4A_Object
 
 		header('Content-Type: text/xml');
 		print '<?xml version="1.0" encoding="utf-8" ?>';
-		print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
+		if ($this->_redesign_whole_mask) {
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
+		} else {
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" >';
+		}
 		foreach ($this->getRenderedMessages() as $message) {
 			print "\n<message><![CDATA[$message]]></message>";
 		}

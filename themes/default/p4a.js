@@ -121,7 +121,9 @@ p4a_ajax_process_response = function (response)
 		
 		p4a_center_elements();
 		p4a_menu_add_submenu_indicator();
-		p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
+		if (response.getElementsByTagName('ajax-response')[0].attributes.length>1) {
+			p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
+		}
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 		if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
 		p4a_working = false;

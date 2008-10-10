@@ -26,6 +26,7 @@ class P4A_Grid extends P4A_Table
 		return $this->actionHandler('onChange', $params);
 	}
 	
+	//TODO: Add the possibility to call autosave(FALSE)
 	public function autoSave()
 	{
 		$this->intercept($this,'onChange','saveData');
