@@ -417,6 +417,7 @@ hr.p4a_line {
 .p4a_db_navigator {
 	text-align: left;
 	font-weight: normal;
+	overflow: auto;
 }
 
 .p4a_db_navigator li {

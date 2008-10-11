@@ -282,10 +282,11 @@ class P4A_DB_Navigator extends P4A_Widget
 		}
 
 		$class = $this->composeStringClass();
+		$properties = $this->composeStringProperties();
 		if (strlen($js) and $this->allow_movement_to_root) {
-			$return = "<ul id='{$obj_id}' $class><li class='home_node'>&nbsp;{$return}</li></ul>";
+			$return = "<ul id='{$obj_id}' $class $properties><li class='home_node'>&nbsp;{$return}</li></ul>";
 		} else {
-			$return = "<div id='{$obj_id}' $class>{$return}</div>";
+			$return = "<div id='{$obj_id}' $class $properties>{$return}</div>";
 		}
 
 		return $return . $js;

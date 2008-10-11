@@ -62,6 +62,8 @@
 - P4A_Thumbnail_Generator::setFileName() method now resets previously detected
   (or computed) widths and heights (thanks to pbond81)
 - a bug with setFocus and AJAX calls was fixed
+- a bug with P4A_DB_Navigator::setStyleProperty was fixed (Thanks to Mario Spada)
+- P4A_Navigator's default CSS now allowss scrolling (Thanks to Mario Spada)
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
