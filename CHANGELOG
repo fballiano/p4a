@@ -1,7 +1,6 @@
 3.2.0
 - P4A_Grid widget was added
-- P4A_Table::showRowIndicator() and hideRowIndicator() methods
-  were added
+- P4A_Table::showRowIndicator() and hideRowIndicator() methods were added
 - P4A_DB_Source::delete() method now supports schemas
 - P4A_Sheet's error messages were beautified
 - P4A_Thumbnail_Generator now supports transparent GIF/PNG
@@ -64,6 +63,8 @@
 - a bug with setFocus and AJAX calls was fixed
 - a bug with P4A_DB_Navigator::setStyleProperty was fixed (Thanks to Mario Spada)
 - P4A_Navigator's default CSS now allowss scrolling (Thanks to Mario Spada)
+- case insensitive check was added when downloading an attachment
+  with P4A installed on a windows server
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
