@@ -159,24 +159,8 @@ class P4A extends P4A_Object
 			$this->addJavascript(P4A_THEME_PATH . "/ie6fixes.js");
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-		
-		$theme_colors  = '&amp;fg=' . urlencode(P4A_THEME_FG);
-		$theme_colors .= '&amp;bg=' . urlencode(P4A_THEME_BG);
-		$theme_colors .= '&amp;border=' . urlencode(P4A_THEME_BORDER);
-		$theme_colors .= '&amp;input_fg=' . urlencode(P4A_THEME_INPUT_FG);
-		$theme_colors .= '&amp;input_bg=' . urlencode(P4A_THEME_INPUT_BG);
-		$theme_colors .= '&amp;input_border=' . urlencode(P4A_THEME_INPUT_BORDER);
-		$theme_colors .= '&amp;selected_fg=' . urlencode(P4A_THEME_SELECTED_FG);
-		$theme_colors .= '&amp;selected_bg=' . urlencode(P4A_THEME_SELECTED_BG);
-		$theme_colors .= '&amp;selected_border=' . urlencode(P4A_THEME_SELECTED_BORDER);
-		$theme_colors .= '&amp;tooltip_fg=' . urlencode(P4A_THEME_TOOLTIP_FG);
-		$theme_colors .= '&amp;tooltip_bg=' . urlencode(P4A_THEME_TOOLTIP_BG);
-		$theme_colors .= '&amp;tooltip_border=' . urlencode(P4A_THEME_TOOLTIP_BORDER);
-		$theme_colors .= '&amp;even_row=' . urlencode(P4A_THEME_EVEN_ROW);
-		$theme_colors .= '&amp;odd_row=' . urlencode(P4A_THEME_ODD_ROW);
-
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
-		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?p4a_icons_path=" . urlencode(P4A_ICONS_PATH) . "&amp;p4a_theme_path=" . urlencode(P4A_THEME_PATH) . $theme_colors, "all");
+		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?" . $this->getCssConstants(), "all");
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld" );
 	}
 
@@ -816,6 +800,34 @@ class P4A extends P4A_Object
 	public function getCss()
 	{
 		return $this->_css;
+	}
+	
+	/**
+	 * Returns some useful constant that you may need if you're going to use a
+	 * dynamic PHP/CSS file (yourfile.css.php).
+	 * <code>$this->addCSS(P4A_THEME_PATH . "/yourfile.css.php?" . $this->getCssConstants());</code>
+	 * @return string
+	 */
+	public static function getCssConstants()
+	{
+		$c = array();
+		$c[] = 'p4a_icons_path=' . urlencode(P4A_ICONS_PATH);
+		$c[] = 'p4a_theme_path=' . urlencode(P4A_THEME_PATH);
+		$c[] = 'fg=' . urlencode(P4A_THEME_FG);
+		$c[] = 'bg=' . urlencode(P4A_THEME_BG);
+		$c[] = 'border=' . urlencode(P4A_THEME_BORDER);
+		$c[] = 'input_fg=' . urlencode(P4A_THEME_INPUT_FG);
+		$c[] = 'input_bg=' . urlencode(P4A_THEME_INPUT_BG);
+		$c[] = 'input_border=' . urlencode(P4A_THEME_INPUT_BORDER);
+		$c[] = 'selected_fg=' . urlencode(P4A_THEME_SELECTED_FG);
+		$c[] = 'selected_bg=' . urlencode(P4A_THEME_SELECTED_BG);
+		$c[] = 'selected_border=' . urlencode(P4A_THEME_SELECTED_BORDER);
+		$c[] = 'tooltip_fg=' . urlencode(P4A_THEME_TOOLTIP_FG);
+		$c[] = 'tooltip_bg=' . urlencode(P4A_THEME_TOOLTIP_BG);
+		$c[] = 'tooltip_border=' . urlencode(P4A_THEME_TOOLTIP_BORDER);
+		$c[] = 'even_row=' . urlencode(P4A_THEME_EVEN_ROW);
+		$c[] = 'odd_row=' . urlencode(P4A_THEME_ODD_ROW);
+		return implode('&amp;', $c);
 	}
 
 	/**

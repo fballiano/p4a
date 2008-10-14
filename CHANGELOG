@@ -65,6 +65,8 @@
 - P4A_Navigator's default CSS now allowss scrolling (Thanks to Mario Spada)
 - case insensitive check was added when downloading an attachment
   with P4A installed on a windows server
+- P4A::getCssConstants() method was added, it's needed when you need some params
+  to pass to a dyndamic PHP/CSS you're creating
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension
