@@ -70,52 +70,6 @@ class P4A_Simple_Edit_Mask extends P4A_Base_Mask
 	public function __construct($source)
 	{
 		parent::__construct();
-		
-		// source
-		if (is_string($source)) {
-			$this->build('P4A_DB_Source', 'source')
-				->setTable($source)
-				->load();
-		} elseif (is_a($source, 'P4A_DB_Source')) {
-			$table = $source->getTable();
-			if (strlen($table) == 0) {
-				trigger_error("The passed P4A_DB_Source has no master table", E_USER_ERROR);
-			}
-			$this->source = $source;
-		} else {
-			$class = get_class($source);
-			trigger_error("$class is not a valid param, please pass a string or a P4A_DB_Source", E_USER_ERROR);
-		}
-		$this->setSource($this->source);
-		
-		// toolbar
-		$this->build('P4A_Full_Toolbar', 'toolbar')
-			->setMask($this);
-		
-		// table
-		$this->build('P4A_Table', 'table')
-			->setSource($this->source)
-			->setWidth(500)
-			->showNavigationBar();
-		
-		// fieldset with anchored objects
-		$this->build('P4A_Fieldset', 'fieldset');
-		while ($field = $this->fields->nextItem()) {
-			$this->fieldset->anchor($field);
-		}
-		
-		// main frame
-		$this->frame
-			->anchor($this->table)
-			->anchor($this->fieldset);
-		
-		// last things
-		$this
-			->display("top", $this->toolbar)
-			->setFocus($this->fields->nextItem())
-			->firstRow();
-		
-		// resetting fields collection pointer
-		$this->fields->reset();
+		$this->constructSimpleEdit($source);
 	}
 }
