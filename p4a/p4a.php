@@ -71,6 +71,7 @@ require_once "$dir/objects/masks/base.php";
 require_once "$dir/objects/masks/error.php";
 require_once "$dir/objects/masks/login.php";
 require_once "$dir/objects/masks/preview.php";
+require_once "$dir/objects/masks/base_masks/simple_edit.php";
 
 //Widgets
 require_once "$dir/objects/widgets/box.php";
