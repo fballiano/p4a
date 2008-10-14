@@ -32,6 +32,7 @@
  */
 
 /**
+ * A simple editing mask built in the "standard" way.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
