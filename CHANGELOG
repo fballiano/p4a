@@ -1,5 +1,7 @@
 3.2.0
 - P4A_Grid widget was added
+- P4A_Simple_Edit_Mask was added to quickly create a simple mask to edit
+  a database table
 - P4A_Table::showRowIndicator() and hideRowIndicator() methods were added
 - P4A_DB_Source::delete() method now supports schemas
 - P4A_Sheet's error messages were beautified
