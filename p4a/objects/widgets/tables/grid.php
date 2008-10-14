@@ -40,7 +40,6 @@
  * @copyright CreaLabs SNC
  * @package p4a
  */
-
 class P4A_Grid extends P4A_Table
 {
 	public function __construct($name)
@@ -138,5 +137,4 @@ class P4A_Grid extends P4A_Table
 		}
 		return $aReturn;
 	}	
-	
 }
