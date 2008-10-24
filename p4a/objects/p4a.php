@@ -555,7 +555,14 @@ class P4A extends P4A_Object
 		ob_start();
 		$script_detector = '<script.*?>(.*?)<\/script>';
 
-		header('Content-Type: text/xml');
+		$gmdate = gmdate( "D, j M Y H:i:s" );
+		header( "Last-Modified: " . $gmdate . " GMT" );
+		header( "Expires: " . $gmdate . " GMT" );
+		header( "Cache-Control: no-store, no-cache, must-revalidate" );
+		header( "Cache-Control: post-check=0, pre-check=0", FALSE );
+		header( "Pragma: no-cache" );
+		header( "Content-Type: text/xml");
+		
 		print '<?xml version="1.0" encoding="utf-8" ?>';
 		if ($this->_redesign_whole_mask) {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
