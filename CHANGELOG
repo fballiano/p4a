@@ -72,6 +72,7 @@
   with P4A installed on a windows server
 - P4A::getCssConstants() method was added, it's needed when you need some params
   to pass to a dyndamic PHP/CSS you're creating
+- Every kind of cache was hopefully completely disabled (Firefox 3 memory cache too)
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

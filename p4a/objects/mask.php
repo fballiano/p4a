@@ -310,7 +310,6 @@ class P4A_Mask extends P4A_Object
 	public function main()
 	{
 		if (!P4A::singleton()->inAjaxCall()) {
-		
 			$gmdate = gmdate( "D, j M Y H:i:s" );
 			Header( "Last-Modified: " . $gmdate . " GMT" );
 			Header( "Expires: " . $gmdate . " GMT" );
