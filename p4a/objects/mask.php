@@ -310,13 +310,12 @@ class P4A_Mask extends P4A_Object
 	public function main()
 	{
 		if (!P4A::singleton()->inAjaxCall()) {
-			$gmdate = gmdate( "D, j M Y H:i:s" );
-			Header( "Last-Modified: " . $gmdate . " GMT" );
-			Header( "Expires: " . $gmdate . " GMT" );
-			Header( "Cache-Control: no-store, no-cache, must-revalidate" );
-			Header( "Cache-Control: post-check=0, pre-check=0", FALSE );
-			Header( "Pragma: no-cache" );
-			header( "Content-Type: text/html; charset=UTF-8");
+			$gmdate = gmdate("D, d M Y H:i:s");
+			header("Content-Type: text/html; charset=UTF-8");
+			header("Cache-Control: no-store, no-cache, must-revalidate");
+			header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+			header("Pragma: no-cache");
+			header("Last-Modified: $gmdate GMT");
 			echo $this->getAsString();
 		}
 	}

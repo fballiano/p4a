@@ -443,9 +443,12 @@ class P4A extends P4A_Object
 			if ($file !== false and file_exists($file)) {
 				$name = basename($file);
 				$name = preg_replace("/^_p4a_.*?_/", "", $name);
-				header("Pragma: public");
-				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-				header("Cache-Control: private", false);
+				$gmdate = gmdate("D, d M Y H:i:s");
+				header("Content-Type: text/html; charset=UTF-8");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+				header("Pragma: no-cache");
+				header("Last-Modified: $gmdate GMT");
 				header("Content-type: application/octet-stream");
 				header("Content-Disposition: attachment; filename=\"$name\"");
 				header("Content-Length: " . filesize($file));
@@ -554,14 +557,13 @@ class P4A extends P4A_Object
 	{
 		ob_start();
 		$script_detector = '<script.*?>(.*?)<\/script>';
-
-		$gmdate = gmdate( "D, j M Y H:i:s" );
-		header( "Last-Modified: " . $gmdate . " GMT" );
-		header( "Expires: " . $gmdate . " GMT" );
-		header( "Cache-Control: no-store, no-cache, must-revalidate" );
-		header( "Cache-Control: post-check=0, pre-check=0", FALSE );
-		header( "Pragma: no-cache" );
-		header( "Content-Type: text/xml");
+		
+		$gmdate = gmdate("D, d M Y H:i:s");
+		header("Content-Type: text/xml");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		header("Pragma: no-cache");
+		header("Last-Modified: $gmdate GMT");
 		
 		print '<?xml version="1.0" encoding="utf-8" ?>';
 		if ($this->_redesign_whole_mask) {
