@@ -74,6 +74,7 @@
   to pass to a dyndamic PHP/CSS you're creating
 - Every kind of cache was hopefully completely disabled
 - jquery::maskedInput plugin was updated to 1.2
+- FCKEditor now has ForcePasteAsPlainText as default configuration
 
 3.0.3
 - P4A_Thumbnail_Generator now supports ie's pjpeg extension

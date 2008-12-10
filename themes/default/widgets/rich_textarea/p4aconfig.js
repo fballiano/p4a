@@ -6,6 +6,7 @@ FCKConfig.FlashUpload = false;
 FCKConfig.CleanWordKeepsStructure = true;
 FCKConfig.FontFormats = 'p;pre;address;h1;h2;h3;h4;h5;h6';
 FCKConfig.BackgroundBlockerOpacity = 0;
+FCKConfig.ForcePasteAsPlainText = true;
 
 FCKConfig.Plugins.Add('simplecommands');
 FCKConfig.Plugins.Add('tablecommands');
