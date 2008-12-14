@@ -274,7 +274,7 @@ class P4A_Thumbnail_Generator
 				$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
 			}
 		}
-		
+
 		if ($this->thumbnail_height === null) {
 			$this->thumbnail_height = $this->thumbnail_max_height;
 			if ($this->thumbnail_width === null) {
@@ -340,7 +340,7 @@ class P4A_Thumbnail_Generator
 			case IMAGETYPE_JPEG:
 				$original = imagecreatefromjpeg($this->filename);
 				if (!imagecopyresampled($thumb, $original, 0, 0, 0, 0, $this->thumbnail_width, $this->thumbnail_height, $this->original_width, $this->original_height)) {
-					throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
+					//throw new P4A_Thumbnail_Generator_Exception("There was an error resizing your image");
 				}
 				break;
 			case IMAGETYPE_PNG:
