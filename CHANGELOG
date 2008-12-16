@@ -1,4 +1,7 @@
 3.2.0
+- P4A is now released under LGPL 3
+- P4A_APPLICATION_SOURCE_DOWNLOAD_URL constant was removed (along with the
+  "download source" link in the footer)
 - P4A_Grid widget was added
 - P4A_Simple_Edit_Mask was added to quickly create a simple mask to edit
   a database table

@@ -2,18 +2,18 @@
 /**
  * This file is part of P4A - PHP For Applications.
  *
- * P4A is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * P4A is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  * 
  * P4A is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * GNU Lesser General Public License for more details.
  * 
- * You should have received a copy of the GNU Affero General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/agpl.html>.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
  * 
  * To contact the authors write to:                                     <br />
  * CreaLabs SNC                                                         <br />
@@ -27,7 +27,7 @@
  * @copyright CreaLabs SNC
  * @link http://www.crealabs.it
  * @link http://p4a.sourceforge.net
- * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
  */
 
@@ -116,10 +116,6 @@ if (!defined('P4A_APPLICATION_URL')) {
 
 if (!defined('P4A_APPLICATION_NAME')) {
 	define('P4A_APPLICATION_NAME', str_replace(_DS_,'_',P4A_APPLICATION_PATH));
-}
-
-if (!defined('P4A_APPLICATION_SOURCE_DOWNLOAD_URL')) {
-	define('P4A_APPLICATION_SOURCE_DOWNLOAD_URL', '.?_p4a_application_download_missing_link');
 }
 
 //Applications libraries constants
