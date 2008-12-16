@@ -31,11 +31,6 @@
  * @package p4a
  */
 
-// Provide an URL where users can download the whole application source
-// code package, you can avoid this step only if you have a valid
-// P4A Commercial License: http://p4a.crealabsfoundation.org/wiki/Commercial_license
-define("P4A_APPLICATION_SOURCE_DOWNLOAD_URL", "http://tinyurl.com/6hbec2");
-
 // Select application's locale
 define("P4A_LOCALE", 'en_US');
 
