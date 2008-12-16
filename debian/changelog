@@ -1,3 +1,8 @@
+p4a (3.2.0-1) unstable; urgency=low
+  * new upstream release
+
+ -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Tue, 16 Dec 2008 09:22:31 +0100
+
 p4a (3.0.3-1) unstable; urgency=low
 
   * P4A_Thumbnail_Generator now supports ie's pjpeg extension
