@@ -98,7 +98,7 @@ class P4A_I18N
 		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->language}/LC_MESSAGES/p4a.mo", $messages);
 		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->locale}/LC_MESSAGES/p4a.mo", $messages);
 		
-		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale);
+		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale, array("disableNotices" => true));
 	}
 	
 	/**
