@@ -52,4 +52,20 @@ cd $PKGDIR
 mv p4a p4a-$VERSION
 zip -qr9 p4a-$VERSION.zip p4a-$VERSION
 tar zcf  p4a-$VERSION.tgz p4a-$VERSION
+
+#############################
+# generating debian package #
+#############################
+
+cd p4a-$VERSION
+mv docs code-reference
+cp -r $SRCDIR/debian .
+rm -rf `find -type d -name '.svn'`
+dpkg-buildpackage
+
+###############
+# cleaning up #
+###############
+
+cd $PKGDIR
 rm -r p4a-$VERSION
