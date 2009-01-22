@@ -1,6 +1,7 @@
 3.2.1
 - Zend Framework was updated to 1.7.3
 - PEAR::Net_Useragent_Detect was updated to 2.5.0
+- jQuery::form was updated to 2.18
 
 3.2.0
 - P4A is now released under LGPL 3
