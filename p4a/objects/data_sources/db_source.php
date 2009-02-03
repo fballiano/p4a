@@ -302,7 +302,9 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function setWhere($where)
 	{
 		$this->resetNumRows();
-		if (!$this->isNew()) $this->firstRow();
+		// if pointer is null load() was not called yet
+		// if isNew() we stay in newRow 
+		if ($this->_pointer !== null and !$this->isNew()) $this->firstRow();
 		$this->_where = $where;
 		return $this;
 	}
