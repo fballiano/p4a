@@ -357,7 +357,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 */
 	public function setQuery($query)
 	{
-		$this->_query = $query;
+		$this->_query = trim(preg_replace("/;$/", "", trim($query)));
 		$this->isReadOnly(true);
 		$this->isSortable(false);
 		return $this;
