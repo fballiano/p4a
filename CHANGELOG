@@ -2,8 +2,10 @@
 - Zend Framework was updated to 1.7.4
 - PEAR::Net_Useragent_Detect was updated to 2.5.0
 - jQuery::form was updated to 2.18
-- P4A_DB_Source::setQuery now strips out final semicolon from the passed
+- P4A_DB_Source::setQuery() now strips out final semicolon from the passed
   SQL query (if present) (bug #2557215)
+- P4A_DB_Source::setWhere() now calls a firstRow() if the DB_Source isn't
+  in the "new row" state (bug #2316271)
 
 3.2.0
 - P4A is now released under LGPL 3
