@@ -85,7 +85,18 @@ function P4A_Filename2File($filename, $uploads_dir)
 	$aFile['name'] = basename($filename);
 	$aFile['path'] = str_replace($uploads_dir,'',$filename);
 	$aFile['size'] = filesize($filename);
-	$aFile['type'] = mime_content_type($filename);
+	$aFile['type'] = null;
+	
+	if (function_exists("mime_content_type")) {
+		$aFile['type'] = mime_content_type($filename);
+	}
+	
+	if (empty($aFile['type']) and class_exists("finfo")) {
+		$finfo = new finfo(FILEINFO_MIME);
+		$aFile['type'] = $finfo->file($filename);
+		$finfo->close();
+	}
+	
 	list($type,$subtype) = explode('/',$aFile['type']);
 	if ($type == 'image') {
 		list($aFile['width'],$aFile['height']) = getimagesize($filename);
