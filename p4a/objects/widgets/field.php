@@ -696,11 +696,10 @@ class P4A_Field extends P4A_Widget
 			$value = $this->data_field->getNewValue();
 			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_calendar_select('p4a_{$id}', '{$id}input')\" />";
 			$options = '{';
-			$years = array();
 			if ($this->_year_range) {
 				$options .= "yearRange:'{$this->_year_range}',";
 			}
-			$options .= '}';
+			$options = substr($options, 0, -1) . '}';
 			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}',$options);\" class=\"p4a_field_date_trigger\" />";
 			$close_header .= "<script type='text/javascript'>p4a_calendar_load()</script>";
 		}

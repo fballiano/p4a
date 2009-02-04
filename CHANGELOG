@@ -8,6 +8,8 @@
   in the "new row" state (bug #2316271)
 - P4A_Filename2File() now uses the fileinfo module if no mime type
   is detected otherways (bug #2121565)
+- a bug with P4A_Field::getAsDate() and Internet Explorer was fixed
+  (thanks to Mario Spada)
 
 3.2.0
 - P4A is now released under LGPL 3
