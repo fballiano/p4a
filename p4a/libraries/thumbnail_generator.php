@@ -121,7 +121,10 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setWidth($width)
 	{
-		if ($width) $this->thumbnail_width = $width;
+		if ($width) {
+			$this->thumbnail_width = $width;
+			$this->thumbnail_max_width = null;
+		}
 		return $this;
 	}
 	
@@ -131,7 +134,10 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setHeight($height)
 	{
-		if ($height) $this->thumbnail_height = $height;
+		if ($height) {
+			$this->thumbnail_height = $height;
+			$this->thumbnail_max_height = null;
+		}
 		return $this;
 	}
 	
@@ -141,7 +147,10 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setMaxWidth($width)
 	{
-		if ($width) $this->thumbnail_max_width = $width;
+		if ($width) {
+			$this->thumbnail_max_width = $width;
+			$this->thumbnail_width = null;
+		}
 		return $this;
 	}
 	
@@ -151,7 +160,10 @@ class P4A_Thumbnail_Generator
 	 */
 	public function setMaxHeight($height)
 	{
-		if ($height) $this->thumbnail_max_height = $height;
+		if ($height) {
+			$this->thumbnail_max_height = $height;
+			$this->thumbnail_height = null;
+		}
 		return $this;
 	}
 	
@@ -268,26 +280,28 @@ class P4A_Thumbnail_Generator
 				throw new P4A_Thumbnail_Generator_Exception("This type of image is not supported");
 		}
 		
-		if ($this->thumbnail_width === null) {
-			$this->thumbnail_width = $this->thumbnail_max_width;
-			if ($this->thumbnail_height === null) {
-				$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
+		if ($this->thumbnail_width) {
+			if (!$this->thumbnail_height) {
+				$height = round($this->thumbnail_width * $this->original_height / $this->original_width);
+				if ($this->thumbnail_max_height and ($height > $this->thumbnail_max_height)) {
+					$height = $this->thumbnail_max_height;
+				}
+				$this->thumbnail_height = $height;
 			}
-		}
-		
-		if ($this->thumbnail_height === null) {
-			$this->thumbnail_height = $this->thumbnail_max_height;
-			if ($this->thumbnail_width === null) {
-				$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
+		} elseif ($this->thumbnail_height) {
+			$width = round($this->thumbnail_height * $this->original_width / $this->original_height);
+			if ($this->thumbnail_max_width and ($width > $this->thumbnail_max_width)) {
+				$width = $this->thumbnail_max_width;
 			}
-		}
-		
-		if ($this->thumbnail_width > $this->thumbnail_max_width) {
+			$this->thumbnail_width = $width;
+		} elseif ($this->thumbnail_max_width) {
 			$this->thumbnail_width = $this->thumbnail_max_width;
 			$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
-		}
-		
-		if ($this->thumbnail_height > $this->thumbnail_max_height) {
+			if ($this->thumbnail_max_height and ($this->thumbnail_height > $this->thumbnail_max_height)) {
+				$this->thumbnail_height = $this->thumbnail_max_height;
+				$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
+			}
+		} elseif ($this->thumbnail_max_height) {
 			$this->thumbnail_height = $this->thumbnail_max_height;
 			$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
 		}

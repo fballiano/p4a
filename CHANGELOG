@@ -10,6 +10,16 @@
   is detected otherways (bug #2121565)
 - a bug with P4A_Field::getAsDate() and Internet Explorer was fixed
   (thanks to Mario Spada)
+- P4A_Thumbnail_Generator::setWidth() now resets the max_width to avoid
+  conflicts
+- P4A_Thumbnail_Generator::setHeight() now resets the max_height to avoid
+  conflicts
+- P4A_Thumbnail_Generator::setMaxWidth() now resets the width to avoid
+  conflicts
+- P4A_Thumbnail_Generator::setMaxHeight() now resets the height to avoid
+  conflicts
+- P4A_Thumbnail_Generator::processFile() height/width calculation was
+  rewritten in order to fix bug #2270922
 
 3.2.0
 - P4A is now released under LGPL 3
