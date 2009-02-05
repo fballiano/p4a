@@ -1,14 +1,12 @@
 /*
  * jQuery Form Plugin
- * version: 2.18 (06-JAN-2009)
+ * version: 2.19 (02-FEB-2009)
  * @requires jQuery v1.2.2 or later
  *
  * Examples and documentation at: http://malsup.com/jquery/form/
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
- *
- * Revision: $Id$
  */
 ;(function($) {
 
@@ -221,12 +219,14 @@ $.fn.ajaxSubmit = function(options) {
         setTimeout(function() {
             // make sure form attrs are set
             var t = $form.attr('target'), a = $form.attr('action');
-            $form.attr({
-                target:   id,
-                method:   'POST',
-                action:   opts.url
-            });
-            
+
+			// update form attrs in IE friendly way
+			form.setAttribute('target',id);
+			if (form.getAttribute('method') != 'POST')
+				form.setAttribute('method', 'POST');
+			if (form.getAttribute('action') != opts.url)
+				form.setAttribute('action', opts.url);
+							
             // ie borks in some cases when setting encoding
             if (! options.skipEncodingOverride) {
                 $form.attr({
@@ -255,18 +255,19 @@ $.fn.ajaxSubmit = function(options) {
             }
             finally {
                 // reset attrs and remove "extra" input elements
-                $form.attr('action', a);
-                t ? $form.attr('target', t) : $form.removeAttr('target');
+				form.setAttribute('action',a);
+                t ? form.setAttribute('target', t) : $form.removeAttr('target');
                 $(extraInputs).remove();
             }
         }, 10);
 
+        var operaHack = 0;
+		
         function cb() {
             if (cbInvoked++) return;
             
             io.detachEvent ? io.detachEvent('onload', cb) : io.removeEventListener('load', cb, false);
 
-            var operaHack = 0;
             var ok = true;
             try {
                 if (timedOut) throw 'timeout';
@@ -540,7 +541,7 @@ $.fieldValue = function(el, successful) {
             var op = ops[i];
             if (op.selected) {
                 // extra pain for IE...
-                var v = $.browser.msie && !(op.attributes['value'].specified) ? op.text : op.value;
+                var v = ($.browser.msie && op.attributes && op.attributes['value'] && !(op.attributes['value'].specified)) ? op.text : op.value;
                 if (one) return v;
                 a.push(v);
             }
