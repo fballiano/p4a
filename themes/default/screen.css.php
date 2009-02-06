@@ -767,6 +767,10 @@ table.p4a_widget_layout_table td.c1 {
 	white-space: nowrap;
 }
 
+.p4a_table td.file {
+	text-align: center;
+}
+
 .p4a_table td.action {
 	background: <?php echo $_GET['bg'] ?>;
 }

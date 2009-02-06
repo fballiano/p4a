@@ -1,3 +1,6 @@
+3.2.2
+- P4A_Table's image cols are now centered horizontally
+
 3.2.1
 - Zend Framework was updated to 1.7.4
 - PEAR::Net_Useragent_Detect was updated to 2.5.0
