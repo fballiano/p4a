@@ -19,5 +19,3 @@ function P4A_Field_loadSelectByArray($field, $params)
 	$field->setType('select');
 	$field->setSource($field->source);
 }
-
-
