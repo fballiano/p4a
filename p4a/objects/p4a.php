@@ -525,7 +525,7 @@ class P4A extends P4A_Object
 					list($width, $height) = @getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 					$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 					$this->objects[$key]->setNewValue('{' . $new_value . '}');
-					if ($this->objects[$key]->actionHandler('afterUpload') == ABORT) return ABORT;
+					if ($this->objects[$key]->actionHandler('afterupload') == ABORT) return ABORT;
 				}
 			}
 
