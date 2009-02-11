@@ -418,6 +418,24 @@ class P4A_Thumbnail_Generator
 		}
 	}
 	
+	/**
+	 * Saves to thumbnail to file
+	 * @param string $filename
+	 * @param integer $quality valid only for JPEG/PNG
+	 * @return bool
+	 */
+	public function renderToFile($filename, $quality = null)
+	{
+		switch ($this->filetype) {
+			case IMAGETYPE_GIF:
+				return imagegif($this->generateThumbnail(), $filename);
+			case IMAGETYPE_JPEG:
+				return imagejpeg($this->generateThumbnail(), $filename, $quality);
+			case IMAGETYPE_PNG:
+				return imagepng($this->generateThumbnail(), $filename, $quality);
+		}
+	}
+	
 	protected function sendContentTypeHeaders()
 	{
 		switch ($this->filetype) {

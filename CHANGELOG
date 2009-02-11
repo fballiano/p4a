@@ -2,6 +2,7 @@
 - P4A_Table's image cols are now centered horizontally
 - P4A_Button::setTooltip() and getTooltip() methods were added
 - afterupload event typo was fixed
+- P4A_Thumbnail_Generator::renderToFile() method was added
 
 3.2.1
 - Zend Framework was updated to 1.7.4
