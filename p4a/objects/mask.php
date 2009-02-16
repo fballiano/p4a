@@ -396,6 +396,11 @@ class P4A_Mask extends P4A_Object
 
 		return $this->fields;
 	}
+	
+	public function getSource()
+	{
+		return $this->data;
+	}
 
 	/**
 	 * Loads the current record data
