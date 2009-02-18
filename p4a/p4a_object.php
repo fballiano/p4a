@@ -91,7 +91,7 @@ abstract class P4A_Object
 	}
 
 	/**
-	 * Instance a new $class ojbect and sets its name to $name
+	 * Instance a new $class ojbect and set its name to $name
 	 * @param string $class
 	 * @param string $name
 	 * @return P4A_Object
