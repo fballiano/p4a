@@ -4,6 +4,7 @@
 - afterupload event typo was fixed
 - P4A_Thumbnail_Generator::renderToFile() method was added
 - P4A_Mask::getSource() method was added
+- Zend Framework was updated to 1.7.5
 
 3.2.1
 - Zend Framework was updated to 1.7.4
