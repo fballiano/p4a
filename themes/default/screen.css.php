@@ -247,6 +247,11 @@ ol.p4a_backtrace li {
 .p4a_field select,
 .p4a_field_file table {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	color: <?php echo $_GET['input_fg'] ?>;
+}
+
+.p4a_field option {
+	color: <?php echo $_GET['input_fg'] ?>;
 }
 
 .p4a_field_label div {

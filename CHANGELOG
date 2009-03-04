@@ -8,6 +8,8 @@
 - a bug with P4A_Fieldset theme was fixed (thanks to Mario Spada)
 - P4A_DB::singleton() DB type verification is now case insensitive
   (bug #2643785) (thanks to BES)
+- a few modifications were done on screen.css file for a better theme
+  result (thanks to pbond81)
 
 3.2.1
 - Zend Framework was updated to 1.7.4
