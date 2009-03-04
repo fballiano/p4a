@@ -238,9 +238,9 @@ msgstr ""
 msgid "notLessThan"
 msgstr ""
 
-# 
+# Value is required and can't be empty
 msgid "isEmpty"
-msgstr "Value is required and can't be empty"
+msgstr ""
 
 # '%value%' does not match against pattern '%pattern%'
 msgid "regexNotMatch"
