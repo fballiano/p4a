@@ -14,6 +14,7 @@
   new rules by Zend Framework (we need your help translating the new
   messages now http://tinyurl.com/au5bvb)
 - a bug with P4A_DB_Source::setWhere() method was fixed
+- translations were synchronized
 
 3.2.1
 - Zend Framework was updated to 1.7.4
