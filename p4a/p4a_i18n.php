@@ -32,6 +32,7 @@
  */
 
 require_once "Zend/Date.php";
+require_once "Zend/Registry.php";
 require_once "Zend/Translate.php";
 require_once "Zend/Translate/Adapter/Array.php";
 
@@ -99,6 +100,7 @@ class P4A_I18N
 		$this->mergeTranslationFile(dirname(__FILE__) . "/i18n/{$this->locale}/LC_MESSAGES/p4a.mo", $messages);
 		
 		$this->_translation_engine = new Zend_Translate(Zend_Translate::AN_ARRAY, $messages, $this->locale, array("disableNotices" => true));
+		Zend_Registry::set('Zend_Translate', $this->_translation_engine);
 	}
 	
 	/**
@@ -309,6 +311,15 @@ class P4A_I18N
 		return clone $this->_locale_engine;
 	}
 	
+	/**
+	 * Clones and return the Zend_Translate engine
+	 * @return Zend_Translate
+	 */
+	public function getTranslationEngine()
+	{
+		return clone $this->_translation_engine;
+	}
+	
 	private function setFirstDayOfTheWeek()
 	{
 		$week_data = Zend_Locale_Data::getList($this->locale, 'week');
@@ -341,8 +352,13 @@ class P4A_I18N
 	/**
 	 * @return integer
 	 */
-	function getFirstDayOfTheWeek()
+	public function getFirstDayOfTheWeek()
 	{
 		return $this->first_day_of_the_week;
+	}
+	
+	public function __wakeup()
+	{
+		Zend_Registry::set('Zend_Translate', $this->_translation_engine);
 	}
 }

@@ -10,6 +10,10 @@
   (bug #2643785) (thanks to BES)
 - a few modifications were done on screen.css file for a better theme
   result (thanks to pbond81)
+- The way we managed P4A_Validate translations was rewritten to fit the
+  new rules by Zend Framework (we need your help translating the new
+  messages now http://tinyurl.com/au5bvb)
+- a bug with P4A_DB_Source::setWhere() method was fixed
 
 3.2.1
 - Zend Framework was updated to 1.7.4
