@@ -4,7 +4,7 @@
 - afterupload event typo was fixed
 - P4A_Thumbnail_Generator::renderToFile() method was added
 - P4A_Mask::getSource() method was added
-- Zend Framework was updated to 1.7.5
+- Zend Framework was updated to 1.7.6
 - a bug with P4A_Fieldset theme was fixed (thanks to Mario Spada)
 - P4A_DB::singleton() DB type verification is now case insensitive
   (bug #2643785) (thanks to BES)
