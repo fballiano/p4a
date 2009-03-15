@@ -200,7 +200,7 @@ function P4A_Include_Objects($dir)
 
 		$dh  = opendir($dir);
 		while (false !== ($filename = readdir($dh))) {
-			if (substr($filename, 0, 1) != '.' and $filename != 'CVS' and $filename != '.svn') {
+			if (substr($filename, 0, 1) != '.' and $filename != 'CVS') {
 				$files[] = $filename;
 			}
 		}
