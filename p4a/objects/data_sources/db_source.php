@@ -1060,9 +1060,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	protected function _composeGroupPart($select)
 	{
-		if ($this->getGroup()) {
-			$select->group(join(',', $this->getGroup()));
-		}
+		$select->group($this->getGroup());
 	}
 
 	protected function _composeOrderPart($select, $order = array())

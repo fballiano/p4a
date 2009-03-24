@@ -16,6 +16,8 @@
 - a bug with P4A_DB_Source::setWhere() method was fixed
 - translations were synchronized
 - auto file inclusion system was updated to avoid reading Mac hidden files
+- a bug with P4A_DB_Source::addGroup() method was solved (internal syntax
+  change due to a Zend Framework change)
 
 3.2.1
 - Zend Framework was updated to 1.7.4
