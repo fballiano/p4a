@@ -18,6 +18,8 @@
 - auto file inclusion system was updated to avoid reading Mac hidden files
 - a bug with P4A_DB_Source::addGroup() method was solved (internal syntax
   change due to a Zend Framework change)
+- p4a_load_js() javascript function was updated to avoid errors if no callback
+  function is passed
 
 3.2.1
 - Zend Framework was updated to 1.7.4

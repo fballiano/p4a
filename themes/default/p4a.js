@@ -345,9 +345,11 @@ p4a_load_js = function (url, callback)
 	var tag = document.createElement('script');
 	tag.type = "text/javascript";
 	tag.src = url;
-	$(tag).bind('load', callback);
-	tag.onreadystatechange = function() {
-		if (this.readyState == 'loaded' || this.readyState == 'complete') callback();
+	if (typeof callback != "undefined") {
+		$(tag).bind('load', callback);
+		tag.onreadystatechange = function() {
+			if (this.readyState == 'loaded' || this.readyState == 'complete') callback();
+		}
 	}
 	$('head').get(0).appendChild(tag);
 }
