@@ -1,3 +1,6 @@
+3.2.3
+- 
+
 3.2.2
 - P4A_Table's image cols are now centered horizontally
 - P4A_Button::setTooltip() and getTooltip() methods were added
