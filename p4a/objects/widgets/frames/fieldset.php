@@ -51,7 +51,7 @@ class P4A_Fieldset extends P4A_Frame
 
 		$properties = $this->composeStringProperties();
 		$actions = $this->composeStringActions();
-		$class = $this->composeStringClass();
+		$class = $this->composeStringClass(array("ui-corner-all"));
 
 		$string  = "<fieldset id='$id' $class $properties $actions>";
 		if ($this->getLabel()) {
