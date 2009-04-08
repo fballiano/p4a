@@ -186,29 +186,30 @@ class P4A_Tab_Pane extends P4A_Widget
 		$height = $this->getHeight();
 		$this->setHeight(null);
 
-		$class = $this->composeStringClass();
+		$class = $this->composeStringClass(array("ui-tabs", "ui-widget", "ui-widget-content"));
 		$properties = $this->composeStringProperties();
 		$return  = "<div id='$id' $class $properties>";
-		$return .= "<ul class='tabs'>";
+		$return .= "<ul class='tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all'>";
 
 		$active_page_name = $this->getActivePageName();
 		$this->pages->reset();
 		while ($page = $this->pages->nextItem()) {
 			if (!$page->isVisible()) continue;
 			$actions = $this->composeStringActions($page->getName());
-			$active = '';
+			$active = "";
 			if ($page->getName() == $active_page_name) {
-				$active = "class='active'";
+				$active = "ui-tabs-selected ui-state-active";
 			}
 			if (!strlen($page->getLabel())) {
 				$page->setDefaultLabel();
 			}
 			$label = __($page->getLabel());
-			$return .= "<li><a href='#' $actions $active>$label</a></li>";
+			$return .= "<li class='ui-state-default ui-corner-top $active'><a href='#t' $actions>$label</a></li>";
 		}
 		$return .= "</ul>";
-		$return .= "<div class='p4a_tab_pane_page' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
+		$return .= "<div class='p4a_tab_pane_page ui-tabs-panel ui-widget-content ui-corner-all ui-helper-clearfix' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
 		$return .= "</div>";
+		$return .= "<script type='text/javascript'>p4a_tabs_load()</script>";
 
 		$this->setHeight($height);
 		return $return;

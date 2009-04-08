@@ -194,6 +194,16 @@ p4a_tooltip_show = function (widget)
 	widget.mouseout(function() {tooltip.hide()});
 }
 
+p4a_tabs_load = function ()
+{
+	p4a_load_css(p4a_theme_path + '/jquery/ui.tabs.css');
+	$(".p4a_tab_pane>ul li").hover(function () {
+		$(this).addClass("ui-state-hover");
+	}, function () {
+		$(this).removeClass("ui-state-hover");
+	});
+}
+
 p4a_calendar_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');

@@ -641,48 +641,29 @@ table.p4a_widget_layout_table td.c1 {
 /* P4A_Tab_Pane */
 /****************/
 
+.p4a_tab_pane,
+div.ui-tabs {
+	padding: 0;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	border: none;
+}
+
 .p4a_tab_pane ul.tabs {
-	border-bottom: 1px solid <?php echo $_GET['input_border'] ?>;
-	padding-left: 20px;
-	text-align: left;
-}
-
-.p4a_browser_ie .p4a_tab_pane ul.tabs {
-	padding-top: 1px;
-}
-
-.p4a_browser_linux .p4a_tab_pane ul.tabs {
-	padding-bottom: 1px;
+	border: 0;
+	background: none;
 }
 
 .p4a_tab_pane ul.tabs li {
-	display: inline;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 .p4a_tab_pane ul.tabs li a {
-	padding: 0 5px;
-	text-decoration: none;
-	border: 1px solid <?php echo $_GET['input_border'] ?>;
-	background: #fafafa;
-}
-
-.p4a_tab_pane ul.tabs a.active,
-.p4a_tab_pane ul.tabs a.active:hover {
-	background: <?php echo $_GET['selected_bg'] ?>;
-	border-bottom: 1px solid white;
-	cursor: default;
-	margin-right: -1px;
-}
-
-.p4a_tab_pane ul.tabs a:hover {
-	background: <?php echo $_GET['selected_bg'] ?>;
+	color: <?php echo $_GET['fg'] ?>;
 }
 
 .p4a_tab_pane div.p4a_tab_pane_page {
-	border: 1px solid <?php echo $_GET['input_border'] ?>;
-	border-top: none;
 	padding: 10px 10px 10px 0;
-	overflow: hidden;
+	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
 /*************/
