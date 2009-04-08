@@ -197,23 +197,20 @@ p4a_tooltip_show = function (widget)
 p4a_calendar_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
-	p4a_load_js(p4a_theme_path + '/jquery/ui.datepicker.js', p4a_calendar_init_defaults);
-}
-
-p4a_calendar_init_defaults = function ()
-{
-	$.datepicker._defaults["dateFormat"] = "yy-mm-dd";
-	$.datepicker._defaults["dayNamesMin"] = p4a_calendar_daynamesmin;
-	$.datepicker._defaults["monthNames"] = p4a_calendar_monthnames;
-	$.datepicker._defaults["firstDay"] = p4a_calendar_firstday;
+	p4a_load_js(p4a_theme_path + '/jquery/ui.datepicker.js');
 }
 
 p4a_calendar_open = function (id, options)
 {
 	var element = $('#'+id);
-	if(!element.is($.datepicker.markerClassName)) {
-		element.datepicker(options);
-	}
+	element.datepicker('destroy');
+	options.changeMonth = true;
+	options.changeYear = true;
+	options.dateFormat = "yy-mm-dd";
+	options.dayNamesMin = p4a_calendar_daynamesmin;
+	options.monthNamesShort = p4a_calendar_monthnames;
+	options.firstDay = p4a_calendar_firstday;
+	element.datepicker(options);
 	element.datepicker('show');
 	return false;
 }

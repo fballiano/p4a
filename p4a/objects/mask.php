@@ -190,7 +190,7 @@ class P4A_Mask extends P4A_Object
 	 */
 	public function getFocusedObjectId()
 	{
-		$this->_redesign_focus = FALSE;
+		$this->_redesign_focus = false;
 		return $this->focus_object_id;
 	}
 	

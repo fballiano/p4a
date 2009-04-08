@@ -387,17 +387,13 @@ ol.p4a_backtrace li {
 /* P4A_Field - date picker */
 /***************************/
 
-div.ui-datepicker-control,
-div.ui-datepicker-links {
-	display: none;
+.ui-datepicker {
+	background: <?php echo $_GET['bg'] ?>;
+	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 }
 
-div.ui-datepicker-header {
-	background: #777;
-}
-
-.ui-datepicker-header select.ui-datepicker-new-month,
-.ui-datepicker-header select.ui-datepicker-new-year {
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
 	background: white;
 	color: <?php echo $_GET['fg'] ?>;
 	font-weight: normal;

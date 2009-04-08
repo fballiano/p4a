@@ -160,6 +160,8 @@ class P4A extends P4A_Object
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
 		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
+		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.core.css", "all");
+		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.theme.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?" . $this->getCssConstants(), "all");
 		$this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld" );
 	}
@@ -569,14 +571,14 @@ class P4A extends P4A_Object
 		if ($this->_redesign_whole_mask) {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 		} else {
-			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId(TRUE) . '">';
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId(true) . '">';
 		}
 		foreach ($this->getRenderedMessages() as $message) {
 			print "\n<message><![CDATA[$message]]></message>";
 		}
 		
 		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
-			$as_string = $this->active_mask->getAsString(false);
+			$as_string = $this->active_mask->getAsString(false) . $this->getJavascriptInitializations();
 			$javascript_codes = array();
 			$javascript = '';
 			$html = preg_replace("/{$script_detector}/si", '', $as_string);
@@ -877,24 +879,32 @@ class P4A extends P4A_Object
 	 */
 	public function getJavascriptInitializations()
 	{
-		$locale_engine = $this->i18n->getLocaleEngine();
+		$locale = $this->i18n->getLocale();
 		$ajax_enabled = P4A_AJAX_ENABLED ? 'true' : 'false';
 		
-		$days = $locale_engine->getTranslationList('days');
+		$days = Zend_Locale::getTranslationList('days', $locale);
 		$days = $days['format']['abbreviated'];
+		$months = Zend_Locale::getTranslationList('months', $locale);
+		$months = $months['format']['wide'];
+		
 		$p4a_shadows_enabled = ($this->isHandheld() or $this->isInternetExplorer()) ? 'false' : 'true';
 		
-		return '<script type="text/javascript">' . "\n" .
+		$return = '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
 		'p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
 		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
-		'p4a_calendar_monthnames = ["'. join('","', $locale_engine->getTranslationList('month')) . '"];' . "\n" .
-		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
-		'$(function() {' . "\n" .
-		'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
-		'});' . "\n" .
-		'</script>';
+		'p4a_calendar_monthnames = ["'. join('","', $months) . '"];' . "\n" .
+		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n";
+
+		if (!$this->inAjaxCall()) {
+			$return .= '$(function() {' . "\n" .
+			'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
+			'});' . "\n";
+		}
+		
+		$return .= '</script>';
+		return $return;
 	}
 
 	/**
@@ -928,17 +938,15 @@ class P4A extends P4A_Object
 	/**
 	 * @return string
 	 */
-	public function getFocusedObjectId($to_redesign=FALSE)
+	public function getFocusedObjectId($to_redesign = false)
 	{
 		if (is_object($this->active_mask)) {
 			if ($to_redesign and $this->active_mask->isFocusToRedesign()) {
 				return $this->active_mask->getFocusedObjectId();
-			} elseif ($to_redesign===FALSE) {
+			} elseif ($to_redesign === false) {
 				return $this->active_mask->getFocusedObjectId();
-			} else {
-				return null;
 			}
-		} 
+		}
 		return null;
 	}
 	
