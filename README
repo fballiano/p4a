@@ -100,6 +100,11 @@ If you want to add calculated fields coming from a DB query
 (such as DISTICT(example_field)) always use parenthesis and never
 use the "DISTINCT example_field" syntax.
 
+Oracle's "date" data field is not supported, you should use a char(10).
+Within your application simply add:
+	$p4a_field->setType("date");
+	$p4a_field->data_field->setType("date");	
+
 -------------
 -- Authors --
 -------------

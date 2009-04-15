@@ -4,6 +4,7 @@
 - jQuery UI was updated to 1.7.1
 - P4A_Tab_Pane was converted to jQuery UI
 - P4A_Fieldset and P4A_Tab_Pane now have rounder borders
+- a note about handling dates with Oracle was added to the README file
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
