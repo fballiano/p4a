@@ -73,6 +73,10 @@ class P4A_Dir_Source extends P4A_Data_Source
 	{
 		parent::__construct($name);
 		$this->fields->build('P4A_Data_Field', 'filename');
+		$this->fields->build('P4A_Data_Field', 'size')
+			->setType("filesize");
+		$this->fields->build('P4A_Data_Field', 'last_modified')
+			->setType("date");
 		$this->setPk('filename');
 	}
 
@@ -194,7 +198,12 @@ class P4A_Dir_Source extends P4A_Data_Source
 						$this->_scanDir($filename, $files);
 					}
 				} elseif(is_file($filepath)) {
-					$files[]['filename'] = $filename;
+					$stat = stat($filepath);
+					$tmp = array();
+					$tmp["filename"] = $filename;
+					$tmp["size"] = $stat["size"];
+					$tmp["last_modified"] = date("Y-m-d", $stat["mtime"]);
+					$files[] = $tmp;
 				}
 			}
 		}

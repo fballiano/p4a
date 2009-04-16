@@ -14,6 +14,7 @@
 - a bug with P4A_Dir_Source and hidden files was solved
 - P4A_Dir_Source::getNumRows() method was added
 - P4A_I18N::format() support for "filesize" data type was added
+- P4A_Dir_Source now supports file size and last modification time
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
