@@ -40,14 +40,14 @@
 class P4A_Dir_Source extends P4A_Data_Source
 {
 	/**
+	 * @var array
+	 */
+	protected $_array = array();
+	
+	/**
 	 * @var string
 	 */
 	protected $_dir = null;
-	
-	/**
-	 * @var boolean
-	 */
-	protected $_cache_enabled = false;
 	
 	/**
 	 * @var boolean
@@ -89,15 +89,11 @@ class P4A_Dir_Source extends P4A_Data_Source
 		if ($dir !== null) {
 			$this->setDir($dir);
 		}
-
-		if ($this->_cache_enabled == true) {
-			$files = array();
-			$this->_array = $this->_scanDir($this->_dir, $files);
-		} else {
-			$this->_array = array();
-		}
-
+		
+		$files = array();
+		$this->_array = $this->_scanDir($this->_dir, $files);
 		$this->_is_loaded = true;
+		
 		return $this;
 	}
 
@@ -149,32 +145,15 @@ class P4A_Dir_Source extends P4A_Data_Source
 	}
 
 	/**
-	 * @param boolean $cache_enabled
-	 * @return P4A_Dir_Source
-	 */
-	public function enableCache($cache_enabled = true)
-	{
-		$this->_cache_enabled = $cache_enabled;
-		if ($this->_is_loaded) {
-			$this->reload();
-		}
-		return $this;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getAll()
 	{
-		if ($this->_cache_enabled) {
-			return $this->_array();
-		} else {
-			$files = array();
-			return $this->_scanDir($this->_dir, $files);
-		}
+		if (!$this->_is_loaded) $this->load();
+		return $this->_array;
 	}
 
-	protected function _scanDir($dir, &$files)
+	protected function _scanDir($dir, array &$files)
 	{
 		if ($dir == $this->_dir or $dir == '') {
 			$basepath = '';
@@ -214,5 +193,48 @@ class P4A_Dir_Source extends P4A_Data_Source
 	public function getNumRows()
 	{
 		return sizeof($this->getAll());
+	}
+	
+	public function row($num_row = null, $move_pointer = true)
+	{
+		if (!$this->_is_loaded) $this->load();
+		
+		if ($num_row !== null) {
+			$row = @$this->_array[$num_row-1];
+		} else {
+			$num_row = $this->_pointer;
+			$row = @$this->_array[$num_row-1];
+		}
+		
+		if ($row === null) $row = array();
+
+		if ($move_pointer) {
+			if ($this->actionHandler('beforemoverow') == ABORT) return ABORT;
+
+			if ($this->isActionTriggered('onmoverow')) {
+				if ($this->actionHandler('onmoverow') == ABORT) return ABORT;
+			} else {
+				if (!empty($row)) {
+					$this->_pointer = $num_row;
+
+					foreach($row as $field=>$value){
+						$this->fields->$field->setValue($value);
+					}
+				} elseif ($this->getNumRows() == 0) {
+					$this->newRow();
+				}
+			}
+
+			$this->actionHandler('aftermoverow');
+		}
+
+		return $row;
+	}
+	
+	public function __sleep()
+	{
+		$this->_array = array();
+		$this->_is_loaded = false;
+		return array_keys(get_object_vars($this));
 	}
 }
