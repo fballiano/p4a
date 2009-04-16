@@ -11,6 +11,7 @@
 - P4A_Dir_Navigator widget was added
 - P4A_Widget::composeStringActions() method now uses
   P4A_Quote_Javascript_String()
+- a bug with P4A_Dir_Source and hidden files was solved
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

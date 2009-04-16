@@ -182,7 +182,7 @@ class P4A_Dir_Source extends P4A_Data_Source
 
 		$dh = opendir($real_dir);
 		while (false !== ($filename = readdir($dh))) {
-			if ($filename != '.' and $filename != '..') {
+			if (substr($filename, 0, 1) != '.' and $filename != 'CVS') {
 				$filepath = $real_dir . '/' . $filename;
 				$filename = $basepath . $filename;
 
