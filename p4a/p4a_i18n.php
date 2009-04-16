@@ -172,7 +172,7 @@ class P4A_I18N
 	 * Reads a normalized value, localizes and returns it.
 	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
-	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param string $type (boolean|date|time|integer|float|decimal|filesize)
 	 * @param integer $num_of_decimals used only if type is float or decimal
 	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
@@ -194,7 +194,7 @@ class P4A_I18N
 	 * Reads a normalized value, localizes and returns it.
 	 * Returns an empty string if no value is passed.
 	 * @param mixed $value
-	 * @param string $type (boolean|date|time|integer|float|decimal|currency)
+	 * @param string $type (boolean|date|time|integer|float|decimal|filesize)
 	 * @param integer $num_of_decimals used only if type is float or decimal
 	 * @return mixed
 	 */
@@ -224,6 +224,11 @@ class P4A_I18N
 			case 'decimal':
 				if ($num_of_decimals === null) $num_of_decimals = 2;
 				return Zend_Locale_Format::toNumber($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine));
+			case 'filesize':
+				if ($num_of_decimals === null) $num_of_decimals = 2;
+				$units = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+				for ($i=0; $value > 1024 and $i < count($units) - 1; $i++) $value /= 1024;
+				return Zend_Locale_Format::toNumber($value, array('precision'=>$num_of_decimals, 'locale'=>$this->_locale_engine)) . " {$units[$i]}";
 		}
 
 		return $value;

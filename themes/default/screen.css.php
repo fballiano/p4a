@@ -753,11 +753,13 @@ div.ui-tabs {
 .p4a_table td.float,
 .p4a_table td.date,
 .p4a_table td.time,
+.p4a_table td.filesize,
 .p4a_table td.integer textarea,
 .p4a_table td.decimal textarea,
 .p4a_table td.float textarea,
 .p4a_table td.date textarea,
-.p4a_table td.time textarea {
+.p4a_table td.time textarea,
+.p4a_table td.filesize textarea {
 	text-align: right;
 	white-space: nowrap;
 }
