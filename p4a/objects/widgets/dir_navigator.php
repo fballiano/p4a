@@ -99,6 +99,11 @@ class P4A_Dir_Navigator extends P4A_Widget
 	{
 		return $this->current_subdir;
 	}
+	
+	public function getCurrentAbsoluteDir()
+	{
+		return P4A_Strip_Double_Slashes("{$this->getBaseDir()}/{$this->getCurrentSubdir()}");
+	}
 
 	/**
 	 * Trims description after x chars (0 = disabled)
