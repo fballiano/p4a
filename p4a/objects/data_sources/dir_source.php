@@ -201,4 +201,9 @@ class P4A_Dir_Source extends P4A_Data_Source
 		closedir($dh);
 		return $files;
 	}
+	
+	public function getNumRows()
+	{
+		return sizeof($this->getAll());
+	}
 }
