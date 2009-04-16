@@ -5,6 +5,12 @@
 - P4A_Tab_Pane was converted to jQuery UI
 - P4A_Fieldset and P4A_Tab_Pane now have rounder borders
 - a note about handling dates with Oracle was added to the README file
+- outline CSS property was removed
+- If magic_quotes_gpc are enebled P4A strips out all slashes from $_POST,
+  $_GET, $_COOKIE and $_REQUEST
+- P4A_Dir_Navigator widget was added
+- P4A_Widget::composeStringActions() method now uses
+  P4A_Quote_Javascript_String()
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

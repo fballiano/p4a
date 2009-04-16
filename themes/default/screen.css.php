@@ -43,6 +43,10 @@ header('Content-type: text/css');
 	color: <?php echo $_GET['fg'] ?>;
 }
 
+a:focus {
+	outline: none;
+}
+
 #p4a_top_container {
 	width: 100%;
 	position: fixed;
@@ -411,59 +415,68 @@ hr.p4a_line {
 	height: 1px;
 }
 
-/********************/
-/* P4A_DB_Navigator */
-/********************/
+/******************************************/
+/* P4A_DB_Navigator and P4A_Dir_Navigator */
+/******************************************/
 
+.p4a_dir_navigator,
 .p4a_db_navigator {
 	text-align: left;
 	font-weight: normal;
 	overflow: auto;
 }
 
+.p4a_dir_navigator li,
 .p4a_db_navigator li {
 	padding: 2px 0 2px 18px;
 	background: url(<?php echo $_GET['p4a_icons_path'] ?>/16/places/folder.png) no-repeat;
 }
 
+.p4a_dir_navigator li.active_node,
 .p4a_db_navigator li.active_node {
 	background-image: url(<?php echo $_GET['p4a_icons_path'] ?>/16/status/folder-open.png);
+	font-weight: bold;
 }
 
+.p4a_dir_navigator li.home_node,
 .p4a_db_navigator li.home_node {
 	background: url(<?php echo $_GET['p4a_icons_path'] ?>/16/actions/go-home.png) no-repeat;
 }
 
+.p4a_browser_opera .p4a_dir_navigator li,
+.p4a_browser_ie .p4a_dir_navigator li,
 .p4a_browser_opera .p4a_db_navigator li,
 .p4a_browser_ie .p4a_db_navigator li {
 	margin-top: 5px;
 	padding-top: 0;
 }
 
+* html .p4a_browser_ie .p4a_dir_navigator li,
 * html .p4a_browser_ie .p4a_db_navigator li {
 	padding: top: 2px;
 	margin-top: 0;
 	width: 100%;
 }
 
+.p4a_dir_navigator a,
+.p4a_dir_navigator,
 .p4a_db_navigator a,
 .p4a_db_navigator {
 	text-decoration: none;
 }
 
+.p4a_dir_navigator a:hover,
 .p4a_db_navigator a:hover {
 	text-decoration: underline;
 }
 
-.p4a_db_navigator .active_node {
-	font-weight: bold;
-}
-
+.p4a_dir_navigator .hoverclass,
 .p4a_db_navigator .hoverclass {
 	color: <?php echo $_GET['selected_fg'] ?>;
 	background: <?php echo $_GET['selected_bg'] ?>;
 }
 
+.p4a_dir_navigator .hoverclass li a,
 .p4a_db_navigator .hoverclass li a {
 	color: <?php echo $_GET['fg'] ?>;
 }

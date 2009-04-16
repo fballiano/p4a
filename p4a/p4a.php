@@ -31,6 +31,20 @@
  * @package p4a
  */
 
+// First of all we strip out slashes if magic quotes are enabled
+if (get_magic_quotes_gpc()) {
+	function P4A_Stripslashes_Deep($value)
+	{
+		return is_array($value) ? array_map('P4A_Stripslashes_Deep', $value) : stripslashes($value);
+	}
+
+	$_POST = array_map('P4A_Stripslashes_Deep', $_POST);
+	$_GET = array_map('P4A_Stripslashes_Deep', $_GET);
+	$_COOKIE = array_map('P4A_Stripslashes_Deep', $_COOKIE);
+	$_REQUEST = array_map('P4A_Stripslashes_Deep', $_REQUEST);
+}
+
+// Starting including all files
 $dir = dirname(__FILE__);
 
 require_once "$dir/functions.php";
@@ -78,6 +92,7 @@ require_once "$dir/objects/widgets/box.php";
 require_once "$dir/objects/widgets/button.php";
 require_once "$dir/objects/widgets/canvas.php";
 require_once "$dir/objects/widgets/db_navigator.php";
+require_once "$dir/objects/widgets/dir_navigator.php";
 require_once "$dir/objects/widgets/field.php";
 require_once "$dir/objects/widgets/frame.php";
 require_once "$dir/objects/widgets/image.php";
