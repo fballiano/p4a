@@ -67,9 +67,14 @@ class P4A_Simple_Edit_Mask extends P4A_Base_Mask
 	/**
 	 * @param string|P4A_DB_Source $source Table name or P4A_DB_Source object
 	 */
-	public function __construct($source)
+	public function __construct($source = null)
 	{
 		parent::__construct();
+		
+		if ($source === null) {
+			$source = get_class($this);
+		}
+		
 		$this->constructSimpleEdit($source);
 	}
 }
