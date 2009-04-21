@@ -206,4 +206,23 @@ class P4A_Dir_Navigator extends P4A_Widget
 		}
 		return $text;
 	}
+	
+	/**
+	 * Returns all directories at root level.
+	 * @return array
+	 */
+	public function getRootDirectories()
+	{
+		$return = array();
+		$base_dir = $this->base_dir;
+		
+		foreach (scandir($base_dir) as $dir) {
+			$absolute_dir = $base_dir . _DS_ . $dir;
+			if (!is_dir($absolute_dir) or $absolute_dir == P4A_UPLOADS_TMP_DIR
+				or substr($dir, 0, 1) == '.' or $dir == 'CVS') continue;
+			$return[] = $dir;
+		}
+		
+		return $return;
+	}
 }
