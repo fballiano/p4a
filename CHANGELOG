@@ -22,6 +22,7 @@
   were added to allow direct upload to a directory when manually build
   fields untied to a P4A_Data_Source
 - P4A_Progress_Bar widget was added
+- P4A footer was moved to allow better centering when sidebars are visible
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

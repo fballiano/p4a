@@ -82,10 +82,10 @@ if (isset($menu) and isset($top)) {
 		<div class="br"></div>
 	</div>
 	<?php endif; ?>
-</div>
-
-<!-- Removing or modifying the following lines is forbidden and it's a
-     violation of the GNU Lesser General Public License. -->
-<div id="p4a_footer">
-	Powered by <a href="http://p4a.sourceforge.net/welcome">P4A - PHP For Applications</a> <?php echo P4A_VERSION?>
+	
+	<!-- Removing or modifying the following lines is forbidden and it's a
+	     violation of the GNU Lesser General Public License. -->
+	<div id="p4a_footer">
+		Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a> <?php echo P4A_VERSION?>
+	</div>
 </div>
