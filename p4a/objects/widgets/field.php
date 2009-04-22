@@ -147,6 +147,11 @@ class P4A_Field extends P4A_Widget
 	protected $input_mask = null;
 	
 	/**
+	 * @var string
+	 */
+	protected $upload_directly_to_dir = null;
+	
+	/**
 	 * @param string $name Mnemonic identifier for the object.
 	 * @param string $add_default_data_field If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 	 */
@@ -1175,6 +1180,29 @@ class P4A_Field extends P4A_Widget
 	{
 		$this->data_field->setUploadSubpath($subpath);
 		return $this;
+	}
+	
+	/**
+	 * Bypass P4A_UPLOADS_TMP_DIR and uploads directly to a given filesystem directory.
+	 * This must be used only when the field is NOT in a P4A_Data_Source
+	 * (eg: when you manually build a field for a file upload feature).
+	 * 
+	 * @param string $dir
+	 * @return P4A_Field
+	 */
+	public function setUploadDirectlyToDir($dir = null)
+	{
+		$this->upload_directly_to_dir = $dir;
+		return $this;
+	}
+	
+	/**
+	 * @see P4A_Field::setUploadDirectlyToDir()
+	 * @return string
+	 */
+	public function getUploadDirectlyToDir()
+	{
+		return $this->upload_directly_to_dir;
 	}
 
 	/**

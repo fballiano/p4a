@@ -18,6 +18,9 @@
 - P4A_Dir_Source's cache was removed due to refactoring
 - P4A_Simple_Edit_Mask now supports empty $source constructor param
   (default is the mask name)
+- P4A_Field::setUploadDirectlyToDir() and getUploadDirectlyToDir() methods
+  were added to allow direct upload to a directory when manually build
+  fields untied to a P4A_Data_Source
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

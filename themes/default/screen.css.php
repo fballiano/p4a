@@ -573,6 +573,10 @@ table.p4a_widget_layout_table td.c1 {
 	padding: 2px;
 }
 
+#p4a_main_container .p4a_toolbar {
+	border: 1px solid <?php echo $_GET['border'] ?>;
+}
+
 #p4a_popup .p4a_toolbar {
 	border: none;
 }
