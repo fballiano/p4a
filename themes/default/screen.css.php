@@ -71,7 +71,7 @@ a:focus {
 
 #p4a_footer {
 	text-align: center;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 #p4a_body form {
