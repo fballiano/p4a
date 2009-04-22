@@ -21,6 +21,7 @@
 - P4A_Field::setUploadDirectlyToDir() and getUploadDirectlyToDir() methods
   were added to allow direct upload to a directory when manually build
   fields untied to a P4A_Data_Source
+- P4A_Progress_Bar widget was added
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

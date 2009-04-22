@@ -101,6 +101,7 @@ require_once "$dir/objects/widgets/line.php";
 require_once "$dir/objects/widgets/link.php";
 require_once "$dir/objects/widgets/menu.php";
 require_once "$dir/objects/widgets/message.php";
+require_once "$dir/objects/widgets/progress_bar.php";
 require_once "$dir/objects/widgets/sheet.php";
 require_once "$dir/objects/widgets/tab_pane.php";
 require_once "$dir/objects/widgets/table.php";
