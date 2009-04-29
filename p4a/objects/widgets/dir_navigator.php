@@ -128,7 +128,12 @@ class P4A_Dir_Navigator extends P4A_Widget
 	}
 
 	/**
-	 * @param unknown_type $id
+	 * Renders the widget as HTML.
+	 * Triggers the "beforeRenderElement" event, passing the absolute dir
+	 * of the single element to the handle, if the handler return the ABORT
+	 * constant the element won't be displayed, otherwise if the return value
+	 * is a string it will be added to the CSS classes of the element's "li"
+	 * HTML tag.
 	 * @return string
 	 */
 	public function getAsString()
@@ -149,13 +154,16 @@ class P4A_Dir_Navigator extends P4A_Widget
 		foreach (scandir($base_dir) as $dir) {
 			$absolute_dir = $base_dir . _DS_ . $dir;
 			if (!is_dir($absolute_dir) or $absolute_dir == P4A_UPLOADS_TMP_DIR or substr($dir, 0, 1) == '.' or $dir == 'CVS') continue;
-			if ($this->actionHandler('beforeRenderElement', $absolute_dir) == ABORT) continue;
+			
+			$handler_return = $this->actionHandler('beforeRenderElement', $absolute_dir);
+			if ($handler_return === ABORT) continue;
+			if (!is_string($handler_return)) $handler_return = "";
 			
 			$actions = $this->composeStringActions(str_replace(P4A_Strip_Double_Slashes("{$this->base_dir}/"), "", P4A_Strip_Double_Slashes($absolute_dir)));
 			$description = $this->_trim($dir);
 			
 			if ($absolute_dir == $current) {
-				$selected = "class='active_node'";
+				$selected = "class='active_node $handler_return'";
 				if ($this->enable_selected_element) {
 					$link_prefix = "<a href='#' {$actions}>";
 					$link_suffix = "</a>";
@@ -164,7 +172,7 @@ class P4A_Dir_Navigator extends P4A_Widget
 					$link_suffix = "</span>";
 				}
 			} else {
-				$selected = "";
+				$selected = "class='$handler_return'";
 				$link_prefix = "<a href='#' {$actions}>";
 				$link_suffix = "</a>";
 			}
