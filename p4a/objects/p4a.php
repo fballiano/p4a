@@ -354,17 +354,7 @@ class P4A extends P4A_Object
 	 */
 	public function executeExternalCommands()
 	{
-		if (isset($_REQUEST['_p4a_application_download_missing_link'])) {
-			$text  = "You've the right to receive the source code of this application.<br />";
-			$text .= "Please contact your software vendor, he has to give it to you.<br />";
-			$text .= "If you get a negative answer drop an e-mail to <a href='mailto:info@crealabs.it'>CreaLabs</a>, ";
-			$text .= "they'll help you getting your rights honored.";
-			P4A_Mask::singleton("P4A_Error_Mask")
-				->setTitle(__("Possible license violation"))
-				->setMessage(__($text))
-				->main();
-			die();
-		} elseif (isset($_REQUEST['_p4a_session_browser'])) {
+		if (isset($_REQUEST['_p4a_session_browser'])) {
 			if (!empty($_REQUEST['_p4a_session_browser']) and isset($this->objects[$_REQUEST['_p4a_session_browser']])) {
 				$obj =& $this->objects[$_REQUEST['_p4a_session_browser']];
 			} else {
@@ -517,21 +507,14 @@ class P4A extends P4A_Object
 					
 				if ($value['error'] == UPLOAD_ERR_NO_FILE) continue;
 				
-				$upload_directory = P4A_UPLOADS_TMP_DIR;
-				$is_field = (substr($key, 0, 3) == 'fld');
-				if ($is_field) {
-					$upload_directly_to = $this->objects[$key]->getUploadDirectlyToDir();
-					if (strlen($upload_directly_to)) $upload_directory = $upload_directly_to;
-				}
-				
 				$value['name'] = str_replace( ',', ';', $value['name'] );
-				$value['name'] = P4A_Get_Unique_File_Name($value['name'], $upload_directory);
-				move_uploaded_file($value['tmp_name'], "{$upload_directory}/{$value['name']}");
-				$value['tmp_name'] = P4A_Strip_Double_Slashes("{$upload_directory}/{$value['name']}");
+				$value['name'] = P4A_Get_Unique_File_Name($value['name'], P4A_UPLOADS_TMP_DIR);
+				move_uploaded_file($value['tmp_name'], P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
+				$value['tmp_name'] = P4A_Strip_Double_Slashes('/' . P4A_UPLOADS_TMP_NAME . '/' . $value['name']);
 				if ($value['type'] == 'image/x-png') $value['type'] = 'image/png'; // fix for ie PNG upload bug
 
-				if ($is_field) {
-					list($width, $height) = @getimagesize("{$upload_directory}/{$value['name']}");
+				if ((substr($key, 0, 3) == 'fld')) {
+					list($width, $height) = @getimagesize(P4A_UPLOADS_TMP_DIR . '/' . $value['name']);
 					$new_value = "{$value['name']},{$value['tmp_name']},{$value['size']},{$value['type']},$width,$height" ;
 					$this->objects[$key]->setNewValue('{' . $new_value . '}');
 					if ($this->objects[$key]->actionHandler('afterupload') == ABORT) return ABORT;
