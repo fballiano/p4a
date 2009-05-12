@@ -32,6 +32,13 @@
  */
 
 /**
+ * This mask is useful when you've to deal with authentication.
+ * Note that all actions set here are AJAX actions, this was decided
+ * because we don't want the mask to be redesigned when the user hits
+ * return or the GO button (focus loss is a problem we want to avoid).
+ * Due to this choice you've to remember that when you're opening a new
+ * mask after upon the completition of the login, you'll have to call
+ * the mask's main() method.
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
