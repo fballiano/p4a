@@ -85,6 +85,7 @@ class P4A_Progress_Bar extends P4A_Widget
 		$actions = $this->composeStringActions();
 		$class = $this->composeStringClass();
 		$label = strlen($this->label) ? __($this->label) : "";
+		$label = str_replace("%s", "{$this->_value}%", $label);
 		
 		$return  = "<script style='text/javascript'>p4a_load_css(p4a_theme_path + '/jquery/ui.progressbar.css')</script>";
 		$return .= "<div id='$id' $class $properties $actions>$label<div class='ui-progressbar ui-widget ui-widget-content ui-corner-all'><div style='width:{$this->_value}%' class='ui-progressbar-value ui-widget-header ui-corner-all'></div></div></div>";
