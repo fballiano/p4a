@@ -32,6 +32,12 @@
  */
 
 /**
+ * A progress bar widget for P4A.
+ * This is not meant to show the loading progress of a mask but to show the
+ * percentage of completition during the filling of a big mask or the space
+ * occupation on the filesystem.
+ * If the label has a "%s" string, this will be replaced with the percentage
+ * represented by the bar (eg: "%s" => "55%").
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
  * @copyright CreaLabs SNC
