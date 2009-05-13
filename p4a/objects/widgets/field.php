@@ -335,7 +335,7 @@ class P4A_Field extends P4A_Widget
 		} elseif (substr($new_value, 0, 1) == '{' and substr($new_value, -1) == '}') {
 			$tmp_value = substr($new_value, 1, -1);
 			$tmp_value = explode("," , $tmp_value);
-			$new_value = $tmp_value[$index];
+			$new_value = isset($tmp_value[$index]) ? $tmp_value[$index] : null;
 		} 
 		return $new_value;
 	}
@@ -1114,9 +1114,12 @@ class P4A_Field extends P4A_Widget
 			$src = P4A_UPLOADS_URL . $this->getNewValue(1);
 			$mime_type = $this->getNewValue(3);
 			$this->label->unsetProperty('for');
+			
+			$name = $this->getNewValue(6);
+			if (strlen($name) == 0) $name = $this->getNewValue(0);
 
 			$sReturn  = '<table>';
-			$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
+			$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $name . '</td></tr>';
 			$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . $p4a->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 			$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';
 			$this->buttons->button_file_preview->enable(P4A_Is_Mime_Type_Embeddable($mime_type));
@@ -1153,8 +1156,11 @@ class P4A_Field extends P4A_Widget
 			$raw_html = "<img alt='' src='$file' width='$width' height='$height' />";
 		}
 		
+		$name = $this->getNewValue(6);
+		if (strlen($name) == 0) $name = $this->getNewValue(0);
+		
 		P4a::singleton()->openMask("P4A_Preview_Mask")
-			->setTitle($this->getNewValue(0))
+			->setTitle($name)
 			->setRawHTML($raw_html);
 	}
 
@@ -1203,7 +1209,11 @@ class P4A_Field extends P4A_Widget
 			$sReturn .= '<tr><td colspan="2"><img alt="' . __('Preview') . '" src=".?_p4a_image_thumbnail=' . urlencode("$src&{$this->max_thumbnail_size}") . '" /></td></tr>';
 		}
 		$this->buttons->button_file_preview->enable();
-		$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $this->getNewValue(0) . '</td></tr>';
+		
+		$name = $this->getNewValue(6);
+		if (strlen($name) == 0) $name = $this->getNewValue(0);
+		
+		$sReturn .= '<tr><th>' . __('Name') . ':</th><td>' . $name . '</td></tr>';
 		$sReturn .= '<tr><th>' . __('Size') . ':</th><td>' . P4A::singleton()->i18n->format($this->getNewValue(2)/1024, "decimal") . ' KB</td></tr>';
 		$sReturn .= '<tr><th>' . __('Type') . ':</th><td>' . $this->getNewValue(3) . '</td></tr>';
 		$sReturn .= '<tr><td colspan="2">' . $this->buttons->button_file_preview->getAsString() . ' '. $this->buttons->button_file_download->getAsString() . ' '  . $this->buttons->button_file_delete->getAsString() . '</td></tr>';

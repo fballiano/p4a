@@ -308,7 +308,8 @@ abstract class P4A_Data_Source extends P4A_Object
 
 				if ($old_value === null) {
 					if ($new_value !== null) {
-						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[0], $target_dir);
+						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[6], $target_dir);
+						unset($a_new_value[6]);
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 						if (!rename($old_path, $new_path)) {
@@ -331,7 +332,8 @@ abstract class P4A_Data_Source extends P4A_Object
 						if (!@unlink($path) and @file_exists($path)) {
 							throw new P4A_Exception("Cannot delete file \"$path\"", P4A_FILESYSTEM_ERROR);
 						}
-						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[0], $target_dir);
+						$a_new_value[0] = P4A_Get_Unique_File_Name($a_new_value[6], $target_dir);
+						unset($a_new_value[6]);
 						$new_path = $target_dir . '/' . $a_new_value[0];
 						$old_path = P4A_UPLOADS_DIR . '/' . $a_new_value[1];
 						if (!@rename($old_path, $new_path)) {

@@ -20,6 +20,8 @@
   (default is the mask name)
 - P4A_Progress_Bar widget was added
 - P4A footer was moved to allow better centering when sidebars are visible
+- when uploading a file, it will have a temporary file until the corresponding
+  record won't be saved
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
