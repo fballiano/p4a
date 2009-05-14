@@ -361,7 +361,7 @@ function P4A_Strip_Double_Backslashes($string)
 {
 	$string = str_replace('\\\\', '\\', $string);
 	if (strpos($string, '\\\\') !== false) {
-		$string = P4A_Strip_Double_Slashes($string);
+		$string = P4A_Strip_Double_Backslashes($string);
 	}
 	return $string;
 }

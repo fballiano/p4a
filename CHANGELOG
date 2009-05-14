@@ -22,6 +22,8 @@
 - P4A footer was moved to allow better centering when sidebars are visible
 - when uploading a file, it will have a temporary file until the corresponding
   record won't be saved
+- a bug with P4A_Strip_Double_Backslashes global function was fixed
+  (thanks to bobkoure)
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
