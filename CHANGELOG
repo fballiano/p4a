@@ -24,6 +24,7 @@
   record won't be saved
 - a bug with P4A_Strip_Double_Backslashes global function was fixed
   (thanks to bobkoure)
+- a bug with Zend_Framework and Oracle was fixed (stripped zend_db_rownum column)
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

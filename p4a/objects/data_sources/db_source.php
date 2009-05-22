@@ -604,6 +604,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		}
 		$row = $db->adapter->fetchRow($select);
 		if (isset($row['ZEND_DB_ROWNUM'])) unset($row['ZEND_DB_ROWNUM']);
+		if (isset($row['zend_db_rownum'])) unset($row['zend_db_rownum']);
 
 		if ($move_pointer) {
 			if ($this->actionHandler('beforemoverow') == ABORT) return ABORT;
@@ -614,7 +615,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				if (!empty($row)) {
 					$this->_pointer = $num_row;
 
-					foreach($row as $field=>$value){
+					foreach($row as $field=>$value) {
 						$this->fields->$field->setValue($value);
 					}
 				} elseif ($this->getNumRows() == 0) {
