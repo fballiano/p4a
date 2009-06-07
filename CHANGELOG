@@ -25,6 +25,7 @@
 - a bug with P4A_Strip_Double_Backslashes global function was fixed
   (thanks to bobkoure)
 - a bug with Zend_Framework and Oracle was fixed (stripped zend_db_rownum column)
+- P4A_DB_Navigator now can work also without recursor (flat list is shown)
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally

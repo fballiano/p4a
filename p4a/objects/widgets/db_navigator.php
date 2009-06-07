@@ -251,11 +251,11 @@ class P4A_DB_Navigator extends P4A_Widget
 		$pk = $this->source->getPk();
 		$current = $this->source->fields->{$pk}->getValue();
 		$rows = $this->source->getAll();
-		if (isset($this->source->fields->{$this->recursor})) {
+		if ($this->recursor !== null and isset($this->source->fields->{$this->recursor})) {
 			$recursor = $this->source->fields->{$this->recursor}->getValue();
-		}
-		if ($current === null) {
-			$current = $recursor;
+			if ($current === null) {
+				$current = $recursor;
+			}
 		}
 		
 		$js = "";
