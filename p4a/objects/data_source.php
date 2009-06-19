@@ -235,6 +235,14 @@ abstract class P4A_Data_Source extends P4A_Object
 	{
 	   return $this;
 	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isFirstRow()
+	{
+		return ($this->_pointer < 2);
+	}
 
 	public function firstRow()
 	{
@@ -282,6 +290,14 @@ abstract class P4A_Data_Source extends P4A_Object
 		} elseif ($this->_pointer !== $num_rows) {
 			$this->newRow();
 		}
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isLastRow()
+	{
+		return ($this->_pointer == $this->getNumRows());
 	}
 	
 	/**
