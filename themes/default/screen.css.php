@@ -487,7 +487,7 @@ hr.p4a_line {
 
 table.p4a_widget_layout_table {
 	border-collapse: collapse;
-	margin: 0 auto;
+	margin: 0;
 	text-align: left;
 }
 
