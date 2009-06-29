@@ -30,6 +30,7 @@
   P4A_Mask::display() that now has no hardcoded object reference
 - P4A_Data_Source::isFirstRow() and isLastRow() methods were added
 - a bug with P4A_Message and IE7 was solved
+- Oracle's LOBs are now supported
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
