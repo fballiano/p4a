@@ -727,7 +727,7 @@ class P4A extends P4A_Object
 	{
 		$object_id = $object->getId();
 		if (array_key_exists($object_id, $this->objects)){
-			ERROR('DUPLICATE OBJECT');
+			trigger_error('Duplicate object ID', E_USER_ERROR);
 		} else {
 			$this->objects[$object_id] = &$object;
 		}
