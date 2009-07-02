@@ -32,6 +32,7 @@ rm p4a/build.sh
 rm -rf p4a/debian
 rm -rf p4a/.cache
 rm -rf p4a/.settings
+rm -rf p4a/.buildpath
 rm -rf `find -type d -name '.svn'`
 rm -f `find -name '.cvsignore'`
 
