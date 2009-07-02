@@ -84,7 +84,7 @@ abstract class P4A_Object
 		$this->setName($name);
 
 		if ($id === null) {
-			$this->_id = uniqid($prefix);
+			$this->_id = $prefix . str_replace('.', '', uniqid(rand(), true));
 		} else {
 			$this->_id = $prefix . $id;
 		}

@@ -31,6 +31,7 @@
 - P4A_Data_Source::isFirstRow() and isLastRow() methods were added
 - a bug with P4A_Message and IE7 was solved
 - Oracle's LOBs are now supported
+- P4A_Object's ID generation algorithm was changed (thanks to pbond81 and Mario Spada)
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
