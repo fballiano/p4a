@@ -581,7 +581,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$db = P4A_DB::singleton($this->getDSN());
 		$select = $this->_composeSelectPkQuery($pk);
 		$row = $db->adapter->fetchRow($select);
-		if ($db->getDBType() == 'oci') {
+		if ($db->getDBType() == 'oci' and is_array($row)) {
 			foreach ($row as $k=>$field) {
 				if (is_resource($field)) {
 					$row[$k] = stream_get_contents($field);
@@ -614,7 +614,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if (isset($row['ZEND_DB_ROWNUM'])) unset($row['ZEND_DB_ROWNUM']);
 		if (isset($row['zend_db_rownum'])) unset($row['zend_db_rownum']);
 		
-		if ($db->getDBType() == 'oci') {
+		if ($db->getDBType() == 'oci' and is_array($row)) {
 			foreach ($row as $k=>$field) {
 				if (is_resource($field)) {
 					$row[$k] = stream_get_contents($field);
