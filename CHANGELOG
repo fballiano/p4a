@@ -34,6 +34,7 @@
 - P4A_Object's ID generation algorithm was changed (thanks to pbond81 and Mario Spada)
 - P4A_Table thumbnail generation speed was improved (bug #2220506) (thanks to pbond81)
 - P4A_Box's ul/ol is now rendered (bug 2634061) (thanks to bes_sf)
+- a note about aliases on P4A_DB_Source's PK was added to the README file
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
