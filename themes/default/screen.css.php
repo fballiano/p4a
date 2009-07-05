@@ -202,6 +202,14 @@ ol.p4a_backtrace li {
 	font-style: italic;
 }
 
+.p4a_box ul li {
+	list-style: disc inside;
+}
+
+.p4a_box ol li {
+	list-style: decimal inside;
+}
+
 /*************/
 /* P4A_Frame */
 /*************/
