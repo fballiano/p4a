@@ -106,7 +106,10 @@ primary key.
 Oracle's "date" data field is not supported, you should use a char(10).
 Within your application simply add:
 	$p4a_field->setType("date");
-	$p4a_field->data_field->setType("date");	
+	$p4a_field->data_field->setType("date");
+	
+If you set P4A_Table's width to 100% and anchor it in a frame/fieldset
+this won't work cause all frame's cells are floating.
 
 -------------
 -- Authors --
