@@ -554,11 +554,13 @@ abstract class P4A_Widget extends P4A_Object
 		$sActions = '';
 		if (is_string($params) or is_numeric($params)) {
 			$params = P4A_Quote_Javascript_String($params);
+			$params = str_replace('\\', '\\\\', $params);
 			$sParams .=  ", '{$params}'";
 		} elseif (is_array($params) and count($params)) {
 			$sParams = ', ';
 			foreach ($params as $param) {
 				$param = P4A_Quote_Javascript_String($param);
+				$params= str_replace('\\', '\\\\', $param);
 				$sParams .= "'{$param}', ";
 			}
 			$sParams = substr($sParams, 0, -2);
