@@ -546,6 +546,16 @@ class P4A_DB_Source extends P4A_Data_Source
 			case 'time':
 				$this->fields->$name->setType('time');
 				break;
+			case 'number':
+				if (strlen($meta['SCALE']) == 0) $meta['SCALE'] = 0;
+				if ($meta['SCALE'] == 0) {
+					$this->fields->$name->setType('integer');
+				} else {
+					$this->fields->$name->setType('decimal');
+					if (is_numeric($meta['SCALE'])) {
+						$this->fields->$name->setNumOfDecimals((int)$meta['SCALE']);
+					}
+				}
 			case 'decimal':
 			case 'numeric':
 				$this->fields->$name->setType('decimal');

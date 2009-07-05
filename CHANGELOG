@@ -35,6 +35,7 @@
 - P4A_Table thumbnail generation speed was improved (bug #2220506) (thanks to pbond81)
 - P4A_Box's ul/ol is now rendered (bug 2634061) (thanks to bes_sf)
 - a note about aliases on P4A_DB_Source's PK was added to the README file
+- P4A_DB_Source now automatically detects Oracle's NUMBER data type
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
