@@ -871,11 +871,17 @@ class P4A_Table_Rows extends P4A_Widget
 						$value = substr($value, 1, -1);
 						$value = explode(',', $value);
 						list($type) = explode('/',$value[3]);
-						if ($type == 'image') {  
-							$image_src = $value[1];
-							$thumb_height = P4A_TABLE_THUMB_HEIGHT;
+						if ($type == 'image') {
 							if (P4A_GD) {
-								$image_src = '.?_p4a_image_thumbnail=' . urlencode("$image_src&$thumb_height");
+								$thumb = new P4A_Thumbnail_Generator();
+								$thumb
+									->setCacheDir(P4A_UPLOADS_TMP_DIR)
+									->setMaxWidth(P4A_TABLE_THUMB_HEIGHT)
+									->setMaxHeight(P4A_TABLE_THUMB_HEIGHT)
+									->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $value[1]))
+									->processFile()
+									->cacheThumbnail();
+								$image_src = P4A_UPLOADS_TMP_URL . '/' . $thumb->getCachedFilename();
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' alt='' />";
 							} else {
 								$image_src = P4A_UPLOADS_PATH . $image_src;

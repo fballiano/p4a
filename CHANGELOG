@@ -32,6 +32,7 @@
 - a bug with P4A_Message and IE7 was solved
 - Oracle's LOBs are now supported
 - P4A_Object's ID generation algorithm was changed (thanks to pbond81 and Mario Spada)
+- P4A_Table thumbnail generation speed was improved (bug #2220506) (thanks to pbond81)
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
