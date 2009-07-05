@@ -159,7 +159,12 @@ class P4A_Dir_Navigator extends P4A_Widget
 			if ($handler_return === ABORT) continue;
 			if (!is_string($handler_return)) $handler_return = "";
 			
-			$actions = $this->composeStringActions(str_replace(P4A_Strip_Double_Slashes("{$this->base_dir}/"), "", P4A_Strip_Double_Slashes($absolute_dir)));
+			if (P4A_OS == "linux") {
+				$actions = $this->composeStringActions(str_replace(P4A_Strip_Double_Slashes("{$this->base_dir}/"), "", P4A_Strip_Double_Slashes($absolute_dir)));
+			} else {
+				$actions = $this->composeStringActions(str_replace(P4A_Strip_Double_Backslashes("{$this->base_dir}\\"), "", P4A_Strip_Double_Backslashes($absolute_dir)));
+			}
+			
 			$description = $this->_trim($dir);
 			
 			if ($absolute_dir == $current) {
