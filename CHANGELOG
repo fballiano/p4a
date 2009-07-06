@@ -39,6 +39,7 @@
 - P4A_Tab_Pane's height honoring bug was fixed (bug #2815814)
 - P4A_Widget::composeStringActions() now handles parameters with backslashes inside
 - a bug with P4A_I18N::format() of boolean data was fixed
+- a bug with multicheckbox's CSS on some browsers was fixed
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
