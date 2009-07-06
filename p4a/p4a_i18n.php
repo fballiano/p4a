@@ -205,7 +205,7 @@ class P4A_I18N
 		switch($type) {
 			case 'boolean':
 				$value = ($value == 1) ? 'yes' : 'no';
-				$yes_no = $this->_locale_engine->getQuestion();
+				$yes_no = Zend_Locale::getQuestion($this->_locale_engine);
 				return $yes_no[$value];
 			case 'date':
 				$date = new Zend_Date($value, "yyyy-MM-dd", $this->_locale_engine);

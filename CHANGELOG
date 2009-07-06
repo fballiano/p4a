@@ -38,6 +38,7 @@
 - P4A_DB_Source now automatically detects Oracle's NUMBER data type
 - P4A_Tab_Pane's height honoring bug was fixed (bug #2815814)
 - P4A_Widget::composeStringActions() now handles parameters with backslashes inside
+- a bug with P4A_I18N::format() of boolean data was fixed
 
 3.2.2
 - P4A_Table's image cols are now centered horizontally
