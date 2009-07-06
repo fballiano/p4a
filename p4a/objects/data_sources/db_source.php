@@ -1115,7 +1115,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		} elseif (is_array($pks)) {
 			$return = '';
 			foreach($pk_values as $key=>$value) {
-				$return .= "$key = " . P4A_DB::singleton($this->getDSN())->quote($value, true) . " AND ";
+				$return .= "$pks[$key] = " . P4A_DB::singleton($this->getDSN())->quote($value, true) . " AND ";
 			}
 			return substr($return, 0, -4);
 		} else {
