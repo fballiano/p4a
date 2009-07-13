@@ -1,55 +1,36 @@
+p4a (3.4.0-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Mon, 13 Jul 2009 09:22:31 +0100
+
 p4a (3.2.2-1) unstable; urgency=low
+
   * new upstream release
 
  -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Tue, 31 Mar 2009 09:22:31 +0100
 
 p4a (3.2.1-1) unstable; urgency=low
+
   * new upstream release
 
  -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Tue, 16 Dec 2008 09:22:31 +0100
 
 p4a (3.2.0-1) unstable; urgency=low
+
   * new upstream release
 
  -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Tue, 05 Feb 2009 09:22:31 +0100
 
 p4a (3.0.3-1) unstable; urgency=low
 
-  * P4A_Thumbnail_Generator now supports ie's pjpeg extension
-  * a bug with P4A_I18N::_format() method was solved
-  (YYYY was changed to yyyy)
-  * P4A_Field::setYearRange() method was added to be able to
-  manage the year range in the datepicker
-  * 10px top padding was added to P4A_Fieldset
-  * jQuery::maskedinput 1.1.4 plugin was added
-  * P4A_Field::setInputMask() and getInputMask() methods were added,
-  check the code reference for usage
-  * popup template support for "top" zone was added
-  * P4A_Table's caption (label) is now automatically traslated at run time
-  * P4A now triggers the "ontranslate" event, you can intercept it
-  (getting string/translation/istranslated parameters) to track
-  translations while developing your application
-  * a bug with P4A_Table's label with IE6 was fixed
-  * P4A_Table's navigation bar's "go to page" label's CSS was changed
-  so now it will remain on a single line
-  * a typo in P4A_DB_Source documentation was fixed
-  * a PHP warning was fixed in P4A_DB_Navigator
-  * more info were added in products_catalogue's index.php file
-  * P4A_Mask::setRequiredField() and unsetRequiredField() methods
-  now check if the field exists before calling the addValidator()
-  otherwise show an error message
+  * new upstream release
 
  -- Andrea Giardina <andrea.giardina@crealabs.it>  Tue, 09 Sep 2008 09:22:31 +0100
 
 p4a (3.0.2-1) unstable; urgency=low
 
-  * a small change was done on P4A_Array_Source to enable the usage of empty array_sources without warnings
-  * tooltips are now automatically translated at rendering time
-  * P4A_DB_Source::saveRow() now reads pk values back from Zend_DB_Table::insert() gaining better functionality with auto increment primary keys
-  * jQuery UI was updated to 1.5.2
-  * a small bug with P4A_I18N::_normalize() method was solved
-  * p4a_focus_set() javascript function was reworked to avoid a javascript warning in firebug
-  * loading a P4A_Array_Source with a simple array of data now does not create the “0″ field anymore, it’s been renamed to “f0″ to avoid problems with some PHP configurations with numerical object properties
+    * new upstream release
 
  -- Andrea Giardina <andrea.giardina@crealabs.it>  Mon, 04 Aug 2008 12:41:00 +0100
 
