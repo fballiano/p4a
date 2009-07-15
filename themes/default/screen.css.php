@@ -663,6 +663,14 @@ table.p4a_widget_layout_table td.c1 {
 	border: 2px solid <?php echo $_GET['tooltip_border'] ?>;
 }
 
+.p4a_tooltip_inner strong {
+	font-weight: bold;
+}
+
+.p4a_tooltip_inner em {
+	font-style: italic;
+}
+
 /****************/
 /* P4A_Tab_Pane */
 /****************/
