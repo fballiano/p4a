@@ -372,7 +372,7 @@ abstract class P4A_Object
 	 * @param mixed $args
 	 * @return unknown
 	 */
-	private function __call($name, $args)
+	public function __call($name, $args)
 	{
 		$name = strtolower($name);
 		if (!array_key_exists($name, $this->_helpers)) {

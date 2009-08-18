@@ -3,6 +3,7 @@
 - DSN charset support was added to set DB connection charset
 - Zend Framework was updated to 1.9.1
 - jquery::maskedInput plugin was updated to 1.2.2
+- P4A_Object::__call() method was changed from private to public for PHP 5.3 compliance
 
 3.4.0
 - Zend Framework was updated to 1.8.4
