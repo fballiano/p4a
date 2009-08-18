@@ -66,10 +66,12 @@ class P4A_DB
 			if(strlen($DSN)) {
 				$$dbconn = new p4a_db();
 				$dsn_data = parse_url($DSN);
+				$dsn_data['params'] = array();
 				if (!isset($dsn_data['host'])) $dsn_data['host'] = null;
 				if (!isset($dsn_data['port'])) $dsn_data['port'] = null;
 				if (!isset($dsn_data['user'])) $dsn_data['user'] = null;
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
+				if (isset($dsn_data['query'])) parse_str($dsn_data['query'], $dsn_data['params']);
 				$dsn_data['scheme'] = strtolower($dsn_data['scheme']);
 		
 				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
@@ -91,6 +93,10 @@ class P4A_DB
 					'password' => $dsn_data['pass'],
 					'dbname' => substr($dsn_data['path'], 1)
 				);
+				
+				foreach ($dsn_data['params'] as $k=>$v) {
+					$connection_params[$k] = $v;
+				}
 				
 				require_once str_replace('_', '/', $driver) . '.php';
 				$$dbconn->adapter = new $driver($connection_params);
