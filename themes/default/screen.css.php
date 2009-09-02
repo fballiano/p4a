@@ -696,7 +696,7 @@ div.ui-tabs {
 }
 
 .p4a_tab_pane div.p4a_tab_pane_page {
-	padding: 10px 10px 10px 0;
+	padding: 10px 10px 15px 0;
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 	overflow: auto;
 }

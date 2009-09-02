@@ -4,6 +4,7 @@
 - Zend Framework was updated to 1.9.2
 - jquery::maskedInput plugin was updated to 1.2.2
 - P4A_Object::__call() method was changed from private to public for PHP 5.3 compliance
+- P4A_Tab_Pane's CSS padding was changed a bit to fix a rendering bug on firefox/chrome
 
 3.4.0
 - Zend Framework was updated to 1.8.4
