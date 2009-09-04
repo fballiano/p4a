@@ -40,6 +40,9 @@ define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
 // define("P4A_DSN", 'oci://p4a:p4a@localhost/xe');
 // define("P4A_DSN", 'sqlite:/p4a_products_catalogue');
 
+// Enable logging and profiling of all DB actions
+// define("P4A_DB_PROFILE", true);
+
 // Enable more error details
 // define("P4A_EXTENDED_ERRORS", true);
 

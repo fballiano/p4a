@@ -995,6 +995,19 @@ class P4A extends P4A_Object
 	 */
 	public function getMessages()
 	{
+		if (P4A_DB_PROFILE) {
+			global $__P4A_REGISTERED_DB_CONNECTIONS;
+			foreach ($__P4A_REGISTERED_DB_CONNECTIONS as $dbconn) {
+				$config = $dbconn->adapter->getConfig();
+				$queries = $dbconn->adapter->getProfiler()->getQueryProfiles();
+				if (is_array($queries) and !empty($queries)) {
+					foreach ($queries as $query) {
+						$this->messageInfo("DB: {$config["dbname"]}<br />Host: {$config["host"]}<br />{$query->getQuery()}<br />Time: {$query->getElapsedSecs()}");
+					}
+				}
+			}
+		}
+		
 		$messages = $this->messages;
 		$this->messages = array();
 		return $messages;

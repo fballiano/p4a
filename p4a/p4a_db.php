@@ -52,19 +52,22 @@ class P4A_DB
 	public static function singleton($DSN = "")
   	{
 		//If DSN is not specified I use default connection
-		if (!strlen($DSN) and defined("P4A_DSN")){
+		if (!strlen($DSN) and defined("P4A_DSN")) {
 			$DSN = P4A_DSN;
 		}
 
 		if (strlen($DSN)) {
 			$dbconn = base64_encode($DSN);
 			$dbconn = "db" . str_replace(array('=','+','/'),'',$dbconn);
-			global $$dbconn; //static $$ doesn't work
+			global $__P4A_REGISTERED_DB_CONNECTIONS;
+			if (!isset($__P4A_REGISTERED_DB_CONNECTIONS) or !is_array($__P4A_REGISTERED_DB_CONNECTIONS)) {
+				$__P4A_REGISTERED_DB_CONNECTIONS = array();
+			}
 		}
 
-		if(!isset($$dbconn) or $$dbconn == null) {
+		if(!isset($__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]) or $__P4A_REGISTERED_DB_CONNECTIONS[$dbconn] == null) {
 			if(strlen($DSN)) {
-				$$dbconn = new p4a_db();
+				$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn] = new p4a_db();
 				$dsn_data = parse_url($DSN);
 				$dsn_data['params'] = array();
 				if (!isset($dsn_data['host'])) $dsn_data['host'] = null;
@@ -84,14 +87,15 @@ class P4A_DB
 						break;
 				}
 		
-				$$dbconn->db_type = $dsn_data['scheme'];
+				$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]->db_type = $dsn_data['scheme'];
 				$driver = 'Zend_Db_Adapter_Pdo_' . ucfirst($dsn_data['scheme']);
 				$connection_params = array(
 					'host' => $dsn_data['host'],
 					'port' => $dsn_data['port'],
 					'username' => $dsn_data['user'],
 					'password' => $dsn_data['pass'],
-					'dbname' => substr($dsn_data['path'], 1)
+					'dbname' => substr($dsn_data['path'], 1),
+					'profiler' => P4A_DB_PROFILER
 				);
 				
 				foreach ($dsn_data['params'] as $k=>$v) {
@@ -99,13 +103,13 @@ class P4A_DB
 				}
 				
 				require_once str_replace('_', '/', $driver) . '.php';
-				$$dbconn->adapter = new $driver($connection_params);
-    			$$dbconn->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
+				$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]->adapter = new $driver($connection_params);
+    			$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
 			} else {
-				$$dbconn = null;
+				$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn] = null;
 			}
 		}
-		return $$dbconn;
+		return $__P4A_REGISTERED_DB_CONNECTIONS[$dbconn];
 	}
 
 	/**
