@@ -476,7 +476,7 @@ class P4A extends P4A_Object
 			foreach ($_FILES as $key=>$value) {
 				unset($_REQUEST[$key]);
 			}
-
+			
 			foreach ($_REQUEST as $key=>$value) {
 				if (substr($key, 0, 3) == 'fld' and $this->objects[$key]->isEnabled()) {
 					if ($this->objects[$key]->getType() == 'file' and strlen($value) == 0) {
@@ -484,11 +484,7 @@ class P4A extends P4A_Object
 						continue;
 					}
 					
-					if (gettype($value) == 'string') {
-						$this->objects[$key]->setNewValue(stripslashes($value));
-					} else {
-						$this->objects[$key]->setNewValue($value);
-					}
+					$this->objects[$key]->setNewValue($value);
 				} elseif (substr($key, 0, 5) == 'param' and strlen($value) > 0) {
 					$aParams[] = $value;
 				}
