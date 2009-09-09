@@ -691,12 +691,13 @@ div.ui-tabs {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
 }
 
-.p4a_tab_pane ul.tabs li {
-	acolor: <?php echo $_GET['fg'] ?>;
+.p4a_tab_pane ul.tabs li a {
+	color: <?php echo $_GET['fg'] ?>;
 }
 
 .p4a_tab_pane ul.tabs li.disabled a {
 	cursor: default;
+	color: <?php echo $_GET['border'] ?>;
 }
 
 .p4a_tab_pane div.p4a_tab_pane_page {
