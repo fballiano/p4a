@@ -195,7 +195,8 @@ class P4A_Tab_Pane extends P4A_Widget
 		$this->pages->reset();
 		while ($page = $this->pages->nextItem()) {
 			if (!$page->isVisible()) continue;
-			$actions = $this->composeStringActions($page->getName());
+			$actions = $page->isEnabled() ? $this->composeStringActions($page->getName()) : "";
+			$disabled = $page->isEnabled() ? "" : "disabled";
 			$active = "";
 			if ($page->getName() == $active_page_name) {
 				$active = "ui-tabs-selected ui-state-active";
@@ -204,7 +205,7 @@ class P4A_Tab_Pane extends P4A_Widget
 				$page->setDefaultLabel();
 			}
 			$label = __($page->getLabel());
-			$return .= "<li class='ui-state-default ui-corner-top $active'><a href='#t' $actions>$label</a></li>";
+			$return .= "<li class='ui-state-default ui-corner-top $active $disabled'><a href='#' $actions>$label</a></li>";
 		}
 		$return .= "</ul>";
 		$return .= "<div class='p4a_tab_pane_page ui-tabs-panel ui-widget-content ui-corner-all ui-helper-clearfix' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";

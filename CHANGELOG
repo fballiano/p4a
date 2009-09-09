@@ -1,6 +1,7 @@
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)
 - a typo was fixed in P4A_DB (profiler activation)
+- P4A_Tab_Pane now correctly handles disabled pages
 
 3.4.1
 - strong/em are now supported by P4A tooltips
