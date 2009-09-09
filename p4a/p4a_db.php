@@ -95,7 +95,7 @@ class P4A_DB
 					'username' => $dsn_data['user'],
 					'password' => $dsn_data['pass'],
 					'dbname' => substr($dsn_data['path'], 1),
-					'profiler' => P4A_DB_PROFILER
+					'profiler' => P4A_DB_PROFILE
 				);
 				
 				foreach ($dsn_data['params'] as $k=>$v) {

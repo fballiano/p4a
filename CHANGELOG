@@ -1,5 +1,6 @@
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)
+- a typo was fixed in P4A_DB (profiler activation)
 
 3.4.1
 - strong/em are now supported by P4A tooltips
