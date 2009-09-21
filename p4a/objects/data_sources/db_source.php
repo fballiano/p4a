@@ -725,7 +725,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					$new_order_array_values[] = array($long_fld,$value);
 				}
 
-				$select->where(substr($where_order, 0, -4));
+				$select->having(substr($where_order, 0, -4));
 			}
 
 			$this->_composeGroupPart($select);
