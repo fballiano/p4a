@@ -220,7 +220,7 @@ class P4A_Validate_NotEmpty extends Zend_Validate_NotEmpty
 		$this->_setValue($valueString);
 
 		if (strlen($valueString) == 0) {
-			$this->_error();
+			$this->_error(null);
 			return false;
 		}
 
