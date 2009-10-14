@@ -3,7 +3,7 @@
 - a typo was fixed in P4A_DB (profiler activation)
 - P4A_Tab_Pane now correctly handles disabled pages
 - a bug with P4A_Table's ordering with P4A_DB_Source having a group clause was solved
-- Zend Framework was updated to 1.9.3PL1
+- Zend Framework was updated to 1.9.4
 
 3.4.1
 - strong/em are now supported by P4A tooltips
