@@ -4,6 +4,7 @@
 - P4A_Tab_Pane now correctly handles disabled pages
 - a bug with P4A_Table's ordering with P4A_DB_Source having a group clause was solved
 - Zend Framework was updated to 1.9.4
+- P4A_Thumbnail_Generator won't generate a thumb bigger than the original image
 
 3.4.1
 - strong/em are now supported by P4A tooltips

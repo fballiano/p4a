@@ -295,14 +295,14 @@ class P4A_Thumbnail_Generator
 			}
 			$this->thumbnail_width = $width;
 		} elseif ($this->thumbnail_max_width) {
-			$this->thumbnail_width = $this->thumbnail_max_width;
+			$this->thumbnail_width = ($this->thumbnail_max_width > $this->original_width) ? $this->original_width : $this->thumbnail_max_width;
 			$this->thumbnail_height = round($this->thumbnail_width * $this->original_height / $this->original_width);
 			if ($this->thumbnail_max_height and ($this->thumbnail_height > $this->thumbnail_max_height)) {
 				$this->thumbnail_height = $this->thumbnail_max_height;
 				$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
 			}
 		} elseif ($this->thumbnail_max_height) {
-			$this->thumbnail_height = $this->thumbnail_max_height;
+			$this->thumbnail_height = ($this->thumbnail_max_height > $this->original_height) ? $this->original_height : $this->thumbnail_max_height;
 			$this->thumbnail_width = round($this->thumbnail_height * $this->original_width / $this->original_height);
 		}
 
