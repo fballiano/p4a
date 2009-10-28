@@ -529,6 +529,17 @@ abstract class P4A_Data_Source extends P4A_Object
 		} else {
 			$insert_header = false;
 		}
+		
+		if (is_array($fields_names)) {
+			$tmp = array_keys($fields_names);
+			if (is_numeric($tmp[0])) {
+				$tmp = $fields_names;
+				$fields_names = array();
+				foreach ($tmp as $colname) {
+					$fields_names[$colname] = P4A_Generate_Default_Label($colname);
+				}
+			}
+		}
 
 		if ($fields_names === null or $fields_names === false or $fields_names === true) {
 			$fields_names = array();
@@ -547,12 +558,10 @@ abstract class P4A_Data_Source extends P4A_Object
 
 		foreach ($rows as $row) {
 			$strrow = "";
-			foreach ($row as $key=>$col) {
-				if (in_array($key, array_keys($fields_names))) {
-					$col = str_replace("\n","",$col);
-					$col = str_replace("\r","",$col);
-					$strrow .= '"' . str_replace('"','""',$col) . "\"{$separator}";
-				}
+			foreach ($fields_names as $col=>$tmp) {
+				$tmp = str_replace("\n","",$row[$col]);
+				$tmp = str_replace("\r","",$tmp);
+				$strrow .= '"' . str_replace('"','""',$tmp) . "\"{$separator}";
 			}
 			$csv .= substr($strrow,0,-1) . "\n";
 		}
