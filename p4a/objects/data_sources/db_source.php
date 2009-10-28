@@ -191,6 +191,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * Add a join (default join type is INNER)
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -205,6 +206,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add an inner join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -219,6 +221,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a left join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -233,6 +236,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a right join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -247,6 +251,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a full join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param string $clausole
 	 * @param array $fields
@@ -261,6 +266,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a cross join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param array $fields
 	 * @param string $schema
@@ -274,6 +280,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a natural join
+	 * Do not add 2 joins on the same table.
 	 * @param string $table
 	 * @param array $fields
 	 * @param string $schema
