@@ -1,4 +1,5 @@
 3.4.3
+- jQuery::form was updated to 2.36
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)
