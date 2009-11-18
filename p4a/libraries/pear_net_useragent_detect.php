@@ -18,7 +18,7 @@
 // |          Jason Rust <jrust@php.net>                                  |
 // +----------------------------------------------------------------------+
 
-// $Id: Detect.php,v 1.27 2008/10/12 00:33:10 jrust Exp $
+// $Id: Detect.php,v 1.28 2009/06/09 04:07:00 clockwerx Exp $
 
 // }}}
 // {{{ constants
@@ -122,12 +122,12 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'belowns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'firefox1.5', 'firefox2.x', 'firefox3.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'belowie6', 'ie6up', 'ie7', 'ie7up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera9', 'opera5up', 'opera6up', 'opera7up', 'belowopera8', 'opera8up', 'opera9up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'safari_mobile', 'chrome', 'netgem', 'webdav', 'icab'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'belowns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'firefox1.5', 'firefox2.x', 'firefox3.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'belowie6', 'ie6up', 'ie7', 'ie7up', 'ie8', 'ie8tr', 'ie8up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera9', 'opera5up', 'opera6up', 'opera7up', 'belowopera8', 'opera8up', 'opera9up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'safari_mobile', 'chrome', 'netgem', 'webdav', 'icab'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
         $os = &Net_UserAgent_Detect::_getStaticProperty('os');
-        $os = array_flip(array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'wince', 'winme', 'win2k', 'winxp', 'winnt', 'win2003', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd'));
+        $os = array_flip(array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'wince', 'winme', 'win2k', 'winxp', 'winnt', 'win2003', 'vista', 'win7', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd'));
 
         // Array which stores known issues with the given client that can
         // be used for on the fly tweaking so that the client may recieve
@@ -262,8 +262,11 @@ class Net_UserAgent_Detect {
             $browser['ie5_5up'] = $browser['ie5up'] && !$browser['ie5'];
             $browser['ie6']     = strpos($agt, 'msie 6') !== false;
             $browser['ie6up']   = $browser['ie5up'] && !$browser['ie5'] && !$browser['ie5_5'];
-            $browser['ie7']     = strpos($agt, 'msie 7') !== false;
+            $browser['ie7'] = strpos($agt, 'msie 7') && !strpos($agt,'trident/4');
             $browser['ie7up']   = $browser['ie6up'] && !$browser['ie6'];
+            $browser['ie8tr'] = strpos($agt, 'msie 7') && strpos($agt,'trident/4') !== false;
+            $browser['ie8'] = strpos($agt, 'msie 8') !== false;
+            $browser['ie8up'] = $browser['ie7up'] && !$browser['ie7']; 
             $browser['belowie6']= $browser['ie'] && !$browser['ie6up'];
             $browser['opera']   = strpos($agt, 'opera') !== false;
             $browser['opera2']  = strpos($agt, 'opera 2') !== false || strpos($agt, 'opera/2') !== false;
@@ -340,6 +343,8 @@ class Net_UserAgent_Detect {
             $os['win9x'] = $os['win95'] || $os['win98'];
             $os['winnt'] = (strpos($agt, 'winnt') !== false || strpos($agt, 'windows nt') !== false) && strpos($agt, 'windows nt 5') === false;
             $os['win32'] = $os['win95'] || $os['winnt'] || $os['win98'] || $majorVersion >= 4 && strpos($agt, 'win32') !== false || strpos($agt, '32bit') !== false;
+            $os['vista'] = strpos($agt, 'windows nt 6.0') !== false;
+            $os['win7'] = strpos($agt, 'windows nt 6.1') !== false; 
             $os['os2']   = strpos($agt, 'os/2') !== false || strpos($agt, 'ibm-webexplorer') !== false;
             $os['mac']   = strpos($agt, 'mac') !== false;
             $os['mac68k']   = $os['mac'] && (strpos($agt, '68k') !== false || strpos($agt, '68000') !== false);
@@ -544,6 +549,8 @@ class Net_UserAgent_Detect {
                     'ie5up'    => 'Microsoft Internet Explorer 5.x',
                     'ie6up'    => 'Microsoft Internet Explorer 6.x',
                     'ie7up'    => 'Microsoft Internet Explorer 7.x',
+                    'ie8up'    => 'Microsoft Internet Explorer 8.x',
+                    'ie8tr'    => 'Microsoft Internet Explorer 8.x (Compatibility View)', 
                     'opera4'   => 'Opera 4.x',
                     'opera5up' => 'Opera 5.x',
                     'nav'      => 'Netscape Navigator',
@@ -703,6 +710,8 @@ class Net_UserAgent_Detect {
                    'winnt' => 'Microsoft Windows NT',
                    'winxp' => 'Microsoft Windows XP',
                    'win2003' => 'Microsoft Windows 2003',
+                   'vista' => 'Microsoft Windows Vista',
+                   'win7' => 'Microsoft Windows 7', 
                    'mac'   => 'Macintosh',
                    'unix'  => 'Linux/Unix');
         }
