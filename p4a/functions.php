@@ -610,8 +610,9 @@ function P4A_Exception_Handler(Exception $e)
 
 /**
  * @param string $url
+ * @param boolean $new_window Only works within AJAX calls
  */
-function P4A_Redirect_To_Url($url)
+function P4A_Redirect_To_Url($url, $new_window = false)
 {
 	$p4a = P4A::singleton();
 	if ($p4a->inAjaxCall()) {
@@ -619,7 +620,13 @@ function P4A_Redirect_To_Url($url)
 		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
 		echo "<widget id='p4a'>\n";
-		echo "<javascript><![CDATA[window.location='$url']]></javascript>\n";
+		
+		if ($new_window) {
+			echo "<javascript><![CDATA[window.open('$url')]]></javascript>\n";
+		} else {
+			echo "<javascript><![CDATA[window.location='$url']]></javascript>\n";
+		}
+		
 		echo "</widget>\n";
 		echo "</ajax-response>";
 		die();
@@ -631,9 +638,10 @@ function P4A_Redirect_To_Url($url)
 
 /**
  * @param string $file
+ * @param boolean $new_window Only works within AJAX calls
  * @throws P4A_Exception if the file does not exists in P4A_UPLOADS_DIR
  */
-function P4A_Redirect_To_File($file)
+function P4A_Redirect_To_File($file, $new_window = false)
 {
 	if (!@file_exists(@realpath(P4A_UPLOADS_DIR . "/$file"))) {
 		throw new P4A_Exception("The requested file does not exists within P4A_UPLOADS_DIR", P4A_FILESYSTEM_ERROR);
@@ -648,7 +656,13 @@ function P4A_Redirect_To_File($file)
 		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
 		echo "<widget id='p4a'>\n";
-		echo "<javascript><![CDATA[window.location='$file']]></javascript>\n";
+		
+		if ($new_window) {
+			echo "<javascript><![CDATA[window.open('$file')]]></javascript>\n";
+		} else {
+			echo "<javascript><![CDATA[window.location='$file']]></javascript>\n";
+		}
+		
 		echo "</widget>\n";
 		echo "</ajax-response>";
 		die();

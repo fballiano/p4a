@@ -6,6 +6,8 @@
 - PEAR::Net_Useragent_Detect was updated to 2.5.1
 - tooltips hiding methods now have a timeout to allow clicking links inside the
   tooltip itself
+- new_window parameter was added to P4A_Redirect_To_File() and P4A_Redirect_To_Url()
+  global functions
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)
