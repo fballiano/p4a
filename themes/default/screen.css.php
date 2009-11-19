@@ -689,6 +689,17 @@ div.ui-tabs {
 
 .p4a_tab_pane ul.tabs li {
 	border: 1px solid <?php echo $_GET['input_border'] ?>;
+	height: 25px;
+}
+
+.p4a_tab_pane ul.tabs li img {
+	float: right;
+	margin: -2px -6px 0px 5px;
+}
+
+.p4a_browser_ie .p4a_tab_pane ul.tabs li img {
+	float: none;
+	vertical-align: top;
 }
 
 .p4a_tab_pane ul.tabs li a {

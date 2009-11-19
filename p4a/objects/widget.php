@@ -105,7 +105,15 @@ abstract class P4A_Widget extends P4A_Object
 	 */
 	protected $_temp_vars = array();
 	
+	/**
+	 * @var array
+	 */
 	protected $_css_classes = array();
+	
+	/**
+	 * @var string
+	 */
+	protected $_tooltip = null;
 	
 	/**
 	 * @param string Object identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name
@@ -939,6 +947,24 @@ abstract class P4A_Widget extends P4A_Object
 	public function getCSSClasses()
 	{
 		return $this->_css_classes;
+	}
+	
+	/**
+	 * @param string $text
+	 * @return P4A_Label
+	 */
+	public function setTooltip($text)
+	{
+		$this->_tooltip = $text;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	function getTooltip()
+	{
+		return $this->_tooltip;
 	}
 
 	/**

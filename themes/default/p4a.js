@@ -177,20 +177,39 @@ p4a_center_elements = function () {
 
 p4a_tooltip_show = function (widget)
 {
+	$("body>.p4a_tooltip").remove();
 	var widget = $(widget);
 	var id = widget.attr('id');
-	var tooltip = $('#'+id+'tooltip');
-	tooltip.css('margin-top', widget.outerHeight());
-	if (tooltip.bgiframe) tooltip.bgiframe();
-	
+	var tooltip = id ? $('#'+id+'tooltip') : widget.find(">.p4a_tooltip");
+	tooltip.clone().appendTo("body");
+	tooltip = $("body>.p4a_tooltip").css({
+		top: parseInt(widget.offset().top + widget.outerHeight()),
+		left: parseInt(widget.offset().left),
+		width: tooltip.width()
+	});
+
 	if (p4a_shadows_enabled && !tooltip.hasClass("p4a_shadow")) {
 		tooltip
 			.addClass("p4a_shadow")
 			.append("<div class='p4a_shadow_b'></div><div class='p4a_shadow_r'></div><div class='p4a_shadow_br'></div>");
 	}
 	
-	
 	tooltip.show();
+	
+	if ((tooltip.offset().left + tooltip.outerWidth()) > ($(window).width() + $(window).scrollLeft())) {
+		tooltip.css({
+			left: 'auto',
+			right: 0
+		});
+	}
+	
+	if ((tooltip.offset().top + tooltip.outerHeight()) > ($(window).height() + $(window).scrollTop())) {
+		tooltip.css({
+			top: parseInt(widget.offset().top - tooltip.outerHeight())
+		});
+	}
+	
+	if (tooltip.bgiframe) tooltip.bgiframe();
 	widget.mouseout(function() {tooltip.hide()});
 }
 

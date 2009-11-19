@@ -41,11 +41,6 @@
 class P4A_Label extends P4A_Widget
 {
 	/**
-	 * @var string
-	 */
-	protected $_tooltip = null;
-
-	/**
 	 * @param string $name Object identifier
 	 * @param string $value
 	 */
@@ -83,23 +78,5 @@ class P4A_Label extends P4A_Widget
 		$css_classes = join(' ', $css_classes);
 		return "<label id='{$id}' class='$css_classes' " . $this->composeStringProperties() . 
 				"$actions>$tooltip_icon<span>" . __($this->getLabel()) . "</span>$tooltip_text</label>\n";
-	}
-
-	/**
-	 * @param string $text
-	 * @return P4A_Label
-	 */
-	public function setTooltip($text)
-	{
-		$this->_tooltip = $text;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getTooltip()
-	{
-		return $this->_tooltip;
 	}
 }

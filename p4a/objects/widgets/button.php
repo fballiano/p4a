@@ -57,11 +57,6 @@ class P4A_Button extends P4A_Widget
 	 * @var boolean
 	 */
 	protected $_label_visible = false;
-	
-	/**
-	 * @var string
-	 */
-	protected $_tooltip = null;
 
 	/**
 	 * @param string $name Mnemonic identifier for the object
@@ -125,24 +120,6 @@ class P4A_Button extends P4A_Widget
 		return parent::setLabel($label);
 	}
 	
-	/**
-	 * @param string $text
-	 * @return P4A_Label
-	 */
-	public function setTooltip($text)
-	{
-		$this->_tooltip = $text;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	function getTooltip()
-	{
-		return $this->_tooltip;
-	}
-
 	/**
 	 * Retuns the HTML rendered button
 	 * @return string

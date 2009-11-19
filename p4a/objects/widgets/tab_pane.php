@@ -205,7 +205,14 @@ class P4A_Tab_Pane extends P4A_Widget
 				$page->setDefaultLabel();
 			}
 			$label = __($page->getLabel());
-			$return .= "<li class='ui-state-default ui-corner-top $active $disabled'><a href='#' $actions>$label</a></li>";
+			$tooltip = __($page->getTooltip());
+			$mouseover = "";
+			if (strlen($tooltip)) {
+				$tooltip = "<div id='{$page->getId()}tooltip' class='p4a_tooltip'><div class='p4a_tooltip_inner'>$tooltip</div></div>";
+				$mouseover = "onmouseover='p4a_tooltip_show(this)'";
+				$label .= ' <img src="' . P4A_ICONS_PATH . '/16/status/dialog-information.png" class="p4a_tooltip_icon" alt="" />';
+			}
+			$return .= "<li class='ui-state-default ui-corner-top $active $disabled' $mouseover><a href='#' $actions>$label</a>$tooltip</li>";
 		}
 		$return .= "</ul>";
 		$return .= "<div class='p4a_tab_pane_page ui-tabs-panel ui-widget-content ui-corner-all ui-helper-clearfix' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
