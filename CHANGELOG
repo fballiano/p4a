@@ -4,6 +4,8 @@
 - setTooltip() methods were moved to P4A_Widget
 - tooltip support was added to P4A_Tab_Pane
 - PEAR::Net_Useragent_Detect was updated to 2.5.1
+- tooltips hiding methods now have a timeout to allow clicking links inside the
+  tooltip itself
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)

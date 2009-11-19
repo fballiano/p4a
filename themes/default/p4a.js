@@ -6,6 +6,7 @@
 
 p4a_working = true;
 p4a_system_messages_timeout = null;
+p4a_tooltip_timeout_id = null;
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
@@ -210,7 +211,10 @@ p4a_tooltip_show = function (widget)
 	}
 	
 	if (tooltip.bgiframe) tooltip.bgiframe();
-	widget.mouseout(function() {tooltip.hide()});
+	widget.mouseout(function() {p4a_tooltip_timeout_id = setTimeout(function () {tooltip.hide()}, 200)});
+	tooltip
+		.mouseover(function () {clearTimeout(p4a_tooltip_timeout_id)})
+		.mouseout(function () {p4a_tooltip_timeout_id = setTimeout(function () {tooltip.hide()}, 200)});
 }
 
 p4a_tabs_load = function ()
