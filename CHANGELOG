@@ -8,6 +8,8 @@
   tooltip itself
 - new_window parameter was added to P4A_Redirect_To_File() and P4A_Redirect_To_Url()
   global functions
+- P4A_DB_Source::_composePkString() was fixed handling multiple primary keys
+  (bug #2833159)
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)

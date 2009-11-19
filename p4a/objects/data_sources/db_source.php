@@ -768,7 +768,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * internal data_fields.
 	 * 
 	 * @param array $fields_values
-	 * @param array $pk_values
+	 * @param array $pk_values must be associative key_name=>key_value
 	 */
 	public function saveRow($fields_values = array(), $pk_values = array())
 	{
@@ -1112,17 +1112,16 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	protected function _composePkString($pk_values = array())
 	{
-		$pks = $this->getPk();
-		if (!$pk_values) {
+		if (empty($pk_values)) {
 			$pk_values = $this->getPkValues();
 		}
 
-		if (is_string($pks)) {
-			return "$pks = " . P4A_DB::singleton($this->getDSN())->quote($pk_values, true);
-		} elseif (is_array($pks)) {
+		if (is_string($pk_values)) {
+			return "{$this->getPk()} = " . P4A_DB::singleton($this->getDSN())->quote($pk_values, true);
+		} elseif (is_array($pk_values)) {
 			$return = '';
 			foreach($pk_values as $key=>$value) {
-				$return .= "$pks[$key] = " . P4A_DB::singleton($this->getDSN())->quote($value, true) . " AND ";
+				$return .= "$key = " . P4A_DB::singleton($this->getDSN())->quote($value, true) . " AND ";
 			}
 			return substr($return, 0, -4);
 		} else {
