@@ -16,7 +16,6 @@
 - P4A_DB_Source::setTableAlias() and getTableAlias() methods were added
 - P4A_DB_Source::addJoin*() methods now support alias on table (see code reference)
 
-
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)
 - a typo was fixed in P4A_DB (profiler activation)
