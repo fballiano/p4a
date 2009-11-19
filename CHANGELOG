@@ -12,6 +12,10 @@
   (bug #2833159)
 - onautocomplete event was added, it can be used to create a custom search for
   fields instead of using P4A's default one
+- P4A_DB_Source::setTable() now supports a second parameter "alias"
+- P4A_DB_Source::setTableAlias() and getTableAlias() methods were added
+- P4A_DB_Source::addJoin*() methods now support alias on table (see code reference)
+
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)

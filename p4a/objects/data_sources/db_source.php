@@ -65,6 +65,11 @@ class P4A_DB_Source extends P4A_Data_Source
 	/**
 	 * @var string
 	 */
+	protected $_table_alias = null;
+	
+	/**
+	 * @var string
+	 */
 	protected $_schema = null;
 	
 	/**
@@ -137,11 +142,13 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * and setSequence() on the P4A_Data_Fields (if needed)
 	 * because those data won't be autodetected.
 	 * @param string $table
+	 * @param string $alias
 	 * @return P4A_DB_Source
 	 */
-	public function setTable($table)
+	public function setTable($table, $alias = null)
 	{
 		$this->_table = $table;
+		$this->_table_alias = $alias;
 		return $this;
 	}
 
@@ -151,6 +158,23 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function getTable()
 	{
 		return $this->_table;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function setTableAlias($alias)
+	{
+		$this->_table_alias = $alias;
+		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTableAlias()
+	{
+		return $this->_table_alias;
 	}
 	
 	/**
@@ -191,8 +215,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * Add a join (default join type is INNER)
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param string $clausole
 	 * @param array $fields
 	 * @param string $schema
@@ -206,8 +229,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add an inner join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param string $clausole
 	 * @param array $fields
 	 * @param string $schema
@@ -221,8 +243,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a left join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param string $clausole
 	 * @param array $fields
 	 * @param string $schema
@@ -236,8 +257,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a right join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param string $clausole
 	 * @param array $fields
 	 * @param string $schema
@@ -251,8 +271,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a full join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param string $clausole
 	 * @param array $fields
 	 * @param string $schema
@@ -266,8 +285,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a cross join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param array $fields
 	 * @param string $schema
 	 * @return P4A_DB_Source
@@ -280,8 +298,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	
 	/**
 	 * Add a natural join
-	 * Do not add 2 joins on the same table.
-	 * @param string $table
+	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
 	 * @param array $fields
 	 * @param string $schema
 	 * @return P4A_DB_Source
@@ -455,9 +472,9 @@ class P4A_DB_Source extends P4A_Data_Source
 		$main_table = $this->getTable();
 		
 		// retrieving tables metadata 
-		foreach ($select->getPart('from') as $table=>$table_data) {
-			$p4a_db_table = new P4A_Db_Table(array('name'=>$table, 'schema'=>$table_data['schema'], 'db'=>$db->adapter));
-			$this->_tables_metadata[$table] = $p4a_db_table->info();
+		foreach ($select->getPart('from') as $alias=>$table_data) {
+			$p4a_db_table = new P4A_Db_Table(array('name'=>$table_data['tableName'], 'schema'=>$table_data['schema'], 'db'=>$db->adapter));
+			$this->_tables_metadata[$table_data['tableName']] = $p4a_db_table->info();
 		}
 		
 		if (!$this->getSchema()) {
@@ -471,7 +488,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		// creating data fields
 		foreach ($select->getPart('columns') as $column_data) {
-			$table_name = $column_data[0];
+			$table_name = $column_data[0] == $this->_table_alias ? $this->_table : $column_data[0];
 			$column_name = $column_data[1];
 			$column_alias = $column_data[2];
 			
@@ -482,7 +499,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			} elseif (!empty($column_alias)) {
 				$field_name = strlen($column_alias) ? $column_alias : $column_name;
-				if (in_array($column_name, array_keys($this->_tables_metadata[$table_name]['metadata']))) {
+				if (isset($this->_tables_metadata[$table_name]) and in_array($column_name, array_keys($this->_tables_metadata[$table_name]['metadata']))) {
 					$meta = $this->_tables_metadata[$table_name]['metadata'][$column_name];
 					if (!$meta['SCHEMA_NAME']) $meta['SCHEMA_NAME'] = $this->_tables_metadata[$table_name]['schema'];
 					$this->createDataField($field_name, $meta);
@@ -531,7 +548,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
 			}
 			
-			if ($this->fields->$name->getTable()!=$this->getTable()) {
+			if ($this->fields->$name->getTable() != $this->getTable()) {
 				$this->fields->$name->isReadOnly(true);
 			}
 		}
@@ -647,7 +664,6 @@ class P4A_DB_Source extends P4A_Data_Source
 			} else {
 				if (!empty($row)) {
 					$this->_pointer = $num_row;
-
 					foreach($row as $field=>$value) {
 						$this->fields->$field->setValue($value);
 					}
@@ -1023,8 +1039,10 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	protected function _composeSelectPart($select)
 	{
+		$table = strlen($this->_table_alias) ? array($this->_table_alias=>$this->_table) : $this->_table;
+		
 		if (empty($this->_fields)) {
-			$select->from($this->getTable(), '*', $this->getSchema());
+			$select->from($table, '*', $this->getSchema());
 		} else {
 			$new_fields = array();
 			foreach ($this->_fields as $k=>$v) {
@@ -1033,12 +1051,13 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 				$new_fields[$v] = $k;
 			}
-			$select->from($this->getTable(), $new_fields, $this->getSchema());
+			$select->from($table, $new_fields, $this->getSchema());
 		}
 		
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
 			$new_fields = $join[3];
+			$table = is_array($join[1]) ? array($join[1][1]=>$join[1][0]) : $join[1];
 			
 			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
@@ -1050,16 +1069,18 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 			
-			$select->$method($join[1], $join[2], $new_fields, $join[4]);
+			$select->$method($table, $join[2], $new_fields, $join[4]);
 		}
 	}
 
 	protected function _composeSelectCountPart($select)
 	{
-		$select->from($this->getTable(), 'count(*)', $this->getSchema());
+		$table = strlen($this->_table_alias) ? array($this->_table_alias=>$this->_table) : $this->_table;
+		$select->from($table, 'count(*)', $this->getSchema());
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
 			$new_fields = $join[3];
+			$table = is_array($join[1]) ? array($join[1][1]=>$join[1][0]) : $join[1];
 			
 			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
@@ -1073,7 +1094,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				var_dump($join[3]);
 			}
 			
-			$select->$method($join[1], $join[2], $new_fields, $join[4]);
+			$select->$method($table, $join[2], $new_fields, $join[4]);
 		}
 	}
 
@@ -1103,8 +1124,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($order) {
 			$order_array = array();
 			foreach ($order as $field=>$direction) {
-				$real_field_name = $this->fields->$field->getSchemaTableField();
-				$order_array[] = "$real_field_name $direction";
+				$order_array[] = "$field $direction";
 			}
 			$select->order($order_array);
 		}
