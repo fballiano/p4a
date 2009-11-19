@@ -10,6 +10,8 @@
   global functions
 - P4A_DB_Source::_composePkString() was fixed handling multiple primary keys
   (bug #2833159)
+- onautocomplete event was added, it can be used to create a custom search for
+  fields instead of using P4A's default one
 
 3.4.2
 - a bug with backslashes stripping was solved (bug #2853694)

@@ -396,14 +396,20 @@ class P4A extends P4A_Object
 				$object =& $this->objects[$_REQUEST['_object']];
 				$db = P4A_DB::singleton($object->data_field->getDSN());
 				$data =& $object->data;
-				$description_field = $object->getSourceDescriptionField();
-				$q = $db->quote($_REQUEST['q'], false);					
-				$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
 				$old_where = $data->getWhere();
-				if ($old_where) {
-					$where = "({$old_where}) AND ($where)";
+				$description_field = $object->getSourceDescriptionField();
+				
+				if ($object->isActionTriggered('onautocomplete')) {
+					$this->actionHandler('onautocomplete', $data, $_REQUEST['q']);
+				} else {
+					$q = $db->quote($_REQUEST['q'], false);
+					$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
+					if ($old_where) {
+						$where = "({$old_where}) AND ($where)";
+					}
+					$data->setWhere($where);
 				}
-				$data->setWhere($where);
+				
 				$all = $data->getAll();
 				$data->setWhere($old_where);
 				foreach ($all as $row) {
