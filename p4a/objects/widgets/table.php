@@ -308,6 +308,26 @@ class P4A_Table extends P4A_Widget
 		$this->_auto_navigation_bar = false;
 		return $this;
 	}
+	
+	/**
+	 * @return P4A_Table
+	 */
+	public function showElementsOnPageBar()
+	{
+		$this->navigation_bar->buttons->elements_page->setVisible(true);
+		$this->navigation_bar->buttons->s2->setVisible(true);
+		$this->navigation_bar->buttons->go2->setVisible(true);
+	}
+	
+	/**
+	 * @return P4A_Table
+	 */
+	public function hideElementsOnPageBar()
+	{
+		$this->navigation_bar->buttons->elements_page->setVisible(false);
+		$this->navigation_bar->buttons->s2->setVisible(false);
+		$this->navigation_bar->buttons->go2->setVisible(false);
+	}
 
 	/**
 	 * Shows the bar with column names
@@ -954,52 +974,82 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 	 * @var P4A_Collection
 	 */
 	public $buttons = null;
+	
+	/**
+	 * @var integer
+	 */
+	const height = 16;
 
 	public function __construct()
 	{
 		parent::__construct("table_navigation_bar");
 		$this->build("p4a_collection", "buttons");
 
-		$this->addButton('go', 'actions/go-jump', 'right');
-		$this->buttons->go->setLabel("Go");
-		$this->buttons->go->implement('onclick', $this, 'goOnClick');
+		$this->addButton('go', 'actions/go-jump', 'right')
+			->setLabel("Go")
+			->implement('onclick', $this, 'goOnClick');
 
-		$this->buttons->build(P4A_FIELD_CLASS, 'page_number');
+		$this->buttons->build(P4A_FIELD_CLASS, 'page_number')
+			->setWidth(30)
+			->addAjaxAction('onreturnpress')
+			->implement('onreturnpress', $this, 'goOnClick');
 		$this->buttons->page_number->label->setStyleProperty("text-align", "right");
-		$this->buttons->page_number->setWidth(30);
-		$this->buttons->page_number->addAjaxAction('onreturnpress');
-		$this->buttons->page_number->implement('onreturnpress', $this, 'goOnClick');
 		$this->anchorRight($this->buttons->page_number);
 
 		$this->buttons->build('p4a_box', 'current_page');
 		$this->anchorLeft($this->buttons->current_page);
+		
+		$this->buttons->build("p4a_box", "s1")
+			->addCSSClass("p4a_toolbar_separator")
+			->setHeight(self::height);
+		$this->anchorRight($this->buttons->s1);
 
 		if (P4A::singleton()->isHandheld()) {
-			$this->addButton('first');
-			$this->buttons->first->setLabel('<<');
-			$this->addButton('prev');
-			$this->buttons->prev->setLabel('<');
-			$this->addButton('next');
-			$this->buttons->next->setLabel('>');
-			$this->addButton('last');
-			$this->buttons->last->setLabel('>>');
+			$this->addButton('first')
+				->setLabel('<<');
+			$this->addButton('prev')
+				->setLabel('<');
+			$this->addButton('next')
+				->setLabel('>');
+			$this->addButton('last')
+				->setLabel('>>');
 			$this->buttons->go->setVisible(false);
 			$this->buttons->page_number->setVisible(false);
 		} else {
-			$this->addButton('last', 'actions/go-last', 'right');
-			$this->buttons->last->setLabel("Go to the last page");
-			$this->addButton('next', 'actions/go-next', 'right');
-			$this->buttons->next->setLabel("Go to the next page");
-			$this->addButton('prev', 'actions/go-previous', 'right');
-			$this->buttons->prev->setLabel("Go to the previous page");
-			$this->addButton('first', 'actions/go-first', 'right');
-			$this->buttons->first->setLabel("Go to the first page");
+			$this->addButton('last', 'actions/go-last', 'right')
+				->setLabel("Go to the last page");
+			$this->addButton('next', 'actions/go-next', 'right')
+				->setLabel("Go to the next page");
+			$this->addButton('prev', 'actions/go-previous', 'right')
+				->setLabel("Go to the previous page");
+			$this->addButton('first', 'actions/go-first', 'right')
+				->setLabel("Go to the first page");
 		}
 		
 		$this->buttons->last->implement('onclick', $this, 'lastOnClick');
 		$this->buttons->next->implement('onclick', $this, 'nextOnClick');
 		$this->buttons->prev->implement('onclick', $this, 'prevOnClick');
 		$this->buttons->first->implement('onclick', $this, 'firstOnClick');
+		
+		$this->buttons->build("p4a_box", "s2")
+			->addCSSClass("p4a_toolbar_separator")
+			->setHeight(self::height)
+			->setVisible(false);
+		$this->anchorRight($this->buttons->s2);
+		
+		$this->addButton('go2', 'actions/go-jump', 'right')
+			->setLabel("Go")
+			->implement('onclick', $this, 'setNumElementsOnPage')
+			->setVisible(false);		
+		
+		$this->buttons->build(P4A_FIELD_CLASS, 'elements_page')
+			->setLabel("Elements/page")
+			->setWidth(30)
+			->addAjaxAction('onreturnpress')
+			->implement('onreturnpress', $this, 'setNumElementsOnPage')
+			->setVisible(false);
+		$this->buttons->elements_page->label->setStyleProperty("text-align", "right");
+		$this->anchorRight($this->buttons->elements_page);
 	}
 
 	/**
@@ -1015,7 +1065,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 
 		if (strlen($icon)>0) {
 			$button->setIcon($icon);
-			$button->setSize(16);
+			$button->setSize(self::height);
 		}
 
 		$anchor = "anchor" . $float;
@@ -1047,6 +1097,8 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$current_page .= $num_pages;
 		$current_page .= ' ';
 		$this->buttons->current_page->setValue($current_page);
+		
+		$this->buttons->elements_page->setValue($parent->data->getPageLimit());
 		return parent::getAsString();
 	}
 
@@ -1124,4 +1176,13 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$parent->redesign();
 	}
 
+	public function setNumElementsOnPage()
+	{
+		$elements = (int)$this->buttons->elements_page->getNewValue();
+		if ($elements < 0) $elements = 0;
+		
+		$parent = P4A::singleton()->getObject($this->getParentID());
+		$parent->data->setPageLimit($elements);
+		$parent->redesign();
+	}
 }
