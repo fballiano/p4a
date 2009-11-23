@@ -1,4 +1,5 @@
 3.4.3
+- Zend Framework was updated to 1.9.5
 - jQuery::form was updated to 2.36
 - tooltip javascript was enhanced to make it location aware (bug #1908495)
 - setTooltip() methods were moved to P4A_Widget
