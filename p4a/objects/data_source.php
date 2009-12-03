@@ -568,6 +568,9 @@ abstract class P4A_Data_Source extends P4A_Object
 		return 	$csv;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public function exportToCSV($filename = '', $separator = ',', $fields_names = null)
 	{
 		$this->exportAsCSV($filename, $separator, $fields_names);
@@ -575,13 +578,20 @@ abstract class P4A_Data_Source extends P4A_Object
 
 	public function exportAsCSV($filename = '', $separator = ',', $fields_names = null)
 	{
-		if (!strlen($filename)) {
+		if (!is_string($filename) or !strlen($filename)) {
 			$filename = $this->getName() . ".csv";
+		}
+		
+		if (!is_string($separator)) {
+			$separator = ',';
 		}
 		
 		P4A_Output_File($this->getAsCSV($separator, $fields_names), $filename);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function deleteRow()
 	{
 		$num_rows = $this->getNumRows();
