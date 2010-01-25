@@ -2,6 +2,7 @@
 - Zend Framework was updated to 1.9.7
 - P4A_Data_Source::exportToCSV() method was marked as deprecated
 - P4A_Data_Source::exportAsCSV() now can be called directly from an event handler
+- translations were updated
 
 3.4.3
 - Zend Framework was updated to 1.9.5
