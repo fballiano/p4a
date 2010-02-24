@@ -1,4 +1,10 @@
-p4a (3.4.3-1) unstable; urgency=low
+p4a (3.4.4-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Fabrizio Balliano <fabrizio.balliano@crealabs.it>  Mon, 24 Feb 2010 09:22:31 +0100
+ 
+ p4a (3.4.3-1) unstable; urgency=low
 
   * new upstream release
 
