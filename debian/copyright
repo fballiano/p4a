@@ -37,7 +37,7 @@ Copyright (C) David Vignoni <david@icon-king.com>
   	License, can be found in /usr/share/common-licenses/LGPL-2.1.	
 
 The files in themes/default/widgets/rich_textarea are 
-Copyright (C) 2003 - 2008 Frederico Caldeira Knabben 
+Copyright (c) 2003-2010, CKSource - Frederico Knabben 
 and are licensed under the terms of any any of the 
 following licenses at your choice:
 
@@ -51,7 +51,7 @@ following licenses at your choice:
 	  see http://www.mozilla.org/MPL/MPL-1.1.html
 
 The file in p4a/libraries/Zend are 
-Copyright (C) 2005 - 2008 Zend Technologies Inc
+Copyright (C) 2005-2010 Zend Technologies USA Inc.
 
     Redistribution and use in source and binary forms, with or without modification,
     are permitted provided that the following conditions are met:
