@@ -1,5 +1,6 @@
-3.4.5
+3.6.0
 - Zend Framework was updated to 1.10.2
+- FCKEditor was dropped and CKEditor 3.2 was added
 
 3.4.4
 - Zend Framework was updated to 1.10.1

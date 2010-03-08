@@ -28,14 +28,11 @@ p4a_event_execute_prepare = function (object_name, action_name, param1, param2, 
 
 p4a_rte_update_all_instances = function ()
 {
-	for (var i=0; i<p4a_form.elements.length; i++) {
-		var e = p4a_form.elements[i];
-		if (e.type == 'textarea') {
-			try {
-				FCKeditorAPI.GetInstance(e.id).UpdateLinkedField();
-			} catch (e) {}
-		}
-	}
+	$("form#p4a div.p4a_field_rich_textarea textarea").each(function () {
+		try {
+			CKEDITOR.instances[$(this).attr('id')].updateElement();
+		} catch (e) {}
+	});
 }
 
 p4a_event_execute = function (object_name, action_name, param1, param2, param3, param4)

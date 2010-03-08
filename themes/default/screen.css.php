@@ -349,6 +349,10 @@ ol.p4a_backtrace li {
 	text-align: center;
 }
 
+.p4a_field_rich_textarea textarea {
+	border: none;
+}
+
 /****************************/
 /* P4A_Field - autocomplete */
 /****************************/

@@ -32,29 +32,44 @@
  */
 ?>
 
-<?php if (!p4a::singleton()->isOpera()): ?>
 <script type="text/javascript">
 
-p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/fckeditor.js', function () {
-	var rte = new FCKeditor('<?php echo $this->getId() ?>input', '<?php echo $this->getWidth() ?>', '<?php echo $this->getHeight() ?>', '<?php echo $this->getRichTextareaTheme() ?>');
-	rte.BasePath = '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/';
-	
-	rte.Config['P4ACustomCSS'] = "<style type='text/css'>.TB_Button_On,.TB_Button_Off,.TB_Button_Disabled{border-color:<?php echo P4A_THEME_BG ?>}.SC_FieldCaption,.TB_ToolbarSet{background-color:<?php echo P4A_THEME_BG ?>}</style>";
-	rte.Config['CustomConfigurationsPath'] = '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/p4aconfig.js';
-	rte.Config['DefaultLanguage'] = '<?php echo P4A::singleton()->i18n->getLanguage() ?>';
-	
-	<?php if ($this->isUploadEnabled()): ?>
-	rte.Config['LinkBrowserURL'] = rte.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>';
-	rte.Config['ImageBrowserURL'] = rte.Config['LinkBrowserURL'];
-	rte.Config['FlashBrowserURL'] = rte.Config['LinkBrowserURL'];
-	<?php else: ?>
-	rte.Config['LinkBrowser'] = false;
-	rte.Config['ImageBrowser'] = false;
-	rte.Config['FlashBrowser'] = false;
-	<?php endif; ?>
-	
-	rte.ReplaceTextarea();
+p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
+	CKEDITOR.replace( '<?php echo $this->getId() ?>input', {
+		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
+		width: '<?php echo $this->getWidth() ?>',
+		height: '<?php echo $this->getHeight() ?>',
+		resize_enabled: false,
+		toolbarCanCollapse: false,
+		coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
+		coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
+		<?php
+			$toolbars = $this->getRichTextareaToolbars();
+			if (empty($toolbars)) {
+				$toolbar = $this->getRichTextareaTheme();
+				if ($toolbar == "Default") {
+					$toolbar = "[
+				      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
+				    	'/',
+				    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
+				    	'/',
+				    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
+			    	]";
+				} else {
+					$toolbar = "'$toolbar'";
+				}
+			} else {
+				foreach ($toolbars as $k=>$v) {
+					$toolbars[$k] = "['" . implode("','", $v) . "']";
+				}
+				$toolbar = "[" . implode(",'/',", $toolbars) . "]";
+			}
+		?>
+	    toolbar: <?php echo $toolbar ?>,
+		<?php if ($this->isUploadEnabled()): ?>
+		filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
+		<?php endif; ?>
+	});
 });
 
 </script>
-<?php endif; ?>

@@ -147,6 +147,11 @@ class P4A_Field extends P4A_Widget
 	protected $input_mask = null;
 	
 	/**
+	 * @var array
+	 */
+	protected $rich_textarea_toolbars = array();
+	
+	/**
 	 * @param string $name Mnemonic identifier for the object.
 	 * @param string $add_default_data_field If it's false the widget doesn't instance a default data_field. You must to set a data_field for the widget before call get_value, get_new_value or getAsstring.
 	 */
@@ -1454,4 +1459,25 @@ class P4A_Field extends P4A_Widget
 	{
 		return $this->input_mask;
 	}
+	
+ 	/**
+ 	 * sets buttons for every richtextarea toolbar
+ 	 * eg: array(array("button1", "button1"), array("button1", "button2"), array("button1", "button2"))
+ 	 * @access public
+ 	 * @param array toolbars
+ 	 */
+ 	function setRichTextareaToolbars($toolbars)
+ 	{
+ 		$this->rich_textarea_toolbars = $toolbars;
+ 		return $this;
+ 	}
+ 	
+ 	/**
+ 	 * @access public
+ 	 * @return string
+ 	 */
+ 	function getRichTextareaToolbars()
+ 	{
+ 		return $this->rich_textarea_toolbars;
+ 	}
 }
