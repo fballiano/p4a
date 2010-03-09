@@ -201,17 +201,6 @@ class P4A_Mask extends P4A_Object
 	{
 		return $this->_redesign_focus;
 	}
-
-	/**
-	 * Removes focus property
-	 * @return P4A_Mask
-	 * @deprecated 
-	 */
-	public function unsetFocus()
-	{
-		$this->focus_object_id = null;
-		return $this;
-	}
 	
 	/**
 	 * Shows the previous mask
@@ -270,18 +259,6 @@ class P4A_Mask extends P4A_Object
 	{
 		$this->_tpl_vars[$variable] =& $object;
 		return $this;
-	}
-
-	 /**
-	 * Tells the template engine to show a string as a variable
-	 * @deprecated
-	 * @param string $variable Variable name, stands for a template variable
-	 * @param string $text String, the value of the assignment
-	 * @return P4A_Mask
-	 */
-	public function displayText($variable, $text)
-	{
-		return $this->display($variable, $text);
 	}
 
 	/**
