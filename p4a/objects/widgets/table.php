@@ -1084,7 +1084,7 @@ class P4A_Table_Navigation_Bar extends P4A_Frame
 		$current_page .= ' ';
 		$current_page .= $num_pages;
 		$current_page .= ' ';
-		$this->buttons->current_page->setValue($current_page);
+		$this->buttons->current_page->setHTML($current_page);
 		
 		$this->buttons->elements_page->setValue($parent->data->getPageLimit());
 		return parent::getAsString();

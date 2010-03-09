@@ -109,7 +109,7 @@ class P4A_Toolbar extends P4A_Widget
 	public function addBox($name, $text, $position = "left")
 	{
 		$this->buttons->build("p4a_box", $name);
-		$this->buttons->$name->setValue($text);
+		$this->buttons->$name->setHTML($text);
 		$this->buttons->$name->setStyleProperty("float", $position);
 		return $this->buttons->$name;
 	}
