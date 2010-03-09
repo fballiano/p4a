@@ -44,27 +44,6 @@ class P4A_Box extends P4A_Widget
 	 * @var string
 	 */
 	protected $_html = null;
-
-	/**
-	 * alias of getHTML()
-	 * @return string
-	 * @deprecated 
-	 */
-	public function getValue()
-	{
-		return $this->getHTML();
-	}
-
-	/**
-	 * alias of setHTML()
-	 * @param string $value
-	 * @deprecated 
-	 * @return P4A_Box
-	 */
-	public function setValue($value = null)
-	{
-		return $this->setHTML($value);
-	}
 	
 	/**
 	 * @param string $html
