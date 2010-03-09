@@ -568,14 +568,6 @@ abstract class P4A_Data_Source extends P4A_Object
 		return 	$csv;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public function exportToCSV($filename = '', $separator = ',', $fields_names = null)
-	{
-		$this->exportAsCSV($filename, $separator, $fields_names);
-	}
-
 	public function exportAsCSV($filename = '', $separator = ',', $fields_names = null)
 	{
 		if (!is_string($filename) or !strlen($filename)) {
