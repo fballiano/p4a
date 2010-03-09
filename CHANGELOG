@@ -1,6 +1,14 @@
 3.6.0
 - Zend Framework was updated to 1.10.2
 - FCKEditor was dropped and CKEditor 3.2 was added
+- P4A_Data_Source::exportToCSV() deprecated method was removed
+- P4A::isPopupOpened() deprecated method was removed
+- P4A_Mask::unsetFocus() deprecated method was removed
+- P4A_Mask::displayText() deprecated method was removed
+- P4A_Table::setHeader() deprecated method was removed
+- P4A_Box::setValue() and getValue() deprecated methods ware removed
+- P4A_DB::getAll(), queryAll(), getRow(), queryRow(), getCol(), queryCol(),
+  getOne() and queryOne() deprecated methods ware removed
 
 3.4.4
 - Zend Framework was updated to 1.10.1

@@ -211,56 +211,12 @@ class P4A_DB
 	 * @param string $query
 	 * @param array $bind
 	 * @return array
-	 * @deprecated 
-	 */
-	public function getAll($query, $bind = array())
-	{
-		return $this->adapter->fetchAll($query, $bind);
-	}
-
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
-	 * @deprecated 
-	 */
-	public function queryAll($query, $bind = array())
-	{
-		return $this->adapter->fetchAll($query, $bind);
-	}
-	
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
 	 */
 	public function fetchAll($query, $bind = array())
 	{
 		return $this->adapter->fetchAll($query, $bind);
 	}
 
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
-	 * @deprecated 
-	 */
-	public function getRow($query, $bind = array())
-	{
-		return $this->adapter->fetchRow($query, $bind);
-	}
-
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
-	 * @deprecated 
-	 */
-	public function queryRow($query, $bind = array())
-	{
-		return $this->adapter->fetchRow($query, $bind);
-	}
-	
 	/**
 	 * @param string $query
 	 * @param array $bind
@@ -275,56 +231,12 @@ class P4A_DB
 	 * @param string $query
 	 * @param array $bind
 	 * @return array
-	 * @deprecated 
-	 */
-	public function getCol($query, $bind = array())
-	{
-		return $this->adapter->fetchCol($query, $bind);
-	}
-
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
-	 * @deprecated 
-	 */
-	public function queryCol($query, $bind = array())
-	{
-		return $this->adapter->fetchCol($query, $bind);
-	}
-	
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return array
 	 */
 	public function fetchCol($query, $bind = array())
 	{
 		return $this->adapter->fetchCol($query, $bind);
 	}
 
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return string
-	 * @deprecated 
-	 */
-	public function getOne($query, $bind = array())
-	{
-		return $this->adapter->fetchOne($query, $bind);
-	}
-
-	/**
-	 * @param string $query
-	 * @param array $bind
-	 * @return string
-	 * @deprecated 
-	 */
-	public function queryOne($query, $bind = array())
-	{
-		return $this->adapter->fetchOne($query, $bind);
-	}
-	
 	/**
 	 * @param string $query
 	 * @param array $bind
