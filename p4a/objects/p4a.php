@@ -260,15 +260,6 @@ class P4A extends P4A_Object
 
 	/**
 	 * @return boolean
-	 * @deprecated 
-	 */
-	public function isPopupOpened()
-	{
-		return $this->active_mask->isPopup();
-	}
-
-	/**
-	 * @return boolean
 	 */
 	public function inAjaxCall()
 	{
