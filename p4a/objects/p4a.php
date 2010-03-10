@@ -551,7 +551,7 @@ class P4A extends P4A_Object
 		header("Last-Modified: $gmdate GMT");
 		
 		print '<?xml version="1.0" encoding="utf-8" ?>';
-		if ($this->_redesign_whole_mask) {
+		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId(true) . '">';
 		} else {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
