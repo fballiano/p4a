@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
 p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
-	CKEDITOR.replace( '<?php echo $this->getId() ?>input', {
+	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
 		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
 		width: '<?php echo $this->getWidth() ?>',
 		height: '<?php echo $this->getHeight() ?>',
