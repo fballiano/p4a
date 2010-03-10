@@ -117,7 +117,7 @@ class P4A_Mask extends P4A_Object
 	/**
 	 * @var boolean
 	 */
-	private $_redesign_focus = FALSE;
+	private $_redesign_focus = false;
 
 	/**
 	 * @param string $name Object name (identifier)
