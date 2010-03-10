@@ -552,9 +552,9 @@ class P4A extends P4A_Object
 		
 		print '<?xml version="1.0" encoding="utf-8" ?>';
 		if ($this->_redesign_whole_mask) {
-			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
-		} else {
 			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId(true) . '">';
+		} else {
+			print '<ajax-response action_id="' . $this->getActionHistoryId() . '" focus_id="' . $this->getFocusedObjectId() . '">';
 		}
 		foreach ($this->getRenderedMessages() as $message) {
 			print "\n<message><![CDATA[$message]]></message>";
@@ -882,7 +882,7 @@ class P4A extends P4A_Object
 
 		if (!$this->inAjaxCall()) {
 			$return .= '$(function() {' . "\n" .
-			'p4a_focus_set("' . $this->getFocusedObjectId() . '");' . "\n" .
+			'p4a_focus_set("' . $this->getFocusedObjectId(true) . '");' . "\n" .
 			'});' . "\n";
 		}
 		
@@ -924,9 +924,7 @@ class P4A extends P4A_Object
 	public function getFocusedObjectId($to_redesign = false)
 	{
 		if (is_object($this->active_mask)) {
-			if ($to_redesign and $this->active_mask->isFocusToRedesign()) {
-				return $this->active_mask->getFocusedObjectId();
-			} elseif ($to_redesign === false) {
+			if ($to_redesign or $this->active_mask->isFocusToRedesign()) {
 				return $this->active_mask->getFocusedObjectId();
 			}
 		}

@@ -188,7 +188,7 @@ class P4A_Mask extends P4A_Object
 	{
 		if ($object instanceof P4A_Object) {
 			$this->focus_object_id = $object->getId();
-			$this->_redesign_focus = TRUE;
+			$this->_redesign_focus = true;
 		} elseif ($object === null) {
 			$this->focus_object_id = null;
 		}

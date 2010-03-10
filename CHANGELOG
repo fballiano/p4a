@@ -14,6 +14,7 @@
 - mask's right sidebar is now shown correctly
 - P4A_Mask::setLeftSidebarWidth(), setRightSidebarWidth(),
   getLeftSidebarWidth() and getRightSidebarWidth() methods were added
+- focus internal management was rewritten
 
 3.4.4
 - Zend Framework was updated to 1.10.1
