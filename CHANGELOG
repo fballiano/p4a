@@ -12,6 +12,8 @@
 - P4A_Output_File now supports the "new window" param
 - P4A_DB_Source::rowByPk() method now returns the retrieved row
 - mask's right sidebar is now shown correctly
+- P4A_Mask::setLeftSidebarWidth(), setRightSidebarWidth(),
+  getLeftSidebarWidth() and getRightSidebarWidth() methods were added
 
 3.4.4
 - Zend Framework was updated to 1.10.1

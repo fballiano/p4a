@@ -118,6 +118,16 @@ class P4A_Mask extends P4A_Object
 	 * @var boolean
 	 */
 	private $_redesign_focus = false;
+	
+	/**
+	 * @var array
+	 */
+	private $_left_sidebar_width = array(280, "px");
+	
+	/**
+	 * @var array
+	 */
+	private $_right_sidebar_width = array(280, "px");
 
 	/**
 	 * @param string $name Object name (identifier)
@@ -676,5 +686,43 @@ class P4A_Mask extends P4A_Object
 	{
 		P4A::singleton()->messageInfo($message);
 		return $this;
+	}
+	
+	/**
+	 * @param integer $width
+	 * @param string $unit
+	 * @return P4A_Mask
+	 */
+	public function setLeftSidebarWidth($width, $unit = "px")
+	{
+		$this->_left_sidebar_width = array($width, $unit);
+		return $this;
+	}
+	
+	/**
+	 * @param integer $width
+	 * @param string $unit
+	 * @return P4A_Mask
+	 */
+	public function setRightSidebarWidth($width, $unit = "px")
+	{
+		$this->_right_sidebar_width = array($width, $unit);
+		return $this;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getLeftSidebarWidth()
+	{
+		return $this->_left_sidebar_width;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getRightSidebarWidth()
+	{
+		return $this->_right_sidebar_width;
 	}
 }

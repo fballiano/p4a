@@ -42,14 +42,14 @@ if (isset($menu) and isset($top)) {
 }
 ?>
 
-<?php if (isset($sidebar_left)): $_sidebar_left_width='280';?>
-<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_left_width ?>px;">
+<?php if (isset($sidebar_left)): ?>
+<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $tmp = $this->getLeftSidebarWidth(); echo "{$tmp[0]}{$tmp[1]}" ?>;">
 	<?php echo $sidebar_left ?>
 </div>
 <?php endif; ?>
 
-<?php if (isset($sidebar_right)):  $_sidebar_right_width='280';?>
-<div id="p4a_sidebar_right" style="padding-top:<?php echo $_top_margin+10?>px; width:<?php echo $_sidebar_right_width ?>px;">
+<?php if (isset($sidebar_right)): ?>
+<div id="p4a_sidebar_right" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $tmp = $this->getRightSidebarWidth(); echo "{$tmp[0]}{$tmp[1]}" ?>;">
 	<?php echo $sidebar_right ?>
 </div>
 <?php endif; ?>
