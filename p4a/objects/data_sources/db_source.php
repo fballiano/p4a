@@ -625,6 +625,11 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $row;
 	}
 
+	/**
+	 * @param integer $num_row The position of the row to retrieve in the data source
+	 * @param boolean $move_pointer
+	 * @return array
+	 */
 	public function row($num_row = null, $move_pointer = true)
 	{
 		$db = P4A_DB::singleton($this->getDSN());
@@ -689,13 +694,20 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $row;
 	}
 
+	/**
+	 * @param mixed $pk
+	 * @return array
+	 */
 	public function rowByPk($pk)
 	{
 		$row = $this->getPkRow($pk);
 		$position = $this->getRowPosition($row);
-		$this->row($position);
+		return $this->row($position);
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getNumRows()
 	{
 		if ($this->_num_rows === null) {
@@ -706,6 +718,10 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $this->_num_rows;
 	}
 
+	/**
+	 * @param array $row
+	 * @return integer
+	 */
 	public function getRowPosition($row = null)
 	{
 		if (!$this->getQuery()) {
