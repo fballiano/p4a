@@ -677,8 +677,9 @@ function P4A_Redirect_To_File($file, $new_window = false)
  * The file will be deleted after being transfered to the client.
  * @param string|array $file_content
  * @param string $file_name file name with extension
+ * @param boolean $new_window Only works within AJAX calls
  */
-function P4A_Output_File($file_content, $file_name)
+function P4A_Output_File($file_content, $file_name, $new_window = false)
 {
 	$name = '_p4a_' . uniqid() . '_' . $file_name;
 	while (file_exists(P4A_UPLOADS_TMP_DIR . "/$name")) {
@@ -695,5 +696,5 @@ function P4A_Output_File($file_content, $file_name)
 	}
 	fclose($fp);
 	
-	P4A_Redirect_To_File(P4A_UPLOADS_TMP_NAME . "/$name");
+	P4A_Redirect_To_File(P4A_UPLOADS_TMP_NAME . "/$name", $new_window);
 }
