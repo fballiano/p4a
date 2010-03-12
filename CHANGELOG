@@ -17,6 +17,8 @@
 - focus internal management was rewritten
 - jQuery::form was updated to 2.40
 - jQuery was updated to 1.4.2
+- pt_BR translation was added to products_catalogue sample application
+  (thanks to Cassiano Faria)
 
 3.4.4
 - Zend Framework was updated to 1.10.1
