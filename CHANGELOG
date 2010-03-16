@@ -15,7 +15,7 @@
 - P4A_Mask::setLeftSidebarWidth(), setRightSidebarWidth(),
   getLeftSidebarWidth() and getRightSidebarWidth() methods were added
 - focus internal management was rewritten
-- jQuery::form was updated to 2.40
+- jQuery::form was updated to 2.43
 - jQuery was updated to 1.4.2
 - pt_BR translation was added to products_catalogue sample application
   (thanks to Cassiano Faria)
