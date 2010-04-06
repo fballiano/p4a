@@ -541,7 +541,7 @@ class P4A extends P4A_Object
 	public function raiseXMLResponse()
 	{
 		ob_start();
-		$script_detector = '<script.*?>(.*?)<\/script>';
+		$script_detector = '<script(.*?)>(.*?)<\/script>';
 		
 		$gmdate = gmdate("D, d M Y H:i:s");
 		header("Content-Type: text/xml");
@@ -563,33 +563,46 @@ class P4A extends P4A_Object
 		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
 			$as_string = $this->active_mask->getAsString(false) . $this->getJavascriptInitializations();
 			$javascript_codes = array();
-			$javascript = '';
+			$javascript_pre = '';
+			$javascript_post = '';
 			$html = preg_replace("/{$script_detector}/si", '', $as_string);
-			preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
-			$javascript_codes = $javascript_codes[1];
+			preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes, PREG_SET_ORDER);
+			
 			foreach ($javascript_codes as $code) {
-				$javascript .= "$code\n\n";
+				if (stripos($code[1], "parse_before_html_replace") !== false) {
+					$javascript_pre .= "$code[2]\n\n";
+				} else {
+					$javascript_post .= "$code[2]\n\n";
+				}
 			}
+			
 			print "<widget id='p4a_inner_body'>\n";
 			print "<html><![CDATA[{$html}]]></html>\n";
-			print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+			print "<javascript_pre><![CDATA[{$javascript_pre}]]></javascript_pre>\n";
+			print "<javascript_post><![CDATA[{$javascript_post}]]></javascript_post>\n";
 			print "</widget>";
 		} else {
 			while (list( ,$id) = each($this->_to_redesign)) {
 				$object =& $this->getObject($id);
 				$as_string = $object->getAsString();
 				$javascript_codes = array();
-				$javascript = '';
+				$javascript_pre = '';
+				$javascript_post = '';
 				$html = preg_replace("/{$script_detector}/si", '', $as_string);
-				preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes);
-				$javascript_codes = $javascript_codes[1];
+				preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes, PREG_SET_ORDER);
+
 				foreach ($javascript_codes as $code) {
-					$javascript .= "$code\n\n";
+					if (stripos($code[1], "parse_before_html_replace") !== false) {
+						$javascript_pre .= "$code[2]\n\n";
+					} else {
+						$javascript_post .= "$code[2]\n\n";
+					}
 				}
 
 				print "\n<widget id='$id'>\n";
 				print "<html><![CDATA[{$html}]]></html>\n";
-				print "<javascript><![CDATA[{$javascript}]]></javascript>\n";
+				print "<javascript_pre><![CDATA[{$javascript_pre}]]></javascript_pre>\n";
+				print "<javascript_post><![CDATA[{$javascript_post}]]></javascript_post>\n";
 				print "</widget>\n";
 			}
 		}

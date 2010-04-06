@@ -1,6 +1,16 @@
 3.6.0
-- Zend Framework was updated to 1.10.2
+- Zend Framework was updated to 1.10.3
 - FCKEditor was dropped and CKEditor 3.2 was added
+- in full AJAX environment external javascripts are loaded only if
+  they were not loaded before
+- in full AJAX environment widgets can now execute javascript code before
+  or after the HTML substitution
+- focus internal management was rewritten
+- P4A_Mask::setLeftSidebarWidth(), setRightSidebarWidth(),
+  getLeftSidebarWidth() and getRightSidebarWidth() methods were added
+- jQuery::form was updated to 2.43
+- jQuery was updated to 1.4.2
+- mask's right sidebar is now shown correctly
 - P4A_Data_Source::exportToCSV() deprecated method was removed
 - P4A::isPopupOpened() deprecated method was removed
 - P4A_Mask::unsetFocus() deprecated method was removed
@@ -11,12 +21,6 @@
   getOne() and queryOne() deprecated methods ware removed
 - P4A_Output_File now supports the "new window" param
 - P4A_DB_Source::rowByPk() method now returns the retrieved row
-- mask's right sidebar is now shown correctly
-- P4A_Mask::setLeftSidebarWidth(), setRightSidebarWidth(),
-  getLeftSidebarWidth() and getRightSidebarWidth() methods were added
-- focus internal management was rewritten
-- jQuery::form was updated to 2.43
-- jQuery was updated to 1.4.2
 - pt_BR translation was added to products_catalogue sample application
   (thanks to Cassiano Faria)
 - es_MX translation was added to products_catalogue sample application

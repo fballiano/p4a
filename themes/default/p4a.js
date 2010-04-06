@@ -92,6 +92,11 @@ p4a_ajax_process_response = function (response)
 	   		var object_id = widgets[i].attributes[0].value;
 	   		var object = $('#'+object_id);
 			if (object.size() > 0) {
+	   			try {
+		   			var javascript = widgets[i].getElementsByTagName('javascript_pre').item(0);
+		   			eval(javascript.firstChild.data);
+	   			} catch (e) {}
+	   			
 				var html = widgets[i].getElementsByTagName('html').item(0);
 	   			if (html) {
 	   				if (object_id == 'p4a_inner_body') {
@@ -102,7 +107,7 @@ p4a_ajax_process_response = function (response)
 	   			}
 	   			
 	   			try {
-		   			var javascript = widgets[i].getElementsByTagName('javascript').item(0);
+		   			var javascript = widgets[i].getElementsByTagName('javascript_post').item(0);
 		   			eval(javascript.firstChild.data);
 	   			} catch (e) {}
 	   		}
@@ -369,6 +374,11 @@ p4a_messages_start_timer = function (milliseconds)
 
 p4a_load_js = function (url, callback)
 {
+	if ($("script").filter(function () {return $(this).attr("src") == url}).length) {
+		if (typeof callback == "function") callback();
+		return;
+	}
+	
 	var tag = document.createElement('script');
 	tag.type = "text/javascript";
 	tag.src = url;
