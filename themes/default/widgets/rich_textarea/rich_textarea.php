@@ -32,8 +32,17 @@
  */
 ?>
 
-<script type="text/javascript">
+<script type="text/javascript" class="parse_before_html_replace">
+var instance_id = '<?php echo $this->getId() ?>input';
+if (CKEDITOR && CKEDITOR.instances[instance_id]) {
+    var instance = CKEDITOR.instances[instance_id];
+	instance.destroy();
+    CKEDITOR.remove(instance);
+    delete CKEDITOR.instances[instance_id];
+}
+</script>
 
+<script type="text/javascript">
 p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
 	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
 		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
@@ -71,5 +80,4 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', fu
 		<?php endif; ?>
 	});
 });
-
 </script>
