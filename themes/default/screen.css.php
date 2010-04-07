@@ -33,6 +33,8 @@
 header('Content-type: text/css');
 ?>
 
+@import url("reset.css");
+
 /*************************/
 /* Default mask template */
 /*************************/
