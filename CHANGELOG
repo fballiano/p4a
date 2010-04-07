@@ -1,4 +1,7 @@
 3.6.0
+
+TODO: check drag drop, scrollbar
+
 - Zend Framework was updated to 1.10.3
 - FCKEditor was dropped and CKEditor 3.2 was added
 - in full AJAX environment external javascripts are loaded only if
@@ -27,6 +30,7 @@
   (thanks to Cassiano Faria)
 - es_MX translation was added to products_catalogue sample application
   (thanks to Edgar Joel)
+- Yahoo CSS reset was updated to 3.1.0
 
 3.4.4
 - Zend Framework was updated to 1.10.1

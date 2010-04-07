@@ -159,7 +159,6 @@ class P4A extends P4A_Object
 			$this->addJavascript(P4A_THEME_PATH . "/ie6fixes.js");
 		}
 		$this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-		$this->addCSS(P4A_THEME_PATH . "/reset-fonts.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.core.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/jquery/ui.theme.css", "all");
 		$this->addCSS(P4A_THEME_PATH . "/screen.css.php?" . $this->getCssConstants(), "all");
