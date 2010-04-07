@@ -234,8 +234,7 @@ p4a_autocomplete_load = function (callback)
 	p4a_load_js(p4a_theme_path + '/jquery/ui.widget.js', function () {
 		p4a_load_js(p4a_theme_path + '/jquery/ui.position.js', function () {
 			p4a_load_js(p4a_theme_path + '/jquery/ui.autocomplete.js', function () {
-				p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css');
-				callback();
+				p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css', callback);
 			});
 		});
 	});
@@ -407,16 +406,18 @@ p4a_load_js = function (url, callback)
 
 p4a_load_css = function (url, callback)
 {
-	if(document.createStyleSheet) {
-		document.createStyleSheet(url);
-	} else {
-		var tag = document.createElement('link');
-		tag.type = "text/css";
-		tag.rel = "stylesheet";
-		tag.media = "all";
-		tag.href = url;
-		$('head').get(0).appendChild(tag);
+	if ($("link").filter(function () {return $(this).attr("href") == url}).length) {
+		if (typeof callback == "function") callback();
+		return;
 	}
+	
+	var tag = document.createElement('link');
+	tag.type = "text/css";
+	tag.rel = "stylesheet";
+	tag.media = "all";
+	tag.href = url;
+	$('head').get(0).appendChild(tag);
+	callback();
 }
 
 $(function () {
