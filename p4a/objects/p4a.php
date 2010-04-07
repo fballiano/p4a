@@ -382,7 +382,7 @@ class P4A extends P4A_Object
 			die();
 		} elseif (isset($_REQUEST['_p4a_autocomplete'])) {
 			if (isset($_REQUEST['_object']) and
-				isset($_REQUEST['q']) and
+				isset($_REQUEST['term']) and
 				isset($this->objects[$_REQUEST['_object']])) {
 				$object =& $this->objects[$_REQUEST['_object']];
 				$db = P4A_DB::singleton($object->data_field->getDSN());
@@ -391,9 +391,9 @@ class P4A extends P4A_Object
 				$description_field = $object->getSourceDescriptionField();
 				
 				if ($object->isActionTriggered('onautocomplete')) {
-					$this->actionHandler('onautocomplete', $data, $_REQUEST['q']);
+					$this->actionHandler('onautocomplete', $data, $_REQUEST['term']);
 				} else {
-					$q = $db->quote($_REQUEST['q'], false);
+					$q = $db->quote($_REQUEST['term'], false);
 					$where = $db->getCaseInsensitiveLikeSQL($description_field, "%$q%");
 					if ($old_where) {
 						$where = "({$old_where}) AND ($where)";
@@ -403,9 +403,16 @@ class P4A extends P4A_Object
 				
 				$all = $data->getAll();
 				$data->setWhere($old_where);
+				$new_data = array();
 				foreach ($all as $row) {
-					echo "{$row[$description_field]}\n";
+					$new_data[] = array(
+						"id" => $row[$description_field],
+						"label" => $row[$description_field],
+						"value" => $row[$description_field]
+					);
 				}
+				require_once "Zend/Json.php";
+				echo Zend_Json::encode($new_data);
 			}
 			die();
 		} elseif (isset($_REQUEST['_p4a_date_format'])) {

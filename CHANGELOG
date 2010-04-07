@@ -10,6 +10,8 @@
   getLeftSidebarWidth() and getRightSidebarWidth() methods were added
 - jQuery::form was updated to 2.43
 - jQuery was updated to 1.4.2
+- jQuery UI was updated to 1.8.0
+- jQuery::autocomplete plugin was replaced by jQuery UI autocomplete
 - mask's right sidebar is now shown correctly
 - P4A_Data_Source::exportToCSV() deprecated method was removed
 - P4A::isPopupOpened() deprecated method was removed

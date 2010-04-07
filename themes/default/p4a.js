@@ -229,6 +229,18 @@ p4a_tabs_load = function ()
 	});
 }
 
+p4a_autocomplete_load = function (callback)
+{
+	p4a_load_js(p4a_theme_path + '/jquery/ui.widget.js', function () {
+		p4a_load_js(p4a_theme_path + '/jquery/ui.position.js', function () {
+			p4a_load_js(p4a_theme_path + '/jquery/ui.autocomplete.js', function () {
+				p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css');
+				callback();
+			});
+		});
+	});
+}
+
 p4a_calendar_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');

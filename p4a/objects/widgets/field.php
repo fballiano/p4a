@@ -677,7 +677,7 @@ class P4A_Field extends P4A_Widget
 		$sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 		if ($this->isEnabled()) {
 			if (is_object($this->data) and $this->data instanceof P4A_DB_Source) {
-				$sReturn .= "<script type='text/javascript'>\$(function(){p4a_load_js('" . P4A_THEME_PATH . "/jquery/autocomplete.js',function(){\$('#{$id}input').autocomplete('index.php?_p4a_autocomplete&_object={$id}',{delay:10,minChars:2,matchSubset:1,matchContains:1,cacheLength:10,autoFill:true})});});</script>";
+				$sReturn .= "<script type='text/javascript'>\$(function(){p4a_autocomplete_load(function(){\$('#{$id}input').autocomplete({source:'index.php?_p4a_autocomplete&_object={$id}',minLength:2})});});</script>";
 			} elseif ($this->input_mask !== null) {
 				$sReturn .= "<script type='text/javascript'>\$(function(){p4a_maskedinput('{$id}','" . P4A_Quote_Javascript_String($this->input_mask) . "')});</script>";
 			}
