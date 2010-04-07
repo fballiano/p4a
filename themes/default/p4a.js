@@ -417,7 +417,7 @@ p4a_load_css = function (url, callback)
 	tag.media = "all";
 	tag.href = url;
 	$('head').get(0).appendChild(tag);
-	callback();
+	if (typeof callback == "function") callback();
 }
 
 $(function () {
