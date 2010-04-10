@@ -461,7 +461,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$db = P4A_DB::singleton($this->getDSN());
 		
 		if ($this->getQuery()) {
-			$row = $db->getRow($this->getQuery());
+			$row = $db->fetchRow($this->getQuery());
 			foreach ($row as $column_name=>$column_value) {
 				$this->createDataField($column_name);
 			}
