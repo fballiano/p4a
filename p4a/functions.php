@@ -622,9 +622,9 @@ function P4A_Redirect_To_Url($url, $new_window = false)
 		echo "<widget id='p4a'>\n";
 		
 		if ($new_window) {
-			echo "<javascript><![CDATA[window.open('$url')]]></javascript>\n";
+			echo "<javascript_pre><![CDATA[window.open('$url')]]></javascript_pre>\n";
 		} else {
-			echo "<javascript><![CDATA[window.location='$url']]></javascript>\n";
+			echo "<javascript_pre><![CDATA[window.location='$url']]></javascript_pre>\n";
 		}
 		
 		echo "</widget>\n";
@@ -658,9 +658,9 @@ function P4A_Redirect_To_File($file, $new_window = false)
 		echo "<widget id='p4a'>\n";
 		
 		if ($new_window) {
-			echo "<javascript><![CDATA[window.open('$file')]]></javascript>\n";
+			echo "<javascript_pre><![CDATA[window.open('$file')]]></javascript_pre>\n";
 		} else {
-			echo "<javascript><![CDATA[window.location='$file']]></javascript>\n";
+			echo "<javascript_pre><![CDATA[window.location='$file']]></javascript_pre>\n";
 		}
 		
 		echo "</widget>\n";
