@@ -43,13 +43,13 @@ if (isset($menu) and isset($top)) {
 ?>
 
 <?php if (isset($sidebar_left)): ?>
-<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $tmp = $this->getLeftSidebarWidth(); echo "{$tmp[0]}{$tmp[1]}" ?>;">
+<div id="p4a_sidebar_left" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $_sidebar_left_width = $this->getLeftSidebarWidth(); echo "{$_sidebar_left_width[0]}{$_sidebar_left_width[1]}" ?>;">
 	<?php echo $sidebar_left ?>
 </div>
 <?php endif; ?>
 
 <?php if (isset($sidebar_right)): ?>
-<div id="p4a_sidebar_right" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $tmp = $this->getRightSidebarWidth(); echo "{$tmp[0]}{$tmp[1]}" ?>;">
+<div id="p4a_sidebar_right" style="padding-top:<?php echo $_top_margin+10 ?>px; width:<?php $_sidebar_right_width = $this->getRightSidebarWidth(); echo "{$_sidebar_right_width[0]}{$_sidebar_right_width[1]}" ?>;">
 	<?php echo $sidebar_right ?>
 </div>
 <?php endif; ?>
@@ -71,7 +71,7 @@ if (isset($menu) and isset($top)) {
 </div>
 
 <!-- MAIN  -->
-<div id="p4a_main_container" style="margin-top:<?php echo $_top_margin?>px; <?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width}px;"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width}px;"?>">
+<div id="p4a_main_container" style="margin-top:<?php echo $_top_margin?>px;<?php if (isset($_sidebar_left_width)) echo "margin-left:{$_sidebar_left_width[0]}{$_sidebar_left_width[1]};"?> <?php if (isset($_sidebar_right_width)) echo "margin-right:{$_sidebar_right_width[0]}{$_sidebar_right_width[1]};"?>">
 	<?php if (strlen($_title)): ?>
 	<h2><?php echo P4A_Generate_Widget_Layout_Table($_icon, $_title) ?></h2>
 	<?php endif; ?>
