@@ -317,6 +317,7 @@ class P4A_Table extends P4A_Widget
 		$this->navigation_bar->buttons->elements_page->setVisible(true);
 		$this->navigation_bar->buttons->s2->setVisible(true);
 		$this->navigation_bar->buttons->go2->setVisible(true);
+		return $this;
 	}
 	
 	/**
@@ -327,6 +328,7 @@ class P4A_Table extends P4A_Widget
 		$this->navigation_bar->buttons->elements_page->setVisible(false);
 		$this->navigation_bar->buttons->s2->setVisible(false);
 		$this->navigation_bar->buttons->go2->setVisible(false);
+		return $this;
 	}
 
 	/**
