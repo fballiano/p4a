@@ -252,7 +252,7 @@ class P4A_I18N
 	 * @param boolean $throw_exception do you want this function to throw an exception on error?
 	 * @return mixed
 	 */
-	public function normalize($value, $type, $num_of_decimals, $throw_exception = true)
+	public function normalize($value, $type, $num_of_decimals = 0, $throw_exception = true)
 	{
 		if ($throw_exception) {
 			return $this->_normalize($value, $type, $num_of_decimals);
