@@ -33,13 +33,13 @@
 ?>
 
 <script type="text/javascript" class="parse_before_html_replace">
-var instance_id = '<?php echo $this->getId() ?>input';
-if (CKEDITOR && CKEDITOR.instances[instance_id]) {
-    var instance = CKEDITOR.instances[instance_id];
+try {
+	var instance_id = '<?php echo $this->getId() ?>input';
+	var instance = CKEDITOR.instances[instance_id];
 	instance.destroy();
-    CKEDITOR.remove(instance);
-    delete CKEDITOR.instances[instance_id];
-}
+	CKEDITOR.remove(instance);
+	delete CKEDITOR.instances[instance_id];
+} catch (e) {}
 </script>
 
 <script type="text/javascript">
