@@ -44,7 +44,9 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	if (p4a_ajax_enabled) {
 		p4a_form._ajax.value = 2;
 		$('#p4a').ajaxSubmit({
-			dataType: 'xml',
+			dataType: 'json',
+			iframe: true,
+			semantic: true,
 			success: p4a_ajax_process_response
 		});
 	} else {
@@ -78,7 +80,9 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 	p4a_form._ajax.value = 1;
 
 	$('#p4a').ajaxSubmit({
-		dataType: 'xml',
+		dataType: 'json',
+		iframe: true,
+		semantic: true,
 		success: p4a_ajax_process_response
 	});
 }
@@ -86,47 +90,44 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 p4a_ajax_process_response = function (response)
 {
 	try {
-		p4a_form._action_id.value = response.getElementsByTagName('ajax-response')[0].attributes[0].value;
-		var widgets = response.getElementsByTagName('widget');
-		for (i=0; i<widgets.length; i++) {
-	   		var object_id = widgets[i].attributes[0].value;
+		p4a_form._action_id.value = response.action_id;
+		for (i=0; i<response.widgets.length; i++) {
+			var widget = response.widgets[i];
+	   		var object_id = widget.id;
 	   		var object = $('#'+object_id);
 			if (object.size() > 0) {
 	   			try {
-		   			var javascript = widgets[i].getElementsByTagName('javascript_pre').item(0);
-		   			eval(javascript.firstChild.data);
+		   			eval(widget.javascript_pre);
 	   			} catch (e) {}
 	   			
-				var html = widgets[i].getElementsByTagName('html').item(0);
-	   			if (html) {
-	   				if (object_id == 'p4a_inner_body') {
-	   					object.html(html.firstChild.data);
-	   				} else {
-		   				object.parent().css('display', 'block').html(html.firstChild.data);
-		   			}
+   				if (object_id == 'p4a_inner_body') {
+   					$("#p4a_inner_body").html(p4a_html_entity_decode(widget.html));
+   				} else {
+	   				object.parent().css('display', 'block').html(p4a_html_entity_decode(widget.html));
 	   			}
 	   			
 	   			try {
-		   			var javascript = widgets[i].getElementsByTagName('javascript_post').item(0);
-		   			eval(javascript.firstChild.data);
+	   				eval(widget.javascript_post);
 	   			} catch (e) {}
 	   		}
 		}
 		
-		var messages = response.getElementsByTagName('message');
+		p4a_center_elements();
+		p4a_menu_add_submenu_indicator();
+		
+		try {
+			p4a_focus_set(response.focus_id);
+		} catch (e) {}
+		
+		var messages = response.messages;
 		if (messages.length > 0) {
 			var new_messages_container = $('<div class="p4a_system_messages"><div class="p4a_system_messages_inner"></div></div>').appendTo(document.body).find('div');
 			for (i=0; i<messages.length; i++) {
-				$('<div class="p4a_system_message">'+messages[i].firstChild.data+'</div>').appendTo(new_messages_container);
+				$('<div class="p4a_system_message">'+p4a_html_entity_decode(messages[i])+'</div>').appendTo(new_messages_container);
 			}
 			p4a_messages_show();
 		}
 		
-		p4a_center_elements();
-		p4a_menu_add_submenu_indicator();
-		if (response.getElementsByTagName('ajax-response')[0].attributes.length>1) {
-			p4a_focus_set(response.getElementsByTagName('ajax-response')[0].attributes[1].value);
-		}
 		if (typeof p4a_png_fix == 'function') p4a_png_fix();
 		if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
 		p4a_working = false;
@@ -416,6 +417,14 @@ p4a_load_css = function (url, callback)
 	tag.href = url;
 	$('head').get(0).appendChild(tag);
 	if (typeof callback == "function") callback();
+}
+
+p4a_html_entity_decode = function (string)
+{
+	var tmp = $("<div/>")
+	var decoded = tmp.html(string).text();
+	tmp.remove();
+	return decoded;
 }
 
 $(function () {

@@ -152,6 +152,7 @@ class P4A extends P4A_Object
 		$browser_identification = $this->detectClient();
 
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
+		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.xml2json.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
@@ -546,11 +547,48 @@ class P4A extends P4A_Object
 	 */
 	public function raiseXMLResponse()
 	{
+		$resp = new p4a_ajax_response();
+		$resp->action_id = $this->getActionHistoryId();
+		$resp->messages = $this->getRenderedMessages();
+		
+		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
+			$resp->focus_id = $this->getFocusedObjectId(true);
+		} else {
+			$resp->focus_id = $this->getFocusedObjectId();
+		}
+				
+		if ($this->_redesign_whole_mask or $_REQUEST['_ajax'] == 2) {
+			$as_string = $this->active_mask->getAsString(false) . $this->getJavascriptInitializations();
+			$resp->widgets[] = new p4a_ajax_response_widget("p4a_inner_body", $as_string);
+		} else {
+			while (list( ,$id) = each($this->_to_redesign)) {
+				$as_string = $this->getObject($id)->getAsString();
+				$resp->widgets[] = new p4a_ajax_response_widget($id, $as_string);
+			}
+		}
+
+		$gmdate = gmdate("D, d M Y H:i:s");
+		header('Content-type: text/javascript; charset: UTF-8');
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		header("Pragma: no-cache");
+		header("Last-Modified: $gmdate GMT");
+		
 		ob_start();
-		$script_detector = '<script(.*?)>(.*?)<\/script>';
+		echo json_encode($resp);
+		
+		if (P4A_AJAX_DEBUG) {
+			if (($fp = @fopen(P4A_AJAX_DEBUG, 'w')) !== false) {
+				@fwrite($fp, ob_get_contents());
+				@fclose($fp);
+			}
+		}
+
+		ob_end_flush();
+		return;
 		
 		$gmdate = gmdate("D, d M Y H:i:s");
-		header("Content-Type: text/xml");
+		header("Content-Type: text/xml; charset: UTF-8");
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 		header("Pragma: no-cache");
@@ -1050,5 +1088,47 @@ class P4A extends P4A_Object
 	public function __wakeup()
 	{
 		$this->messages = array();
+	}
+}
+
+
+
+class p4a_ajax_response
+{
+	public $action_id = null;
+	public $focus_id = null;
+	public $widgets = array();
+	public $messages = array();
+}
+
+
+class p4a_ajax_response_widget
+{
+	public $id = null;
+	public $html = null;
+	public $javascript_pre = null;
+	public $javascript_post = null;
+	
+	public function __construct($id, $as_string)
+	{
+		$script_detector = '<script(.*?)>(.*?)<\/script>';
+		$javascript_codes = array();
+		$javascript_pre = '';
+		$javascript_post = '';
+		$html = preg_replace("/{$script_detector}/si", '', $as_string);
+		preg_match_all("/{$script_detector}/si", $as_string, $javascript_codes, PREG_SET_ORDER);
+		
+		foreach ($javascript_codes as $code) {
+			if (stripos($code[1], "parse_before_html_replace") !== false) {
+				$javascript_pre .= "$code[2]\n\n";
+			} else {
+				$javascript_post .= "$code[2]\n\n";
+			}
+		}
+		
+		$this->id = $id;
+		$this->html = trim($html);
+		$this->javascript_pre = trim($javascript_pre);
+		$this->javascript_post = trim($javascript_post);
 	}
 }
