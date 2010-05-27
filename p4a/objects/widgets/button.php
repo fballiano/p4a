@@ -156,7 +156,7 @@ class P4A_Button extends P4A_Widget
 				$icon = P4A_ICONS_PATH . "/{$size}/{$this->_icon}";
 				$icon .= '.' . P4A_ICONS_EXTENSION;
 			}
-			$icon = "<img src='$icon' width='$size' height='$size' alt=''>";
+			$icon = "<img src='$icon' width='$size' height='$size' alt='' />";
 		}
 		if ($icon) {
 			$class = array('p4a_button_image');
