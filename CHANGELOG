@@ -2,7 +2,7 @@
 
 TODO: check drag drop, scrollbar
 
-- Zend Framework was updated to 1.10.3
+- Zend Framework was updated to 1.10.5
 - FCKEditor was dropped and CKEditor 3.2 was added
 - in full AJAX environment external javascripts are loaded only if
   they were not loaded before
