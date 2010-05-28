@@ -97,6 +97,11 @@ class P4A_DB_Navigator extends P4A_Widget
 	protected $enable_selected_element = false;
 
 	/**
+	 * @var string
+	 */
+	protected $root_label = null;
+
+	/**
 	 * @param string $name
 	 */
 	public function __construct($name)
@@ -217,11 +222,15 @@ class P4A_DB_Navigator extends P4A_Widget
 	 * Note: Movements will work only if P4A_AJAX_ENABLED is true.
 	 * 
 	 * @param boolean
+	 * @param string
 	 * @return P4A_DB_Navigator
+	 * 
+	 * @see P4A_DB_Navigator::setRootLabel()
 	 */
-	public function allowMovementToRoot($allow = true)
+	public function allowMovementToRoot($allow = true, $root_label = null)
 	{
 		$this->allow_movement_to_root = $allow;
+		$this->root_label = $root_label;
 		return $this;
 	}
 
@@ -284,7 +293,10 @@ class P4A_DB_Navigator extends P4A_Widget
 		$class = $this->composeStringClass();
 		$properties = $this->composeStringProperties();
 		if (strlen($js) and $this->allow_movement_to_root) {
-			$return = "<ul id='{$obj_id}' $class $properties><li class='home_node'>&nbsp;{$return}</li></ul>";
+			$root_label = $this->root_label;
+			if (strlen($root_label)) $root_label = __($root_label);
+			if (strlen($root_label) == 0) $root_label = "&nbsp;";
+			$return = "<ul id='{$obj_id}' $class $properties><li class='home_node'>{$root_label}{$return}</li></ul>";
 		} else {
 			$return = "<div id='{$obj_id}' $class $properties>{$return}</div>";
 		}
@@ -418,5 +430,24 @@ class P4A_DB_Navigator extends P4A_Widget
 		}
 
 		return $this->actionHandler('afterMovement');
+	}
+	
+	/**
+	 * Root label is translated at rendering time
+	 * @param string $label
+	 * @return P4A_DB_Navigator
+	 */
+	public function setRootLabel($label)
+	{
+		$this->root_label = $label;
+		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getRootLabel()
+	{
+		return $this->root_label;
 	}
 }

@@ -33,6 +33,9 @@
 - P4A_I18N::normalize() $num_of_decimals params now has a default value
 - P4A_Table_Rows' onformat event now passes a 5th parameter to the interceptor
   method, this param is the complete row
+- P4A_DB_Navigator::setRootLabel() and getRootLabel() methods were added
+- P4A_DB_Navigator::allowMovementToRoot() method now supports a 2nd param
+  (root element label)
 
 3.4.4
 - Zend Framework was updated to 1.10.1
