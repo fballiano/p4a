@@ -31,6 +31,8 @@
   (thanks to Edgar Joel)
 - Yahoo CSS reset was updated to 3.1.0
 - P4A_I18N::normalize() $num_of_decimals params now has a default value
+- P4A_Table_Rows' onformat event now passes a 5th parameter to the interceptor
+  method, this param is the complete row
 
 3.4.4
 - Zend Framework was updated to 1.10.1
