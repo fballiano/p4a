@@ -305,7 +305,16 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, roots_mov
 	
 	if (is_root && !roots_movement) return;
 	
-	$('#' + obj_id + '_' + current_id).draggable({revert: true, handle: 'span'});
+	$('#' + obj_id + '_' + current_id).draggable({
+		revert: true,
+		helper: 'clone',
+		start: function () {
+			$(this).css('visibility', 'hidden');
+		},
+		stop: function () {
+			$(this).css('visibility', 'visible');
+		}
+	});
 	$('#' + obj_id + ' li a').droppable({
 		accept: '.active_node',
 		hoverClass: 'hoverclass',

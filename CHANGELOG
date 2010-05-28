@@ -1,7 +1,5 @@
 3.6.0
 
-TODO: check drag drop, scrollbar
-
 - Zend Framework was updated to 1.10.5
 - FCKEditor was dropped and CKEditor 3.2 was added
 - all AJAX stack was rewritten to use JSON instead of XML
