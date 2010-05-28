@@ -253,3 +253,6 @@ msgstr ""
 # '%value%' is greater than %max% characters long
 msgid "stringLengthTooLong"
 msgstr ""
+
+msgid "Elements/page"
+msgstr ""
