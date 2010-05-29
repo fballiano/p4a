@@ -1,6 +1,6 @@
 3.6.0
 
-- Zend Framework was updated to 1.10.4
+- Zend Framework was updated to 1.10.3
 - FCKEditor was dropped and CKEditor 3.2 was added
 - all AJAX stack was rewritten to use JSON instead of XML
 - in full AJAX environment external javascripts are loaded only if
