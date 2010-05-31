@@ -152,7 +152,6 @@ class P4A extends P4A_Object
 		$browser_identification = $this->detectClient();
 
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
-		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.xml2json.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
 			$this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
@@ -568,14 +567,15 @@ class P4A extends P4A_Object
 		}
 
 		$gmdate = gmdate("D, d M Y H:i:s");
-		header('Content-type: text/javascript; charset: UTF-8');
+		header('Content-type: text/plain; charset: UTF-8');
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 		header("Pragma: no-cache");
 		header("Last-Modified: $gmdate GMT");
 		
 		ob_start();
-		echo json_encode($resp);
+		require_once "Zend/Json.php";
+		echo Zend_Json::encode($resp);
 		
 		if (P4A_AJAX_DEBUG) {
 			if (($fp = @fopen(P4A_AJAX_DEBUG, 'w')) !== false) {
