@@ -1,0 +1,3 @@
+skins/kama/editor.css, add
+span.cke_skin_kama {border:none;padding:0;}
+.cke_skin_kama .cke_button_source .cke_label{display:none;}
