@@ -1152,7 +1152,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$pk_values = $this->getPkValues();
 		}
 
-		if (is_string($pk_values)) {
+		if (is_numeric($pk_values) or is_string($pk_values)) {
 			return "{$this->getPk()} = " . P4A_DB::singleton($this->getDSN())->quote($pk_values, true);
 		} elseif (is_array($pk_values)) {
 			$return = '';
