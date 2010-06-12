@@ -40,7 +40,7 @@ header('Content-type: text/css');
 /*************************/
 
 * {
-	font-family: "Bitstream Vera Sans", sans-serif;
+	font-family: Verdana,Arial,sans-serif;
 	font-size: 11px;
 	color: <?php echo $_GET['fg'] ?>;
 }
