@@ -950,8 +950,9 @@ class P4A_Table_Rows extends P4A_Widget
 
 /**
  * The gui widgets to navigate the table.
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
 class P4A_Table_Navigation_Bar extends P4A_Frame

@@ -22,7 +22,6 @@
  * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
- * @link http://www.crealabs.it
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
