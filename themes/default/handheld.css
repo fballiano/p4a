@@ -1,5 +1,5 @@
 /**
- * Copyright (c) CreaLabs SNC (http://www.crealabs.it)
+ * Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * Code licensed under LGPL3 license:
  * http://www.gnu.org/licenses/lgpl.html
  */
