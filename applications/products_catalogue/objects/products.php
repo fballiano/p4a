@@ -16,25 +16,21 @@
  * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
  * 
  * To contact the authors write to:                                     <br />
- * CreaLabs SNC                                                         <br />
- * Via Medail, 32                                                       <br />
- * 10144 Torino (Italy)                                                 <br />
- * Website: {@link http://www.crealabs.it}                              <br />
- * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
+ * Fabrizio Balliano <fabrizio@fabrizioballiano.it>                     <br />
+ * Andrea Giardina <andrea.giardina@crealabs.it>
  *
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
- * @link http://www.crealabs.it
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
  */
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
 class Products extends P4A_Base_Mask

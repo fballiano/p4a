@@ -16,16 +16,12 @@
  * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
  *
  * To contact the authors write to:                                     <br />
- * CreaLabs SNC                                                         <br />
- * Via Medail, 32                                                       <br />
- * 10144 Torino (Italy)                                                 <br />
- * Website: {@link http://www.crealabs.it}                              <br />
- * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
+ * Fabrizio Balliano <fabrizio@fabrizioballiano.it>                     <br />
+ * Andrea Giardina <andrea.giardina@crealabs.it>
  *
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
- * @link http://www.crealabs.it
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a_validate
@@ -52,9 +48,9 @@ require_once 'Zend/Validate/Regex.php';
 require_once 'Zend/Validate/StringLength.php';
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate extends Zend_Validate
 {
@@ -73,144 +69,144 @@ class P4A_Validate extends Zend_Validate
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Alnum extends Zend_Validate_Alnum
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Alpha extends Zend_Validate_Alpha
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Between extends Zend_Validate_Between
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Ccnum extends Zend_Validate_Ccnum
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Date extends Zend_Validate_Date
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Digits extends Zend_Validate_Digits
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_EmailAddress extends Zend_Validate_EmailAddress
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Float extends Zend_Validate_Float
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_GreaterThan extends Zend_Validate_GreaterThan
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Hex extends Zend_Validate_Hex
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Hostname extends Zend_Validate_Hostname
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_InArray extends Zend_Validate_InArray
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Int extends Zend_Validate_Int
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Ip extends Zend_Validate_Ip
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_LessThan extends Zend_Validate_LessThan
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_NotEmpty extends Zend_Validate_NotEmpty
 {
@@ -229,18 +225,18 @@ class P4A_Validate_NotEmpty extends Zend_Validate_NotEmpty
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_Regex extends Zend_Validate_Regex
 {
 }
 
 /**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  */
 class P4A_Validate_StringLength extends Zend_Validate_StringLength
 {

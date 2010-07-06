@@ -16,16 +16,12 @@
  * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
  * 
  * To contact the authors write to:                                     <br />
- * CreaLabs SNC                                                         <br />
- * Via Medail, 32                                                       <br />
- * 10144 Torino (Italy)                                                 <br />
- * Website: {@link http://www.crealabs.it}                              <br />
- * E-mail: {@link mailto:info@crealabs.it info@crealabs.it}
+ * Fabrizio Balliano <fabrizio@fabrizioballiano.it>                     <br />
+ * Andrea Giardina <andrea.giardina@crealabs.it>
  *
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
- * @link http://www.crealabs.it
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @link http://p4a.sourceforge.net
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
@@ -35,9 +31,9 @@
  * Tabular rapresentation of a data source.
  * This is a complex widget that's used to allow users to navigate
  * data sources and than (for example) edit a record or view details etc...
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
 class P4A_Table extends P4A_Widget
@@ -504,9 +500,9 @@ class P4A_Table extends P4A_Widget
 
 /**
  * Keeps the data for a single table column
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
 class P4A_Table_Col extends P4A_Widget
@@ -798,9 +794,9 @@ class P4A_Table_Col extends P4A_Widget
 
 /**
  * Keeps all the data for all the rows.
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
- * @author Fabrizio Balliano <fabrizio.balliano@crealabs.it>
- * @copyright CreaLabs SNC
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
 class P4A_Table_Rows extends P4A_Widget
