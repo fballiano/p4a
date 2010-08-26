@@ -448,6 +448,10 @@ class P4A_DB_Source extends P4A_Data_Source
 		return $filters;
 	}
 
+	/**
+	 * @return P4A_DB_Source
+	 * @see p4a/objects/P4A_Data_Source#load()
+	 */
 	public function load()
 	{
 		if (!$this->getQuery() and !$this->getTable()){
@@ -461,7 +465,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			foreach ($row as $column_name=>$column_value) {
 				$this->createDataField($column_name);
 			}
-			return;
+			return $this;
 		}
 		
 		$select = $this->_composeSelectStructureQuery();
