@@ -100,7 +100,9 @@ p4a_ajax_process_response = function (response)
 		   			eval(widget.javascript_pre);
 	   			} catch (e) {}
 	   			
-   				if (object_id == 'p4a_inner_body') {
+	   			if (object_id == 'p4a') {
+	   				// do nothing, it's a special code
+	   			} else if (object_id == 'p4a_inner_body') {
    					$("#p4a_inner_body").html(p4a_html_entity_decode(widget.html));
    				} else {
 	   				object.parent().css('display', 'block').html(p4a_html_entity_decode(widget.html));

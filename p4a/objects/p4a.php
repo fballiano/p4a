@@ -1087,8 +1087,13 @@ class P4A extends P4A_Object
 	}
 }
 
-
-
+/**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
+ * @link http://p4a.sourceforge.net
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ * @package p4a
+ */
 class p4a_ajax_response
 {
 	public $action_id = null;
@@ -1097,7 +1102,13 @@ class p4a_ajax_response
 	public $messages = array();
 }
 
-
+/**
+ * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
+ * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
+ * @link http://p4a.sourceforge.net
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ * @package p4a
+ */
 class p4a_ajax_response_widget
 {
 	public $id = null;
