@@ -1,5 +1,7 @@
 3.6.1
 - P4A_DB_Source::load() now returns an object also when setQuery() is used
+- P4A_DB_Source::load()'s autosequence creation now checks that the field
+  exists before calling the setSequence()
 
 3.6.0
 

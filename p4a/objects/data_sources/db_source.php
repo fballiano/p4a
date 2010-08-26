@@ -526,7 +526,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$table_name = $this->_tables_metadata[$main_table]['metadata'][$field_name]['TABLE_NAME'];
 			if (is_string($main_table_sequence)) {
 				$this->fields->$field_name->setSequence($main_table_sequence);
-			} else {
+			} elseif (isset($this->fields->$field_name)) {
 				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
 			}
 		}
