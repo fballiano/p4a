@@ -5,6 +5,7 @@
 - a bug with P4A_Redirect_To_Url and P4A_Redirect_To_File was solved
   (bug #3039449)
 - better focus management for P4A_Grid
+- a bug with AJAX javascript returning and html entities was solved
 
 3.6.0
 

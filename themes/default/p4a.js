@@ -97,7 +97,7 @@ p4a_ajax_process_response = function (response)
 	   		var object = $('#'+object_id);
 			if (object.size() > 0) {
 	   			try {
-		   			eval(widget.javascript_pre);
+	   				eval(p4a_html_entity_decode(widget.javascript_pre));
 	   			} catch (e) {}
 	   			
 	   			if (object_id == 'p4a') {
@@ -109,7 +109,7 @@ p4a_ajax_process_response = function (response)
 	   			}
 	   			
 	   			try {
-	   				eval(widget.javascript_post);
+	   				eval(p4a_html_entity_decode(widget.javascript_post));
 	   			} catch (e) {}
 	   		}
 		}
