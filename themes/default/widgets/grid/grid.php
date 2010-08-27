@@ -55,7 +55,7 @@ function upgrade_grid(obj, set_focus) {
 	title = obj.attr('title');
 	obj.text("");
 	
-	input = $("<textarea title='"+title+"' class='p4a_grid_text' id='"+id+"_text' type='text' ></textarea>");				
+	input = $("<textarea title='"+title+"' class='p4a_grid_text' id='"+id+"_text' type='text'></textarea>");				
 	input.val(value);
 	input.height(height-2);
 	input.width(width-2);
