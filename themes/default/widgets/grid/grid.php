@@ -30,8 +30,9 @@
 
 <script type="text/javascript">
 
-function upgrade_grid(obj) {
-
+function upgrade_grid(obj, set_focus) {
+	set_focus = typeof(set_focus) == 'undefined' ? true : set_focus;
+	
 	if (obj.find('textarea').length) {
 		return;
 	}
@@ -58,7 +59,7 @@ function upgrade_grid(obj) {
 	input.val(value);
 	input.height(height-2);
 	input.width(width-2);
-	
+
 	input.focus (function(){
 		if (!$(this).parent().prevAll(".p4a_grid_td_enabled").length) {
 			prev = $(this).parent().parent().prev().children(".p4a_grid_td_enabled:last");
@@ -72,9 +73,8 @@ function upgrade_grid(obj) {
 			next = $(this).parent().next(".p4a_grid_td_enabled");
 		}
 		
-		upgrade_grid(prev);
-		upgrade_grid(next);
-		
+		upgrade_grid(prev, false);
+		upgrade_grid(next, false);
 	});
 	
 	input.change(function(){
@@ -88,6 +88,8 @@ function upgrade_grid(obj) {
 	obj.append(input);
 	obj.width(width);
 	obj.height(height);
+
+	if (set_focus) input.focus();
 }
 
 function jq(myid) { 

@@ -4,6 +4,7 @@
   exists before calling the setSequence()
 - a bug with P4A_Redirect_To_Url and P4A_Redirect_To_File was solved
   (bug #3039449)
+- better focus management for P4A_Grid
 
 3.6.0
 
