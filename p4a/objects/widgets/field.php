@@ -453,6 +453,8 @@ class P4A_Field extends P4A_Widget
 	public function setSource($data_source)
 	{
 		unset($this->data);
+		if ($data_source === null) return $this;
+		
 		$this->data =& $data_source;
 
 		$pk = $this->data->getPk();
