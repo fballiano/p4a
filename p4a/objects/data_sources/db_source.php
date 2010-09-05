@@ -766,7 +766,9 @@ class P4A_DB_Source extends P4A_Data_Source
 
 				$select->having(substr($where_order, 0, -4));
 				while ($f = $this->fields->nextItem()) {
-					$select->group($f->getSchemaTableField());
+					if (!isset($this->_multivalue_fields[$f->getName()])) {
+						$select->group($f->getSchemaTableField());
+					}
 				}
 			}
 
