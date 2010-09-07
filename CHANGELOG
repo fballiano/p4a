@@ -4,6 +4,7 @@
 - P4A_DB_Source::getRowPosition now correctly handles multivalue fields
   (bug #3057839)
 - forcing IE to use his latest rendering engine
+- some javascript fixes were applied to make IE ajax system work
 
 3.6.1
 - P4A_DB_Source::load() now returns an object also when setQuery() is used

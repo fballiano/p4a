@@ -647,7 +647,7 @@ class P4A_Field extends P4A_Widget
 		$error = '';
 		if ($this->_error !== null) {
 			$css_classes[] = 'field_error';
-			$error = "<div class='field_error_msg'>{$this->_error}</div><script type='text/javascript'>\$('#{$id} iframe').mouseover(function () {\$('#{$id} .field_error_msg').show()}); \$('#{$id}input').mouseover(function () {\$('#{$id} .field_error_msg').show()}).mouseout(function () {\$('#{$id} .field_error_msg').hide()})</script>";
+			$error = "<div class='field_error_msg'>{$this->_error}</div><script type='text/javascript'>\$('#{$id} iframe').mouseover(function () {\$('#{$id} .field_error_msg').show()}); \$('#{$id}input').mouseover(function () {\$('#{$id} .field_error_msg').show()}).mouseout(function () {\$('#{$id} .field_error_msg').hide()};</script>";
 			$this->_error = null;
 		}
 		
@@ -704,7 +704,7 @@ class P4A_Field extends P4A_Widget
 			}
 			$options = substr($options, 0, -1) . '}';
 			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_calendar_open('p4a_{$id}',$options);\" class=\"p4a_field_date_trigger\" />";
-			$close_header .= "<script type='text/javascript'>p4a_calendar_load()</script>";
+			$close_header .= "<script type='text/javascript'>p4a_calendar_load();</script>";
 		}
 
 		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
