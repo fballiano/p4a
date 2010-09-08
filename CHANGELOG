@@ -5,6 +5,7 @@
   (bug #3057839)
 - forcing IE to use his latest rendering engine
 - some javascript fixes were applied to make IE ajax system work
+- Zend Framework was updated to 1.10.8
 
 3.6.1
 - P4A_DB_Source::load() now returns an object also when setQuery() is used
