@@ -8,6 +8,7 @@
 - Zend Framework was updated to 1.10.8
 - P4A_I18N now correcly handles 3 chars languages (like "fil")
 - translations were updated
+- Filipino translation was added (thanks to Elin Eon)
 
 3.6.1
 - P4A_DB_Source::load() now returns an object also when setQuery() is used
