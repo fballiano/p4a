@@ -1,4 +1,5 @@
 3.6.3
+- P4A_Data_Fields::getSchemaTableField now correctly handles calculated fields
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param
