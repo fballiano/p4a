@@ -84,8 +84,13 @@ class P4A_I18N
 	 */
 	public function setLocale($locale = P4A_LOCALE)
 	{
-		$this->language = strtolower(substr($locale, 0, 2));
-		$this->region = strtoupper(substr($locale, 3, 2));
+		// removing eventual ".charset" part
+		$locale = explode(".", $locale);
+		$locale = $locale[0];
+		
+		list($this->language, $this->region) = explode("_", $locale);
+		$this->language = strtolower($this->language);
+		$this->region = strtoupper($this->region);
 		$this->locale = "{$this->language}_{$this->region}";
 		
 		$this->_locale_engine = new Zend_Locale($this->locale);
