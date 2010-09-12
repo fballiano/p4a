@@ -128,6 +128,11 @@ class P4A extends P4A_Object
 	 */
 	private $browser_os = self::BROWSER_LINUX;
 	
+	/**
+	 * @var Zend_Cache
+	 */
+	private $_cache = null;
+	
 	const BROWSER_GECKO = 'gecko';
 	const BROWSER_HANDHELD = 'handheld';
 	const BROWSER_IE = 'ie';
@@ -138,10 +143,15 @@ class P4A extends P4A_Object
 	const BROWSER_MAC = 'mac';
 	const BROWSER_WINDOWS = 'windows';
 
-	public function __construct()
+	/**
+	 * @param Zend_Cache $cache
+	 * @return P4A
+	 */
+	public function __construct($cache = null)
 	{
 		//do not call parent constructor
 		$_SESSION["p4a"] =& $this;
+		$this->_cache = $cache;
 		$this->i18n = new p4a_i18n(P4A_LOCALE);
 
 		$this->build("P4A_Collection", "masks");
@@ -1079,6 +1089,11 @@ class P4A extends P4A_Object
 			$message = P4A_Generate_Widget_Layout_Table($icon, $text, 'p4a_message');
 		}
 		return $messages;
+	}
+	
+	public function getCache()
+	{
+		return $this->_cache;
 	}
 	
 	public function __wakeup()

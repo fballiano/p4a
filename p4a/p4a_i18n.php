@@ -75,6 +75,8 @@ class P4A_I18N
 	 */
 	public function __construct($locale = P4A_LOCALE)
 	{
+		$cache = p4a::singleton()->getCache();
+		if ($cache !== null) Zend_Locale_Data::setCache($cache);
 		$this->setLocale($locale);
 	}
 

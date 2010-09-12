@@ -1,6 +1,11 @@
 3.6.3
 - P4A_Data_Fields::getSchemaTableField now correctly handles calculated fields
 - a bug with P4A_I18N::format and time fields was fixed
+- P4A::__construct() now has a "cache" param, simply pass a Zend_Cache object
+  to override all Zend_Cache configurations inside P4A
+- P4A::getCache() method was added
+- P4A_I18N now uses P4A::getCache() to pass an overridden Zend_Cache object to
+  Zend_Locale_Data
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param
