@@ -580,7 +580,7 @@ abstract class P4A_Widget extends P4A_Object
 				$browser_action = 'onkeypress';
 				$return = 'true';
 				$prefix .= 'if(p4a_keypressed_is_return(event)){';
-				$suffix .= '}';
+				$suffix .= 'return false;}';
 			} elseif ($action == 'onkeypress'
 				   or $action == 'onkeydown'
 				   or $action == 'onkeyup') {
