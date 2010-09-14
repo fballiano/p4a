@@ -7,6 +7,8 @@
 - P4A_I18N now uses P4A::getCache() to pass an overridden Zend_Cache object to
   Zend_Locale_Data
 - a bug with "onreturnpress" and IE was fixed
+- a bug with multicple CKEditor instances (loaded via AJAX call) and IE
+  was solved
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param

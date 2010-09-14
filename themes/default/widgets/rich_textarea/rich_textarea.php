@@ -40,41 +40,43 @@ try {
 
 <script type="text/javascript">
 p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
-	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
-		autoUpdateElement: false,
-		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
-		width: '<?php echo $this->getWidth() ?>',
-		height: '<?php echo $this->getHeight() ?>',
-		resize_enabled: false,
-		toolbarCanCollapse: false,
-		coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
-		coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
-		<?php
-			$toolbars = $this->getRichTextareaToolbars();
-			if (empty($toolbars)) {
-				$toolbar = $this->getRichTextareaTheme();
-				if ($toolbar == "Default") {
-					$toolbar = "[
-				      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
-				    	'/',
-				    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
-				    	'/',
-				    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
-			    	]";
+	jQuery(function () {
+		CKEDITOR.replace('<?php echo $this->getId() ?>input', {
+			autoUpdateElement: false,
+			language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
+			width: '<?php echo $this->getWidth() ?>',
+			height: '<?php echo $this->getHeight() ?>',
+			resize_enabled: false,
+			toolbarCanCollapse: false,
+			coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
+			coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
+			<?php
+				$toolbars = $this->getRichTextareaToolbars();
+				if (empty($toolbars)) {
+					$toolbar = $this->getRichTextareaTheme();
+					if ($toolbar == "Default") {
+						$toolbar = "[
+					      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
+					    	'/',
+					    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
+					    	'/',
+					    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
+				    	]";
+					} else {
+						$toolbar = "'$toolbar'";
+					}
 				} else {
-					$toolbar = "'$toolbar'";
+					foreach ($toolbars as $k=>$v) {
+						$toolbars[$k] = "['" . implode("','", $v) . "']";
+					}
+					$toolbar = "[" . implode(",'/',", $toolbars) . "]";
 				}
-			} else {
-				foreach ($toolbars as $k=>$v) {
-					$toolbars[$k] = "['" . implode("','", $v) . "']";
-				}
-				$toolbar = "[" . implode(",'/',", $toolbars) . "]";
-			}
-		?>
-	    toolbar: <?php echo $toolbar ?>,
-		<?php if ($this->isUploadEnabled()): ?>
-		filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
-		<?php endif; ?>
+			?>
+		    toolbar: <?php echo $toolbar ?>,
+			<?php if ($this->isUploadEnabled()): ?>
+			filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
+			<?php endif; ?>
+		});
 	});
 });
 </script>
