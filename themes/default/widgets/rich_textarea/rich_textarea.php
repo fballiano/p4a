@@ -50,6 +50,7 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', fu
 			toolbarCanCollapse: false,
 			coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
 			coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
+			forcePasteAsPlainText: true,
 			<?php
 				$toolbars = $this->getRichTextareaToolbars();
 				if (empty($toolbars)) {

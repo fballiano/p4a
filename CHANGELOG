@@ -9,6 +9,7 @@
 - a bug with "onreturnpress" and IE was fixed
 - a bug with multicple CKEditor instances (loaded via AJAX call) and IE
   was solved
+- CKEditor's forcePasteAsPlainText option was enabled again
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param
