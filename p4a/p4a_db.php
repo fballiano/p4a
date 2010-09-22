@@ -91,6 +91,7 @@ class P4A_DB
 					'username' => $dsn_data['user'],
 					'password' => $dsn_data['pass'],
 					'dbname' => substr($dsn_data['path'], 1),
+					'charset' => 'UTF8',
 					'profiler' => P4A_DB_PROFILE
 				);
 				

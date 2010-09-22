@@ -1,4 +1,21 @@
-3.6.3
+3.8.0
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- P4A_DB's connection charset is now set to UTF 8
+  This could lead to possible data corruption, if you're upgrading from a
+  previous release and you're using MySQL or PostgreSQL (Oracle and SQLite
+  should not be involved in this change) you've to be sure to convert the DB
+  charset to UTF-8 before editing data in your P4A applications.
+  
+  ALWAYS DO BACKUPS BEFORE ANYTHING ELSE!!!
+  
+  For MySQL we used this procedure to migrate our DBs:
+  mysqldump --default-character-set=latin1 DBNAME > dump.sql
+  open dump.sql and replace this line
+  /*!40101 SET NAMES latin1 */;
+  with
+  /*!40101 SET NAMES utf8 */;
+  mysql NEWDBNAME < dump.sql
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - P4A_Data_Fields::getSchemaTableField now correctly handles calculated fields
 - a bug with P4A_I18N::format and time fields was fixed
 - P4A::__construct() now has a "cache" param, simply pass a Zend_Cache object
