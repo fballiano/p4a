@@ -28,6 +28,7 @@
 - a bug with multicple CKEditor instances (loaded via AJAX call) and IE
   was solved
 - CKEditor's forcePasteAsPlainText option was enabled again
+- jQuery::form was updated to 2.47
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param
