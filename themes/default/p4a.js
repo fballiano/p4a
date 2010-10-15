@@ -46,7 +46,7 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	if (p4a_ajax_enabled) {
 		p4a_form._ajax.value = 2;
 		if (p4a_upload_progress) {
-			p4a_interval_id = setInterval("p4a_upload_progress_check()", 2000);
+			p4a_interval_id = setInterval("p4a_upload_progress_check()", 3000);
 		}
 		$('#p4a').ajaxSubmit({
 			dataType: 'json',
