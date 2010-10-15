@@ -502,8 +502,8 @@ class P4A_Mask extends P4A_Object
 		$return .= "<input type='hidden' name='param3' />\n";
 		$return .= "<input type='hidden' name='param4' />\n";
 		$return .= "<input type='hidden' name='UPLOAD_IDENTIFIER' value='{$mask_id}{$action_id}' id='p4a_upload_identifier' />\n";
-		
 		$return .= "<div id='p4a_inner_body'>\n";
+		
 		return $return;
 	}
 

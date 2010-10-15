@@ -461,14 +461,12 @@ class P4A extends P4A_Object
 				}
 			}
 			die();
-		} elseif (isset($_REQUEST['_p4a_upload_progress'])) {
-			if (function_exists("uploadprogress_get_info")) {
-				$upload_info = uploadprogress_get_info($_REQUEST['_p4a_upload_progress']);
-				if (is_array($upload_info)) {
-					$percentage = round($upload_info["bytes_uploaded"] / $upload_info["bytes_total"] * 100) . "%";
-					$speed = round($upload_info["speed_average"] / 1024) . "KB/s";
-					echo "$percentage - $speed";
-				}
+		} elseif (isset($_REQUEST['_p4a_upload_progress']) and P4A_UPLOAD_PROGRESS) {
+			$upload_info = uploadprogress_get_info($_REQUEST['_p4a_upload_progress']);
+			if (is_array($upload_info)) {
+				$percentage = round($upload_info["bytes_uploaded"] / $upload_info["bytes_total"] * 100) . "%";
+				$speed = round($upload_info["speed_average"] / 1024) . "KB/s";
+				echo "$percentage - $speed";
 			}
 			die();
 		}
@@ -937,6 +935,7 @@ class P4A extends P4A_Object
 	{
 		$locale = $this->i18n->getLocale();
 		$ajax_enabled = P4A_AJAX_ENABLED ? 'true' : 'false';
+		$upload_progress = (P4A_AJAX_ENABLED and P4A_UPLOAD_PROGRESS) ? 'true' : 'false';
 		
 		$days = Zend_Locale::getTranslationList('days', $locale);
 		$days = $days['format']['abbreviated'];
@@ -948,6 +947,7 @@ class P4A extends P4A_Object
 		$return = '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
+		'p4a_upload_progress = ' . $upload_progress . ';' . "\n" .
 		'p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
 		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
 		'p4a_calendar_monthnames = ["'. join('","', $months) . '"];' . "\n" .

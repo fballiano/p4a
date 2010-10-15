@@ -9,19 +9,6 @@ p4a_system_messages_timeout = null;
 p4a_tooltip_timeout_id = null;
 p4a_interval_id = null;
 
-p4a_upload_progress = function ()
-{
-	$.get($("#p4a").attr("action"), {
-		"_p4a_upload_progress": $("#p4a_upload_identifier").val()
-	}, function (percentage) {
-		if (percentage.length > 0) {
-			$("#p4a_loading_percentage").html(percentage).show();
-		} else {
-			$("#p4a_loading_percentage").hide();
-		}
-	});
-}
-
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
 	p4a_working = true;
@@ -58,7 +45,9 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	
 	if (p4a_ajax_enabled) {
 		p4a_form._ajax.value = 2;
-		p4a_interval_id = setInterval("p4a_upload_progress()", 2000);
+		if (p4a_upload_progress) {
+			p4a_interval_id = setInterval("p4a_upload_progress_check()", 2000);
+		}
 		$('#p4a').ajaxSubmit({
 			dataType: 'json',
 			iframe: true,
@@ -156,6 +145,19 @@ p4a_ajax_process_response = function (response)
 	} catch (e) {
 		p4a_ajax_error();
 	}
+}
+
+p4a_upload_progress_check = function ()
+{
+	$.get($("#p4a").attr("action"), {
+		"_p4a_upload_progress": $("#p4a_upload_identifier").val()
+	}, function (percentage) {
+		if (percentage.length > 0) {
+			$("#p4a_loading_percentage").html(percentage).show();
+		} else {
+			$("#p4a_loading_percentage").hide();
+		}
+	});
 }
 
 p4a_ajax_error = function ()
