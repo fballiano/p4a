@@ -7,6 +7,20 @@
 p4a_working = true;
 p4a_system_messages_timeout = null;
 p4a_tooltip_timeout_id = null;
+p4a_interval_id = null;
+
+p4a_upload_progress = function ()
+{
+	$.get($("#p4a").attr("action"), {
+		"_p4a_upload_progress": $("#p4a_upload_identifier").val()
+	}, function (percentage) {
+		if (percentage.length > 0) {
+			$("#p4a_loading_percentage").html(percentage).show();
+		} else {
+			$("#p4a_loading_percentage").hide();
+		}
+	});
+}
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
@@ -24,6 +38,7 @@ p4a_event_execute_prepare = function (object_name, action_name, param1, param2, 
 	p4a_form.param2.value = param2;
 	p4a_form.param3.value = param3;
 	p4a_form.param4.value = param4;
+	p4a_form.UPLOAD_IDENTIFIER.value = object_name + p4a_form._action_id.value;
 }
 
 p4a_rte_update_all_instances = function ()
@@ -43,6 +58,7 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	
 	if (p4a_ajax_enabled) {
 		p4a_form._ajax.value = 2;
+		p4a_interval_id = setInterval("p4a_upload_progress()", 2000);
 		$('#p4a').ajaxSubmit({
 			dataType: 'json',
 			iframe: true,
@@ -89,6 +105,10 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 
 p4a_ajax_process_response = function (response)
 {
+	try {
+		clearInterval(p4a_interval_id);
+	} catch (e) {}
+	
 	try {
 		p4a_form._action_id.value = response.action_id;
 		for (i=0; i<response.widgets.length; i++) {
@@ -156,6 +176,7 @@ p4a_loading_show = function ()
 p4a_loading_hide = function ()
 {
 	$('#p4a_loading').hide();
+	$("#p4a_loading_percentage").hide();
 }
 
 p4a_center_elements = function () {

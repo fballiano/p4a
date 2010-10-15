@@ -488,16 +488,21 @@ class P4A_Mask extends P4A_Object
 	 */
 	protected function maskOpen()
 	{
+		$mask_id = $this->getId();
+		$action_id = p4a::singleton()->getActionHistoryId();
+		
 		$return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
 		$return .= "<input type='submit' onclick='return false' style='display:none' />\n";
-		$return .= "<input type='hidden' name='_object' value='" . $this->getId() . "' />\n";
+		$return .= "<input type='hidden' name='_object' value='{$mask_id}' />\n";
 		$return .= "<input type='hidden' name='_action' value='none' />\n";
 		$return .= "<input type='hidden' name='_ajax' value='0' />\n";
-		$return .= "<input type='hidden' name='_action_id' value='" . p4a::singleton()->getActionHistoryId() . "' />\n";
+		$return .= "<input type='hidden' name='_action_id' value='{$action_id}' />\n";
 		$return .= "<input type='hidden' name='param1' />\n";
 		$return .= "<input type='hidden' name='param2' />\n";
 		$return .= "<input type='hidden' name='param3' />\n";
 		$return .= "<input type='hidden' name='param4' />\n";
+		$return .= "<input type='hidden' name='UPLOAD_IDENTIFIER' value='{$mask_id}{$action_id}' id='p4a_upload_identifier' />\n";
+		
 		$return .= "<div id='p4a_inner_body'>\n";
 		return $return;
 	}

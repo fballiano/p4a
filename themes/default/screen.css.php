@@ -95,6 +95,13 @@ a:focus {
 	float: right;
 }
 
+#p4a_loading_percentage {
+	color: white;
+	white-space: nowrap;
+	padding: 5px 5px 0 5px;
+	display: none;
+}
+
 * html #p4a_loading {
 	position: absolute;
 }

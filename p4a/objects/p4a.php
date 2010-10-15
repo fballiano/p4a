@@ -461,6 +461,16 @@ class P4A extends P4A_Object
 				}
 			}
 			die();
+		} elseif (isset($_REQUEST['_p4a_upload_progress'])) {
+			if (function_exists("uploadprogress_get_info")) {
+				$upload_info = uploadprogress_get_info($_REQUEST['_p4a_upload_progress']);
+				if (is_array($upload_info)) {
+					$percentage = round($upload_info["bytes_uploaded"] / $upload_info["bytes_total"] * 100) . "%";
+					$speed = round($upload_info["speed_average"] / 1024) . "KB/s";
+					echo "$percentage - $speed";
+				}
+			}
+			die();
 		}
 	}
 
