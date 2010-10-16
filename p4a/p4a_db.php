@@ -72,8 +72,9 @@ class P4A_DB
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
 				if (isset($dsn_data['query'])) parse_str($dsn_data['query'], $dsn_data['params']);
 				$dsn_data['scheme'] = strtolower($dsn_data['scheme']);
-		
-				if (!in_array($dsn_data['scheme'], array('mysql','oci','pgsql','sqlite'))) {
+				list($dsn_data['scheme'], $dsn_data['pdo_type']) = explode('-', $dsn_data['scheme']);
+				
+				if (!in_array($dsn_data['scheme'], array('mysql', 'mssql','oci','pgsql','sqlite'))) {
 					trigger_error("{$dsn_data['scheme']} is not a supported DB engine", E_USER_ERROR);
 				}
 				
@@ -94,11 +95,14 @@ class P4A_DB
 					'charset' => 'UTF8',
 					'profiler' => P4A_DB_PROFILE
 				);
+				if (isset($dsn_data['pdo_type'])) {
+					$connection_params['pdoType'] = $dsn_data['pdo_type'];
+				}
 				
 				foreach ($dsn_data['params'] as $k=>$v) {
 					$connection_params[$k] = $v;
 				}
-				
+
 				require_once str_replace('_', '/', $driver) . '.php';
 				$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]->adapter = new $driver($connection_params);
     			$__P4A_REGISTERED_DB_CONNECTIONS[$dbconn]->adapter->setFetchMode(Zend_Db::FETCH_ASSOC);
@@ -144,6 +148,19 @@ class P4A_DB
 				} catch (Exception $e) {
 					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY)");
 					$this->adapter->insert($sequence_name, array());
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				}
+				return $id;
+			case 'mssql':
+				$sequence_name .= '_seq';
+				try {
+					$this->adapter->query("INSERT INTO $sequence_name DEFAULT VALUES");
+					$id = $this->adapter->lastInsertId();
+					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
+				} catch (Exception $e) {
+					$this->adapter->query("CREATE TABLE $sequence_name (id INTEGER NOT NULL IDENTITY PRIMARY KEY)");
+					$this->adapter->query("INSERT INTO $sequence_name DEFAULT VALUES");
 					$id = $this->adapter->lastInsertId();
 					$this->adapter->query("DELETE FROM $sequence_name WHERE id<$id");
 				}

@@ -559,6 +559,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			case 'integer':
 				$this->fields->$name->setType('integer');
 				break;
+			case 'bit':
 			case 'bool':
 			case 'boolean':
 			case 'tinyint':
