@@ -82,9 +82,16 @@ P4A works with:
 - PostgreSQL
 - Oracle
 - SQLite
+- Microsoft SQL Server
 
 To make P4A connect to a database you need PDO extensions
-(pdo_mysql, pdo_pgsql, pdo_oci or pdo_sqlite).
+(pdo_mysql, pdo_pgsql, pdo_oci, pdo_sqlite, pdo_mssql).
+
+All connections' charsets are set to UTF-8.
+
+If you're using Microsoft SQL Server beware that only nchar and nvarchar
+data type is unicode, thus do not use char and varchar because they're
+not UTF-8 safe. 
 
 ------------------
 -- KNOWN ISSUES --

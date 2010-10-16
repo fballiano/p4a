@@ -1,5 +1,7 @@
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - P4A_DB's connection charset is now set to UTF 8
   This could lead to possible data corruption, if you're upgrading from a
   previous release and you're using MySQL or PostgreSQL (Oracle and SQLite
@@ -16,6 +18,10 @@
   /*!40101 SET NAMES utf8 */;
   mysql NEWDBNAME < dump.sql
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- Support For MS SQL was added, check out the README file
+- README file was updated
 - CKEditor was updated to 3.4.1
 - P4A_Data_Fields::getSchemaTableField now correctly handles calculated fields
 - a bug with P4A_I18N::format and time fields was fixed
