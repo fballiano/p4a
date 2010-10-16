@@ -30,11 +30,11 @@
 // Select application's locale
 define("P4A_LOCALE", 'en_US');
 
-// Connect to the database (if you want you can add "?charset=YOURCHARSET" to the DSN)
 define("P4A_DSN", 'mysql://root:@localhost/p4a_products_catalogue');
-// define("P4A_DSN", 'pgsql://p4a:p4a@localhost/p4a_products_catalogue');
+// define("P4A_DSN", 'pgsql://postgres:postgres@localhost/p4a_products_catalogue');
 // define("P4A_DSN", 'oci://p4a:p4a@localhost/xe');
 // define("P4A_DSN", 'sqlite:/p4a_products_catalogue');
+// define("P4A_DSN", 'mssql-dblib://user:password@localhost/p4a_products_catalogue');
 
 // Enable logging and profiling of all DB actions
 // define("P4A_DB_PROFILE", true);
