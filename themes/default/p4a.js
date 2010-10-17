@@ -45,9 +45,7 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 	
 	if (p4a_ajax_enabled) {
 		p4a_form._ajax.value = 2;
-		if (p4a_upload_progress) {
-			p4a_interval_id = setInterval("p4a_upload_progress_check()", 3000);
-		}
+		p4a_upload_progress_enable();
 		$('#p4a').ajaxSubmit({
 			dataType: 'json',
 			iframe: true,
@@ -83,7 +81,7 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 	if (p4a_working) return false;
 	p4a_event_execute_prepare(object_name, action_name, param1, param2, param3, param4);
 	p4a_form._ajax.value = 1;
-
+	p4a_upload_progress_enable();
 	$('#p4a').ajaxSubmit({
 		dataType: 'json',
 		iframe: true,
@@ -144,6 +142,14 @@ p4a_ajax_process_response = function (response)
 		p4a_working = false;
 	} catch (e) {
 		p4a_ajax_error();
+	}
+}
+
+p4a_upload_progress_enable = function ()
+{
+	// starting upload progress check only if there's a file uploading
+	if (p4a_upload_progress && $("#p4a input[type='file'][value!='']:enabled").length) {
+		p4a_interval_id = setInterval("p4a_upload_progress_check()", 3000);
 	}
 }
 
