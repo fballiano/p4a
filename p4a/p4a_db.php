@@ -72,7 +72,10 @@ class P4A_DB
 				if (!isset($dsn_data['pass'])) $dsn_data['pass'] = null;
 				if (isset($dsn_data['query'])) parse_str($dsn_data['query'], $dsn_data['params']);
 				$dsn_data['scheme'] = strtolower($dsn_data['scheme']);
-				list($dsn_data['scheme'], $dsn_data['pdo_type']) = explode('-', $dsn_data['scheme']);
+				
+				if (strpos($dsn_data['scheme'], '-') !== false) {
+					list($dsn_data['scheme'], $dsn_data['pdo_type']) = explode('-', $dsn_data['scheme']);
+				}
 				
 				if (!in_array($dsn_data['scheme'], array('mysql', 'mssql','oci','pgsql','sqlite'))) {
 					trigger_error("{$dsn_data['scheme']} is not a supported DB engine", E_USER_ERROR);
