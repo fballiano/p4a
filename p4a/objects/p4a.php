@@ -412,7 +412,7 @@ class P4A extends P4A_Object
 				foreach ($all as $row) {
 					$new_data[] = array(
 						"id" => $row[$description_field],
-						"label" => $row[$description_field],
+						"label" => htmlspecialchars($row[$description_field]),
 						"value" => $row[$description_field]
 					);
 				}
