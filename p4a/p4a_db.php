@@ -283,6 +283,7 @@ class P4A_DB
 	{
 		switch ($this->db_type) {
 			case 'mysql':
+			case 'mssql':
 			case 'sqlite':
 				return "$column_name LIKE '$search_pattern'";
 			case 'pgsql':
