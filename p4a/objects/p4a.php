@@ -560,6 +560,7 @@ class P4A extends P4A_Object
 	 */
 	public function raiseXMLResponse()
 	{
+		/*
 		$resp = new p4a_ajax_response();
 		$resp->action_id = $this->getActionHistoryId();
 		$resp->messages = $this->getRenderedMessages();
@@ -589,7 +590,7 @@ class P4A extends P4A_Object
 		
 		ob_start();
 		require_once "Zend/Json.php";
-		echo Zend_Json::encode($resp);
+		echo "<textarea>" . Zend_Json::encode($resp) . "</textarea>";
 		
 		if (P4A_AJAX_DEBUG) {
 			if (($fp = @fopen(P4A_AJAX_DEBUG, 'w')) !== false) {
@@ -600,7 +601,9 @@ class P4A extends P4A_Object
 
 		ob_end_flush();
 		return;
+		*/
 		
+		$script_detector = '<script(.*?)>(.*?)<\/script>';
 		$gmdate = gmdate("D, d M Y H:i:s");
 		header("Content-Type: text/xml; charset: UTF-8");
 		header("Cache-Control: no-store, no-cache, must-revalidate");

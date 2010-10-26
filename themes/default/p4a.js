@@ -47,7 +47,7 @@ p4a_event_execute = function (object_name, action_name, param1, param2, param3, 
 		p4a_form._ajax.value = 2;
 		p4a_upload_progress_enable();
 		$('#p4a').ajaxSubmit({
-			dataType: 'json',
+			dataType: 'xml',
 			iframe: true,
 			semantic: true,
 			success: p4a_ajax_process_response
@@ -83,7 +83,7 @@ p4a_event_execute_ajax = function (object_name, action_name, param1, param2, par
 	p4a_form._ajax.value = 1;
 	p4a_upload_progress_enable();
 	$('#p4a').ajaxSubmit({
-		dataType: 'json',
+		dataType: 'xml',
 		iframe: true,
 		semantic: true,
 		success: p4a_ajax_process_response
@@ -97,43 +97,44 @@ p4a_ajax_process_response = function (response)
 	} catch (e) {}
 	
 	try {
-		p4a_form._action_id.value = response.action_id;
-		for (i=0; i<response.widgets.length; i++) {
-			var widget = response.widgets[i];
-	   		var object_id = widget.id;
-	   		var object = $('#'+object_id);
-			if (object.size() > 0) {
+		p4a_form._action_id.value = $("ajax-response", response).attr("action_id");
+		
+		$("ajax-response widget", response).each(function () {
+			var $widget = $(this);
+			var object_id = $widget.attr("id");
+			var $object = $('#'+object_id);
+			if ($object.size() > 0) {
 	   			try {
-	   				eval(p4a_html_entity_decode(widget.javascript_pre));
+	   				eval($widget.children("javascript_pre").text());
 	   			} catch (e) {}
 	   			
 	   			if (object_id == 'p4a') {
 	   				// do nothing, it's a special code
 	   			} else if (object_id == 'p4a_inner_body') {
-   					$("#p4a_inner_body").html(p4a_html_entity_decode(widget.html));
+   					$("#p4a_inner_body").html($widget.children("html").text());
    				} else {
-	   				object.parent().css('display', 'block').html(p4a_html_entity_decode(widget.html));
+	   				$object.parent().css('display', 'block').html($widget.children("html").text());
 	   			}
 	   			
 	   			try {
-	   				eval(p4a_html_entity_decode(widget.javascript_post));
+	   				eval($widget.children("javascript_post").text());
 	   			} catch (e) {}
-	   		}
-		}
+			}
+		});
 		
 		p4a_center_elements();
 		p4a_menu_add_submenu_indicator();
 		
 		try {
-			p4a_focus_set(response.focus_id);
+			p4a_focus_set($("ajax-response", response).attr("focus_id"));
 		} catch (e) {}
 		
-		var messages = response.messages;
-		if (messages.length > 0) {
-			var new_messages_container = $('<div class="p4a_system_messages"><div class="p4a_system_messages_inner"></div></div>').appendTo(document.body).find('div');
-			for (i=0; i<messages.length; i++) {
-				$('<div class="p4a_system_message">'+p4a_html_entity_decode(messages[i])+'</div>').appendTo(new_messages_container);
-			}
+		var $messages = $("ajax-response message", response);
+		if ($messages.length > 0) {
+			var $new_messages_container = $('<div class="p4a_system_messages"><div class="p4a_system_messages_inner"></div></div>').appendTo(document.body).find('div');
+			$messages.each(function () {
+				$('<div class="p4a_system_message">'+$(this).text()+'</div>').appendTo($new_messages_container);
+			});
 			p4a_messages_show();
 		}
 		
