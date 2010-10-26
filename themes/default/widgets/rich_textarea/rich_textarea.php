@@ -29,55 +29,57 @@
 ?>
 
 <script type="text/javascript" class="parse_before_html_replace">
-try {
-	var instance_id = '<?php echo $this->getId() ?>input';
-	var instance = CKEDITOR.instances[instance_id];
-	instance.destroy();
-	CKEDITOR.remove(instance);
-	delete CKEDITOR.instances[instance_id];
-} catch (e) {}
+p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
+	jQuery(function () {
+		try {
+			var instance_id = '<?php echo $this->getId() ?>input';
+			var instance = CKEDITOR.instances[instance_id];
+			CKEDITOR.remove(instance);
+			instance.destroy();
+			delete CKEDITOR.instances[instance_id];
+		} catch (e) {}
+	});
+});
 </script>
 
 <script type="text/javascript">
-p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
-	jQuery(function () {
-		CKEDITOR.replace('<?php echo $this->getId() ?>input', {
-			autoUpdateElement: false,
-			language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
-			width: '<?php echo $this->getWidth() ?>',
-			height: '<?php echo $this->getHeight() ?>',
-			resize_enabled: false,
-			toolbarCanCollapse: false,
-			coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
-			coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
-			forcePasteAsPlainText: true,
-			<?php
-				$toolbars = $this->getRichTextareaToolbars();
-				if (empty($toolbars)) {
-					$toolbar = $this->getRichTextareaTheme();
-					if ($toolbar == "Default") {
-						$toolbar = "[
-					      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
-					    	'/',
-					    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
-					    	'/',
-					    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
-				    	]";
-					} else {
-						$toolbar = "'$toolbar'";
-					}
+jQuery(function () {
+	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
+		autoUpdateElement: false,
+		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
+		width: '<?php echo $this->getWidth() ?>',
+		height: '<?php echo $this->getHeight() ?>',
+		resize_enabled: false,
+		toolbarCanCollapse: false,
+		coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
+		coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
+		forcePasteAsPlainText: true,
+		<?php
+			$toolbars = $this->getRichTextareaToolbars();
+			if (empty($toolbars)) {
+				$toolbar = $this->getRichTextareaTheme();
+				if ($toolbar == "Default") {
+					$toolbar = "[
+				      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
+				    	'/',
+				    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
+				    	'/',
+				    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
+			    	]";
 				} else {
-					foreach ($toolbars as $k=>$v) {
-						$toolbars[$k] = "['" . implode("','", $v) . "']";
-					}
-					$toolbar = "[" . implode(",'/',", $toolbars) . "]";
+					$toolbar = "'$toolbar'";
 				}
-			?>
-		    toolbar: <?php echo $toolbar ?>,
-			<?php if ($this->isUploadEnabled()): ?>
-			filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
-			<?php endif; ?>
-		});
+			} else {
+				foreach ($toolbars as $k=>$v) {
+					$toolbars[$k] = "['" . implode("','", $v) . "']";
+				}
+				$toolbar = "[" . implode(",'/',", $toolbars) . "]";
+			}
+		?>
+	    toolbar: <?php echo $toolbar ?>,
+		<?php if ($this->isUploadEnabled()): ?>
+		filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
+		<?php endif; ?>
 	});
 });
 </script>

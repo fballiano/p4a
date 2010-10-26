@@ -42,6 +42,7 @@
   not work with PHP CGI)
 - a bug with autocomplete and HTML tags (in the value) was fixed
 - a bug with autocomplete loading was fixed (thank to Lorenzo Valori)
+- a bug with CKEDITOR and AJAX was fixed
 
 3.6.2
 - P4A_Field::setSource() now correctly handles null param
