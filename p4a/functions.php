@@ -613,6 +613,41 @@ function P4A_Redirect_To_Url($url, $new_window = false)
 	$p4a = P4A::singleton();
 	if ($p4a->inAjaxCall()) {
 		$gmdate = gmdate("D, d M Y H:i:s");
+		header('Content-type: text/xml; charset: UTF-8');
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		header("Pragma: no-cache");
+		header("Last-Modified: $gmdate GMT");
+		
+		ob_start();
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
+		foreach ($p4a->getRenderedMessages() as $message) {
+			echo "\n<message><![CDATA[$message]]></message>";
+		}
+		echo "<widget id='p4a'>\n";
+		
+		if ($new_window) {
+			echo "<javascript_pre><![CDATA[window.open('$url')]]></javascript_pre>\n";
+		} else {
+			echo "<javascript_pre><![CDATA[window.location='$url']]></javascript_pre>\n";
+		}
+		
+		echo "</widget>\n";
+		echo "</ajax-response>";
+		
+		if (P4A_AJAX_DEBUG) {
+			if (($fp = @fopen(P4A_AJAX_DEBUG, 'w')) !== false) {
+				@fwrite($fp, ob_get_contents());
+				@fclose($fp);
+			}
+		}
+
+		ob_end_flush();
+		die();
+		
+		/* JSON OUTPUT DISABLED
+		$gmdate = gmdate("D, d M Y H:i:s");
 		header('Content-type: text/plain; charset: UTF-8');
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
@@ -644,6 +679,7 @@ function P4A_Redirect_To_Url($url, $new_window = false)
 
 		ob_end_flush();
 		die();
+		*/
 	}
 	
 	header("Location: $url");
@@ -666,6 +702,40 @@ function P4A_Redirect_To_File($file, $new_window = false)
 	$file = "index.php?_p4a_download_file=$file";
 	
 	if ($p4a->inAjaxCall()) {
+		$gmdate = gmdate("D, d M Y H:i:s");
+		header('Content-type: text/xml; charset: UTF-8');
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		header("Pragma: no-cache");
+		header("Last-Modified: $gmdate GMT");
+		
+		ob_start();
+		echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+		echo "<ajax-response action_id=\"" . $p4a->getActionHistoryId() . "\" focus_id=\"\">\n";
+		foreach ($p4a->getRenderedMessages() as $message) {
+			echo "\n<message><![CDATA[$message]]></message>";
+		}
+		echo "<widget id='p4a'>\n";
+		
+		if ($new_window) {
+			echo "<javascript_pre><![CDATA[window.open('$file')]]></javascript_pre>\n";
+		} else {
+			echo "<javascript_pre><![CDATA[window.location='$file']]></javascript_pre>\n";
+		}
+		
+		echo "</widget>\n";
+		echo "</ajax-response>";
+		
+		if (P4A_AJAX_DEBUG) {
+			if (($fp = @fopen(P4A_AJAX_DEBUG, 'w')) !== false) {
+				@fwrite($fp, ob_get_contents());
+				@fclose($fp);
+			}
+		}
+
+		ob_end_flush();
+		die();
+		/* JSON OUTPUT DISABLED
 		$gmdate = gmdate("D, d M Y H:i:s");
 		header('Content-type: text/plain; charset: UTF-8');
 		header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -698,6 +768,7 @@ function P4A_Redirect_To_File($file, $new_window = false)
 
 		ob_end_flush();
 		die();
+		*/
 	}
 	
 	header("Location: $file");
