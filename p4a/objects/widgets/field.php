@@ -625,7 +625,10 @@ class P4A_Field extends P4A_Widget
 	{
 		$id = $this->getId();
 		if (!$this->isVisible()) {
-			return "<span id='{$id}' class='hidden'></span>";
+			return "<span id='{$id}' class='hidden'></span>" .
+			"<script type='text/javascript' class='parse_before_html_replace'>
+			if (typeof {$id}pre == 'function') {{$id}pre();};
+			</script>";
 		}
 
 		$type = $this->type;

@@ -29,7 +29,7 @@
 ?>
 
 <script type="text/javascript" class="parse_before_html_replace">
-p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
+<?php echo $this->getId() ?>pre = function () {
 	try {
 		var instance_id = '<?php echo $this->getId() ?>input';
 		var instance = CKEDITOR.instances[instance_id];
@@ -37,7 +37,9 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', fu
 		instance.destroy();
 		delete CKEDITOR.instances[instance_id];
 	} catch (e) {}
-});
+};
+
+p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', <?php echo $this->getId() ?>pre);
 </script>
 
 <script type="text/javascript">
