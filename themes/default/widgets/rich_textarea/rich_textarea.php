@@ -30,20 +30,22 @@
 
 <script type="text/javascript" class="parse_before_html_replace">
 p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', function () {
-	jQuery(function () {
-		try {
-			var instance_id = '<?php echo $this->getId() ?>input';
-			var instance = CKEDITOR.instances[instance_id];
-			CKEDITOR.remove(instance);
-			instance.destroy();
-			delete CKEDITOR.instances[instance_id];
-		} catch (e) {}
-	});
+	try {
+		var instance_id = '<?php echo $this->getId() ?>input';
+		var instance = CKEDITOR.instances[instance_id];
+		CKEDITOR.remove(instance);
+		instance.destroy();
+		delete CKEDITOR.instances[instance_id];
+	} catch (e) {}
 });
 </script>
 
 <script type="text/javascript">
-jQuery(function () {
+<?php echo $this->getId() ?>post = function () {
+	if (typeof CKEDITOR == "undefined") {
+		setTimeout(<?php echo $this->getId() ?>post, 200);
+	}
+
 	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
 		autoUpdateElement: false,
 		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
@@ -81,5 +83,7 @@ jQuery(function () {
 		filebrowserBrowseUrl: '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/filemanager/browser/default/browser.html?Connector=<?php echo $connector ?>'
 		<?php endif; ?>
 	});
-});
+};
+
+<?php echo $this->getId() ?>post();
 </script>
