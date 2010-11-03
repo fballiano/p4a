@@ -213,7 +213,7 @@ class P4A_Tab_Pane extends P4A_Widget
 		$return .= "</ul>";
 		$return .= "<div class='p4a_tab_pane_page ui-tabs-panel ui-widget-content ui-corner-all ui-helper-clearfix' style='height:$height'>" . $this->getActivePage()->getAsString() . "</div>";
 		$return .= "</div>";
-		$return .= "<script type='text/javascript'>p4a_tabs_load()</script>";
+		$return .= "<script type='text/javascript'>p4a_tabs_load();</script>";
 
 		$this->setHeight($height);
 		return $return;
