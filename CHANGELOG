@@ -24,6 +24,7 @@
 - AJAX STACK REVERTED TO XML (instead of JSON) due to the bugs with jQuery::form
 - README file was updated
 - CKEditor was updated to 3.4.1
+- a new strategy to avoid CKEDITOR loading problems was implemented
 - P4A_Data_Fields::getSchemaTableField now correctly handles calculated fields
 - a bug with P4A_I18N::format and time fields was fixed
 - P4A::__construct() now has a "cache" param, simply pass a Zend_Cache object
