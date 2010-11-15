@@ -429,8 +429,17 @@ p4a_messages_start_timer = function (milliseconds)
 
 p4a_load_js = function (url, callback)
 {
-	if ($("script").filter(function () {return $(this).attr("src") == url}).length) {
-		if (typeof callback == "function") callback();
+	var $existing_tag = $("script").filter(function () {return $(this).attr("src") == url});
+	if ($existing_tag.length) {
+		if (typeof callback == "function") {
+			if ($existing_tag.attr('p4a_fully_loaded') == 1) {
+				callback();
+			} else {
+				setTimeout(function () {
+					p4a_load_js(url, callback);
+				}, 200);
+			}
+		}
 		return;
 	}
 	
@@ -438,9 +447,15 @@ p4a_load_js = function (url, callback)
 	tag.type = "text/javascript";
 	tag.src = url;
 	if (typeof callback != "undefined") {
+		$(tag).bind('load', function () {
+			$(this).attr('p4a_fully_loaded', '1');
+		});
 		$(tag).bind('load', callback);
 		tag.onreadystatechange = function() {
-			if (this.readyState == 'loaded' || this.readyState == 'complete') callback();
+			if (this.readyState == 'loaded' || this.readyState == 'complete') {
+				$(tag).attr('p4a_fully_loaded', '1');
+				callback();
+			}
 		}
 	}
 	$('head').get(0).appendChild(tag);

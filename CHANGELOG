@@ -1,5 +1,7 @@
 3.8.1
 - jQuery was updated to 1.4.4
+- a bug with multiple p4a_load_js calls (with the same url and within the
+  same loading cycle) was solved
 
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
