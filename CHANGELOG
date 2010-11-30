@@ -2,6 +2,7 @@
 - jQuery was updated to 1.4.4
 - a bug with multiple p4a_load_js calls (with the same url and within the
   same loading cycle) was solved
+- a bug with MSSQL and query limits was fixed (thanks to Lorenzo Valori)
 
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

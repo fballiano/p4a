@@ -966,6 +966,9 @@ class P4A_DB_Source extends P4A_Data_Source
 			if (is_string($select)) {
 				$select = $db->adapter->limit($select, $count, $from);
 			} else {
+				if ($db->getDBType() == "mssql" and ($from+$count > $this->getNumRows())) {
+					$count = $this->getNumRows() % $this->getPageLimit();
+				}
 				$select->limit($count, $from);
 			}
 			$rows = $db->adapter->fetchAll($select);
