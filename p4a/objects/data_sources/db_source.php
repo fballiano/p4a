@@ -902,11 +902,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				foreach($row as $field=>$value){
 					$this->fields->$field->setValue($value);
 				}
-				try {
-					$this->updateRowPosition();
-				} catch (Exception $e) {
-					$this->firstRow();
-				}
+				$this->updateRowPosition();
 			} else {
 				$this->firstRow();
 			}
