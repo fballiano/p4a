@@ -4,6 +4,7 @@
   same loading cycle) was solved
 - a bug with MSSQL and query limits was fixed (thanks to Diego Fattori)
 - CKEditor was updated to 3.5
+- P4A_DB_Source::getRowPosition() now returns 1 if the query throws an error
 
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
