@@ -5,6 +5,7 @@
 - a bug with MSSQL and query limits was fixed (thanks to Diego Fattori)
 - CKEditor was updated to 3.5
 - P4A_DB_Source::getRowPosition() now returns 1 if the query throws an error
+- P4A_DB_Source::addHaving(), setHaving() and getHaving() methods were added
 - Zend Framework was updated to 1.11.2
 
 3.8.0

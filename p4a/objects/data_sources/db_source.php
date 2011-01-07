@@ -89,6 +89,11 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected $_group = array();
 	
 	/**
+	 * @var array
+	 */
+	protected $_having = array();
+	
+	/**
 	 * @var boolean
 	 */
 	protected $_is_sortable = true;
@@ -373,7 +378,44 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_group;
 	}
+	
+	/**
+	 * Multiple having clause will be added with the AND operator
+	 * @param string $having
+	 * @return P4A_DB_Source
+	 */
+	public function addHaving($having)
+	{
+		$this->_having[] = $having;
+		return $this;
+	}
 
+	/**
+	 * @param string|array $having
+	 * @return P4A_DB_Source
+	 */
+	public function setHaving($having)
+	{
+		$this->_having = array();
+		if (!is_array($having)) {
+			$having = array($having);
+		}
+
+		foreach($having as $h) {
+			$this->addHaving($h);
+		}
+		
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getHaving()
+	{
+		return $this->_having;
+	}
+	
 	/**
 	 * @param string $query
 	 * @return P4A_DB_Source
@@ -1020,6 +1062,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_composeSelectPart($select);
 		$this->_composeWherePart($select);
 		$this->_composeGroupPart($select);
+		$this->_composeHavingPart($select);
 		return $select;
 	}
 
@@ -1036,6 +1079,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_composeSelectPart($select);
 		$this->_composeWherePart($select);
 		$this->_composeGroupPart($select);
+		$this->_composeHavingPart($select);
 		if ($add_order_clause) $this->_composeOrderPart($select);
 		return $select;
 	}
@@ -1067,6 +1111,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		
 		$select->where($pk_string);
 		$this->_composeGroupPart($select);
+		$this->_composeHavingPart($select);
 		$this->_composeOrderPart($select);
 		return $select;
 	}
@@ -1150,6 +1195,14 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function _composeGroupPart($select)
 	{
 		$select->group($this->getGroup());
+	}
+	
+	protected function _composeHavingPart($select)
+	{
+		$having = $this->getHaving();
+		foreach ($having as $h) {
+			$select->having($h);
+		}
 	}
 
 	protected function _composeOrderPart($select, $order = array())
