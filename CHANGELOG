@@ -7,6 +7,7 @@
 - P4A_DB_Source::getRowPosition() now returns 1 if the query throws an error
 - P4A_DB_Source::addHaving(), setHaving() and getHaving() methods were added
 - Zend Framework was updated to 1.11.2
+- a bug with P4A::restart() method was fixed (thanks to Daniel Carrero)
 
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

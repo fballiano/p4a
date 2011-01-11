@@ -312,7 +312,7 @@ class P4A extends P4A_Object
 	public function restart()
 	{
 		$this->close();
-		header('Location: ' . P4A_APPLICATION_PATH );
+		P4A_Redirect_To_Url(P4A_APPLICATION_PATH);
 	}
 
 	public function initTimer()
