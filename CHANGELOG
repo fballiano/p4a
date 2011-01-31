@@ -9,6 +9,7 @@
 - Zend Framework was updated to 1.11.2
 - a bug with P4A::restart() method was fixed (thanks to Daniel Carrero)
 - a bug with P4A_Data_Source::saveUploads() and custom file paths was solved
+- a new technique to unload CKEditor was implemented
 
 3.8.0
 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

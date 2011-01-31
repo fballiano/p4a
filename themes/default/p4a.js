@@ -111,6 +111,7 @@ p4a_ajax_process_response = function (response)
 	   			if (object_id == 'p4a') {
 	   				// do nothing, it's a special code
 	   			} else if (object_id == 'p4a_inner_body') {
+	   				p4a_rich_textarea_remove_all();
    					$("#p4a_inner_body").html($widget.children("html").text());
    				} else {
 	   				$object.parent().css('display', 'block').html($widget.children("html").text());
@@ -184,8 +185,18 @@ p4a_loading_show = function ()
 
 p4a_loading_hide = function ()
 {
+	if (typeof CKEDITOR !== "undefined") {
+		for (var instance in CKEDITOR.instances) {
+			if (!CKEDITOR.instances[instance].p4a_loaded) {
+				setTimeout(p4a_loading_hide, 1000);
+				return false;
+			}
+		}
+	}
+	
 	$('#p4a_loading').hide();
 	$("#p4a_loading_percentage").hide();
+	p4a_working = false;
 }
 
 p4a_center_elements = function () {
@@ -427,6 +438,16 @@ p4a_messages_start_timer = function (milliseconds)
 	}, milliseconds);
 }
 
+p4a_rich_textarea_remove_all = function ()
+{
+	if (typeof CKEDITOR !== "undefined") {
+		for (var instance_id in CKEDITOR.instances) {
+			CKEDITOR.instances[instance_id].destroy();
+			delete CKEDITOR.instances[instance_id];
+		}
+	}
+}
+
 p4a_load_js = function (url, callback)
 {
 	var $existing_tag = $("script").filter(function () {return $(this).attr("src") == url});
@@ -496,6 +517,6 @@ $(function () {
 	p4a_messages_show();
 	if (typeof p4a_png_fix == 'function') p4a_png_fix();
 	if (typeof p4a_menu_activate == 'function') p4a_menu_activate();
+	
 	setTimeout(p4a_loading_hide, 1000);
-	p4a_working = false;
 });

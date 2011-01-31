@@ -32,9 +32,7 @@
 <?php echo $this->getId() ?>pre = function () {
 	try {
 		var instance_id = '<?php echo $this->getId() ?>input';
-		var instance = CKEDITOR.instances[instance_id];
-		CKEDITOR.remove(instance);
-		instance.destroy();
+		CKEDITOR.instances[instance_id].destroy();
 		delete CKEDITOR.instances[instance_id];
 	} catch (e) {}
 };
@@ -49,6 +47,7 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', <?
 	}
 
 	CKEDITOR.replace('<?php echo $this->getId() ?>input', {
+		p4a_instance_id: '<?php echo $this->getId() ?>input',
 		autoUpdateElement: false,
 		language: '<?php echo P4A::singleton()->i18n->getLanguage() ?>',
 		width: '<?php echo $this->getWidth() ?>',
@@ -58,6 +57,11 @@ p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', <?
 		coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
 		coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
 		forcePasteAsPlainText: true,
+		on: {
+			instanceReady: function (e) {
+				e.editor.p4a_loaded = true;
+			}
+		},
 		<?php
 			$toolbars = $this->getRichTextareaToolbars();
 			if (empty($toolbars)) {
