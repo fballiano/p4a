@@ -1,3 +1,6 @@
+3.8.2
+- Zend Framework was updated to 1.11.3
+
 3.8.1
 - jQuery was updated to 1.4.4
 - a bug with multiple p4a_load_js calls (with the same url and within the
