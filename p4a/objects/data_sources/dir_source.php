@@ -160,28 +160,36 @@ class P4A_Dir_Source extends P4A_Data_Source
 		}
 
 		$dh = opendir($real_dir);
+		$tmp_files = array();
 		while (false !== ($filename = readdir($dh))) {
 			if (substr($filename, 0, 1) != '.' and $filename != 'CVS') {
-				$filepath = $real_dir . '/' . $filename;
-				$filename = $basepath . $filename;
-
-				if (is_dir($filepath)) {
-					if ($this->_listing_subdirs) {
-						$files[]['filename'] = $filename;
-					}
-					if ($this->_scan_subdirs) {
-						$this->_scanDir($filename, $files);
-					}
-				} elseif(is_file($filepath)) {
-					$stat = stat($filepath);
-					$tmp = array();
-					$tmp["filename"] = $filename;
-					$tmp["size"] = $stat["size"];
-					$tmp["last_modified"] = date("Y-m-d", $stat["mtime"]);
-					$files[] = $tmp;
-				}
+				$tmp_files[] = $filename;
 			}
 		}
+		
+		natcasesort($tmp_files);
+		
+		foreach ($tmp_files as $filename) {
+			$filepath = $real_dir . '/' . $filename;
+			$filename = $basepath . $filename;
+
+			if (is_dir($filepath)) {
+				if ($this->_listing_subdirs) {
+					$files[]['filename'] = $filename;
+				}
+				if ($this->_scan_subdirs) {
+					$this->_scanDir($filename, $files);
+				}
+			} elseif(is_file($filepath)) {
+				$stat = stat($filepath);
+				$tmp = array();
+				$tmp["filename"] = $filename;
+				$tmp["size"] = $stat["size"];
+				$tmp["last_modified"] = date("Y-m-d", $stat["mtime"]);
+				$files[] = $tmp;
+			}
+		}
+		
 		closedir($dh);
 		return $files;
 	}
