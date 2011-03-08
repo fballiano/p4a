@@ -64,6 +64,11 @@ class P4A_Dir_Source extends P4A_Data_Source
 	 * @var boolean
 	 */
 	protected $_is_loaded = false;
+	
+	/**
+	 * @var integer
+	 */
+	protected $_page_limit = 0;
 
 	public function __construct($name)
 	{
@@ -74,6 +79,16 @@ class P4A_Dir_Source extends P4A_Data_Source
 		$this->fields->build('P4A_Data_Field', 'last_modified')
 			->setType("date");
 		$this->setPk('filename');
+	}
+	
+	/**
+	 * @param integer $page_limit
+	 * @return P4A_Data_Source
+	 */
+	public function setPageLimit($page_limit)
+	{
+		trigger_error('P4A_Dir_Source does not support pagination', E_USER_ERROR);
+		return $this;
 	}
 
 	/**
