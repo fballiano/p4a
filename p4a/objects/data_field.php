@@ -368,7 +368,7 @@ class P4A_Data_Field extends P4A_Object
 			if (strlen($schema)) $schema = "{$schema}.";
 
 			$table = $this->getTable();
-			if (strlen($table)) $table = "{$table}.";		
+			if (strlen($table)) $table = "{$table}.";
 
 			$name = $this->getName();
 			return $schema . $table . $name;
