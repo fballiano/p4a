@@ -488,6 +488,14 @@ class P4A_Field extends P4A_Widget
 		}
 		return $this;
 	}
+	
+	/**
+	 * @return P4A_Data_Source
+	 */
+	public function getSource()
+	{
+		return $this->data;
+	}
 
 	/**
 	 * When the field has a source, this is used to know which source's field keeps the value to be used in this field
