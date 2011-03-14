@@ -4,6 +4,7 @@
 - P4A_Dir_Source automatically sorts files
 - P4A_Dir_Source::setPageLimit() calling was disabled
 - P4A_Dir_Source's page limit is now set to 0 (disabled)
+- autocomplete values are now sorted and unique
 
 3.8.1
 - jQuery was updated to 1.4.4

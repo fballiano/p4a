@@ -409,11 +409,16 @@ class P4A extends P4A_Object
 				$all = $data->getAll();
 				$data->setWhere($old_where);
 				$new_data = array();
+				$tmp = array();
 				foreach ($all as $row) {
+					$tmp[$row[$description_field]] = $row[$description_field];
+				}
+				ksort($tmp);
+				foreach ($tmp as $k=>$v) {
 					$new_data[] = array(
-						"id" => $row[$description_field],
-						"label" => htmlspecialchars($row[$description_field]),
-						"value" => $row[$description_field]
+						"id" => $k,
+						"label" => htmlspecialchars($k),
+						"value" => $k
 					);
 				}
 				require_once "Zend/Json.php";
