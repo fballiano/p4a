@@ -748,7 +748,7 @@ class P4A extends P4A_Object
 	}
 
 	/**
-	 * @param unknown_type $destroy completely destroy the current mask object?
+	 * @param boolean $destroy completely destroy the current mask object?
 	 */
 	public function showPrevMask($destroy = false)
 	{
