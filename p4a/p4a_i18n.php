@@ -297,6 +297,15 @@ class P4A_I18N
 				if (!isset($date['minute'])) $date['minute'] = '00';
 				if (!isset($date['second'])) $date['second'] = '00';
 				return "{$date['hour']}:{$date['minute']}:{$date['second']}";
+			case 'datetime':
+				$date =  Zend_Locale_Format::getDateTime($value, array('locale'=>$this->_locale_engine, 'fix_date'=>true));
+				$date['month'] = str_pad($date['month'], 2, 0, STR_PAD_LEFT);
+				$date['day'] = str_pad($date['day'], 2, 0, STR_PAD_LEFT);
+				$date['hour'] = str_pad($date['hour'], 2, 0, STR_PAD_LEFT);
+				$date['minute'] = str_pad($date['minute'], 2, 0, STR_PAD_LEFT);
+				$date['second'] = str_pad($date['second'], 2, 0, STR_PAD_LEFT);
+				return "{$date['year']}-{$date['month']}-{$date['day']} {$date['hour']}:{$date['minute']}:{$date['second']}";
+				break;
 			case 'integer':
 				return Zend_Locale_Format::getInteger($value, array('locale'=>$this->_locale_engine));
 			case 'float':

@@ -181,6 +181,9 @@ class P4A_Field extends P4A_Widget
 				case 'date':
 					$this->setType('date');
 					break;
+				case 'datetime':
+					$this->setType('datetime');
+					break;
 				case 'boolean':
 					$this->setType('checkbox');
 					break;
@@ -407,6 +410,7 @@ class P4A_Field extends P4A_Widget
 			}
 			break;
 		case 'date':
+		case 'datetime':
 			$this->setYearRange(P4A_DATEPICKER_START_YEAR, P4A_DATEPICKER_END_YEAR);
 			break;
 		case 'text':
@@ -564,6 +568,7 @@ class P4A_Field extends P4A_Widget
 			case 'text':
 			case 'textarea':
 			case 'date':
+			case 'datetime':
 				return true;
 		}
 
@@ -693,7 +698,34 @@ class P4A_Field extends P4A_Widget
 		}
 		return $sReturn;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAsDateTime()
+	{
+		$id = $this->getId();
+		$enabled = $this->isEnabled();
+		$disabled = $enabled ? "": " disabled='disabled' ";
 
+		$header = "<input id='{$id}input' type='text' $disabled";
+		$close_header = "/>";
+
+		if (!P4A::singleton()->isHandheld()) {
+			$value = $this->data_field->getNewValue();
+			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_datetime_select('p4a_{$id}', '{$id}input')\" />";
+			$options = '{';
+			if ($this->_year_range) {
+				$options .= "yearRange:'{$this->_year_range}',";
+			}
+			$options = substr($options, 0, -1) . '}';
+			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_datetime_open('p4a_{$id}',$options);\" class=\"p4a_field_date_trigger\" />";
+			$close_header .= "<script type='text/javascript'>p4a_datetime_load();</script>";
+		}
+
+		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
+	}
+	
 	/**
 	 * @return string
 	 */
@@ -1354,6 +1386,7 @@ class P4A_Field extends P4A_Widget
 			case 'text':
 			case 'hidden':
 			case 'date':
+			case 'datetime':
 				return 'value="' . htmlspecialchars($value) . '" ';
 				break;
 			case 'textarea':

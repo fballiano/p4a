@@ -320,6 +320,55 @@ p4a_calendar_select = function (value_id, description_id)
 	);
 }
 
+p4a_datetime_load = function ()
+{
+	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
+	p4a_load_css(p4a_theme_path + '/jquery/ui.slider.css');
+	
+	require({baseUrl: p4a_theme_path},[
+		'order!' + p4a_theme_path + '/jquery/ui.core.js',
+		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
+		'order!' + p4a_theme_path + '/jquery/ui.mouse.js',
+		'order!' + p4a_theme_path + '/jquery/ui.datepicker.js',
+		'order!' + p4a_theme_path + '/jquery/ui.effects.core.js',
+		'order!' + p4a_theme_path + '/jquery/ui.slider.js',
+		'order!' + p4a_theme_path + '/jquery/jquery-ui-timepicker-addon.js'
+	]);
+}
+
+p4a_datetime_open = function (id, options)
+{
+	var element = $('#'+id);
+	element.datetimepicker('destroy');
+	options.changeMonth = true;
+	options.changeYear = true;
+	options.dateFormat = "yy-mm-dd";
+	options.timeFormat = "hh:mm:ss";
+	options.dayNamesMin = p4a_calendar_daynamesmin;
+	options.monthNamesShort = p4a_calendar_monthnames;
+	options.firstDay = p4a_calendar_firstday;
+	options.timeText = p4a_calendar_timetext;
+	options.hourText = p4a_calendar_hourtext;
+	options.minuteText = p4a_calendar_minutetext;
+	options.secondText = p4a_calendar_secondtext;
+	options.showButtonPanel = false;
+	options.showSecond = true;
+	element.datetimepicker(options);
+	element.datetimepicker('show');
+	return false;
+}
+
+p4a_datetime_select = function (value_id, description_id)
+{
+	$.get(
+		p4a_form.action,
+		{_p4a_datetime_format: $('#'+value_id).attr('value')},
+		function (new_value) {
+			$('#'+description_id).attr('value', new_value).change();
+		}
+	);
+}
+
 p4a_maskedinput = function (id, mask)
 {
 	p4a_load_js(p4a_theme_path + '/jquery/maskedinput.js', function () {$('#'+id+'input').mask(mask)});
@@ -450,36 +499,7 @@ p4a_rich_textarea_remove_all = function ()
 
 p4a_load_js = function (url, callback)
 {
-	var $existing_tag = $("script").filter(function () {return $(this).attr("src") == url});
-	if ($existing_tag.length) {
-		if (typeof callback == "function") {
-			if ($existing_tag.attr('p4a_fully_loaded') == 1) {
-				callback();
-			} else {
-				setTimeout(function () {
-					p4a_load_js(url, callback);
-				}, 200);
-			}
-		}
-		return;
-	}
-	
-	var tag = document.createElement('script');
-	tag.type = "text/javascript";
-	tag.src = url;
-	if (typeof callback != "undefined") {
-		$(tag).bind('load', function () {
-			$(this).attr('p4a_fully_loaded', '1');
-		});
-		$(tag).bind('load', callback);
-		tag.onreadystatechange = function() {
-			if (this.readyState == 'loaded' || this.readyState == 'complete') {
-				$(tag).attr('p4a_fully_loaded', '1');
-				callback();
-			}
-		}
-	}
-	$('head').get(0).appendChild(tag);
+	require([url], callback);
 }
 
 p4a_load_css = function (url, callback)

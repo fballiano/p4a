@@ -256,3 +256,7 @@ msgstr ""
 
 msgid "Elements/page"
 msgstr ""
+
+# As you would use in "what time is it?" question
+msgid "Time"
+msgstr ""

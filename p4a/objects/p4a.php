@@ -157,6 +157,7 @@ class P4A extends P4A_Object
 		$this->build("P4A_Collection", "masks");
 		$browser_identification = $this->detectClient();
 
+		$this->addJavascript(P4A_THEME_PATH . "/require.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
 		$this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
 		if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
@@ -427,6 +428,9 @@ class P4A extends P4A_Object
 			die();
 		} elseif (isset($_REQUEST['_p4a_date_format'])) {
 			echo $this->i18n->format($_REQUEST['_p4a_date_format'], 'date', null, false);
+			die();
+		} elseif (isset($_REQUEST['_p4a_datetime_format'])) {
+			echo $this->i18n->format($_REQUEST['_p4a_datetime_format'], 'datetime', null, false);
 			die();
 		} elseif (isset($_REQUEST['_p4a_image_thumbnail'])) {
 			$image_data = explode('&', $_REQUEST['_p4a_image_thumbnail']);
@@ -952,6 +956,11 @@ class P4A extends P4A_Object
 		
 		$p4a_shadows_enabled = ($this->isHandheld() or $this->isInternetExplorer()) ? 'false' : 'true';
 		
+		$units = Zend_Locale::getTranslationList("Unit", $locale);
+		$hours_unit = ucfirst(trim(str_replace("{0}", "", $units["hour"]["other"])));
+		$minutes_unit = ucfirst(trim(str_replace("{0}", "", $units["minute"]["other"])));
+		$seconds_unit = ucfirst(trim(str_replace("{0}", "", $units["second"]["other"])));
+		
 		$return = '<script type="text/javascript">' . "\n" .
 		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
 		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
@@ -959,7 +968,11 @@ class P4A extends P4A_Object
 		'p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
 		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
 		'p4a_calendar_monthnames = ["'. join('","', $months) . '"];' . "\n" .
-		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n";
+		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
+		'p4a_calendar_timetext = "' . $this->i18n->translate("Time") . "\";\n" .
+		'p4a_calendar_hourtext = "' . $hours_unit . "\";\n" .
+		'p4a_calendar_minutetext = "' . $minutes_unit . "\";\n" .
+		'p4a_calendar_secondtext = "' . $seconds_unit . "\";\n";
 
 		if (!$this->inAjaxCall()) {
 			$return .= '$(function() {' . "\n" .
