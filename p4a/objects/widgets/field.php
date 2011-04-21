@@ -181,6 +181,9 @@ class P4A_Field extends P4A_Widget
 				case 'date':
 					$this->setType('date');
 					break;
+				case 'time':
+					$this->setType('time');
+					break;
 				case 'datetime':
 					$this->setType('datetime');
 					break;
@@ -419,6 +422,7 @@ class P4A_Field extends P4A_Widget
 		case 'radio':
 		case 'checkbox':
 		case 'password':
+		case 'time':
 			break;
 		case 'file':
 			$this->data_field->setType('file');
@@ -568,6 +572,7 @@ class P4A_Field extends P4A_Widget
 			case 'text':
 			case 'textarea':
 			case 'date':
+			case 'time':
 			case 'datetime':
 				return true;
 		}
@@ -658,8 +663,8 @@ class P4A_Field extends P4A_Widget
 			$suffix = $this->getAsRichTextarea();
 		}
 
-		$new_method = 'getAs' . $type;
-		$return = $this->$new_method() . $suffix ;
+		$new_method = "getAs{$type}";
+		$return = $this->$new_method() . $suffix;
 		$error = '';
 		if ($this->_error !== null) {
 			$css_classes[] = 'field_error';
@@ -697,6 +702,29 @@ class P4A_Field extends P4A_Widget
 			}
 		}
 		return $sReturn;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAsTime()
+	{
+		$id = $this->getId();
+		$enabled = $this->isEnabled();
+		$disabled = $enabled ? "": " disabled='disabled' ";
+
+		$header = "<input id='{$id}input' type='text' $disabled";
+		$close_header = "/>";
+
+		if (!P4A::singleton()->isHandheld()) {
+			$value = $this->data_field->getNewValue();
+			if ($enabled) $close_header .= "<input type='hidden' value='$value' name='p4a_{$id}' id='p4a_{$id}' onchange=\"p4a_time_select('p4a_{$id}', '{$id}input')\" />";
+			$options = '{}';
+			$close_header .= "<input type='button' value='...' id='{$id}button' $disabled onclick=\"return p4a_time_open('p4a_{$id}',$options);\" class=\"p4a_field_date_trigger\" />";
+			$close_header .= "<script type='text/javascript'>p4a_time_load();</script>";
+		}
+
+		return $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue() . $this->composeStringActions() . $close_header;
 	}
 	
 	/**
@@ -1386,6 +1414,7 @@ class P4A_Field extends P4A_Widget
 			case 'text':
 			case 'hidden':
 			case 'date':
+			case 'time':
 			case 'datetime':
 				return 'value="' . htmlspecialchars($value) . '" ';
 				break;

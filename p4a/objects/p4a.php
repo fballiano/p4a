@@ -429,6 +429,9 @@ class P4A extends P4A_Object
 		} elseif (isset($_REQUEST['_p4a_date_format'])) {
 			echo $this->i18n->format($_REQUEST['_p4a_date_format'], 'date', null, false);
 			die();
+		} elseif (isset($_REQUEST['_p4a_time_format'])) {
+			echo $this->i18n->format($_REQUEST['_p4a_time_format'], 'time', null, false);
+			die();
 		} elseif (isset($_REQUEST['_p4a_datetime_format'])) {
 			echo $this->i18n->format($_REQUEST['_p4a_datetime_format'], 'datetime', null, false);
 			die();

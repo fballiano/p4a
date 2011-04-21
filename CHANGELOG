@@ -10,6 +10,7 @@
 - P4A_Field::getSource() method was added
 - p4a_load_js now uses requirejs
 - P4A_Field and P4A_Data_Fields now support the "datetime" type
+- P4A_Field and P4A_Data_Fields now support the "time" type
 
 3.8.1
 - jQuery was updated to 1.4.4

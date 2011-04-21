@@ -320,6 +320,45 @@ p4a_calendar_select = function (value_id, description_id)
 	);
 }
 
+p4a_time_load = function ()
+{
+	p4a_datetime_load();
+}
+
+p4a_time_open = function (id, options)
+{
+	var element = $('#'+id);
+	element.timepicker('destroy');
+	options.changeMonth = true;
+	options.changeYear = true;
+	options.dateFormat = "yy-mm-dd";
+	options.timeFormat = "hh:mm:ss";
+	options.dayNamesMin = p4a_calendar_daynamesmin;
+	options.monthNamesShort = p4a_calendar_monthnames;
+	options.firstDay = p4a_calendar_firstday;
+	options.timeText = p4a_calendar_timetext;
+	options.hourText = p4a_calendar_hourtext;
+	options.minuteText = p4a_calendar_minutetext;
+	options.secondText = p4a_calendar_secondtext;
+	options.timeOnlyTitle = p4a_calendar_timetext;
+	options.showButtonPanel = false;
+	options.showSecond = false;
+	element.timepicker(options);
+	element.timepicker('show');
+	return false;
+}
+
+p4a_time_select = function (value_id, description_id)
+{
+	$.get(
+		p4a_form.action,
+		{_p4a_time_format: $('#'+value_id).attr('value')},
+		function (new_value) {
+			$('#'+description_id).attr('value', new_value).change();
+		}
+	);
+}
+
 p4a_datetime_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
