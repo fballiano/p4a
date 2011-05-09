@@ -232,24 +232,13 @@ abstract class P4A_Object
 	}
 	
 	/**
-	 * alias for dropImplement
-	 * @param string $action
-	 * @return P4A_Object
-	 * @see dropImplement
-	 * @deprecated 
-	 */
-	public function dropMethod($action)
-	{
-		return $this->dropImplement($action);
-	}
-	
-	/**
 	 * Removes handling an action
 	 * @param string $action
 	 * @return P4A_Object
 	 */
 	public function dropImplement($action)
 	{
+		$action = strtolower($action);
 		if (isset($this->_map_actions[$action])) {
 			unset($this->_map_actions[$action]);
 		}
