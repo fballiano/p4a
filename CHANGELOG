@@ -14,6 +14,7 @@
 - P4A_Object::dropImplement() now turns the action to lowercase
 - deprecated method P4A_Object::dropMethod() was removed
 - a javascript bug with P4A_DB_Navigator's drag&drop functionalities was solved
+- P4A_DB_Navigator now correctly supports source with non-default DSN
 
 3.8.1
 - jQuery was updated to 1.4.4

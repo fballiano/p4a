@@ -358,7 +358,7 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		if (strlen($id) == 0) return array();
 		
-		$section = P4A_DB::singleton()->adapter->fetchRow("SELECT * FROM $table WHERE $pk=?", array($id));
+		$section = P4A_DB::singleton($this->source->getDSN())->adapter->fetchRow("SELECT * FROM $table WHERE $pk=?", array($id));
 		$return = array();
 		$return[] = $section;
 
@@ -419,9 +419,9 @@ class P4A_DB_Navigator extends P4A_Widget
 
 		if ($new_value != $current) {
 			if (strlen($new_value)) {
-				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor} = ? WHERE $pk = ?", array($new_value, $current));
+				P4A_DB::singleton($this->source->getDSN())->adapter->query("UPDATE $table SET {$this->recursor} = ? WHERE $pk = ?", array($new_value, $current));
 			} else {
-				P4A_DB::singleton()->adapter->query("UPDATE $table SET {$this->recursor} = NULL WHERE $pk = ?", array($current));
+				P4A_DB::singleton($this->source->getDSN())->adapter->query("UPDATE $table SET {$this->recursor} = NULL WHERE $pk = ?", array($current));
 			}
 		}
 
