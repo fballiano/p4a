@@ -13,6 +13,7 @@
 - P4A_Field and P4A_Data_Fields now support the "time" type
 - P4A_Object::dropImplement() now turns the action to lowercase
 - deprecated method P4A_Object::dropMethod() was removed
+- a javascript bug with P4A_DB_Navigator's drag&drop functionalities was solved
 
 3.8.1
 - jQuery was updated to 1.4.4

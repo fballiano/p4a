@@ -415,16 +415,14 @@ p4a_maskedinput = function (id, mask)
 
 p4a_db_navigator_load = function (obj_id, current_id, field_to_update, roots_movement)
 {
-	p4a_load_js(p4a_theme_path + '/jquery/ui.core.js', function () {
-		p4a_load_js(p4a_theme_path + '/jquery/ui.widget.js', function () {
-			p4a_load_js(p4a_theme_path + '/jquery/ui.mouse.js', function () {
-				p4a_load_js(p4a_theme_path + '/jquery/ui.draggable.js', function () {
-					p4a_load_js(p4a_theme_path + '/jquery/ui.droppable.js', function () {
-						p4a_db_navigator_init(obj_id, current_id, field_to_update, roots_movement);
-					});
-				});
-			});
-		});
+	require({baseUrl: p4a_theme_path},[
+		'order!' + p4a_theme_path + '/jquery/ui.core.js',
+		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
+		'order!' + p4a_theme_path + '/jquery/ui.mouse.js',
+		'order!' + p4a_theme_path + '/jquery/ui.draggable.js',
+		'order!' + p4a_theme_path + '/jquery/ui.droppable.js',
+	], function () {
+		p4a_db_navigator_init(obj_id, current_id, field_to_update, roots_movement);
 	});
 }
 
@@ -452,8 +450,13 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, roots_mov
 		accept: '.active_node',
 		hoverClass: 'hoverclass',
 		tolerance: 'pointer',
-		drop: function() {
+		drop: function(event, ui) {
 			$('#' + field_to_update + 'input').val($(this).parent().attr('id').split('_')[1]);
+			setTimeout(function() { ui.draggable.remove(); }, 1);
+			try {
+				$("#" + ui.draggable.attr("id")).draggable("destroy");
+				$("#" + $(this).parent().attr("id")).droppable("destroy");
+			} catch (e) {}
 			p4a_event_execute_ajax(field_to_update, 'onchange');
 		}
 	});
@@ -463,9 +466,11 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, roots_mov
 			accept: '.active_node',
 			hoverClass: 'hoverclass',
 			tolerance: 'pointer',
-			drop: function() {
+			drop: function(event, ui) {
+				setTimeout(function() { ui.draggable.remove(); }, 1);
+				$("#" + $(this).parent().attr("id")).droppable("destroy");
 				$('#' + field_to_update + 'input').val('');
-				p4a_event_execute_ajax(field_to_update, 'onChange');
+				p4a_event_execute_ajax(field_to_update, 'onchange');
 			}
 		});
 	}
