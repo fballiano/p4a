@@ -358,6 +358,12 @@ class P4A_DB_Navigator extends P4A_Widget
 	{
 		if (strlen($id) == 0) return array();
 		
+		$query = $this->source->getQuery();
+		if ($query) {
+			$table = "($query) p4a_tmp";
+			unset($query);
+		}
+		
 		$section = P4A_DB::singleton($this->source->getDSN())->adapter->fetchRow("SELECT * FROM $table WHERE $pk=?", array($id));
 		$return = array();
 		$return[] = $section;
