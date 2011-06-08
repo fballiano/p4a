@@ -334,13 +334,13 @@ abstract class P4A_Data_Source extends P4A_Object
 					}
 				} else {
 					if ($new_value === null) {
-						$path = $target_dir . '/' . $a_old_value[1];
+						$path = P4A_UPLOADS_DIR . $a_old_value[1];
 						if (!@unlink($path) and @file_exists($path)) {
 							throw new P4A_Exception("Cannot delete file \"$path\"", P4A_FILESYSTEM_ERROR);
 						}
 						$field->setNewValue(null);
 					} elseif ($new_value!=$old_value) {
-						$path = $target_dir . '/' . $a_old_value[1];
+						$path = P4A_UPLOADS_DIR . $a_old_value[1];
 						if (!@unlink($path) and @file_exists($path)) {
 							throw new P4A_Exception("Cannot delete file \"$path\"", P4A_FILESYSTEM_ERROR);
 						}
