@@ -2,6 +2,7 @@
 - P4A_DB_Navigator now supports query defined sources
 - a bug with P4A_Data_Source::saveUploads() was solved
 - a bug with P4A_Table's image cols (without GD installed) was solved
+- P4A_DB_Navigator now triggers a beforeclick event
 
 3.8.2
 - Zend Framework was updated to 1.11.6
