@@ -890,7 +890,7 @@ class P4A_Table_Rows extends P4A_Widget
 								$image_src = P4A_UPLOADS_TMP_URL . '/' . $thumb->getCachedFilename();
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' alt='' />";
 							} else {
-								$image_src = P4A_UPLOADS_PATH . $image_src;
+								$image_src = P4A_UPLOADS_PATH . $value[1];
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
 							}
 						} else {
