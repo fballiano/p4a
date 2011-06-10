@@ -37,13 +37,14 @@
 	} catch (e) {}
 };
 
-p4a_load_js('<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js', <?php echo $this->getId() ?>pre);
+require(['<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js'], <?php echo $this->getId() ?>pre);
 </script>
 
 <script type="text/javascript">
 <?php echo $this->getId() ?>post = function () {
 	if (typeof CKEDITOR == "undefined") {
 		setTimeout(<?php echo $this->getId() ?>post, 200);
+		return;
 	}
 
 	CKEDITOR.replace('<?php echo $this->getId() ?>input', {

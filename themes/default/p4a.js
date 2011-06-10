@@ -275,23 +275,22 @@ p4a_tabs_load = function ()
 
 p4a_autocomplete_load = function (callback)
 {
-	p4a_load_js(p4a_theme_path + '/jquery/ui.core.js', function () {
-		p4a_load_js(p4a_theme_path + '/jquery/ui.widget.js', function () {
-			p4a_load_js(p4a_theme_path + '/jquery/ui.position.js', function () {
-				p4a_load_js(p4a_theme_path + '/jquery/ui.autocomplete.js', function () {
-					p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css', callback);
-				});
-			});
-		});
-	});
+	p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css');
+	require({baseUrl: p4a_theme_path},[
+		'order!' + p4a_theme_path + '/jquery/ui.core.js',
+		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
+		'order!' + p4a_theme_path + '/jquery/ui.position.js',
+		'order!' + p4a_theme_path + '/jquery/ui.autocomplete.js'
+	], callback);
 }
 
 p4a_calendar_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
-	p4a_load_js(p4a_theme_path + '/jquery/ui.core.js', function () {
-		p4a_load_js(p4a_theme_path + '/jquery/ui.datepicker.js');
-	});
+	require({baseUrl: p4a_theme_path},[
+   		'order!' + p4a_theme_path + '/jquery/ui.core.js',
+   		'order!' + p4a_theme_path + '/jquery/ui.datepicker.js'
+   	]);
 }
 
 p4a_calendar_open = function (id, options)
@@ -410,7 +409,7 @@ p4a_datetime_select = function (value_id, description_id)
 
 p4a_maskedinput = function (id, mask)
 {
-	p4a_load_js(p4a_theme_path + '/jquery/maskedinput.js', function () {$('#'+id+'input').mask(mask)});
+	require([p4a_theme_path + '/jquery/maskedinput.js'], function () {$('#'+id+'input').mask(mask)});
 }
 
 p4a_db_navigator_load = function (obj_id, current_id, field_to_update, roots_movement)
@@ -539,11 +538,6 @@ p4a_rich_textarea_remove_all = function ()
 			delete CKEDITOR.instances[instance_id];
 		}
 	}
-}
-
-p4a_load_js = function (url, callback)
-{
-	require([url], callback);
 }
 
 p4a_load_css = function (url, callback)
