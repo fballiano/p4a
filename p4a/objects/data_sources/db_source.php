@@ -968,7 +968,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	 */
 	public function deleteRow()
 	{
-		if (!$this->isReadOnly()) {
+		if (!$this->isNew() and !$this->isReadOnly()) {
 			$db = P4A_DB::singleton($this->getDSN());
 			$table = $this->getTable();
 			$schema = $this->getSchema();
