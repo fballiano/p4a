@@ -540,6 +540,11 @@ p4a_rich_textarea_remove_all = function ()
 	}
 }
 
+p4a_load_js = function (url, callback)
+{
+	require([url], callback);
+}
+
 p4a_load_css = function (url, callback)
 {
 	if ($("link").filter(function () {return $(this).attr("href") == url}).length) {

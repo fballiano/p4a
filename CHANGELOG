@@ -3,7 +3,7 @@
 - a bug with P4A_Data_Source::saveUploads() was solved
 - a bug with P4A_Table's image cols (without GD installed) was solved
 - P4A_DB_Navigator now triggers a beforeclick event
-- p4a_load_js was completely removed and all code was migrated to require.js
+- all p4a_load_js calls were migrated to require.js
 - a bug with P4A_DB_Source::deleteRow() called when in newRow state was solved
 
 3.8.2
