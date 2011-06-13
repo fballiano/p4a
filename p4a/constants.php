@@ -259,9 +259,10 @@ define('P4A_DEFAULT_MINIMAL_REPORTING', P4A_DEFAULT_ERROR_REPORTING ^ E_WARNING)
 define('P4A_FILESYSTEM_ERROR', 1);
 define('P4A_UPLOAD_PROGRESS', function_exists('uploadprogress_get_info'));
 
-if (!defined('P4A_GD') and function_exists('ImageJPEG') and
-	function_exists('ImagePNG') and function_exists('ImageGIF')) {
-	define('P4A_GD', true);
-} else {
-	define('P4A_GD', false);
+if (!defined('P4A_GD')) {
+	if (function_exists('ImageJPEG') and function_exists('ImagePNG') and function_exists('ImageGIF')) {
+		define('P4A_GD', true);
+	} else {
+		define('P4A_GD', false);
+	}
 }

@@ -6,6 +6,7 @@
 - all p4a_load_js calls were migrated to require.js
 - a bug with P4A_DB_Source::deleteRow() called when in newRow state was solved
 - p4a_ajax_enable javascript function was added
+- a bug with P4A_GD constant default definition was solved
 
 3.8.2
 - Zend Framework was updated to 1.11.6
