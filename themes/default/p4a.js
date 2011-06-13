@@ -4,10 +4,10 @@
  * http://www.gnu.org/licenses/lgpl.html
  */
 
-p4a_working = true;
-p4a_system_messages_timeout = null;
-p4a_tooltip_timeout_id = null;
-p4a_interval_id = null;
+var p4a_working = true;
+var p4a_system_messages_timeout = null;
+var p4a_tooltip_timeout_id = null;
+var p4a_interval_id = null;
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
 {
@@ -171,6 +171,11 @@ p4a_upload_progress_check = function ()
 p4a_ajax_error = function ()
 {
 	p4a_refresh();
+}
+
+p4a_ajax_enable = function (enable)
+{
+	p4a_ajax_enabled = enable;
 }
 
 p4a_refresh = function ()

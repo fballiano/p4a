@@ -965,17 +965,17 @@ class P4A extends P4A_Object
 		$seconds_unit = ucfirst(trim(str_replace("{0}", "", $units["second"]["other"])));
 		
 		$return = '<script type="text/javascript">' . "\n" .
-		'p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
-		'p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
-		'p4a_upload_progress = ' . $upload_progress . ';' . "\n" .
-		'p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
-		'p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
-		'p4a_calendar_monthnames = ["'. join('","', $months) . '"];' . "\n" .
-		'p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
-		'p4a_calendar_timetext = "' . $this->i18n->translate("Time") . "\";\n" .
-		'p4a_calendar_hourtext = "' . $hours_unit . "\";\n" .
-		'p4a_calendar_minutetext = "' . $minutes_unit . "\";\n" .
-		'p4a_calendar_secondtext = "' . $seconds_unit . "\";\n";
+		'var p4a_theme_path = "' . P4A_THEME_PATH . '";' . "\n" .
+		'var p4a_ajax_enabled = ' . $ajax_enabled . ';' . "\n" .
+		'var p4a_upload_progress = ' . $upload_progress . ';' . "\n" .
+		'var p4a_shadows_enabled = ' . $p4a_shadows_enabled . ';' . "\n" .
+		'var p4a_calendar_daynamesmin = ["'. join('","', $days) . '"];' . "\n" .
+		'var p4a_calendar_monthnames = ["'. join('","', $months) . '"];' . "\n" .
+		'var p4a_calendar_firstday = ' . $this->i18n->getFirstDayOfTheWeek() . ";\n" .
+		'var p4a_calendar_timetext = "' . $this->i18n->translate("Time") . "\";\n" .
+		'var p4a_calendar_hourtext = "' . $hours_unit . "\";\n" .
+		'var p4a_calendar_minutetext = "' . $minutes_unit . "\";\n" .
+		'var p4a_calendar_secondtext = "' . $seconds_unit . "\";\n";
 
 		if (!$this->inAjaxCall()) {
 			$return .= '$(function() {' . "\n" .
