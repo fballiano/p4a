@@ -7,6 +7,8 @@
 - a bug with P4A_DB_Source::deleteRow() called when in newRow state was solved
 - p4a_ajax_enable javascript function was added
 - a bug with P4A_GD constant default definition was solved
+- P4A_Mask::restart() method was added
+- Zend Framework was updated to 1.11.7
 
 3.8.2
 - Zend Framework was updated to 1.11.6

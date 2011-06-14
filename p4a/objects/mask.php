@@ -726,4 +726,14 @@ class P4A_Mask extends P4A_Object
 	{
 		return $this->_right_sidebar_width;
 	}
+	
+	/**
+	 * Destroyes current mask and reopen it (useful for developers)
+	 */
+	public function restart()
+	{
+		$p4a = p4a::singleton();
+		$p4a->showPrevMask(true);
+		$p4a->openMask(get_class($this));
+	}
 }
