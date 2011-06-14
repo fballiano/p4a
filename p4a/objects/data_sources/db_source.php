@@ -117,6 +117,11 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @var array
 	 */
 	protected $_tables_metadata = array();
+	
+	/**
+	 * @var boolean
+	 */
+	protected $_is_loaded = false;
 
 	/**
 	 * @param string $DSN
@@ -496,6 +501,10 @@ class P4A_DB_Source extends P4A_Data_Source
 	 */
 	public function load()
 	{
+		if ($this->_is_loaded) {
+			trigger_error('P4A_DB_Source can be called only once', E_USER_ERROR);
+		}
+		
 		if (!$this->getQuery() and !$this->getTable()){
 			trigger_error('Please define a query of a table', E_USER_ERROR);
 		}
@@ -572,6 +581,8 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
 			}
 		}
+		
+		$this->_is_loaded = true;
 		return $this;
 	}
 	

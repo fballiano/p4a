@@ -10,6 +10,7 @@
 - P4A_Mask::restart() method was added
 - Zend Framework was updated to 1.11.7
 - translations were updated
+- P4A_DB_Source::load() method now checks for duplicate calls and throws an error
 
 3.8.2
 - Zend Framework was updated to 1.11.6
