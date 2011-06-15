@@ -1,3 +1,5 @@
+3.8.4
+
 3.8.3
 - P4A_DB_Navigator now supports query defined sources
 - a bug with P4A_Data_Source::saveUploads() was solved
