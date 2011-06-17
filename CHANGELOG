@@ -4,6 +4,8 @@
 - p4a_center_elements() javascript funcion now removes marginLeft/paddingLeft
   from the first visible column of the first P4A_Frame widget
 - a bug with P4A_Frame and multiple CSS classes was solved
+- P4A_Table's arrow symbols were because the past ones weren't shown on mobile
+  devices
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources

@@ -48,18 +48,18 @@
 			<?php if ($header['action']): ?>
 				<th>
 					<?php if ($header['order'] == 'asc'): ?>
-						<div style="float:right">&#x25BC;</div>
+						<div style="float:right">↓</div>
 					<?php elseif ($header['order'] == 'desc'): ?>
-						<div style="float:right">&#x25B2;</div>
+						<div style="float:right">↑</div>
 					<?php endif; ?>
 					<a href="#" <?php echo $header['action']?>><?php echo $header['value']?></a>
 				</th>
 			<?php else: ?>
 				<th>
 					<?php if ($header['order'] == 'asc'): ?>
-						<div style="float:right">&#x25BC;</div>
+						<div style="float:right">↓</div>
 					<?php elseif ($header['order'] == 'desc'): ?>
-						<div style="float:right">&#x25B2;</div>
+						<div style="float:right">↑</div>
 					<?php endif; ?>
 					<?php echo $header['value']?>
 				</th>
@@ -78,7 +78,7 @@
 				<?php if ($this->_show_row_indicator): ?>
 			    <th class="p4a_row_indicator">
 			    	<?php if ($row['row']['active']): ?>
-						&#x25BA;
+						→
 					<?php else: ?>
 						&nbsp;
 					<?php endif; ?>
