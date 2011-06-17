@@ -133,6 +133,11 @@ class P4A extends P4A_Object
 	 */
 	private $_cache = null;
 	
+	/**
+	 * @var string
+	 */
+	protected $_meta_viewport = "width=device-width, initial-scale=1, maximum-scale=1, target-densitydpi=device-dpi";
+	
 	const BROWSER_GECKO = 'gecko';
 	const BROWSER_HANDHELD = 'handheld';
 	const BROWSER_IE = 'ie';
@@ -1128,6 +1133,24 @@ class P4A extends P4A_Object
 	public function getCache()
 	{
 		return $this->_cache;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getMetaViewport()
+	{
+		return $this->_meta_viewport;
+	}
+	
+	/**
+	 * @param string $metaviewport
+	 * return P4A
+	 */
+	public function setMetaViewport($metaviewport)
+	{
+		$this->_meta_viewport = $metaviewport;
+		return $this;
 	}
 	
 	public function __wakeup()
