@@ -32,6 +32,7 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, target-densitydpi=device-dpi">
 <title><?php echo P4A::singleton()->getTitle() ?></title>
 
 <?php foreach (P4A::singleton()->getCSS() as $_url=>$_media): ?>

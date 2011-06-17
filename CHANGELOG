@@ -1,4 +1,5 @@
 3.8.4
+- "meta viewport" tag was added to mask's HTML for a better mobile rendering
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources
