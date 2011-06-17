@@ -1,6 +1,8 @@
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering
 - P4A::getMetaViewport() and setMetaViewport() methods were added
+- p4a_center_elements() javascript funcion now removes marginLeft/paddingLeft
+  from the first visible column of the first P4A_Frame widget
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources

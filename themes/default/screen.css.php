@@ -223,6 +223,10 @@ ol.p4a_backtrace li {
 	float: left;
 }
 
+.p4a_frame .col {
+	padding: 2px 0;
+}
+
 /****************/
 /* P4A_Fieldset */
 /****************/

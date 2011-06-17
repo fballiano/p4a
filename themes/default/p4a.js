@@ -205,6 +205,13 @@ p4a_loading_hide = function ()
 }
 
 p4a_center_elements = function () {
+	$('#p4a_main>.p4a_frame>.row').each(function () {
+		$(this).children('.col:visible').first().css({
+			marginLeft: 0,
+			paddingLeft: 0
+		});
+	});
+	
 	var main = $('#p4a_main');
 	main.css({
 		float: 'left',

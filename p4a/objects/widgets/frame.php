@@ -153,7 +153,7 @@ class P4A_Frame extends P4A_Widget
 			$one_visible = false;
 			$row = "\n<div class='row'>";
 			foreach ($objs as $obj) {
-				$classes = array();
+				$classes = array("col");
 				$object = $p4a->getObject($obj["id"]);
 				if (is_object($object)) {
 					$as_string = $object->getAsString();
@@ -181,7 +181,7 @@ class P4A_Frame extends P4A_Widget
 					} else {
 						$display = $object->isVisible() ? 'block' : 'none';
 						$class = empty($classes) ? '' : 'class="' . implode(',', $classes) . '"';
-						$row .= "\n\t<div $class style='padding:2px 0;display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
+						$row .= "\n\t<div $class style='display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
 					}
 				}
 			}
