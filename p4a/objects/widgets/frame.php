@@ -180,7 +180,7 @@ class P4A_Frame extends P4A_Widget
 						$row .= $as_string;
 					} else {
 						$display = $object->isVisible() ? 'block' : 'none';
-						$class = empty($classes) ? '' : 'class="' . implode(',', $classes) . '"';
+						$class = empty($classes) ? '' : 'class="' . implode(' ', $classes) . '"';
 						$row .= "\n\t<div $class style='display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
 					}
 				}
