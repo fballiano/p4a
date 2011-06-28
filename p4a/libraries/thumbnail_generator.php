@@ -386,6 +386,8 @@ class P4A_Thumbnail_Generator
 	
 	public function outputThumbnail()
 	{
+		@ob_clean();
+		
 		if ($this->isCacheEnabled()) {
 			if (!$this->isCached()) $this->cacheThumbnail();
 			header("Expires: " . gmdate("D, d M Y H:i:s", time()+24*60*60) . " GMT");

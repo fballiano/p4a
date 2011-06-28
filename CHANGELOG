@@ -6,6 +6,8 @@
 - a bug with P4A_Frame and multiple CSS classes was solved
 - P4A_Table's arrow symbols were because the past ones weren't shown on mobile
   devices
+- an ob_clean() call was added to P4A_Thumbnail_Generator::outputThumbnail()
+  method
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources
