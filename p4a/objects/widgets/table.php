@@ -887,7 +887,7 @@ class P4A_Table_Rows extends P4A_Widget
 									->setFilename(P4A_Strip_Double_Slashes(P4A_UPLOADS_DIR . $value[1]))
 									->processFile()
 									->cacheThumbnail();
-								$image_src = P4A_UPLOADS_TMP_URL . '/' . $thumb->getCachedFilename();
+								$image_src = P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename();
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' alt='' />";
 							} else {
 								$image_src = P4A_UPLOADS_PATH . $value[1];
