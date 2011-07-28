@@ -9,6 +9,8 @@
 - an ob_clean() call was added to P4A_Thumbnail_Generator::outputThumbnail()
   method
 - Zend Framework was updated to 1.11.8
+- P4A_Table's image cols do not throw exception anymore if the image
+  does not exist
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources

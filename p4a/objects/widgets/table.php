@@ -879,6 +879,7 @@ class P4A_Table_Rows extends P4A_Widget
 						list($type) = explode('/',$value[3]);
 						if ($type == 'image') {
 							if (P4A_GD) {
+								try {
 								$thumb = new P4A_Thumbnail_Generator();
 								$thumb
 									->setCacheDir(P4A_UPLOADS_TMP_DIR)
@@ -889,6 +890,9 @@ class P4A_Table_Rows extends P4A_Widget
 									->cacheThumbnail();
 								$image_src = P4A_UPLOADS_TMP_PATH . '/' . $thumb->getCachedFilename();
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' alt='' />";
+								} catch (Exception $e) {
+									$aReturn[$i]['cells'][$j]['value'] = "";
+								}
 							} else {
 								$image_src = P4A_UPLOADS_PATH . $value[1];
 								$aReturn[$i]['cells'][$j]['value'] = "<img src='$image_src' height='$thumb_height' alt='' />";
