@@ -8,7 +8,7 @@
   devices
 - an ob_clean() call was added to P4A_Thumbnail_Generator::outputThumbnail()
   method
-- Zend Framework was updated to 1.11.9
+- Zend Framework was updated to 1.11.10
 - P4A_Table's image cols do not throw exception anymore if the image
   does not exist
 
