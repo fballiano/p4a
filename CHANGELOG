@@ -11,6 +11,8 @@
 - Zend Framework was updated to 1.11.10
 - P4A_Table's image cols do not throw exception anymore if the image
   does not exist
+- P4A_Field_loadSelectByArray helper now supports a second parameter to specify
+  the array's primary key field name
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources

@@ -11,10 +11,11 @@
 
 function P4A_Field_loadSelectByArray($field, $params)
 {
-	list($array) = $params;
-
 	$field->build('p4a_array_source', 'source');
-	$field->source->load($array);
+	if (isset($params[1])) {
+		$field->source->setPk($params[1]);
+	}
+	$field->source->load($params[0]);
 	
 	$field->setType('select');
 	$field->setSource($field->source);
