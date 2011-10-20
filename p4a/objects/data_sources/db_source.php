@@ -1120,7 +1120,8 @@ class P4A_DB_Source extends P4A_Data_Source
 			if (is_array($pk_value)) {
 				list($key,$pk_value) = each($pk_value);
 			}
-			$pk_string = "{$this->_table}.{$pk_key} = '{$pk_value}' ";
+			$pk_value = p4a_db::singleton($this->getDSN())->quote($pk_value, true);
+			$pk_string = "{$this->_table}.{$pk_key} = {$pk_value} ";
 		}
 		
 		$select->where($pk_string);

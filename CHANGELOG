@@ -15,6 +15,7 @@
   does not exist
 - P4A_Field_loadSelectByArray helper now supports a second parameter to specify
   the array's primary key field name
+- a bug with P4A_DB_Source strings primary keys escaping was solved
 
 3.8.3
 - P4A_DB_Navigator now supports query defined sources
