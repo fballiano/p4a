@@ -8,7 +8,7 @@ CREATE TABLE `brands` (
   `description` text NOT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY  (`brand_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `brands`
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `brands_brand_id_seq`;
 CREATE TABLE `brands_brand_id_seq` (
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) ENGINE=MyISAM AUTO_INCREMENT=4;
 
 --
 -- Dumping data for table `brands_brand_id_seq`
@@ -42,7 +42,7 @@ CREATE TABLE `categories` (
   `description` text NOT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY  (`category_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `categories`
@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `categories_category_id_seq`;
 CREATE TABLE `categories_category_id_seq` (
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) ENGINE=MyISAM AUTO_INCREMENT=4;
 
 --
 -- Dumping data for table `categories_category_id_seq`
@@ -84,7 +84,7 @@ CREATE TABLE `products` (
   `visible` tinyint(1) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY  (`product_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `products`
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `products_product_id_seq`;
 CREATE TABLE `products_product_id_seq` (
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=6;
+) ENGINE=MyISAM AUTO_INCREMENT=6;
 
 --
 -- Dumping data for table `products_product_id_seq`
