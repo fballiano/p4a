@@ -58,6 +58,9 @@ require(['<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js'], <?ph
 		coreStyles_strike: {element: 'span', attributes: {'style': 'text-decoration:line-through'}},
 		coreStyles_underline: {element: 'span', attributes: {'style': 'text-decoration:underline'}},
 		forcePasteAsPlainText: true,
+		<?php if ($this->rich_textarea_templates): ?>
+		templates_files: ['<?php echo implode("','", array_keys($this->rich_textarea_templates)) ?>'],
+		<?php endif; ?>
 		on: {
 			instanceReady: function (e) {
 				e.editor.p4a_loaded = true;
@@ -68,12 +71,13 @@ require(['<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/ckeditor.js'], <?ph
 			if (empty($toolbars)) {
 				$toolbar = $this->getRichTextareaTheme();
 				if ($toolbar == "Default") {
+					$templates = $this->rich_textarea_templates ? ",'Templates'" : "";
 					$toolbar = "[
 				      	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print','-','About'],
 				    	'/',
 				    	['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format'],
 				    	'/',
-				    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar']
+				    	['Link','Unlink','Anchor','-','Image','Flash','-','Table','HorizontalRule','SpecialChar'$templates]
 			    	]";
 				} else {
 					$toolbar = "'$toolbar'";

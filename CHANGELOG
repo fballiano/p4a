@@ -1,5 +1,7 @@
 3.8.5
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
+- P4A_Field::addRichTextareaTemplate(), removeRichTextareaTemplate and
+  getRichTextareaTemplates() methods were added 
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering

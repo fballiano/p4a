@@ -115,7 +115,7 @@ class P4A_Field extends P4A_Widget
 	 * @var string
 	 */
 	protected $rich_textarea_theme = 'Default';
-
+	
 	/**
 	 * The error message
 	 * @var string
@@ -146,6 +146,11 @@ class P4A_Field extends P4A_Widget
 	 * @var array
 	 */
 	protected $rich_textarea_toolbars = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $rich_textarea_templates = array();
 	
 	/**
 	 * @param string $name Mnemonic identifier for the object.
@@ -1463,6 +1468,34 @@ class P4A_Field extends P4A_Widget
 	public function getRichTextareaTheme()
 	{
 		return $this->rich_textarea_theme;
+	}
+	
+	/**
+	 * @param string $url
+	 * @return P4A_Field
+	 */
+	public function addRichTextareaTemplate($url)
+	{
+		$this->rich_textarea_templates[$url] = true;
+		return $this;
+	}
+	
+	/**
+	 * @param string $url
+	 * @return P4A_Field
+	 */
+	public function removeRichTextareaTemplate($url)
+	{
+		unset($this->rich_textarea_templates[$url]);
+		return $this;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getRichTextareaTemplates()
+	{
+		return array_keys($this->rich_textarea_templates);
 	}
 	
 	/**
