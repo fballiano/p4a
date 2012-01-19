@@ -6,15 +6,15 @@
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
- * 
+ *
  * P4A is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
- * 
+ *
  * To contact the authors write to:                                     <br />
  * Fabrizio Balliano <fabrizio@fabrizioballiano.it>                     <br />
  * Andrea Giardina <andrea.giardina@crealabs.it>
@@ -29,13 +29,13 @@
 
 /**
  * Read/write data from/to a database.
- * 
+ *
  * Note that P4A_DB_Source is case sensitive when handling
  * schemas/tables/columns names, thus if your table name
  * is "products" (lowercase) then type it lowercase in P4A too,
  * if it is "PRODUCTS" (uppercase) then type it uppercase
  * in P4A too and so on...
- * 
+ *
  * @author Fabrizio Balliano <fabrizio@fabrizioballiano.it>
  * @author Andrea Giardina <andrea.giardina@crealabs.it>
  * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
@@ -47,77 +47,77 @@ class P4A_DB_Source extends P4A_Data_Source
 	 * @var string
 	 */
 	protected $_DSN = null;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_pk = null;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_table = null;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_table_alias = null;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_schema = null;
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_fields = array();
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_join = array();
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_where = null;
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_group = array();
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_having = array();
-	
+
 	/**
 	 * @var boolean
 	 */
 	protected $_is_sortable = true;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $_query = null;
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_multivalue_fields = array();
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_filters = array();
-	
+
 	/**
 	 * @var array
 	 */
 	protected $_tables_metadata = array();
-	
+
 	/**
 	 * @var boolean
 	 */
@@ -165,7 +165,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_table;
 	}
-	
+
 	/**
 	 * @return string
 	 */
@@ -174,7 +174,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_table_alias = $alias;
 		return $this;
 	}
-	
+
 	/**
 	 * @return string
 	 */
@@ -182,7 +182,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_table_alias;
 	}
-	
+
 	/**
 	 * @param string $schema
 	 * @return P4A_DB_Source
@@ -232,7 +232,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_join[] = array('INNER', $table, $clausole, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add an inner join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -246,7 +246,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->addJoin($table, $clausole, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add a left join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -260,7 +260,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_join[] = array('LEFT', $table, $clausole, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add a right join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -274,7 +274,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_join[] = array('RIGHT', $table, $clausole, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add a full join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -288,7 +288,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_join[] = array('FULL', $table, $clausole, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add a cross join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -301,7 +301,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$this->_join[] = array('CROSS', $table, null, $fields, $schema);
 		return $this;
 	}
-	
+
 	/**
 	 * Add a natural join
 	 * @param string|array $table Table name or table/alias array (eg: array("table_name", "alias"))
@@ -332,9 +332,9 @@ class P4A_DB_Source extends P4A_Data_Source
 	public function setWhere($where)
 	{
 		$this->resetNumRows();
-		$this->_where = $where;				
+		$this->_where = $where;
 		// if pointer is null load() was not called yet
-		// if isNew() we stay in newRow 
+		// if isNew() we stay in newRow
 		if ($this->_pointer !== null and !$this->isNew()) $this->firstRow();
 		return $this;
 	}
@@ -372,7 +372,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		foreach($group as $g) {
 			$this->addGroup($g);
 		}
-		
+
 		return $this;
 	}
 
@@ -383,7 +383,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_group;
 	}
-	
+
 	/**
 	 * Multiple having clause will be added with the AND operator
 	 * @param string $having
@@ -409,7 +409,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		foreach($having as $h) {
 			$this->addHaving($h);
 		}
-		
+
 		return $this;
 	}
 
@@ -420,7 +420,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		return $this->_having;
 	}
-	
+
 	/**
 	 * @param string $query
 	 * @return P4A_DB_Source
@@ -504,13 +504,13 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($this->_is_loaded) {
 			trigger_error('P4A_DB_Source can be called only once', E_USER_ERROR);
 		}
-		
+
 		if (!$this->getQuery() and !$this->getTable()){
 			trigger_error('Please define a query of a table', E_USER_ERROR);
 		}
-		
+
 		$db = P4A_DB::singleton($this->getDSN());
-		
+
 		if ($this->getQuery()) {
 			$row = $db->fetchRow($this->getQuery());
 			foreach ($row as $column_name=>$column_value) {
@@ -518,16 +518,16 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 			return $this;
 		}
-		
+
 		$select = $this->_composeSelectStructureQuery();
 		$main_table = $this->getTable();
-		
-		// retrieving tables metadata 
+
+		// retrieving tables metadata
 		foreach ($select->getPart('from') as $alias=>$table_data) {
 			$p4a_db_table = new P4A_Db_Table(array('name'=>$table_data['tableName'], 'schema'=>$table_data['schema'], 'db'=>$db->adapter));
 			$this->_tables_metadata[$table_data['tableName']] = $p4a_db_table->info();
 		}
-		
+
 		if (!$this->getSchema()) {
 			foreach ($this->_tables_metadata[$main_table]['metadata'] as $column_data) {
 				if (strlen($column_data['SCHEMA_NAME'])) {
@@ -536,13 +536,13 @@ class P4A_DB_Source extends P4A_Data_Source
 				break;
 			}
 		}
-		
+
 		// creating data fields
 		foreach ($select->getPart('columns') as $column_data) {
 			$table_name = $column_data[0] == $this->_table_alias ? $this->_table : $column_data[0];
 			$column_name = $column_data[1];
 			$column_alias = $column_data[2];
-			
+
 			if ($column_name == '*') {
 				foreach ($this->_tables_metadata[$table_name]['metadata'] as $field_name=>$meta) {
 					if (!$meta['SCHEMA_NAME']) $meta['SCHEMA_NAME'] = $this->_tables_metadata[$table_name]['schema'];
@@ -560,7 +560,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 		}
-		
+
 		// setting primary keys
 		$primary_keys = array_values($this->_tables_metadata[$main_table]['primary']);
 		if (P4A_AUTO_DB_PRIMARY_KEYS and !empty($primary_keys)) {
@@ -570,7 +570,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->setPk($primary_keys);
 			}
 		}
-		
+
 		$main_table_sequence = $this->_tables_metadata[$main_table]['sequence'];
 		if (P4A_AUTO_DB_SEQUENCES and sizeof($primary_keys) == 1 and $main_table_sequence) {
 			$field_name = $primary_keys[0];
@@ -581,16 +581,16 @@ class P4A_DB_Source extends P4A_Data_Source
 				$this->fields->$field_name->setSequence("{$table_name}_{$field_name}");
 			}
 		}
-		
+
 		$this->_is_loaded = true;
 		return $this;
 	}
-	
+
 	protected function createDataField($name, $meta = null)
 	{
 		$this->fields->build("P4A_Data_Field", $name);
 		$this->fields->$name->setDSN($this->getDSN());
-		
+
 		if ($meta === null) {
 			$this->fields->$name->isReadOnly(true);
 		} else {
@@ -600,12 +600,12 @@ class P4A_DB_Source extends P4A_Data_Source
 			if ($name != $meta['COLUMN_NAME']) {
 				$this->fields->$name->setAliasOf($meta['COLUMN_NAME']);
 			}
-			
+
 			if ($this->fields->$name->getTable() != $this->getTable()) {
 				$this->fields->$name->isReadOnly(true);
 			}
 		}
-		
+
 		switch (strtolower($meta['DATA_TYPE'])) {
 			case 'int':
 			case 'int4':
@@ -699,7 +699,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($num_row == 0) {
 			$num_row = 1;
 		}
-		
+
 		if ($this->getQuery()) {
 			$select = $db->adapter->limit($this->getQuery(), 1, $num_row-1);
 		} else {
@@ -709,7 +709,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		$row = $db->adapter->fetchRow($select);
 		if (isset($row['ZEND_DB_ROWNUM'])) unset($row['ZEND_DB_ROWNUM']);
 		if (isset($row['zend_db_rownum'])) unset($row['zend_db_rownum']);
-		
+
 		if ($db->getDBType() == 'oci' and is_array($row)) {
 			foreach ($row as $k=>$field) {
 				if (is_resource($field)) {
@@ -797,7 +797,7 @@ class P4A_DB_Source extends P4A_Data_Source
 						list ($p_long_fld,$p_value) = $new_order_array_value;
 						$p_order .= "$p_long_fld = $p_value AND ";
 					}
-					
+
 					/*
 					where order_field < "value" or (order_field="value" and pk1 <
 					"valuepk1") or ( order_field="value" and pk1 = "valuepk1" and
@@ -831,7 +831,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 			$this->_composeGroupPart($select);
 			$select = $this->_composeSelectCountQuery($select->__toString());
-			
+
 			/* Hack to solve mystic mysql bug: p4a bug 1666868 */
 			/*http://sourceforge.net/tracker/index.php?func=detail&aid=1666868&group_id=98294&atid=620566*/
 			if (!empty($this->_join) and $db->getDBType() == 'mysql') {
@@ -839,17 +839,17 @@ class P4A_DB_Source extends P4A_Data_Source
 					$db->adapter->fetchOne($select);
 				} catch (Exception $e) {}
 			}
-			
+
 			try {
 				$position = $db->adapter->fetchOne($select) + 1;
 			} catch (Exception $e) {
 				$position = 1;
 			}
-			
+
 			return $position;
 		}
 	}
-	
+
 	/**
 	 * @return P4A_DB_Source
 	 */
@@ -861,15 +861,15 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * Inserts/update the row to the database.
-	 * 
+	 *
 	 * If you've multivalue fields be sure that the user can't
 	 * change the value of primary keys or the record will
 	 * be broken.
-	 * 
+	 *
 	 * You can pass $fields_values and $pk_values if you want
 	 * to save a row you created in a custom way bypassing
 	 * internal data_fields.
-	 * 
+	 *
 	 * @param array $fields_values
 	 * @param array $pk_values must be associative key_name=>key_value
 	 */
@@ -880,7 +880,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$db = P4A_DB::singleton($this->getDSN());
 			$table = $this->getTable();
 			$schema = $this->getSchema();
-			
+
 			if (empty($fields_values)) {
 				while($field = $this->fields->nextItem()) {
 					if ($field->getSchema() != $schema) continue;
@@ -890,7 +890,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					} else {
 						$name = $field->getName();
 					}
-					
+
 					if (isset($this->_tables_metadata[$table]['metadata'][$name]) and
 						!$field->isReadOnly() and
 						!array_key_exists($name, $this->_multivalue_fields)) {
@@ -920,9 +920,9 @@ class P4A_DB_Source extends P4A_Data_Source
 			} else {
 				$p4a_db_table->update($fields_values, $this->_composePkString($pk_values));
 			}
-			
+
 			if (is_string($pks)) {
-				$pk_value = $this->fields->$pks->getNewValue();  
+				$pk_value = $this->fields->$pks->getNewValue();
 				foreach ($this->_multivalue_fields as $fieldname=>$aField) {
 					$fk_table = $aField["table"];
 					$fk_table = ($schema ? "$schema." : "") . $fk_table;
@@ -930,19 +930,19 @@ class P4A_DB_Source extends P4A_Data_Source
 					$fk = $aField["fk"];
 					$old_fk_values = $db->adapter->fetchCol("SELECT $fk_field FROM $fk_table WHERE $fk=?", $pk_value);
 					$fk_values = $this->fields->$fieldname->getNewValue();
-	
+
 					if (!is_array($old_fk_values)) $old_fk_values = array();
 					if (!is_array($fk_values)) $fk_values = array();
-	
+
 					$toadd = array_diff($fk_values, $old_fk_values);
 					$toremove = array_diff($old_fk_values, $fk_values);
-	
+
 					if (!empty($toremove)) {
 						foreach ($toremove as $k=>$v) {
 							$db->adapter->query("DELETE FROM $fk_table WHERE $fk=? AND $fk_field=?", array($pk_value, $v));
 						}
 					}
-	
+
 					if (!empty($toadd)) {
 						foreach ($toadd as $k=>$v) {
 							$db->adapter->query("INSERT INTO $fk_table($fk, $fk_field) VALUES(?, ?)", array($pk_value, $v));
@@ -950,7 +950,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					}
 				}
 			}
-			
+
 			if (empty($pk_values)) {
 				if (is_string($pks)) {
 					$pk_values[] = $this->fields->$pks->getNewValue();
@@ -961,7 +961,7 @@ class P4A_DB_Source extends P4A_Data_Source
 				}
 			}
 			$row = $this->getPkRow($pk_values);
-			
+
 			$this->resetNumRows();
 			if ($row) {
 				foreach($row as $field=>$value){
@@ -993,7 +993,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 				$db->adapter->query("DELETE FROM $fk_table WHERE $fk=?", array($pk_value));
 			}
-			
+
 			$table = new P4A_Db_Table(array('name'=>$this->getTable(), 'schema'=>$this->getSchema(), 'db'=>$db->adapter));
 			$table->delete($this->_composePkString());
 			$this->resetNumRows();
@@ -1004,7 +1004,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 	/**
 	 * Returns all rows as an associative array.
-	 * 
+	 *
 	 * You can get only a subset of all rows using
 	 * $from and $count parameters.
 	 *
@@ -1054,15 +1054,15 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($query !== null) {
 			return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 		}
-		
+
 		if ($this->getQuery()) {
 			return "SELECT count(*) AS p4a_count FROM (". $this->getQuery() . ") p4a_count";
 		}
-		
+
 		$query = $this->_composeSelectQuery(false)->__toString();
 		return "SELECT count(*) AS p4a_count FROM ($query) p4a_count";
 	}
-	
+
 	/**
 	 * @return Zend_Db_Select|string
 	 */
@@ -1071,7 +1071,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($this->getQuery()) {
 			return "SELECT * FROM (". $this->getQuery() . ") p4a_structure";
 		}
-		
+
 		$select = P4A_DB::singleton($this->getDSN())->select();
 		$this->_composeSelectPart($select);
 		$this->_composeWherePart($select);
@@ -1088,7 +1088,7 @@ class P4A_DB_Source extends P4A_Data_Source
 		if ($this->getQuery()) {
 			return "SELECT * FROM (". $this->getQuery() . ") p4a_select";
 		}
-		
+
 		$select = P4A_DB::singleton($this->getDSN())->select();
 		$this->_composeSelectPart($select);
 		$this->_composeWherePart($select);
@@ -1110,10 +1110,11 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$pk_key = $this->getPK();
 		$pk_string = "";
+		$table = $this->_table_alias ? $this->_table_alias : $this->_table;
 
 		if (is_array($pk_key)) {
 			for($i=0;$i<count($pk_key);$i++){
-				$pk_string .= "{$this->_table}.{$pk_key[$i]} = '{$pk_value[$i]}' AND ";
+				$pk_string .= "{$table}.{$pk_key[$i]} = '{$pk_value[$i]}' AND ";
 			}
 			$pk_string = substr($pk_string,0,-4);
 		} else {
@@ -1121,9 +1122,9 @@ class P4A_DB_Source extends P4A_Data_Source
 				list($key,$pk_value) = each($pk_value);
 			}
 			$pk_value = p4a_db::singleton($this->getDSN())->quote($pk_value, true);
-			$pk_string = "{$this->_table}.{$pk_key} = {$pk_value} ";
+			$pk_string = "{$table}.{$pk_key} = {$pk_value} ";
 		}
-		
+
 		$select->where($pk_string);
 		$this->_composeGroupPart($select);
 		$this->_composeHavingPart($select);
@@ -1134,7 +1135,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	protected function _composeSelectPart($select)
 	{
 		$table = strlen($this->_table_alias) ? array($this->_table_alias=>$this->_table) : $this->_table;
-		
+
 		if (empty($this->_fields)) {
 			$select->from($table, '*', $this->getSchema());
 		} else {
@@ -1147,12 +1148,12 @@ class P4A_DB_Source extends P4A_Data_Source
 			}
 			$select->from($table, $new_fields, $this->getSchema());
 		}
-		
+
 		foreach ($this->_join as $join) {
 			$method = "join{$join[0]}";
 			$new_fields = $join[3];
 			$table = is_array($join[1]) ? array($join[1][1]=>$join[1][0]) : $join[1];
-			
+
 			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
 				foreach ($join[3] as $k=>$v) {
@@ -1162,7 +1163,7 @@ class P4A_DB_Source extends P4A_Data_Source
 					$new_fields[$v] = $k;
 				}
 			}
-			
+
 			$select->$method($table, $join[2], $new_fields, $join[4]);
 		}
 	}
@@ -1175,7 +1176,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			$method = "join{$join[0]}";
 			$new_fields = $join[3];
 			$table = is_array($join[1]) ? array($join[1][1]=>$join[1][0]) : $join[1];
-			
+
 			if (is_array($new_fields) and !empty($new_fields)) {
 				$new_fields = array();
 				foreach ($join[3] as $k=>$v) {
@@ -1187,7 +1188,7 @@ class P4A_DB_Source extends P4A_Data_Source
 			} else {
 				var_dump($join[3]);
 			}
-			
+
 			$select->$method($table, $join[2], $new_fields, $join[4]);
 		}
 	}
@@ -1211,7 +1212,7 @@ class P4A_DB_Source extends P4A_Data_Source
 	{
 		$select->group($this->getGroup());
 	}
-	
+
 	protected function _composeHavingPart($select)
 	{
 		$having = $this->getHaving();
@@ -1299,7 +1300,7 @@ class P4A_DB_Source extends P4A_Data_Source
 
 		$this->fields->build("P4A_Data_Field", $fieldname);
 		$this->fields->$fieldname->setDSN($this->getDSN());
-		
+
 		return $this;
 	}
 

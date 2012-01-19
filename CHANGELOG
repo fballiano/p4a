@@ -1,7 +1,8 @@
 3.8.5
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
 - P4A_Field::addRichTextareaTemplate(), removeRichTextareaTemplate and
-  getRichTextareaTemplates() methods were added 
+  getRichTextareaTemplates() methods were added
+- a bug with P4A_DB_Source::getPkRow() and table alias was solved
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering
@@ -74,9 +75,9 @@
   previous release and you're using MySQL or PostgreSQL (Oracle and SQLite
   should not be involved in this change) you've to be sure to convert the DB
   charset to UTF-8 before editing data in your P4A applications.
-  
+
   ALWAYS DO BACKUPS BEFORE ANYTHING ELSE!!!
-  
+
   For MySQL we used this procedure to migrate our DBs:
   mysqldump --default-character-set=latin1 DBNAME > dump.sql
   open dump.sql and replace this line
@@ -460,7 +461,7 @@
 - P4A_DB_Navigator::allowMovement(false) is now supported
 - P4A_Message default icon was ported to the new icons structure
 - a bug on P4A_DB_Navigator drag&drop javascript was solved
-- a bug (download file name) with P4A_Output_File() global 
+- a bug (download file name) with P4A_Output_File() global
   function was solved
 - a bug with P4A_Output_File() global function automatic file delete
   on Windows servers was solved
@@ -470,7 +471,7 @@
 - P4A_Table's CSS was beautified a bit
 - _disabled icons were removed, opacity: 0.2 filter is added to buttons
   to simulate the disabled effect
-- P4A_Message's CSS was changed due to the variation of its usage, 
+- P4A_Message's CSS was changed due to the variation of its usage,
   now it's not black/bold anymore
 - P4A_Table's order/row indicators were replaced with HTML entities
   removing the need for icons
@@ -514,7 +515,7 @@
 - mouseover on system messages pause the fadeOut timer giving
   more time to read the messages
 - P4A_Table_Col::setHeader() method was marked deprecated
-- P4A_Table_Rows and P4A_Table_Col now trigger the onclick event 
+- P4A_Table_Rows and P4A_Table_Col now trigger the onclick event
   (in addition to beforeclick and afterclick) useful if you don't
   want the table to move your linked P4A_Data_Source
 - P4A_Table::showTitleBar() method was removed because obsolete
@@ -610,7 +611,7 @@
 - P4A_I18N::translate() methods returns an empty string if nothing is passed
 - minor documentation updates were done on P4A_DB_Source
 - Zend Framework was updated to 1.5.1
-- P4A_Field::getAsMulticheckbox() and getAsRadio() methods now use 
+- P4A_Field::getAsMulticheckbox() and getAsRadio() methods now use
   P4A_Generate_Widget_Layout_Table() global function to render labels and inputs
 - P4A_Field::getAsDate()'s input is now "readonly"
 - a bug with P4A_I18N::format() method managing dates was solved
@@ -645,7 +646,7 @@
 - P4A_Thumbnail_Generator::isMimeTypeSupported() method was added
 - P4A_Field::getAsFile() method now calls P4A_Thumbnail_Generator::isMimeTypeSupported() before rendering the image preview
 - P4A_Field::getAsFile() method now always render the "preview" button, but it will be disabled if no preview is available
-- P4A_DB, P4A_Tab_Pane, P4A_Table, P4A_Data_Source and P4A_Widget 
+- P4A_DB, P4A_Tab_Pane, P4A_Table, P4A_Data_Source and P4A_Widget
   were ported to the trigger_error() function for programming errors
 - P4A_Error() global function was removed because unused
 - P4A now throws an exception when uploading forbidden files
@@ -665,7 +666,7 @@
 - a bug with FCKEditor's filemanager was solved
 - P4A_Button now render the "disabled='disabled'" property if disabled
 - P4A_Button now addes 'p4a_button_disabled' or 'p4a_button_image_disabled' class if disabled
-- a bug with P4A_Field autocomplete was solved 
+- a bug with P4A_Field autocomplete was solved
 - P4A_DB_Source was completely ported to the new error handlers
 - multicheckbox CSS was fixed
 - P4A_Field::getAsMultiselect() method now added a "size" property if none was specified
@@ -793,7 +794,7 @@
 - P4A_Image::setIcon() now supports a path to an image instead of the icon name
 - P4A_Toolbar::enable() and disable() methods params were removed
 - P4A_Toolbar::addLabel() method was renamed to addBox()
-- P4A_Toolbar::setOrientation() method was removed because it was not implemented 
+- P4A_Toolbar::setOrientation() method was removed because it was not implemented
 - jQuery::dimensions plugin was updated to 1.2
 - DHTMLCalendar by dynarch was dropped and replaced by jQuery::UI::datepicker 3.2
 - P4A_Field::getAsDate() now it's fully working with the jQuery::UI::datepicker with an additional ajax call to reformat the date
@@ -906,13 +907,13 @@
 - P4A now sets error_reporting to P4A_MINIMAL_ERROR_REPORTING before using getid3() and then restore the error_reporting to the previous value
 - P4A_Validate and PEAR::Validate classes were removed
 - P4A_Field::addValidator() method was added, you can pass it Zend_Validate_* obejects
-- P4A_Field::isValid() method was added to check if the validators chain is respected or not 
+- P4A_Field::isValid() method was added to check if the validators chain is respected or not
 - P4A_Base_Mask::setRequiredField() method now relies on Zend_Validator_NotEmpty
 - P4A_Base_Mask::checkRequiredFields() method was renamed to validateFields() and now checks all validators chains for all fields and not only required fields
 - all javascripts were refactored
 - javascript/css popup management was reworked
 - P4A_Base_Mask::setRequiredField(), validateFields(), warning(), error() and info() methods were moved to P4A_Mask
-- P4A_Validate_Alnum, P4A_Validate_Alpha, P4A_Validate_Between, P4A_Validate_Ccnum, P4A_Validate_Date, P4A_Validate_Digits, P4A_Validate_EmailAddress, P4A_Validate_Float, P4A_Validate_GreaterThan, P4A_Validate_Hex, 
+- P4A_Validate_Alnum, P4A_Validate_Alpha, P4A_Validate_Between, P4A_Validate_Ccnum, P4A_Validate_Date, P4A_Validate_Digits, P4A_Validate_EmailAddress, P4A_Validate_Float, P4A_Validate_GreaterThan, P4A_Validate_Hex,
   P4A_Validate_Hostname, P4A_Validate_InArray, P4A_Validate_Int, P4A_Validate_Ip, P4A_Validate_LessThan, P4A_Validate_NotEmpty, P4A_Validate_Regex and P4A_Validate_StringLength classes were added.
   These classes rely on Zend_Validate_* classes but we need them to allow translation of error messages
 - P4A::isPopupOpened() and getFocusedObjectId() methods are now marked as deprecated
@@ -997,8 +998,8 @@
 
 2.2.1
 - multicheckbox field and multiselect field now support saving in single table field
-- P4A_Field::setMultivalueSeparator method was added 
-- a bug with images on p4a_table wal solved 
+- P4A_Field::setMultivalueSeparator method was added
+- a bug with images on p4a_table wal solved
 - rich_textarea "Full" theme was added
 - jQuery::form was updated to 2.01
 - a bug with empty "file" fields submitted with an ajax call was solved
