@@ -6,15 +6,15 @@
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
- * 
+ *
  * P4A is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with P4A.  If not, see <http://www.gnu.org/licenses/lgpl.html>.
- * 
+ *
  * To contact the authors write to:                                     <br />
  * Fabrizio Balliano <fabrizio@fabrizioballiano.it>                     <br />
  * Andrea Giardina <andrea.giardina@crealabs.it>
@@ -32,12 +32,12 @@
 
 function upgrade_grid(obj, set_focus) {
 	set_focus = typeof(set_focus) == 'undefined' ? true : set_focus;
-	
+
 	if (obj.find('textarea').length) {
 		return;
 	}
 	id = obj.attr('id');
-	
+
 	var value;
 	var input;
 	var height;
@@ -45,38 +45,38 @@ function upgrade_grid(obj, set_focus) {
 	var a_id;
 	var next_id;
 	var prev_id;
-	
+
 	/* TODO: I don't use this var at the moment */
 	var num_cols = <?php echo count($table_cols); ?>;
-	
+
 	value = obj.text();
 	height = obj.height();
 	width = obj.width();
 	title = obj.attr('title');
 	obj.text("");
-	
-	input = $("<textarea title='"+title+"' class='p4a_grid_text' id='"+id+"_text' type='text'></textarea>");				
+
+	input = $("<textarea title='"+title+"' class='p4a_grid_text' id='"+id+"_text' type='text'></textarea>");
 	input.val(value);
 	input.height(height-2);
 	input.width(width-2);
 
 	input.focus (function(){
-		if (!$(this).parent().prevAll(".p4a_grid_td_enabled").length) {
-			prev = $(this).parent().parent().prev().children(".p4a_grid_td_enabled:last");
+		if (!$(this).parent().prevAll(".p4a_grid_td_enabled:not(.action)").length) {
+			prev = $(this).parent().parent().prev().children(".p4a_grid_td_enabled:not(.action):last");
 		} else {
-			prev = $(this).parent().prev(".p4a_grid_td_enabled");
+			prev = $(this).parent().prev(".p4a_grid_td_enabled:not(.action)");
 		}
-		
-		if (!$(this).parent().nextAll(".p4a_grid_td_enabled").length) {
-			next = $(this).parent().parent().next().children(".p4a_grid_td_enabled:first");
+
+		if (!$(this).parent().nextAll(".p4a_grid_td_enabled:not(.action)").length) {
+			next = $(this).parent().parent().next().children(".p4a_grid_td_enabled:not(.action):first");
 		} else {
-			next = $(this).parent().next(".p4a_grid_td_enabled");
+			next = $(this).parent().next(".p4a_grid_td_enabled:not(.action)");
 		}
-		
+
 		upgrade_grid(prev, false);
 		upgrade_grid(next, false);
 	});
-	
+
 	input.change(function(){
 		id = $(this).attr('id');
 		a_id = id.split('_');
@@ -84,7 +84,7 @@ function upgrade_grid(obj, set_focus) {
 		field_name = $(this).attr('title');
 		p4a_event_execute_ajax(a_id[0],'prechange',pk_value,field_name,input.val());
 	});
-	
+
 	obj.append(input);
 	obj.width(width);
 	obj.height(height);
@@ -92,23 +92,23 @@ function upgrade_grid(obj, set_focus) {
 	if (set_focus) input.focus();
 }
 
-function jq(myid) { 
+function jq(myid) {
 	return '#'+myid.replace(/:/g,"\\:").replace(/\./g,"\\.").replace(/=/g,"\\=");
 }
 
 $(document).ready(function() {
-	$("td.p4a_grid_td_enabled").each(function() {
+	$("td.p4a_grid_td_enabled:not(.action)").each(function() {
 		$(this).click(function(){
 			if (!$(this).find('textarea').length) {
 				upgrade_grid($(this));
-			} 
+			}
 		});
-		
+
 	});
 });
 
 </script>
-		
+
 <table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() ?> <?php echo $this->composeStringProperties() ?>>
 	<?php if ($this->getLabel()): ?>
 	<caption><?php echo __($this->getLabel()) ?></caption>
@@ -153,7 +153,7 @@ $(document).ready(function() {
 			<?php $i++; ?>
 			<tr>
 				<?php foreach ($row['cells'] as $cell): ?>
-					<td title="<?php echo $cell['title'] ?>" id="<?php echo $cell['id'] ?>" class="<?php echo $cell['class'] ?> <?php echo $cell['type']?>"><?php echo $cell['value']?></td>
+					<td title="<?php echo $cell['title'] ?>" id="<?php echo $cell['id'] ?>" class="<?php echo $cell['class'] ?> <?php echo $cell['type']?>"><?php if ($cell['clickable']): ?><a href="#" <?php echo $cell['action']?>><?php echo $cell['value']?></a><?php else: ?><?php echo $cell['value']?><?php endif; ?></td>
 				<?php endforeach; ?>
 			</tr>
 		<?php endforeach; ?>
