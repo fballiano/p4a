@@ -5,6 +5,7 @@
 - P4A_Field::addRichTextareaTemplate(), removeRichTextareaTemplate and
   getRichTextareaTemplates() methods were added
 - a bug with P4A_DB_Source::getPkRow() and table alias was solved
+- a bug with multiple output buffers and raiseXMLresponse() was solved (thanks to eddiejr)
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering

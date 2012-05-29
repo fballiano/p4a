@@ -694,6 +694,9 @@ class P4A extends P4A_Object
 		}
 
 		ob_end_flush();
+		while (ob_get_level()) {
+			ob_end_flush();
+		}
 	}
 
 	/**
