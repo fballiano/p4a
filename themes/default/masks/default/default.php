@@ -79,6 +79,12 @@ if (isset($menu) and isset($top)) {
 	</div>
 	<?php endif; ?>
 	
+	<?php if (isset($status_bar)): ?>
+		<div id="p4a_statusbar" style="height:<?php $_statusbar_height = $this->getStatusbarHeight(); echo "{$_statusbar_height[0]}{$_statusbar_height[1]}" ?>;">
+			<?php echo $status_bar; ?>
+		</div>
+	<?php endif; ?>
+	
 	<!-- Removing or modifying the following lines is forbidden and it's a
 	     violation of the GNU Lesser General Public License. -->
 	<div id="p4a_footer">
