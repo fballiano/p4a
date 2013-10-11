@@ -124,6 +124,11 @@ class P4A_Mask extends P4A_Object
 	 * @var array
 	 */
 	private $_right_sidebar_width = array(280, "px");
+	
+	/**
+	 * @var array
+	 */
+	private $_statusbar_height = array(20, "px");
 
 	/**
 	 * @param string $name Object name (identifier)
@@ -712,6 +717,17 @@ class P4A_Mask extends P4A_Object
 	}
 	
 	/**
+	 * @param integer $width
+	 * @param string $unit
+	 * @return P4A_Mask
+	 */
+	public function setStatusbarHeight($height, $unit = "px")
+	{
+		$this->_statusbar_height = array($height, $unit);
+		return $this;
+	}
+	
+	/**
 	 * @return array
 	 */
 	public function getLeftSidebarWidth()
@@ -725,6 +741,14 @@ class P4A_Mask extends P4A_Object
 	public function getRightSidebarWidth()
 	{
 		return $this->_right_sidebar_width;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getStatusbarHeight()
+	{
+		return $this->_statusbar_height;
 	}
 	
 	/**
