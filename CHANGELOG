@@ -1,12 +1,13 @@
 3.8.5
 - P4A_Grid now supports "action cols"
-- Zend Framework was updated to 1.11.11
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
 - P4A_Field::addRichTextareaTemplate(), removeRichTextareaTemplate and
   getRichTextareaTemplates() methods were added
 - a bug with P4A_DB_Source::getPkRow() and table alias was solved
 - a bug with multiple output buffers and raiseXMLresponse() was solved (thanks to eddiejr)
-- Zend Framework was updated to 1.12.0
+- Zend Framework was updated to 1.12.3
+- A new status bar is added to the masks
+- A multivalue bug with saveRow and data refresh is solved
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering
