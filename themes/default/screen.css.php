@@ -133,6 +133,17 @@ a:focus {
  	right: 0;
 }
 
+#p4a_statusbar {
+	background: <?php echo $_GET['bg'] ?>;
+	text-align: left;
+	padding-left: 25px;
+	padding-top: 5px;
+	bottom: 0;
+	width: 100%;
+	position: fixed;
+	border-top: 1px solid <?php echo $_GET['border'] ?>;
+}
+
 ol.p4a_backtrace {
 	margin-left: 20px;
 }

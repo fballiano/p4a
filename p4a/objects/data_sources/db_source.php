@@ -967,6 +967,9 @@ class P4A_DB_Source extends P4A_Data_Source
 				foreach($row as $field=>$value){
 					$this->fields->$field->setValue($value);
 				}
+				foreach ($this->_multivalue_fields as $fieldname=>$aField) {
+					$this->fields->$fieldname->setValue($this->fields->$fieldname->getNewValue());
+				}
 				$this->updateRowPosition();
 			} else {
 				$this->firstRow();
