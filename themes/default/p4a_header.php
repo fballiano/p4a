@@ -27,8 +27,8 @@
  * @package p4a
  */
 
-echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+echo $_xml_header ?><!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -46,7 +46,7 @@ echo $_xml_header ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://ww
 <?php echo P4A::singleton()->getJavascriptInitializations() ?>
 </head>
 
-<body class="p4a_browser_<?php echo P4A::singleton()->getBrowser() ?>">
+<body class="p4a_browser_<?php echo P4A::singleton()->getBrowser() ?> container">
 <div id='p4a_body' class='p4a_browser_<?php echo P4A::singleton()->getBrowserOS() ?>'>
 <div id='p4a_loading'>
 	<img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?>

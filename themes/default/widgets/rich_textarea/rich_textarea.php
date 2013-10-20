@@ -29,6 +29,7 @@
 ?>
 
 <script type="text/javascript" class="parse_before_html_replace">
+//CKEDITOR_BASEPATH = '<?php echo P4A_THEME_PATH ?>/widgets/rich_textarea/';
 <?php echo $this->getId() ?>pre = function () {
 	try {
 		var instance_id = '<?php echo $this->getId() ?>input';
