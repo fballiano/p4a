@@ -1,4 +1,5 @@
 3.8.5
+- require.js was updated to 2.1.9
 - P4A_Grid now supports "action cols"
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
 - P4A_Field::addRichTextareaTemplate(), removeRichTextareaTemplate and
