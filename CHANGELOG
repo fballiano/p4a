@@ -7,6 +7,7 @@
 - a bug with P4A_DB_Source::getPkRow() and table alias was solved
 - a bug with multiple output buffers and raiseXMLresponse() was solved (thanks to eddiejr)
 - Zend Framework was updated to 1.12.0
+- a missing property in "multicheckbox" field type was added
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering

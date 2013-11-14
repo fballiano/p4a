@@ -1023,6 +1023,11 @@ class P4A_Field extends P4A_Widget
 		$value_field		= $this->getSourceValueField();
 		$description_field	= $this->getSourceDescriptionField();
 		$new_value			= $this->getNewValue();
+		
+		$disabled = '';
+		if (!$this->isEnabled()) {
+			$disabled = 'disabled="disabled"';
+		}
 
 		$i = 0;
 		foreach ($external_data as $key=>$current) {
@@ -1035,7 +1040,7 @@ class P4A_Field extends P4A_Widget
 			} else {
 				$checked = "";
 			}
-			$sReturn .= P4A_Generate_Widget_Layout_Table("<input type='checkbox' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked />", "<label for='{$id}_{$i}input'>{$current[$description_field]}</label>");
+			$sReturn .= P4A_Generate_Widget_Layout_Table("<input type='checkbox' id='{$id}_{$i}input' name='{$id}[]' value='{$current[$value_field]}' $checked $disabled />", "<label for='{$id}_{$i}input'>{$current[$description_field]}</label>");
 			$i++;
 		}
 
