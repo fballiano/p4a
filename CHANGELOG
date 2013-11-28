@@ -1,5 +1,6 @@
 3.8.5
-- CKEditor was updated to 4.2.2
+- According to the new CKEditor skin, changes the field width to show correctly the status bars
+- CKEditor was updated to 4.3.0
 - require.js was updated to 2.1.9
 - P4A_Grid now supports "action cols"
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
@@ -10,6 +11,7 @@
 - Zend Framework was updated to 1.12.3
 - A new status bar is added to the masks
 - A multivalue bug with saveRow and data refresh is solved
+- a missing property in "multicheckbox" field type was added
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering
