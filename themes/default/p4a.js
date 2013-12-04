@@ -6,6 +6,7 @@
 
 var p4a_working = true;
 var p4a_system_messages_timeout = null;
+var p4a_tooltip_timeout_id = null;
 var p4a_interval_id = null;
 
 p4a_event_execute_prepare = function (object_name, action_name, param1, param2, param3, param4)
@@ -124,8 +125,7 @@ p4a_ajax_process_response = function (response)
 		
 		p4a_center_elements();
 		p4a_menu_add_submenu_indicator();
-		p4a_popover_enable();
-		
+
 		try {
 			p4a_focus_set($("ajax-response", response).attr("focus_id"));
 		} catch (e) {}
@@ -145,12 +145,6 @@ p4a_ajax_process_response = function (response)
 	} catch (e) {
 		p4a_ajax_error();
 	}
-}
-
-p4a_popover_enable = function ()
-{
-	$("[data-toggle=popover] label").append(' <span class="glyphicon glyphicon-info-sign"></span>');
-	$("[data-toggle=popover]").popover();
 }
 
 p4a_upload_progress_enable = function ()
@@ -238,6 +232,47 @@ p4a_center_elements = function () {
 			marginRight: 'auto'
 		});
 	});
+}
+
+p4a_tooltip_show = function (widget)
+{
+	$("body>.p4a_tooltip").remove();
+	var widget = $(widget);
+	var id = widget.attr('id');
+	var tooltip = id ? $('#'+id+'tooltip') : widget.find(">.p4a_tooltip");
+	tooltip.clone().appendTo("body");
+	tooltip = $("body>.p4a_tooltip").css({
+		top: parseInt(widget.offset().top + widget.outerHeight()),
+		left: parseInt(widget.offset().left),
+		width: tooltip.width()
+	});
+
+	if (p4a_shadows_enabled && !tooltip.hasClass("p4a_shadow")) {
+		tooltip
+			.addClass("p4a_shadow")
+			.append("<div class='p4a_shadow_b'></div><div class='p4a_shadow_r'></div><div class='p4a_shadow_br'></div>");
+	}
+
+	tooltip.show();
+
+	if ((tooltip.offset().left + tooltip.outerWidth()) > ($(window).width() + $(window).scrollLeft())) {
+		tooltip.css({
+			left: 'auto',
+			right: 0
+		});
+	}
+
+	if ((tooltip.offset().top + tooltip.outerHeight()) > ($(window).height() + $(window).scrollTop())) {
+		tooltip.css({
+			top: parseInt(widget.offset().top - tooltip.outerHeight())
+		});
+	}
+
+	if (tooltip.bgiframe) tooltip.bgiframe();
+	widget.mouseout(function() {p4a_tooltip_timeout_id = setTimeout(function () {tooltip.hide()}, 200)});
+	tooltip
+		.mouseover(function () {clearTimeout(p4a_tooltip_timeout_id)})
+		.mouseout(function () {p4a_tooltip_timeout_id = setTimeout(function () {tooltip.hide()}, 200)});
 }
 
 p4a_tabs_load = function ()
@@ -548,7 +583,6 @@ p4a_html_entity_decode = function (string)
 
 $(function () {
 	p4a_center_elements();
-	p4a_popover_enable();
 	p4a_form = $('#p4a')[0];
 	$(document)
 		.ajaxStart(p4a_loading_show)

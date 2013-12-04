@@ -408,7 +408,7 @@ class P4A_Field extends P4A_Widget
 			$this->setHeight(200);
 			break;
 		case 'rich_textarea':
-			$this->setWidth(500);
+			$this->setWidth(575);
 			$this->setHeight(300);
 			break;
 		case 'multicheckbox':
