@@ -289,10 +289,10 @@ p4a_autocomplete_load = function (callback)
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.autocomplete.css');
 	require({baseUrl: p4a_theme_path},[
-		'order!' + p4a_theme_path + '/jquery/ui.core.js',
-		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
-		'order!' + p4a_theme_path + '/jquery/ui.position.js',
-		'order!' + p4a_theme_path + '/jquery/ui.autocomplete.js'
+		p4a_theme_path + '/jquery/ui.core.js',
+		p4a_theme_path + '/jquery/ui.widget.js',
+		p4a_theme_path + '/jquery/ui.position.js',
+		p4a_theme_path + '/jquery/ui.autocomplete.js'
 	], callback);
 }
 
@@ -300,8 +300,8 @@ p4a_calendar_load = function ()
 {
 	p4a_load_css(p4a_theme_path + '/jquery/ui.datepicker.css');
 	require({baseUrl: p4a_theme_path},[
-   		'order!' + p4a_theme_path + '/jquery/ui.core.js',
-   		'order!' + p4a_theme_path + '/jquery/ui.datepicker.js'
+   		p4a_theme_path + '/jquery/ui.core.js',
+   		p4a_theme_path + '/jquery/ui.datepicker.js'
    	]);
 }
 
@@ -376,13 +376,13 @@ p4a_datetime_load = function ()
 	p4a_load_css(p4a_theme_path + '/jquery/ui.slider.css');
 	
 	require({baseUrl: p4a_theme_path},[
-		'order!' + p4a_theme_path + '/jquery/ui.core.js',
-		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
-		'order!' + p4a_theme_path + '/jquery/ui.mouse.js',
-		'order!' + p4a_theme_path + '/jquery/ui.datepicker.js',
-		'order!' + p4a_theme_path + '/jquery/ui.effects.core.js',
-		'order!' + p4a_theme_path + '/jquery/ui.slider.js',
-		'order!' + p4a_theme_path + '/jquery/jquery-ui-timepicker-addon.js'
+		p4a_theme_path + '/jquery/ui.core.js',
+		p4a_theme_path + '/jquery/ui.widget.js',
+		p4a_theme_path + '/jquery/ui.mouse.js',
+		p4a_theme_path + '/jquery/ui.datepicker.js',
+		p4a_theme_path + '/jquery/ui.effects.core.js',
+		p4a_theme_path + '/jquery/ui.slider.js',
+		p4a_theme_path + '/jquery/jquery-ui-timepicker-addon.js'
 	]);
 }
 
@@ -427,11 +427,11 @@ p4a_maskedinput = function (id, mask)
 p4a_db_navigator_load = function (obj_id, current_id, field_to_update, roots_movement)
 {
 	require({baseUrl: p4a_theme_path},[
-		'order!' + p4a_theme_path + '/jquery/ui.core.js',
-		'order!' + p4a_theme_path + '/jquery/ui.widget.js',
-		'order!' + p4a_theme_path + '/jquery/ui.mouse.js',
-		'order!' + p4a_theme_path + '/jquery/ui.draggable.js',
-		'order!' + p4a_theme_path + '/jquery/ui.droppable.js',
+		p4a_theme_path + '/jquery/ui.core.js',
+		p4a_theme_path + '/jquery/ui.widget.js',
+		p4a_theme_path + '/jquery/ui.mouse.js',
+		p4a_theme_path + '/jquery/ui.draggable.js',
+		p4a_theme_path + '/jquery/ui.droppable.js',
 	], function () {
 		p4a_db_navigator_init(obj_id, current_id, field_to_update, roots_movement);
 	});

@@ -12,6 +12,7 @@
 - A new status bar is added to the masks
 - A multivalue bug with saveRow and data refresh is solved
 - a missing property in "multicheckbox" field type was added
+- some js refactoring because of requirejs upgrade
 
 3.8.4
 - "meta viewport" tag was added to mask's HTML for a better mobile rendering
