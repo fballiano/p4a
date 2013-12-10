@@ -1,6 +1,6 @@
 3.8.5
 - According to the new CKEditor skin, changes the field width to show correctly the status bars
-- CKEditor was updated to 4.3.0
+- CKEditor was updated to 4.3.1
 - require.js was updated to 2.1.9
 - P4A_Grid now supports "action cols"
 - products_catalogue's MySQL db dump now is compatible with MySQL 5.5 (#3420403)
