@@ -1,9 +1,0 @@
-P4A for Debian
-----------------
-
-  The Debian package ships with a default configuration file for apache.
-  It is located under the /etc/p4a/ directory and it is automatically
-  symlinked into the /etc/APACHE-SERVER/conf.d directory. All configuration
-  changes will also be removed when the package is purged. Make sure to adjust
-  the configuration file provided to suit your needs.
-

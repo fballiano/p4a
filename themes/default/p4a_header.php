@@ -32,29 +32,29 @@ echo $_xml_header ?><!DOCTYPE html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="<?php echo P4A::singleton()->getMetaViewport() ?>">
-<title><?php echo P4A::singleton()->getTitle() ?></title>
+<meta name="viewport" content="<?php echo \P4A\P4A::singleton()->getMetaViewport() ?>">
+<title><?php echo \P4A\P4A::singleton()->getTitle() ?></title>
 
-<?php foreach (P4A::singleton()->getCSS() as $_url=>$_media): ?>
+<?php foreach (\P4A\P4A::singleton()->getCSS() as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>" />
 <?php endforeach; ?>
 
-<?php foreach (P4A::singleton()->getJavascript() as $_k=>$_v): ?>
+<?php foreach (\P4A\P4A::singleton()->getJavascript() as $_k=>$_v): ?>
 <script type="text/javascript" src="<?php echo $_k ?>"></script>
 <?php endforeach; ?>
 
-<?php echo P4A::singleton()->getJavascriptInitializations() ?>
+<?php echo \P4A\P4A::singleton()->getJavascriptInitializations() ?>
 </head>
 
-<body class="p4a_browser_<?php echo P4A::singleton()->getBrowser() ?> container">
-<div id='p4a_body' class='p4a_browser_<?php echo P4A::singleton()->getBrowserOS() ?>'>
+<body class="p4a_browser_<?php echo \P4A\P4A::singleton()->getBrowser() ?> container">
+<div id='p4a_body' class='p4a_browser_<?php echo \P4A\P4A::singleton()->getBrowserOS() ?>'>
 <div id='p4a_loading'>
 	<img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?>
 	<div id='p4a_loading_percentage'></div>
 </div>
 <div class='p4a_system_messages'>
 	<div class='p4a_system_messages_inner'>
-		<?php foreach (P4A::singleton()->getRenderedMessages() as $message): ?>
+		<?php foreach (\P4A\P4A::singleton()->getRenderedMessages() as $message): ?>
 		<div class='p4a_system_message'><?php echo $message ?></div>
 		<?php endforeach; ?>
 	</div>
