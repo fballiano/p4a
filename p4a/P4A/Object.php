@@ -67,12 +67,6 @@ abstract class Object
     protected $_objects = array();
 
     /**
-     * helpers cache
-     * @var array
-     */
-    protected $_helpers = array();
-
-    /**
      * @param string Object identifier, when you add an object to another object (such as $p4a) you can access to it by $p4a->object_name
      * @param string Prefix string for ID generation
      * @param string Object ID identifies an object in the $p4a's object collection. You can set a static ID if you want that all clients uses the same ID (tipically for web sites).
@@ -327,63 +321,29 @@ abstract class Object
 
     /**
      * @param string $name
-     */
-    protected function _loadHelper($name)
-    {
-        $namespace = get_class($this);
-        P4A::singleton()->messageWarning($namespace);
-        return;
-        /*
-        $namespace = get_class(P4A::singleton());
-        $namespace = explode('\\', $namespace);
-        $namespace = $namespace[0];
-        P4A::singleton()->messageWarning($namespace);
-        return;
-
-        /*
-        $classes[] = $class_name;
-        while ($class_name = strtolower(get_parent_class($class_name))) {
-            $classes[] = $class_name;
-        }
-        $classes = array_reverse($classes);
-        foreach ($a_dirs as $dir) {
-            foreach ($classes as $class_name) {
-                if (file_exists("{$dir}/{$class_name}_{$name}.php")) {
-                    $file = "{$dir}/{$class_name}_{$name}.php";
-                    $func = "{$class_name}_{$name}";
-                    break 2;
-                }
-            }
-        }
-
-        if (!isset($func)) {
-            $backtrace = debug_backtrace();
-            $backtrace = $backtrace[2];
-            P4A_Error_Handler(E_USER_ERROR, "Method $name not found", $backtrace['file'], $backtrace['line']);
-        }
-        $this->_helpers[$name] = array($file, $func);
-        */
-    }
-
-    /**
-     * @param string $name
      * @param mixed $args
      * @return unknown
      */
     public function __call($name, $args)
     {
+        $app_namespace = get_class(P4A::singleton());
+        $app_namespace = explode('\\', $app_namespace);
+        $app_namespace = $app_namespace[0];
+        $check_app_helpers = class_exists($app_namespace . '\\Helpers', true);
+
+        $args_for_helper = array($this);
+        array_push($args_for_helper, $args);
+
         $class_name = get_class($this);
-
-        // TODO: call user's app helpers too
-
         while ($class_name = get_parent_class($class_name)) {
             $helper_name = str_replace('\\', '_', $class_name) . '_' . $name;
-            if (method_exists('P4A\\Helpers', $helper_name)) {
-                $a = array($this);
-                array_push($a, $args);
-                return call_user_func_array(array('P4A\\Helpers', $helper_name), $a);
+            if ($check_app_helpers and method_exists($app_namespace . '\\Helpers', $helper_name)) {
+                return call_user_func_array(array($app_namespace . '\\Helpers', $helper_name), $args_for_helper);
+            } elseif (method_exists('P4A\\Helpers', $helper_name)) {
+                return call_user_func_array(array('P4A\\Helpers', $helper_name), $args_for_helper);
             }
         }
+
         trigger_error("Method $name not found", E_USER_ERROR);
     }
 }
