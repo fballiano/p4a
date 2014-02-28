@@ -72,7 +72,7 @@ class I18n
      */
     public function __construct($locale = P4A_LOCALE)
     {
-        $cache = p4a::singleton()->getCache();
+        $cache = P4A::singleton()->getCache();
         if ($cache !== null) {
             Zend_Locale_Data::setCache($cache);
         }
@@ -168,7 +168,7 @@ class I18n
         }
         $translation = $this->_translation_engine->translate($string, $this->locale);
         $is_translated = $this->_translation_engine->isTranslated($string, $this->locale);
-        p4a::singleton()->actionHandler('ontranslate', $string, $translation, $is_translated);
+        P4A::singleton()->actionHandler('ontranslate', $string, $translation, $is_translated);
         return $translation;
     }
 
