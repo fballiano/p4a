@@ -417,6 +417,7 @@ function P4A_Is_Browser_Event($event)
  */
 function P4A_Generate_Default_Label($string)
 {
+    $string = preg_replace("|^.*\\\|", "", $string);
     return ucfirst(str_replace('_', ' ', strtolower($string)));
 }
 
@@ -596,7 +597,7 @@ function P4A_Error_Handler($error_number, $error_string, $error_file, $error_lin
  */
 function P4A_Exception_Handler(Exception $e)
 {
-    $p4a = P4A::singleton();
+    $p4a = \P4A\P4A::singleton();
     $error_file = basename($e->getFile());
     $message = $e->getMessage() . "<br /><em>File: {$error_file}, Line: {$e->getLine()}</em>";
 
@@ -661,7 +662,7 @@ function P4A_Exception_Handler(Exception $e)
  */
 function P4A_Redirect_To_Url($url, $new_window = false)
 {
-    $p4a = P4A::singleton();
+    $p4a = \P4A\P4A::singleton();
     if ($p4a->inAjaxCall()) {
         $gmdate = gmdate("D, d M Y H:i:s");
         header('Content-type: text/xml; charset: UTF-8');
@@ -748,7 +749,7 @@ function P4A_Redirect_To_File($file, $new_window = false)
         throw new P4A_Exception("The requested file does not exists within P4A_UPLOADS_DIR", P4A_FILESYSTEM_ERROR);
     }
 
-    $p4a = P4A::singleton();
+    $p4a = \P4A\P4A::singleton();
     $file = urlencode($file);
     $file = "index.php?_p4a_download_file=$file";
 
