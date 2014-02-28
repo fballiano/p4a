@@ -62,19 +62,19 @@ class Label extends Widget
         }
 
         $css_classes = $this->getCSSClasses();
+        $css_classes[] = "control-label";
+        $css_classes[] = "col-sm-2";
         $actions = $this->composeStringActions();
 
         $tooltip_text = __($this->getTooltip());
         $tooltip_icon = '';
         if ($tooltip_text) {
-            $tooltip_icon = '<img src="' . P4A_ICONS_PATH . '/16/status/dialog-information.png" class="p4a_tooltip_icon" alt="" />';
-            $tooltip_text = "<div id='{$id}tooltip' class='p4a_tooltip'><div class='p4a_tooltip_inner'>{$tooltip_text}</div></div>";
-            $actions .= " onmouseover='p4a_tooltip_show(this)' ";
-            $css_classes[] = 'p4a_label_tooltip';
+            $tooltip_icon = ' <span class="glyphicon glyphicon-info-sign"></span>';
+            $tooltip_text = "data-toggle='popover' data-content='$tooltip_text'";
         }
 
         $css_classes = join(' ', $css_classes);
-        return "<label id='{$id}' class='$css_classes' " . $this->composeStringProperties() .
-        "$actions>$tooltip_icon<span>" . __($this->getLabel()) . "</span>$tooltip_text</label>\n";
+        return "<label id='{$id}' {$tooltip_text} class='$css_classes' " . $this->composeStringProperties() .
+        "$actions>" . __($this->getLabel()) . "{$tooltip_icon}</label><script type='text/javascript'>\$('#{$id}').popover({trigger:'hover'})</script>\n";
     }
 }

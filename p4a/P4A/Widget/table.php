@@ -108,6 +108,7 @@ class Table extends Widget
     public function __construct($name)
     {
         parent::__construct($name);
+        $this->_css_classes = array("table", "table-bordered", "table-striped", "table-hover");
         $this->build('P4A\Widget\TableRows', 'rows');
         $this->build('P4A\Widget\TableNavigationBar', 'navigation_bar');
         $this->useTemplate('table');
@@ -1027,7 +1028,8 @@ class TableNavigationBar extends Frame
         parent::__construct("table_navigation_bar");
         $this->build("P4A\Collection", "buttons");
 
-        $this->addButton('go', 'actions/go-jump', 'right')
+        $this->addButton('go', 'ok')
+            ->addCSSClass("btn-xs")
             ->setLabel("Go")
             ->implement('onclick', $this, 'goOnClick');
 
@@ -1046,27 +1048,18 @@ class TableNavigationBar extends Frame
             ->setHeight(self::height);
         $this->anchorRight($this->buttons->s1);
 
-        if (P4A::singleton()->isHandheld()) {
-            $this->addButton('first')
-                ->setLabel('<<');
-            $this->addButton('prev')
-                ->setLabel('<');
-            $this->addButton('next')
-                ->setLabel('>');
-            $this->addButton('last')
-                ->setLabel('>>');
-            $this->buttons->go->setVisible(false);
-            $this->buttons->page_number->setVisible(false);
-        } else {
-            $this->addButton('last', 'actions/go-last', 'right')
-                ->setLabel("Go to the last page");
-            $this->addButton('next', 'actions/go-next', 'right')
-                ->setLabel("Go to the next page");
-            $this->addButton('prev', 'actions/go-previous', 'right')
-                ->setLabel("Go to the previous page");
-            $this->addButton('first', 'actions/go-first', 'right')
-                ->setLabel("Go to the first page");
-        }
+        $this->addButton('last', 'fast-forward', 'right')
+            ->addCSSClass("btn-xs")
+            ->setLabel("Go to the last page");
+        $this->addButton('next', 'forward', 'right')
+            ->addCSSClass("btn-xs")
+            ->setLabel("Go to the next page");
+        $this->addButton('prev', 'backward', 'right')
+            ->addCSSClass("btn-xs")
+            ->setLabel("Go to the previous page");
+        $this->addButton('first', 'fast-backward', 'right')
+            ->addCSSClass("btn-xs")
+            ->setLabel("Go to the first page");
 
         $this->buttons->last->implement('onclick', $this, 'lastOnClick');
         $this->buttons->next->implement('onclick', $this, 'nextOnClick');
@@ -1079,7 +1072,7 @@ class TableNavigationBar extends Frame
             ->setVisible(false);
         $this->anchorRight($this->buttons->s2);
 
-        $this->addButton('go2', 'actions/go-jump', 'right')
+        $this->addButton('go2', 'ok')
             ->setLabel("Go")
             ->implement('onclick', $this, 'setNumElementsOnPage')
             ->setVisible(false);
@@ -1141,7 +1134,21 @@ class TableNavigationBar extends Frame
         $this->buttons->current_page->setHTML($current_page);
 
         $this->buttons->elements_page->setValue($parent->data->getPageLimit());
-        return parent::getAsString();
+
+        return "
+            <div class='row'>
+                <div class='col-md-3'>{$this->buttons->current_page->getAsString()}</div>
+                <div class='col-md-4'>
+                    {$this->buttons->first->getAsString()}
+                    {$this->buttons->prev->getAsString()}
+                    {$this->buttons->next->getAsString()}
+                    {$this->buttons->last->getAsString()}
+                </div>
+                <div class='col-md-4'>
+                    {$this->buttons->page_number->getAsString()}
+                    {$this->buttons->go->getAsString()}
+                </div>
+            </div>";
     }
 
     /**

@@ -141,7 +141,7 @@ class P4A extends Object
     /**
      * @var string
      */
-    protected $_meta_viewport = "width=device-width, initial-scale=1, maximum-scale=1, target-densitydpi=device-dpi";
+    protected $_meta_viewport = "width=device-width, initial-scale=1";
 
     const BROWSER_GECKO = 'gecko';
     const BROWSER_HANDHELD = 'handheld';
@@ -165,56 +165,15 @@ class P4A extends Object
         $this->i18n = new I18n(P4A_LOCALE);
 
         $this->build("P4A\Collection", "masks");
-        $browser_identification = $this->detectClient();
 
         $this->addJavascript(P4A_THEME_PATH . "/require.js");
-        $this->addJavascript(P4A_THEME_PATH . "/jquery/jquery.js");
+        $this->addJavascript("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+        $this->addJavascript("//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js");
         $this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
-        if ($this->isInternetExplorer() and !$browser_identification['ie7up']) {
-            $this->addJavascript(P4A_THEME_PATH . "/jquery/bgiframe.js");
-            $this->addJavascript(P4A_THEME_PATH . "/jquery/ifixpng.js");
-            $this->addJavascript(P4A_THEME_PATH . "/ie6fixes.js");
-        }
         $this->addJavascript(P4A_THEME_PATH . "/p4a.js");
+        $this->addCSS("//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", "all");
         $this->addCSS(P4A_THEME_PATH . "/jquery/ui.core.css", "all");
         $this->addCSS(P4A_THEME_PATH . "/jquery/ui.theme.css", "all");
-        $this->addCSS(P4A_THEME_PATH . "/screen.css.php?" . $this->getCssConstants(), "all");
-        $this->addCSS(P4A_THEME_PATH . "/handheld.css", $this->isHandheld() ? "all" : "handheld");
-    }
-
-    /**
-     * @return array
-     */
-    private function detectClient()
-    {
-        \Net_UserAgent_Detect::detect();
-
-        if (P4A_FORCE_HANDHELD_RENDERING) {
-            $this->browser = self::BROWSER_HANDHELD;
-        } elseif (\Net_UserAgent_Detect::isIE()) {
-            $this->browser = self::BROWSER_IE;
-        } elseif (\Net_UserAgent_Detect::isBrowser('gecko')) {
-            $this->browser = self::BROWSER_GECKO;
-        } elseif (\Net_UserAgent_Detect::isBrowser('safari')) {
-            $this->browser = self::BROWSER_SAFARI;
-        } elseif (\Net_UserAgent_Detect::isBrowser('opera')) {
-            $this->browser = self::BROWSER_OPERA;
-        } else {
-            $this->browser = self::BROWSER_HANDHELD;
-        }
-
-        foreach (\Net_UserAgent_Detect::_getStaticProperty('os') as $os => $detected) {
-            if ($detected) {
-                if (preg_match("/^win.*$/", $os)) {
-                    $this->browser_os = self::BROWSER_WINDOWS;
-                } elseif (preg_match("/^mac.*$/", $os)) {
-                    $this->browser_os = self::BROWSER_MAC;
-                }
-                break;
-            }
-        }
-
-        return \Net_UserAgent_Detect::_getStaticProperty('browser');
     }
 
     /**
@@ -1067,13 +1026,24 @@ class P4A extends Object
     /**
      * Outputs a system message to user
      * @param string $text
-     * @param string $icon
-     * @param integer $icon_size
+     * @param string $type success|info|warning|danger
      * @return P4A
      */
-    public function message($text, $icon = null, $icon_size = 32)
+    public function message($text, $type = null)
     {
-        $this->messages[] = array($text, $icon, $icon_size);
+        $this->messages[] = array($text, $type);
+        return $this;
+    }
+
+    /**
+     * Prints out a warning message (with a warning icon).
+     * It's a wrapper for P4A::message()
+     * @param string $message
+     * @return P4A
+     */
+    public function messageSuccess($message)
+    {
+        $this->message($message, 'success');
         return $this;
     }
 
@@ -1085,7 +1055,7 @@ class P4A extends Object
      */
     public function messageWarning($message)
     {
-        $this->message($message, 'status/dialog-warning');
+        $this->message($message, 'warning');
         return $this;
     }
 
@@ -1097,7 +1067,7 @@ class P4A extends Object
      */
     public function messageError($message)
     {
-        $this->message($message, 'status/dialog-error');
+        $this->message($message, 'danger');
         return $this;
     }
 
@@ -1109,7 +1079,7 @@ class P4A extends Object
      */
     public function messageInfo($message)
     {
-        $this->message($message, 'status/dialog-information');
+        $this->message($message, 'info');
         return $this;
     }
 

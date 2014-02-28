@@ -428,7 +428,7 @@ class P4A_DB_Navigator extends P4A_Widget
         $table = $this->source->getTable();
         $pk = $this->source->getPk();
         $current = $this->source->fields->{$pk}->getValue();
-        $field = P4A::singleton()->getObject($this->field_to_update_on_movement);
+        $field = \P4A\P4A::singleton()->getObject($this->field_to_update_on_movement);
         $new_value = $field->getNormalizedNewValue();
 
         $receiver_path = $this->getPath($new_value, $table, $pk);

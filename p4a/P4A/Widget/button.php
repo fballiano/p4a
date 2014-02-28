@@ -145,32 +145,12 @@ class Button extends Widget
 
         $icon = "";
         if ($this->_icon != null) {
-            $size = $this->getSize();
-            if (strpos($size, 'x') !== false) {
-                list($width, $size) = explode('x', $size);
-            }
+            $iconset = P4A_ICONSET;
+            $icon = "<span class='$iconset $iconset-{$this->_icon}'></span>";
+        }
 
-            if (strpos($this->_icon, '.') !== false) {
-                $icon = $this->_icon;
-            } else {
-                $icon = P4A_ICONS_PATH . "/{$size}/{$this->_icon}";
-                $icon .= '.' . P4A_ICONS_EXTENSION;
-            }
-            $icon = "<img src='$icon' width='$size' height='$size' alt='' />";
-        }
-        if ($icon) {
-            $class = array('p4a_button_image');
-            if (!$this->isEnabled()) {
-                $class[] = 'p4a_button_image_disabled';
-            }
-            $class = $this->composeStringClass($class);
-        } else {
-            $class = array();
-            if (!$this->isEnabled()) {
-                $class[] = 'p4a_button_disabled';
-            }
-            $class = $this->composeStringClass($class);
-        }
+        $class = array('btn', 'btn-default');
+        $class = $this->composeStringClass($class);
 
         $tooltip_text = __($this->getTooltip());
         if ($tooltip_text) {
@@ -178,8 +158,6 @@ class Button extends Widget
             $actions .= " onmouseover='p4a_tooltip_show(this)' ";
         }
 
-        return "<button id='$id' title='$title' $class $properties $actions>" .
-        $tooltip_text .
-        P4A_Generate_Widget_Layout_Table($icon, $label) . '</button>';
+        return "<button id='$id' type='button' title='$title' $class $properties $actions>{$tooltip_text}{$icon}{$label}</button>";
     }
 }

@@ -52,51 +52,51 @@ class Full extends Toolbar
 
     protected function addDefaultButtons()
     {
-        $this->addButton('new', 'actions/document-new')
+        $this->addButton('new', 'file')
             ->setLabel("Insert a new element")
             ->setProperty("accesskey", "N");
 
-        $this->addButton('save', 'actions/document-save')
+        $this->addButton('save', 'save')
             ->setLabel("Confirm and save")
             ->setAccessKey("S");
 
-        $this->addButton('cancel', 'actions/edit-undo')
+        $this->addButton('cancel', 'repeat')
             ->setLabel("Cancel current operation")
             ->setAccessKey("Z");
 
         $this->addSeparator();
 
-        $this->addButton('delete', 'actions/edit-delete')
+        $this->addButton('delete', 'trash')
             ->setLabel("Delete current element")
             ->addAction("onclick")
             ->requireConfirmation();
 
         $this->addSeparator();
 
-        $this->addButton('first', 'actions/go-first')
+        $this->addButton('first', 'fast-backward')
             ->setLabel("Go to the first element")
             ->setAccessKey(8);
 
-        $this->addButton('prev', 'actions/go-previous')
+        $this->addButton('prev', 'backward')
             ->setLabel("Go to the previous element")
             ->setAccessKey(4);
 
-        $this->addButton('next', 'actions/go-next')
+        $this->addButton('next', 'forward')
             ->setLabel("Go to the next element")
             ->setAccessKey(6);
 
-        $this->addButton('last', 'actions/go-last')
+        $this->addButton('last', 'fast-forward')
             ->setLabel("Go to the last element")
             ->setAccessKey(2);
 
         $this->addSeparator();
 
-        $this->addButton('print', 'actions/document-print')
+        $this->addButton('print', 'print')
             ->dropAction('onclick')
             ->setProperty('onclick', 'window.print(); return false;')
             ->setAccessKey("P");
 
-        $this->addButton('exit', 'actions/window-close', 'right')
+        $this->addButton('exit', 'off', 'right')
             ->setLabel("Go back to the previous mask")
             ->setAccessKey("X");
     }

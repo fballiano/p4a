@@ -122,9 +122,6 @@ p4a_ajax_process_response = function (response)
 	   			} catch (e) {}
 			}
 		});
-		
-		p4a_center_elements();
-		p4a_menu_add_submenu_indicator();
 
 		try {
 			p4a_focus_set($("ajax-response", response).attr("focus_id"));
@@ -202,36 +199,6 @@ p4a_loading_hide = function ()
 	$('#p4a_loading').hide();
 	$("#p4a_loading_percentage").hide();
 	p4a_working = false;
-}
-
-p4a_center_elements = function () {
-	$('#p4a_main>.p4a_frame>.row').each(function () {
-		$(this).children('.col:visible').first().css({
-			marginLeft: 0,
-			paddingLeft: 0
-		});
-	});
-	
-	var main = $('#p4a_main');
-	main.css({
-		float: 'left',
-		width: 'auto'
-	});
-	main.css({
-		width: main.outerWidth(),
-		float: 'none'
-	});
-	$('#p4a_popup #p4a_main_inner_container').css({
-		width: main.outerWidth()
-	});
-	$('.p4a_frame_anchor_center:visible').each(function() {
-		$(this).css({
-			width: $(this).filter(':first-child').outerWidth(),
-			float: 'none',
-			marginLeft: 'auto',
-			marginRight: 'auto'
-		});
-	});
 }
 
 p4a_tooltip_show = function (widget)
@@ -487,17 +454,6 @@ p4a_db_navigator_init = function (obj_id, current_id, field_to_update, roots_mov
 	}
 }
 
-p4a_menu_add_submenu_indicator = function ()
-{
-	var submenu_indicator_html = "<span style='float:right' class='AAA'>&#x25BA;</span>";
-	$('.p4a_menu_has_items .p4a_menu_has_items>a:not(.p4a_processed)')
-		.addClass('p4a_processed')
-		.prepend(submenu_indicator_html);
-	$('.p4a_menu_has_items .p4a_menu_has_items>div:not(.p4a_processed)')
-		.addClass('p4a_processed')
-		.prepend(submenu_indicator_html);
-}
-
 p4a_messages_show = function ()
 {
 	if ($('.p4a_system_messages:visible').size() > 0) return false;
@@ -582,13 +538,11 @@ p4a_html_entity_decode = function (string)
 }
 
 $(function () {
-	p4a_center_elements();
 	p4a_form = $('#p4a')[0];
 	$(document)
 		.ajaxStart(p4a_loading_show)
 		.ajaxStop(p4a_loading_hide)
 		.ajaxError(p4a_ajax_error);
-	p4a_menu_add_submenu_indicator();
 	p4a_messages_show();
 	if (typeof p4a_png_fix == 'function') p4a_png_fix();
 	if (typeof p4a_menu_activate == 'function') p4a_menu_activate();

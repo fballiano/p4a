@@ -312,6 +312,10 @@ if (!defined('P4A_DENIED_EXTENSIONS')) {
     define('P4A_DENIED_EXTENSIONS', 'php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi');
 }
 
+if (!defined('P4A_ICONSET')) {
+    define('P4A_ICONSET', 'glyphicon');
+}
+
 define('P4A_VERSION', '4.0.0-pre-alfa');
 define('P4A_ORDER_ASCENDING', 'ASC');
 define('P4A_ORDER_DESCENDING', 'DESC');

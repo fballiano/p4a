@@ -27,6 +27,10 @@
  * @package p4a
  */
 
+namespace P4A\Widget;
+
+use P4A\P4A;
+
 /**
  * The sheet widget
  * A canvas is a panel where you anchor widgets in a grid way.
@@ -37,7 +41,7 @@
  * @copyright Copyright (c) 2003-2010 Fabrizio Balliano, Andrea Giardina
  * @package p4a
  */
-class P4A_Sheet extends P4A_Widget
+class Sheet extends Widget
 {
     /**
      * @var array
@@ -94,8 +98,8 @@ class P4A_Sheet extends P4A_Widget
      */
     public function anchor($widget, $row, $col, $rowspan = 1, $colspan = 1)
     {
-        if (!($widget instanceof P4A_Widget) and !is_string($widget)) {
-            trigger_error("P4A_Sheet accepts only P4A_Widgets or strings", E_USER_ERROR);
+        if (!($widget instanceof Widget) and !is_string($widget)) {
+            trigger_error("Sheet accepts only widgets or strings", E_USER_ERROR);
         }
 
         if ($row + $rowspan - 1 > $this->_rows) {
@@ -121,7 +125,7 @@ class P4A_Sheet extends P4A_Widget
             }
         }
 
-        if ($widget instanceof P4A_Widget) {
+        if ($widget instanceof Widget) {
             $widget = $widget->getId();
         }
 
@@ -173,9 +177,10 @@ class P4A_Sheet extends P4A_Widget
         $actions = $this->composeStringActions();
         $class = $this->composeStringClass();
 
-        $string = "<table id='$id' $properties $actions $class>\n";
+        //$string = "<table id='$id' $properties $actions $class>\n";
+        $string = "";
         for ($i = 1; $i <= $this->_rows; $i++) {
-            $string .= "<tr>\n";
+            $string .= "<div class='row'>";
             for ($j = 1; $j <= $this->_cols;) {
                 if (is_string($this->_map[$i][$j])) {
                     $j++;
@@ -196,12 +201,12 @@ class P4A_Sheet extends P4A_Widget
                     $rowspan = $cell[1];
                     $colspan = $cell[2];
                 }
-                $string .= "<td rowspan='$rowspan' colspan='$colspan'>$obj_as_string</td>\n";
+                $string .= "<td class='col-md-$colspan'>$obj_as_string</div>";
                 $j += $colspan;
             }
-            $string .= "</tr>\n";
+            $string .= "</div>";
         }
-        $string .= "</table>\n";
+        //$string .= "</table>\n";
         return $string;
     }
 }

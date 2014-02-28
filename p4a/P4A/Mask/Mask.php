@@ -154,7 +154,7 @@ class Mask extends Object
         $this->close_popup_button->setIcon("exit");
         $this->close_popup_button->implement('onclick', P4A::singleton(), 'showPrevMask');
 
-        $this->title = ucfirst(str_replace('_', ' ', $this->getName()));
+        $this->title = P4A_Generate_Default_Label($this->getName());
         $this->useTemplate('default');
     }
 
@@ -503,9 +503,9 @@ class Mask extends Object
     protected function maskOpen()
     {
         $mask_id = $this->getId();
-        $action_id = p4a::singleton()->getActionHistoryId();
+        $action_id = P4A::singleton()->getActionHistoryId();
 
-        $return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
+        $return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php' class='form-horizontal' role='form'>\n";
         $return .= "<input type='submit' onclick='return false' style='display:none' />\n";
         $return .= "<input type='hidden' name='_object' value='{$mask_id}' />\n";
         $return .= "<input type='hidden' name='_action' value='none' />\n";
@@ -765,7 +765,7 @@ class Mask extends Object
      */
     public function restart()
     {
-        $p4a = p4a::singleton();
+        $p4a = P4A::singleton();
         $p4a->showPrevMask(true);
         $p4a->openMask(get_class($this));
     }

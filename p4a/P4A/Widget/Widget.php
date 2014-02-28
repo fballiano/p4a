@@ -30,6 +30,7 @@
 namespace P4A\Widget;
 
 use P4A\Object;
+use P4A\P4A;
 
 /**
  * Base class for objects that permit user interation with the application.

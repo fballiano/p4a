@@ -29,6 +29,7 @@
 
 namespace P4A\Widget;
 
+use P4A\DataSource\DbSource;
 use P4A\P4A;
 use P4A\Validate\Validate;
 
@@ -716,17 +717,17 @@ class Field extends Widget
     public function getAsText()
     {
         $id = $this->getId();
-        $header = "<input id='{$id}input' type='text' ";
-        $close_header = '/>';
+        $header = "<div class='col-sm-10'><input id='{$id}input' type='text' ";
+        $close_header = '/></div>';
 
         if (!$this->isEnabled()) {
             $header .= 'disabled="disabled" ';
         }
 
-        $sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue(
-            ) . $this->composeStringActions() . $close_header;
+        $sReturn = '<div class="form-group">' . $this->composeLabel() . $header . $this->composeStringProperties() . ' class="form-control" ' . $this->composeStringValue(
+            ) . $this->composeStringActions() . $close_header . '</div>';
         if ($this->isEnabled()) {
-            if (is_object($this->data) and $this->data instanceof P4A\DataSource\DbSource) {
+            if (is_object($this->data) and $this->data instanceof DbSource) {
                 $sReturn .= "<script type='text/javascript'>\$(function(){p4a_autocomplete_load(function(){\$('#{$id}input').autocomplete({source:'index.php?_p4a_autocomplete&_object={$id}',minLength:2})});});</script>";
             } elseif ($this->input_mask !== null) {
                 $sReturn .= "<script type='text/javascript'>\$(function(){p4a_maskedinput('{$id}','" . P4A_Quote_Javascript_String(
@@ -852,8 +853,8 @@ class Field extends Widget
     public function getAsPassword()
     {
         $id = $this->getId();
-        $header = "<input id='{$id}input' type='password' ";
-        $close_header = '/>';
+        $header = "<div class='col-sm-10'><input id='{$id}input' class='form-control' type='password' ";
+        $close_header = '/></div>';
 
         if (!$this->isEnabled()) {
             $header .= 'disabled="disabled" ';
@@ -863,8 +864,8 @@ class Field extends Widget
             $header .= ' value="' . P4A_PASSWORD_OBFUSCATOR . '" ';
         }
 
-        $sReturn = $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue(
-            ) . $this->composeStringActions() . $close_header;
+        $sReturn = '<div class="form-group">' . $this->composeLabel() . $header . $this->composeStringProperties() . $this->composeStringValue(
+            ) . $this->composeStringActions() . $close_header . '</div>';
         return $sReturn;
     }
 

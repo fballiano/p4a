@@ -26,11 +26,13 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
  */
-?><table id="<?php echo $this->getId() ?>" <?php echo $this->composeStringClass() ?> <?php echo $this->composeStringProperties() ?>>
-	<?php if ($this->getLabel()): ?>
-	<caption><?php echo __($this->getLabel()) ?></caption>
-	<?php endif; ?>
-
+?><div class="panel panel-primary" id="<?php echo $this->getId() ?>">
+    <?php if ($this->getLabel()): ?>
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php echo __($this->getLabel()) ?></h3>
+    </div>
+    <?php endif; ?>
+<table <?php echo $this->composeStringClass() ?> <?php echo $this->composeStringProperties() ?>>
 	<?php if ($this->_show_row_indicator): ?>
 	<col class="select" />
 	<?php endif; ?>
@@ -96,3 +98,4 @@
 		<tr><th colspan='99' class="p4a_toolbar"><?php echo $navigation_bar ?></th></tr>
 	<?php endif; ?>
 </table>
+</div>

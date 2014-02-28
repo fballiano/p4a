@@ -143,7 +143,6 @@ class Frame extends Widget
 
         $string = "<div id='{$id}' $class $properties $actions>";
         $string .= $this->getChildrenAsString();
-        $string .= "<div class='br'></div>";
         $string .= "</div>\n\n";
         return $string;
     }
@@ -185,9 +184,8 @@ class Frame extends Widget
                     if ($handheld) {
                         $row .= $as_string;
                     } else {
-                        $display = $object->isVisible() ? 'block' : 'none';
                         $class = empty($classes) ? '' : 'class="' . implode(' ', $classes) . '"';
-                        $row .= "\n\t<div $class style='display:$display;float:$float;$margin:$margin_value'>$as_string\n\t</div>";
+                        $row .= "<div $class>$as_string</div>";
                     }
                 }
             }

@@ -134,11 +134,11 @@ class Menu extends Widget
 
         $sReturn = "";
         if ($this->hasItems()) {
-            $sReturn .= "<ul id='$id' class='p4a_menu'>";
+            $sReturn .= "<nav class='navbar navbar-default' role='navigation' id='$id'><div class='container-fluid'><ul class='nav navbar-nav'>";
             while ($item = $this->items->nextItem()) {
                 $sReturn .= $item->getAsString();
             }
-            $sReturn .= "</ul>";
+            $sReturn .= "</ul></div></nav>";
         }
         return $sReturn;
     }

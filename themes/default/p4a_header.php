@@ -46,17 +46,18 @@ echo $_xml_header ?><!DOCTYPE html>
 <?php echo \P4A\P4A::singleton()->getJavascriptInitializations() ?>
 </head>
 
-<body class="p4a_browser_<?php echo \P4A\P4A::singleton()->getBrowser() ?> container">
-<div id='p4a_body' class='p4a_browser_<?php echo \P4A\P4A::singleton()->getBrowserOS() ?>'>
+<body>
+<div id='p4a_body' class='container-fluid'>
 <div id='p4a_loading'>
 	<img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?>
 	<div id='p4a_loading_percentage'></div>
 </div>
 <div class='p4a_system_messages'>
-	<div class='p4a_system_messages_inner'>
-		<?php foreach (\P4A\P4A::singleton()->getRenderedMessages() as $message): ?>
-		<div class='p4a_system_message'><?php echo $message ?></div>
-		<?php endforeach; ?>
-	</div>
+    <?php foreach (\P4A\P4A::singleton()->getMessages() as $message): ?>
+    <div class='alert alert-<?= $message[1] ?> alert-dismissable'>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?= P4A_Generate_Widget_Layout_Table('<span class="glyphicon glyphicon-info-sign" style="zoom:2"></span>&nbsp;&nbsp;', $message[0]) ?>
+    </div>
+    <?php endforeach; ?>
 </div>
 <?php echo $this->maskOpen() ?>

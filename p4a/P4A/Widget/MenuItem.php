@@ -171,7 +171,7 @@ class MenuItem extends Widget
             return "<div id='$id' class='hidden'></div>";
         }
 
-        $has_items = $this->hasItems() ? "class='p4a_menu_has_items'" : '';
+        $has_items = $this->hasItems() ? "class='dropdown'" : '';
         $properties = $this->composeStringProperties();
         if (P4A::singleton()->isHandheld()) {
             $icon = '';
@@ -190,23 +190,18 @@ class MenuItem extends Widget
         }
 
         if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
-            $sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table(
-                    $icon,
-                    "<div $properties>" . __($this->getLabel()) . "</div>"
-                );
+            $sReturn = "<li $has_items><a href='#' $properties data-toggle='dropdown' class='dropdown-toggle'>" . __($this->getLabel()) . "</a>";
         } else {
             $actions = $this->composeStringActions();
-            $sReturn = "<li $has_items>" . P4A_Generate_Widget_Layout_Table(
-                    $icon,
+            $sReturn = "<li $has_items>" .
                     "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey(
                         __($this->getLabel()),
                         $this->getAccessKey()
-                    ) . "</a>"
-                );
+                    ) . "</a>";
         }
 
         if ($has_items) {
-            $sReturn .= "<ul>";
+            $sReturn .= "<ul class='dropdown-menu'>";
             while ($item = $this->items->nextItem()) {
                 $sReturn .= $item->getAsString();
             }

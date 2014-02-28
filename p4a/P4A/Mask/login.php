@@ -84,8 +84,6 @@ final class Login extends Mask
             ->implement('onclick', $this, 'login');
 
         $this->build('P4A\Widget\Frame', 'frame')
-            ->setStyleProperty('margin-top', '50px')
-            ->setStyleProperty('margin-bottom', '50px')
             ->anchor($this->username)
             ->anchor($this->password)
             ->anchorCenter($this->go);
