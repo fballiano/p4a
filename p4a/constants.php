@@ -231,7 +231,7 @@ if (!defined('P4A_ENABLE_RENDERING')) define('P4A_ENABLE_RENDERING', true);
 if (!defined('P4A_FIELD_CLASS')) define('P4A_FIELD_CLASS', 'P4A_Field');
 if (!defined('P4A_EXTENDED_ERRORS')) define('P4A_EXTENDED_ERRORS', false);
 if (!defined('P4A_AUTO_DB_PRIMARY_KEYS')) define('P4A_AUTO_DB_PRIMARY_KEYS', true);
-if (!defined('P4A_AUTO_DB_SEQUENCES')) define('P4A_AUTO_DB_SEQUENCES', true);
+if (!defined('P4A_AUTO_DB_SEQUENCES')) define('P4A_AUTO_DB_SEQUENCES', true); // could be set to false for mySQL to avoid problems when non p4a code is inserting new records
 if (!defined('P4A_AJAX_ENABLED')) define('P4A_AJAX_ENABLED', true);
 if (!defined('P4A_AJAX_DEBUG')) define('P4A_AJAX_DEBUG', false);
 if (!defined('P4A_EXCEPTION_HANDLER')) define('P4A_EXCEPTION_HANDLER', 'P4A_Exception_Handler');
