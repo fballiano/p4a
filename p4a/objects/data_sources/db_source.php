@@ -624,6 +624,9 @@ class P4A_DB_Source extends P4A_Data_Source
 			case 'time':
 				$this->fields->$name->setType('time');
 				break;
+			case 'timestamp':
+				$this->fields->$name->setType('datetime');
+				break;
 			case 'datetime':
 				$this->fields->$name->setType('datetime');
 				break;
