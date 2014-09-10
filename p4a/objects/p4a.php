@@ -925,7 +925,7 @@ class P4A extends P4A_Object
 	 */
 	public function addJavascript($uri)
 	{
-		$this->_javascript[$uri] = null;
+		$this->_javascript[$uri] = 1;
 		return $this;
 	}
 
