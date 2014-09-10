@@ -864,7 +864,7 @@ class P4A extends P4A_Object
 		if (!isset($this->_css[$uri])) {
 			$this->_css[$uri] = array();
 		}
-		$this->_css[$uri][$media] = null;
+		$this->_css[$uri][$media] = 1;
 		return $this;
 	}
 
