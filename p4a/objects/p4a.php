@@ -864,7 +864,7 @@ class P4A extends P4A_Object
 		if (!isset($this->_css[$uri])) {
 			$this->_css[$uri] = array();
 		}
-		$this->_css[$uri][$media] = 1;
+		$this->_css[$uri][$media] = true;
 		return $this;
 	}
 
@@ -925,7 +925,7 @@ class P4A extends P4A_Object
 	 */
 	public function addJavascript($uri)
 	{
-		$this->_javascript[$uri] = 1;
+		$this->_javascript[$uri] = true;
 		return $this;
 	}
 
