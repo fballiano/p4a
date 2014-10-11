@@ -505,7 +505,7 @@ class Mask extends Object
         $mask_id = $this->getId();
         $action_id = P4A::singleton()->getActionHistoryId();
 
-        $return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php' class='form-horizontal' role='form'>\n";
+        $return = "<form method='post' enctype='multipart/form-data' id='p4a' onsubmit='return false' action='index.php'>\n";
         $return .= "<input type='submit' onclick='return false' style='display:none' />\n";
         $return .= "<input type='hidden' name='_object' value='{$mask_id}' />\n";
         $return .= "<input type='hidden' name='_action' value='none' />\n";

@@ -54,14 +54,14 @@ class Frame extends Widget
 
     /**
      * @param P4A_Widget $object
-     * @param string $margin
-     * @param string $float
+     * @param integer $cols How many colums should the widget occupy?
+     * @param  integer $offset How many columns left empty from the previous widget (or the left border)?
      * @return P4A_Frame
      */
-    protected function _anchor($object, $margin = "20px", $float = "left")
+    protected function _anchor($object, $cols, $offset)
     {
         if (is_object($object)) {
-            $to_add = array("id" => $object->getId(), "margin" => $margin, "float" => $float);
+            $to_add = array("id" => $object->getId(), "cols" => $cols, "offset" => $offset);
             $this->_map[$this->_row][] = $to_add;
         }
         return $this;
@@ -69,14 +69,14 @@ class Frame extends Widget
 
     /**
      * @param P4A_Widget $object
-     * @param string $margin
-     * @param string $float
+     * @param integer $cols How many colums should the widget occupy?
+     * @param integer $offset How many columns left empty from the previous widget (or the left border)?
      * @return P4A_Frame
      */
-    public function anchor($object, $margin = "10px", $float = "left")
+    public function anchor($object, $cols = 1, $offset = 0)
     {
         $this->newRow();
-        return $this->_anchor($object, $margin, $float);
+        return $this->_anchor($object, $cols, $offset);
     }
 
     /**
@@ -84,9 +84,9 @@ class Frame extends Widget
      * @param string $margin
      * @return P4A_Frame
      */
-    public function anchorRight($object, $margin = "10px")
+    public function anchorRight($object, $cols = 1, $offset = 0)
     {
-        return $this->_anchor($object, $margin, "right");
+        return $this->anchorLeft($object, $cols, $offset);
     }
 
     /**
@@ -94,19 +94,15 @@ class Frame extends Widget
      * @param string $margin
      * @return P4A_Frame
      */
-    public function anchorLeft($object, $margin = "10px")
+    public function anchorLeft($object, $cols = 1, $offset = 0)
     {
-        return $this->_anchor($object, $margin, "left");
+        return $this->_anchor($object, $cols, $offset);
     }
 
-    /**
-     * @param P4A_Widget $object
-     * @return P4A_Frame
-     */
-    public function anchorCenter($object)
+    public function anchorCenter($object, $cols = 1, $offset = 0)
     {
         $this->newRow();
-        return $this->_anchor($object, "auto", "none");
+        return $this->_anchor($object, $cols, $offset);
     }
 
     /**
@@ -154,9 +150,10 @@ class Frame extends Widget
         $handheld = P4A::singleton()->isHandheld();
         foreach ($this->_map as $objs) {
             $one_visible = false;
-            $row = "\n<div class='row'>";
+            $row = array();
+
             foreach ($objs as $obj) {
-                $classes = array("col");
+                $classes = array();
                 $object = $p4a->getObject($obj["id"]);
                 if (is_object($object)) {
                     $as_string = $object->getAsString();
@@ -169,27 +166,21 @@ class Frame extends Widget
                     $as_string = '';
                 }
                 if (strlen($as_string) > 0) {
-                    if ($obj["float"] == "none") {
-                        $obj["float"] = "left";
-                        $obj["margin"] = 0;
-                        $classes[] = "p4a_frame_anchor_center";
-                    }
-
                     $one_visible = true;
+                    $classes[] = "col-md-" . $obj["cols"];
+                    if ($obj["offset"]) $classes[] = "col-md-offset-" . $obj["offset"];
+                    /*
                     $float = $obj["float"];
                     $margin = "margin-" . $obj["float"];
                     $margin_value = $obj["margin"];
+                    */
                     $as_string = "\n\t\t$as_string";
-
-                    if ($handheld) {
-                        $row .= $as_string;
-                    } else {
-                        $class = empty($classes) ? '' : 'class="' . implode(' ', $classes) . '"';
-                        $row .= "<div $class>$as_string</div>";
-                    }
+                    $class = empty($classes) ? '' : 'class="' . implode(' ', $classes) . '"';
+                    $row .= "<div $class>$as_string</div>";
                 }
             }
 
+            $row = "\n<div class='row'>";
             $row .= "\n</div>\n";
 
             if ($one_visible) {

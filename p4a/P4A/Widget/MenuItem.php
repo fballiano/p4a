@@ -171,7 +171,8 @@ class MenuItem extends Widget
             return "<div id='$id' class='hidden'></div>";
         }
 
-        $has_items = $this->hasItems() ? "class='dropdown'" : '';
+        $has_items = $this->hasItems() ? "class='treeview'" : '';
+        $has_items_icon = $has_items ? '<i class="fa fa-angle-left pull-right"></i>' : '' ;
         $properties = $this->composeStringProperties();
         if (P4A::singleton()->isHandheld()) {
             $icon = '';
@@ -190,18 +191,18 @@ class MenuItem extends Widget
         }
 
         if (empty($this->_map_actions["onclick"]["method"]) or !$this->isEnabled()) {
-            $sReturn = "<li $has_items><a href='#' $properties data-toggle='dropdown' class='dropdown-toggle'>" . __($this->getLabel()) . "</a>";
+            $sReturn = "<li $has_items><a href='#' $properties><span>" . __($this->getLabel()) . "</span>$has_items_icon</a>";
         } else {
             $actions = $this->composeStringActions();
             $sReturn = "<li $has_items>" .
-                    "<a href='#' $actions $properties>" . P4A_Highlight_AccessKey(
+                    "<a href='#' $actions $properties><span>" . P4A_Highlight_AccessKey(
                         __($this->getLabel()),
                         $this->getAccessKey()
-                    ) . "</a>";
+                    ) . "</span>$has_items_icon</a>";
         }
 
         if ($has_items) {
-            $sReturn .= "<ul class='dropdown-menu'>";
+            $sReturn .= "<ul class='treeview-menu'>";
             while ($item = $this->items->nextItem()) {
                 $sReturn .= $item->getAsString();
             }

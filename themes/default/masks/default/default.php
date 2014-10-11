@@ -28,41 +28,79 @@
  */
 ?>
 
-<?php if (isset($menu)): ?>
-<div id="p4a_menu" class="row">
-    <?php echo $menu?>
-</div>
-<?php endif; ?>
+<header class="header">
+    <span class="logo"><?= \P4A\P4A::singleton()->getTitle() ?></span>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="navbar-btn sidebar-toggle hidden-md hidden-lg" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <p class="navbar-text"><?= $this->getTitle() ?></p>
+    </nav>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <?php if (isset($menu)): ?>
+    <aside class="left-side sidebar-offcanvas">
+        <section class="sidebar">
+            <?= $menu ?>
+        </section>
+    </aside>
+    <?php endif ?>
 
-<?php if (isset($top)): ?>
-<div id="p4a_top" class="row">
-    <?php echo $top?>
-</div>
-<?php endif; ?>
+    <aside class="right-side">
+        <section class="content">
+            <?php if (isset($top)): ?>
+                <div id="p4a_top" class="row">
+                    <div class="col-md-12"><?= $top ?></div>
+                </div>
+            <?php endif; ?>
 
-<?php if (strlen($_title)): ?>
-<div class="page-header row">
-    <h1>
-        <?php if ($_icon): ?>
-            <span class="<?= P4A_ICONSET ?> <?= P4A_ICONSET ?>-<?= $_icon ?>"></span>
-        <?php endif ?>
-        <?= $_title ?>
-    </h1>
-</div>
-<?php endif; ?>
+            <div class='p4a_system_messages'>
+                <?php foreach (\P4A\P4A::singleton()->getMessages() as $message): ?>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 text-center">
+                            <div class="alert alert-<?= $message[1] ?> alert-dismissable text-left">
+                                <i class="fa fa-<?php
+                                switch ($message[1]) {
+                                    case "danger":
+                                        echo "ban";
+                                        break;
+                                    case "success":
+                                        echo "check";
+                                        break;
+                                    default:
+                                        echo $message[1];
+                                }
+                                ?>"></i>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <?= $message[0] ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-<?php if (isset($main)): ?>
-<div id="p4a_main" class="row"><?php echo $main ?></div>
-<?php endif; ?>
+            <?php if (isset($main)): ?>
+                <div id="p4a_main"><?php echo $main ?></div>
+            <?php endif; ?>
 
-<?php if (isset($status_bar)): ?>
-<div id="p4a_statusbar" class="row" style="height:<?php $_statusbar_height = $this->getStatusbarHeight(); echo "{$_statusbar_height[0]}{$_statusbar_height[1]}" ?>;">
-    <?php echo $status_bar; ?>
-</div>
-<?php endif; ?>
+            <?php if (isset($status_bar)): ?>
+                <div id="p4a_statusbar" class="row" style="height:<?php $_statusbar_height = $this->getStatusbarHeight(); echo "{$_statusbar_height[0]}{$_statusbar_height[1]}" ?>;">
+                    <?php echo $status_bar; ?>
+                </div>
+            <?php endif; ?>
 
-<!-- Removing or modifying the following lines is forbidden and it's a
-     violation of the GNU Lesser General Public License. -->
-<div id="p4a_footer"  class="row">
-    Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a> <?php echo P4A_VERSION?>
+            <div class="page-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 text-center">
+                        <!-- Removing or modifying the following lines is forbidden and it's a violation of the GNU Lesser General Public License. -->
+                        <span class="txt-color-white">Powered by <a href="http://p4a.sourceforge.net">P4A - PHP For Applications</a> <?php echo P4A_VERSION ?></span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </aside>
 </div>

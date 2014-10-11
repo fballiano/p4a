@@ -134,11 +134,11 @@ class Menu extends Widget
 
         $sReturn = "";
         if ($this->hasItems()) {
-            $sReturn .= "<nav class='navbar navbar-default' role='navigation' id='$id'><div class='container-fluid'><ul class='nav navbar-nav'>";
+            $sReturn .= "<ul class='sidebar-menu'>";
             while ($item = $this->items->nextItem()) {
                 $sReturn .= $item->getAsString();
             }
-            $sReturn .= "</ul></div></nav>";
+            $sReturn .= "</ul>";
         }
         return $sReturn;
     }

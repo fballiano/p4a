@@ -26,14 +26,13 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @package p4a
  */
-
-echo $_xml_header ?><!DOCTYPE html>
+?><!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="<?php echo \P4A\P4A::singleton()->getMetaViewport() ?>">
-<title><?php echo \P4A\P4A::singleton()->getTitle() ?></title>
+<title><?= \P4A\P4A::singleton()->getTitle() ?></title>
 
 <?php foreach (\P4A\P4A::singleton()->getCSS() as $_url=>$_media): ?>
 <link href="<?php echo $_url?>" rel="stylesheet" type="text/css" media="<?php echo join(', ', array_keys($_media)) ?>" />
@@ -43,21 +42,18 @@ echo $_xml_header ?><!DOCTYPE html>
 <script type="text/javascript" src="<?php echo $_k ?>"></script>
 <?php endforeach; ?>
 
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
 <?php echo \P4A\P4A::singleton()->getJavascriptInitializations() ?>
 </head>
 
-<body>
-<div id='p4a_body' class='container-fluid'>
-<div id='p4a_loading'>
+<body class="skin-blue" id="p4a_body">
+<div id='p4a_body'>
+<div id='p4a_loading' style="position:absolute;top:0;right:0;z-index:1000;background:red;white-space:nowrap;color:white;padding:5px">
 	<img src='<?php echo P4A_THEME_PATH ?>/loading.gif' alt='' /> <?php echo __('Loading...') ?>
 	<div id='p4a_loading_percentage'></div>
-</div>
-<div class='p4a_system_messages'>
-    <?php foreach (\P4A\P4A::singleton()->getMessages() as $message): ?>
-    <div class='alert alert-<?= $message[1] ?> alert-dismissable'>
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <?= P4A_Generate_Widget_Layout_Table('<span class="glyphicon glyphicon-info-sign" style="zoom:2"></span>&nbsp;&nbsp;', $message[0]) ?>
-    </div>
-    <?php endforeach; ?>
 </div>
 <?php echo $this->maskOpen() ?>

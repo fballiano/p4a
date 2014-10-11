@@ -141,7 +141,7 @@ class P4A extends Object
     /**
      * @var string
      */
-    protected $_meta_viewport = "width=device-width, initial-scale=1";
+    protected $_meta_viewport = "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
 
     const BROWSER_GECKO = 'gecko';
     const BROWSER_HANDHELD = 'handheld';
@@ -166,14 +166,18 @@ class P4A extends Object
 
         $this->build("P4A\Collection", "masks");
 
-        $this->addJavascript(P4A_THEME_PATH . "/require.js");
-        $this->addJavascript("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
-        $this->addJavascript("//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js");
-        $this->addJavascript(P4A_THEME_PATH . "/jquery/form.js");
+        $this->addJavascript("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js");
+        $this->addJavascript("//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js");
+        $this->addJavascript("//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.50/jquery.form.min.js");
+        $this->addJavascript("//localhost/AdminLTE/js/AdminLTE/app.js");
+        $this->addJavascript("//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js");
         $this->addJavascript(P4A_THEME_PATH . "/p4a.js");
-        $this->addCSS("//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", "all");
-        $this->addCSS(P4A_THEME_PATH . "/jquery/ui.core.css", "all");
-        $this->addCSS(P4A_THEME_PATH . "/jquery/ui.theme.css", "all");
+        $this->addCSS("//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", "all");
+        $this->addCSS("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css", "all");
+        $this->addCSS("//localhost/AdminLTE/css/AdminLTE.css", "all");
+
+        //$this->addCSS(P4A_THEME_PATH . "/jquery/ui.core.css", "all");
+        //$this->addCSS(P4A_THEME_PATH . "/jquery/ui.theme.css", "all");
     }
 
     /**

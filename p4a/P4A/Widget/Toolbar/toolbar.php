@@ -201,11 +201,16 @@ class Toolbar extends Widget
         $size = $this->getSize();
         $properties = $this->composeStringProperties();
         $class = $this->composeStringClass(array("btn-toolbar"));
-        $return = "<div id='$id' $class $properties role='toolbar'>";
+        $return = "<div id='$id' $class $properties role='toolbar'><div class='btn-group'>";
         while ($button = $this->buttons->nextItem()) {
+            if (in_array("p4a_toolbar_separator", $button->getCSSClasses())) {
+                $return .= "</div><div class='btn-group'>";
+                continue;
+            }
+
             $return .= "{$button->getAsString()}";
         }
-        $return .= "</div>\n\n";
+        $return .= "</div></div>\n\n";
         return $return;
     }
 }

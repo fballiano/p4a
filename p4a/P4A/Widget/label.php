@@ -63,7 +63,7 @@ class Label extends Widget
 
         $css_classes = $this->getCSSClasses();
         $css_classes[] = "control-label";
-        $css_classes[] = "col-sm-2";
+        $css_classes[] = "col-sm-3";
         $actions = $this->composeStringActions();
 
         $tooltip_text = __($this->getTooltip());

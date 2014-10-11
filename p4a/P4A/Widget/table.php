@@ -1137,16 +1137,22 @@ class TableNavigationBar extends Frame
 
         return "
             <div class='row'>
-                <div class='col-md-3'>{$this->buttons->current_page->getAsString()}</div>
+                <div class='col-md-4'>$current_page</div>
                 <div class='col-md-4'>
-                    {$this->buttons->first->getAsString()}
-                    {$this->buttons->prev->getAsString()}
-                    {$this->buttons->next->getAsString()}
-                    {$this->buttons->last->getAsString()}
+                    <div class='btn-group'>
+                        {$this->buttons->first->getAsString()}
+                        {$this->buttons->prev->getAsString()}
+                        {$this->buttons->next->getAsString()}
+                        {$this->buttons->last->getAsString()}
+                    </div>
                 </div>
                 <div class='col-md-4'>
-                    {$this->buttons->page_number->getAsString()}
-                    {$this->buttons->go->getAsString()}
+                    <div class='input-group'>
+                        {$this->buttons->page_number->getAsString()}
+                        <span class='input-group-btn'>
+                            {$this->buttons->go->getAsString()}
+                        </span>
+                    </div>
                 </div>
             </div>";
     }

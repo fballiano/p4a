@@ -717,7 +717,7 @@ class Field extends Widget
     public function getAsText()
     {
         $id = $this->getId();
-        $header = "<div class='col-sm-10'><input id='{$id}input' type='text' ";
+        $header = "<div class='col-sm-9'><input id='{$id}input' type='text' ";
         $close_header = '/></div>';
 
         if (!$this->isEnabled()) {
@@ -853,7 +853,7 @@ class Field extends Widget
     public function getAsPassword()
     {
         $id = $this->getId();
-        $header = "<div class='col-sm-10'><input id='{$id}input' class='form-control' type='password' ";
+        $header = "<div class='col-sm-9'><input id='{$id}input' class='form-control' type='password' ";
         $close_header = '/></div>';
 
         if (!$this->isEnabled()) {
@@ -1222,11 +1222,11 @@ class Field extends Widget
         }
 
         $id = $this->getId();
-        $header = "<input type='hidden' name='{$id}' value='0' $disabled /><input type='checkbox' id='{$id}input' value='1' $checked $disabled ";
-        $close_header = "/>";
+        $header = "<div class='col-sm-9'><input type='hidden' name='{$id}' value='0' $disabled /><input type='checkbox' id='{$id}input' value='1' $checked $disabled class='form-control' ";
+        $close_header = "/></div>";
 
         $header .= $this->composeStringActions() . $this->composeStringProperties() . $close_header;
-        return $this->composeLabel() . $header;
+        return '<div class="form-group">' . $this->composeLabel() . $header . '</div>';
     }
 
     /**

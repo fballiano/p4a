@@ -84,8 +84,8 @@ final class Login extends Mask
             ->implement('onclick', $this, 'login');
 
         $this->build('P4A\Widget\Frame', 'frame')
-            ->anchor($this->username)
-            ->anchor($this->password)
+            ->anchor($this->username, 6)
+            ->anchor($this->password, 6)
             ->anchorCenter($this->go);
 
         $this
